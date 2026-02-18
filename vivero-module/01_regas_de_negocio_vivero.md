@@ -1,8 +1,3 @@
-Listo, aquí tienes tu documento **reorganizado, más legible y 100% alineado** con todo lo que definimos (eventos, no mezclar, no dividir, despachos parciales, PENDIENTE/COMPLETO/CORRECCIÓN, evidencia con excepción, fechas duales, cierre automático, roles y blockchain MVP).
-Lo puedes copiar/pegar tal cual en tu doc.
-
----
-
 # Reglas de Negocio (RN) — Módulo 2: Vivero
 
 ## 1. Propósito
