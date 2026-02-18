@@ -1,272 +1,269 @@
-# Reglas de Negocio (RN) — Módulo 1: Recolección
+# Módulo 1 — Recolección (Origen y trazabilidad del material biológico)
 
 ## 1. Propósito
 
-Estas reglas definen **cómo debe comportarse el sistema frente a la realidad operativa de la recolección**, independientemente de la interfaz o tecnología.
+El **Módulo 1 (Recolección)** registra el **origen** del material biológico (semillas o esquejes) y crea el **Lote Origen** que alimenta al **Módulo 2 (Vivero)**.
 
-Buscan garantizar:
+Su objetivo es generar un historial auditable de:
 
-- **Trazabilidad fuerte** (origen claro del material biológico).
-- **Coherencia temporal y de cantidades** (no magia, no “inventos”).
-- Registro fiel de evidencia (fotos) y ubicación.
-- Compatibilidad con el flujo del **Módulo 2 (Vivero)** y con una futura estrategia de **validación/anclaje blockchain** (MVP).
+- **qué se recolectó** (especie, tipo de material y cantidad),
+- **dónde se recolectó** (ubicación estructurada),
+- **con qué evidencia** (fotografías),
+- **cuándo se selló/validó** (registro “final”),
+- y **cómo se consumió** posteriormente (consumo automático hacia Vivero y/o descarte).
 
-Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
-
----
-
-## 2. Definiciones básicas
-
-- **Recolección (Lote Origen):** registro que representa material biológico recolectado (semillas o esquejes) con evidencia y ubicación.
-- **Tipo de material:** `SEMILLA` o `ESQUEJE`.
-- **Cantidad:**
-    - Para `ESQUEJE`: unidades enteras.
-    - Para `SEMILLA`: peso (kg/gr), almacenado en una unidad canónica.
-- **Estado de stock:** `ALMACENADO`, `USADO`, `DESECHADO`.
-- **Ubicación estructurada:** latitud/longitud obligatorias + datos administrativos opcionales (catálogos).
-- **Evidencia:** fotos obligatorias (mínimo 2), formato JPG/PNG.
-- **Historial:** bitácora inmutable de cambios (quién/cuándo/antes-después).
+Este módulo es la base de trazabilidad: si acá el origen es flojo, todo lo demás es cuento.
 
 ---
 
-## 3. Reglas de identidad, propiedad y trazabilidad
+## 2. Conceptos clave
 
-### RN-REC-01 — Identificador único
+### 2.1. Recolección = Lote Origen
 
-Toda recolección tiene un **identificador único** generado automáticamente por el sistema. No se puede editar.
+- Una **recolección** representa un **lote origen** (un “contenedor” de material biológico).
+- Un lote origen puede abastecer **uno o varios** lotes del Módulo 2, pero **siempre** manteniendo trazabilidad mediante movimientos (ver 4).
 
-### RN-REC-02 — Propiedad del registro (recolector)
+✅ Esto permite uso parcial sin perder el rastro: cada consumo queda enlazado a su lote de vivero.
 
-Cada recolección debe estar asociada a un **Recolector** (RF-GEN-01).
+### 2.2. Separación Web2 vs sellado (bloquechain-friendly)
 
-En el MVP: por defecto el recolector es **el usuario autenticado**, salvo roles con permiso para registrar en nombre de otro.
+El módulo separa dos cosas:
 
-### RN-REC-03 — Recolección como “Lote Origen”
+- **Estado del registro (Web2):**
+    - `BORRADOR`: editable, barato, aún no registrado en blockchain (no sellado).
+    - `VALIDADO`: registrado en blockchain (sellado), no ediable (solo correcciones auditadas)
+- **Estado operativo (inventario):**
+    - `ABIERTO`: saldo disponible > 0
+    - `CERRADO`: saldo disponible = 0 (agotado)
 
-Una recolección **es** un “lote origen” para los módulos siguientes. Por tanto:
+### 2.3. Cantidad y unidad canónica
 
-- Debe poder **ser referenciada** desde Vivero (M2).
-- Debe poder **cambiar de estado** por uso/consumo (manual o automático según reglas).
-
----
-
-## 4. Reglas de captura y campos mínimos
-
-### RN-REC-04 — Fecha de recolección obligatoria y acotada
-
-La **fecha de recolección** es obligatoria y debe cumplir:
-
-- No puede ser futura.
-- Puede ser retroactiva hasta **45 días** como máximo.
-
-Además, el sistema registra automáticamente:
-
-- `fecha_registro` (timestamp del sistema),
-- `usuario_registro`.
-
-### RN-REC-05 — Especie: nombre científico + nombre comercial
-
-Se debe registrar **nombre científico** y **nombre comercial**.
-
-MVP (práctico, compatible con lo que ya tienen):
-
-- Se guardan como texto.
-- Si existe un catálogo de especies, se recomienda guardar también una referencia (`especie_id`) **sin perder el snapshot textual**.
-
-### RN-REC-06 — Método de recolección desde catálogo extensible
-
-El método de recolección se selecciona de un **catálogo**.
-
-Se permite ampliar el catálogo, pero **no “a lo loco”**:
-
-- Regla sugerida: solo usuarios con rol “Administrador/Operador” pueden crear nuevos métodos (o quedan como “pendientes de aprobación”).
-
-### RN-REC-07 — Lugar de almacenamiento (vivero) desde catálogo
-
-El lugar de almacenamiento se selecciona de la lista de **viveros (RF-GEN-02)**.
-
-Para añadir un nuevo vivero, debe registrarse primero en el módulo general correspondiente.
-
----
-
-## 5. Reglas de estado del material (stock)
-
-### RN-REC-08 — Estados válidos y obligatorios
-
-Toda recolección debe estar en exactamente uno de estos estados:
-
-- `ALMACENADO` (default),
-- `USADO`,
-- `DESECHADO`.
-
-### RN-REC-09 — Estado por defecto
-
-Al crear una recolección, el estado por defecto es **ALMACENADO**.
-
-El usuario puede cambiarlo a `USADO` o `DESECHADO` según permisos y reglas.
-
-### RN-REC-10 — Restricción de uso por estado
-
-- Si una recolección está `DESECHADO`, **no puede** usarse para iniciar vivero (M2).
-- Si una recolección está `USADO`, **no puede** volver a usarse (ver pregunta crítica sobre uso parcial).
-
----
-
-## 6. Reglas de cantidades y unidades
-
-### RN-REC-11 — Cantidad obligatoria y > 0
-
-La cantidad de recolección es obligatoria y debe ser **mayor a 0**.
-
-### RN-REC-12 — Semillas: conversión a unidad canónica
-
-Para `SEMILLA`:
-
-- El usuario puede ingresar en **kg** o **gr**,
-- El sistema debe almacenar en una unidad canónica (recomendado: **gramos** como decimal),
-- Mantener (si se quiere) el “input original” solo para UI, pero la lógica usa la unidad canónica.
-
-### RN-REC-13 — Esquejes: entero estricto
-
-Para `ESQUEJE`:
-
-- La cantidad es **entera** y **sin decimales**.
-- Debe ser ≥ 1.
-
----
-
-## 7. Reglas de evidencia fotográfica
-
-### RN-REC-14 — Evidencia mínima obligatoria
-
-Toda recolección debe incluir **mínimo 2 fotografías**:
-
-- 1 foto que evidencie la especie,
-- 1 foto que evidencie la cantidad/volumen recolectado (o su contenedor/medición).
-
-Se pueden agregar más.
-
-### RN-REC-15 — Formato y tamaño por foto
-
-Cada foto debe cumplir:
-
-- Formato: **JPG o PNG**.
-- Tamaño máximo: **5 MB**.
+- **ESQUEJE:** unidades enteras (1, 2, 3…)
+- **SEMILLA:** peso, con unidad canónica **gramos (g)** almacenada como decimal
     
-    Si excede: se rechaza esa imagen con mensaje claro, sin tumbar todo el registro (ideal UX).
+    (la UI puede permitir kg o g, pero el sistema opera en g).
     
 
----
+### 2.4. Consumo automático hacia Vivero
 
-## 8. Reglas de observaciones
-
-### RN-REC-16 — Observaciones acotadas
-
-Observaciones:
-
-- Máximo **1000 caracteres**.
-- Sin emojis (validación técnica; si esto trae problemas reales en campo, lo revisamos).
+- El consumo del lote origen **no se registra manualmente** en Recolección, es decir no hay una pantalla u opción dentro del modulo de recolección donde se registra el consumo del material biológico.
+- Se descuenta **automáticamente** cuando en el Modulo 2 se crea un lote de germinación/embolsado seleccionando esta recolección como origen, es decir al crear un nuevo lote en el modulo dos se selecciona la cantidad.
 
 ---
 
-## 9. Reglas de ubicación estructurada (RF-REC-02)
+## 3. Flujo del proceso (etapas)
 
-### RN-REC-17 — Latitud y longitud obligatorias
+El lote origen atraviesa 4 etapas operativas (no confundir con estados):
 
-Toda recolección debe tener:
+### 3.1. Creación del BORRADOR
 
-- `latitud` obligatoria: rango **[-90, 90]** con **6 decimales**.
-- `longitud` obligatoria: rango **[-180, 180]** con **6 decimales**.
+**Objetivo:** capturar el registro sin bloquear operación de campo.
 
-Si faltan: error indicando exactamente el campo faltante.
+Datos mínimos recomendados para permitir guardar BORRADOR:
 
-### RN-REC-18 — Campos administrativos opcionales por catálogo
+- fecha de recolección (≤ 45 días atrás, no futura)
+- tipo de material (semilla/esqueje)
+- especie (nombre científico + comercial)
+- cantidad inicial (válida según material)
+- recolector (por defecto el usuario autenticado)
+- vivero de almacenamiento (catálogo RF-GEN-02)
+- observaciones (opcional)
 
-País/Departamento/Provincia/Comunidad/Zona:
-
-- Son opcionales,
-- Se seleccionan de catálogos (cuando existan),
-- Si un dato no existe en catálogo, el sistema debe impedir inventar valores (o manejar “pendiente” — ver preguntas críticas).
-
-### RN-REC-19 — Coherencia mínima de estructura
-
-Si se envían valores administrativos, deben estar “bien formados” (IDs válidos / pertenecen al catálogo correspondiente). Si no: error.
+> Nota MVP: ubicación y fotos pueden faltar en BORRADOR, pero serán **obligatorias** para VALIDAR.
+> 
 
 ---
 
-## 10. Reglas de edición + historial (RF-REC-03)
+### 3.2. Completar evidencia y ubicación
 
-### RN-REC-20 — Historial obligatorio e inmutable
+**Objetivo:** completar lo que hace al registro “defendible” ante auditoría.
 
-Cualquier modificación a una recolección debe generar un registro en historial con:
+Requisitos para avanzar hacia validación:
 
-- usuario que modificó,
-- fecha/hora,
-- versión anterior y nueva (o diff por campos),
-- motivo (recomendado, aunque no esté en RF todavía).
-
-El historial:
-
-- se guarda en tablas separadas,
-- **no se puede borrar**.
-
-### RN-REC-21 — Qué cambios deben registrar historial
-
-Se registra **cualquier cambio**, especialmente:
-
-- estado (ALMACENADO/USADO/DESECHADO),
-- cantidad,
-- fotos (altas/bajas),
-- ubicación,
-- especie/método/vivero/observaciones.
-
-### RN-REC-22 — Datos automáticos en auditoría
-
-Los datos de auditoría (usuario, timestamps) se toman automáticamente del sistema.
+- **Fotografías:** mínimo 2 (especie + cantidad)
+    - JPG/PNG
+    - máximo 5MB por foto
+- **Ubicación estructurada (RF-REC-02):**
+    - latitud (obligatorio): -90 a 90, 6 decimales
+    - longitud (obligatorio): -180 a 180, 6 decimales
+    - administrativos opcionales por catálogo: país/departamento/provincia/comunidad/zona
+        
+        (permitiendo “SIN ESPECIFICAR” como MVP)
+        
 
 ---
 
-## 11. Reglas de integración con Módulo 2 (Vivero)
+### 3.3. Validación (sellado)
 
-### RN-REC-23 — Elegibilidad para iniciar vivero
+**Objetivo:** convertir el registro en un origen confiable y “sellable”.
 
-Solo se puede iniciar un lote de vivero desde una recolección que esté:
+Al validar:
 
-- en estado `ALMACENADO`,
-- con evidencia mínima completa,
-- con ubicación válida,
-- con tipo_material definido.
+- el recolector confirma explícitamente que:
+    - el registro queda sellado,
+    - puede registrarse/anclarse en blockchain (según estrategia MVP),
+    - ediciones posteriores no reescriben el pasado: se hacen por **CORRECCIÓN**.
+- se registran automáticamente:
+    - usuario_validación
+    - fecha_validación
 
-### RN-REC-24 — Cambio de estado por consumo (si aplica)
+Desde este punto:
 
-Cuando una recolección se usa para crear un lote de vivero, el sistema debe:
+- no se permite editar el contenido validado directamente,
+- cualquier cambio se hace con evento **CORRECCIÓN** (ver 4 y 5).
 
-- registrar el vínculo (recolección → lote_vivero),
-- cambiar estado a `USADO` **si el modelo es 1:1** (ver preguntas críticas),
-- generar historial automático.
+---
+
+### 3.4. Uso en Vivero (consumo automático)
+
+**Objetivo:** iniciar el Modulo 2 usando un origen validado, descontando saldo de forma atómica.
+
+Cuando desde el Modulo 2 se crea un lote seleccionando una recolección:
+
+- el sistema verifica que la recolección esté:
+    - `VALIDADO`
+    - operativamente `ABIERTO` (saldo > 0)
+    - con saldo suficiente para la cantidad solicitada
+- crea el lote de vivero (el Modulo 2)
+- registra un movimiento **CONSUMO_A_VIVERO** en la recolección
+- descuenta saldo automáticamente
+- enlaza `recolección_id → lote_vivero_id`
+
+**Regla crítica:** creación el Modulo 2 + consumo deben ser **atómicos**:
+
+- si falla el Modulo 2, no se descuenta saldo
+- si falla el descuento, no se crea el Modulo 2
 
 ---
 
-## 12. Roles y estrategia blockchain (MVP)
+### 3.5. Descarte (parcial o total)
 
-### RN-REC-25 — Roles mínimos (MVP)
+**Objetivo:** registrar pérdidas reales del lote origen.
 
-- **Recolector:** crea registros, adjunta evidencia.
-- **Supervisor/Validador (opcional en v1):** valida calidad / aprueba especie nueva / aprueba métodos nuevos.
-- **Auditor:** consulta historial completo.
+- Se registra un movimiento **DESECHO** con:
+    - cantidad descartada (según tipo de material)
+    - **motivo de descarte** obligatorio (catálogo + “OTRO”)
+    - observación si corresponde
 
-### RN-REC-26 — “Especie nueva” como bandera de control
-
-Si `es_especie_nueva = true`:
-
-- el registro debe quedar marcado para revisión (cola de validación),
-- se sugiere requerir más evidencia o una nota técnica (pregunta crítica).
-
-### RN-REC-27 — Anclaje blockchain (propuesta)
-
-MVP recomendado:
-
-- Solo anclar a blockchain recolecciones “validadas” (si añadimos esa capa) **o**
-- anclar cuando la recolección se usa para iniciar vivero (porque ya entra al flujo “sellado”).
+Si el descarte deja el saldo en 0, el lote queda `CERRADO`.
 
 ---
+
+## 4. Eventos y movimientos (modelo audit-friendly)
+
+El módulo usa un enfoque **append-only**: se agregan eventos/movimientos, no se reescribe la historia.
+
+Movimientos típicos:
+
+- **CONSUMO_A_VIVERO** (automático desde el Modulo 2)
+- **DESECHO** (parcial o total, con motivo obligatorio)
+- **CORRECCIÓN** (post-validación, con delta y motivo)
+- (opcional) **EVIDENCIA_AGREGADA** (si quieres auditar la carga de fotos como evento)
+- (opcional) **UBICACIÓN_AGREGADA/ACTUALIZADA** (si se quiere más granularidad)
+
+---
+
+## 5. Estados y eventos del registro: BORRADOR, VALIDADO y CORRECCIÓN
+
+### 5.1. BORRADOR
+
+- Editable.
+- Permite incompletitud controlada (ej. sin ubicación, sin comunidad o sin fotos).
+- No se ancla a blockchain.
+
+### 5.2. VALIDADO
+
+- Registro sellado.
+- No se permite editar directamente.
+- Es elegible para:
+    - consumo hacia el Modulo 2
+    - anclaje blockchain (según estrategia)
+
+### 5.3. CORRECCIÓN (post-validación)
+
+Si se detecta un error después de validar:
+
+- no se edita el registro original,
+- se crea un evento **CORRECCIÓN** con:
+    - delta (+/-) por campo/cantidad, según aplique
+    - motivo
+    - responsable
+    - timestamp
+- se ancla también la corrección en blockchain y se debe mencionar que hubo una corrección, es importante que esta corrección se aceptada por el administrador.
+
+---
+
+## 6. Evidencia fotográfica y excepciones
+
+- Las fotos son obligatorias para **VALIDAR** (mínimo 2).
+- En MVP, no se permiten “validaciones sin evidencia” (para no abrir un agujero de trazabilidad).
+- Futuro: se puede permitir excepción con motivo y aprobación (similar al el Modulo 2), pero no en el MVP.
+
+---
+
+## 7. Reglas temporales (operación real)
+
+- La fecha de recolección (`fecha_recolección`) puede ser retroactiva hasta **45 días**.
+- El sistema guarda siempre:
+    - `created_at` (fecha/hora real del registro),
+    - `fecha_validación` (cuando se selló).
+
+Restricción:
+
+- no se permite fecha futura.
+
+---
+
+## 8. Reglas de consistencia de cantidades (conservación del saldo)
+
+El saldo del lote origen se conserva así:
+
+**saldo = cantidad_inicial − consumos − descartes (+/− correcciones)**
+
+Reglas:
+
+- El saldo **nunca** puede ser negativo.
+- El saldo solo puede aumentar por **CORRECCIÓN** (auditada).
+- El lote se considera `CERRADO` cuando saldo = 0.
+
+---
+
+## 9. Auditoría y estrategia blockchain (MVP)
+
+Para evitar gas innecesario:
+
+- El sistema opera en Web2 con historial append-only.
+- Se ancla en blockchain:
+    - al pasar a `VALIDADO`
+    - y al registrar `CORRECCIÓN` (si ocurre)
+
+Roles (MVP):
+
+- Recolector: crea BORRADOR, completa datos y VALIDADA su propio registro.
+- Admin: administra catálogos (especies, métodos, ubicaciones).
+- Auditor/Consulta: solo lectura + acceso a historial.
+
+(Futuro: validación por supervisor y/o multi-aprobación antes de anclar.)
+
+---
+
+## 10. Alcance MVP y futuro
+
+**MVP incluye**
+
+- BORRADOR / VALIDADO / CORRECCIÓN (post-validación)
+- Unidad canónica de semillas en gramos
+- Ubicación con lat/long obligatorias para validar
+- Evidencia mínima (2 fotos) para validar
+- Motivo de descarte obligatorio
+- Movimientos append-only (consumo automático desde el Modulo 2, descarte, corrección)
+- Integración con el Modulo 2 con consumo automático y transacción atómica
+- Catálogos administrados + “SIN ESPECIFICAR” para niveles administrativos
+
+**Futuro**
+
+- Excepciones aprobadas (validación sin evidencia, casos justificados)
+- Propuesta de nuevas comunidades/zonas por usuarios (aprobación admin)
+- Offline-first (captura en campo sin señal: fotos/local → subida posterior)
+- Métricas de calidad de evidencia (ej. obligatoriedad de foto GPS/EXIF si se quiere subir el estándar)
+- En el futuro las validaciones serán comunitarias, más de una persona tiene que validar que se está haciendo dicha recolección y se registra en blockchain.
