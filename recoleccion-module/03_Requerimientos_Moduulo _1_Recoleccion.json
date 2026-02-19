@@ -1,0 +1,174 @@
+```json
+{
+  "requerimientos": [
+    {
+      "codigo": "RF-REC-01",
+      "modulo": "Recolección",
+      "nombre": "Crear recolección",
+      "descripcion": "Permitir registrar una recolección en el sistema.",
+      "campos": [
+        "- Identificador unico",
+        "- Fecha ✅ (Obligatorio)",
+        "- Nombre cinetifico y nombre comercial ✅",
+        "- Método de recolección ✅ ",
+        "- Cantidad de recolección. ✅ (Obligatorio)",
+        "- Fotografias ✅ (Obligatorio)",
+        "- Tipo material (semilla o esqueje) ✅ (Obligatorio)",
+        "- Recolector ✅ RF-GEN-01(Obligatorio)",
+        "- Ubicación de la recolección ✅ RF-REC-02 (Obligatorio)",
+        "- Lugar de almacenamiento, vivero RF-GEN-02 ✅",
+        "- Estado (Usado, Almacenado, Desechado) ✅",
+        "- Observaciones ✅",
+        "- Marcar si es especie nueva, bool. ✅"
+      ],
+      "validaciones": [
+        "- Solo acepto fechas hasta 45 días atrás (máx antigüedad) ni posteriores a hoy.",
+        "- El metodo es de una lista de metodos donde se pueden agregar más metodos. ",
+        "- Las cantidades de recolección son para esquejes en unidades numericas, enteras y para semillas en Kg y gr. Deben ser mayor a 0. ",
+        "- Minimo 2 fotrografías, de la especie y de la cantidad recolectada. Pero se pueden añadir más. Formato: JPG/PNG.",
+        "- Solo se puede escogen entre semilla o esqueje. ",
+        "- Seleccionar uno de los 3 estados si o si.",
+        "- Máximo 1000 caracteres sin emojis."
+      ],
+      "reglas_adicionales": [
+        "- Límite de 5 MB por imagen. Si excede, se rechaza la imagen y se muestra mensaje de error.",
+        "- Valor por defecto: Almacenado. El usuario puede cambiarlo a Usado o Desechado.",
+        "- Lugar de almacenamiento se selecciona de la lista de viveros (RF-GEN-02). Para añadir un nuevo lugar se debe registrar primero un nuevo vivero."
+      ]
+    },
+    {
+      "codigo": "RF-REC-02",
+      "modulo": "Recolección",
+      "nombre": "Ubicación estructurada",
+      "descripcion": "Guardar la unicación de la recolección.",
+      "campos": [
+        "- País (No Obligatorio)",
+        "- Departamento (No Obligatorio)",
+        "- Provincia (No Obligatorio)",
+        "- Comunidad (No Obligatorio)",
+        "- Zona (No Obligatorio)",
+        "- Latitud y Longitud (Obligatorio)"
+      ],
+      "validaciones": [
+        "- País/Departamento/Provincia/Comunidad/Zona son catálogos",
+        "- Para latitud rango de -90 a 90 grados con 6 decimales.",
+        "- Para longitud rango de -180 a 180 grados con 6 decimales.",
+        "- "
+      ],
+      "reglas_adicionales": [
+        "- Si faltan datos obligatorios (latitud/longitud) se lanza error indicando qué campo falta.",
+        "- Si algun dato esta mal estructurado lanza error."
+      ]
+    },
+    {
+      "codigo": "RF-REC-03",
+      "modulo": "Recolección",
+      "nombre": "Edición/actualización + historial",
+      "descripcion": "Mantener un historial de actualizaciones (quién/cuándo/antes-después), por ejemplo cuando se actualiza un estado al usar las semillas.",
+      "campos": [
+        "- Usuario que modifico",
+        "- Fecha ",
+        "- Hora",
+        "- Versión antigua, versión nueva"
+      ],
+      "validaciones": [
+        "- Dado edición válida, cuando guardo, entonces historial registra cambios.",
+        "- Los cambios se guardan en tablas separadas. ",
+        "- Se registra cualquier cambio.",
+        "- El historial no se puede borrar. ",
+        "- El historial se aplica a lotes. "
+      ],
+      "reglas_adicionales": [
+        "- Los datos se toman de foma automática"
+      ]
+    }
+  ]
+}
+```
+```json
+{
+  "requerimientos": [
+    {
+      "codigo": "RF-REC-01",
+      "modulo": "Recolección",
+      "nombre": "Crear recolección",
+      "descripcion": "Permitir registrar una recolección en el sistema.",
+      "campos": [
+        "- Identificador unico",
+        "- Fecha ✅ (Obligatorio)",
+        "- Nombre cinetifico y nombre comercial ✅",
+        "- Método de recolección ✅ ",
+        "- Cantidad de recolección. ✅ (Obligatorio)",
+        "- Fotografias ✅ (Obligatorio)",
+        "- Tipo material (semilla o esqueje) ✅ (Obligatorio)",
+        "- Recolector ✅ RF-GEN-01(Obligatorio)",
+        "- Ubicación de la recolección ✅ RF-REC-02 (Obligatorio)",
+        "- Lugar de almacenamiento, vivero RF-GEN-02 ✅",
+        "- Estado (Usado, Almacenado, Desechado) ✅",
+        "- Observaciones ✅",
+        "- Marcar si es especie nueva, bool. ✅"
+      ],
+      "validaciones": [
+        "- Solo acepto fechas hasta 45 días atrás (máx antigüedad) ni posteriores a hoy.",
+        "- El metodo es de una lista de metodos donde se pueden agregar más metodos. ",
+        "- Las cantidades de recolección son para esquejes en unidades numericas, enteras y para semillas en Kg y gr. Deben ser mayor a 0. ",
+        "- Minimo 2 fotrografías, de la especie y de la cantidad recolectada. Pero se pueden añadir más. Formato: JPG/PNG.",
+        "- Solo se puede escogen entre semilla o esqueje. ",
+        "- Seleccionar uno de los 3 estados si o si.",
+        "- Máximo 1000 caracteres sin emojis."
+      ],
+      "reglas_adicionales": [
+        "- Límite de 5 MB por imagen. Si excede, se rechaza la imagen y se muestra mensaje de error.",
+        "- Valor por defecto: Almacenado. El usuario puede cambiarlo a Usado o Desechado.",
+        "- Lugar de almacenamiento se selecciona de la lista de viveros (RF-GEN-02). Para añadir un nuevo lugar se debe registrar primero un nuevo vivero."
+      ]
+    },
+    {
+      "codigo": "RF-REC-02",
+      "modulo": "Recolección",
+      "nombre": "Ubicación estructurada",
+      "descripcion": "Guardar la unicación de la recolección.",
+      "campos": [
+        "- País (No Obligatorio)",
+        "- Departamento (No Obligatorio)",
+        "- Provincia (No Obligatorio)",
+        "- Comunidad (No Obligatorio)",
+        "- Zona (No Obligatorio)",
+        "- Latitud y Longitud (Obligatorio)"
+      ],
+      "validaciones": [
+        "- País/Departamento/Provincia/Comunidad/Zona son catálogos",
+        "- Para latitud rango de -90 a 90 grados con 6 decimales.",
+        "- Para longitud rango de -180 a 180 grados con 6 decimales.",
+        "- "
+      ],
+      "reglas_adicionales": [
+        "- Si faltan datos obligatorios (latitud/longitud) se lanza error indicando qué campo falta.",
+        "- Si algun dato esta mal estructurado lanza error."
+      ]
+    },
+    {
+      "codigo": "RF-REC-03",
+      "modulo": "Recolección",
+      "nombre": "Edición/actualización + historial",
+      "descripcion": "Mantener un historial de actualizaciones (quién/cuándo/antes-después), por ejemplo cuando se actualiza un estado al usar las semillas.",
+      "campos": [
+        "- Usuario que modifico",
+        "- Fecha ",
+        "- Hora",
+        "- Versión antigua, versión nueva"
+      ],
+      "validaciones": [
+        "- Dado edición válida, cuando guardo, entonces historial registra cambios.",
+        "- Los cambios se guardan en tablas separadas. ",
+        "- Se registra cualquier cambio.",
+        "- El historial no se puede borrar. ",
+        "- El historial se aplica a lotes. "
+      ],
+      "reglas_adicionales": [
+        "- Los datos se toman de foma automática"
+      ]
+    }
+  ]
+}
+```
