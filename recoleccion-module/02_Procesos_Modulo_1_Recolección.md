@@ -9,7 +9,7 @@ Su objetivo es generar un historial auditable de:
 - **qué se recolectó** (especie, tipo de material y cantidad),
 - **dónde se recolectó** (ubicación estructurada),
 - **con qué evidencia** (fotografías),
-- **cuándo se selló/validó** (registro “final”),    
+- **cuándo se selló/validó** (registro “final”),
 - y **cómo se consumió** posteriormente (consumo automático hacia Vivero y/o descarte).
 
 Este módulo es la base de trazabilidad: si acá el origen es flojo, todo lo demás es cuento.
@@ -57,7 +57,7 @@ El lote origen atraviesa 4 etapas operativas (no confundir con estados):
 
 ### 3.1. Creación del BORRADOR
 
-**Objetivo:** capturar el registro sin bloquear operación de campo.
+**Objetivo:** capturar el registro con opción a editar despues y agregar detalles o modificaciones sin costos elevados.
 
 Datos mínimos recomendados para permitir guardar BORRADOR:
 
@@ -68,8 +68,10 @@ Datos mínimos recomendados para permitir guardar BORRADOR:
 - recolector (por defecto el usuario autenticado)
 - vivero de almacenamiento (catálogo RF-GEN-02)
 - observaciones (opcional)
+- fotos (2 minimo)
+- ubicación (lat/long mínimo, niveles administrativos osea comunidad/zona)
 
-> Nota MVP: ubicación y fotos pueden faltar en BORRADOR, pero serán **obligatorias** para VALIDAR.
+> Nota MVP: ubicación y fotos tampocopueden faltar en BORRADOR pero si se pueden editar, y son **obligatorias** para VALIDAR.
 > 
 
 ---
@@ -158,8 +160,8 @@ Movimientos típicos:
 - **CONSUMO_A_VIVERO** (automático desde el Modulo 2)
 - **DESECHO** (parcial o total, con motivo obligatorio)
 - **CORRECCIÓN** (post-validación, con delta y motivo)
-- (opcional) **EVIDENCIA_AGREGADA** (si quieres auditar la carga de fotos como evento)
-- (opcional) **UBICACIÓN_AGREGADA/ACTUALIZADA** (si se quiere más granularidad)
+- **EVIDENCIA_AGREGADA** (si auditar la carga de fotos como evento)
+- **UBICACIÓN_AGREGADA/ACTUALIZADA** (más granularidad)
 
 ---
 
@@ -167,17 +169,50 @@ Movimientos típicos:
 
 ### 5.1. BORRADOR
 
-- Editable.
-- Permite incompletitud controlada (ej. sin ubicación, sin comunidad o sin fotos).
-- No se ancla a blockchain.
+**Objetivo:** permitir captura rápida en campo sin perder consistencia mínima.
+
+- **Editable** (se puede corregir lo que esté mal).
+- **Incompletitud controlada:** a pesar de ser un BORRADOR requerie compos minimos para no caer en basura.
+- **No se ancla a blockchain** (no es “historia oficial” todavía).
+
+**Campos típicamente editables en BORRADOR (MVP):**
+- Especie (científico/comercial) y tipo de material.
+- Fecha de recolección.
+- Método de recolección.
+- Cantidad inicial (con normalización a unidad canónica).
+- Vivero de almacenamiento.
+- Ubicación (si existe) y referencia/observaciones.
+- Evidencia fotográfica (alta/baja).
+
+**Validaciones mínimas incluso en BORRADOR (anti-basura):**
+- Tipo de material obligatorio.
+- Especie obligatoria.
+- Cantidad inicial **> 0**.
+- Fecha **no futura** (y dentro del rango permitido por reglas temporales del módulo).
+
+**Auditoría mínima (Web2):**
+- `creado_por`, `creado_en`, `actualizado_por`, `actualizado_en`.
 
 ### 5.2. VALIDADO
 
-- Registro sellado.
-- No se permite editar directamente.
-- Es elegible para:
-    - consumo hacia el Modulo 2
-    - anclaje blockchain (según estrategia)
+**Objetivo:** convertir el BORRADOR en un registro **sellado** y auditable.
+
+- Registro **sellado**.
+- **No se permite editar la ficha** directamente.
+- Se vuelve elegible para **consumo** hacia el Módulo 2 (Vivero).
+
+**Condiciones para pasar a VALIDADO (MVP):**
+- Evidencia mínima completa (≥ 2 fotos).
+- Ubicación con **latitud/longitud** válidas.
+- Campos mínimos completos (especie, tipo material, fecha, cantidad inicial, método, vivero).
+
+**Post-validación (sin reescritura):**
+- Solo se permiten **movimientos append-only**:
+  - `CONSUMO_A_VIVERO` (automático desde Módulo 2)
+  - `DESECHO` (con motivo)
+  - `CORRECCIÓN` (con motivo + delta)
+  
+(Futuro: Esta parte de validación también se hara por la comunidad, no solo el recolector, se puede proponer que más de una persona valide la recolección y quede registrado en blockchain quienes validaron y cuando.)
 
 ### 5.3. CORRECCIÓN (post-validación)
 
@@ -195,7 +230,7 @@ Si se detecta un error después de validar:
 
 ## 6. Evidencia fotográfica y excepciones
 
-- Las fotos son obligatorias para **VALIDAR** (mínimo 2).
+- Las fotos son obligatorias para **VALIDAR** y para crear un **BORRADOR** también (mínimo 2).
 - En MVP, no se permiten “validaciones sin evidencia” (para no abrir un agujero de trazabilidad).
 - Futuro: se puede permitir excepción con motivo y aprobación (similar al el Modulo 2), pero no en el MVP.
 
@@ -234,12 +269,15 @@ Para evitar gas innecesario:
 
 - El sistema opera en Web2 con historial append-only.
 - Se ancla en blockchain:
-    - al pasar a `VALIDADO`
-    - y al registrar `CORRECCIÓN` (si ocurre)
+    - al pasar a `VALIDADO` (hash/snapshot del registro sellado)
+    - y por cada movimiento post-validación:
+        - `CONSUMO_A_VIVERO`
+        - `DESECHO`
+        - `CORRECCIÓN`
 
 Roles (MVP):
 
-- Recolector: crea BORRADOR, completa datos y VALIDADA su propio registro.
+- Recolector: crea BORRADOR, completa datos y valida su propio registro.
 - Admin: administra catálogos (especies, métodos, ubicaciones).
 - Auditor/Consulta: solo lectura + acceso a historial.
 
@@ -267,3 +305,4 @@ Roles (MVP):
 - Offline-first (captura en campo sin señal: fotos/local → subida posterior)
 - Métricas de calidad de evidencia (ej. obligatoriedad de foto GPS/EXIF si se quiere subir el estándar)
 - En el futuro las validaciones serán comunitarias, más de una persona tiene que validar que se está haciendo dicha recolección y se registra en blockchain.
+- Las validaciones también se harán por la comunidad, no solo el recolector, se puede proponer que más de una persona valide la recolección y quede registrado en blockchain quienes validaron y cuando.
