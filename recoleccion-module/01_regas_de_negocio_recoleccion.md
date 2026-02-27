@@ -22,7 +22,7 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
 * **Cantidad:**
 
   * Para `ESQUEJE`: unidades enteras.
-  * Para `SEMILLA`: peso (kg/gr), almacenado en una unidad canónica.
+  * Para `SEMILLA`: bien peso (kg/gr) o son unidades enteras, almacenado en una unidad canónica.
 * **Estados:** `BORRADOR/VALIDADO` (registro) y `ABIERTO/CERRADO` (operativo, derivado del saldo).
 * **Ubicación estructurada:** latitud/longitud obligatorias **para validar** + datos administrativos opcionales (catálogos).
 * **Evidencia:** fotos obligatorias **para validar** (mínimo 2), formato JPG/PNG.
@@ -105,7 +105,7 @@ Cada recolección maneja **dos estados**:
 Al crear una recolección:
 
 - `estado_registro = BORRADOR`
-- `saldo_actual = cantidad_inicial` (normalizada a unidad canónica)
+- `saldo_actual = cantidad_inicial` (normalizada a unidad canónica gramos o unidades de semillas)
 - `estado_operativo = ABIERTO` (porque cantidad_inicial debe ser > 0)
 
 ### RN-REC-10 — Restricción de uso por estado (consumo a vivero)
@@ -145,8 +145,8 @@ La cantidad de recolección es obligatoria y debe ser **mayor a 0**.
 Para `SEMILLA`:
 
 * El usuario puede ingresar en **kg** o **gr**,
-* El sistema debe almacenar en una unidad canónica (recomendado: **gramos** como decimal),
-* Mantener (si se quiere) el “input original” solo para UI, pero la lógica usa la unidad canónica.
+* El sistema debe almacenar en una unidad canónica (que serían **gramos** como decimal en caso de ser peso, o unidades enteras si se cuenta por cantidad de semillas).
+* Mantener (si se quiere) el “input original” solo para UI, pero la lógica usan las unidades canónicas.
 
 ### RN-REC-13 — Esquejes: entero estricto
 

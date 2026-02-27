@@ -39,7 +39,7 @@ El módulo separa dos cosas:
 ### 2.3. Cantidad y unidad canónica
 
 - **ESQUEJE:** unidades enteras (1, 2, 3…)
-- **SEMILLA:** peso, con unidad canónica **gramos (g)** almacenada como decimal
+- **SEMILLA:** peso o unidades enteras, con unidad canónica **gramos (g)** almacenada como decimal o entero según corresponda (1, 2, 3...)
     
     (la UI puede permitir kg o g, pero el sistema opera en g).
     
