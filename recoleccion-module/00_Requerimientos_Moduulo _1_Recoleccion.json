@@ -14,7 +14,7 @@
         "- Método de recolección ✅ (Obligatorio)",
         "- Tipo de material: SEMILLA o ESQUEJE ✅ (Obligatorio)",
         "- Cantidad inicial ✅ (Obligatorio)",
-        "- Unidad canónica (derivada): g para SEMILLA / unidad para ESQUEJE",
+        "- Unidad canónica (derivada): g o unidad para SEMILLA / solo unidad para ESQUEJE",
         "- Saldo actual (derivado por movimientos)",
         "- Recolector ✅ (Obligatorio)",
         "- Lugar de almacenamiento (vivero) ✅ (Obligatorio)",
@@ -25,7 +25,7 @@
       "validaciones": [
         "- La fecha no puede ser futura.",
         "- La cantidad inicial debe ser > 0.",
-        "- Para SEMILLA: normalizar a gramos (unidad canónica).",
+        "- Para SEMILLA: normalizar a gramos (unidad canónica) o se mantiene con unidad de ser el caso.",
         "- Para ESQUEJE: cantidad entera estricta.",
       ],
       "reglas_adicionales": [
@@ -99,7 +99,7 @@
       "descripcion": "Registrar movimientos append-only que alteran el saldo: consumo a vivero, desecho y corrección.",
       "campos": [
         "- Tipo de movimiento: CONSUMO_A_VIVERO / DESECHO / CORRECCIÓN",
-        "- Delta (positivo o negativo) en unidad canónica",
+        "- Delta (positivo o negativo) en unidad canónica respectiva",
         "- Motivo (obligatorio para DESECHO y CORRECCIÓN)",
         "- Fecha/hora del movimiento",
         "- Usuario responsable",
