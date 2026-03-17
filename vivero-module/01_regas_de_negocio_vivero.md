@@ -27,7 +27,7 @@ Cada regla incluye:
 - **Unidades en proceso:** semillas sembradas estimadas o esquejes iniciados; no son plantas vivas aún.
 - **Plantas vivas:** saldo operativo desde Embolsado.
 - **Estado del lote:** `ACTIVO | FINALIZADO`
-- **Estado del evento:** `PENDIENTE | COMPLETO`
+- **Estado del evento:** `PENDIENTE_VALIDACION | COMPLETO | RECHAZADO | BORRADOR`
 - **Corrección:** tipo de evento post-validación que ajusta sin editar el pasado.
 - **Evidencia de trazabilidad:** soporte auditado asociado al evento, almacenado en `evidencia_trazabilidad`.
 
@@ -114,15 +114,15 @@ El flujo mínimo del lote en MVP incluye estos hitos obligatorios:
 
 1. Inicio
 2. Embolsado
-3. Despacho
+3. Adaptabilidad (por lo menos pasar por 1/2 sombra o sol directo)
+4. Despacho
 
-### RN-VIV-09 — Cambio de ambiente como evento flexible
+### RN-VIV-09 — Perdiodo de adaptabilidad
 - **Severidad:** ADVERTENCIA
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Baja
 
-El cambio de ambiente se registra como evento flexible y no constituye una etapa obligatoria ni bloqueante.
-
+Es una etapa que es obligatoria en el ciclo de viviero pero no se exige un tiempo mínimo específico y tampoco que primero termine una etapa entre sombra, media sombra o sol directo para pasar a la siguiente. Puede entrar directamente a media sombra o sol.
 ### RN-VIV-10 — Secuencialidad mínima por hitos
 - **Severidad:** BLOQUEANTE
 - **Aplica en MVP:** Sí
@@ -131,7 +131,8 @@ El cambio de ambiente se registra como evento flexible y no constituye una etapa
 No se permite registrar:
 
 - Embolsado sin Inicio previo
-- Despacho sin Embolsado previo
+- Adaptabilidad sin Embolsado previo
+- Despacho sin Adaptabilidad previa
 
 ### RN-VIV-11 — Embolsado como nacimiento del saldo vivo
 - **Severidad:** BLOQUEANTE
@@ -161,15 +162,17 @@ El lote de vivero solo puede tener estos estados:
 
 Todo evento/hito del vivero solo puede tener estos estados:
 
-- `PENDIENTE`
+- `PENDIENTE_VALIDACION`
 - `COMPLETO`
+- `RECHAZADO`
+- `BORRADOR`
 
 ### RN-VIV-14 — CORRECCIÓN es tipo de evento, no estado
 - **Severidad:** BLOQUEANTE
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Alta
 
-La corrección posterior a la validación debe registrarse como un evento `CORRECCION`, no como un estado del lote ni del evento original.
+La corrección posterior a la validación debe registrarse como un evento `CORRECCION`, no como un estado del lote ni del evento original. No es prioritaria para el MVP pero es importante para mantener la integridad del historial.
 
 ### RN-VIV-15 — Edición permitida solo en PENDIENTE
 - **Severidad:** BLOQUEANTE
@@ -208,12 +211,14 @@ El inicio del lote debe registrar simultáneamente:
 - `cantidad_consumida_origen` en la unidad canónica de Módulo 1,
 - y `unidades_iniciales_en_proceso` como lectura operativa del vivero.
 
+Una vez que el evento se marca como `COMPLETO` entonces recién se hace el descuento oficial en la base de datos. Al mandar a `COMPLETADO` se tiene que verificar que haya la cantidad que se está consumiendo para evitar que se consuma más de lo que está disponible.
+
 ### RN-VIV-19 — Semilla puede consumir en gramos y operar en unidades estimadas
 - **Severidad:** ADVERTENCIA
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Media
 
-Para semilla, el consumo del origen puede mantenerse en gramos o unidades según la unidad canónica del lote origen, mientras que vivero puede registrar una cantidad estimada de semillas sembradas.
+Para semilla, el consumo del origen puede mantenerse en gramos o unidades según la unidad canónica del lote origen, mientras que vivero puede registrar una cantidad estimada de semillas sembradas. Y al momento de iniciar el lote, tenemos la cantidad estimada de semillas que plantamos y también la cantidad que consumimos del lote origen, que puede ser en gramos o unidades según el caso.
 
 ### RN-VIV-20 — Todo evento que afecte saldo vivo registra saldo antes y después
 - **Severidad:** BLOQUEANTE
@@ -287,13 +292,7 @@ La lógica de cierre debe calcular el motivo así:
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Alta
 
-Una vez `FINALIZADO`, el lote no admite nuevos eventos operativos normales.
-
-Solo admite:
-
-- consulta,
-- correcciones auditadas,
-- y carga de evidencia tardía cuando corresponda.
+Una vez `FINALIZADO`, el lote no admite nuevos eventos operativos.
 
 ### RN-VIV-29 — Corrección posterior puede reabrir el lote
 - **Severidad:** REQUIERE_SUPERVISOR
@@ -431,7 +430,7 @@ El módulo debe permitir listar y consultar lotes por estado, vivero, planta/esp
 
 La consulta del lote debe hacer visible la secuencia:
 
-`recolección origen → consumo → inicio → embolsado → mermas/cambios → despachos → cierre`
+`recolección origen → consumo → inicio → embolsado → adaptabilidad (con sus subetapas) → mermas/cambios → despachos → cierre`
 
 ### RN-VIV-45 — Reportes deben distinguir cierre por pérdida vs despacho
 - **Severidad:** BLOQUEANTE
@@ -444,7 +443,7 @@ Los reportes para auditoría/certificación deben diferenciar claramente los lot
 - `PERDIDA_TOTAL`
 - `MIXTO`
 
-Un cierre por pérdida total no debe interpretarse igual que uno despachado a plantación.
+Un cierre por pérdida total no debe interpretarse igual que uno despachado a plantación. Aca es importante tener las cantidades de plantas perdidas y despachadas.
 
 ---
 
@@ -457,8 +456,8 @@ Un cierre por pérdida total no debe interpretarse igual que uno despachado a pl
 
 Roles mínimos:
 
-- **Responsable:** registra eventos en `PENDIENTE`
-- **Supervisor:** valida eventos, aprueba excepciones y autoriza anclajes
+- **General:** registra eventos en `PENDIENTE`
+- **Validador:** valida eventos, aprueba excepciones y autoriza anclajes
 - **Auditor/Consulta:** lectura y trazabilidad
 
 ---
@@ -477,6 +476,7 @@ El MVP prioriza:
 - identidad de planta,
 - saldo vivo auditable,
 - despachos trazables,
+- adaptabilidad registrada operativamente,
 - y cierres bien clasificados,
 
 por encima de modelados agronómicos avanzados, offline-first o multi-aprobación compleja.

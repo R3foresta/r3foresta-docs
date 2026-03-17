@@ -365,7 +365,7 @@ El módulo debe exponer una vista operativa que permita:
 - ver cierres por pérdida,
 - y visualizar la cadena completa:
 
-`recolección origen → consumo a vivero → inicio → embolsado → mermas/cambios → despachos → cierre`
+`recolección origen → consumo a vivero → inicio → embolsado → adaptabilidad (con sus sub etapas) → mermas/cambios → despachos → cierre`
 
 Esta vista es crítica para operación diaria y para auditoría.
 
