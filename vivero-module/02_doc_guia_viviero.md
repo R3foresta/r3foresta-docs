@@ -159,11 +159,11 @@ Desde este punto se registra:
 
 El vivero debe permitir que la altura y el tiempo de crecimiento varíen por especie; el sistema no modela un agronomía rígida detallada en el MVP.
 
-### 3.3. Cambio de ambiente (evento flexible pero importante)
+### 3.3. Ambientes de adaptabilidad obligatorios pero flexibles con las sub etapas
 
-La antigua “Adaptación” deja de ser una etapa obligatoria y pasa a registrarse como **evento de cambio de ambiente**.
+La antigua “Adaptación” es una etapa obligatoria y pasa a registrarse como **adapatabilidad** con subetapas.
 
-Ambientes posibles (catálogo, configurable):
+Etapas (catálogo, configurable):
 
 - Sombra
 - Media Sombra
@@ -402,7 +402,7 @@ Hitos recomendados para anclaje en blockchain en el MVP:
 - estados separados de lote y evento
 - validación por evento/hito
 - embolsado como nacimiento del saldo vivo
-- cambio de ambiente flexible
+- obligatoriedad para ambiendes de adaptabilidad (sombra/media sombra/sol directo) pero no tiene que pasar por cada uno ni registrarse en blockchain o validarse. 
 - mermas con causa
 - despachos parciales y totales con destino estructurado
 - evidencia de trazabilidad por evento

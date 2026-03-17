@@ -7,9 +7,9 @@
     "Severidad": "BLOQUEANTE",
     "Aplica en MVP": "Sí",
     "Aporta a carbono": "Alta",
-    "Campos clave y obligatoriedad": "Obligatorio (PENDIENTE):\n- id_lote_origen (único)\n- id_planta (heredado desde M1)\n- nombre_cientifico_snapshot\n- nombre_comercial_snapshot\n- tipo_material_snapshot\n- id_vivero\n- fecha_evento_inicio\n- responsable\n- cantidad_consumida_origen\n- unidad_consumida_origen\n- unidades_iniciales_en_proceso\nObligatorio (COMPLETO):\n- Todo lo anterior + validación de supervisor\nOpcional:\n- observaciones\n- evidencias_trazabilidad asociadas",
+    "Campos clave y obligatoriedad": "Obligatorio (PENDIENTE):\n- id_lote_origen (único)\n- id_planta (heredado desde M1)\n- nombre_cientifico_snapshot\n- nombre_comercial_snapshot\n- tipo_material_snapshot\n- id_vivero\n- fecha_evento_inicio\n- responsable\n- cantidad_consumida_origen\n- unidad_consumida_origen\n- unidades_iniciales_en_proceso\n- evidencias_trazabilidad asociadas\nObligatorio (COMPLETO):\n- Todo lo anterior + validación de supervisor\nOpcional:\n- observaciones",
     "Reglas y validaciones": "- No se permite mezclar múltiples lotes origen en un lote de vivero.\n- El lote origen debe estar VERIFICADO (o estado formal equivalente), habilitado para consumo y con saldo suficiente.\n- La identidad de planta debe heredarse y congelarse como snapshot.\n- cantidad_consumida_origen > 0.\n- unidades_iniciales_en_proceso > 0.\n- fecha_evento_inicio: no futura; permitida hasta 10 días en el pasado.\n- El lote de vivero se crea y el saldo del origen se descuenta en una sola transacción atómica.\n- created_at se registra automáticamente.",
-    "Comportamiento al Guardar": "- Guarda el evento INICIO en estado PENDIENTE por defecto.\n- Crea el lote de vivero en ACTIVO.\n- Registra el vínculo con el lote origen.\n- Registra el movimiento CONSUMO_A_VIVERO en Módulo 1 dentro de la misma transacción.\n- Muestra confirmación + resumen del lote."
+    "Comportamiento al Guardar": "- Guarda el evento INICIO en estado BORRADOR por defecto.\n- Crea el lote de vivero en ACTIVO.\n- Registra el vínculo con el lote origen.\n- Una vez el lote pasa a `COMPLETO` registra el movimiento CONSUMO_A_VIVERO en Módulo 1 dentro de la misma transacción verificando que exista la cantidad suficiente.\n- Muestra confirmación + resumen del lote."
   },
   {
     "ID": "RF-VIV-02",
