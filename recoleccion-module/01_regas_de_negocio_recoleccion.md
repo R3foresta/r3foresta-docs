@@ -284,7 +284,7 @@ Cuando se crea un lote de vivero desde una recolección, el sistema debe:
 ### RN-REC-25 — Roles mínimos (MVP)
 
 * **Recolector:** crea registros, adjunta evidencia.
-* **Supervisor/Validador (opcional en v1):** valida calidad / aprueba especie nueva / aprueba métodos nuevos.
+* **VALIDADOR/Validador (opcional en v1):** valida calidad / aprueba especie nueva / aprueba métodos nuevos.
 * **Auditor:** consulta historial completo.
 
 (Futuro: se pueden agregar roles de “comunidad” para validación colaborativa, con registro de quién validó qué y cuándo.)

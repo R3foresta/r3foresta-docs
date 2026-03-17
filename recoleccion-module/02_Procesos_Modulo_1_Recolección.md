@@ -281,7 +281,7 @@ Roles (MVP):
 - Admin: administra catálogos (especies, métodos, ubicaciones).
 - Auditor/Consulta: solo lectura + acceso a historial.
 
-(Futuro: validación por supervisor y/o multi-aprobación antes de anclar.)
+(Futuro: validación por VALIDADOR y/o multi-aprobación antes de anclar.)
 
 ---
 

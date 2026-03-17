@@ -13,7 +13,7 @@ Estas reglas definen cómo debe comportarse el sistema frente a la realidad oper
 
 Cada regla incluye:
 
-- **Severidad:** `BLOQUEANTE | REQUIERE_SUPERVISOR | ADVERTENCIA`
+- **Severidad:** `BLOQUEANTE | REQUIERE_VALIDADOR | ADVERTENCIA`
 - **Aplica en MVP:** `Sí | No`
 - **Relevancia carbono:** `Alta | Media | Baja`
 
@@ -184,18 +184,18 @@ Mientras un evento esté en `PENDIENTE`, se permite editarlo.
 Una vez `COMPLETO`, queda bloqueado y solo puede ser ajustado mediante `CORRECCION`.
 
 ### RN-VIV-16 — Validación por evento/hito
-- **Severidad:** REQUIERE_SUPERVISOR
+- **Severidad:** REQUIERE_VALIDADOR
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Alta
 
 La validación se realiza por evento/hito, no por lote completo.
 
-### RN-VIV-17 — Solo supervisor puede pasar a COMPLETO
-- **Severidad:** REQUIERE_SUPERVISOR
+### RN-VIV-17 — Solo VALIDADOR puede pasar a COMPLETO
+- **Severidad:** REQUIERE_VALIDADOR
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Alta
 
-Solo un usuario con rol de supervisor puede pasar un evento de `PENDIENTE` a `COMPLETO`.
+Solo un usuario con rol de VALIDADOR puede pasar un evento de `PENDIENTE` a `COMPLETO`.
 
 ---
 
@@ -295,7 +295,7 @@ La lógica de cierre debe calcular el motivo así:
 Una vez `FINALIZADO`, el lote no admite nuevos eventos operativos.
 
 ### RN-VIV-29 — Corrección posterior puede reabrir el lote
-- **Severidad:** REQUIERE_SUPERVISOR
+- **Severidad:** REQUIERE_VALIDADOR
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Media
 
@@ -327,7 +327,7 @@ Toda evidencia debe quedar vinculada al evento correspondiente para preservar au
 No se permite registrar ni completar un despacho sin evidencia de trazabilidad válida.
 
 ### RN-VIV-33 — Excepción de evidencia permitida solo en eventos autorizados
-- **Severidad:** REQUIERE_SUPERVISOR
+- **Severidad:** REQUIERE_VALIDADOR
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Media
 
@@ -341,7 +341,7 @@ La excepción de evidencia puede existir para eventos permitidos, pero **no apli
 Si una evidencia se obtiene después, puede agregarse como evidencia tardía sin borrar la excepción ni alterar el historial anterior.
 
 ### RN-VIV-35 — Umbral de merma puede exigir evidencia y observación
-- **Severidad:** REQUIERE_SUPERVISOR
+- **Severidad:** REQUIERE_VALIDADOR
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Media
 
@@ -394,7 +394,7 @@ No se permite registrar un evento con fecha anterior al hito que lo habilita, sa
 Los eventos del vivero se agregan al historial y no pueden sobrescribirse ni eliminarse.
 
 ### RN-VIV-41 — Hitos recomendados para anclaje blockchain
-- **Severidad:** REQUIERE_SUPERVISOR
+- **Severidad:** REQUIERE_VALIDADOR
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Alta
 
@@ -450,7 +450,7 @@ Un cierre por pérdida total no debe interpretarse igual que uno despachado a pl
 ## 11. Roles mínimos
 
 ### RN-VIV-46 — Roles base del módulo
-- **Severidad:** REQUIERE_SUPERVISOR
+- **Severidad:** REQUIERE_VALIDADOR
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Media
 

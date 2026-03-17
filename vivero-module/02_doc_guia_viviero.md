@@ -142,7 +142,7 @@ Reglas importantes:
 
 - El lote origen debe ser elegible para consumo.
 - La creación del lote en Módulo 2 y el descuento del saldo en Módulo 1 ocurren en **una misma transacción atómica**.
-- El evento de Inicio nace en estado `PENDIENTE_VALIDACION` y luego puede ser validado a `COMPLETO` por un supervisor con el rol de VALIDADOR.
+- El evento de Inicio nace en estado `PENDIENTE_VALIDACION` y luego puede ser validado a `COMPLETO` por un VALIDADOR con el rol de VALIDADOR.
 
 ### 3.2. Embolsado
 
@@ -247,9 +247,9 @@ Futuro (fuera del MVP):
 Cada evento/hito pasa por:
 
 - **PENDIENTE_VALIDACION:** registro editable con datos mínimos
-- **RECHAZADO:** validado por supervisor pero con errores que requieren corrección
+- **RECHAZADO:** validado por VALIDADOR pero con errores que requieren corrección
 - **BORRADOR:** evento creado pero aún no listo para validación
-- **COMPLETO:** validado por supervisor e inmutable
+- **COMPLETO:** validado por VALIDADOR e inmutable
 
 ### 5.2. Estado del lote
 
