@@ -77,11 +77,11 @@ Antes de Embolsado puede existir germinación, selección o pérdida natural del
 Para evitar ambigüedad:
 
 - **Estado del lote:** `ACTIVO | FINALIZADO`
-- **Estado del evento:** `PENDIENTE | COMPLETO`
+- **Estado del evento:** `PENDIENTE | COMPLETO | RECHAZADO | BORRADOR`
 
 Además:
 
-- **CORRECCIÓN** no es un estado; es un **tipo de evento** post-validación.
+- **CORRECCIÓN** no es un estado; es un **tipo de evento** post-validación. (no para el MVP)
 
 ### 2.7. Evidencia de trazabilidad
 
@@ -104,6 +104,8 @@ Cuando un lote llega a estado `FINALIZADO`, debe diferenciarse **por qué** se c
 - `MIXTO`
 
 Esto es crítico para reportes de certificación y lectura de valor para bonos de carbono.
+
+**Tenemos que tener la cantidasd de plantas que se perdieron o se despacharon.
 
 ---
 
@@ -140,7 +142,7 @@ Reglas importantes:
 
 - El lote origen debe ser elegible para consumo.
 - La creación del lote en Módulo 2 y el descuento del saldo en Módulo 1 ocurren en **una misma transacción atómica**.
-- El evento de Inicio nace en estado `PENDIENTE` y luego puede ser validado a `COMPLETO` por un supervisor.
+- El evento de Inicio nace en estado `PENDIENTE` y luego puede ser validado a `COMPLETO` por un supervisor con el rol de VALIDADOR.
 
 ### 3.2. Embolsado
 
@@ -157,7 +159,7 @@ Desde este punto se registra:
 
 El vivero debe permitir que la altura y el tiempo de crecimiento varíen por especie; el sistema no modela un agronomía rígida detallada en el MVP.
 
-### 3.3. Cambio de ambiente (evento flexible)
+### 3.3. Cambio de ambiente (evento flexible pero importante)
 
 La antigua “Adaptación” deja de ser una etapa obligatoria y pasa a registrarse como **evento de cambio de ambiente**.
 
@@ -174,6 +176,8 @@ Reglas:
 - Permite ida y vuelta entre ambientes.
 - No bloquea el despacho.
 - Se registra para análisis histórico y manejo operativo.
+  
+**No es necesario validar el cambio de ambiente y tampoco tiene que resgistrarse en blockchain**. Es un evento operativo importante pero no crítico para la trazabilidad de la cadena de custodia.
 
 ### 3.4. Merma
 
@@ -262,7 +266,7 @@ Esto permite:
 - bloquear edición solo del evento validado,
 - y mantener el lote operativo mientras existan eventos futuros legítimos.
 
-### 5.4. Corrección post-validación
+### 5.4. Corrección post-validación (No para MVP)
 
 Si se detecta un error luego de un evento `COMPLETO` o de un hito anclado:
 
@@ -287,9 +291,9 @@ Esto permite soportar distintos tipos de evidencia sin perder la relación audit
 
 ### 6.2. Reglas mínimas por tipo de evento
 
-- **Inicio:** evidencia recomendable; puede completarse con excepción aprobada si aplica la regla operativa.
-- **Embolsado:** evidencia recomendable/obligatoria según criterio de validación definido.
-- **Merma:** evidencia recomendable; puede volverse obligatoria si supera umbrales.
+- **Inicio:** evidencia; puede completarse con excepción aprobada si aplica la regla operativa.
+- **Embolsado:** evidencia obligatoria según criterio de validación definido.
+- **Merma:** evidencia; puede volverse obligatoria si supera umbrales.
 - **Cambio de ambiente:** evidencia opcional.
 - **Despacho:** evidencia **obligatoria**. No se permite despacho sin evidencia.
 - **Corrección:** evidencia opcional, pero recomendable si altera saldo o corrige un hito ya anclado.
@@ -379,12 +383,13 @@ Para evitar costos de gas innecesarios:
 
 - los eventos se guardan en base de datos como historial append-only,
 - el anclaje blockchain se realiza por **hitos/cierres relevantes**, no por cada evento,
-- el supervisor decide cuándo validar y cuándo anclar.
+- el sistema por defecto decide cuándo eventos/hitos solo se validan y cuándo se anclan a blockchain automaticamente.
 
-Hitos recomendados para anclaje en MVP:
+Hitos recomendados para anclaje en blockchain en el MVP:
 
 - **Inicio validado**
 - **Embolsado validado**
+- **Adaptación**
 - **Cierre del lote**
 - **Corrección** que altere saldo o afecte un hito previamente anclado
 
