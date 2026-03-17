@@ -77,7 +77,7 @@ Antes de Embolsado puede existir germinación, selección o pérdida natural del
 Para evitar ambigüedad:
 
 - **Estado del lote:** `ACTIVO | FINALIZADO`
-- **Estado del evento:** `PENDIENTE | COMPLETO | RECHAZADO | BORRADOR`
+- **Estado del evento:** `PENDIENTE_VALIDACION | COMPLETO | RECHAZADO | BORRADOR`
 
 Además:
 
@@ -105,7 +105,7 @@ Cuando un lote llega a estado `FINALIZADO`, debe diferenciarse **por qué** se c
 
 Esto es crítico para reportes de certificación y lectura de valor para bonos de carbono.
 
-**Tenemos que tener la cantidasd de plantas que se perdieron o se despacharon.
+**Tenemos que registrar la cantidad de plantas que se perdieron o se despacharon.
 
 ---
 
@@ -142,7 +142,7 @@ Reglas importantes:
 
 - El lote origen debe ser elegible para consumo.
 - La creación del lote en Módulo 2 y el descuento del saldo en Módulo 1 ocurren en **una misma transacción atómica**.
-- El evento de Inicio nace en estado `PENDIENTE` y luego puede ser validado a `COMPLETO` por un supervisor con el rol de VALIDADOR.
+- El evento de Inicio nace en estado `PENDIENTE_VALIDACION` y luego puede ser validado a `COMPLETO` por un supervisor con el rol de VALIDADOR.
 
 ### 3.2. Embolsado
 
@@ -246,7 +246,9 @@ Futuro (fuera del MVP):
 
 Cada evento/hito pasa por:
 
-- **PENDIENTE:** registro editable con datos mínimos
+- **PENDIENTE_VALIDACION:** registro editable con datos mínimos
+- **RECHAZADO:** validado por supervisor pero con errores que requieren corrección
+- **BORRADOR:** evento creado pero aún no listo para validación
 - **COMPLETO:** validado por supervisor e inmutable
 
 ### 5.2. Estado del lote
@@ -291,28 +293,20 @@ Esto permite soportar distintos tipos de evidencia sin perder la relación audit
 
 ### 6.2. Reglas mínimas por tipo de evento
 
-- **Inicio:** evidencia; puede completarse con excepción aprobada si aplica la regla operativa.
+- **Inicio:** evidencia obligatoria para validar el hito, especialmente si es semilla (foto del semillero o registro de unidades sembradas).
 - **Embolsado:** evidencia obligatoria según criterio de validación definido.
-- **Merma:** evidencia; puede volverse obligatoria si supera umbrales.
+- **Merma:** evidencia obligatoria.
 - **Cambio de ambiente:** evidencia opcional.
 - **Despacho:** evidencia **obligatoria**. No se permite despacho sin evidencia.
-- **Corrección:** evidencia opcional, pero recomendable si altera saldo o corrige un hito ya anclado.
+- **Corrección:** evidencia opcional, pero recomendable si altera saldo o corrige un hito ya anclado. (no para MVP)
 
 ### 6.3. Excepción de evidencia
 
-La excepción de evidencia sigue existiendo para eventos permitidos, pero **no aplica al despacho**.
-
-Toda excepción aprobada debe registrar:
-
-- motivo,
-- fecha,
-- responsable,
-- aprobador,
-- y trazabilidad visible en el historial.
+Para el MVP no se aceptaran excepciones de evidencia. Si un evento requiere evidencia y no se puede adjuntar, el evento no puede ser validado como completo.
 
 ### 6.4. Evidencia tardía
 
-Si una evidencia se obtiene después, puede adjuntarse como **evidencia tardía** sin alterar el historial previo.
+Para el MVP no se podra adjuntar evidencia tardía. Si una evidencia se obtiene después, puede adjuntarse como **evidencia tardía** pero esto no se incluye en el MVP, esto no debería alterar el historial previo.
 
 ---
 
