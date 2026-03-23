@@ -1,497 +1,578 @@
-# Reglas de Negocio - Modulo 2 Vivero
-
-# Reglas de Negocio (RN) — Módulo 2: Vivero
+# Reglas de Negocio (RN) — Módulo 2: Vivero — Versión MVP
 
 ## 1. Propósito
 
-Estas reglas definen cómo debe comportarse el sistema frente a la realidad operativa del vivero, asegurando:
+Estas reglas definen el comportamiento mínimo del sistema para el Módulo 2: Vivero, priorizando un MVP que preserve el núcleo del proyecto:
 
-- trazabilidad fuerte,
-- coherencia temporal y de cantidades,
-- compatibilidad con auditoría,
-- y valor real para la cadena de custodia de bonos de carbono.
+* trazabilidad fuerte desde un lote origen único,
+* coherencia temporal y de cantidades,
+* control confiable del saldo vivo,
+* historial auditable de eventos,
+* y una base técnica simple que luego pueda crecer.
 
 Cada regla incluye:
 
-- **Severidad:** `BLOQUEANTE | REQUIERE_VALIDADOR | ADVERTENCIA`
-- **Aplica en MVP:** `Sí | No`
-- **Relevancia carbono:** `Alta | Media | Baja`
+* **Severidad:** `BLOQUEANTE | ADVERTENCIA`
+* **Aplica en MVP:** `Sí | No`
+* **Relevancia carbono:** `Alta | Media | Baja`
 
 ---
 
 ## 2. Definiciones base
 
-- **Lote origen:** registro de Recolección (Módulo 1) que abastece al vivero.
-- **Lote de vivero:** lote iniciado en Módulo 2 a partir de un único lote origen.
-- **Cantidad consumida del origen:** cantidad descontada en Módulo 1, usando la unidad canónica del lote origen.
-- **Unidades en proceso:** semillas sembradas estimadas o esquejes iniciados; no son plantas vivas aún.
-- **Plantas vivas:** saldo operativo desde Embolsado.
-- **Estado del lote:** `ACTIVO | FINALIZADO`
-- **Estado del evento:** `PENDIENTE_VALIDACION | COMPLETO | RECHAZADO | BORRADOR`
-- **Corrección:** tipo de evento post-validación que ajusta sin editar el pasado.
-- **Evidencia de trazabilidad:** soporte auditado asociado al evento, almacenado en `evidencia_trazabilidad`.
+* **Lote origen:** registro de Recolección (Módulo 1) que abastece al vivero.
+* **Lote de vivero:** lote iniciado en Módulo 2 a partir de un único lote origen.
+* **Cantidad consumida del origen:** cantidad descontada en Módulo 1 usando la unidad canónica del lote origen.
+* **Unidades en proceso:** semillas sembradas estimadas o esquejes iniciados; aún no son plantas vivas.
+* **Plantas vivas:** saldo operativo que nace en el evento `EMBOLSADO`.
+* **Saldo vivo:** cantidad actual de plantas vivas disponibles en el lote.
+* **Adaptabilidad:** etapa operativa en la que la planta se fortalece en ambientes controlados antes de plantarse. En el MVP se registra como evento opcional de seguimiento, no como requisito bloqueante del flujo.
+* **Estado del lote:** `ACTIVO | FINALIZADO`.
+* **Estado del evento:** en el MVP todo evento se registra directamente como `COMPLETO`.
+* **Evidencia de trazabilidad:** soporte asociado al evento, almacenado en `evidencia_trazabilidad`.
+* **Motivo de cierre:** clasificación del cierre del lote: `DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO`.
 
 ---
 
 ## 3. Identidad y trazabilidad del lote
 
 ### RN-VIV-01 — Identificador único del lote de vivero
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 Todo lote de vivero debe poseer un identificador único e inmutable generado por el sistema.
 
 ### RN-VIV-02 — Origen único del lote
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 Todo lote de vivero debe estar vinculado a **un solo lote origen**.
 
 No se permite mezclar múltiples lotes origen en un mismo lote de vivero.
 
 ### RN-VIV-03 — Prohibida la división y fusión en vivero
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
 
-En el módulo de vivero:
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-- no se permite dividir un lote en sub-lotes,
-- no se permite fusionar dos lotes en uno.
+En el MVP:
+
+* no se permite dividir un lote en sub-lotes,
+* no se permite fusionar dos lotes en uno.
 
 ### RN-VIV-04 — Elegibilidad del origen para iniciar vivero
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 Solo se puede iniciar un lote de vivero desde una recolección que esté:
 
-- en estado **VERIFICADO** (o el estado formal equivalente del Módulo 1),
-- operativamente habilitada para consumo,
-- con saldo suficiente,
-- y con identidad de planta disponible.
+* en estado **VERIFICADO** o equivalente formal del Módulo 1,
+* operativamente habilitada para consumo,
+* con saldo suficiente,
+* y con identidad de planta disponible.
 
 ### RN-VIV-05 — Atomicidad entre Módulo 1 y Módulo 2
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 La creación del lote de vivero y el descuento del saldo del lote origen en Módulo 1 deben ejecutarse en **una sola transacción atómica**.
 
 Si falla una parte, falla toda la operación.
 
 ### RN-VIV-06 — Múltiples lotes de vivero desde un mismo origen
-- **Severidad:** ADVERTENCIA
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
+
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
 
 Un mismo lote origen puede abastecer a múltiples lotes de vivero, siempre que cada consumo quede registrado individualmente y el saldo se recalcule correctamente.
 
 ### RN-VIV-07 — Herencia y snapshot de la planta
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
 
-Al crear el lote de vivero se debe heredar y congelar la identidad de la planta/especie desde Módulo 1, incluyendo como mínimo:
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-- `planta_id`
-- `nombre_cientifico_snapshot`
-- `nombre_comercial_snapshot`
-- `tipo_material_snapshot`
+Al crear el lote de vivero se debe heredar y congelar la identidad de la planta o especie desde Módulo 1, incluyendo como mínimo:
+
+* `planta_id`
+* `nombre_cientifico_snapshot`
+* `nombre_comercial_snapshot`
+* `tipo_material_snapshot`
 
 ---
 
 ## 4. Flujo operativo y hitos
 
 ### RN-VIV-08 — Hitos obligatorios del ciclo mínimo
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 El flujo mínimo del lote en MVP incluye estos hitos obligatorios:
 
-1. Inicio
-2. Embolsado
-3. Adaptabilidad (por lo menos pasar por 1/2 sombra o sol directo)
-4. Despacho
+1. `INICIO`
+2. `EMBOLSADO`
+3. `DESPACHO`
 
-### RN-VIV-09 — Perdiodo de adaptabilidad
-- **Severidad:** ADVERTENCIA
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Baja
+### RN-VIV-09 — Adaptabilidad como seguimiento operativo
 
-Es una etapa que es obligatoria en el ciclo de viviero pero no se exige un tiempo mínimo específico y tampoco que primero termine una etapa entre sombra, media sombra o sol directo para pasar a la siguiente. Puede entrar directamente a media sombra o sol.
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Baja
+
+La **adaptabilidad** representa el periodo en el que la planta se fortalece en ambientes controlados antes de plantarse. Puede registrarse múltiples veces como evento de seguimiento durante el ciclo del lote.
+
+En el MVP:
+
+* puede registrarse como evento operativo,
+* puede incluir subetapas como `SOMBRA`, `MEDIA_SOMBRA` y `SOL_DIRECTO`,
+* no exige permanencia mínima,
+* no exige una secuencia rígida,
+* y **no bloquea el despacho**.
+
+Su objetivo en el MVP es aportar contexto operativo e historial, sin volver compleja la lógica central del sistema.
+
 ### RN-VIV-10 — Secuencialidad mínima por hitos
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 No se permite registrar:
 
-- Embolsado sin Inicio previo
-- Adaptabilidad sin Embolsado previo
-- Despacho sin Adaptabilidad previa
+* `EMBOLSADO` sin `INICIO` previo,
+* `MERMA` sin `EMBOLSADO` previo,
+* `DESPACHO` sin `EMBOLSADO` previo,
+* `ADAPTABILIDAD` sin `EMBOLSADO` previo.
+
+`ADAPTABILIDAD` no es requisito para registrar `MERMA` ni `DESPACHO`.
 
 ### RN-VIV-11 — Embolsado como nacimiento del saldo vivo
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
 
-El saldo de plantas vivas nace en el evento **EMBOLSADO**. Antes de ese hito solo existen unidades en proceso.
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+El saldo de plantas vivas nace en el evento `EMBOLSADO`. Antes de ese hito solo existen unidades en proceso. El evento EMBOLSADO solo puede registrarse una vez por lote.
 
 ---
 
 ## 5. Estados y validación
 
 ### RN-VIV-12 — Estados del lote
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 El lote de vivero solo puede tener estos estados:
 
-- `ACTIVO`
-- `FINALIZADO`
+* `ACTIVO`
+* `FINALIZADO`
 
-### RN-VIV-13 — Estados del evento
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-13 — Estado del evento en el MVP
 
-Todo evento/hito del vivero solo puede tener estos estados:
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
 
-- `PENDIENTE_VALIDACION`
-- `COMPLETO`
-- `RECHAZADO`
-- `BORRADOR`
+En el MVP, todo evento se registra directamente como `COMPLETO`.
 
-### RN-VIV-14 — CORRECCIÓN es tipo de evento, no estado
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+No se utilizarán flujos operativos de `BORRADOR`, `PENDIENTE_VALIDACION` o `RECHAZADO`. De todas formas debemos dejar preparada la evolución futura para incorporar validación formal por evento sin romper el núcleo del MVP.
 
-La corrección posterior a la validación debe registrarse como un evento `CORRECCION`, no como un estado del lote ni del evento original. No entra en el MVP pero es importante para mantener la integridad del historial.
+### RN-VIV-14 — Validación formal por evento
 
-### RN-VIV-15 — Edición permitida solo en PENDIENTE
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** No
+* **Relevancia carbono:** Media
 
-Mientras un evento esté en `PENDIENTE`, se permite editarlo.
+La validación formal por evento con estados intermedios queda reservada para una fase posterior.
 
-Una vez `COMPLETO`, queda bloqueado y solo puede ser ajustado mediante `CORRECCION`.
+### RN-VIV-15 — Edición posterior del evento
 
-### RN-VIV-16 — Validación por evento/hito
-- **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-La validación se realiza por evento/hito, no por lote completo.
-Para el MVP directamente se crea el evento como `COMPLETO` y no se permite edición posterior, pero en futuras iteraciones se permitirá crear eventos como `BORRADOR` o `PENDIENTE_VALIDACION` para luego validarlos a `COMPLETO`.
+Una vez registrado un evento, no debe editarse ni sobrescribirse.
 
-### RN-VIV-17 — Solo VALIDADOR puede pasar a COMPLETO
-- **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
-
-Solo un usuario con rol de VALIDADOR puede pasar un evento de `PENDIENTE` a `COMPLETO`.
-En el MVP directamente se crea el evento como `COMPLETO` y no se permite edición posterior, pero en futuras iteraciones se permitirá crear eventos como `BORRADOR` o `PENDIENTE_VALIDACION` para luego validarlos a `COMPLETO` por un VALIDADOR.
+Si más adelante se requiere ajuste, deberá resolverse con eventos correctivos en una siguiente fase del producto.
 
 ---
 
 ## 6. Cantidades, saldos y cierres
 
-### RN-VIV-18 — Doble lectura de cantidad en Inicio
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-16 — Doble lectura de cantidad en Inicio
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 El inicio del lote debe registrar simultáneamente:
 
-- `cantidad_consumida_origen` en la unidad canónica de Módulo 1,
-- y `unidades_iniciales_en_proceso` como lectura operativa del vivero.
+* `cantidad_consumida_origen` en la unidad canónica de Módulo 1,
+* `unidades_iniciales_en_proceso` como lectura operativa del vivero.
 
-Una vez que el evento se marca como `COMPLETO` entonces recién se hace el descuento oficial en la base de datos. Al mandar a `COMPLETADO` se tiene que verificar que haya la cantidad que se está consumiendo para evitar que se consuma más de lo que está disponible.
+En el MVP, el evento `INICIO` se registra directamente como `COMPLETO` y, en esa misma transacción atómica, se descuenta el saldo oficial del lote origen verificando disponibilidad suficiente.
 
-### RN-VIV-19 — Semilla puede consumir en gramos y operar en unidades estimadas
-- **Severidad:** ADVERTENCIA
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
+### RN-VIV-17 — Semilla puede consumir en gramos y operar en unidades estimadas
 
-Para semilla, el consumo del origen puede mantenerse en gramos o unidades según la unidad canónica del lote origen, mientras que vivero puede registrar una cantidad estimada de semillas sembradas. Y al momento de iniciar el lote, tenemos la cantidad estimada de semillas que plantamos y también la cantidad que consumimos del lote origen, que puede ser en gramos o unidades según el caso.
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
 
-### RN-VIV-20 — Todo evento que afecte saldo vivo registra saldo antes y después
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+Para semilla, el consumo del origen puede mantenerse en gramos o unidades según la unidad canónica del lote origen, mientras vivero puede registrar una cantidad estimada de semillas sembradas.
 
-Los eventos `EMBOLSADO`, `MERMA`, `DESPACHO` y `CORRECCION` que afecten saldo vivo deben registrar:
+### RN-VIV-18 — Todo evento que afecte saldo vivo registra saldo antes y después
 
-- `saldo_vivo_antes`
-- `saldo_vivo_despues`
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-### RN-VIV-21 — MERMA representa pérdida explícita
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+Los eventos `EMBOLSADO`, `MERMA` y `DESPACHO` que afecten saldo vivo deben registrar:
+
+* `saldo_vivo_antes`
+* `saldo_vivo_despues`
+
+El saldo vivo debe ser calculado por el sistema y no provisto por el usuario.
+
+### RN-VIV-19 — MERMA representa pérdida explícita
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 Toda pérdida operativa debe registrarse mediante un evento `MERMA` con causa, cantidad y responsable.
 
-### RN-VIV-22 — Despachos y mermas no pueden exceder el saldo
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-20 — Despachos y mermas no pueden exceder el saldo
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 La cantidad perdida o despachada no puede superar el saldo vivo disponible al momento del evento.
 
-### RN-VIV-23 — El saldo vivo no puede ser negativo
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-21 — El saldo vivo no puede ser negativo
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 Ningún evento puede dejar el saldo vivo en un valor negativo.
 
-### RN-VIV-24 — El saldo vivo solo aumenta por corrección auditada
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-22 — El saldo vivo no aumenta en el MVP
 
-Un incremento del saldo vivo solo puede provenir de un evento `CORRECCION` con delta positivo y motivo obligatorio.
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-### RN-VIV-25 — Cierre automático por saldo vivo 0
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+En el MVP, el saldo vivo solo puede mantenerse o disminuir.
+
+No se permiten incrementos de saldo vivo una vez nacido en `EMBOLSADO`.
+
+### RN-VIV-23 — Cierre automático por saldo vivo 0
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 Cuando el saldo vivo llegue a `0`, el lote debe pasar automáticamente a estado `FINALIZADO`.
 
-### RN-VIV-26 — Motivo de cierre obligatorio
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-24 — Motivo de cierre obligatorio
 
-Todo lote finalizado debe registrar `motivo_cierre` con uno de estos valores:
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-- `DESPACHO_TOTAL`
-- `PERDIDA_TOTAL`
-- `MIXTO`
+Todo cierre automático debe calcular y guardar un `motivo_cierre`:
 
-### RN-VIV-27 — Cálculo del motivo de cierre
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+* `DESPACHO_TOTAL`
+* `PERDIDA_TOTAL`
+* `MIXTO`
 
-La lógica de cierre debe calcular el motivo así:
+### RN-VIV-25 — Lote finalizado no admite eventos operativos nuevos
 
-- si el saldo llegó a 0 solo por despachos → `DESPACHO_TOTAL`
-- si el saldo llegó a 0 sin despachos y por pérdidas/ajustes negativos → `PERDIDA_TOTAL`
-- si el saldo llegó a 0 combinando despachos y pérdidas → `MIXTO`
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-### RN-VIV-28 — Restricción posterior al cierre
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
-
-Una vez `FINALIZADO`, el lote no admite nuevos eventos operativos.
-
-### RN-VIV-29 — Corrección posterior puede reabrir el lote
-- **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** No
-- **Relevancia carbono:** Media
-
-Si una corrección posterior deja nuevamente `saldo_vivo > 0`, el lote puede regresar a `ACTIVO`, preservando el historial íntegro del cierre anterior.
+Una vez que el lote pase a `FINALIZADO`, no se permiten nuevos eventos operativos normales.
 
 ---
 
 ## 7. Evidencia de trazabilidad
 
-### RN-VIV-30 — La evidencia se registra en evidencia_trazabilidad
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-26 — Evidencia mínima por evento crítico
 
-La evidencia del vivero debe gestionarse mediante la entidad/tabla `evidencia_trazabilidad`, no como fotos aisladas sin contexto.
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-### RN-VIV-31 — La evidencia se asocia por evento
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+En el MVP:
 
-Toda evidencia debe quedar vinculada al evento correspondiente para preservar auditabilidad.
+* `INICIO` requiere evidencia,
+* `DESPACHO` requiere evidencia,
+* `EMBOLSADO`, `MERMA` y `ADAPTABILIDAD` requieren evidencia.
 
-### RN-VIV-32 — Despacho requiere evidencia obligatoria
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+La evidencia debe almacenarse y vincularse directamente al evento que la origina.
 
-No se permite registrar ni completar un despacho sin evidencia de trazabilidad válida.
+### RN-VIV-27 — No se permite completar un evento crítico sin evidencia requerida
 
-### RN-VIV-33 — Excepción de evidencia permitida solo en eventos autorizados
-- **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** No
-- **Relevancia carbono:** Media
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-En el MVP no se permite registrar eventos sin evidencia.
+Si un evento que exige evidencia no tiene soporte válido, no debe registrarse.
 
-### RN-VIV-34 — Evidencia tardía no borra el historial previo
-- **Severidad:** ADVERTENCIA
-- **Aplica en MVP:** No
-- **Relevancia carbono:** Media
+### RN-VIV-28 — No se aceptan excepciones de evidencia en el MVP
 
-Si una evidencia se obtiene después, puede agregarse como evidencia tardía sin borrar la excepción ni alterar el historial anterior. Pero esto no se aplicara en el MVP, en el MVP la evidencia es obligatoria para completar el evento.
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
 
-### RN-VIV-35 — Umbral de merma puede exigir evidencia y observación
-- **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
+En el MVP no se aceptan excepciones de evidencia ni aprobaciones especiales para omitirla.
 
-Cuando una merma supere el umbral operativo configurado, el sistema debe exigir observación y puede exigir evidencia adicional según parametrización.
+### RN-VIV-29 — No se acepta evidencia tardía en el MVP
+
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
+
+En el MVP, la evidencia debe registrarse junto con el evento cuando sea obligatoria.
+
+### RN-VIV-30 — Umbral de merma puede exigir observación reforzada
+
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
+
+Cuando una merma supere el umbral operativo configurado, el sistema debe exigir observación obligatoria y puede exigir evidencia adicional.
 
 ---
 
 ## 8. Reglas temporales
 
-### RN-VIV-36 — Doble fecha obligatoria
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-31 — Doble fecha obligatoria
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 Todo evento debe registrar:
 
-- `fecha_evento`
-- `created_at`
+* `fecha_evento`
+* `created_at`
 
-### RN-VIV-37 — No se permiten fechas futuras
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
+### RN-VIV-32 — No se permiten fechas futuras
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
 
 No se permite registrar eventos con `fecha_evento` futura.
 
-### RN-VIV-38 — Ventana retroactiva máxima de 10 días
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
+### RN-VIV-33 — Ventana retroactiva máxima de 10 días
 
-Se permite registrar eventos hasta 10 días en el pasado respecto de la fecha actual del sistema.
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
 
-### RN-VIV-39 — Coherencia temporal por hitos
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+Se permite registrar eventos hasta 10 días en el pasado respecto de la fecha actual del sistema. Este valor debe ser configurable por el sistema.
 
-No se permite registrar un evento con fecha anterior al hito que lo habilita, salvo corrección justificada.
+### RN-VIV-34 — Coherencia temporal por hitos
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+No se permite registrar un evento con fecha anterior al hito que lo habilita.
 
 ---
 
 ## 9. Modelo de eventos y blockchain
 
-### RN-VIV-40 — Eventos append-only
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-35 — Eventos append-only
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 Los eventos del vivero se agregan al historial y no pueden sobrescribirse ni eliminarse.
 
-### RN-VIV-41 — Hitos recomendados para anclaje blockchain
-- **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-36 — Tipos de evento del MVP
 
-- Inicio con inicio y salida validado
-- Embolsado con inicio y salida validada
-- Adaptación con inicio y salida validada pero no se incluyen las sub etapas.
-- Cierre del lote
-- Corrección que altere saldo o un hito previamente anclado
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
 
-Para el MVP solamente anclaremos en blockchain la salida de los lotes. Esto significa que el evento de **Despacho** será el único hito que se ancle en blockchain, ya que es el punto donde el material sale del vivero con destino a plantación.
+Los tipos de evento mínimos del MVP son:
 
-### RN-VIV-42 — No se ancla cada evento
-- **Severidad:** ADVERTENCIA
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
+* `INICIO`
+* `EMBOLSADO`
+* `ADAPTABILIDAD`
+* `MERMA`
+* `DESPACHO`
+* `CIERRE_AUTOMATICO`
 
-Los eventos que se anclan:
-- Inicio con inicio y salida validado
-- Embolsado con inicio y salida validada
-- Adaptación con inicio y salida validada pero no se incluyen las sub etapas.
-- Cierre del lote
-- Corrección que altere saldo o un hito previamente anclado
-- Merma
+### RN-VIV-37 — Blockchain no bloquea el núcleo operativo
 
-Los eventos que no se anclan:
-- Las sub etapas de adaptabilidad (sombra, media sombra, sol directo)
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+El historial operativo del MVP vive primero en base de datos.
+
+La estrategia blockchain no debe bloquear el registro, consulta ni cierre confiable del lote.
+
+### RN-VIV-38 — Anclaje blockchain mínimo del MVP
+
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Si se implementa anclaje blockchain en el MVP, solo el evento `DESPACHO` será candidato a anclaje.
+
+Este anclaje debe considerarse complementario y no indispensable para el funcionamiento base del módulo.
 
 ---
 
 ## 10. Consulta operativa y cadena de custodia
 
-### RN-VIV-43 — Listado operativo obligatorio
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
+### RN-VIV-39 — Listado operativo obligatorio
 
-El módulo debe permitir listar y consultar lotes por estado, vivero, planta/especie, lote origen, motivo de cierre y pendientes de validación.
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
 
-### RN-VIV-44 — Cadena de custodia visible
-- **Severidad:** ADVERTENCIA
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+El módulo debe permitir listar y consultar lotes por:
+
+* estado,
+* vivero,
+* planta o especie,
+* lote origen,
+* lote de vivero,
+* motivo de cierre.
+
+### RN-VIV-40 — Cadena de custodia visible
+
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 La consulta del lote debe hacer visible la secuencia:
 
-`recolección origen → consumo → inicio → embolsado → adaptabilidad (con sus subetapas) → mermas/cambios → despachos → cierre`
+`recolección origen → consumo → inicio → embolsado → adaptabilidad → mermas → despachos → cierre`
 
-### RN-VIV-45 — Reportes deben distinguir cierre por pérdida vs despacho
-- **Severidad:** BLOQUEANTE
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-41 — Reportes distinguen tipos de cierre
 
-Los reportes para auditoría/certificación deben diferenciar claramente los lotes cerrados por:
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
-- `DESPACHO_TOTAL`
-- `PERDIDA_TOTAL`
-- `MIXTO`
+Los reportes deben diferenciar claramente los lotes cerrados por:
 
-Un cierre por pérdida total no debe interpretarse igual que uno despachado a plantación. Aca es importante tener las cantidades de plantas perdidas y despachadas.
-
----
-
-## 11. Roles mínimos
-
-### RN-VIV-46 — Roles base del módulo
-- **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Media
-
-Roles mínimos:
-
-- **ADMIN:** gestión global, configuración de umbrales, gestión de usuarios y validadores.
-- **Validador:** valida eventos.
-- **General:** Es el operativo, que registra eventos en `BORRADOR` y los manda para verificación.
-- **Consulta:** lectura y trazabilidad
+* `DESPACHO_TOTAL`
+* `PERDIDA_TOTAL`
+* `MIXTO`
 
 ---
 
-## 12. Principio rector del MVP
+## 11. Roles mínimos del MVP
 
-### RN-VIV-47 — Prioridad del dato auditable sobre la complejidad innecesaria
-- **Severidad:** ADVERTENCIA
-- **Aplica en MVP:** Sí
-- **Relevancia carbono:** Alta
+### RN-VIV-42 — Roles mínimos
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
+
+Para el MVP bastan estos roles mínimos:
+
+* `ADMIN`
+* `OPERADOR`
+* `CONSULTA`
+
+Roles futuros:
+* `VALIDADOR`
+
+### RN-VIV-43 — Alcance operativo por rol
+
+* **Severidad:** ADVERTENCIA
+
+* **Aplica en MVP:** Sí
+
+* **Relevancia carbono:** Media
+
+* `ADMIN`: parametriza, consulta y administra.
+
+* `OPERADOR`: registra eventos permitidos y consulta lotes.
+
+* `CONSULTA`: visualiza historial, cadena de custodia y reportes.
+
+Roles futuros:
+* `VALIDADOR`: valida eventos.
+
+---
+
+## 12. Alcance real del MVP
+
+### RN-VIV-44 — Lo que sí protege el núcleo del MVP
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
 
 El MVP prioriza:
 
-- origen claro,
-- consumo atómico,
-- identidad de planta,
-- saldo vivo auditable,
-- despachos trazables,
-- adaptabilidad registrada operativamente,
-- y cierres bien clasificados,
+* trazabilidad del origen,
+* creación del lote desde un único origen,
+* consumo atómico Módulo 1 → Módulo 2,
+* snapshots de planta,
+* control de saldo vivo,
+* registro auditable de eventos clave,
+* evidencia mínima,
+* y cierre confiable del lote.
 
-por encima de modelados agronómicos avanzados, offline-first o multi-aprobación compleja.
+### RN-VIV-45 — Lo que queda fuera del MVP
 
----
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** No
+* **Relevancia carbono:** Media
+
+Quedan fuera del MVP:
+
+* validación formal por evento,
+* estados `BORRADOR`, `PENDIENTE_VALIDACION` y `RECHAZADO` en operación,
+* correcciones post-validación,
+* reapertura de lotes,
+* excepciones de evidencia,
+* evidencia tardía,
+* multi-aprobación,
+* blockchain multi-hito,
+* anclaje por cada evento,
+* modelado agronómico avanzado por especie,
+* y flujos complejos offline-first.
+
+### RN-VIV-46 — Principio de crecimiento posterior
+
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
+
+El diseño del MVP debe dejar preparada una evolución futura para incorporar, sin romper el núcleo:
+
+* validaciones más complejas,
+* subflujos más ricos de adaptabilidad,
+* correcciones auditadas,
+* blockchain ampliada,
+* y mayor profundidad operativa.
