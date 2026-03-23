@@ -172,7 +172,7 @@ Todo evento/hito del vivero solo puede tener estos estados:
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Alta
 
-La corrección posterior a la validación debe registrarse como un evento `CORRECCION`, no como un estado del lote ni del evento original. No es prioritaria para el MVP pero es importante para mantener la integridad del historial.
+La corrección posterior a la validación debe registrarse como un evento `CORRECCION`, no como un estado del lote ni del evento original. No entra en el MVP pero es importante para mantener la integridad del historial.
 
 ### RN-VIV-15 — Edición permitida solo en PENDIENTE
 - **Severidad:** BLOQUEANTE
@@ -189,6 +189,7 @@ Una vez `COMPLETO`, queda bloqueado y solo puede ser ajustado mediante `CORRECCI
 - **Relevancia carbono:** Alta
 
 La validación se realiza por evento/hito, no por lote completo.
+Para el MVP directamente se crea el evento como `COMPLETO` y no se permite edición posterior, pero en futuras iteraciones se permitirá crear eventos como `BORRADOR` o `PENDIENTE_VALIDACION` para luego validarlos a `COMPLETO`.
 
 ### RN-VIV-17 — Solo VALIDADOR puede pasar a COMPLETO
 - **Severidad:** REQUIERE_VALIDADOR
@@ -196,6 +197,7 @@ La validación se realiza por evento/hito, no por lote completo.
 - **Relevancia carbono:** Alta
 
 Solo un usuario con rol de VALIDADOR puede pasar un evento de `PENDIENTE` a `COMPLETO`.
+En el MVP directamente se crea el evento como `COMPLETO` y no se permite edición posterior, pero en futuras iteraciones se permitirá crear eventos como `BORRADOR` o `PENDIENTE_VALIDACION` para luego validarlos a `COMPLETO` por un VALIDADOR.
 
 ---
 
@@ -296,7 +298,7 @@ Una vez `FINALIZADO`, el lote no admite nuevos eventos operativos.
 
 ### RN-VIV-29 — Corrección posterior puede reabrir el lote
 - **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** Sí
+- **Aplica en MVP:** No
 - **Relevancia carbono:** Media
 
 Si una corrección posterior deja nuevamente `saldo_vivo > 0`, el lote puede regresar a `ACTIVO`, preservando el historial íntegro del cierre anterior.
@@ -328,17 +330,17 @@ No se permite registrar ni completar un despacho sin evidencia de trazabilidad v
 
 ### RN-VIV-33 — Excepción de evidencia permitida solo en eventos autorizados
 - **Severidad:** REQUIERE_VALIDADOR
-- **Aplica en MVP:** Sí
+- **Aplica en MVP:** No
 - **Relevancia carbono:** Media
 
-La excepción de evidencia puede existir para eventos permitidos, pero **no aplica a despacho**.
+En el MVP no se permite registrar eventos sin evidencia.
 
 ### RN-VIV-34 — Evidencia tardía no borra el historial previo
 - **Severidad:** ADVERTENCIA
-- **Aplica en MVP:** Sí
+- **Aplica en MVP:** No
 - **Relevancia carbono:** Media
 
-Si una evidencia se obtiene después, puede agregarse como evidencia tardía sin borrar la excepción ni alterar el historial anterior.
+Si una evidencia se obtiene después, puede agregarse como evidencia tardía sin borrar la excepción ni alterar el historial anterior. Pero esto no se aplicara en el MVP, en el MVP la evidencia es obligatoria para completar el evento.
 
 ### RN-VIV-35 — Umbral de merma puede exigir evidencia y observación
 - **Severidad:** REQUIERE_VALIDADOR
@@ -398,19 +400,29 @@ Los eventos del vivero se agregan al historial y no pueden sobrescribirse ni eli
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Alta
 
-En el MVP se recomienda anclar al menos:
-
-- Inicio validado
-- Embolsado validado
+- Inicio con inicio y salida validado
+- Embolsado con inicio y salida validada
+- Adaptación con inicio y salida validada pero no se incluyen las sub etapas.
 - Cierre del lote
 - Corrección que altere saldo o un hito previamente anclado
+
+Para el MVP solamente anclaremos en blockchain la salida de los lotes. Esto significa que el evento de **Despacho** será el único hito que se ancle en blockchain, ya que es el punto donde el material sale del vivero con destino a plantación.
 
 ### RN-VIV-42 — No se ancla cada evento
 - **Severidad:** ADVERTENCIA
 - **Aplica en MVP:** Sí
 - **Relevancia carbono:** Media
 
-Para optimizar costos, el anclaje blockchain no se realiza por cada evento individual sino por hitos/cierres relevantes.
+Los eventos que se anclan:
+- Inicio con inicio y salida validado
+- Embolsado con inicio y salida validada
+- Adaptación con inicio y salida validada pero no se incluyen las sub etapas.
+- Cierre del lote
+- Corrección que altere saldo o un hito previamente anclado
+- Merma
+
+Los eventos que no se anclan:
+- Las sub etapas de adaptabilidad (sombra, media sombra, sol directo)
 
 ---
 
@@ -456,9 +468,10 @@ Un cierre por pérdida total no debe interpretarse igual que uno despachado a pl
 
 Roles mínimos:
 
-- **General:** registra eventos en `PENDIENTE`
-- **Validador:** valida eventos, aprueba excepciones y autoriza anclajes
-- **Auditor/Consulta:** lectura y trazabilidad
+- **ADMIN:** gestión global, configuración de umbrales, gestión de usuarios y validadores.
+- **Validador:** valida eventos.
+- **General:** Es el operativo, que registra eventos en `BORRADOR` y los manda para verificación.
+- **Consulta:** lectura y trazabilidad
 
 ---
 

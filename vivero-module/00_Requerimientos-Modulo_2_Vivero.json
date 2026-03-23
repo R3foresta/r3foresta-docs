@@ -63,13 +63,13 @@
     "ID": "RF-VIV-06",
     "Sección": "Vivero",
     "Nombre": "Validación: Cambiar evento de PENDIENTE_VALIDACION a COMPLETO",
-    "Objetivo": "Validar un evento/hito para bloquear su edición y dejarlo listo para auditoría y eventual anclaje blockchain.",
+    "Objetivo": "Validar un evento/hito para bloquear su edición y dejarlo listo para auditoría.",
     "Severidad": "REQUIERE_VALIDADOR",
     "Aplica en MVP": "Sí",
     "Aporta a carbono": "Alta",
     "Campos clave y obligatoriedad": "Obligatorio:\n- id_evento_vivero\n- tipo_evento\n- aprobado_por (VALIDADOR)\n- fecha_aprobacion\nOpcional:\n- comentario_validacion",
     "Reglas y validaciones": "- Solo rol VALIDADOR o ADMIN puede completar.\n- Para completar: datos mínimos completos + reglas de evidencia aplicables al tipo de evento.\n- Una vez COMPLETO: no se permite edición; solo CORRECCION.\n- La validación es por evento/hito, no por lote completo.\n- Si no se valida pasa a estado RECHAZADO con un comentario obligatorio y vuelve al estado BORRADOR.\n- Para ser validodo se admines lotes en estado BORRADOR.",
-    "Comportamiento al Guardar": "- Cambia el estado del evento a COMPLETO.\n- Registra sello de validación.\n- Se guarda directamente en la blockchain."
+    "Comportamiento al Guardar": "- Cambia el estado del evento a COMPLETO.\n- Registra sello de validación."
   },
   {
     "ID": "RF-VIV-07",

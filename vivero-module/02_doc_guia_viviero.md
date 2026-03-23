@@ -77,11 +77,12 @@ Antes de Embolsado puede existir germinación, selección o pérdida natural del
 Para evitar ambigüedad:
 
 - **Estado del lote:** `ACTIVO | FINALIZADO`
-- **Estado del evento:** `PENDIENTE_VALIDACION | COMPLETO | RECHAZADO | BORRADOR`
+- **Estado del evento:** `PENDIENTE_VALIDACION | VALIDADO | RECHAZADO | BORRADOR`
 
 Además:
 
 - **CORRECCIÓN** no es un estado; es un **tipo de evento** post-validación. (no para el MVP)
+- La parte de **BORRADOR** no entrará en el MVP, pero se deja diseñada para permitir que los eventos puedan crearse inicialmente como borradores editables antes de ser validados. En el MVP el lote se crea directamente en **VALIDADO** y no se permite edición posterior, pero esto se flexibilizará en futuras iteraciones.
 
 ### 2.7. Evidencia de trazabilidad
 
@@ -115,9 +116,9 @@ El flujo mínimo del MVP se basa en **tres hitos obligatorios** y **eventos flex
 
 1. **Inicio**
 2. **Embolsado**
-3. **Despacho**
+3. **Adaptabilidad** (con sub etapas)
+4. **Despacho**
 
-El **Cambio de Ambiente** se mantiene como evento flexible y no bloqueante.
 
 ### 3.1. Inicio
 
@@ -142,7 +143,7 @@ Reglas importantes:
 
 - El lote origen debe ser elegible para consumo.
 - La creación del lote en Módulo 2 y el descuento del saldo en Módulo 1 ocurren en **una misma transacción atómica**.
-- El evento de Inicio nace en estado `PENDIENTE_VALIDACION` y luego puede ser validado a `COMPLETO` por un VALIDADOR con el rol de VALIDADOR.
+- El evento de Inicio nace en estado `BORRADOR` y luego puede ser validado a `COMPLETO` por un VALIDADOR con el rol de VALIDADOR. (no para el MVP, en el MVP el evento se crea directamente como `COMPLETO` y no se permite edición posterior, pero esto se flexibilizará en futuras iteraciones)
 
 ### 3.2. Embolsado
 
@@ -246,10 +247,12 @@ Futuro (fuera del MVP):
 
 Cada evento/hito pasa por:
 
+- **BORRADOR:** evento creado pero aún no listo para validación
 - **PENDIENTE_VALIDACION:** registro editable con datos mínimos
 - **RECHAZADO:** validado por VALIDADOR pero con errores que requieren corrección
-- **BORRADOR:** evento creado pero aún no listo para validación
 - **COMPLETO:** validado por VALIDADOR e inmutable
+
+Estos estados no se aplicaran en el MVP, pero se dejan diseñados para permitir que los eventos puedan crearse inicialmente como borradores editables antes de ser validados. En el MVP el lote se crea directamente en **VALIDADO** y no se permite edición posterior, pero esto se flexibilizará en futuras iteraciones.
 
 ### 5.2. Estado del lote
 
@@ -373,17 +376,13 @@ Esta vista es crítica para operación diaria y para auditoría.
 
 ## 10. Auditoría y estrategia blockchain (MVP)
 
-Para evitar costos de gas innecesarios:
+Para el MVP solamente anclaremos en blockchain la salida de los lotes. Esto significa que el evento de **Despacho** será el único hito que se ancle en blockchain, ya que es el punto donde el material sale del vivero con destino a plantación.
 
-- los eventos se guardan en base de datos como historial append-only,
-- el anclaje blockchain se realiza por **hitos/cierres relevantes**, no por cada evento,
-- el sistema por defecto decide cuándo eventos/hitos solo se validan y cuándo se anclan a blockchain automaticamente.
+En el futuro se debe implementar un analaje robusto que incluya:
 
-Hitos recomendados para anclaje en blockchain en el MVP:
-
-- **Inicio validado**
-- **Embolsado validado**
-- **Adaptación**
+- **Entrada y salida de Inicio**
+- **Entrada y salida de Embolsado validado**
+- **Entrada y salida de Adaptación Validada**
 - **Cierre del lote**
 - **Corrección** que altere saldo o afecte un hito previamente anclado
 
