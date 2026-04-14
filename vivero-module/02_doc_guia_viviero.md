@@ -8,7 +8,7 @@ El **Módulo 2 (Vivero)** registra la maduración y preparación pre-plantación
 
 Su objetivo en el MVP es dejar evidencia verificable de:
 
-* qué lote origen alimentó al lote de vivero,
+* qué lote origen (recolección) alimentó al lote de vivero,
 * qué planta o especie se está trabajando,
 * cuánto material se consumió desde Recolección,
 * cuánto material entró en proceso en vivero,
@@ -36,10 +36,13 @@ Esto mantiene trazabilidad fuerte: cada merma, despacho o cierre del vivero siem
 
 Solo se puede iniciar un lote de vivero desde una recolección que esté:
 
-* en estado `VALIDADO`,
-* operativamente `ABIERTO`,
+* con `estado_registro = VALIDADO`,
+* operativamente habilitada para consumo,
+* con `estado_recoleccion` no incompatible con consumo,
 * con saldo suficiente para el consumo,
 * y con identidad de planta disponible para heredar.
+
+En la documentación previa de Recolección esto equivale al concepto operativo de registro "abierto": todavía existe saldo disponible para consumir.
 
 ### 2.3. Identidad de planta heredada desde Módulo 1
 
@@ -92,9 +95,8 @@ Desde ese momento:
 Para el MVP:
 
 * **Estado del lote:** `ACTIVO | FINALIZADO`
-* **Estado del evento:** todo evento se registra directamente como `COMPLETO`
 
-En esta fase no se usan estados como `BORRADOR`, `PENDIENTE_VALIDACION` o `RECHAZADO` dentro del módulo de vivero.
+El carácter definitivo del evento se resuelve con el modelo **append-only** y con la inmutabilidad práctica del registro una vez insertado.
 
 ### 2.8. Evidencia de trazabilidad
 
@@ -106,7 +108,10 @@ La evidencia se modela mediante la entidad **`evidencia_trazabilidad`**, que pue
 * referencias técnicas,
 * y otros soportes auditables.
 
-En el MVP, la evidencia debe quedar **vinculada directamente al evento que la origina**.
+En el MVP, la evidencia debe quedar **vinculada directamente al evento que la origina** usando el modelo polimórfico de `EVIDENCIAS_TRAZABILIDAD`:
+
+* `tipo_entidad_id` identifica que la evidencia pertenece a un evento de vivero,
+* y `entidad_id` apunta al `EVENTO_LOTE_VIVERO.id` correspondiente.
 
 ### 2.9. Motivo de cierre del lote
 
@@ -166,25 +171,27 @@ Registro del arranque del lote según el material:
 
 Datos mínimos esperados:
 
-* `lote_origen_id`
-* `fecha_evento`
-* `responsable`
+* `recoleccion_id`
+* `fecha_inicio` en `LOTE_VIVERO`
+* `fecha_evento` del `EVENTO_LOTE_VIVERO` tipo `INICIO`
+* `responsable_id`
 * `vivero_id`
-* `cantidad_consumida_origen`
-* `unidad_consumida_origen`
 * `cantidad_inicial_en_proceso`
-* `unidad_inicial_en_proceso`
+* `unidad_medida_inicial`
+* `cantidad_afectada` del evento `INICIO`
+* `unidad_medida_evento` del evento `INICIO`
 * snapshots de planta (`planta_id`, nombre científico, nombre comercial, tipo de material)
 * `observaciones` si aplica
 * al menos una `evidencia_trazabilidad` válida
 
 Reglas importantes:
 
-* El lote origen debe estar `VALIDADO`, `ABIERTO` y con saldo suficiente.
+* El lote origen debe estar `VALIDADO`, habilitado para consumo y con saldo suficiente.
 * La creación del lote en Módulo 2 y el descuento del saldo en Módulo 1 ocurren en **una misma transacción atómica**.
-* En el MVP, `cantidad_inicial_en_proceso` usa la misma unidad del origen.
+* En el MVP, `cantidad_inicial_en_proceso` usa la misma unidad del origen y se materializa en `LOTE_VIVERO.unidad_medida_inicial`.
 * En el MVP, `cantidad_inicial_en_proceso` refleja la cantidad efectivamente consumida del origen.
-* El evento `INICIO` se registra directamente como `COMPLETO`.
+* El consumo del origen queda reflejado en `RECOLECCION_MOVIMIENTO` con `tipo_movimiento = CONSUMO_A_VIVERO`.
+* El evento `INICIO` queda persistido como un registro append-only en `EVENTO_LOTE_VIVERO`.
 * No se permite edición posterior del evento.
 
 Aclaraciones:
@@ -203,6 +210,8 @@ Desde este punto se registra:
 * `plantas_vivas_iniciales`
 * `saldo_vivo_antes = 0`
 * `saldo_vivo_despues = plantas_vivas_iniciales`
+* `cantidad_afectada = plantas_vivas_iniciales`
+* `unidad_medida_evento = UNIDAD`
 * `observaciones`
 * al menos una `evidencia_trazabilidad` válida
 
@@ -233,7 +242,7 @@ Datos mínimos esperados:
 
 * `fecha_evento`
 * `subetapa_destino`
-* `responsable`
+* `responsable_id`
 * `observaciones` si aplica
 * al menos una `evidencia_trazabilidad` válida
 
@@ -249,10 +258,11 @@ La **Merma** representa pérdida explícita del saldo vivo por causas reales del
 
 Cada merma registra:
 
-* `cantidad_perdida`
+* `cantidad_afectada`
+* `unidad_medida_evento = UNIDAD`
 * `causa_merma`
 * `fecha_evento`
-* `responsable`
+* `responsable_id`
 * `saldo_vivo_antes`
 * `saldo_vivo_despues`
 * `observaciones`
@@ -261,6 +271,7 @@ Cada merma registra:
 Reglas importantes:
 
 * La merma siempre se expresa en **UNIDAD**.
+* La causa se registra en `causa_merma_vivero`.
 * La cantidad perdida no puede exceder el saldo vivo disponible.
 * El saldo no puede quedar negativo.
 * Si el saldo vivo llega a `0`, el lote debe cerrarse automáticamente.
@@ -271,12 +282,13 @@ El **Despacho** representa la salida parcial o total de plantas listas para plan
 
 Cada despacho registra:
 
-* `cantidad_despachada`
+* `cantidad_afectada`
+* `unidad_medida_evento = UNIDAD`
 * `fecha_evento`
-* `responsable`
+* `responsable_id`
 * `destino_tipo` (`PLANTACION_PROPIA`, `DONACION_COMUNIDAD`, `VENTA`, `OTRO`)
 * `destino_referencia`
-* `comunidad_destino` cuando aplique
+* `comunidad_destino_id` cuando aplique
 * `saldo_vivo_antes`
 * `saldo_vivo_despues`
 * `observaciones`
@@ -296,8 +308,9 @@ El **Cierre automático** se genera cuando el saldo vivo llega a `0`.
 Este evento debe registrar:
 
 * `fecha_evento`
-* `motivo_cierre`
-* referencia al evento que dejó el saldo en cero
+* `motivo_cierre_calculado` en `EVENTO_LOTE_VIVERO`
+* `motivo_cierre` en `LOTE_VIVERO`
+* `ref_evento_trigger_id` apuntando al evento que dejó el saldo en cero
 
 Reglas importantes:
 
@@ -326,10 +339,8 @@ Tipos de evento del MVP:
 Fuera del MVP:
 
 * correcciones auditadas,
-* validación formal por evento,
 * excepción de evidencia,
 * evidencia tardía,
-* multi-aprobación,
 * traslados entre viveros,
 * división o fusión de lotes,
 * y sincronización offline-first.
@@ -343,6 +354,12 @@ En esta versión del MVP, la evidencia se maneja de forma **estricta**.
 ### 6.1. Regla general
 
 Todo evento operativo del vivero debe quedar respaldado por evidencia de trazabilidad vinculada directamente al evento.
+
+En términos del esquema:
+
+* la evidencia se guarda en `EVIDENCIAS_TRAZABILIDAD`,
+* `tipo_entidad_id` clasifica la entidad,
+* y `entidad_id` referencia el `EVENTO_LOTE_VIVERO.id`.
 
 ### 6.2. Eventos con evidencia obligatoria
 
@@ -427,6 +444,8 @@ La estrategia blockchain **no debe bloquear** el registro, consulta ni cierre co
 
 Si se implementa anclaje blockchain en esta fase, solo el evento **`DESPACHO`** será candidato a anclaje.
 
+En el esquema actual, ese anclaje vive como `metadata_blockchain` dentro de `EVENTO_LOTE_VIVERO` y puede incluir datos como `blockchain_url`, `token_id` y `transaction_hash`.
+
 Este anclaje se considera complementario y no indispensable para el funcionamiento base del módulo.
 
 Fuera del MVP puede ampliarse a otros hitos relevantes.
@@ -435,19 +454,19 @@ Fuera del MVP puede ampliarse a otros hitos relevantes.
 
 ## 11. Roles mínimos del MVP
 
-Para operar el módulo de vivero en el MVP bastan estos roles funcionales:
+Para operar el módulo de vivero en el MVP deben mapearse los permisos sobre los roles reales del enum `rol_usuario`:
 
 * `ADMIN`
-* `OPERADOR`
-* `CONSULTA`
+* `GENERAL`
+* `VALIDADOR`
+* `VOLUNTARIO`
 
-Alcance básico:
+Alcance recomendado:
 
 * `ADMIN`: parametriza, consulta y administra.
-* `OPERADOR`: registra eventos permitidos y consulta lotes.
-* `CONSULTA`: visualiza historial, cadena de custodia y reportes.
-
-Si la plataforma ya maneja roles como `GENERAL`, `VALIDADOR` o `VOLUNTARIO`, su mapeo de permisos queda fuera de esta guía y no cambia las reglas centrales del módulo.
+* `GENERAL`: registra eventos permitidos y consulta lotes. En la práctica reemplaza el rol funcional que antes se describía como "operador".
+* `VALIDADOR`: existe como rol global de la plataforma, pero en este módulo no activa un flujo especial en el MVP.
+* `VOLUNTARIO`: no debería tener permisos operativos críticos del módulo salvo parametrización explícita.
 
 ---
 
@@ -474,13 +493,10 @@ Si la plataforma ya maneja roles como `GENERAL`, `VALIDADOR` o `VOLUNTARIO`, su 
 
 ### Queda fuera por ahora
 
-* validación formal por evento,
-* estados operativos `BORRADOR`, `PENDIENTE_VALIDACION` y `RECHAZADO`,
-* correcciones post-validación,
+* correcciones posteriores por eventos compensatorios,
 * reapertura de lotes,
 * excepciones de evidencia,
 * evidencia tardía,
-* multi-aprobación,
 * blockchain multi-hito,
 * anclaje por cada evento,
 * modelado agronómico detallado por especie,

@@ -28,7 +28,7 @@ Cada regla incluye:
 * **Saldo vivo:** cantidad actual de plantas vivas disponibles en el lote.
 * **Adaptabilidad:** etapa operativa en la que la planta se fortalece en ambientes controlados antes de plantarse. En el MVP se registra como evento opcional de seguimiento, no como requisito bloqueante del flujo.
 * **Estado del lote:** `ACTIVO | FINALIZADO`.
-* **Estado del evento:** en el MVP todo evento se registra directamente como `COMPLETO`.
+* **Eventos de vivero:** se registran como append-only y se consideran definitivos una vez insertados.
 * **Evidencia de trazabilidad:** soporte asociado al evento, almacenado en `evidencia_trazabilidad`.
 * **Motivo de cierre:** clasificación del cierre del lote: `DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO`.
 
@@ -74,7 +74,8 @@ En el MVP:
 Solo se puede iniciar un lote de vivero desde una recolección que esté:
 
 * con `estado_registro = VALIDADO`,
-* con `estado_operativo = ABIERTO`,
+* operativamente habilitada para consumo,
+* con `estado_recoleccion` no incompatible con consumo,
 * con saldo suficiente para el consumo,
 * y con identidad de planta disponible.
 
@@ -182,23 +183,21 @@ El lote de vivero solo puede tener estos estados:
 * `ACTIVO`
 * `FINALIZADO`
 
-### RN-VIV-13 — Estado del evento en el MVP
+### RN-VIV-13 — Eventos append-only en el MVP
 
 * **Severidad:** BLOQUEANTE
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Media
 
-En el MVP, todo evento se registra directamente como `COMPLETO`.
+En el MVP, todo evento insertado en `EVENTO_LOTE_VIVERO` se considera definitivo y se gobierna por el modelo append-only.
 
-No se utilizarán flujos operativos de `BORRADOR`, `PENDIENTE_VALIDACION` o `RECHAZADO`.
-
-### RN-VIV-14 — Validación formal por evento
+### RN-VIV-14 — Sin validación adicional por evento
 
 * **Severidad:** ADVERTENCIA
-* **Aplica en MVP:** No
+* **Aplica en MVP:** Sí
 * **Relevancia carbono:** Media
 
-La validación formal por evento con estados intermedios queda reservada para una fase posterior.
+En el MVP no existe flujo de validación, aprobación o rechazo por evento. Todo registro append-only se toma como verdadero al momento de guardarse.
 
 ### RN-VIV-15 — Edición posterior del evento
 
@@ -222,10 +221,12 @@ Si más adelante se requiere ajuste, deberá resolverse con eventos correctivos 
 
 El inicio del lote debe registrar simultáneamente:
 
-* `cantidad_consumida_origen` en la unidad canónica de Módulo 1,
-* `cantidad_inicial_en_proceso` en la misma unidad del origen.
+* `LOTE_VIVERO.cantidad_inicial_en_proceso`,
+* `LOTE_VIVERO.unidad_medida_inicial`,
+* `EVENTO_LOTE_VIVERO.cantidad_afectada` para el `INICIO`,
+* `EVENTO_LOTE_VIVERO.unidad_medida_evento` para el `INICIO`.
 
-En el MVP, `cantidad_inicial_en_proceso` refleja el consumo realizado sobre el lote origen.
+En el MVP, `cantidad_inicial_en_proceso` refleja el consumo realizado sobre el lote origen y debe quedar alineada con el movimiento `CONSUMO_A_VIVERO` registrado en Módulo 1.
 
 ### RN-VIV-17 — La unidad del inicio respeta la unidad canónica del origen
 
@@ -236,6 +237,8 @@ En el MVP, `cantidad_inicial_en_proceso` refleja el consumo realizado sobre el l
 Para `SEMILLA`, el consumo del origen puede mantenerse en gramos o unidades según la unidad canónica del lote origen. Para `ESQUEJE`, la unidad es siempre entera.
 
 Desde `EMBOLSADO`, el saldo vivo se maneja siempre en `UNIDAD`.
+
+Si `tipo_material_snapshot = OTRO`, el flujo queda fuera del estándar del MVP y requiere definición adicional.
 
 ### RN-VIV-18 — Todo evento que afecte saldo vivo registra saldo antes y después
 
@@ -335,6 +338,11 @@ En el MVP:
 * `DESPACHO` requiere evidencia.
 
 La evidencia debe almacenarse y vincularse directamente al evento que la origina.
+
+En el esquema, esto implica:
+
+* `EVIDENCIAS_TRAZABILIDAD.tipo_entidad_id` asociado al tipo de entidad evento de vivero,
+* `EVIDENCIAS_TRAZABILIDAD.entidad_id = EVENTO_LOTE_VIVERO.id`.
 
 ### RN-VIV-27 — No se permite completar un evento crítico sin evidencia requerida
 
@@ -452,6 +460,8 @@ La estrategia blockchain no debe bloquear el registro, consulta ni cierre confia
 
 Si se implementa anclaje blockchain en el MVP, solo el evento `DESPACHO` será candidato a anclaje.
 
+En el esquema actual, ese anclaje se almacena como `EVENTO_LOTE_VIVERO.metadata_blockchain`.
+
 Este anclaje debe considerarse complementario y no indispensable para el funcionamiento base del módulo.
 
 ---
@@ -469,8 +479,8 @@ El módulo debe permitir listar y consultar lotes por:
 * estado,
 * vivero,
 * planta o especie,
-* lote origen,
-* lote de vivero,
+* `recoleccion_id`,
+* `lote_vivero_id`,
 * motivo de cierre.
 
 ### RN-VIV-40 — Cadena de custodia visible
@@ -505,11 +515,12 @@ Los reportes deben diferenciar claramente los lotes cerrados por:
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Media
 
-Para el MVP bastan estos roles funcionales:
+Para el MVP se debe trabajar sobre los roles existentes en `rol_usuario`:
 
 * `ADMIN`
-* `OPERADOR`
-* `CONSULTA`
+* `GENERAL`
+* `VALIDADOR`
+* `VOLUNTARIO`
 
 ### RN-VIV-43 — Alcance operativo por rol
 
@@ -518,10 +529,9 @@ Para el MVP bastan estos roles funcionales:
 * **Relevancia carbono:** Media
 
 * `ADMIN`: parametriza, consulta y administra.
-* `OPERADOR`: registra eventos permitidos y consulta lotes.
-* `CONSULTA`: visualiza historial, cadena de custodia y reportes.
-
-Si la plataforma mantiene roles como `GENERAL`, `VALIDADOR` o `VOLUNTARIO`, su mapeo queda fuera de estas reglas y no altera el flujo base del módulo.
+* `GENERAL`: registra eventos permitidos y consulta lotes.
+* `VALIDADOR`: existe como rol global, pero en este módulo no activa un flujo especial en el MVP.
+* `VOLUNTARIO`: no debería registrar eventos críticos del módulo salvo parametrización explícita.
 
 ---
 
@@ -552,13 +562,10 @@ El MVP prioriza:
 
 Quedan fuera del MVP:
 
-* validación formal por evento,
-* estados `BORRADOR`, `PENDIENTE_VALIDACION` y `RECHAZADO` en operación,
-* correcciones post-validación,
+* correcciones posteriores por eventos compensatorios,
 * reapertura de lotes,
 * excepciones de evidencia,
 * evidencia tardía,
-* multi-aprobación,
 * blockchain multi-hito,
 * anclaje por cada evento,
 * modelado agronómico avanzado por especie,
@@ -573,7 +580,6 @@ Quedan fuera del MVP:
 
 El diseño del MVP debe dejar preparada una evolución futura para incorporar, sin romper el núcleo:
 
-* validaciones más complejas,
 * subflujos más ricos de adaptabilidad,
 * correcciones auditadas,
 * blockchain ampliada,
