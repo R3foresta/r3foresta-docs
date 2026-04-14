@@ -64,14 +64,6 @@ Además, el sistema registra automáticamente:
 * `fecha_registro` (timestamp del sistema),
 * `usuario_registro`.
 
-### RN-REC-05 — Especie: nombre científico + nombre comercial
-
-Se debe registrar **nombre científico** y **nombre comercial**.
-
-MVP (práctico, compatible con lo que ya tienen):
-
-* Se guardan como texto.
-* Si existe un catálogo de especies, se recomienda guardar también una referencia (`especie_id`) **sin perder el snapshot textual**.
 
 ### RN-REC-06 — Método de recolección desde catálogo cerrado
 
@@ -267,12 +259,14 @@ Solo se puede iniciar un lote de vivero desde una recolección que esté:
 - con tipo_material definido
 - con `saldo_actual` suficiente para el consumo
 
+El evento de INCIO de vivero consume de forma el material recolectado con trasacción atómico.
+
 ### RN-REC-24 — Movimiento de consumo por creación de lote (consumo parcial)
 
 Cuando se crea un lote de vivero desde una recolección, el sistema debe:
 
 - registrar el vínculo (recolección → lote_vivero),
-- registrar un movimiento `CONSUMO_A_VIVERO` con delta negativo,
+- registrar un movimiento `CONSUMO_A_VIVERO` con delta negativo en la recoleccion_movimiento,
 - recalcular `saldo_actual` y el estado operativo:
   - `ABIERTO` si saldo > 0
   - `CERRADO` si saldo = 0

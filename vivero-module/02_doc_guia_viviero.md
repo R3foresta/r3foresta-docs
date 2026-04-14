@@ -4,18 +4,18 @@
 
 ## 1. Propósito
 
-El **Módulo 2 (Vivero)** registra el proceso de maduración y preparación pre-plantación del material biológico proveniente del **Módulo 1 (Recolección)**.
+El **Módulo 2 (Vivero)** registra la maduración y preparación pre-plantación del material biológico que proviene del **Módulo 1 (Recolección)**.
 
-Su propósito operativo y de trazabilidad en el MVP es dejar evidencia verificable de:
+Su objetivo en el MVP es dejar evidencia verificable de:
 
 * qué lote origen alimentó al lote de vivero,
 * qué planta o especie se está trabajando,
 * cuánto material se consumió desde Recolección,
-* cuántas unidades entran en proceso en vivero,
+* cuánto material entró en proceso en vivero,
 * cuándo nacen las plantas vivas como saldo operativo,
-* qué eventos operativos ocurren durante el ciclo,
+* qué eventos ocurren durante el ciclo,
 * qué mermas y despachos se registran,
-* qué evidencia de trazabilidad acompaña cada evento,
+* qué evidencia acompaña cada evento,
 * y cómo se cierra el lote cuando el saldo vivo llega a cero.
 
 Este módulo no demuestra por sí solo captura de carbono, pero sí sostiene una parte crítica de la historia auditable: la **cadena de custodia y supervivencia operativa pre-plantación**.
@@ -28,7 +28,7 @@ Este módulo no demuestra por sí solo captura de carbono, pero sí sostiene una
 
 * Un **lote de vivero** se crea usando material biológico proveniente de **un solo lote origen** del Módulo 1.
 * **No se permite mezclar** varios lotes origen en un mismo lote de vivero.
-* Un mismo lote origen **sí puede alimentar varios lotes de vivero**, siempre que cada consumo quede registrado individualmente y el saldo del Módulo 1 se recalcule correctamente.
+* Un mismo lote origen **sí puede alimentar varios lotes de vivero**, siempre que cada consumo quede registrado individualmente y el saldo de Recolección se recalcule correctamente.
 
 Esto mantiene trazabilidad fuerte: cada merma, despacho o cierre del vivero siempre puede atribuirse a un origen único.
 
@@ -36,9 +36,9 @@ Esto mantiene trazabilidad fuerte: cada merma, despacho o cierre del vivero siem
 
 Solo se puede iniciar un lote de vivero desde una recolección que esté:
 
-* en estado **VERIFICADO** o equivalente formal del Módulo 1,
-* operativamente habilitada para consumo,
-* con saldo suficiente,
+* en estado `VALIDADO`,
+* operativamente `ABIERTO`,
+* con saldo suficiente para el consumo,
 * y con identidad de planta disponible para heredar.
 
 ### 2.3. Identidad de planta heredada desde Módulo 1
@@ -52,38 +52,51 @@ Al crear el lote de vivero se debe **heredar y congelar (snapshot)** la identida
 
 Esto evita que cambios futuros en catálogos alteren la trazabilidad histórica del lote.
 
-### 2.4. Doble lectura de cantidad
+### 2.4. Doble lectura del inicio
 
-En vivero conviven dos lecturas distintas de cantidad:
+En `INICIO` conviven dos lecturas distintas, pero alineadas:
 
 1. **Cantidad consumida del origen**
-   Es la cantidad que se descuenta del Módulo 1 usando la **unidad canónica del lote origen**.
+   Es la cantidad que se descuenta del Módulo 1 usando la **unidad canónica del lote origen**. Puede ser gramos o unidades, según el tipo de material y cómo se registró en Recolección.
 
-2. **Unidades iniciales en proceso**
-   Es la cantidad operativa que inicia en vivero:
+2. **Cantidad inicial en proceso**
+   Es la cantidad con la que el vivero arranca su seguimiento operativo antes de contar plantas vivas.
 
-   * semillas sembradas estimadas, o
-   * esquejes iniciados en proceso.
+En el MVP:
 
-Esto es especialmente importante para **semillas**, donde el consumo desde Recolección puede mantenerse en gramos, mientras vivero necesita además una lectura estimada de unidades sembradas.
+* `cantidad_inicial_en_proceso` usa la **misma unidad** del lote origen,
+* y se registra como reflejo del consumo realizado al inicio.
+
+Todavía no hablamos de plantas vivas. Eso empieza recién en `EMBOLSADO`.
 
 ### 2.5. Inicio no equivale a plantas vivas
 
-* En **Inicio** se registran **unidades en proceso**.
-* La contabilidad estricta de **plantas vivas** comienza desde **Embolsado**.
+* En `INICIO` se registra material en proceso.
+* En `INICIO` **no existe saldo vivo** todavía.
+* `saldo_vivo_antes` y `saldo_vivo_despues` quedan en `null` para este evento.
 
-Antes de Embolsado puede existir germinación, selección o pérdida natural del proceso, pero el saldo vivo operativo nace recién cuando la planta entra a bolsa o maceta.
+`INICIO` crea el lote, crea el evento, registra evidencia y descuenta origen; todavía no crea saldo vivo.
 
-### 2.6. Estados del MVP
+### 2.6. Embolsado crea el saldo vivo
+
+El evento `EMBOLSADO` marca el momento en que la plántula o esqueje ya puede contarse como **planta viva**.
+
+Desde ese momento:
+
+* nace `plantas_vivas_iniciales`,
+* nace `saldo_vivo_actual`,
+* y toda merma o despacho se calcula siempre en **UNIDAD**.
+
+### 2.7. Estados del MVP
 
 Para el MVP:
 
 * **Estado del lote:** `ACTIVO | FINALIZADO`
 * **Estado del evento:** todo evento se registra directamente como `COMPLETO`
 
-En esta fase no se usan estados operativos como `BORRADOR`, `PENDIENTE_VALIDACION` o `RECHAZADO`.
+En esta fase no se usan estados como `BORRADOR`, `PENDIENTE_VALIDACION` o `RECHAZADO` dentro del módulo de vivero.
 
-### 2.7. Evidencia de trazabilidad
+### 2.8. Evidencia de trazabilidad
 
 La evidencia se modela mediante la entidad **`evidencia_trazabilidad`**, que puede almacenar:
 
@@ -95,9 +108,9 @@ La evidencia se modela mediante la entidad **`evidencia_trazabilidad`**, que pue
 
 En el MVP, la evidencia debe quedar **vinculada directamente al evento que la origina**.
 
-### 2.8. Motivo de cierre del lote
+### 2.9. Motivo de cierre del lote
 
-Cuando un lote llega a estado `FINALIZADO`, debe diferenciarse **por qué** se cerró, usando `motivo_cierre`:
+Cuando un lote llega a estado `FINALIZADO`, debe diferenciarse **por qué** se cerró usando `motivo_cierre`:
 
 * `DESPACHO_TOTAL`
 * `PERDIDA_TOTAL`
@@ -107,26 +120,29 @@ Cuando un lote llega a estado `FINALIZADO`, debe diferenciarse **por qué** se c
 
 ## 3. Flujo del proceso (MVP)
 
-El flujo mínimo del MVP se basa en **tres hitos obligatorios** y **dos eventos operativos principales**, con un evento opcional de seguimiento:
+El flujo mínimo del MVP se basa en **dos hitos estructurales obligatorios**, **dos eventos operativos principales**, un evento opcional de seguimiento y un cierre automático.
 
-### Hitos obligatorios
+### Hitos estructurales obligatorios
 
-1. **Inicio**
-2. **Embolsado**
-3. **Despacho**
+1. `INICIO`
+2. `EMBOLSADO`
 
 ### Eventos operativos principales
 
-* **Merma**
-* **Cierre automático**
+* `MERMA`
+* `DESPACHO`
 
 ### Evento opcional de seguimiento
 
-* **Adaptabilidad**
+* `ADAPTABILIDAD` con subetapas `SOMBRA`, `MEDIA_SOMBRA` y `SOL_DIRECTO`
+
+### Evento automático
+
+* `CIERRE_AUTOMATICO`
 
 ### Secuencia mínima del MVP
 
-`recolección origen → consumo a vivero → inicio → embolsado → adaptabilidad (opcional) → merma(s) y/o despacho(s) → cierre automático`
+`recolección origen -> consumo a vivero -> inicio -> embolsado -> adaptabilidad (opcional) -> merma(s) y/o despacho(s) -> cierre automático`
 
 Reglas de secuencia:
 
@@ -135,6 +151,7 @@ Reglas de secuencia:
 * No se permite `DESPACHO` sin `EMBOLSADO` previo.
 * No se permite `ADAPTABILIDAD` sin `EMBOLSADO` previo.
 * `ADAPTABILIDAD` **no es requisito** para registrar `MERMA` ni `DESPACHO`.
+* Un lote **puede finalizar sin despacho** si todo su saldo vivo se pierde por mermas.
 
 ---
 
@@ -144,69 +161,87 @@ Reglas de secuencia:
 
 Registro del arranque del lote según el material:
 
-* **Semilla** → germinación / semillero
-* **Esqueje** → inicio de enraizamiento o proceso equivalente
+* **Semilla** -> germinación / semillero
+* **Esqueje** -> inicio de enraizamiento o proceso equivalente
 
 Datos mínimos esperados:
 
-* `id_lote_origen`
-* `fecha_evento_inicio`
+* `lote_origen_id`
+* `fecha_evento`
 * `responsable`
-* `id_vivero`
+* `vivero_id`
 * `cantidad_consumida_origen`
 * `unidad_consumida_origen`
-* `unidades_iniciales_en_proceso`
-* `planta_id` y snapshots heredados desde Módulo 1
-* observaciones (si aplica)
-* evidencia de trazabilidad obligatoria
+* `cantidad_inicial_en_proceso`
+* `unidad_inicial_en_proceso`
+* snapshots de planta (`planta_id`, nombre científico, nombre comercial, tipo de material)
+* `observaciones` si aplica
+* al menos una `evidencia_trazabilidad` válida
 
 Reglas importantes:
 
-* El lote origen debe ser elegible para consumo.
+* El lote origen debe estar `VALIDADO`, `ABIERTO` y con saldo suficiente.
 * La creación del lote en Módulo 2 y el descuento del saldo en Módulo 1 ocurren en **una misma transacción atómica**.
-* En el MVP, el evento `INICIO` se registra directamente como `COMPLETO`.
+* En el MVP, `cantidad_inicial_en_proceso` usa la misma unidad del origen.
+* En el MVP, `cantidad_inicial_en_proceso` refleja la cantidad efectivamente consumida del origen.
+* El evento `INICIO` se registra directamente como `COMPLETO`.
 * No se permite edición posterior del evento.
+
+Aclaraciones:
+
+* `plantas_vivas_iniciales = null`
+* `saldo_vivo_actual = null`
+* `saldo_vivo_antes = null`
+* `saldo_vivo_despues = null`
 
 ## 4.2. Embolsado
 
-El **Embolsado** marca el punto en el que la plántula pasa a bolsa o maceta y comienza el seguimiento como **saldo vivo**.
+El **Embolsado** marca el punto en el que la plántula o el esqueje ya pueden contarse como plantas vivas y empieza el seguimiento del **saldo vivo**.
 
 Desde este punto se registra:
 
 * `plantas_vivas_iniciales`
-* `saldo_vivo_antes`
-* `saldo_vivo_despues`
-* observaciones
-* evidencia de trazabilidad obligatoria
+* `saldo_vivo_antes = 0`
+* `saldo_vivo_despues = plantas_vivas_iniciales`
+* `observaciones`
+* al menos una `evidencia_trazabilidad` válida
 
 Reglas importantes:
 
 * El evento `EMBOLSADO` solo puede registrarse **una vez por lote**.
 * El saldo vivo nace en este evento.
+* `plantas_vivas_iniciales` debe ser mayor a `0`.
 * El saldo debe ser **calculado por el sistema**, no ingresado libremente por el usuario.
+* Desde este evento todo saldo vivo se maneja en **UNIDAD**.
 
 ## 4.3. Adaptabilidad
 
-La **Adaptabilidad** representa el periodo en el que la planta se fortalece en ambientes controlados antes de plantarse.
+La **Adaptabilidad** representa el periodo en el que la planta se fortalece en ambientes controlados antes de plantarse. Se aplica al lote completo, no a plantas individuales ni a fracciones del lote.
 
 En el MVP:
 
 * se registra como evento operativo de seguimiento,
 * puede ocurrir múltiples veces durante el ciclo del lote,
-* puede incluir subetapas como `SOMBRA`, `MEDIA_SOMBRA` y `SOL_DIRECTO`,
+* incluye subetapas como `SOMBRA`, `MEDIA_SOMBRA` y `SOL_DIRECTO`,
 * no exige permanencia mínima,
 * no exige una secuencia rígida,
 * y **no bloquea el despacho**.
 
 Su objetivo en el MVP es aportar contexto operativo e historial sin volver compleja la lógica central del sistema.
 
-Datos mínimos recomendados:
+Datos mínimos esperados:
 
 * `fecha_evento`
-* `subetapa_ambiente`
+* `subetapa_destino`
 * `responsable`
-* observaciones
-* evidencia de trazabilidad obligatoria
+* `observaciones` si aplica
+* al menos una `evidencia_trazabilidad` válida
+
+Reglas importantes:
+
+* No se permite `ADAPTABILIDAD` sin `EMBOLSADO` previo.
+* No cambia el saldo vivo.
+* Si el modelo de eventos guarda saldo, entonces `saldo_vivo_antes = saldo_vivo_despues = saldo_vivo_actual`.
 
 ## 4.4. Merma
 
@@ -220,35 +255,38 @@ Cada merma registra:
 * `responsable`
 * `saldo_vivo_antes`
 * `saldo_vivo_despues`
-* observaciones
-* evidencia de trazabilidad obligatoria
+* `observaciones`
+* al menos una `evidencia_trazabilidad` válida
 
 Reglas importantes:
 
-* La merma no puede dejar saldo negativo.
+* La merma siempre se expresa en **UNIDAD**.
 * La cantidad perdida no puede exceder el saldo vivo disponible.
-* Cuando la merma supere el umbral operativo configurado, el sistema debe exigir observación obligatoria y puede exigir validaciones adicionales en fases futuras.
+* El saldo no puede quedar negativo.
+* Si el saldo vivo llega a `0`, el lote debe cerrarse automáticamente.
 
 ## 4.5. Despacho
 
-El **Despacho** representa la salida parcial o total de plantas listas para plantación.
+El **Despacho** representa la salida parcial o total de plantas listas para plantación o destino equivalente.
 
 Cada despacho registra:
 
 * `cantidad_despachada`
 * `fecha_evento`
 * `responsable`
-* `destino_tipo`
+* `destino_tipo` (`PLANTACION_PROPIA`, `DONACION_COMUNIDAD`, `VENTA`, `OTRO`)
 * `destino_referencia`
-* `comunidad_destino`
+* `comunidad_destino` cuando aplique
 * `saldo_vivo_antes`
 * `saldo_vivo_despues`
-* evidencia de trazabilidad obligatoria
+* `observaciones`
+* al menos una `evidencia_trazabilidad` válida
 
 Reglas importantes:
 
-* No se permite despacho sin `EMBOLSADO` previo.
+* No se permite `DESPACHO` sin `EMBOLSADO` previo.
 * La cantidad despachada no puede exceder el saldo vivo disponible.
+* Puede haber múltiples despachos parciales.
 * Si el saldo vivo llega a `0`, el lote debe cerrarse automáticamente.
 
 ## 4.6. Cierre automático
@@ -259,15 +297,13 @@ Este evento debe registrar:
 
 * `fecha_evento`
 * `motivo_cierre`
-* `saldo_vivo_final`
 * referencia al evento que dejó el saldo en cero
 
 Reglas importantes:
 
 * El lote pasa a estado `FINALIZADO`.
 * Ya no se permiten nuevos eventos operativos normales.
-* El `motivo_cierre` debe calcularse como:
-
+* El `motivo_cierre` se calcula como:
   * `DESPACHO_TOTAL`
   * `PERDIDA_TOTAL`
   * `MIXTO`
@@ -276,7 +312,7 @@ Reglas importantes:
 
 ## 5. Modelo de eventos
 
-El sistema se basa en eventos **append-only**: se agregan al historial y no se reescriben ni eliminan.
+El sistema se basa en eventos **append-only**: se agregan al historial y no se reescriben ni se eliminan.
 
 Tipos de evento del MVP:
 
@@ -295,6 +331,7 @@ Fuera del MVP:
 * evidencia tardía,
 * multi-aprobación,
 * traslados entre viveros,
+* división o fusión de lotes,
 * y sincronización offline-first.
 
 ---
@@ -344,7 +381,9 @@ Idealmente, la ventana retroactiva debe ser configurable por el sistema.
 
 Desde `EMBOLSADO`:
 
-`saldo_vivo_despues = saldo_vivo_antes - mermas - despachos`
+* `EMBOLSADO`: `saldo_vivo_despues = plantas_vivas_iniciales`
+* `MERMA`: `saldo_vivo_despues = saldo_vivo_antes - cantidad_perdida`
+* `DESPACHO`: `saldo_vivo_despues = saldo_vivo_antes - cantidad_despachada`
 
 Reglas:
 
@@ -359,8 +398,8 @@ El lote se finaliza automáticamente cuando el saldo vivo llega a **0**.
 
 No basta marcar `FINALIZADO`; también debe calcularse `motivo_cierre`:
 
-* **DESPACHO_TOTAL**: el lote llegó a 0 por despachos,
-* **PERDIDA_TOTAL**: el lote llegó a 0 sin despachos, por pérdida total,
+* **DESPACHO_TOTAL**: el lote llegó a 0 solo por despachos,
+* **PERDIDA_TOTAL**: el lote llegó a 0 sin despachos, solo por pérdida,
 * **MIXTO**: el lote llegó a 0 combinando mermas y despachos.
 
 ---
@@ -374,7 +413,7 @@ El módulo debe exponer una vista operativa que permita:
 * visualizar el historial del lote,
 * y seguir la cadena completa:
 
-`recolección origen → consumo a vivero → inicio → embolsado → adaptabilidad → mermas → despachos → cierre`
+`recolección origen -> consumo a vivero -> inicio -> embolsado -> adaptabilidad -> mermas -> despachos -> cierre`
 
 Esta vista es crítica para operación diaria y para auditoría.
 
@@ -396,7 +435,7 @@ Fuera del MVP puede ampliarse a otros hitos relevantes.
 
 ## 11. Roles mínimos del MVP
 
-Para el MVP bastan estos roles:
+Para operar el módulo de vivero en el MVP bastan estos roles funcionales:
 
 * `ADMIN`
 * `OPERADOR`
@@ -408,7 +447,7 @@ Alcance básico:
 * `OPERADOR`: registra eventos permitidos y consulta lotes.
 * `CONSULTA`: visualiza historial, cadena de custodia y reportes.
 
-El rol `VALIDADOR` queda reservado para una fase posterior.
+Si la plataforma ya maneja roles como `GENERAL`, `VALIDADOR` o `VOLUNTARIO`, su mapeo de permisos queda fuera de esta guía y no cambia las reglas centrales del módulo.
 
 ---
 
@@ -417,16 +456,16 @@ El rol `VALIDADOR` queda reservado para una fase posterior.
 ### Incluye
 
 * origen único por lote de vivero,
-* elegibilidad solo desde recolecciones verificadas y con saldo suficiente,
-* consumo atómico Módulo 1 → Módulo 2,
+* elegibilidad solo desde recolecciones `VALIDADO` y con saldo suficiente,
+* consumo atómico Módulo 1 -> Módulo 2,
 * herencia de planta o especie y snapshots,
-* doble lectura de cantidad,
+* doble lectura del inicio en la misma unidad del origen,
 * eventos append-only,
 * estados simples de lote y evento,
-* embolsado como nacimiento del saldo vivo,
-* adaptabilidad como seguimiento operativo no bloqueante,
-* merma con causa,
-* despacho parcial o total con destino estructurado,
+* `EMBOLSADO` como nacimiento del saldo vivo,
+* `ADAPTABILIDAD` como seguimiento operativo no bloqueante,
+* `MERMA` con causa,
+* `DESPACHO` parcial o total con destino estructurado,
 * evidencia estricta por evento,
 * cierre automático con motivo de cierre,
 * historial visible,
@@ -445,4 +484,5 @@ El rol `VALIDADOR` queda reservado para una fase posterior.
 * blockchain multi-hito,
 * anclaje por cada evento,
 * modelado agronómico detallado por especie,
+* división y fusión de lotes,
 * y flujos complejos offline-first.

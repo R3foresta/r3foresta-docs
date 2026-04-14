@@ -23,7 +23,7 @@ Cada regla incluye:
 * **Lote origen:** registro de Recolección (Módulo 1) que abastece al vivero.
 * **Lote de vivero:** lote iniciado en Módulo 2 a partir de un único lote origen.
 * **Cantidad consumida del origen:** cantidad descontada en Módulo 1 usando la unidad canónica del lote origen.
-* **Unidades en proceso:** semillas sembradas estimadas o esquejes iniciados; aún no son plantas vivas.
+* **Cantidad inicial en proceso:** lectura operativa del material que entra a vivero en `INICIO`, usando la misma unidad del origen en el MVP.
 * **Plantas vivas:** saldo operativo que nace en el evento `EMBOLSADO`.
 * **Saldo vivo:** cantidad actual de plantas vivas disponibles en el lote.
 * **Adaptabilidad:** etapa operativa en la que la planta se fortalece en ambientes controlados antes de plantarse. En el MVP se registra como evento opcional de seguimiento, no como requisito bloqueante del flujo.
@@ -62,7 +62,7 @@ No se permite mezclar múltiples lotes origen en un mismo lote de vivero.
 
 En el MVP:
 
-* no se permite dividir un lote en sub-lotes,
+* no se permite dividir un lote en sublotes,
 * no se permite fusionar dos lotes en uno.
 
 ### RN-VIV-04 — Elegibilidad del origen para iniciar vivero
@@ -73,9 +73,9 @@ En el MVP:
 
 Solo se puede iniciar un lote de vivero desde una recolección que esté:
 
-* en estado **VERIFICADO** o equivalente formal del Módulo 1,
-* operativamente habilitada para consumo,
-* con saldo suficiente,
+* con `estado_registro = VALIDADO`,
+* con `estado_operativo = ABIERTO`,
+* con saldo suficiente para el consumo,
 * y con identidad de planta disponible.
 
 ### RN-VIV-05 — Atomicidad entre Módulo 1 y Módulo 2
@@ -113,17 +113,18 @@ Al crear el lote de vivero se debe heredar y congelar la identidad de la planta 
 
 ## 4. Flujo operativo y hitos
 
-### RN-VIV-08 — Hitos obligatorios del ciclo mínimo
+### RN-VIV-08 — Hitos estructurales del ciclo mínimo
 
 * **Severidad:** BLOQUEANTE
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Alta
 
-El flujo mínimo del lote en MVP incluye estos hitos obligatorios:
+Todo lote de vivero debe iniciar con:
 
 1. `INICIO`
 2. `EMBOLSADO`
-3. `DESPACHO`
+
+`DESPACHO` es obligatorio solo cuando exista salida hacia plantación o destino equivalente. Un lote también puede finalizar por pérdida total del saldo vivo.
 
 ### RN-VIV-09 — Adaptabilidad como seguimiento operativo
 
@@ -164,7 +165,7 @@ No se permite registrar:
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Alta
 
-El saldo de plantas vivas nace en el evento `EMBOLSADO`. Antes de ese hito solo existen unidades en proceso. El evento EMBOLSADO solo puede registrarse una vez por lote.
+El saldo de plantas vivas nace en el evento `EMBOLSADO`. Antes de ese hito solo existe material en proceso. El evento `EMBOLSADO` solo puede registrarse una vez por lote.
 
 ---
 
@@ -189,7 +190,7 @@ El lote de vivero solo puede tener estos estados:
 
 En el MVP, todo evento se registra directamente como `COMPLETO`.
 
-No se utilizarán flujos operativos de `BORRADOR`, `PENDIENTE_VALIDACION` o `RECHAZADO`. De todas formas debemos dejar preparada la evolución futura para incorporar validación formal por evento sin romper el núcleo del MVP.
+No se utilizarán flujos operativos de `BORRADOR`, `PENDIENTE_VALIDACION` o `RECHAZADO`.
 
 ### RN-VIV-14 — Validación formal por evento
 
@@ -222,17 +223,19 @@ Si más adelante se requiere ajuste, deberá resolverse con eventos correctivos 
 El inicio del lote debe registrar simultáneamente:
 
 * `cantidad_consumida_origen` en la unidad canónica de Módulo 1,
-* `unidades_iniciales_en_proceso` como lectura operativa del vivero.
+* `cantidad_inicial_en_proceso` en la misma unidad del origen.
 
-En el MVP, el evento `INICIO` se registra directamente como `COMPLETO` y, en esa misma transacción atómica, se descuenta el saldo oficial del lote origen verificando disponibilidad suficiente.
+En el MVP, `cantidad_inicial_en_proceso` refleja el consumo realizado sobre el lote origen.
 
-### RN-VIV-17 — Semilla puede consumir en gramos y operar en unidades estimadas
+### RN-VIV-17 — La unidad del inicio respeta la unidad canónica del origen
 
 * **Severidad:** ADVERTENCIA
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Media
 
-Para semilla, el consumo del origen puede mantenerse en gramos o unidades según la unidad canónica del lote origen, mientras vivero puede registrar una cantidad estimada de semillas sembradas.
+Para `SEMILLA`, el consumo del origen puede mantenerse en gramos o unidades según la unidad canónica del lote origen. Para `ESQUEJE`, la unidad es siempre entera.
+
+Desde `EMBOLSADO`, el saldo vivo se maneja siempre en `UNIDAD`.
 
 ### RN-VIV-18 — Todo evento que afecte saldo vivo registra saldo antes y después
 
@@ -240,12 +243,16 @@ Para semilla, el consumo del origen puede mantenerse en gramos o unidades según
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Alta
 
-Los eventos `EMBOLSADO`, `MERMA` y `DESPACHO` que afecten saldo vivo deben registrar:
+Los eventos `EMBOLSADO`, `MERMA` y `DESPACHO` deben registrar:
 
 * `saldo_vivo_antes`
 * `saldo_vivo_despues`
 
-El saldo vivo debe ser calculado por el sistema y no provisto por el usuario.
+Reglas específicas:
+
+* en `EMBOLSADO`, `saldo_vivo_antes = 0`,
+* en `EMBOLSADO`, `saldo_vivo_despues = plantas_vivas_iniciales`,
+* en `MERMA` y `DESPACHO`, el saldo lo calcula el sistema.
 
 ### RN-VIV-19 — MERMA representa pérdida explícita
 
@@ -322,8 +329,10 @@ Una vez que el lote pase a `FINALIZADO`, no se permiten nuevos eventos operativo
 En el MVP:
 
 * `INICIO` requiere evidencia,
-* `DESPACHO` requiere evidencia,
-* `EMBOLSADO`, `MERMA` y `ADAPTABILIDAD` requieren evidencia.
+* `EMBOLSADO` requiere evidencia,
+* `ADAPTABILIDAD` requiere evidencia,
+* `MERMA` requiere evidencia,
+* `DESPACHO` requiere evidencia.
 
 La evidencia debe almacenarse y vincularse directamente al evento que la origina.
 
@@ -472,7 +481,7 @@ El módulo debe permitir listar y consultar lotes por:
 
 La consulta del lote debe hacer visible la secuencia:
 
-`recolección origen → consumo → inicio → embolsado → adaptabilidad → mermas → despachos → cierre`
+`recolección origen -> consumo -> inicio -> embolsado -> adaptabilidad -> mermas -> despachos -> cierre`
 
 ### RN-VIV-41 — Reportes distinguen tipos de cierre
 
@@ -496,31 +505,23 @@ Los reportes deben diferenciar claramente los lotes cerrados por:
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Media
 
-Para el MVP bastan estos roles mínimos:
+Para el MVP bastan estos roles funcionales:
 
 * `ADMIN`
 * `OPERADOR`
 * `CONSULTA`
 
-Roles futuros:
-* `VALIDADOR`
-
 ### RN-VIV-43 — Alcance operativo por rol
 
 * **Severidad:** ADVERTENCIA
-
 * **Aplica en MVP:** Sí
-
 * **Relevancia carbono:** Media
 
 * `ADMIN`: parametriza, consulta y administra.
-
 * `OPERADOR`: registra eventos permitidos y consulta lotes.
-
 * `CONSULTA`: visualiza historial, cadena de custodia y reportes.
 
-Roles futuros:
-* `VALIDADOR`: valida eventos.
+Si la plataforma mantiene roles como `GENERAL`, `VALIDADOR` o `VOLUNTARIO`, su mapeo queda fuera de estas reglas y no altera el flujo base del módulo.
 
 ---
 
@@ -536,7 +537,7 @@ El MVP prioriza:
 
 * trazabilidad del origen,
 * creación del lote desde un único origen,
-* consumo atómico Módulo 1 → Módulo 2,
+* consumo atómico Módulo 1 -> Módulo 2,
 * snapshots de planta,
 * control de saldo vivo,
 * registro auditable de eventos clave,
@@ -561,6 +562,7 @@ Quedan fuera del MVP:
 * blockchain multi-hito,
 * anclaje por cada evento,
 * modelado agronómico avanzado por especie,
+* división y fusión de lotes,
 * y flujos complejos offline-first.
 
 ### RN-VIV-46 — Principio de crecimiento posterior
