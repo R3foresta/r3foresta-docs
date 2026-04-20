@@ -31,7 +31,7 @@ El módulo separa dos cosas:
 
 - **Estado del registro (Web2):**
     - `BORRADOR`: editable, barato, aún no registrado en blockchain (no sellado).
-    - `VALIDADO`: registrado en blockchain (sellado), no ediable (solo correcciones auditadas)
+    - `VALIDADO`: registrado en blockchain (sellado), no editable
 - **Estado operativo (inventario):**
     - `ABIERTO`: saldo disponible > 0
     - `CERRADO`: saldo disponible = 0 (agotado)
@@ -39,10 +39,20 @@ El módulo separa dos cosas:
 ### 2.3. Cantidad y unidad canónica
 
 - **ESQUEJE:** unidades enteras (1, 2, 3…)
-- **SEMILLA:** peso o unidades enteras, con unidad canónica **gramos (g)** almacenada como decimal o entero según corresponda (1, 2, 3...)
-    
-    (la UI puede permitir kg o g, pero el sistema opera en g).
-    
+- **SEMILLA:** peso o unidades enteras, con persistencia oficial en `G` o `UNIDAD` según la regla funcional del material.
+
+Convención oficial del sistema:
+
+- `ENUM(unidad_medida) = [UNIDAD, G]`
+- el frontend puede aceptar `kg`, `g` y `unidad`
+- el backend normaliza `kg -> G`, `g -> G` y `unidad -> UNIDAD`
+- `kg` no se persiste
+- no se deben mezclar `G` y `GR`
+
+Reglas por tipo de material:
+
+- **SEMILLA:** puede capturarse en peso o en unidades; si entra por peso se persiste `G`, si entra por conteo se persiste `UNIDAD`.
+- **ESQUEJE:** solo `UNIDAD`, entero estricto, sin decimales.
 
 ### 2.4. Consumo automático hacia Vivero
 
@@ -104,7 +114,7 @@ Al validar:
 - el recolector confirma explícitamente que:
     - el registro queda sellado,
     - puede registrarse/anclarse en blockchain (según estrategia MVP),
-    - ediciones posteriores no reescriben el pasado: se hacen por **CORRECCIÓN**.
+    - ediciones posteriores no reescriben el pasado: en el MVP no se corrige el registro ya validado; cualquier modelo de corrección queda fuera de alcance.
 - se registran automáticamente:
     - usuario_validación
     - fecha_validación
@@ -112,7 +122,7 @@ Al validar:
 Desde este punto:
 
 - no se permite editar el contenido validado directamente,
-- cualquier cambio se hace con evento **CORRECCIÓN** (ver 4 y 5).
+- solo se permiten movimientos append-only del MVP: `CONSUMO_A_VIVERO` y `DESECHO`.
 
 ---
 
@@ -130,6 +140,20 @@ Cuando desde el Modulo 2 se crea un lote seleccionando una recolección:
 - registra un movimiento **CONSUMO_A_VIVERO** en la recolección
 - descuenta saldo automáticamente
 - enlaza `recolección_id → lote_vivero_id`
+
+Contrato estricto entre Módulo 1 y Módulo 2 en `INICIO`:
+
+- `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`
+- `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
+- `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
+- `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
+
+Restricciones del MVP:
+
+- no se puede consumir más de lo disponible
+- la unidad del movimiento debe coincidir con la unidad canónica de la recolección
+- `CONSUMO_A_VIVERO` usa `delta` negativo
+- `DESECHO` usa `delta` negativo
 
 **Regla crítica:** creación el Modulo 2 + consumo deben ser **atómicos**:
 
@@ -159,13 +183,12 @@ Movimientos típicos:
 
 - **CONSUMO_A_VIVERO** (automático desde el Modulo 2)
 - **DESECHO** (parcial o total, con motivo obligatorio)
-- **CORRECCIÓN** (post-validación, con delta y motivo)
 - **EVIDENCIA_AGREGADA** (si auditar la carga de fotos como evento)
 - **UBICACIÓN_AGREGADA/ACTUALIZADA** (más granularidad)
 
 ---
 
-## 5. Estados y eventos del registro: BORRADOR, VALIDADO y CORRECCIÓN
+## 5. Estados y eventos del registro: BORRADOR y VALIDADO
 
 ### 5.1. BORRADOR
 
@@ -210,21 +233,16 @@ Movimientos típicos:
 - Solo se permiten **movimientos append-only**:
   - `CONSUMO_A_VIVERO` (automático desde Módulo 2)
   - `DESECHO` (con motivo)
-  - `CORRECCIÓN` (con motivo + delta)
   
 (Futuro: Esta parte de validación también se hara por la comunidad, no solo el recolector, se puede proponer que más de una persona valide la recolección y quede registrado en blockchain quienes validaron y cuando.)
 
-### 5.3. CORRECCIÓN (post-validación)
+### 5.3. Correcciones fuera del MVP
 
-Si se detecta un error después de validar:
+Si se detecta un error después de validar, en el MVP no se corrige la recolección validada ni sus movimientos. La regla operativa es:
 
-- no se edita el registro original,
-- se crea un evento **CORRECCIÓN** con:
-    - delta (+/-) por campo/cantidad, según aplique
-    - motivo
-    - responsable
-    - timestamp
-- se ancla también la corrección en blockchain y se debe mencionar que hubo una corrección, es importante que esta corrección se aceptada por el administrador.
+- el borrador sí se puede editar antes de validar,
+- una vez validado/subido, no hay vuelta atrás en el MVP,
+- un modelo futuro de `CORRECCION` podrá existir como evento auditado, pero queda explícitamente fuera de esta fase.
 
 ---
 
@@ -253,12 +271,12 @@ Restricción:
 
 El saldo del lote origen se conserva así:
 
-**saldo = cantidad_inicial − consumos − descartes (+/− correcciones)**
+**saldo = cantidad_inicial + SUM(delta_movimientos)**
 
 Reglas:
 
 - El saldo **nunca** puede ser negativo.
-- El saldo solo puede aumentar por **CORRECCIÓN** (auditada).
+- En el MVP, los deltas persistidos son negativos porque solo existen `CONSUMO_A_VIVERO` y `DESECHO`.
 - El lote se considera `CERRADO` cuando saldo = 0.
 
 ---
@@ -273,7 +291,6 @@ Para evitar gas innecesario:
     - y por cada movimiento post-validación:
         - `CONSUMO_A_VIVERO`
         - `DESECHO`
-        - `CORRECCIÓN`
 
 Roles (MVP):
 
@@ -289,17 +306,18 @@ Roles (MVP):
 
 **MVP incluye**
 
-- BORRADOR / VALIDADO / CORRECCIÓN (post-validación)
-- Unidad canónica de semillas en gramos
+- BORRADOR / VALIDADO
+- Persistencia oficial de unidades: `UNIDAD | G`
 - Ubicación con lat/long obligatorias para validar
 - Evidencia mínima (2 fotos) para validar
 - Motivo de descarte obligatorio
-- Movimientos append-only (consumo automático desde el Modulo 2, descarte, corrección)
+- Movimientos append-only (consumo automático desde el Modulo 2 y descarte)
 - Integración con el Modulo 2 con consumo automático y transacción atómica
 - Catálogos administrados + “SIN ESPECIFICAR” para niveles administrativos
 
 **Futuro**
 
+- Correcciones auditadas post-validación
 - Excepciones aprobadas (validación sin evidencia, casos justificados)
 - Propuesta de nuevas comunidades/zonas por usuarios (aprobación admin)
 - Offline-first (captura en campo sin señal: fotos/local → subida posterior)

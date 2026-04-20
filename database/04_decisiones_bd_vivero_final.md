@@ -201,7 +201,61 @@ Consistencia fuerte entre Recolección y Vivero.
 
 ---
 
-## 10. La evidencia se desacopló del evento
+## 10. El contrato entre Módulo 1 y Módulo 2 en `INICIO` es estricto
+
+### Decisión
+El movimiento `CONSUMO_A_VIVERO`, el `LOTE_VIVERO` y el evento `INICIO` deben persistirse con cantidades y unidades estrictamente alineadas.
+
+### La duda crítica
+“¿Por qué no dejar que cada tabla guarde su propia lectura?”
+
+### Respuesta
+Porque eso abre inconsistencias difíciles de auditar justo en el punto más sensible del proceso: el traspaso entre origen y vivero.  
+Si las tres piezas no coinciden, la trazabilidad se rompe desde el arranque del lote.
+
+### Invariantes obligatorias
+- `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`
+- `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
+- `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
+- `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
+
+### Lo que se sacrificó
+Flexibilidad para desacoplar lecturas o tolerar diferencias operativas.
+
+### Lo que se ganó
+Trazabilidad defendible y menor ambigüedad entre módulos.
+
+---
+
+## 11. Se adoptó una convención oficial única de unidades persistidas
+
+### Decisión
+La persistencia oficial del sistema usa solo `ENUM(unidad_medida) = [UNIDAD, G]`.
+
+### La duda crítica
+“¿Por qué no persistir también `kg` o soportar `GR` como variante?”
+
+### Respuesta
+Porque una sola convención fuerte simplifica backend, frontend, base de datos y documentación.  
+`kg` es útil como entrada de usuario, pero no debe propagarse a persistencia.  
+Tampoco se debe mezclar `G` con `GR`, porque eso introduce ruido semántico sin valor funcional.
+
+### Reglas derivadas
+- frontend acepta `kg`, `g` y `unidad`
+- backend normaliza `kg -> G`, `g -> G`, `unidad -> UNIDAD`
+- `kg` no se persiste
+- `G` permite decimales
+- `UNIDAD` no permite decimales
+
+### Lo que se sacrificó
+Flexibilidad temprana para soportar más unidades.
+
+### Lo que se ganó
+Consistencia transversal y menos errores de integración.
+
+---
+
+## 12. La evidencia se desacopló del evento
 
 ### Decisión
 La evidencia se modela como entidad separada y vinculable al evento, no como campos embebidos dentro del propio evento.
@@ -221,7 +275,7 @@ Mejor diseño documental y mayor reutilización futura.
 
 ---
 
-## 11. Blockchain es accesorio, no dependencia operativa
+## 13. Blockchain es accesorio, no dependencia operativa
 
 ### Decisión
 El anclaje blockchain no condiciona la validez operativa de un despacho.
@@ -242,7 +296,7 @@ Autonomía operativa y menor fragilidad del sistema.
 
 ---
 
-## 12. Se privilegió semántica fuerte sobre flexibilidad prematura
+## 14. Se privilegió semántica fuerte sobre flexibilidad prematura
 
 ### Decisión
 El modelo no se diseñó para soportar todos los escenarios futuros desde el día uno.
@@ -253,6 +307,12 @@ El modelo no se diseñó para soportar todos los escenarios futuros desde el dí
 ### Respuesta
 Porque la flexibilidad temprana suele introducir ambigüedad estructural, validaciones difusas y más costo cognitivo.  
 En un MVP, la prioridad no es cubrir todas las variantes posibles, sino construir una base estable, entendible y defendible.
+
+Eso también implica dejar fuera del MVP:
+- `CORRECCION` operativa una vez registrado el evento,
+- persistencia de `kg`,
+- conversiones automáticas entre masa y plantas vivas,
+- y unidades híbridas o configurables por vivero.
 
 ### Lo que se sacrificó
 Generalización temprana.

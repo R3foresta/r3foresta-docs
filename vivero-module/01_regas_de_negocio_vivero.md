@@ -26,6 +26,9 @@ Cada regla incluye:
 * **Cantidad inicial en proceso:** lectura operativa del material que entra a vivero en `INICIO`, usando la misma unidad del origen en el MVP.
 * **Plantas vivas:** saldo operativo que nace en el evento `EMBOLSADO`.
 * **Saldo vivo:** cantidad actual de plantas vivas disponibles en el lote.
+* **Persistencia oficial de unidades:** `ENUM(unidad_medida) = [UNIDAD, G]`.
+* **Normalización de entrada:** el frontend puede aceptar `kg`, `g` y `unidad`; el backend normaliza `kg -> G`, `g -> G` y `unidad -> UNIDAD`. `kg` no se persiste.
+* **Material en proceso:** material consumido desde Recolección y registrado en `INICIO`; puede estar en `G` o `UNIDAD`, y no representa todavía plantas vivas.
 * **Adaptabilidad:** etapa operativa en la que la planta se fortalece en ambientes controlados antes de plantarse. En el MVP se registra como evento opcional de seguimiento, no como requisito bloqueante del flujo.
 * **Estado del lote:** `ACTIVO | FINALIZADO`.
 * **Eventos de vivero:** se registran como append-only y se consideran definitivos una vez insertados.
@@ -234,11 +237,57 @@ En el MVP, `cantidad_inicial_en_proceso` refleja el consumo realizado sobre el l
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Media
 
-Para `SEMILLA`, el consumo del origen puede mantenerse en gramos o unidades según la unidad canónica del lote origen. Para `ESQUEJE`, la unidad es siempre entera.
+Para `SEMILLA`, el consumo del origen puede mantenerse en `G` o `UNIDAD` según la unidad canónica del lote origen y las reglas funcionales definidas para la especie/material.
+
+Para `ESQUEJE`, la unidad es siempre `UNIDAD`, con entero estricto y sin decimales.
 
 Desde `EMBOLSADO`, el saldo vivo se maneja siempre en `UNIDAD`.
 
 Si `tipo_material_snapshot = OTRO`, el flujo queda fuera del estándar del MVP y requiere definición adicional.
+
+### RN-VIV-17A — Contrato estricto entre Recolección y Vivero en `INICIO`
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Cuando se crea un `LOTE_VIVERO` desde una `RECOLECCION`, el movimiento `CONSUMO_A_VIVERO`, el lote y el evento `INICIO` deben quedar estrictamente alineados.
+
+Invariantes obligatorias:
+
+* `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`
+* `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
+* `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
+* `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
+
+### RN-VIV-17B — Convención oficial de unidades y reglas numéricas
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+La convención oficial del sistema en DB, backend, frontend y documentación es:
+
+* `UNIDAD`
+* `G`
+
+Reglas obligatorias:
+
+* No se deben mezclar `G` y `GR`.
+* `G` permite decimales.
+* `UNIDAD` no permite decimales.
+* `kg` solo existe como input del frontend y nunca se persiste.
+* No se aceptan otras unidades en el MVP.
+
+### RN-VIV-17C — El sistema no convierte masa en plantas vivas
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+El sistema no convierte automáticamente gramos en plantas vivas.
+
+`EMBOLSADO` registra un nuevo dato observado del proceso: cuántas plantas vivas resultaron del material que entró al lote.
 
 ### RN-VIV-18 — Todo evento que afecte saldo vivo registra saldo antes y después
 
@@ -256,6 +305,20 @@ Reglas específicas:
 * en `EMBOLSADO`, `saldo_vivo_antes = 0`,
 * en `EMBOLSADO`, `saldo_vivo_despues = plantas_vivas_iniciales`,
 * en `MERMA` y `DESPACHO`, el saldo lo calcula el sistema.
+
+### RN-VIV-18A — Reglas de unidad por evento
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Reglas obligatorias por evento:
+
+* `INICIO`: `cantidad_afectada` usa la misma cantidad que el consumo de Recolección y `unidad_medida_evento` usa la misma unidad del origen.
+* `EMBOLSADO`: `cantidad_afectada = plantas_vivas_iniciales` y `unidad_medida_evento = UNIDAD`.
+* `ADAPTABILIDAD`, `MERMA`, `DESPACHO` y `CIERRE_AUTOMATICO`: operan sobre saldo vivo en `UNIDAD`.
+
+Para `ADAPTABILIDAD`, si el modelo persiste `cantidad_afectada`, esta debe expresarse en `UNIDAD` y referir al saldo vivo observado; no modifica el saldo.
 
 ### RN-VIV-19 — MERMA representa pérdida explícita
 

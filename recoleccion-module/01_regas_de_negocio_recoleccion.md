@@ -21,8 +21,11 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
 * **Tipo de material:** `SEMILLA` o `ESQUEJE`.
 * **Cantidad:**
 
-  * Para `ESQUEJE`: unidades enteras.
-  * Para `SEMILLA`: bien peso (kg/gr) o son unidades enteras, almacenado en una unidad canónica.
+  * Persistencia oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]`.
+  * Para `ESQUEJE`: solo `UNIDAD`, entero estricto, sin decimales.
+  * Para `SEMILLA`: puede capturarse por peso o por conteo, pero solo se persiste en `G` o `UNIDAD`.
+  * El frontend puede aceptar `kg`, `g` y `unidad`; el backend normaliza `kg -> G`, `g -> G` y `unidad -> UNIDAD`.
+  * `kg` no se persiste en base de datos.
 * **Estados:** `BORRADOR/VALIDADO` (registro) y `ABIERTO/CERRADO` (operativo, derivado del saldo).
 * **Ubicación estructurada:** latitud/longitud obligatorias **para validar** + datos administrativos opcionales (catálogos).
 * **Evidencia:** fotos obligatorias **para validar** (mínimo 2), formato JPG/PNG.
@@ -116,15 +119,19 @@ Post-validación, el saldo solo cambia mediante **movimientos** (no edición dir
 
 - `CONSUMO_A_VIVERO` (automático desde M2) → delta negativo + referencia al lote de vivero
 - `DESECHO` (manual) → delta negativo + **motivo obligatorio**
-- `CORRECCIÓN` (controlado) → delta positivo/negativo + **motivo obligatorio** + rol autorizado
 
-Los movimientos son **append-only**: no se editan ni se borran; si hay error, se registra una corrección nueva.
+Fuera del MVP:
+
+- `CORRECCION` (controlado) → delta positivo/negativo + **motivo obligatorio** + rol autorizado
+
+Los movimientos son **append-only**: no se editan ni se borran. Si más adelante se incorpora `CORRECCION`, deberá registrarse como un movimiento nuevo y auditable, no como edición del pasado.
 
 ### RN-REC-10B — Conservación del saldo (no magia)
 
 - `saldo_actual = cantidad_inicial + SUM(delta_movimientos)`
 - Regla dura: el sistema **no permite** que `saldo_actual` quede por debajo de 0.
 - Cuando `saldo_actual = 0` ⇒ `estado_operativo = CERRADO`.
+- En el MVP, todos los `delta_movimientos` persistidos son negativos porque `CORRECCION` queda fuera de alcance.
 
 ## 6. Reglas de cantidades y unidades
 
@@ -136,14 +143,27 @@ La cantidad de recolección es obligatoria y debe ser **mayor a 0**.
 
 Para `SEMILLA`:
 
-* El usuario puede ingresar en **kg** o **gr**,
-* El sistema debe almacenar en una unidad canónica (que serían **gramos** como decimal en caso de ser peso, o unidades enteras si se cuenta por cantidad de semillas).
-* Mantener (si se quiere) el “input original” solo para UI, pero la lógica usan las unidades canónicas.
+* El frontend puede ingresar en `kg`, `g` o `unidad`, según las reglas funcionales definidas para la especie/material.
+* El sistema debe persistir solo `G` o `UNIDAD`.
+* Si la captura es por peso, la unidad persistida es `G`.
+* Si la captura es por conteo, la unidad persistida es `UNIDAD`.
+* `kg` existe solo como input del frontend y nunca se persiste.
+* No se deben mezclar `G` y `GR` en documentación, backend, frontend ni base de datos.
+
+### RN-REC-12A — Convención oficial de persistencia de unidades
+
+La convención oficial del sistema para `RECOLECCION.unidad_canonica` y `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento` es:
+
+* `UNIDAD`
+* `G`
+
+No se aceptan otras unidades en el MVP.
 
 ### RN-REC-13 — Esquejes: entero estricto
 
 Para `ESQUEJE`:
 
+* La cantidad usa siempre `UNIDAD`.
 * La cantidad es **entera** y **sin decimales**.
 * Debe ser ≥ 1.
 
@@ -187,8 +207,8 @@ Observaciones:
 
 ### RN-REC-17 — Latitud y longitud obligatorias (solo para VALIDADO)
 
-- En `BORRADOR`: `latitud/longitud` son **opcionales**.
-- Para pasar a `VALIDADO`: son **obligatorias** y deben cumplir:
+- En `BORRADOR`: `latitud/longitud` son **obligatorias**.
+- Para pasar a `VALIDADO`: también son **obligatorias** y deben cumplir:
   - `latitud` en rango **[-90, 90]** con **6 decimales**.
   - `longitud` en rango **[-180, 180]** con **6 decimales**.
 
@@ -229,7 +249,8 @@ El historial:
 - En `VALIDADO`: **no se permite editar la ficha**. Solo se permiten movimientos append-only:
   - `CONSUMO_A_VIVERO`
   - `DESECHO`
-  - `CORRECCIÓN`
+
+No hay correcciones operativas en el MVP una vez validado/subido el registro. El borrador sí se puede modificar antes de validar.
 
 ### RN-REC-22 — Qué cambios deben registrar historial
 
@@ -240,7 +261,7 @@ Se registra **cualquier cambio**, especialmente:
 - altas/bajas de fotos,
 - cambios de ubicación (lat/long y estructura administrativa),
 - cambios de especie/método/vivero/observaciones,
-- creación de movimientos (consumo, desecho, corrección).
+- creación de movimientos (`CONSUMO_A_VIVERO`, `DESECHO`).
 
 ### RN-REC-22A — Datos automáticos en auditoría
 
@@ -259,7 +280,7 @@ Solo se puede iniciar un lote de vivero desde una recolección que esté:
 - con tipo_material definido
 - con `saldo_actual` suficiente para el consumo
 
-El evento de INCIO de vivero consume de forma el material recolectado con trasacción atómico.
+El evento de `INICIO` de vivero consume el material recolectado con transacción atómica.
 
 ### RN-REC-24 — Movimiento de consumo por creación de lote (consumo parcial)
 
@@ -267,11 +288,35 @@ Cuando se crea un lote de vivero desde una recolección, el sistema debe:
 
 - registrar el vínculo (recolección → lote_vivero),
 - registrar un movimiento `CONSUMO_A_VIVERO` con delta negativo en la recoleccion_movimiento,
+- persistir `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento` con la misma unidad que `RECOLECCION.unidad_canonica`,
 - recalcular `saldo_actual` y el estado operativo:
   - `ABIERTO` si saldo > 0
   - `CERRADO` si saldo = 0
 
 > No existe “cambio a USADO” como estado absoluto: el consumo se modela como movimiento.
+
+### RN-REC-24A — Contrato estricto con Vivero en el evento `INICIO`
+
+Cuando se crea un `LOTE_VIVERO` desde una `RECOLECCION`, el movimiento `CONSUMO_A_VIVERO`, el lote y el evento `INICIO` deben quedar estrictamente alineados.
+
+Invariantes obligatorias:
+
+- `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`
+- `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
+- `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
+- `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
+
+Restricciones:
+
+- No se puede consumir más de lo disponible en la recolección.
+- La unidad del movimiento debe coincidir con la unidad canónica de la recolección.
+- La unidad del evento `INICIO` debe coincidir con la del movimiento de consumo.
+- `CONSUMO_A_VIVERO` usa `delta` negativo.
+- `DESECHO` usa `delta` negativo.
+
+Fuera del MVP:
+
+- `CORRECCION` podrá usar `delta` positivo o negativo según corresponda.
 
 ## 12. Roles y estrategia blockchain (MVP)
 
@@ -301,6 +346,5 @@ MVP recomendado:
 - Anclar también cada **movimiento post-validación**:
   - `CONSUMO_A_VIVERO`
   - `DESECHO`
-  - `CORRECCIÓN`
 
 `BORRADOR` no se considera historia oficial (no requiere anclaje).

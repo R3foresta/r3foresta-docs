@@ -46,8 +46,7 @@ flowchart TD
 
   val --> post[Post **VALIDADO** Append only
   CONSUMO_A_VIVERO
-  DESECHO
-  CORRECCION]
+  DESECHO]
 
   %% =========================
   %% CONSUMO AUTOMATICO HACIA MODULO 2
@@ -73,7 +72,7 @@ flowchart TD
 
   ok1 --> mov1[Movimiento CONSUMO_A_VIVERO]
   mov1 --> saldo1[Descontar saldo
-  saldo igual inicial menos consumos menos descartes mas o menos correcciones]
+  saldo igual inicial mas sumatoria de deltas]
 
   saldo1 --> close1{Saldo igual a 0}
   close1 -- Si --> cerr[Operativo CERRADO]
@@ -95,36 +94,16 @@ flowchart TD
   close2 -- No --> ab
 
   %% =========================
-  %% CORRECCION POST VALIDACION
-  %% =========================
-  post --> corr[Solicitar CORRECCION]
-  corr --> adminok{Admin aprueba correccion}
-  adminok -- No --> corrrej[Rechazar correccion
-  Se conserva historial]
-  adminok -- Si --> mov3[Movimiento CORRECCION
-  Delta mas o menos
-  Motivo
-  Responsable
-  Timestamp]
-
-  mov3 --> saldo3[Recalcular saldo
-  No puede ser negativo]
-  saldo3 --> close3{Saldo igual a 0}
-  close3 -- Si --> cerr
-  close3 -- No --> ab
-
-  %% =========================
   %% BLOCKCHAIN MVP
   %% =========================
   val --> bc1[(Anclar en blockchain al VALIDAR)]
   mov1 --> bc2[(Anclar en blockchain CONSUMO_A_VIVERO)]
   mov2 --> bc3[(Anclar en blockchain DESECHO)]
-  mov3 --> bc4[(Anclar en blockchain CORRECCION)]
 ```
 
 ---
 
-## 2) Diagrama Mermaid — Proceso operativo (BORRADOR → VALIDADO → consumo/descarte/corrección)
+## 2) Diagrama Mermaid — Proceso operativo (BORRADOR → VALIDADO → consumo/descarte)
 
 ```mermaid id="op_m1_recoleccion"
 flowchart TD
@@ -170,16 +149,6 @@ flowchart TD
   s1 -- Si --> cerr
   s1 -- No --> ab
 
-  %% Correccion
-  val --> corr[Solicitar CORRECCION
-  Motivo + delta]
-  corr --> adm{Admin aprueba}
-  adm -- No --> corrrej[No aplica correccion]
-  adm -- Si --> corrOK[Registrar CORRECCION]
-  corrOK --> sal3[Actualizar saldo]
-  sal3 --> s2{Saldo igual a 0}
-  s2 -- Si --> cerr
-  s2 -- No --> ab
 ```
 
 ---
@@ -211,28 +180,19 @@ flowchart TD
   motivo
   timestamp]
 
-  a1 --> e4[EVENTO CORRECCION
-  delta mas o menos
-  motivo
-  responsable
-  timestamp]
-
   %% Reglas de saldo
   a1 --> calc[Calculo de saldo]
   calc --> formula[Saldo = cantidad_inicial
-  - suma de consumos
-  - suma de desechos
-  + suma de correcciones]
+  + suma de deltas]
 
   formula --> rule1[Regla 1 Saldo nunca negativo]
-  formula --> rule2[Regla 2 Solo CORRECCION puede aumentar saldo]
+  formula --> rule2[Regla 2 En MVP solo existen deltas negativos]
   formula --> rule3[Regla 3 Si saldo igual a 0 => CERRADO]
 
   %% Blockchain MVP
   e1 --> bc1[(Blockchain ancla VALIDACION)]
   e2 --> bc2[(Blockchain ancla CONSUMO_A_VIVERO)]
   e3 --> bc3[(Blockchain ancla DESECHO)]
-  e4 --> bc4[(Blockchain ancla CORRECCION)]
 ```
 
 ---
@@ -251,10 +211,6 @@ flowchart LR
     Sellado
     No editable directo
     Elegible consumo]
-    r1 --> r1c[CORRECCION
-    Evento append only
-    Requiere aprobacion admin]
-    r1c --> r1
   end
 
   %% =========================
@@ -282,11 +238,6 @@ flowchart LR
   z2 -- Si --> o1
   z2 -- No --> o0
 
-  r1 --> k1[CORRECCION
-  delta mas o menos] --> t3[Recalcula saldo] --> z3{Saldo igual a 0}
-  z3 -- Si --> o1
-  z3 -- No --> o0
-
   %% =========================
   %% REGLAS CLAVE
   %% =========================
@@ -296,12 +247,15 @@ flowchart LR
   note2[Regla clave
   CERRADO solo significa saldo 0
   El registro sigue existiendo]:::note
+  note3[Convencion oficial
+  Persistencia solo UNIDAD o G
+  kg solo input frontend]:::note
 
   note1 --- r0
   note1 --- r1
   note2 --- o1
+  note3 --- r1
 
   classDef note fill:#f5f5f5,stroke:#999,stroke-width:1px,color:#111;
 ```
-
 

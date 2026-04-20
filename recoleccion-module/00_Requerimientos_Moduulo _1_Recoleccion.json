@@ -2,118 +2,136 @@
   "requerimientos": [
     {
       "codigo": "RF-REC-01",
-      "modulo": "Recolección",
-      "nombre": "Registrar recolección (BORRADOR)",
-      "descripcion": "Permitir crear una recolección en estado BORRADOR y editarla hasta su validación.",
+      "modulo": "Recoleccion",
+      "nombre": "Registrar recoleccion (BORRADOR)",
+      "descripcion": "Permitir crear una recoleccion en estado BORRADOR y editarla hasta su validacion, manteniendo una sola convencion oficial de unidades.",
       "campos": [
-        "- Identificador único",
-        "- Estado del registro: BORRADOR (default) / VALIDADO",
-        "- Estado operativo (derivado): ABIERTO / CERRADO",
-        "- Fecha de recolección ✅ (Obligatorio)",
-        "- Especie: nombre científico + nombre comercial ✅ (Obligatorio)",
-        "- Método de recolección ✅ (Obligatorio)",
-        "- Tipo de material: SEMILLA o ESQUEJE ✅ (Obligatorio)",
-        "- Cantidad inicial ✅ (Obligatorio)",
-        "- Unidad canónica (derivada): g o unidad para SEMILLA / solo unidad para ESQUEJE",
-        "- Saldo actual (derivado por movimientos)",
-        "- Recolector ✅ (Obligatorio)",
-        "- Lugar de almacenamiento (vivero) ✅ (Obligatorio)",
-        "- Ubicación RF-REC-02 ✅ (Obligatorio)",
-        "- Fotografías ✅ (Obligatorio)",
-        "- Observaciones (Opcional)"
+        "Identificador unico",
+        "Estado del registro: BORRADOR (default) / VALIDADO",
+        "Estado operativo derivado: ABIERTO / CERRADO",
+        "Fecha de recoleccion obligatoria",
+        "Especie: nombre cientifico + nombre comercial obligatorios",
+        "Metodo de recoleccion obligatorio",
+        "Tipo de material: SEMILLA o ESQUEJE obligatorio",
+        "Cantidad inicial obligatoria",
+        "Unidad canonica derivada: UNIDAD o G",
+        "Saldo actual derivado por movimientos",
+        "Recolector obligatorio",
+        "Lugar de almacenamiento (vivero) obligatorio",
+        "Ubicacion RF-REC-02 obligatoria",
+        "Fotografias obligatorias",
+        "Observaciones opcionales"
       ],
       "validaciones": [
-        "- La fecha no puede ser futura.",
-        "- La cantidad inicial debe ser > 0.",
-        "- Para SEMILLA: normalizar a gramos (unidad canónica) o se mantiene con unidad de ser el caso.",
-        "- Para ESQUEJE: cantidad entera estricta.",
+        "La fecha no puede ser futura.",
+        "La cantidad inicial debe ser > 0.",
+        "Persistencia oficial: ENUM(unidad_medida) = [UNIDAD, G].",
+        "Frontend puede aceptar kg, g y unidad.",
+        "Backend normaliza kg -> G, g -> G y unidad -> UNIDAD.",
+        "kg no se persiste en base de datos.",
+        "SEMILLA puede persistirse en G o UNIDAD segun la captura funcional.",
+        "ESQUEJE solo admite UNIDAD, entero estricto y sin decimales."
       ],
       "reglas_adicionales": [
-        "- En BORRADOR no se considera registro sellado (no es historia oficial).",
-        "- Se registran automáticamente campos de auditoría (creado_por/creado_en/actualizado_por/actualizado_en)."
+        "En BORRADOR no se considera registro sellado.",
+        "No se deben mezclar G y GR en documentacion, backend, frontend ni DB.",
+        "Se registran automaticamente campos de auditoria (creado_por/creado_en/actualizado_por/actualizado_en)."
       ]
     },
     {
       "codigo": "RF-REC-02",
-      "modulo": "Recolección",
-      "nombre": "Ubicación estructurada",
-      "descripcion": "Permitir asociar ubicación GPS y estructura administrativa por catálogos.",
+      "modulo": "Recoleccion",
+      "nombre": "Ubicacion estructurada",
+      "descripcion": "Permitir asociar ubicacion GPS y estructura administrativa por catalogos.",
       "campos": [
-        "- País Obligatorio por catalogo, por defecto BOLIVIA",
-        "- Comunidad o Localidad (Obligatorio por catálogo)",
-        "- Latitud y Longitud (Obligatorio para BORRADOR y VALIDAR)"
+        "Pais obligatorio por catalogo, por defecto BOLIVIA",
+        "Comunidad o Localidad obligatoria por catalogo",
+        "Latitud y Longitud obligatorias para BORRADOR y VALIDAR"
       ],
       "validaciones": [
-        "- Latitud en rango [-90, 90] con 6 decimales.",
-        "- Longitud en rango [-180, 180] con 6 decimales.",
-        "- Si se envían IDs administrativos, deben existir en catálogo y ser coherentes."
+        "Latitud en rango [-90, 90] con 6 decimales.",
+        "Longitud en rango [-180, 180] con 6 decimales.",
+        "Si se envian IDs administrativos, deben existir en catalogo y ser coherentes."
       ],
       "reglas_adicionales": [
-        "- Si un dato administrativo no existe en catálogo, usar 'SIN ESPECIFICAR' (MVP) y despues para pasar a VALIDADO se lo puede corregir pero es OBLIGATORIO que exista en el catálogo para pasar a VALIDADO."
+        "Si un dato administrativo no existe en catalogo, usar SIN ESPECIFICAR en el MVP.",
+        "Para pasar a VALIDADO, la informacion obligatoria debe existir y ser consistente con catalogo."
       ]
     },
     {
       "codigo": "RF-REC-03",
-      "modulo": "Recolección",
-      "nombre": "Edición/actualización + historial",
-      "descripcion": "Permitir editar la ficha solo en BORRADOR y guardar historial inmutable; en VALIDADO solo movimientos.",
+      "modulo": "Recoleccion",
+      "nombre": "Edicion y auditoria del registro",
+      "descripcion": "Permitir editar la ficha solo en BORRADOR y guardar historial inmutable; en VALIDADO solo se permiten movimientos append-only del MVP.",
       "campos": [
-        "- Usuario que modificó",
-        "- Fecha y hora",
-        "- Versión antigua / versión nueva (o diff)",
-        "- Motivo (recomendado; obligatorio para correcciones post-validación)"
+        "Usuario que modifico",
+        "Fecha y hora",
+        "Version antigua / version nueva (o diff)",
+        "Motivo cuando aplique"
       ],
       "validaciones": [
-        "- En VALIDADO no se permite editar la ficha (solo registrar movimientos).",
-        "- El historial no se puede borrar."
+        "En VALIDADO no se permite editar la ficha.",
+        "En VALIDADO solo se permiten los movimientos CONSUMO_A_VIVERO y DESECHO.",
+        "El historial no se puede borrar."
       ],
       "reglas_adicionales": [
-        "- Los cambios se guardan en tablas separadas.",
-        "- Se registra cualquier cambio relevante (campos clave, fotos, ubicación, transición a VALIDADO, movimientos)."
+        "Los cambios se guardan en tablas separadas.",
+        "Se registra cualquier cambio relevante: campos clave, fotos, ubicacion, transicion a VALIDADO y movimientos.",
+        "No hay CORRECCION operativa en el MVP una vez validado/subido el registro."
       ]
     },
     {
       "codigo": "RF-REC-04",
-      "modulo": "Recolección",
-      "nombre": "Validar y sellar recolección",
-      "descripcion": "Permitir pasar de BORRADOR a VALIDADO cuando el registro cumpla evidencias y ubicación, y anclarlo a blockchain.",
+      "modulo": "Recoleccion",
+      "nombre": "Validar y sellar recoleccion",
+      "descripcion": "Permitir pasar de BORRADOR a VALIDADO cuando el registro cumpla evidencias y ubicacion, y anclarlo a blockchain.",
       "campos": [
-        "- Cambio de estado: BORRADOR → VALIDADO",
-        "- Usuario validador",
-        "- Fecha/hora de validación",
-        "- Hash/snapshot del registro sellado",
-        "- Identificador de anclaje en blockchain (tx o referencia)"
+        "Cambio de estado: BORRADOR -> VALIDADO",
+        "Usuario validador",
+        "Fecha/hora de validacion",
+        "Hash/snapshot del registro sellado",
+        "Identificador de anclaje en blockchain (tx o referencia)"
       ],
       "validaciones": [
-        "- Para VALIDAR se exige: ≥2 fotos + lat/long válidas + campos mínimos completos.",
-        "- No se permite volver de VALIDADO a BORRADOR."
+        "Para VALIDAR se exige >= 2 fotos + lat/long validas + campos minimos completos.",
+        "No se permite volver de VALIDADO a BORRADOR."
       ],
       "reglas_adicionales": [
-        "- Al VALIDAR se considera el registro como historia oficial (sellado)."
+        "Al VALIDAR se considera el registro como historia oficial (sellado).",
+        "El borrador se puede modificar; una vez validado no hay vuelta atras en el MVP."
       ]
     },
     {
       "codigo": "RF-REC-05",
-      "modulo": "Recolección",
+      "modulo": "Recoleccion",
       "nombre": "Movimientos e inventario (saldo)",
-      "descripcion": "Registrar movimientos append-only que alteran el saldo: consumo a vivero, desecho y corrección.",
+      "descripcion": "Registrar movimientos append-only que alteran el saldo del lote origen y asegurar el contrato estricto con Vivero en el evento INICIO.",
       "campos": [
-        "- Tipo de movimiento: CONSUMO_A_VIVERO / DESECHO / CORRECCIÓN",
-        "- Delta (positivo o negativo) en unidad canónica respectiva",
-        "- Motivo (obligatorio para DESECHO y CORRECCIÓN)",
-        "- Fecha/hora del movimiento",
-        "- Usuario responsable",
-        "- Referencia opcional a lote de vivero (en CONSUMO_A_VIVERO)",
-        "- Saldo resultante (derivado)"
+        "Tipo de movimiento MVP: CONSUMO_A_VIVERO / DESECHO",
+        "Delta negativo en unidad canonica respectiva",
+        "Unidad del movimiento: UNIDAD o G",
+        "Motivo obligatorio para DESECHO",
+        "Fecha/hora del movimiento",
+        "Usuario responsable",
+        "Referencia opcional a lote de vivero en CONSUMO_A_VIVERO",
+        "Saldo resultante derivado"
       ],
       "validaciones": [
-        "- No permitir que el saldo quede < 0.",
-        "- CONSUMO_A_VIVERO requiere recolección VALIDADO y saldo suficiente.",
-        "- CORRECCIÓN requiere rol autorizado."
+        "No permitir que el saldo quede < 0.",
+        "CONSUMO_A_VIVERO requiere recoleccion VALIDADO y saldo suficiente.",
+        "La unidad del movimiento debe coincidir con la unidad canonica de la recoleccion.",
+        "No se puede consumir mas de lo disponible.",
+        "CONSUMO_A_VIVERO usa delta negativo.",
+        "DESECHO usa delta negativo."
       ],
       "reglas_adicionales": [
-        "- Cada movimiento se ancla a blockchain (MVP).",
-        "- El estado operativo ABIERTO/CERRADO se recalcula según saldo."
+        "saldo_actual = cantidad_inicial + SUM(delta_movimientos).",
+        "Si saldo_actual = 0, estado_operativo = CERRADO.",
+        "Contrato estricto M1-M2: abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso.",
+        "Contrato estricto M1-M2: LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada.",
+        "Contrato estricto M1-M2: RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento.",
+        "Cada movimiento del MVP puede anclarse a blockchain sin romper la operacion base.",
+        "CORRECCION queda fuera del MVP; si existe en el futuro podra usar delta positivo o negativo segun corresponda."
       ]
     }
   ]

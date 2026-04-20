@@ -8,9 +8,11 @@ El contexto funcional del módulo obliga a proteger especialmente estos puntos:
 
 - trazabilidad fuerte desde un **lote origen único**,
 - consumo atómico entre **Recolección** y **Vivero**,
+- alineación estricta entre `RECOLECCION_MOVIMIENTO`, `LOTE_VIVERO` y `EVENTO_LOTE_VIVERO` en `INICIO`,
 - historial **append-only** de eventos,
 - control confiable del **saldo vivo**,
 - evidencias obligatorias por evento,
+- convención oficial de unidades persistidas `UNIDAD | G`,
 - y cierre automático del lote cuando el saldo llega a cero.
 
 ---
@@ -138,6 +140,7 @@ flowchart LR
 - `lote_vivero_evento` guarda el historial append-only.
 - `evidencia_trazabilidad` respalda cada evento obligatorio.
 - el saldo actual se actualiza transaccionalmente al registrar cada evento.
+- la unidad persistida se restringe a `UNIDAD` o `G`; `kg` solo existe como input y se normaliza antes de persistir.
 
 ---
 
@@ -180,3 +183,9 @@ El event sourcing puro ofrece mucha trazabilidad, pero exige una complejidad que
 El modelo híbrido, en cambio, permite construir un MVP sólido, entendible y extensible, manteniendo el equilibrio correcto entre operación diaria, integridad del dato y auditoría.
 
 Por eso, para esta fase, **la arquitectura recomendada es una tabla operativa de lote + una tabla de eventos + una relación clara con evidencias y con el lote origen de Recolección**.
+
+Restricciones explícitas del MVP:
+
+- no hay correcciones operativas una vez registrado el evento; el modelo sigue append-only sin `CORRECCION` activa en esta fase,
+- `CONSUMO_A_VIVERO` y `DESECHO` usan `delta` negativo,
+- `EMBOLSADO` no convierte automáticamente gramos en plantas vivas; registra un conteo observado en `UNIDAD`.

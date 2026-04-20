@@ -60,7 +60,7 @@ Esto evita que cambios futuros en catálogos alteren la trazabilidad histórica 
 En `INICIO` conviven dos lecturas distintas, pero alineadas:
 
 1. **Cantidad consumida del origen**
-   Es la cantidad que se descuenta del Módulo 1 usando la **unidad canónica del lote origen**. Puede ser gramos o unidades, según el tipo de material y cómo se registró en Recolección.
+   Es la cantidad que se descuenta del Módulo 1 usando la **unidad canónica del lote origen**. En persistencia solo puede ser `G` o `UNIDAD`.
 
 2. **Cantidad inicial en proceso**
    Es la cantidad con la que el vivero arranca su seguimiento operativo antes de contar plantas vivas.
@@ -72,7 +72,33 @@ En el MVP:
 
 Todavía no hablamos de plantas vivas. Eso empieza recién en `EMBOLSADO`.
 
-### 2.5. Inicio no equivale a plantas vivas
+### 2.5. Convención oficial de unidades
+
+La convención oficial del sistema en base de datos, backend, frontend y documentación es:
+
+* `ENUM(unidad_medida) = [UNIDAD, G]`
+* no se deben mezclar `G` y `GR`
+
+Entrada permitida desde frontend:
+
+* `kg`
+* `g`
+* `unidad`
+
+Normalización backend:
+
+* `kg -> G`
+* `g -> G`
+* `unidad -> UNIDAD`
+
+Reglas numéricas:
+
+* `G` permite decimales
+* `UNIDAD` no permite decimales
+* `kg` no se persiste
+* no se aceptan otras unidades en el MVP
+
+### 2.6. Inicio no equivale a plantas vivas
 
 * En `INICIO` se registra material en proceso.
 * En `INICIO` **no existe saldo vivo** todavía.
@@ -80,7 +106,27 @@ Todavía no hablamos de plantas vivas. Eso empieza recién en `EMBOLSADO`.
 
 `INICIO` crea el lote, crea el evento, registra evidencia y descuenta origen; todavía no crea saldo vivo.
 
-### 2.6. Embolsado crea el saldo vivo
+### 2.7. Material en proceso no es igual a plantas vivas
+
+**Material en proceso**
+
+* se usa en `INICIO`
+* puede estar en `G` o `UNIDAD`
+* representa material consumido desde Recolección
+* no representa todavía plantas vivas
+
+**Plantas vivas**
+
+* nacen en `EMBOLSADO`
+* se expresan siempre en `UNIDAD`
+* representan conteo biológico observado
+* no son una conversión automática matemática del material en proceso
+
+Regla clave:
+
+El sistema no convierte automáticamente gramos en plantas vivas. `EMBOLSADO` registra un nuevo dato observado del proceso: cuántas plantas vivas resultaron del material que entró al lote.
+
+### 2.8. Embolsado crea el saldo vivo
 
 El evento `EMBOLSADO` marca el momento en que la plántula o esqueje ya puede contarse como **planta viva**.
 
@@ -88,9 +134,9 @@ Desde ese momento:
 
 * nace `plantas_vivas_iniciales`,
 * nace `saldo_vivo_actual`,
-* y toda merma o despacho se calcula siempre en **UNIDAD**.
+* y todo evento posterior que opera sobre saldo vivo se expresa en **UNIDAD**.
 
-### 2.7. Estados del MVP
+### 2.9. Estados del MVP
 
 Para el MVP:
 
@@ -98,7 +144,7 @@ Para el MVP:
 
 El carácter definitivo del evento se resuelve con el modelo **append-only** y con la inmutabilidad práctica del registro una vez insertado.
 
-### 2.8. Evidencia de trazabilidad
+### 2.10. Evidencia de trazabilidad
 
 La evidencia se modela mediante la entidad **`evidencia_trazabilidad`**, que puede almacenar:
 
@@ -113,7 +159,7 @@ En el MVP, la evidencia debe quedar **vinculada directamente al evento que la or
 * `tipo_entidad_id` identifica que la evidencia pertenece a un evento de vivero,
 * y `entidad_id` apunta al `EVENTO_LOTE_VIVERO.id` correspondiente.
 
-### 2.9. Motivo de cierre del lote
+### 2.11. Motivo de cierre del lote
 
 Cuando un lote llega a estado `FINALIZADO`, debe diferenciarse **por qué** se cerró usando `motivo_cierre`:
 
@@ -194,6 +240,20 @@ Reglas importantes:
 * El evento `INICIO` queda persistido como un registro append-only en `EVENTO_LOTE_VIVERO`.
 * No se permite edición posterior del evento.
 
+Invariantes obligatorias entre Módulo 1 y Módulo 2:
+
+* `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`
+* `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
+* `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
+* `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
+
+Restricciones:
+
+* No se puede consumir más de lo disponible en la recolección.
+* La unidad del movimiento debe coincidir con la unidad canónica de la recolección.
+* La unidad de `INICIO` debe coincidir con la del movimiento de consumo.
+* `CONSUMO_A_VIVERO` usa `delta` negativo.
+
 Aclaraciones:
 
 * `plantas_vivas_iniciales = null`
@@ -222,6 +282,7 @@ Reglas importantes:
 * `plantas_vivas_iniciales` debe ser mayor a `0`.
 * El saldo debe ser **calculado por el sistema**, no ingresado libremente por el usuario.
 * Desde este evento todo saldo vivo se maneja en **UNIDAD**.
+* `EMBOLSADO` no convierte matemáticamente gramos en plantas; registra un conteo observado del proceso.
 
 ## 4.3. Adaptabilidad
 
@@ -251,6 +312,7 @@ Reglas importantes:
 * No se permite `ADAPTABILIDAD` sin `EMBOLSADO` previo.
 * No cambia el saldo vivo.
 * Si el modelo de eventos guarda saldo, entonces `saldo_vivo_antes = saldo_vivo_despues = saldo_vivo_actual`.
+* Si el modelo persiste `cantidad_afectada` para este evento, debe expresarse en `UNIDAD`.
 
 ## 4.4. Merma
 
@@ -344,6 +406,11 @@ Fuera del MVP:
 * traslados entre viveros,
 * división o fusión de lotes,
 * y sincronización offline-first.
+
+Regla explícita del MVP:
+
+* El borrador operativo previo al guardado definitivo puede ajustarse.
+* Una vez registrado un evento, no hay correcciones en esta fase del producto.
 
 ---
 
