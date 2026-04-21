@@ -87,7 +87,9 @@ Cada recolección maneja **dos estados**:
 
 1) **Estado del registro (Web2 / calidad de datos):**
 - `BORRADOR` (editable)
+- `PENDIENTE_VALIDACION` (congelado mientras revisa el validador)
 - `VALIDADO` (sellado)
+- `RECHAZADO` (no consumible; puede corregirse y reenviarse a validación)
 
 2) **Estado operativo (inventario):**
 - `ABIERTO` (saldo disponible > 0)
@@ -103,6 +105,12 @@ Al crear una recolección:
 - `saldo_actual = cantidad_inicial` (normalizada a unidad canónica gramos o unidades de semillas)
 - `estado_operativo = ABIERTO` (porque cantidad_inicial debe ser > 0)
 
+### RN-REC-09A — Soft delete solo para borradores
+
+En el MVP, un registro solo puede eliminarse si está en `BORRADOR`.
+
+La eliminación debe resolverse como **soft delete**, preservando trazabilidad mínima del registro creado.
+
 ### RN-REC-10 — Restricción de uso por estado (consumo a vivero)
 
 Para que una recolección pueda alimentar lotes del Módulo 2 (Vivero) debe cumplir:
@@ -111,7 +119,7 @@ Para que una recolección pueda alimentar lotes del Módulo 2 (Vivero) debe cump
 - `estado_operativo = ABIERTO`
 - `saldo_actual >= cantidad_a_consumir`
 
-Si está en `BORRADOR` o `CERRADO`, **no puede** consumirse.
+Si está en `BORRADOR`, `PENDIENTE_VALIDACION`, `RECHAZADO` o `CERRADO`, **no puede** consumirse.
 
 ### RN-REC-10A — Movimientos permitidos (append-only) y efecto en saldo
 
@@ -125,6 +133,15 @@ Fuera del MVP:
 - `CORRECCION` (controlado) → delta positivo/negativo + **motivo obligatorio** + rol autorizado
 
 Los movimientos son **append-only**: no se editan ni se borran. Si más adelante se incorpora `CORRECCION`, deberá registrarse como un movimiento nuevo y auditable, no como edición del pasado.
+
+### RN-REC-10C — Separación entre historial del registro y movimientos
+
+En Recolección deben separarse dos responsabilidades:
+
+- `RECOLECCION_HISTORIAL`: historial del ciclo de vida del registro y sus transiciones de estado.
+- `RECOLECCION_MOVIMIENTO`: ledger operativo de inventario, usado solo cuando cambia el saldo o cuando en el futuro exista una corrección técnica/auditada.
+
+`RECOLECCION_MOVIMIENTO` no debe reutilizarse como historial general de edición de la ficha.
 
 ### RN-REC-10B — Conservación del saldo (no magia)
 
@@ -171,10 +188,10 @@ Para `ESQUEJE`:
 
 ## 7. Reglas de evidencia fotográfica
 
-### RN-REC-14 — Evidencia mínima obligatoria (solo para VALIDADO)
+### RN-REC-14 — Evidencia mínima obligatoria
 
 - En `BORRADOR`: su porposito es evitar subir registros errados a blockchain si no se esta seguro de los datos ya que es editable, fotos y ubicación son obligatorias para crear un borrador y evitar huecos de trazabilidad.
-- Para pasar a `VALIDADO`: se exige **mínimo 2 fotografías**:
+- Para pasar a `PENDIENTE_VALIDACION`: se exige **mínimo 2 fotografías**:
   - 1 foto que evidencie la especie,
   - 1 foto que evidencie la cantidad/volumen recolectado (o su contenedor/medición).
 
@@ -205,10 +222,10 @@ Observaciones:
 
 ## 9. Reglas de ubicación estructurada (RF-REC-02)
 
-### RN-REC-17 — Latitud y longitud obligatorias (solo para VALIDADO)
+### RN-REC-17 — Latitud y longitud obligatorias
 
 - En `BORRADOR`: `latitud/longitud` son **obligatorias**.
-- Para pasar a `VALIDADO`: también son **obligatorias** y deben cumplir:
+- Para pasar a `PENDIENTE_VALIDACION`: también son **obligatorias** y deben cumplir:
   - `latitud` en rango **[-90, 90]** con **6 decimales**.
   - `longitud` en rango **[-180, 180]** con **6 decimales**.
 
@@ -229,23 +246,34 @@ Si se envían valores administrativos, deben estar “bien formados” (IDs vál
 
 ## 10. Reglas de edición + historial (RF-REC-03)
 
-### RN-REC-20 — Historial obligatorio e inmutable
+### RN-REC-20 — Historial mínimo del MVP y preparación para evolución
 
-Cualquier modificación debe generar un registro en historial con:
+En el MVP **no es obligatorio auditar cada edición del borrador campo por campo**.
 
-- usuario que modificó,
-- fecha/hora,
-- versión anterior y nueva (o diff por campos),
-- motivo (recomendado; obligatorio para correcciones post-validación).
+Para no sobrecargar el producto, se deja preparada una tabla `RECOLECCION_HISTORIAL` append-only para registrar solo el ciclo de vida del registro.
 
-El historial:
+Eventos mínimos recomendados:
 
-- se guarda en tablas separadas,
-- **no se puede borrar**.
+- `BORRADOR_CREADO`
+- `SOLICITUD_VALIDACION`
+- `VALIDACION_APROBADA`
+- `VALIDACION_RECHAZADA`
+- `BORRADOR_ELIMINADO`
+
+Este historial:
+
+- se guarda separado del ledger operativo,
+- no reemplaza `RECOLECCION_MOVIMIENTO`,
+- y **no se puede borrar**.
 
 ### RN-REC-21 — Reglas de edición por estado
 
 - En `BORRADOR`: se permite editar los campos del registro (incluyendo fotos y ubicación).
+- En `BORRADOR`: se permite eliminar mediante soft delete.
+- En `BORRADOR`: `created_at` no se edita; `updated_at` y `updated_by` deben reflejar la última edición.
+- En `PENDIENTE_VALIDACION`: la ficha queda congelada mientras el validador decide.
+- En `RECHAZADO`: el registro no es consumible, pero puede corregirse y reenviarse a validación.
+- En `RECHAZADO`: `created_at` no se edita; `updated_at` y `updated_by` deben reflejar la última corrección.
 - En `VALIDADO`: **no se permite editar la ficha**. Solo se permiten movimientos append-only:
   - `CONSUMO_A_VIVERO`
   - `DESECHO`
@@ -254,18 +282,31 @@ No hay correcciones operativas en el MVP una vez validado/subido el registro. El
 
 ### RN-REC-22 — Qué cambios deben registrar historial
 
-Se registra **cualquier cambio**, especialmente:
+En el MVP se busca **trazabilidad razonable**, no auditoría exhaustiva de cada cambio en borrador.
 
-- transición `BORRADOR → VALIDADO`,
-- cambios de cantidad inicial y unidad canónica,
-- altas/bajas de fotos,
-- cambios de ubicación (lat/long y estructura administrativa),
-- cambios de especie/método/vivero/observaciones,
-- creación de movimientos (`CONSUMO_A_VIVERO`, `DESECHO`).
+Por eso, el historial mínimo recomendado debe registrar:
+
+- creación del borrador,
+- solicitud de validación,
+- aprobación del validador,
+- rechazo del validador,
+- eliminación de borrador,
+- y creación de movimientos (`CONSUMO_A_VIVERO`, `DESECHO`).
+
+La edición del borrador se resuelve con campos de auditoría de la ficha (`updated_at`, `updated_by`) y no con eventos por cada cambio de campo.
 
 ### RN-REC-22A — Datos automáticos en auditoría
 
 Los datos de auditoría (usuario, timestamps) se toman automáticamente del sistema.
+
+### RN-REC-22B — Cómo se construye el timeline mínimo del MVP
+
+El timeline mínimo de una recolección puede construirse combinando:
+
+- `RECOLECCION.created_at` para “se creó borrador”,
+- `RECOLECCION_HISTORIAL` para `SOLICITUD_VALIDACION`, `VALIDACION_APROBADA`, `VALIDACION_RECHAZADA` y `BORRADOR_ELIMINADO`,
+- `RECOLECCION.fecha_validacion` como dato materializado del momento en que quedó validada,
+- y `RECOLECCION_MOVIMIENTO.created_at` para consumos y desechos.
 
 ## 11. Reglas de integración con Módulo 2 (Vivero)
 
@@ -322,8 +363,8 @@ Fuera del MVP:
 
 ### RN-REC-25 — Roles mínimos (MVP)
 
-* **Recolector:** crea registros, adjunta evidencia.
-* **VALIDADOR/Validador (opcional en v1):** valida calidad / aprueba especie nueva / aprueba métodos nuevos.
+* **Recolector:** crea borradores, edita borradores y envía a validación.
+* **VALIDADOR/Validador:** revisa registros en `PENDIENTE_VALIDACION` y los aprueba o rechaza.
 * **Auditor:** consulta historial completo.
 
 (Futuro: se pueden agregar roles de “comunidad” para validación colaborativa, con registro de quién validó qué y cuándo.)
@@ -348,3 +389,4 @@ MVP recomendado:
   - `DESECHO`
 
 `BORRADOR` no se considera historia oficial (no requiere anclaje).
+`PENDIENTE_VALIDACION` y `RECHAZADO` forman parte del ciclo Web2 del registro, pero tampoco se consideran historia oficial anclada.

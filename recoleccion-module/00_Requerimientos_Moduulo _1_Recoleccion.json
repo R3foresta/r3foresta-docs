@@ -7,7 +7,7 @@
       "descripcion": "Permitir crear una recoleccion en estado BORRADOR y editarla hasta su validacion, manteniendo una sola convencion oficial de unidades.",
       "campos": [
         "Identificador unico",
-        "Estado del registro: BORRADOR (default) / VALIDADO",
+        "Estado del registro: BORRADOR (default) / PENDIENTE_VALIDACION / VALIDADO / RECHAZADO",
         "Estado operativo derivado: ABIERTO / CERRADO",
         "Fecha de recoleccion obligatoria",
         "Especie: nombre cientifico + nombre comercial obligatorios",
@@ -34,6 +34,7 @@
       ],
       "reglas_adicionales": [
         "En BORRADOR no se considera registro sellado.",
+        "En BORRADOR se permite soft delete.",
         "No se deben mezclar G y GR en documentacion, backend, frontend ni DB.",
         "Se registran automaticamente campos de auditoria (creado_por/creado_en/actualizado_por/actualizado_en)."
       ]
@@ -46,7 +47,7 @@
       "campos": [
         "Pais obligatorio por catalogo, por defecto BOLIVIA",
         "Comunidad o Localidad obligatoria por catalogo",
-        "Latitud y Longitud obligatorias para BORRADOR y VALIDAR"
+        "Latitud y Longitud obligatorias para BORRADOR y solicitar validacion"
       ],
       "validaciones": [
         "Latitud en rango [-90, 90] con 6 decimales.",
@@ -55,50 +56,59 @@
       ],
       "reglas_adicionales": [
         "Si un dato administrativo no existe en catalogo, usar SIN ESPECIFICAR en el MVP.",
-        "Para pasar a VALIDADO, la informacion obligatoria debe existir y ser consistente con catalogo."
+        "Para solicitar validacion, la informacion obligatoria debe existir y ser consistente con catalogo."
       ]
     },
     {
       "codigo": "RF-REC-03",
       "modulo": "Recoleccion",
       "nombre": "Edicion y auditoria del registro",
-      "descripcion": "Permitir editar la ficha solo en BORRADOR y guardar historial inmutable; en VALIDADO solo se permiten movimientos append-only del MVP.",
+      "descripcion": "Permitir editar la ficha en BORRADOR y RECHAZADO, congelarla en PENDIENTE_VALIDACION, y separar historial de ciclo de vida de los movimientos de inventario.",
       "campos": [
         "Usuario que modifico",
         "Fecha y hora",
-        "Version antigua / version nueva (o diff)",
+        "updated_at / updated_by",
+        "Tabla RECOLECCION_HISTORIAL para ciclo de vida",
         "Motivo cuando aplique"
       ],
       "validaciones": [
+        "En BORRADOR se puede editar la ficha y hacer soft delete.",
+        "En PENDIENTE_VALIDACION no se permite editar la ficha.",
+        "En RECHAZADO se permite corregir y reenviar a validacion.",
         "En VALIDADO no se permite editar la ficha.",
         "En VALIDADO solo se permiten los movimientos CONSUMO_A_VIVERO y DESECHO.",
         "El historial no se puede borrar."
       ],
       "reglas_adicionales": [
-        "Los cambios se guardan en tablas separadas.",
-        "Se registra cualquier cambio relevante: campos clave, fotos, ubicacion, transicion a VALIDADO y movimientos.",
+        "RECOLECCION_HISTORIAL registra ciclo de vida del registro.",
+        "RECOLECCION_MOVIMIENTO registra exclusivamente operaciones que afectan saldo.",
+        "En el MVP no se audita cada edicion del borrador campo por campo.",
         "No hay CORRECCION operativa en el MVP una vez validado/subido el registro."
       ]
     },
     {
       "codigo": "RF-REC-04",
       "modulo": "Recoleccion",
-      "nombre": "Validar y sellar recoleccion",
-      "descripcion": "Permitir pasar de BORRADOR a VALIDADO cuando el registro cumpla evidencias y ubicacion, y anclarlo a blockchain.",
+      "nombre": "Solicitar validacion y resolver por validador",
+      "descripcion": "Permitir pasar de BORRADOR o RECHAZADO a PENDIENTE_VALIDACION, y luego a VALIDADO o RECHAZADO segun la decision del validador.",
       "campos": [
-        "Cambio de estado: BORRADOR -> VALIDADO",
+        "Cambio de estado: BORRADOR o RECHAZADO -> PENDIENTE_VALIDACION",
+        "Cambio de estado: PENDIENTE_VALIDACION -> VALIDADO o RECHAZADO",
         "Usuario validador",
         "Fecha/hora de validacion",
         "Hash/snapshot del registro sellado",
         "Identificador de anclaje en blockchain (tx o referencia)"
       ],
       "validaciones": [
-        "Para VALIDAR se exige >= 2 fotos + lat/long validas + campos minimos completos.",
-        "No se permite volver de VALIDADO a BORRADOR."
+        "Para solicitar validacion se exige >= 2 fotos + lat/long validas + campos minimos completos.",
+        "Mientras esta en PENDIENTE_VALIDACION no se permite editar la ficha.",
+        "Solo VALIDADO habilita consumo.",
+        "RECHAZADO no habilita consumo."
       ],
       "reglas_adicionales": [
         "Al VALIDAR se considera el registro como historia oficial (sellado).",
-        "El borrador se puede modificar; una vez validado no hay vuelta atras en el MVP."
+        "RECOLECCION_HISTORIAL debe registrar SOLICITUD_VALIDACION, VALIDACION_APROBADA y VALIDACION_RECHAZADA.",
+        "El borrador o rechazado se pueden modificar; una vez validado no hay vuelta atras en el MVP."
       ]
     },
     {

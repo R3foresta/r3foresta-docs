@@ -37,9 +37,18 @@ flowchart TD
   Niveles admin opcional
   Permite SIN ESPECIFICAR]
 
-  evloc --> reqVal{Cumple requisitos para VALIDAR}
+  evloc --> reqVal{Cumple requisitos para solicitar validacion}
   reqVal -- No --> b2
-  reqVal -- Si --> val[VALIDAR Sellado
+  reqVal -- Si --> pend[Enviar a validacion
+  Estado PENDIENTE_VALIDACION
+  Ficha congelada]
+
+  pend --> rev{Validador aprueba}
+  rev -- No --> rej[RECHAZADO
+  No consumible
+  Se puede corregir y reenviar]
+  rej --> b2
+  rev -- Si --> val[VALIDADO Sellado
   Guarda usuario_validacion
   Guarda fecha_validacion
   No editable directo]
@@ -96,14 +105,17 @@ flowchart TD
   %% =========================
   %% BLOCKCHAIN MVP
   %% =========================
-  val --> bc1[(Anclar en blockchain al VALIDAR)]
+  pend --> ev1[(Historial SOLICITUD_VALIDACION)]
+  rej --> ev2[(Historial VALIDACION_RECHAZADA)]
+  val --> ev3[(Historial VALIDACION_APROBADA)]
+  val --> bc1[(Anclar en blockchain al aprobar validacion)]
   mov1 --> bc2[(Anclar en blockchain CONSUMO_A_VIVERO)]
   mov2 --> bc3[(Anclar en blockchain DESECHO)]
 ```
 
 ---
 
-## 2) Diagrama Mermaid — Proceso operativo (BORRADOR → VALIDADO → consumo/descarte)
+## 2) Diagrama Mermaid — Proceso operativo (BORRADOR → PENDIENTE_VALIDACION → VALIDADO/RECHAZADO)
 
 ```mermaid id="op_m1_recoleccion"
 flowchart TD
@@ -112,13 +124,20 @@ flowchart TD
   Completar datos base
   Guardar cambios]
 
-  b1 --> req{Listo para VALIDAR
+  b1 --> req{Listo para solicitar validacion
   Fotos minimo 2
   Lat y Long validas
   Campos min completos}
 
   req -- No --> b1
-  req -- Si --> val[VALIDADO Sellado
+  req -- Si --> pend[PENDIENTE_VALIDACION
+  Ficha congelada]
+
+  pend --> dec{Validador aprueba}
+  dec -- No --> rejState[RECHAZADO
+  Corregir y reenviar]
+  rejState --> b1
+  dec -- Si --> val[VALIDADO Sellado
   No editable directo]
 
   %% Consumo automatico hacia Modulo 2
@@ -153,35 +172,45 @@ flowchart TD
 
 ---
 
-## 3) Diagrama Mermaid — Modelo de eventos (append-only + cálculo de saldo)
+## 3) Diagrama Mermaid — Ciclo de vida + movimientos de saldo
 
-Este diagrama muestra que **no editamos el pasado**: solo agregas eventos, y el saldo sale de sumar/restar.
+Este diagrama muestra la separación entre:
+
+- historial del registro (`RECOLECCION_HISTORIAL`)
+- y ledger de inventario (`RECOLECCION_MOVIMIENTO`)
 
 ```mermaid id="eventos_m1_recoleccion"
 flowchart TD
   a0[Recoleccion Lote Origen
   cantidad_inicial
   tipo_material
-  estado_registro BORRADOR o VALIDADO
+  estado_registro BORRADOR o PENDIENTE_VALIDACION o VALIDADO o RECHAZADO
   estado_operativo ABIERTO o CERRADO] --> a1[Ledger de eventos append only]
 
-  a1 --> e1[EVENTO VALIDACION
-  usuario_validacion
-  fecha_validacion
-  snapshot hash opcional]
+  a1 --> e1[RECOLECCION_HISTORIAL
+  BORRADOR_CREADO]
 
-  a1 --> e2[EVENTO CONSUMO_A_VIVERO
+  a1 --> e2[RECOLECCION_HISTORIAL
+  SOLICITUD_VALIDACION]
+
+  a1 --> e3[RECOLECCION_HISTORIAL
+  VALIDACION_APROBADA o VALIDACION_RECHAZADA]
+
+  a1 --> e4[RECOLECCION_MOVIMIENTO
+  CONSUMO_A_VIVERO
   cantidad
   lote_vivero_id
   timestamp]
 
-  a1 --> e3[EVENTO DESECHO
+  a1 --> e5[RECOLECCION_MOVIMIENTO
+  DESECHO
   cantidad
   motivo
   timestamp]
 
   %% Reglas de saldo
-  a1 --> calc[Calculo de saldo]
+  e4 --> calc[Calculo de saldo]
+  e5 --> calc
   calc --> formula[Saldo = cantidad_inicial
   + suma de deltas]
 
@@ -190,14 +219,15 @@ flowchart TD
   formula --> rule3[Regla 3 Si saldo igual a 0 => CERRADO]
 
   %% Blockchain MVP
-  e1 --> bc1[(Blockchain ancla VALIDACION)]
-  e2 --> bc2[(Blockchain ancla CONSUMO_A_VIVERO)]
-  e3 --> bc3[(Blockchain ancla DESECHO)]
+  e3 --> bc1[(Blockchain ancla VALIDACION_APROBADA)]
+  e4 --> bc2[(Blockchain ancla CONSUMO_A_VIVERO)]
+  e5 --> bc3[(Blockchain ancla DESECHO)]
 ```
 
 ---
 ## 4) **Estado del registro (Web2)** vs **Estado operativo (inventario)**.
-La idea clave: **VALIDADO no significa agotado**, y **CERRADO no significa borrado**.
+La idea clave: `RECOLECCION_HISTORIAL` y `RECOLECCION_MOVIMIENTO` coexisten.  
+`VALIDADO` no significa agotado, y `CERRADO` no significa borrado.
 
 ```mermaid id="maquina_estados_m1"
 flowchart LR
@@ -207,10 +237,17 @@ flowchart LR
   subgraph R[Estado del registro Web2]
     r0[BORRADOR
     Editable
-    No blockchain] --> r1[VALIDADO
+    Soft delete posible
+    No blockchain] --> r05[PENDIENTE_VALIDACION
+    Ficha congelada]
+    r05 --> r1[VALIDADO
     Sellado
     No editable directo
     Elegible consumo]
+    r05 --> r2[RECHAZADO
+    No consumible
+    Editable para corregir]
+    r2 --> r05
   end
 
   %% =========================
@@ -242,7 +279,7 @@ flowchart LR
   %% REGLAS CLAVE
   %% =========================
   note1[Regla clave
-  BORRADOR nunca se consume
+  BORRADOR, PENDIENTE_VALIDACION y RECHAZADO nunca se consumen
   Solo VALIDADO puede alimentar Modulo 2]:::note
   note2[Regla clave
   CERRADO solo significa saldo 0
@@ -252,10 +289,11 @@ flowchart LR
   kg solo input frontend]:::note
 
   note1 --- r0
+  note1 --- r05
   note1 --- r1
+  note1 --- r2
   note2 --- o1
   note3 --- r1
 
   classDef note fill:#f5f5f5,stroke:#999,stroke-width:1px,color:#111;
 ```
-

@@ -31,10 +31,19 @@ El módulo separa dos cosas:
 
 - **Estado del registro (Web2):**
     - `BORRADOR`: editable, barato, aún no registrado en blockchain (no sellado).
-    - `VALIDADO`: registrado en blockchain (sellado), no editable
+    - `PENDIENTE_VALIDACION`: congelado mientras el validador revisa.
+    - `VALIDADO`: registrado en blockchain (sellado), no editable.
+    - `RECHAZADO`: no consumible, pero corregible para reenvío.
 - **Estado operativo (inventario):**
     - `ABIERTO`: saldo disponible > 0
     - `CERRADO`: saldo disponible = 0 (agotado)
+
+Además, el módulo debe separar dos historiales:
+
+- **`RECOLECCION_HISTORIAL`** para ciclo de vida del registro.
+- **`RECOLECCION_MOVIMIENTO`** para movimientos que afectan saldo.
+
+Esto sigue la misma lógica general de Vivero, pero en Recolección conviene separar ambas cosas porque editar, pedir validación o rechazar un registro **no es** un movimiento de inventario.
 
 ### 2.3. Cantidad y unidad canónica
 
@@ -81,8 +90,15 @@ Datos mínimos recomendados para permitir guardar BORRADOR:
 - fotos (2 minimo)
 - ubicación (lat/long mínimo, niveles administrativos osea comunidad/zona)
 
-> Nota MVP: ubicación y fotos tampocopueden faltar en BORRADOR pero si se pueden editar, y son **obligatorias** para VALIDAR.
+> Nota MVP: ubicación y fotos tampocopueden faltar en BORRADOR pero si se pueden editar, y son **obligatorias** para pasar a `PENDIENTE_VALIDACION`.
 > 
+
+En `BORRADOR`:
+
+- se puede editar la ficha,
+- `created_at` no cambia,
+- `updated_at` y `updated_by` deben reflejar la última edición,
+- y se puede eliminar solo mediante **soft delete**.
 
 ---
 
@@ -105,24 +121,35 @@ Requisitos para avanzar hacia validación:
 
 ---
 
-### 3.3. Validación (sellado)
+### 3.3. Solicitud de validación y decisión del validador
 
-**Objetivo:** convertir el registro en un origen confiable y “sellable”.
+**Objetivo:** separar la captura del borrador de la revisión formal del registro.
 
-Al validar:
+Flujo del MVP:
 
-- el recolector confirma explícitamente que:
-    - el registro queda sellado,
-    - puede registrarse/anclarse en blockchain (según estrategia MVP),
-    - ediciones posteriores no reescriben el pasado: en el MVP no se corrige el registro ya validado; cualquier modelo de corrección queda fuera de alcance.
-- se registran automáticamente:
-    - usuario_validación
-    - fecha_validación
+1. El recolector envía el borrador a revisión.
+2. El estado pasa a `PENDIENTE_VALIDACION`.
+3. Se registra un historial `SOLICITUD_VALIDACION`.
+4. El validador revisa y decide:
+   - `VALIDADO`
+   - `RECHAZADO`
 
-Desde este punto:
+Si el validador **aprueba**:
 
-- no se permite editar el contenido validado directamente,
-- solo se permiten movimientos append-only del MVP: `CONSUMO_A_VIVERO` y `DESECHO`.
+- se registran `usuario_validacion` y `fecha_validacion`,
+- se registra un historial `VALIDACION_APROBADA`,
+- el registro queda sellado,
+- puede registrarse/anclarse en blockchain,
+- y ya no se permite editar la ficha directamente.
+
+Si el validador **rechaza**:
+
+- se registra un historial `VALIDACION_RECHAZADA`,
+- el registro pasa a `RECHAZADO`,
+- no se puede consumir,
+- y puede corregirse para volver a enviarse a validación.
+
+Mientras el registro está en `PENDIENTE_VALIDACION`, la ficha queda congelada.
 
 ---
 
@@ -177,18 +204,39 @@ Si el descarte deja el saldo en 0, el lote queda `CERRADO`.
 
 ## 4. Eventos y movimientos (modelo audit-friendly)
 
-El módulo usa un enfoque **append-only**: se agregan eventos/movimientos, no se reescribe la historia.
+El módulo usa un enfoque **append-only** pero con dos capas distintas:
+
+### 4.1. Eventos del ciclo de vida del registro
+
+`RECOLECCION_HISTORIAL` registra el timeline del registro, no el saldo.
+
+Eventos mínimos recomendados:
+
+- `BORRADOR_CREADO`
+- `SOLICITUD_VALIDACION`
+- `VALIDACION_APROBADA`
+- `VALIDACION_RECHAZADA`
+- `BORRADOR_ELIMINADO`
+
+En el MVP, esta tabla se deja preparada para no mezclar ciclo de vida con inventario.
+
+### 4.2. Movimientos de inventario
+
+`RECOLECCION_MOVIMIENTO` registra solo operaciones que afectan saldo o que en el futuro afecten integridad inventariable.
 
 Movimientos típicos:
 
 - **CONSUMO_A_VIVERO** (automático desde el Modulo 2)
 - **DESECHO** (parcial o total, con motivo obligatorio)
-- **EVIDENCIA_AGREGADA** (si auditar la carga de fotos como evento)
-- **UBICACIÓN_AGREGADA/ACTUALIZADA** (más granularidad)
+
+Fuera del MVP:
+
+- **CORRECCION**
+- **AJUSTE_MIGRACION**
 
 ---
 
-## 5. Estados y eventos del registro: BORRADOR y VALIDADO
+## 5. Estados y eventos del registro: BORRADOR, PENDIENTE_VALIDACION, VALIDADO y RECHAZADO
 
 ### 5.1. BORRADOR
 
@@ -197,6 +245,7 @@ Movimientos típicos:
 - **Editable** (se puede corregir lo que esté mal).
 - **Incompletitud controlada:** a pesar de ser un BORRADOR requerie compos minimos para no caer en basura.
 - **No se ancla a blockchain** (no es “historia oficial” todavía).
+- **Eliminable solo con soft delete**.
 
 **Campos típicamente editables en BORRADOR (MVP):**
 - Especie (científico/comercial) y tipo de material.
@@ -216,18 +265,28 @@ Movimientos típicos:
 **Auditoría mínima (Web2):**
 - `creado_por`, `creado_en`, `actualizado_por`, `actualizado_en`.
 
-### 5.2. VALIDADO
+### 5.2. PENDIENTE_VALIDACION
 
-**Objetivo:** convertir el BORRADOR en un registro **sellado** y auditable.
+**Objetivo:** congelar la ficha mientras el validador revisa.
+
+- El recolector ya no edita mientras el registro está en revisión.
+- El registro todavía no es elegible para consumo.
+- Todavía no se ancla a blockchain.
+- Debe existir un registro de historial `SOLICITUD_VALIDACION`.
+
+### 5.3. VALIDADO
+
+**Objetivo:** convertir el registro revisado en un origen **sellado** y auditable.
 
 - Registro **sellado**.
 - **No se permite editar la ficha** directamente.
 - Se vuelve elegible para **consumo** hacia el Módulo 2 (Vivero).
 
-**Condiciones para pasar a VALIDADO (MVP):**
+**Condiciones para ser aprobado como `VALIDADO` (MVP):**
 - Evidencia mínima completa (≥ 2 fotos).
 - Ubicación con **latitud/longitud** válidas.
 - Campos mínimos completos (especie, tipo material, fecha, cantidad inicial, método, vivero).
+- Revisión/aprobación del validador.
 
 **Post-validación (sin reescritura):**
 - Solo se permiten **movimientos append-only**:
@@ -236,7 +295,16 @@ Movimientos típicos:
   
 (Futuro: Esta parte de validación también se hara por la comunidad, no solo el recolector, se puede proponer que más de una persona valide la recolección y quede registrado en blockchain quienes validaron y cuando.)
 
-### 5.3. Correcciones fuera del MVP
+### 5.4. RECHAZADO
+
+**Objetivo:** dejar constancia de que el validador no aprobó la solicitud.
+
+- El registro no es consumible.
+- El registro no se ancla a blockchain.
+- Debe existir un registro de historial `VALIDACION_RECHAZADA`.
+- El recolector puede corregir la ficha y reenviarla a validación.
+
+### 5.5. Correcciones fuera del MVP
 
 Si se detecta un error después de validar, en el MVP no se corrige la recolección validada ni sus movimientos. La regla operativa es:
 
@@ -248,7 +316,7 @@ Si se detecta un error después de validar, en el MVP no se corrige la recolecci
 
 ## 6. Evidencia fotográfica y excepciones
 
-- Las fotos son obligatorias para **VALIDAR** y para crear un **BORRADOR** también (mínimo 2).
+- Las fotos son obligatorias para crear un **BORRADOR** y para enviarlo a `PENDIENTE_VALIDACION` también (mínimo 2).
 - En MVP, no se permiten “validaciones sin evidencia” (para no abrir un agujero de trazabilidad).
 - Futuro: se puede permitir excepción con motivo y aprobación (similar al el Modulo 2), pero no en el MVP.
 
@@ -259,6 +327,7 @@ Si se detecta un error después de validar, en el MVP no se corrige la recolecci
 - La fecha de recolección (`fecha_recolección`) puede ser retroactiva hasta **45 días**.
 - El sistema guarda siempre:
     - `created_at` (fecha/hora real del registro),
+    - `updated_at` (última edición de ficha cuando aplica),
     - `fecha_validación` (cuando se selló).
 
 Restricción:
@@ -286,6 +355,7 @@ Reglas:
 Para evitar gas innecesario:
 
 - El sistema opera en Web2 con historial append-only.
+- El timeline mínimo del registro se construye combinando `RECOLECCION.created_at`, `RECOLECCION_HISTORIAL` y `RECOLECCION_MOVIMIENTO.created_at`.
 - Se ancla en blockchain:
     - al pasar a `VALIDADO` (hash/snapshot del registro sellado)
     - y por cada movimiento post-validación:
@@ -294,11 +364,10 @@ Para evitar gas innecesario:
 
 Roles (MVP):
 
-- Recolector: crea BORRADOR, completa datos y valida su propio registro.
+- Recolector: crea `BORRADOR`, edita la ficha y solicita validación.
+- Validador: revisa `PENDIENTE_VALIDACION` y aprueba o rechaza.
 - Admin: administra catálogos (especies, métodos, ubicaciones).
 - Auditor/Consulta: solo lectura + acceso a historial.
-
-(Futuro: validación por VALIDADOR y/o multi-aprobación antes de anclar.)
 
 ---
 
@@ -306,17 +375,20 @@ Roles (MVP):
 
 **MVP incluye**
 
-- BORRADOR / VALIDADO
+- BORRADOR / PENDIENTE_VALIDACION / VALIDADO / RECHAZADO
+- Soft delete solo para BORRADOR
 - Persistencia oficial de unidades: `UNIDAD | G`
 - Ubicación con lat/long obligatorias para validar
 - Evidencia mínima (2 fotos) para validar
+- `RECOLECCION_HISTORIAL` preparado para ciclo de vida mínimo del registro
 - Motivo de descarte obligatorio
-- Movimientos append-only (consumo automático desde el Modulo 2 y descarte)
+- `RECOLECCION_MOVIMIENTO` reservado para consumo automático desde el Modulo 2 y descarte
 - Integración con el Modulo 2 con consumo automático y transacción atómica
 - Catálogos administrados + “SIN ESPECIFICAR” para niveles administrativos
 
 **Futuro**
 
+- Auditoría campo por campo del borrador
 - Correcciones auditadas post-validación
 - Excepciones aprobadas (validación sin evidencia, casos justificados)
 - Propuesta de nuevas comunidades/zonas por usuarios (aprobación admin)
