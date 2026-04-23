@@ -144,6 +144,11 @@ erDiagram
     bigint id PK
     date fecha
     ENUM(tipo_material_origen) tipo_material
+    text nombre_cientifico_snapshot "NOT NULL - snapshot oficial se congela al VALIDAR"
+    text nombre_comercial_snapshot "NOT NULL - naming oficial; snapshot se congela al VALIDAR"
+    text variedad_snapshot "NOT NULL - snapshot oficial se congela al VALIDARr"
+    text nombre_comunidad_snapshot "NOT NULL - comunidad donde se recolectó; snapshot oficial se congela al VALIDAR"
+    text nombre_recolector_snapshot "NOT NULL - snapshot oficial se congela al VALIDAR"
     boolean especie_nueva
     text observaciones
     bigint usuario_id FK
@@ -163,25 +168,11 @@ erDiagram
     ENUM(estado_registro_recoleccion) estado_registro
     ENUM(unidad_medida) unidad_canonica
     numeric cantidad_inicial_canonica
-    bigint usuario_validacion_id FK "nullable - solo cuando la solicitud fue aprobada"
+  bigint usuario_validacion_id FK "nullable - solo cuando la solicitud fue aprobada"
     timestamptz fecha_validacion "nullable - solo cuando pasa a VALIDADO"
     text blockchain_tx_validacion
-    text nombre_cientifico_snapshot "nullable - snapshot oficial se congela al VALIDAR"
-    text nombre_comercial_snapshot "nullable - naming oficial; snapshot se congela al VALIDAR"
-    text variedad_snapshot "nullable - snapshot oficial se congela al VALIDAR"
-    text nombre_comunidad_snapshot "nullable - comunidad donde se recolectó; snapshot oficial se congela al VALIDAR"
-    text nombre_recolector_snapshot "nullable - snapshot oficial se congela al VALIDAR"
     numeric saldo_actual
     ENUM(estado_operativo_recoleccion) estado_operativo
-  }
-
-  RECOLECCION_FOTO {
-    bigint id PK
-    bigint recoleccion_id FK
-    text url
-    int peso_bytes
-    text formato
-    timestamptz created_at
   }
 
   RECOLECCION_HISTORIAL {
@@ -345,7 +336,6 @@ EVENTO_LOTE_VIVERO {
   VIVERO ||--o{ RECOLECCION : almacena_en
   METODO_RECOLECCION ||--o{ RECOLECCION : metodo
   PLANTA ||--o{ RECOLECCION : identifica
-  RECOLECCION ||--o{ RECOLECCION_FOTO : fotos
   RECOLECCION ||--o{ RECOLECCION_HISTORIAL : historial_ciclo_vida
   USUARIO ||--o{ RECOLECCION_HISTORIAL : actor
   RECOLECCION ||--o{ RECOLECCION_MOVIMIENTO : movimientos
@@ -385,22 +375,11 @@ EVENTO_LOTE_VIVERO {
   USUARIO ||--o{ PLANTACION_USUARIO : participa
   PLANTACION ||--o{ PLANTACION_LOTE_VIVERO : usa_lote
   LOTE_VIVERO ||--o{ PLANTACION_LOTE_VIVERO : se_usa_en
-
----
-
-ENUMs
+ENUMS
 RECOLECCION
 tipo_material_origen = [SEMILLA, ESQUEJE]
 
 estado_registro_recoleccion = [BORRADOR, PENDIENTE_VALIDACION, VALIDADO, RECHAZADO]
-
-tipo_historial_recoleccion = [
-  BORRADOR_CREADO,
-  SOLICITUD_VALIDACION,
-  VALIDACION_APROBADA,
-  VALIDACION_RECHAZADA,
-  BORRADOR_ELIMINADO
-]
 
 tipo_movimiento_recoleccion = [
   CONSUMO_A_VIVERO, DESECHO, CORRECCION, AJUSTE_MIGRACION
@@ -413,18 +392,6 @@ motivo_movimiento_recoleccion se mantiene en DB como enum oficial, pero debe doc
 Motivos funcionales: usados en la operación normal del negocio.
 Motivos correctivos: usados para correcciones auditadas.
 Motivos técnicos: usados para migraciones, integridad o reversas técnicas.
-
-En Recolección se deja explícita la separación:
-- `RECOLECCION_HISTORIAL` registra ciclo de vida del registro y transiciones de estado.
-- `RECOLECCION_MOVIMIENTO` registra exclusivamente operaciones que afectan saldo o integridad inventariable.
-
-Snapshots oficiales:
-- Un `snapshot` es una copia congelada del dato de identidad relevante en un momento oficial del proceso.
-- En `RECOLECCION`, el snapshot oficial no se fija en borrador: puede recalcularse libremente mientras el registro siga en `BORRADOR` o `RECHAZADO`.
-- El congelamiento oficial ocurre recién en `approveValidation`, cuando la recolección pasa a `VALIDADO`.
-- Esto evita que cambios posteriores en `PLANTA`, usuario o comunidad reescriban retrospectivamente lo que realmente se validó.
-- `LOTE_VIVERO` hereda esos datos congelados desde Recolección al momento de creación del lote para “congelar” también el historial del Módulo 2.
-- El naming cerrado para el dato comercial es `nombre_comercial_snapshot`; ya no se usa `nombre_comun_snapshot`.
 
 LOTE VIVIERO
 estado_lote_vivero = [ACTIVO, FINALIZADO]
