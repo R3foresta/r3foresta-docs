@@ -11,6 +11,7 @@
         "Estado operativo derivado: ABIERTO / CERRADO",
         "Fecha de recoleccion obligatoria",
         "Especie: nombre cientifico + nombre comercial obligatorios",
+        "Snapshots oficiales en RECOLECCION: nombre_cientifico_snapshot, nombre_comercial_snapshot, variedad_snapshot, nombre_comunidad_snapshot, nombre_recolector_snapshot",
         "Metodo de recoleccion obligatorio",
         "Tipo de material: SEMILLA o ESQUEJE obligatorio",
         "Cantidad inicial obligatoria",
@@ -36,6 +37,7 @@
         "En BORRADOR no se considera registro sellado.",
         "En BORRADOR se permite soft delete.",
         "No se deben mezclar G y GR en documentacion, backend, frontend ni DB.",
+        "En BORRADOR y RECHAZADO los datos del snapshot pueden recalcularse libremente.",
         "Se registran automaticamente campos de auditoria (creado_por/creado_en/actualizado_por/actualizado_en)."
       ]
     },
@@ -69,6 +71,7 @@
         "Fecha y hora",
         "updated_at / updated_by",
         "Tabla RECOLECCION_HISTORIAL para ciclo de vida",
+        "Snapshots oficiales congelados al validar",
         "Motivo cuando aplique"
       ],
       "validaciones": [
@@ -77,12 +80,14 @@
         "En RECHAZADO se permite corregir y reenviar a validacion.",
         "En VALIDADO no se permite editar la ficha.",
         "En VALIDADO solo se permiten los movimientos CONSUMO_A_VIVERO y DESECHO.",
+        "Una vez VALIDADO, el snapshot oficial no se recalcula por cambios posteriores en PLANTA, comunidad o recolector.",
         "El historial no se puede borrar."
       ],
       "reglas_adicionales": [
         "RECOLECCION_HISTORIAL registra ciclo de vida del registro.",
         "RECOLECCION_MOVIMIENTO registra exclusivamente operaciones que afectan saldo.",
         "En el MVP no se audita cada edicion del borrador campo por campo.",
+        "El naming oficial del dato comercial congelado es nombre_comercial_snapshot; no se usa nombre_comun_snapshot.",
         "No hay CORRECCION operativa en el MVP una vez validado/subido el registro."
       ]
     },
@@ -97,6 +102,7 @@
         "Usuario validador",
         "Fecha/hora de validacion",
         "Hash/snapshot del registro sellado",
+        "Congelamiento de snapshots oficiales de identidad al aprobar",
         "Identificador de anclaje en blockchain (tx o referencia)"
       ],
       "validaciones": [
@@ -107,6 +113,7 @@
       ],
       "reglas_adicionales": [
         "Al VALIDAR se considera el registro como historia oficial (sellado).",
+        "Al VALIDAR se congelan nombre_cientifico_snapshot, nombre_comercial_snapshot, variedad_snapshot, nombre_comunidad_snapshot y nombre_recolector_snapshot.",
         "RECOLECCION_HISTORIAL debe registrar SOLICITUD_VALIDACION, VALIDACION_APROBADA y VALIDACION_RECHAZADA.",
         "El borrador o rechazado se pueden modificar; una vez validado no hay vuelta atras en el MVP."
       ]
@@ -129,6 +136,7 @@
       "validaciones": [
         "No permitir que el saldo quede < 0.",
         "CONSUMO_A_VIVERO requiere recoleccion VALIDADO y saldo suficiente.",
+        "CONSUMO_A_VIVERO requiere que la recoleccion ya tenga snapshot oficial congelado.",
         "La unidad del movimiento debe coincidir con la unidad canonica de la recoleccion.",
         "No se puede consumir mas de lo disponible.",
         "CONSUMO_A_VIVERO usa delta negativo.",
@@ -140,6 +148,7 @@
         "Contrato estricto M1-M2: abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso.",
         "Contrato estricto M1-M2: LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada.",
         "Contrato estricto M1-M2: RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento.",
+        "Contrato estricto M1-M2: LOTE_VIVERO hereda snapshots oficiales desde RECOLECCION, no desde una lectura viva de PLANTA.",
         "Cada movimiento del MVP puede anclarse a blockchain sin romper la operacion base.",
         "CORRECCION queda fuera del MVP; si existe en el futuro podra usar delta positivo o negativo segun corresponda."
       ]

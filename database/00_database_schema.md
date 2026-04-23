@@ -166,6 +166,11 @@ erDiagram
     bigint usuario_validacion_id FK "nullable - solo cuando la solicitud fue aprobada"
     timestamptz fecha_validacion "nullable - solo cuando pasa a VALIDADO"
     text blockchain_tx_validacion
+    text nombre_cientifico_snapshot "nullable - snapshot oficial se congela al VALIDAR"
+    text nombre_comercial_snapshot "nullable - naming oficial; snapshot se congela al VALIDAR"
+    text variedad_snapshot "nullable - snapshot oficial se congela al VALIDAR"
+    text nombre_comunidad_snapshot "nullable - comunidad donde se recolectó; snapshot oficial se congela al VALIDAR"
+    text nombre_recolector_snapshot "nullable - snapshot oficial se congela al VALIDAR"
     numeric saldo_actual
     ENUM(estado_operativo_recoleccion) estado_operativo
   }
@@ -212,9 +217,12 @@ erDiagram
     bigint planta_id FK "NOT NULL"
     bigint vivero_id FK "NOT NULL"
     bigint responsable_id FK "NOT NULL"
-    text nombre_cientifico_snapshot "NOT NULL - congelado al crear"
-    text nombre_comercial_snapshot "NOT NULL - congelado al crear"
-    ENUM(tipo_material_origen) tipo_material_snapshot "NOT NULL - congelado al crear"
+    text nombre_cientifico_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
+    text nombre_comercial_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
+    ENUM(tipo_material_origen) tipo_material_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
+    text variedad_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
+    text nombre_comunidad_origen_snapshot "NOT NULL - congelado al crear"
+    text nombre_responsable_snapshot "NOT NULL - congelado al crear"
     date fecha_inicio "NOT NULL"
     numeric cantidad_inicial_en_proceso "NOT NULL - lectura operativa de inicio"
     ENUM(unidad_medida) unidad_medida_inicial "NOT NULL - UNIDAD | G"
@@ -409,6 +417,14 @@ Motivos técnicos: usados para migraciones, integridad o reversas técnicas.
 En Recolección se deja explícita la separación:
 - `RECOLECCION_HISTORIAL` registra ciclo de vida del registro y transiciones de estado.
 - `RECOLECCION_MOVIMIENTO` registra exclusivamente operaciones que afectan saldo o integridad inventariable.
+
+Snapshots oficiales:
+- Un `snapshot` es una copia congelada del dato de identidad relevante en un momento oficial del proceso.
+- En `RECOLECCION`, el snapshot oficial no se fija en borrador: puede recalcularse libremente mientras el registro siga en `BORRADOR` o `RECHAZADO`.
+- El congelamiento oficial ocurre recién en `approveValidation`, cuando la recolección pasa a `VALIDADO`.
+- Esto evita que cambios posteriores en `PLANTA`, usuario o comunidad reescriban retrospectivamente lo que realmente se validó.
+- `LOTE_VIVERO` hereda esos datos congelados desde Recolección al momento de creación del lote para “congelar” también el historial del Módulo 2.
+- El naming cerrado para el dato comercial es `nombre_comercial_snapshot`; ya no se usa `nombre_comun_snapshot`.
 
 LOTE VIVIERO
 estado_lote_vivero = [ACTIVO, FINALIZADO]

@@ -30,6 +30,7 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
 * **Ubicación estructurada:** latitud/longitud obligatorias **para validar** + datos administrativos opcionales (catálogos).
 * **Evidencia:** fotos obligatorias **para validar** (mínimo 2), formato JPG/PNG.
 * **Historial:** bitácora inmutable de cambios (quién/cuándo/antes-después).
+* **Snapshot:** copia congelada de datos oficiales de identidad en un momento formal del proceso, para que cambios posteriores en tablas maestras no alteren el historial ya validado.
 
 ---
 
@@ -50,6 +51,20 @@ Una recolección **es** un “lote origen” para los módulos siguientes. Por t
 
 * Debe poder **ser referenciada** desde Vivero (M2).
 * Debe poder **cambiar de estado** por uso/consumo (manual o automático según reglas).
+
+### RN-REC-03A — Snapshot oficial de identidad en validación
+
+El sistema debe guardar en `RECOLECCION` un snapshot oficial de identidad al momento de aprobar la validación.
+
+Ese snapshot debe incluir, como mínimo:
+
+- `nombre_cientifico_snapshot`
+- `nombre_comercial_snapshot`
+- `variedad_snapshot`
+- `nombre_comunidad_snapshot`
+- `nombre_recolector_snapshot`
+
+Su propósito es congelar el dato oficial validado para que cambios posteriores en `PLANTA`, comunidad o usuario no reescriban retrospectivamente la historia del lote origen.
 
 ---
 
@@ -120,6 +135,14 @@ Para que una recolección pueda alimentar lotes del Módulo 2 (Vivero) debe cump
 - `saldo_actual >= cantidad_a_consumir`
 
 Si está en `BORRADOR`, `PENDIENTE_VALIDACION`, `RECHAZADO` o `CERRADO`, **no puede** consumirse.
+
+### RN-REC-10D — El snapshot oficial se fija solo al validar
+
+- En `BORRADOR` y `RECHAZADO`, los datos derivados para snapshot pueden recalcularse libremente.
+- En `PENDIENTE_VALIDACION`, la ficha queda congelada mientras se revisa.
+- El snapshot oficial se fija recién al aprobar la validación.
+- Una vez `VALIDADO`, el snapshot oficial no debe recalcularse ni sobrescribirse por cambios posteriores en tablas maestras.
+- El naming oficial del campo comercial congelado es `nombre_comercial_snapshot`; no se usa `nombre_comun_snapshot`.
 
 ### RN-REC-10A — Movimientos permitidos (append-only) y efecto en saldo
 

@@ -9,6 +9,7 @@ El contexto funcional del módulo obliga a proteger especialmente estos puntos:
 - trazabilidad fuerte desde un **lote origen único**,
 - consumo atómico entre **Recolección** y **Vivero**,
 - alineación estricta entre `RECOLECCION_MOVIMIENTO`, `LOTE_VIVERO` y `EVENTO_LOTE_VIVERO` en `INICIO`,
+- herencia explícita de snapshots congelados desde `RECOLECCION` hacia `LOTE_VIVERO`,
 - historial **append-only** de eventos,
 - control confiable del **saldo vivo**,
 - evidencias obligatorias por evento,
@@ -139,6 +140,8 @@ flowchart LR
 - `lote_vivero` guarda el estado operativo actual.
 - `lote_vivero_evento` guarda el historial append-only.
 - `evidencia_trazabilidad` respalda cada evento obligatorio.
+- `recoleccion` guarda snapshots oficiales de identidad al validar; esos snapshots son la fuente de herencia hacia `lote_vivero`.
+- un snapshot, en este contexto, es una copia congelada del dato relevante para que el historial no cambie si luego se edita `PLANTA` u otra tabla maestra.
 - el saldo actual se actualiza transaccionalmente al registrar cada evento.
 - la unidad persistida se restringe a `UNIDAD` o `G`; `kg` solo existe como input y se normaliza antes de persistir.
 
@@ -189,3 +192,5 @@ Restricciones explícitas del MVP:
 - no hay correcciones operativas una vez registrado el evento; el modelo sigue append-only sin `CORRECCION` activa en esta fase,
 - `CONSUMO_A_VIVERO` y `DESECHO` usan `delta` negativo,
 - `EMBOLSADO` no convierte automáticamente gramos en plantas vivas; registra un conteo observado en `UNIDAD`.
+- en Recolección, el snapshot oficial se congela solo al aprobar la validación; antes de eso puede recalcularse en borrador,
+- el naming oficial del dato comercial congelado es `nombre_comercial_snapshot`.

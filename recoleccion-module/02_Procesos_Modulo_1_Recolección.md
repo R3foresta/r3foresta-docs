@@ -45,6 +45,11 @@ Además, el módulo debe separar dos historiales:
 
 Esto sigue la misma lógica general de Vivero, pero en Recolección conviene separar ambas cosas porque editar, pedir validación o rechazar un registro **no es** un movimiento de inventario.
 
+El módulo también separa dos momentos para la identidad:
+
+- mientras la recolección está en borrador, la identidad visible puede recalcularse si cambia la fuente maestra,
+- cuando la recolección se aprueba, se guarda un **snapshot oficial** en la propia recolección para congelar el dato validado.
+
 ### 2.3. Cantidad y unidad canónica
 
 - **ESQUEJE:** unidades enteras (1, 2, 3…)
@@ -138,6 +143,12 @@ Si el validador **aprueba**:
 
 - se registran `usuario_validacion` y `fecha_validacion`,
 - se registra un historial `VALIDACION_APROBADA`,
+- se congelan en `RECOLECCION` los snapshots oficiales de identidad:
+  - `nombre_cientifico_snapshot`
+  - `nombre_comercial_snapshot`
+  - `variedad_snapshot`
+  - `nombre_comunidad_snapshot`
+  - `nombre_recolector_snapshot`
 - el registro queda sellado,
 - puede registrarse/anclarse en blockchain,
 - y ya no se permite editar la ficha directamente.
@@ -167,6 +178,7 @@ Cuando desde el Modulo 2 se crea un lote seleccionando una recolección:
 - registra un movimiento **CONSUMO_A_VIVERO** en la recolección
 - descuenta saldo automáticamente
 - enlaza `recolección_id → lote_vivero_id`
+- y hereda al lote de vivero los snapshots oficiales ya congelados en Recolección, para no depender de lecturas vivas de `PLANTA`
 
 Contrato estricto entre Módulo 1 y Módulo 2 en `INICIO`:
 
@@ -174,6 +186,9 @@ Contrato estricto entre Módulo 1 y Módulo 2 en `INICIO`:
 - `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
 - `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
 - `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
+- `LOTE_VIVERO.nombre_cientifico_snapshot = RECOLECCION.nombre_cientifico_snapshot`
+- `LOTE_VIVERO.nombre_comercial_snapshot = RECOLECCION.nombre_comercial_snapshot`
+- `LOTE_VIVERO.variedad_snapshot = RECOLECCION.variedad_snapshot`
 
 Restricciones del MVP:
 

@@ -20,7 +20,7 @@ En este módulo todavía **no** se trabaja plantas vivas; eso empieza recién en
 - **RECOLECCION_HISTORIAL**: historial del ciclo de vida del registro.
 - **RECOLECCION_MOVIMIENTO**: movimientos que afectan saldo.
 - **UBICACION**: latitud, longitud y referencia territorial.
-- **PLANTA**: especie o planta asociada al registro.
+- **PLANTA**: catálogo maestro de especie, pero no fuente viva del historial una vez congelado el snapshot oficial.
 - **VIVERO**: lugar de almacenamiento asociado a la recolección.
 
 ## 3. Reglas bloqueantes
@@ -30,6 +30,9 @@ En este módulo todavía **no** se trabaja plantas vivas; eso empieza recién en
 - `PENDIENTE_VALIDACION` congela la ficha mientras revisa el validador.
 - `RECHAZADO` no habilita consumo, pero permite corregir y reenviar.
 - En `VALIDADO` no se edita la ficha; solo se permiten movimientos de saldo.
+- El snapshot oficial de identidad se congela solo al aprobar la validación.
+- En `BORRADOR` y `RECHAZADO`, el snapshot puede recalcularse.
+- El naming oficial es `nombre_comercial_snapshot`; no `nombre_comun_snapshot`.
 - El soft delete solo está permitido para `BORRADOR`.
 - La fecha de recolección no puede ser futura y puede ser retroactiva hasta 45 días.
 - La persistencia oficial de unidades es solo `UNIDAD` y `G`.
@@ -49,16 +52,20 @@ En este módulo todavía **no** se trabaja plantas vivas; eso empieza recién en
 4. Envía el registro a `PENDIENTE_VALIDACION`.
 5. Se registra `SOLICITUD_VALIDACION` en `RECOLECCION_HISTORIAL`.
 6. El validador revisa y aprueba.
-7. El registro pasa a `VALIDADO` y se registra `VALIDACION_APROBADA`.
-8. Desde Vivero se puede hacer un `CONSUMO_A_VIVERO` si hay saldo suficiente.
-9. Si ocurre pérdida operativa en origen, se registra `DESECHO`.
-10. Si el saldo llega a 0, el estado operativo pasa a `CERRADO`.
+7. En `approveValidation` se congelan en `RECOLECCION` los snapshots oficiales:
+   `nombre_cientifico_snapshot`, `nombre_comercial_snapshot`, `variedad_snapshot`, `nombre_comunidad_snapshot`, `nombre_recolector_snapshot`.
+8. El registro pasa a `VALIDADO` y se registra `VALIDACION_APROBADA`.
+9. Desde Vivero se puede hacer un `CONSUMO_A_VIVERO` si hay saldo suficiente.
+10. El lote de vivero hereda esos snapshots ya congelados, sin releer `PLANTA` en vivo.
+11. Si ocurre pérdida operativa en origen, se registra `DESECHO`.
+12. Si el saldo llega a 0, el estado operativo pasa a `CERRADO`.
 
 ## 5. Qué no se permite
 
 - Consumir una recolección en `BORRADOR`.
 - Consumir una recolección en `PENDIENTE_VALIDACION`.
 - Consumir una recolección en `RECHAZADO`.
+- Consumir una recolección `VALIDADO` que todavía no tenga snapshot oficial congelado.
 - Editar una ficha en `PENDIENTE_VALIDACION`.
 - Editar una ficha en `VALIDADO`.
 - Eliminar una recolección que no esté en `BORRADOR`.
@@ -104,5 +111,6 @@ Para operación diaria, el timeline mínimo se interpreta así:
 
 - `RECOLECCION.created_at`: se creó el borrador.
 - `RECOLECCION_HISTORIAL`: cambios de estado del registro.
+- `RECOLECCION.*_snapshot`: identidad oficial congelada al momento de aprobar la validación.
 - `RECOLECCION.fecha_validacion`: momento materializado de aprobación.
 - `RECOLECCION_MOVIMIENTO.created_at`: consumos y desechos.

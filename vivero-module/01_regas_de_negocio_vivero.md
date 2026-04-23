@@ -34,6 +34,7 @@ Cada regla incluye:
 * **Eventos de vivero:** se registran como append-only y se consideran definitivos una vez insertados.
 * **Evidencia de trazabilidad:** soporte asociado al evento, almacenado en `evidencia_trazabilidad`.
 * **Motivo de cierre:** clasificación del cierre del lote: `DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO`.
+* **Snapshot heredado:** copia congelada de la identidad oficial recibida desde Recolección para que el lote de vivero no cambie si luego cambia `PLANTA` u otra tabla maestra.
 
 ---
 
@@ -106,12 +107,19 @@ Un mismo lote origen puede abastecer a múltiples lotes de vivero, siempre que c
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Alta
 
-Al crear el lote de vivero se debe heredar y congelar la identidad de la planta o especie desde Módulo 1, incluyendo como mínimo:
+Al crear el lote de vivero se debe heredar y congelar la identidad oficial desde Módulo 1. La fuente oficial del snapshot es `RECOLECCION` ya validada, no una lectura viva de `PLANTA`.
+
+Debe incluir, como mínimo:
 
 * `planta_id`
 * `nombre_cientifico_snapshot`
 * `nombre_comercial_snapshot`
 * `tipo_material_snapshot`
+* `variedad_snapshot`
+* `nombre_comunidad_origen_snapshot`
+* `nombre_responsable_snapshot`
+
+El objetivo es congelar el historial del lote de vivero desde su nacimiento.
 
 ---
 
@@ -230,6 +238,23 @@ El inicio del lote debe registrar simultáneamente:
 * `EVENTO_LOTE_VIVERO.unidad_medida_evento` para el `INICIO`.
 
 En el MVP, `cantidad_inicial_en_proceso` refleja el consumo realizado sobre el lote origen y debe quedar alineada con el movimiento `CONSUMO_A_VIVERO` registrado en Módulo 1.
+
+### RN-VIV-16A — Contrato de herencia de snapshots en INICIO
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Al iniciar un lote de vivero, los snapshots heredados deben quedar alineados con el snapshot oficial de la recolección validada.
+
+Invariantes mínimas:
+
+* `LOTE_VIVERO.nombre_cientifico_snapshot = RECOLECCION.nombre_cientifico_snapshot`
+* `LOTE_VIVERO.nombre_comercial_snapshot = RECOLECCION.nombre_comercial_snapshot`
+* `LOTE_VIVERO.tipo_material_snapshot = RECOLECCION.tipo_material`
+* `LOTE_VIVERO.variedad_snapshot = RECOLECCION.variedad_snapshot`
+
+En el MVP estos datos quedan congelados al crear el lote y no deben recalcularse después.
 
 ### RN-VIV-17 — La unidad del inicio respeta la unidad canónica del origen
 
