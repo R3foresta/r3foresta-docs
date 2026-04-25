@@ -212,7 +212,7 @@ erDiagram
     text nombre_comercial_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
     ENUM(tipo_material_origen) tipo_material_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
     text variedad_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
-    text nombre_comunidad_origen_snapshot "NOT NULL - congelado al crear"
+    text nombre_comunidad_origen_snapshot "NOT NULL - congelado al crear y también lo hereda"
     text nombre_responsable_snapshot "NOT NULL - congelado al crear"
     date fecha_inicio "NOT NULL"
     numeric cantidad_inicial_en_proceso "NOT NULL - lectura operativa de inicio"

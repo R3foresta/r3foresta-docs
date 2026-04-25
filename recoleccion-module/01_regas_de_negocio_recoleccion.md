@@ -256,12 +256,12 @@ Si faltan al validar: error indicando exactamente el campo faltante.
 
 ### RN-REC-18 — Campos administrativos opcionales por catálogo
 
-País/Departamento/Provincia/Comunidad/Zona:
+País/Departamento/Provincia/Comunidad-Zona:
 
 - Son opcionales,
 - Se seleccionan de catálogos (cuando existan),
 - Si un dato no existe en catálogo, el sistema debe impedir “inventar” valores.
-  - Alternativa MVP: permitir “SIN ESPECIFICAR” en niveles administrativos.
+  - Alternativa MVP: permitir por defualt “SIN ESPECIFICAR” en niveles administrativos.
 
 ### RN-REC-19 — Coherencia mínima de estructura
 
@@ -392,13 +392,9 @@ Fuera del MVP:
 
 (Futuro: se pueden agregar roles de “comunidad” para validación colaborativa, con registro de quién validó qué y cuándo.)
 
-### RN-REC-26 — “Especie nueva” como bandera de control
+### RN-REC-26 — Para registrar recolecciones nuevas solo se usan las plantas del catalog
 
-Si `es_especie_nueva = true`:
-
-* el registro debe quedar marcado para revisión (cola de validación),
-  
-(Futuro: Se requeren más evidencia de evidencia o una nota técnica.)
+No se permite registrar una recolección con un nombre científico que no exista en el catálogo de plantas (RF-GEN-03). Esto garantiza que cada recolección esté vinculada a una planta con identidad oficial.
 
 ### RN-REC-27 — Anclaje blockchain (MVP)
 

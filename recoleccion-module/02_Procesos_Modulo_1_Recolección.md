@@ -93,7 +93,7 @@ Datos mínimos recomendados para permitir guardar BORRADOR:
 - vivero de almacenamiento (catálogo RF-GEN-02)
 - observaciones (opcional)
 - fotos (2 minimo)
-- ubicación (lat/long mínimo, niveles administrativos osea comunidad/zona)
+- ubicación (lat/long mínimo, niveles administrativos osea Comunidad-Zona)
 
 > Nota MVP: ubicación y fotos tampocopueden faltar en BORRADOR pero si se pueden editar, y son **obligatorias** para pasar a `PENDIENTE_VALIDACION`.
 > 
@@ -119,7 +119,7 @@ Requisitos para avanzar hacia validación:
 - **Ubicación estructurada (RF-REC-02):**
     - latitud (obligatorio): -90 a 90, 6 decimales
     - longitud (obligatorio): -180 a 180, 6 decimales
-    - administrativos opcionales por catálogo: país/departamento/provincia/comunidad/zona
+    - administrativos opcionales por catálogo: país/departamento/provincia/Comunidad-Zona
         
         (permitiendo “SIN ESPECIFICAR” como MVP)
         
