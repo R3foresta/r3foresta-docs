@@ -351,6 +351,8 @@ El evento de `INICIO` de vivero consume el material recolectado con transacción
 Cuando se crea un lote de vivero desde una recolección, el sistema debe:
 
 - registrar el vínculo (recolección → lote_vivero),
+- generar el `LOTE_VIVERO.codigo_trazabilidad` con formato `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`,
+- usar el `vivero_id` seleccionado para el lote de vivero, no heredarlo automáticamente desde `RECOLECCION.vivero_id`,
 - registrar un movimiento `CONSUMO_A_VIVERO` con delta negativo en la recoleccion_movimiento,
 - persistir `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento` con la misma unidad que `RECOLECCION.unidad_canonica`,
 - recalcular `saldo_actual` y el estado operativo:

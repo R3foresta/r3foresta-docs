@@ -260,6 +260,8 @@ Consistencia transversal y menos errores de integración.
 ### Decisión
 La evidencia se modela como entidad separada y vinculable al evento, no como campos embebidos dentro del propio evento.
 
+En el MVP, `INICIO`, `EMBOLSADO`, `MERMA` y `DESPACHO` requieren mínimo 1 foto. `ADAPTABILIDAD` puede registrar evidencia, pero sus subetapas pueden guardarse sin foto.
+
 ### La duda crítica
 “¿Por qué no guardar los archivos directamente en columnas del evento?”
 

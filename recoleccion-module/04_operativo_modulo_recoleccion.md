@@ -57,8 +57,10 @@ En este módulo todavía **no** se trabaja plantas vivas; eso empieza recién en
 8. El registro pasa a `VALIDADO` y se registra `VALIDACION_APROBADA`.
 9. Desde Vivero se puede hacer un `CONSUMO_A_VIVERO` si hay saldo suficiente.
 10. El lote de vivero hereda esos snapshots ya congelados, sin releer `PLANTA` en vivo.
-11. Si ocurre pérdida operativa en origen, se registra `DESECHO`.
-12. Si el saldo llega a 0, el estado operativo pasa a `CERRADO`.
+11. El lote de vivero selecciona su propio `vivero_id`; no lo hereda automáticamente desde la recolección.
+12. El lote de vivero genera `codigo_trazabilidad` con formato `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`.
+13. Si ocurre pérdida operativa en origen, se registra `DESECHO`.
+14. Si el saldo llega a 0, el estado operativo pasa a `CERRADO`.
 
 ## 5. Qué no se permite
 

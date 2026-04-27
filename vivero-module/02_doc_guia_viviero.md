@@ -52,8 +52,17 @@ Al crear el lote de vivero se debe **heredar y congelar (snapshot)** la identida
 * `nombre_cientifico_snapshot`
 * `nombre_comercial_snapshot`
 * `tipo_material_snapshot`
+* `variedad_snapshot`
+* `nombre_comunidad_origen_snapshot`
+* `nombre_responsable_snapshot`
 
 Esto evita que cambios futuros en catálogos alteren la trazabilidad histórica del lote.
+
+El `vivero_id` del lote no se hereda desde la recolección. Se selecciona en el inicio del lote según el vivero operativo donde se gestionará ese material.
+
+El `codigo_trazabilidad` del lote de vivero es propio y concatena el código del origen:
+
+`VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`
 
 ### 2.4. Doble lectura del inicio
 
@@ -221,19 +230,21 @@ Datos mínimos esperados:
 * `fecha_inicio` en `LOTE_VIVERO`
 * `fecha_evento` del `EVENTO_LOTE_VIVERO` tipo `INICIO`
 * `responsable_id`
-* `vivero_id`
+* `vivero_id` seleccionado para este lote
+* `codigo_trazabilidad` con formato `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`
 * `cantidad_inicial_en_proceso`
 * `unidad_medida_inicial`
 * `cantidad_afectada` del evento `INICIO`
 * `unidad_medida_evento` del evento `INICIO`
 * snapshots de planta (`planta_id`, nombre científico, nombre comercial, tipo de material)
 * `observaciones` si aplica
-* al menos una `evidencia_trazabilidad` válida
+* al menos una `evidencia_trazabilidad` válida, mínimo 1 foto
 
 Reglas importantes:
 
 * El lote origen debe estar `VALIDADO`, habilitado para consumo y con saldo suficiente.
 * La creación del lote en Módulo 2 y el descuento del saldo en Módulo 1 ocurren en **una misma transacción atómica**.
+* El `vivero_id` del lote se selecciona en Vivero y no se hereda automáticamente desde `RECOLECCION.vivero_id`.
 * En el MVP, `cantidad_inicial_en_proceso` usa la misma unidad del origen y se materializa en `LOTE_VIVERO.unidad_medida_inicial`.
 * En el MVP, `cantidad_inicial_en_proceso` refleja la cantidad efectivamente consumida del origen.
 * El consumo del origen queda reflejado en `RECOLECCION_MOVIMIENTO` con `tipo_movimiento = CONSUMO_A_VIVERO`.
@@ -305,11 +316,12 @@ Datos mínimos esperados:
 * `subetapa_destino`
 * `responsable_id`
 * `observaciones` si aplica
-* al menos una `evidencia_trazabilidad` válida
+* `evidencia_trazabilidad` opcional
 
 Reglas importantes:
 
 * No se permite `ADAPTABILIDAD` sin `EMBOLSADO` previo.
+* La foto es opcional en `ADAPTABILIDAD`; sus subetapas pueden registrarse sin evidencia.
 * No cambia el saldo vivo.
 * Si el modelo de eventos guarda saldo, entonces `saldo_vivo_antes = saldo_vivo_despues = saldo_vivo_actual`.
 * Si el modelo persiste `cantidad_afectada` para este evento, debe expresarse en `UNIDAD`.
@@ -420,7 +432,7 @@ En esta versión del MVP, la evidencia se maneja de forma **estricta**.
 
 ### 6.1. Regla general
 
-Todo evento operativo del vivero debe quedar respaldado por evidencia de trazabilidad vinculada directamente al evento.
+Todo evento operativo del vivero que exige evidencia debe quedar respaldado por evidencia de trazabilidad vinculada directamente al evento.
 
 En términos del esquema:
 
@@ -434,15 +446,18 @@ En el MVP la evidencia es obligatoria para:
 
 * `INICIO`
 * `EMBOLSADO`
-* `ADAPTABILIDAD`
 * `MERMA`
 * `DESPACHO`
+
+La evidencia mínima para esos eventos es 1 foto válida.
+
+`ADAPTABILIDAD` puede tener evidencia, pero no es obligatoria. Sus subetapas (`SOMBRA`, `MEDIA_SOMBRA`, `SOL_DIRECTO`) pueden registrarse sin foto.
 
 ### 6.3. Reglas de operación
 
 * Si un evento requiere evidencia y no tiene soporte válido, **no debe registrarse**.
-* No se aceptan excepciones de evidencia en el MVP.
-* No se acepta evidencia tardía en el MVP.
+* No se aceptan excepciones de evidencia para eventos obligatorios en el MVP.
+* No se acepta evidencia tardía en el MVP para eventos que exigen evidencia.
 
 ---
 

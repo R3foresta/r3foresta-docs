@@ -29,6 +29,8 @@ Su objetivo operativo es:
 - La creación del lote y el consumo del origen deben ser atómicos.
 - `INICIO` debe quedar alineado con `RECOLECCION_MOVIMIENTO`.
 - La identidad visible del lote debe heredarse desde los snapshots oficiales de `RECOLECCION`, no recalcularse desde `PLANTA`.
+- El `codigo_trazabilidad` del lote debe usar formato `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`.
+- El `vivero_id` del lote se selecciona en Vivero y no se hereda automáticamente desde `RECOLECCION.vivero_id`.
 - `EMBOLSADO` no puede existir sin `INICIO`.
 - `MERMA`, `DESPACHO` y `ADAPTABILIDAD` no pueden existir sin `EMBOLSADO`.
 - `EMBOLSADO` solo puede registrarse una vez por lote.
@@ -37,21 +39,22 @@ Su objetivo operativo es:
 - El sistema no convierte automáticamente gramos en plantas vivas.
 - El saldo vivo no puede quedar negativo.
 - Un lote `FINALIZADO` no admite nuevos eventos operativos normales.
-- La evidencia es obligatoria para `INICIO`, `EMBOLSADO`, `ADAPTABILIDAD`, `MERMA` y `DESPACHO`.
+- La evidencia mínima es 1 foto para `INICIO`, `EMBOLSADO`, `MERMA` y `DESPACHO`; en `ADAPTABILIDAD` es opcional.
 
 ## 4. Flujo feliz
 
 1. Se selecciona una **RECOLECCION** `VALIDADO` con saldo suficiente.
 2. Se leen los snapshots oficiales ya congelados en esa recolección.
-3. Se crea el **LOTE_VIVERO** heredando esos snapshots y se registra `CONSUMO_A_VIVERO` en Módulo 1.
-4. Se registra `INICIO` con la misma cantidad y unidad del consumo.
-5. El lote queda `ACTIVO`, pero todavía sin saldo vivo.
-6. Se registra `EMBOLSADO`.
-7. Nacen `plantas_vivas_iniciales` y `saldo_vivo_actual` en `UNIDAD`.
-8. Opcionalmente se registra `ADAPTABILIDAD`.
-9. Si hay pérdidas, se registra `MERMA`.
-10. Si salen plantas a destino, se registra `DESPACHO`.
-11. Cuando `saldo_vivo_actual = 0`, el sistema genera `CIERRE_AUTOMATICO` y el lote pasa a `FINALIZADO`.
+3. Se selecciona el vivero operativo del lote.
+4. Se crea el **LOTE_VIVERO** heredando esos snapshots y se registra `CONSUMO_A_VIVERO` en Módulo 1.
+5. Se registra `INICIO` con la misma cantidad y unidad del consumo.
+6. El lote queda `ACTIVO`, pero todavía sin saldo vivo.
+7. Se registra `EMBOLSADO`.
+8. Nacen `plantas_vivas_iniciales` y `saldo_vivo_actual` en `UNIDAD`.
+9. Opcionalmente se registra `ADAPTABILIDAD`.
+10. Si hay pérdidas, se registra `MERMA`.
+11. Si salen plantas a destino, se registra `DESPACHO`.
+12. Cuando `saldo_vivo_actual = 0`, el sistema genera `CIERRE_AUTOMATICO` y el lote pasa a `FINALIZADO`.
 
 ## 5. Qué no se permite
 

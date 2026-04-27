@@ -180,6 +180,10 @@ Cuando desde el Modulo 2 se crea un lote seleccionando una recolección:
 - enlaza `recolección_id → lote_vivero_id`
 - y hereda al lote de vivero los snapshots oficiales ya congelados en Recolección, para no depender de lecturas vivas de `PLANTA`
 
+El lote de vivero usa un `vivero_id` seleccionado en Módulo 2; no se hereda automáticamente desde `RECOLECCION.vivero_id`.
+
+El `codigo_trazabilidad` del lote de vivero debe quedar como `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`.
+
 Contrato estricto entre Módulo 1 y Módulo 2 en `INICIO`:
 
 - `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`

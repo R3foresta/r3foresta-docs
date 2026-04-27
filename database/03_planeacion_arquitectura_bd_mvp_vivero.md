@@ -12,7 +12,7 @@ El contexto funcional del módulo obliga a proteger especialmente estos puntos:
 - herencia explícita de snapshots congelados desde `RECOLECCION` hacia `LOTE_VIVERO`,
 - historial **append-only** de eventos,
 - control confiable del **saldo vivo**,
-- evidencias obligatorias por evento,
+- evidencias obligatorias en eventos principales y opcionales en `ADAPTABILIDAD`,
 - convención oficial de unidades persistidas `UNIDAD | G`,
 - y cierre automático del lote cuando el saldo llega a cero.
 
@@ -139,8 +139,10 @@ flowchart LR
 
 - `lote_vivero` guarda el estado operativo actual.
 - `lote_vivero_evento` guarda el historial append-only.
-- `evidencia_trazabilidad` respalda cada evento obligatorio.
+- `evidencia_trazabilidad` respalda cada evento que exige evidencia; en `ADAPTABILIDAD` es opcional.
 - `recoleccion` guarda snapshots oficiales de identidad al validar; esos snapshots son la fuente de herencia hacia `lote_vivero`.
+- `lote_vivero.vivero_id` se selecciona en Vivero y no se hereda automáticamente desde `recoleccion.vivero_id`.
+- `lote_vivero.codigo_trazabilidad` concatena su código propio con el código del origen: `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`.
 - un snapshot, en este contexto, es una copia congelada del dato relevante para que el historial no cambie si luego se edita `PLANTA` u otra tabla maestra.
 - el saldo actual se actualiza transaccionalmente al registrar cada evento.
 - la unidad persistida se restringe a `UNIDAD` o `G`; `kg` solo existe como input y se normaliza antes de persistir.

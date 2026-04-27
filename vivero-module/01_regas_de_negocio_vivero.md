@@ -48,6 +48,14 @@ Cada regla incluye:
 
 Todo lote de vivero debe poseer un identificador único e inmutable generado por el sistema.
 
+El `codigo_trazabilidad` del lote de vivero debe construirse con el formato:
+
+`VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`
+
+Ejemplo: si la recolección tiene `codigo_trazabilidad = REC-000045`, el lote puede quedar como `VIV-000123-REC-000045`.
+
+El código de vivero es propio del lote y no reemplaza el código de la recolección; lo concatena para conservar el vínculo visible con el origen.
+
 ### RN-VIV-02 — Origen único del lote
 
 * **Severidad:** BLOQUEANTE
@@ -120,6 +128,8 @@ Debe incluir, como mínimo:
 * `nombre_responsable_snapshot`
 
 El objetivo es congelar el historial del lote de vivero desde su nacimiento.
+
+El `vivero_id` del lote de vivero no se hereda desde `RECOLECCION.vivero_id`. Debe seleccionarse como el vivero operativo donde se inicia o gestiona ese lote.
 
 ---
 
@@ -417,13 +427,14 @@ Una vez que el lote pase a `FINALIZADO`, no se permiten nuevos eventos operativo
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Alta
 
-En el MVP:
+En el MVP, cada evento principal requiere mínimo 1 foto como evidencia:
 
 * `INICIO` requiere evidencia,
 * `EMBOLSADO` requiere evidencia,
-* `ADAPTABILIDAD` requiere evidencia,
 * `MERMA` requiere evidencia,
 * `DESPACHO` requiere evidencia.
+
+`ADAPTABILIDAD` puede registrar evidencia, pero no es obligatoria. Sus subetapas (`SOMBRA`, `MEDIA_SOMBRA`, `SOL_DIRECTO`) pueden registrarse sin foto.
 
 La evidencia debe almacenarse y vincularse directamente al evento que la origina.
 

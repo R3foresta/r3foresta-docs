@@ -149,6 +149,8 @@
         "Contrato estricto M1-M2: LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada.",
         "Contrato estricto M1-M2: RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento.",
         "Contrato estricto M1-M2: LOTE_VIVERO hereda snapshots oficiales desde RECOLECCION, no desde una lectura viva de PLANTA.",
+        "Contrato M1-M2: LOTE_VIVERO.vivero_id se selecciona en Vivero y no se hereda automaticamente desde RECOLECCION.vivero_id.",
+        "Contrato M1-M2: LOTE_VIVERO.codigo_trazabilidad usa formato VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}.",
         "Cada movimiento del MVP puede anclarse a blockchain sin romper la operacion base.",
         "CORRECCION queda fuera del MVP; si existe en el futuro podra usar delta positivo o negativo segun corresponda."
       ]
