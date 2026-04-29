@@ -337,7 +337,7 @@ Los eventos `EMBOLSADO`, `MERMA` y `DESPACHO` deben registrar:
 
 Reglas específicas:
 
-* en `EMBOLSADO`, `saldo_vivo_antes = 0`,
+* en `EMBOLSADO`, `saldo_vivo_antes = null`,
 * en `EMBOLSADO`, `saldo_vivo_despues = plantas_vivas_iniciales`,
 * en `MERMA` y `DESPACHO`, el saldo lo calcula el sistema.
 

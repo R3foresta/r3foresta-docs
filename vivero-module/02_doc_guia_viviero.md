@@ -279,7 +279,7 @@ El **Embolsado** marca el punto en el que la plántula o el esqueje ya pueden co
 Desde este punto se registra:
 
 * `plantas_vivas_iniciales`
-* `saldo_vivo_antes = 0`
+* `saldo_vivo_antes = null`
 * `saldo_vivo_despues = plantas_vivas_iniciales`
 * `cantidad_afectada = plantas_vivas_iniciales`
 * `unidad_medida_evento = UNIDAD`
