@@ -168,7 +168,7 @@ erDiagram
     ENUM(estado_registro_recoleccion) estado_registro
     ENUM(unidad_medida) unidad_canonica
     numeric cantidad_inicial_canonica
-  bigint usuario_validacion_id FK "nullable - solo cuando la solicitud fue aprobada"
+    bigint usuario_validacion_id FK "nullable - solo cuando la solicitud fue aprobada"
     timestamptz fecha_validacion "nullable - solo cuando pasa a VALIDADO"
     numeric saldo_actual
     ENUM(estado_operativo_recoleccion) estado_operativo
