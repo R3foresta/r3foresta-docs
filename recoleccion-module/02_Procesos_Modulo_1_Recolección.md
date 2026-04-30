@@ -312,7 +312,7 @@ Fuera del MVP:
   - `CONSUMO_A_VIVERO` (automático desde Módulo 2)
   - `DESECHO` (con motivo)
   
-(Futuro: Esta parte de validación también se hara por la comunidad, no solo el recolector, se puede proponer que más de una persona valide la recolección y quede registrado en blockchain quienes validaron y cuando.)
+(Fuera del MVP: se puede evaluar validacion comunitaria adicional, con registro explicito de quienes validaron y cuando.)
 
 ### 5.4. RECHAZADO
 
@@ -383,10 +383,10 @@ Para evitar gas innecesario:
 
 Roles (MVP):
 
-- Recolector: crea `BORRADOR`, edita la ficha y solicita validación.
-- Validador: revisa `PENDIENTE_VALIDACION` y aprueba o rechaza.
-- Admin: administra catálogos (especies, métodos, ubicaciones).
-- Auditor/Consulta: solo lectura + acceso a historial.
+- `ADMIN`: administra catalogos y puede consultar o intervenir segun permisos de negocio.
+- `GENERAL`: crea `BORRADOR`, edita la ficha y solicita validacion.
+- `VALIDADOR`: revisa `PENDIENTE_VALIDACION` y aprueba o rechaza.
+- `VOLUNTARIO`: no deberia tener permisos operativos criticos salvo habilitacion explicita.
 
 ---
 
@@ -410,8 +410,7 @@ Roles (MVP):
 - Auditoría campo por campo del borrador
 - Correcciones auditadas post-validación
 - Excepciones aprobadas (validación sin evidencia, casos justificados)
-- Propuesta de nuevas comunidades/zonas por usuarios (aprobación admin)
+- Alta de nuevas comunidades/zonas solo por `ADMIN`
 - Offline-first (captura en campo sin señal: fotos/local → subida posterior)
 - Métricas de calidad de evidencia (ej. obligatoriedad de foto GPS/EXIF si se quiere subir el estándar)
-- En el futuro las validaciones serán comunitarias, más de una persona tiene que validar que se está haciendo dicha recolección y se registra en blockchain.
-- Las validaciones también se harán por la comunidad, no solo el recolector, se puede proponer que más de una persona valide la recolección y quede registrado en blockchain quienes validaron y cuando.
+- Fuera del MVP se puede evaluar validacion comunitaria adicional, con registro explicito en historial y, si aplica, en blockchain.

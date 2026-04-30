@@ -221,7 +221,7 @@ Para `ESQUEJE`:
 Se pueden agregar más.
 
 
-(Futuro: La validación también se hará por la comunidad, no solo el recolector, se puede proponer que más de una persona valide la recolección y quede registrado en blockchain quienes validaron y cuando.)
+(Fuera del MVP: se puede evaluar validacion comunitaria adicional, con registro explicito de quienes validaron y cuando.)
 
 ### RN-REC-15 — Formato y tamaño por foto
 

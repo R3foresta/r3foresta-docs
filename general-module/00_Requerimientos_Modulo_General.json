@@ -1,0 +1,176 @@
+{
+  "requerimientos": [
+    {
+      "codigo": "RF-GEN-01",
+      "modulo": "General",
+      "nombre": "Gestionar usuarios y roles base",
+      "descripcion": "Permitir administrar usuarios operativos del sistema con identidad, rol, estado y datos de acceso consistentes.",
+      "campos": [
+        "id",
+        "nombre",
+        "apellido",
+        "doc_identidad unico",
+        "correo unico",
+        "username unico",
+        "auth_id",
+        "wallet_address opcional",
+        "organizacion",
+        "contacto",
+        "foto_perfil_url opcional",
+        "rol",
+        "activo"
+      ],
+      "validaciones": [
+        "No se permiten usuarios duplicados por doc_identidad, correo o username.",
+        "El rol debe pertenecer al catalogo oficial de roles del sistema: ADMIN, GENERAL, VALIDADOR, VOLUNTARIO.",
+        "Todo registro operativo debe poder asociarse a un usuario responsable.",
+        "El usuario autenticado es el actor por defecto en operaciones propias."
+      ],
+      "reglas_adicionales": [
+        "No se debe borrar historial por desactivar un usuario.",
+        "La desactivacion no debe romper trazabilidad historica.",
+        "Los snapshots funcionales pueden congelar nombre completo cuando aplique."
+      ]
+    },
+    {
+      "codigo": "RF-GEN-02",
+      "modulo": "General",
+      "nombre": "Gestionar viveros",
+      "descripcion": "Permitir crear y mantener viveros operativos usados por Recoleccion y Vivero.",
+      "campos": [
+        "codigo unico",
+        "nombre",
+        "ubicacion_id",
+        "responsable opcional",
+        "estado activo/inactivo"
+      ],
+      "validaciones": [
+        "Todo vivero debe tener codigo unico.",
+        "Todo vivero debe apuntar a una ubicacion valida.",
+        "No se debe permitir usar un vivero inactivo en nuevos registros."
+      ],
+      "reglas_adicionales": [
+        "Recoleccion selecciona vivero de almacenamiento desde este catalogo.",
+        "Vivero selecciona vivero operativo del lote desde este catalogo.",
+        "La inactivacion no debe afectar registros historicos existentes."
+      ]
+    },
+    {
+      "codigo": "RF-GEN-03",
+      "modulo": "General",
+      "nombre": "Gestionar catalogo maestro de plantas",
+      "descripcion": "Mantener un catalogo oficial de plantas y especies que sirva como fuente de seleccion para los modulos operativos.",
+      "campos": [
+        "id",
+        "tipo_planta_id",
+        "nombre_cientifico",
+        "nombre_comun_principal",
+        "nombres_comunes opcional fuera de alcance MVP",
+        "variedad opcional",
+        "tipo_material_permitido",
+        "imagen_url opcional",
+        "notas tecnicas opcionales",
+        "estado activo/inactivo"
+      ],
+      "validaciones": [
+        "No se debe registrar una recoleccion con planta inexistente en catalogo.",
+        "nombre_cientifico debe existir y ser consistente.",
+        "nombre_comun_principal es la fuente maestra vigente para poblar nombre_comercial_snapshot en modulos operativos.",
+        "tipo_material_permitido solo puede ser SEMILLA o ESQUEJE en el MVP.",
+        "La inactivacion impide nuevo uso, pero no altera historial."
+      ],
+      "reglas_adicionales": [
+        "La tabla maestra es fuente viva de seleccion, no fuente viva del historial ya congelado.",
+        "Los modulos operativos congelan snapshots al momento formal definido por su flujo.",
+        "El catalogo debe distinguir entre identidad taxonomica y naming operativo.",
+        "nombres_comunes no se toma en cuenta en el MVP."
+      ]
+    },
+    {
+      "codigo": "RF-GEN-04",
+      "modulo": "General",
+      "nombre": "Gestionar ubicacion estructurada",
+      "descripcion": "Permitir registrar ubicaciones con GPS y referencia territorial reutilizable.",
+      "campos": [
+        "latitud",
+        "longitud",
+        "pais_id",
+        "division_id",
+        "nombre",
+        "precision_m opcional",
+        "fuente opcional",
+        "referencia opcional"
+      ],
+      "validaciones": [
+        "Latitud en rango [-90, 90].",
+        "Longitud en rango [-180, 180].",
+        "Si existe division_id, debe pertenecer al pais indicado.",
+        "Toda ubicacion usada operativamente debe vincularse a una comunidad, zona o division valida.",
+        "Las coordenadas operativas se guardan siempre en la tabla UBICACION y no como campos directos en eventos operativos."
+      ],
+      "reglas_adicionales": [
+        "La coordenada es la fuente minima de verdad geografica.",
+        "El dato administrativo complementa, pero no reemplaza, la coordenada.",
+        "La ubicacion puede reutilizarse por viveros, recolecciones y eventos futuros."
+      ]
+    },
+    {
+      "codigo": "RF-GEN-05",
+      "modulo": "General",
+      "nombre": "Gestionar comunidades y estructura territorial",
+      "descripcion": "Definir la fuente oficial para comunidades, localidades y otras divisiones administrativas usadas en trazabilidad.",
+      "campos": [
+        "pais_id",
+        "tipo_division",
+        "nombre",
+        "parent_id opcional",
+        "codigo_externo opcional",
+        "activo"
+      ],
+      "validaciones": [
+        "Toda comunidad o localidad debe pertenecer a una jerarquia territorial coherente.",
+        "No se deben crear duplicados funcionales del mismo territorio.",
+        "En el MVP la comunidad se resuelve con DIVISION_ADMINISTRATIVA usando DIVISION_TIPO = Comunidad - Localidad (id 4).",
+        "Solo ADMIN puede crear nuevas comunidades o zonas."
+      ],
+      "reglas_adicionales": [
+        "Para el MVP, la comunidad se resuelve dentro de DIVISION_ADMINISTRATIVA con el tipo ya definido para Comunidad - Localidad.",
+        "El nombre usado en snapshots debe provenir de una fuente oficial al momento del congelamiento.",
+        "Cambios de naming no deben reescribir historial ya validado."
+      ]
+    },
+    {
+      "codigo": "RF-GEN-06",
+      "modulo": "General",
+      "nombre": "Gestionar evidencias y tipos de entidad",
+      "descripcion": "Permitir vincular evidencia trazable a registros operativos mediante una capa comun de adjuntos.",
+      "campos": [
+        "tipo_entidad_id",
+        "entidad_id",
+        "codigo_trazabilidad opcional",
+        "bucket",
+        "ruta_archivo",
+        "tipo_archivo",
+        "mime_type",
+        "tamano_bytes",
+        "hash_sha256 opcional",
+        "titulo opcional",
+        "descripcion opcional",
+        "metadata opcional",
+        "es_principal",
+        "orden",
+        "tomado_en opcional"
+      ],
+      "validaciones": [
+        "Toda evidencia debe pertenecer a un tipo_entidad_id valido.",
+        "La evidencia debe poder asociarse sin ambiguedad a una entidad de negocio.",
+        "No se debe perder evidencia por cambios de estado del registro principal."
+      ],
+      "reglas_adicionales": [
+        "La capa de evidencias es transversal y no debe duplicarse por modulo.",
+        "Cada modulo define obligatoriedad, pero el modelo comun vive aqui.",
+        "eliminado_en queda reservado para futuro; en el MVP no se usara como parte del flujo funcional."
+      ]
+    }
+  ]
+}
