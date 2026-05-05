@@ -360,7 +360,7 @@ Cada despacho registra:
 * `unidad_medida_evento = UNIDAD`
 * `fecha_evento`
 * `responsable_id`
-* `destino_tipo` (`PLANTACION_PROPIA`, `DONACION_COMUNIDAD`, `VENTA`, `OTRO`)
+* `destino_tipo` (`PLANTACION_PROPIA`, `PLANTACION_COMUNIDAD`, `DONACION`, `VENTA`, `OTRO`)
 * `destino_referencia`
 * `comunidad_destino_id` cuando aplique
 * `saldo_vivo_antes`
