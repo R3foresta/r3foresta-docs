@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Repositorio **solo de documentación** (no hay build, tests, ni lint). Es la base documental de R3Foresta: requerimientos funcionales, reglas de negocio, guías operativas, decisiones de arquitectura y scripts SQL de soporte. El idioma de trabajo es español; preservarlo en cualquier documento nuevo o edición.
 
-Archivos `.excalidraw` son diagramas binarios — **no editar ni leer directamente** (el usuario los gestiona en Excalidraw). `planificacion-weekly.excalidraw` está en `.gitignore`.
+Archivos `.excalidraw` son material de trabajo en equipo, no documentación canónica del problema. **Ignorarlos por completo** al revisar, resumir o razonar sobre el dominio: no leerlos, no editarlos, no contarlos en inventarios de documentación, no incluirlos en análisis. El usuario los gestiona aparte en Excalidraw. `planificacion-weekly.excalidraw` está en `.gitignore`.
 
 ## Arquitectura del dominio
 
