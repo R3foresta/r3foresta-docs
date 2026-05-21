@@ -143,7 +143,7 @@
       "campos": [
         "asignacion_id obligatorio",
         "cantidad_devuelta > 0",
-        "motivo_devolucion obligatorio (catalogo motivo_devolucion_plantacion + OTRO)",
+        "motivo_devolucion obligatorio (enum motivo_devolucion_plantacion, incluye OTRO)",
         "observaciones opcional",
         "usuario_devolucion y fecha_devolucion automaticos"
       ],
@@ -245,7 +245,7 @@
       "campos": [
         "Cambio de estado: ACTIVA -> FINALIZADA_PARCIAL",
         "Usuario que ejecuta (debe ser ADMIN)",
-        "motivo_cierre_parcial obligatorio (catalogo + OTRO)",
+        "motivo_cierre_parcial obligatorio (enum motivo_cierre_parcial, incluye OTRO)",
         "observaciones opcionales",
         "Evento SUBCAMPANIA_FINALIZADA_PARCIAL en SUBCAMPANIA_HISTORIAL",
         "fecha_cierre_operativo = NOW()",
@@ -272,7 +272,7 @@
         "fecha_reporte obligatoria",
         "responsable_id obligatorio",
         "cantidad_muerta_delta > 0",
-        "causa_mortandad obligatoria (catalogo causa_mortandad_plantacion + OTRO)",
+        "causa_mortandad obligatoria (enum causa_mortandad_plantacion, incluye OTRO)",
         "Latitud y Longitud obligatorias por GPS",
         "Foto obligatoria (minimo 1)",
         "observaciones opcional"

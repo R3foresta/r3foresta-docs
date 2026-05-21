@@ -64,7 +64,9 @@ Esto permite reflejar:
 - Alianzas público-privadas.
 - Transparencia pública sobre quién respalda cada proyecto.
 
-En MVP las organizaciones pueden modelarse con un catálogo simple (`ORGANIZACION`).
+En el MVP `ORGANIZACION` se modela como **tabla maestra real** del Módulo General, al mismo nivel que `USUARIO`, `VIVERO` o `PLANTA` (no como texto libre ni como catálogo embebido en Plantación). La relación N:M entre `CAMPANIA` y `ORGANIZACION` se persiste en una tabla puente `CAMPANIA_ORGANIZACION`.
+
+La inactivación de una organización (`activo = false`) no rompe historial: las campañas que la tengan asociada siguen mostrando el snapshot de su nombre congelado al activar la subcampaña.
 
 ### 2.4. Estados operativos de la subcampaña
 
@@ -665,6 +667,57 @@ En MVP toda la información es pública (alineado con el carácter blockchain de
 
 - `PAUSADA`
 - `CANCELADA`
+
+### Catálogos cerrados del módulo (enums)
+
+Definidos formalmente en `database/00_database_schema.md`. Los valores `OTRO` se acompañan siempre de un campo de texto libre en observaciones cuando aplique.
+
+**`motivo_cierre_parcial`** (cierre manual de subcampaña a `FINALIZADA_PARCIAL`):
+
+- `FALTA_STOCK`
+- `PROBLEMAS_CLIMATICOS`
+- `CANCELACION_CONVENIO`
+- `CONFLICTO_SOCIAL`
+- `ACCESO_RESTRINGIDO`
+- `CAMBIO_PRIORIDAD_INSTITUCIONAL`
+- `RIESGO_OPERATIVO`
+- `META_REDEFINIDA`
+- `CIERRE_ADMINISTRATIVO`
+- `OTRO`
+
+**`causa_mortandad_plantacion`** (reporte de pérdidas sobre grupo plantado):
+
+- `SEQUIA`
+- `EXCESO_AGUA`
+- `HELADA`
+- `GRANIZO`
+- `PLAGA`
+- `ENFERMEDAD`
+- `SUELO_INADECUADO`
+- `FALTA_MANTENIMIENTO`
+- `DANO_MECANICO`
+- `PASTOREO`
+- `VANDALISMO`
+- `INCENDIO`
+- `COMPETENCIA_MALEZA`
+- `TRASPLANTE_DEFICIENTE`
+- `DESCONOCIDA`
+- `OTRO`
+
+**`motivo_devolucion_plantacion`** (devolución de árboles asignados al vivero):
+
+- `SOBRANTE_OPERATIVO`
+- `ERROR_PLANIFICACION`
+- `CAMBIO_SUBCAMPANIA`
+- `CIERRE_SUBCAMPANIA`
+- `PROBLEMAS_CALIDAD_LOTE`
+- `CONDICIONES_CAMPO_NO_APTAS`
+- `ACCESO_RESTRINGIDO`
+- `CANCELACION_ACTIVIDAD`
+- `REASIGNACION_PRIORIDAD`
+- `OTRO`
+
+---
 
 ### Futuro
 
