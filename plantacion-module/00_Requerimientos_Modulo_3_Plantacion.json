@@ -3,188 +3,269 @@
     {
       "codigo": "RF-PLA-01",
       "modulo": "Plantacion",
-      "nombre": "Crear y planificar campaña (BORRADOR)",
-      "descripcion": "Permitir crear una campaña en estado BORRADOR y editarla hasta su activacion. La campaña es la unidad central del modulo y agrupa toda plantacion.",
+      "nombre": "Crear campaña estrategica con organizaciones asociadas",
+      "descripcion": "Permitir crear una campaña como contenedor estrategico del proyecto. La campaña agrupa N subcampañas operativas y puede tener 1 o mas organizaciones asociadas.",
       "campos": [
-        "Identificador unico",
-        "Estado del registro: BORRADOR (default) / ACTIVA / PAUSADA / COMPLETADA / CANCELADA",
-        "Nombre de la campaña obligatorio",
-        "Tipo: REFORESTACION / ARBORIZACION / FORESTACION obligatorio",
-        "Coordinador asignado obligatorio (usuario rol COORDINADOR)",
-        "Operarios del equipo opcionales al crear, ampliables despues",
-        "Una o mas zonas/comunidades del catalogo administrativo",
-        "Sub-metas por zona si hay varias zonas",
-        "Meta total de arboles > 0",
-        "Mix de especies con tope porcentual por especie",
-        "Poligono del area (GeoJSON) obligatorio para activar",
-        "Campaña padre opcional (si es una fase de otra campaña)",
-        "Fechas estimadas de inicio y fin (opcionales)",
-        "Snapshots oficiales en CAMPANIA: nombre_zona_snapshot, nombre_coordinador_snapshot",
-        "Descripcion opcional"
+        "Identificador unico de campaña",
+        "Nombre obligatorio",
+        "Descripcion opcional",
+        "Fecha estimada de inicio global opcional",
+        "Fecha estimada de fin global opcional",
+        "Lista de organizaciones asociadas (relacion N:M con catalogo ORGANIZACION)",
+        "Estado derivado en tiempo real desde sus subcampañas, no persistido"
       ],
       "validaciones": [
-        "Meta total > 0.",
-        "La suma de sub-metas por zona debe ser igual a la meta total.",
-        "La suma de topes porcentuales de especies debe ser <= 100%.",
-        "Tipo debe pertenecer al enum tipo_campania.",
-        "Coordinador debe existir y tener rol COORDINADOR o ADMIN.",
-        "Las zonas seleccionadas deben existir en el catalogo administrativo.",
-        "Si tiene campaña padre, la padre debe existir y no estar CANCELADA.",
-        "Las fechas estimadas no pueden ser inconsistentes (fin antes que inicio)."
+        "Nombre obligatorio y unico dentro del sistema (recomendado).",
+        "Las organizaciones asociadas deben existir en el catalogo ORGANIZACION.",
+        "Las fechas estimadas, si se cargan, deben ser coherentes (fin >= inicio).",
+        "La campaña no tiene poligono, meta ni mix propios; esos viven en subcampaña."
       ],
       "reglas_adicionales": [
-        "En BORRADOR se permite edicion libre y soft delete.",
-        "En BORRADOR la campaña no acepta asignaciones ni plantaciones.",
-        "Para activar la campaña, el poligono y el mix de especies son obligatorios.",
+        "El estado de la campaña padre se calcula en tiempo real: BORRADOR si todas las subcampañas son BORRADOR; ACTIVA si al menos una subcampaña esta ACTIVA; EN_MANTENIMIENTO si todas estan cerradas y al menos una en MANTENIMIENTO_ACTIVO; MONITOREO_HISTORICO si todas estan en MONITOREO_HISTORICO.",
+        "Una campaña puede tener 1 o mas organizaciones asociadas (relacion many-to-many).",
+        "Si se quiere ampliar el proyecto, se crea una nueva subcampaña dentro de la misma campaña; no existe el concepto de fases ni campañas hijas.",
         "Solo ADMIN puede crear campañas en el MVP.",
-        "El area en hectareas se calcula automaticamente desde el poligono como dato referencial, no como meta.",
-        "Una campaña hija hereda el contexto de la padre pero tiene su propia meta, poligono, equipo y estado.",
         "Se registran automaticamente campos de auditoria (creado_por/creado_en/actualizado_por/actualizado_en)."
       ]
     },
     {
       "codigo": "RF-PLA-02",
       "modulo": "Plantacion",
-      "nombre": "Activar, pausar, completar o cancelar campaña",
-      "descripcion": "Gestionar el ciclo de vida operativo de la campaña con transiciones controladas.",
+      "nombre": "Crear y planificar subcampaña (BORRADOR)",
+      "descripcion": "Permitir crear una subcampaña en estado BORRADOR dentro de una campaña existente. La subcampaña es la unidad operativa real del modulo.",
       "campos": [
-        "Cambio de estado: BORRADOR -> ACTIVA",
-        "Cambio de estado: ACTIVA -> PAUSADA / COMPLETADA / CANCELADA",
-        "Cambio de estado: PAUSADA -> ACTIVA / CANCELADA",
-        "Cambio de estado: COMPLETADA -> CANCELADA (excepcional)",
-        "Usuario que ejecuta la accion",
-        "Fecha/hora de la transicion",
-        "Motivo (obligatorio para PAUSADA, CANCELADA y COMPLETADA manual)",
-        "Hash/snapshot del registro sellado al activar (opcional, para blockchain)"
+        "Identificador unico de subcampaña",
+        "campania_id obligatorio (campaña padre)",
+        "Nombre obligatorio",
+        "Tipo: REFORESTACION / ARBORIZACION / FORESTACION obligatorio",
+        "Estado operativo: BORRADOR (default) / ACTIVA / COMPLETADA / FINALIZADA_PARCIAL",
+        "Estados reservados en enum sin flujo en MVP: PAUSADA / CANCELADA",
+        "Fase de mantenimiento (derivada por fecha): NO_APLICA / MANTENIMIENTO_ACTIVO / MONITOREO_HISTORICO",
+        "Coordinador obligatorio (usuario con rol COORDINADOR o ADMIN)",
+        "Equipo de operarios (lista de usuarios, opcional al crear)",
+        "Zona/comunidad del catalogo administrativo obligatoria",
+        "Poligono (GeoJSON) obligatorio para activar",
+        "Area en hectareas derivada del poligono, no editable manualmente",
+        "Meta total de arboles > 0",
+        "Mix de especies con tope porcentual por especie",
+        "Fechas estimadas de inicio y fin (opcionales, solo futuras al crear)",
+        "fecha_cierre_operativo (timestamp del cierre, automatico o manual)",
+        "fecha_fin_mantenimiento (calculada como fecha_cierre_operativo + 3 anos)",
+        "Snapshots oficiales: nombre_zona_snapshot, nombre_coordinador_snapshot, nombres_organizaciones_snapshot"
       ],
       "validaciones": [
-        "Para activar: poligono presente, mix de especies definido, meta > 0, coordinador asignado.",
-        "Una campaña COMPLETADA solo puede pasar a CANCELADA por ADMIN.",
-        "Una campaña CANCELADA es terminal y solo permite lectura.",
-        "PAUSADA y ACTIVA son reversibles entre si.",
-        "Al cancelar, debe devolverse al vivero todo saldo asignado no plantado.",
-        "Al completar manualmente, debe registrarse motivo explicito."
+        "Meta total > 0.",
+        "La suma de topes porcentuales de especies debe ser <= 100%.",
+        "El coordinador debe existir y tener rol COORDINADOR o ADMIN.",
+        "La zona debe existir en el catalogo administrativo.",
+        "Las fechas estimadas deben ser futuras al crear.",
+        "El area no se ingresa manualmente; se calcula desde el poligono.",
+        "Tipo debe pertenecer al enum tipo_subcampania."
       ],
       "reglas_adicionales": [
-        "El cierre por meta alcanzada es automatico: cuando SUM(PLANTACION_INICIAL) >= meta_total, la campaña pasa a COMPLETADA.",
-        "Una campaña COMPLETADA todavia acepta MORTANDAD_REPORTADA y REPOSICION.",
-        "Una campaña CANCELADA no acepta ningun nuevo evento operativo.",
-        "Una campaña PAUSADA no acepta nuevos eventos operativos hasta reactivarse.",
-        "Cada transicion debe registrarse en CAMPANIA_HISTORIAL."
+        "En BORRADOR se permite edicion libre y soft delete.",
+        "En BORRADOR la subcampaña no acepta asignaciones ni plantaciones.",
+        "Una campaña tiene al menos 1 subcampaña; sin limite superior.",
+        "La ventana de mantenimiento (3 anos) es configurable a nivel sistema.",
+        "Estados PAUSADA y CANCELADA existen en el enum pero no se usan en MVP.",
+        "Se registran automaticamente campos de auditoria."
       ]
     },
     {
       "codigo": "RF-PLA-03",
       "modulo": "Plantacion",
-      "nombre": "Asignar arboles desde Vivero a Campaña",
-      "descripcion": "Vincular stock vivo de lotes de vivero a una campaña, reservando logicamente sin descontar todavia del saldo vivo del Modulo 2.",
+      "nombre": "Activar subcampaña",
+      "descripcion": "Pasar la subcampaña de BORRADOR a ACTIVA, habilitandola para operar. Permite activacion con stock parcial.",
       "campos": [
-        "Identificador unico de la asignacion",
-        "campania_id obligatorio (debe estar ACTIVA o PAUSADA)",
-        "lote_vivero_id obligatorio (debe estar ACTIVO)",
-        "cantidad_asignada > 0",
-        "Unidad: UNIDAD (siempre)",
-        "Estado derivado: ACTIVA / AGOTADA / DEVUELTA",
-        "Cantidad plantada acumulada (derivada)",
-        "Cantidad devuelta acumulada (derivada)",
-        "Saldo asignado disponible (derivado)",
-        "usuario_asignacion y fecha_asignacion automaticos"
+        "Cambio de estado: BORRADOR -> ACTIVA",
+        "Usuario que ejecuta",
+        "Fecha/hora de la transicion",
+        "Evento SUBCAMPANIA_ACTIVADA en SUBCAMPANIA_HISTORIAL",
+        "Snapshot opcional para anclaje blockchain"
       ],
       "validaciones": [
-        "cantidad_asignada <= saldo_vivo_lote - asignaciones_activas_de_ese_lote.",
-        "La campaña debe estar ACTIVA o PAUSADA al momento de asignar.",
-        "El lote de vivero debe estar en estado ACTIVO.",
-        "No se permite asignar a campañas en BORRADOR, COMPLETADA o CANCELADA.",
-        "Solo ADMIN o COORDINADOR de la campaña pueden asignar."
+        "Poligono presente.",
+        "Mix de especies definido (al menos una especie con tope > 0).",
+        "Coordinador asignado.",
+        "Meta total > 0.",
+        "Zona y campaña padre validas."
       ],
       "reglas_adicionales": [
-        "Una asignacion no genera evento en el Modulo 2; es una reserva logica.",
-        "Un lote de vivero puede asignar a varias campañas; una campaña puede recibir de varios lotes.",
-        "Las asignaciones son flexibles: pueden ampliarse o reducirse mientras no esten plantadas.",
-        "El saldo_asignado_disponible = cantidad_asignada - cantidad_plantada - cantidad_devuelta.",
-        "Si saldo_asignado_disponible = 0, estado = AGOTADA.",
-        "Si toda la cantidad fue devuelta sin plantar, estado = DEVUELTA.",
-        "Cada asignacion debe registrarse como evento ASIGNACION_VIVERO en EVENTO_PLANTACION."
+        "Una subcampaña puede activarse sin tener el 100% del stock asignado en lotes.",
+        "Si se activa con stock parcial, el sistema muestra advertencia visual clara mostrando el % de cobertura.",
+        "El sistema permite ampliar asignaciones en cualquier momento durante el estado ACTIVA.",
+        "La activacion congela snapshots oficiales de identidad (zona, coordinador, organizaciones)."
       ]
     },
     {
       "codigo": "RF-PLA-04",
       "modulo": "Plantacion",
-      "nombre": "Devolver arboles asignados al Vivero",
-      "descripcion": "Liberar reserva de arboles asignados que no se van a plantar, devolviendo saldo al lote de vivero.",
+      "nombre": "Asignar lotes de vivero a subcampaña con proposito",
+      "descripcion": "Vincular stock vivo de lotes del Modulo 2 a una subcampaña, especificando el proposito de la asignacion (PLANTACION_INICIAL o REPOSICION).",
       "campos": [
-        "asignacion_id obligatorio",
-        "cantidad_devuelta > 0",
-        "motivo_devolucion obligatorio (catalogo + OTRO)",
-        "observaciones opcional",
-        "usuario_devolucion y fecha_devolucion automaticos"
+        "Identificador unico de la asignacion",
+        "subcampania_id obligatorio",
+        "lote_vivero_id obligatorio",
+        "cantidad_asignada > 0 (cantidad absoluta)",
+        "proposito_asignacion: PLANTACION_INICIAL / REPOSICION obligatorio",
+        "Unidad: UNIDAD (siempre)",
+        "Estado derivado: ACTIVA / AGOTADA / DEVUELTA",
+        "Cantidad consumida acumulada (derivada)",
+        "Cantidad devuelta acumulada (derivada)",
+        "Saldo asignado disponible (derivado)",
+        "usuario_asignacion y fecha_asignacion automaticos"
       ],
       "validaciones": [
-        "cantidad_devuelta <= saldo_asignado_disponible de la asignacion.",
-        "No se permite devolver si la asignacion ya esta DEVUELTA o AGOTADA sin saldo.",
-        "Solo ADMIN o COORDINADOR de la campaña pueden devolver."
+        "cantidad_asignada <= LOTE_VIVERO.saldo_vivo_actual - SUM(asignaciones_activas_del_lote).",
+        "Las asignaciones se cargan en cantidad absoluta; el porcentaje sobre saldo del lote es solo ayuda visual.",
+        "El lote de vivero debe estar en estado ACTIVO.",
+        "Asignaciones con proposito PLANTACION_INICIAL solo se aceptan en subcampañas ACTIVA.",
+        "Asignaciones con proposito REPOSICION se aceptan en ACTIVA, COMPLETADA o FINALIZADA_PARCIAL.",
+        "No se aceptan asignaciones en subcampañas BORRADOR.",
+        "Solo ADMIN o COORDINADOR de la subcampaña pueden asignar."
       ],
       "reglas_adicionales": [
-        "La devolucion no genera evento en el Modulo 2 porque los arboles nunca salieron fisicamente del vivero.",
-        "Reduce el saldo asignado y libera la reserva logica sobre el lote.",
-        "Debe registrarse como evento DEVOLUCION_A_VIVERO en EVENTO_PLANTACION.",
-        "Si la campaña pasa a CANCELADA, debe devolverse todo el saldo asignado no plantado."
+        "Una asignacion no genera evento en el Modulo 2; es una reserva logica.",
+        "Un lote puede asignar a varias subcampañas; una subcampaña puede recibir de varios lotes.",
+        "Una asignacion con proposito PLANTACION_INICIAL solo puede consumirse en plantaciones iniciales; no en reposiciones.",
+        "Una asignacion con proposito REPOSICION solo puede consumirse en reposiciones; no en plantaciones iniciales.",
+        "saldo_asignado_disponible = cantidad_asignada - cantidad_consumida - cantidad_devuelta.",
+        "Si saldo_asignado_disponible = 0, estado = AGOTADA.",
+        "Si toda la cantidad fue devuelta sin consumir, estado = DEVUELTA.",
+        "Cada asignacion debe registrarse como evento ASIGNACION_VIVERO en EVENTO_PLANTACION."
       ]
     },
     {
       "codigo": "RF-PLA-05",
       "modulo": "Plantacion",
-      "nombre": "Registrar plantacion inicial",
-      "descripcion": "Registrar un grupo de arboles plantados en una micro-ubicacion especifica, dentro de una campaña activa. Es la unidad atomica del modulo.",
+      "nombre": "Devolver arboles asignados al Vivero",
+      "descripcion": "Liberar reserva de arboles asignados que no se van a consumir, devolviendo saldo al lote de vivero. No genera evento en Modulo 2 porque los arboles nunca salieron fisicamente.",
       "campos": [
-        "Identificador unico del registro",
-        "campania_id obligatorio (debe estar ACTIVA)",
-        "responsable_id obligatorio (operario logueado)",
-        "co_responsables_ids opcional (array de usuarios del equipo)",
-        "fecha_plantacion obligatoria",
-        "Latitud y Longitud obligatorias, capturadas por GPS",
-        "Fotografias obligatorias (minimo 1)",
-        "Lista de especies plantadas con cantidades (al menos una con cantidad > 0)",
-        "Cantidad total plantada (derivada: suma de especies)",
-        "Observaciones opcional",
-        "Snapshots oficiales: nombre_campania_snapshot, nombre_zona_snapshot, nombre_responsable_snapshot",
-        "Snapshots por especie heredados desde Modulo 2",
-        "es_reposicion = false (es plantacion inicial)",
-        "Cantidad muerta acumulada (derivada de mortandades)",
-        "Cantidad repuesta acumulada (derivada de reposiciones)",
-        "Saldo vivo del grupo (derivado)"
+        "asignacion_id obligatorio",
+        "cantidad_devuelta > 0",
+        "motivo_devolucion obligatorio (catalogo motivo_devolucion_plantacion + OTRO)",
+        "observaciones opcional",
+        "usuario_devolucion y fecha_devolucion automaticos"
       ],
       "validaciones": [
-        "La campaña debe estar ACTIVA.",
-        "La cantidad total plantada > 0.",
-        "Cada especie debe pertenecer al mix permitido de la campaña.",
-        "Si una especie excede su tope porcentual, advertir pero NO bloquear (guia, no restriccion dura en MVP).",
-        "La cantidad total plantada no puede exceder el saldo asignado disponible de la campaña.",
-        "Latitud en [-90, 90] con 6 decimales.",
-        "Longitud en [-180, 180] con 6 decimales.",
-        "El punto GPS debe estar dentro del poligono de la campaña (o de alguna de sus zonas si tiene sub-metas), con tolerancia configurable.",
-        "fecha_plantacion no futura, hasta 10 dias en el pasado.",
-        "Minimo 1 foto valida vinculada al registro.",
-        "Si SUM(PLANTACION_INICIAL) alcanza meta_total, la campaña se cierra automaticamente.",
-        "No se permite PLANTACION_INICIAL si la campaña esta COMPLETADA o CANCELADA."
+        "cantidad_devuelta <= saldo_asignado_disponible.",
+        "No se permite devolver si la asignacion ya esta DEVUELTA.",
+        "Solo ADMIN o COORDINADOR de la subcampaña pueden devolver."
       ],
       "reglas_adicionales": [
-        "El descuento del saldo asignado usa FIFO entre los lotes asignados a la campaña.",
-        "Por cada lote afectado se genera atomicamente un DESPACHO en EVENTO_LOTE_VIVERO del Modulo 2.",
-        "DESPACHO.destino_tipo = PLANTACION_CAMPAÑA (nuevo valor del enum destino_tipo_vivero).",
-        "DESPACHO.destino_referencia apunta al REGISTRO_PLANTACION.id.",
-        "DESPACHO.comunidad_destino_id se hereda de la campaña.",
-        "SUM(DESPACHO.cantidad_afectada) por registro = REGISTRO_PLANTACION.cantidad_total_plantada.",
-        "Unidad siempre UNIDAD.",
-        "El registro es append-only: no se permite edicion posterior en el MVP.",
-        "Cada registro debe registrarse como evento PLANTACION_INICIAL en EVENTO_PLANTACION.",
-        "Las reposiciones NO cuentan para la meta; solo PLANTACION_INICIAL avanza la barra de progreso."
+        "La devolucion no genera evento en el Modulo 2.",
+        "Reduce el saldo asignado y libera la reserva logica sobre el lote.",
+        "Debe registrarse como evento DEVOLUCION_A_VIVERO en EVENTO_PLANTACION."
       ]
     },
     {
       "codigo": "RF-PLA-06",
       "modulo": "Plantacion",
-      "nombre": "Reportar mortandad sobre grupo plantado",
+      "nombre": "Registrar plantacion inicial con seleccion explicita de lote",
+      "descripcion": "Registrar un grupo de arboles plantados en una micro-ubicacion, dentro de una subcampaña activa. El operario selecciona explicitamente de que lote(s) sale el material.",
+      "campos": [
+        "Identificador unico del registro",
+        "subcampania_id obligatorio (debe estar ACTIVA)",
+        "responsable_id obligatorio (operario o coordinador)",
+        "co_responsables_ids opcional (subconjunto del equipo)",
+        "fecha_plantacion obligatoria",
+        "Latitud y Longitud obligatorias por GPS",
+        "Fotografias obligatorias (minimo 1)",
+        "Lista de especies con cantidades y lote_vivero_origen por especie",
+        "Cantidad total plantada (derivada)",
+        "Observaciones opcional",
+        "Snapshots oficiales: nombre_subcampania_snapshot, nombre_zona_snapshot, nombre_responsable_snapshot, snapshots de especie por lote",
+        "es_reposicion = false",
+        "Cantidad muerta acumulada (derivada)",
+        "Cantidad repuesta acumulada (derivada)",
+        "Saldo vivo del grupo (derivado)"
+      ],
+      "validaciones": [
+        "La subcampaña debe estar ACTIVA.",
+        "Cada cantidad por especie-lote > 0.",
+        "Cada lote seleccionado debe tener asignacion ACTIVA con proposito PLANTACION_INICIAL a esa subcampaña.",
+        "La cantidad por lote no puede exceder el saldo_asignado_disponible de esa asignacion.",
+        "Cada especie debe pertenecer al mix permitido de la subcampaña.",
+        "Si una especie excede su tope porcentual, advertir pero NO bloquear (guia, no restriccion dura en MVP).",
+        "Latitud en [-90, 90] con 6 decimales.",
+        "Longitud en [-180, 180] con 6 decimales.",
+        "El punto GPS debe estar dentro del poligono de la subcampaña con tolerancia configurable (default 50m); fuera de tolerancia se bloquea.",
+        "fecha_plantacion no futura, hasta 10 dias en el pasado.",
+        "Minimo 1 foto valida.",
+        "El responsable debe ser miembro del equipo o el coordinador de la subcampaña.",
+        "Los co_responsables deben ser subconjunto del equipo de la subcampaña.",
+        "Si la subcampaña esta COMPLETADA o FINALIZADA_PARCIAL, no se permite PLANTACION_INICIAL."
+      ],
+      "reglas_adicionales": [
+        "El operario selecciona explicitamente el lote por especie; si solo hay un lote disponible se preselecciona.",
+        "Por cada lote afectado se genera atomicamente un DESPACHO en EVENTO_LOTE_VIVERO del Modulo 2.",
+        "DESPACHO.destino_tipo = PLANTACION_CAMPAÑA.",
+        "DESPACHO.origen_despacho = AUTOMATICO_PLANTACION.",
+        "DESPACHO.destino_referencia = REGISTRO_PLANTACION.id.",
+        "DESPACHO lleva referencias subcampania_id y campania_id para drill-down.",
+        "DESPACHO.comunidad_destino_id se hereda de la subcampaña.",
+        "SUM(DESPACHO.cantidad_afectada) por registro = REGISTRO_PLANTACION.cantidad_total_plantada.",
+        "Unidad siempre UNIDAD.",
+        "La evidencia del DESPACHO automatico se hereda del REGISTRO_PLANTACION; el operario de vivero no sube fotos adicionales.",
+        "El registro es append-only: no se permite edicion posterior en el MVP.",
+        "Cada registro debe registrarse como evento PLANTACION_INICIAL en EVENTO_PLANTACION.",
+        "Las reposiciones NO cuentan para la meta; solo PLANTACION_INICIAL avanza la barra de progreso.",
+        "Sin porcentaje de participacion entre co-responsables; todos por igual."
+      ]
+    },
+    {
+      "codigo": "RF-PLA-07",
+      "modulo": "Plantacion",
+      "nombre": "Cierre automatico a COMPLETADA por alcance de meta",
+      "descripcion": "Cerrar automaticamente la subcampaña cuando la suma de plantaciones iniciales alcanza la meta total.",
+      "campos": [
+        "Cambio automatico de estado: ACTIVA -> COMPLETADA",
+        "Evento SUBCAMPANIA_COMPLETADA en SUBCAMPANIA_HISTORIAL",
+        "fecha_cierre_operativo = NOW() del evento que dispara el cierre",
+        "fecha_fin_mantenimiento = fecha_cierre_operativo + 3 anos",
+        "Referencia al evento PLANTACION_INICIAL que disparo el cierre"
+      ],
+      "validaciones": [
+        "Se evalua tras cada PLANTACION_INICIAL.",
+        "Se dispara cuando SUM(PLANTACION_INICIAL.cantidad_total) >= meta_total."
+      ],
+      "reglas_adicionales": [
+        "El cierre es automatico, no requiere accion manual.",
+        "Una vez COMPLETADA: no acepta PLANTACION_INICIAL ni asignaciones con proposito PLANTACION_INICIAL.",
+        "Una vez COMPLETADA sigue aceptando: MORTANDAD_REPORTADA, REPOSICION, asignaciones con proposito REPOSICION, devoluciones.",
+        "fecha_cierre_operativo se congela; no cambia mas.",
+        "La fase de mantenimiento pasa a MANTENIMIENTO_ACTIVO."
+      ]
+    },
+    {
+      "codigo": "RF-PLA-08",
+      "modulo": "Plantacion",
+      "nombre": "Cierre manual a FINALIZADA_PARCIAL por admin",
+      "descripcion": "Permitir al ADMIN cerrar una subcampaña antes de alcanzar la meta, dejando lo plantado como valido.",
+      "campos": [
+        "Cambio de estado: ACTIVA -> FINALIZADA_PARCIAL",
+        "Usuario que ejecuta (debe ser ADMIN)",
+        "motivo_cierre_parcial obligatorio (catalogo + OTRO)",
+        "observaciones opcionales",
+        "Evento SUBCAMPANIA_FINALIZADA_PARCIAL en SUBCAMPANIA_HISTORIAL",
+        "fecha_cierre_operativo = NOW()",
+        "fecha_fin_mantenimiento = fecha_cierre_operativo + 3 anos"
+      ],
+      "validaciones": [
+        "Solo ADMIN puede ejecutar esta accion.",
+        "La subcampaña debe estar en estado ACTIVA.",
+        "motivo_cierre_parcial obligatorio."
+      ],
+      "reglas_adicionales": [
+        "Comportamiento posterior identico a COMPLETADA: sin plantaciones iniciales, con mantenimiento permitido.",
+        "No hay reapertura: si aparece stock nuevo despues, se crea una nueva subcampaña dentro de la misma campaña.",
+        "La fase de mantenimiento pasa a MANTENIMIENTO_ACTIVO."
+      ]
+    },
+    {
+      "codigo": "RF-PLA-09",
+      "modulo": "Plantacion",
+      "nombre": "Reportar mortandad con foto y GPS obligatorios",
       "descripcion": "Registrar perdidas observadas en visitas posteriores a un grupo previamente plantado, como delta sobre el grupo.",
       "campos": [
         "registro_plantacion_id obligatorio (grupo afectado)",
@@ -192,41 +273,42 @@
         "responsable_id obligatorio",
         "cantidad_muerta_delta > 0",
         "causa_mortandad obligatoria (catalogo causa_mortandad_plantacion + OTRO)",
-        "foto opcional",
+        "Latitud y Longitud obligatorias por GPS",
+        "Foto obligatoria (minimo 1)",
         "observaciones opcional"
       ],
       "validaciones": [
         "cantidad_muerta_delta > 0.",
-        "cantidad_muerta_acumulada + delta <= cantidad_plantada_inicial + reposiciones_acumuladas del grupo.",
-        "fecha_reporte no futura.",
+        "cantidad_muerta_acumulada + delta <= plantado_inicial + reposiciones_acumuladas del grupo.",
+        "fecha_reporte no futura, sin restriccion retroactiva fuerte.",
         "causa_mortandad debe pertenecer al enum causa_mortandad_plantacion.",
-        "El grupo debe existir y pertenecer a una campaña no CANCELADA."
+        "GPS dentro del poligono de la subcampaña con tolerancia configurable.",
+        "Permitido en estados operativos: ACTIVA, COMPLETADA, FINALIZADA_PARCIAL.",
+        "Permitido en fase de mantenimiento: MANTENIMIENTO_ACTIVO y MONITOREO_HISTORICO."
       ],
       "reglas_adicionales": [
-        "El sistema debe mostrar al operario el historico del grupo antes de confirmar (cantidad plantada, mortandad previa, vivos estimados) para evitar doble conteo.",
+        "El sistema muestra al operario el historico del grupo antes de confirmar para evitar doble conteo.",
         "Se registra como evento MORTANDAD_REPORTADA en EVENTO_PLANTACION, append-only.",
-        "Se permite reportar mortandad incluso en campañas COMPLETADAS.",
-        "No se permite reportar mortandad en campañas CANCELADAS.",
-        "El saldo vivo del grupo se recalcula automaticamente: saldo_vivo = plantado_inicial - muertos_acumulados + repuestos_acumulados.",
-        "En el MVP no se permite correccion de mortandad (sin reescritura).",
-        "La causa probable se exige obligatoriamente para alimentar estadisticas de mejora del proceso."
+        "Se permite reportar mortandad incluso durante MONITOREO_HISTORICO (aunque no se espere activamente).",
+        "saldo_vivo del grupo se recalcula automaticamente.",
+        "En el MVP no se permite correccion de mortandad (sin reescritura)."
       ]
     },
     {
-      "codigo": "RF-PLA-07",
+      "codigo": "RF-PLA-10",
       "modulo": "Plantacion",
-      "nombre": "Registrar reposicion sobre grupo con mortandad",
-      "descripcion": "Plantar arboles nuevos para reemplazar muertos previamente reportados en un grupo, manteniendo trazabilidad de la reposicion.",
+      "nombre": "Registrar reposicion vinculada a grupo origen",
+      "descripcion": "Plantar arboles nuevos para reemplazar muertos, consumiendo exclusivamente asignaciones con proposito REPOSICION.",
       "campos": [
         "Identificador unico del registro de reposicion",
         "registro_plantacion_origen_id obligatorio (grupo que se repone)",
-        "campania_id obligatorio (heredado del grupo origen)",
+        "subcampania_id heredado del grupo origen",
         "responsable_id obligatorio",
-        "co_responsables_ids opcional",
+        "co_responsables_ids opcional (subconjunto del equipo)",
         "fecha_reposicion obligatoria",
         "Latitud y Longitud obligatorias por GPS",
         "Fotografias obligatorias (minimo 1)",
-        "Lista de especies repuestas con cantidades",
+        "Lista de especies con cantidades y lote_vivero_origen por especie",
         "Cantidad total repuesta (derivada)",
         "es_reposicion = true",
         "Snapshots oficiales como en plantacion inicial",
@@ -235,37 +317,81 @@
       "validaciones": [
         "El grupo origen debe existir y tener mortandad reportada previamente.",
         "cantidad_total_repuesta <= cantidad_muerta_acumulada - cantidad_repuesta_acumulada del grupo.",
-        "La campaña puede estar ACTIVA o COMPLETADA (se permite reposicion post-cierre).",
-        "No se permite reposicion en campañas CANCELADAS.",
-        "Validaciones de GPS y poligono identicas a PLANTACION_INICIAL.",
-        "Validaciones de mix de especies identicas a PLANTACION_INICIAL.",
-        "La cantidad total no puede exceder el saldo asignado disponible de la campaña."
+        "Cada lote seleccionado debe tener asignacion ACTIVA con proposito REPOSICION en esa subcampaña.",
+        "Permitido en estados operativos: ACTIVA, COMPLETADA, FINALIZADA_PARCIAL.",
+        "Permitido en fase MANTENIMIENTO_ACTIVO y MONITOREO_HISTORICO.",
+        "Validaciones de GPS, poligono y mix identicas a PLANTACION_INICIAL.",
+        "El responsable debe ser miembro del equipo o coordinador."
       ],
       "reglas_adicionales": [
-        "La reposicion consume saldo asignado de la campaña como cualquier plantacion (FIFO sobre lotes).",
-        "Genera DESPACHO atomico en Modulo 2 con destino_tipo = PLANTACION_CAMPAÑA y referencia al REGISTRO_PLANTACION de reposicion.",
+        "La reposicion consume saldo asignado con proposito REPOSICION.",
+        "Genera DESPACHO atomico en Modulo 2 con destino_tipo = PLANTACION_CAMPAÑA y origen_despacho = AUTOMATICO_PLANTACION.",
         "Se registra como evento REPOSICION en EVENTO_PLANTACION, append-only.",
-        "Las reposiciones NO cuentan para la meta de la campaña, pero SI suman al saldo vivo del grupo origen.",
-        "El registro de reposicion es a su vez un grupo plantado y puede recibir mortandad y reposiciones futuras.",
-        "Sin limite temporal en el MVP: una reposicion puede registrarse meses despues de la plantacion inicial."
+        "Las reposiciones NO cuentan para la meta; suman al saldo vivo del grupo origen.",
+        "Sin limite temporal en el MVP: una reposicion puede registrarse meses o anos despues.",
+        "El sistema diferencia visualmente reposiciones hechas en MANTENIMIENTO_ACTIVO vs MONITOREO_HISTORICO."
       ]
     },
     {
-      "codigo": "RF-PLA-08",
+      "codigo": "RF-PLA-11",
+      "modulo": "Plantacion",
+      "nombre": "Transicion automatica a MONITOREO_HISTORICO por fecha",
+      "descripcion": "Trasladar la subcampaña de MANTENIMIENTO_ACTIVO a MONITOREO_HISTORICO automaticamente cuando se cumplen 3 anos desde el cierre operativo.",
+      "campos": [
+        "Cambio automatico de fase: MANTENIMIENTO_ACTIVO -> MONITOREO_HISTORICO",
+        "Evento TRANSICION_A_MONITOREO_HISTORICO en SUBCAMPANIA_HISTORIAL",
+        "Fecha de la transicion"
+      ],
+      "validaciones": [
+        "Se evalua periodicamente (job programado o al consultar).",
+        "Se dispara cuando today >= fecha_fin_mantenimiento."
+      ],
+      "reglas_adicionales": [
+        "La transicion no cambia el estado operativo; solo la fase de mantenimiento.",
+        "El sistema deja de generar alertas activas de monitoreo.",
+        "Se siguen aceptando mortandad y reposicion pero el sistema no las espera rutinariamente.",
+        "La ventana de 3 anos es configurable a nivel sistema.",
+        "Estado operativo (COMPLETADA o FINALIZADA_PARCIAL) se mantiene sin cambios."
+      ]
+    },
+    {
+      "codigo": "RF-PLA-12",
+      "modulo": "Plantacion",
+      "nombre": "Gestion de equipo de subcampaña",
+      "descripcion": "Permitir agregar y remover operarios del equipo de una subcampaña mientras no este terminal.",
+      "campos": [
+        "subcampania_id",
+        "usuario_id a agregar o remover",
+        "Evento EQUIPO_AMPLIADO o EQUIPO_REDUCIDO en SUBCAMPANIA_HISTORIAL",
+        "Usuario que ejecuta",
+        "Fecha/hora"
+      ],
+      "validaciones": [
+        "Solo ADMIN o COORDINADOR de la subcampaña pueden gestionar el equipo.",
+        "El usuario a agregar debe existir y tener rol compatible (GENERAL, COORDINADOR o ADMIN).",
+        "No se puede remover al coordinador via gestion de equipo (debe usarse el flujo de cambio de coordinador).",
+        "No se permite gestion de equipo en BORRADOR (la subcampaña no esta operativa).",
+        "Si un operario se remueve, sus registros previos permanecen intactos (append-only)."
+      ],
+      "reglas_adicionales": [
+        "El equipo se puede gestionar en estados ACTIVA, COMPLETADA y FINALIZADA_PARCIAL (puede haber mantenimiento por hacer).",
+        "Los co-responsables de futuros registros deben ser subconjunto del equipo actual."
+      ]
+    },
+    {
+      "codigo": "RF-PLA-13",
       "modulo": "Plantacion",
       "nombre": "Evidencia y geolocalizacion estricta por evento",
-      "descripcion": "Gestionar evidencias fotograficas, GPS y poligonos como soportes obligatorios o complementarios segun el evento.",
+      "descripcion": "Gestionar evidencias fotograficas y GPS como soportes obligatorios en todos los eventos operativos del MVP.",
       "campos": [
         "Modelo polimorfico: tipo_entidad_id + entidad_id apuntando a EVENTO_PLANTACION.id",
-        "Latitud/Longitud capturadas en cada PLANTACION_INICIAL y REPOSICION",
-        "Poligono GeoJSON de la campaña almacenado en CAMPANIA",
-        "Sub-poligonos por zona si la campaña tiene sub-metas",
+        "Latitud/Longitud capturadas en PLANTACION_INICIAL, REPOSICION y MORTANDAD_REPORTADA",
+        "Poligono GeoJSON de la subcampaña almacenado en SUBCAMPANIA",
         "Area en hectareas calculada automaticamente"
       ],
       "validaciones": [
-        "PLANTACION_INICIAL y REPOSICION requieren minimo 1 foto y GPS valido.",
-        "El GPS debe estar dentro del poligono de la campaña (o subzona) con tolerancia configurable.",
-        "MORTANDAD_REPORTADA permite foto opcional.",
+        "PLANTACION_INICIAL, REPOSICION y MORTANDAD_REPORTADA requieren minimo 1 foto y GPS valido.",
+        "El GPS debe estar dentro del poligono de la subcampaña con tolerancia configurable.",
         "Formato de fotos: JPG/PNG.",
         "Tamaño maximo por foto: 5 MB.",
         "Si un evento requiere evidencia y no la tiene, no debe registrarse.",
@@ -274,118 +400,106 @@
       ],
       "reglas_adicionales": [
         "La evidencia se asocia al evento usando EVIDENCIAS_TRAZABILIDAD.",
-        "El poligono de campaña es obligatorio para activar la campaña.",
+        "El poligono de subcampaña es obligatorio para activar.",
         "El area en hectareas es referencial, no es meta ni se valida.",
-        "Si el GPS cae fuera del poligono dentro de la tolerancia, se permite con advertencia visual.",
-        "Si el GPS cae claramente fuera (mas alla de la tolerancia), se bloquea el registro."
+        "Si el GPS cae fuera del poligono pero dentro de tolerancia, se permite con advertencia visual.",
+        "Si el GPS cae fuera de tolerancia, se bloquea el registro."
       ]
     },
     {
-      "codigo": "RF-PLA-09",
+      "codigo": "RF-PLA-14",
       "modulo": "Plantacion",
-      "nombre": "Historial y cadena de custodia de campaña y plantacion",
-      "descripcion": "Visualizar el timeline completo de la campaña y de cada grupo plantado, con drill-down hacia Modulo 2 y Modulo 1.",
+      "nombre": "Historial y cadena de custodia",
+      "descripcion": "Visualizar el timeline completo de campaña, subcampaña y cada grupo plantado, con drill-down hacia Modulo 2 y Modulo 1.",
       "campos": [
-        "Timeline de la campaña: CAMPANIA_HISTORIAL + EVENTO_PLANTACION agregados",
+        "Timeline de campaña: CAMPANIA_HISTORIAL",
+        "Timeline de subcampaña: SUBCAMPANIA_HISTORIAL + EVENTO_PLANTACION agregados",
         "Timeline del grupo plantado: PLANTACION_INICIAL + MORTANDAD_REPORTADA + REPOSICION asociados",
-        "Datos derivados: progreso de meta, saldo vivo de la campaña, % de supervivencia",
-        "Vinculos hacia DESPACHO del Modulo 2 por cada plantacion",
-        "Vinculos hacia LOTE_VIVERO y RECOLECCION para drill-down",
-        "Filtros: por estado, por zona, por coordinador, por operario, por especie, por rango de fechas"
+        "Datos derivados: progreso de meta, saldo vivo, % supervivencia",
+        "Vinculos hacia DESPACHO del Modulo 2 por cada plantacion/reposicion",
+        "Vinculos hacia LOTE_VIVERO y RECOLECCION para drill-down completo",
+        "Filtros: por estado operativo, por fase de mantenimiento, por zona, por coordinador, por operario, por especie, por rango de fechas"
       ],
       "validaciones": [
         "No se pueden ocultar eventos del historial.",
         "Los eventos son append-only y no editables.",
-        "El historial debe mostrar la identidad congelada (snapshots) sin recalcular desde catalogos vivos.",
+        "El historial debe mostrar identidad congelada (snapshots) sin recalcular desde catalogos vivos.",
         "Control de acceso por rol para vistas privadas; vista publica habilitada sin autenticacion."
       ],
       "reglas_adicionales": [
-        "Para PUBLICO: drill-down disponible desde campaña hasta recoleccion origen.",
-        "Para OPERARIO: vista de su historial del dia/semana.",
-        "Para COORDINADOR: vista de su campaña y desempeño individual de su equipo.",
-        "Para ADMIN: vista global de todas las campañas.",
-        "Las reposiciones se diferencian visualmente de las plantaciones iniciales."
+        "Drill-down disponible desde campaña/subcampaña hasta recoleccion origen.",
+        "Las reposiciones se diferencian visualmente de las plantaciones iniciales.",
+        "Reposiciones en MANTENIMIENTO_ACTIVO vs MONITOREO_HISTORICO se diferencian visualmente."
       ]
     },
     {
-      "codigo": "RF-PLA-10",
+      "codigo": "RF-PLA-15",
       "modulo": "Plantacion",
       "nombre": "Vista publica sin autenticacion",
-      "descripcion": "Exponer la informacion del modulo como cara publica del proyecto, sin login, alineada con el caracter blockchain de transparencia.",
+      "descripcion": "Exponer informacion de campañas, subcampañas y plantaciones sin login, alineada con el caracter blockchain de transparencia.",
       "campos": [
-        "Home publico con totalizadores: total arboles plantados, captura estimada CO2, campañas activas, comunidades alcanzadas",
-        "Mapa interactivo con poligonos de zonas y pines GPS de plantaciones",
-        "Listado de campañas activas con barras de progreso",
-        "Detalle publico de campaña con mix de especies real vs planificado, galeria de fotos, equipo participante",
+        "Home publico con totalizadores globales",
+        "Mapa interactivo con poligonos de subcampañas y pines GPS",
+        "Listado de campañas con sus subcampañas y organizaciones asociadas",
+        "Detalle de subcampaña con barra de progreso, mix de especies real vs planificado, galeria, equipo",
         "Drill-down hacia Modulo 2 y Modulo 1",
-        "Estimacion de captura de CO2 por especie + edad + cantidad (formulas referenciales)"
+        "Estimacion de captura de CO2 (formulas referenciales)"
       ],
       "validaciones": [
-        "La vista publica solo muestra campañas con al menos un PLANTACION_INICIAL registrado.",
-        "Campañas en BORRADOR no son publicas.",
-        "Campañas CANCELADAS pueden mostrarse marcadas como tales.",
-        "Los datos blockchain anclados se muestran como verificables (link al explorador)."
+        "Las subcampañas en BORRADOR no son publicas.",
+        "Las subcampañas con al menos un PLANTACION_INICIAL son publicas.",
+        "Los datos blockchain anclados se muestran como verificables."
       ],
       "reglas_adicionales": [
-        "En el MVP, toda la informacion de campañas activas y completadas es publica.",
-        "No hay restriccion sobre nombres de operarios, coordinadores ni ubicaciones (transparencia total).",
-        "La vista publica es responsive y prioriza visual: mapa, fotos, progreso.",
-        "Permite compartir links directos a campañas y grupos plantados."
+        "Toda la informacion publica en MVP, sin restricciones.",
+        "Vista responsive priorizando mapa, fotos y progreso.",
+        "Permite compartir links directos."
       ]
     },
     {
-      "codigo": "RF-PLA-11",
+      "codigo": "RF-PLA-16",
       "modulo": "Plantacion",
-      "nombre": "Blockchain minima: anclar eventos clave sin bloquear la operacion",
-      "descripcion": "Permitir anclaje blockchain sobre eventos publicamente verificables, sin bloquear el nucleo operativo del modulo.",
+      "nombre": "Blockchain minima: anclar eventos clave",
+      "descripcion": "Permitir anclaje blockchain sobre eventos publicamente verificables, sin bloquear el nucleo operativo.",
       "campos": [
-        "Opcional si se implementa en MVP:",
         "evento_plantacion_id",
-        "tipo_evento (CAMPANIA_ACTIVADA, PLANTACION_INICIAL, REPOSICION, CAMPANIA_COMPLETADA)",
-        "metadata_blockchain",
-        "Contenido recomendado dentro de metadata_blockchain:",
-        "blockchain_url",
-        "token_id",
-        "transaction_hash"
+        "tipo_evento candidato: SUBCAMPANIA_ACTIVADA, PLANTACION_INICIAL, REPOSICION, SUBCAMPANIA_COMPLETADA, SUBCAMPANIA_FINALIZADA_PARCIAL",
+        "metadata_blockchain (blockchain_url, token_id, transaction_hash)"
       ],
       "validaciones": [
-        "El historial operativo del MVP vive primero en base de datos.",
-        "Blockchain no debe bloquear el registro, consulta ni cierre confiable de la campaña.",
-        "Si se implementa en el MVP, los candidatos son: CAMPANIA_ACTIVADA, PLANTACION_INICIAL, REPOSICION y CAMPANIA_COMPLETADA.",
-        "El anclaje se guarda dentro de EVENTO_PLANTACION.metadata_blockchain.",
-        "El anclaje es complementario y no indispensable para el funcionamiento base del modulo.",
-        "No hay correcciones operativas en el MVP una vez registrado el evento."
+        "Historial operativo vive primero en base de datos.",
+        "Blockchain no bloquea registro, consulta ni cierre.",
+        "Si falla la integracion, el evento operativo permanece valido."
       ],
       "reglas_adicionales": [
-        "Registra metadata_blockchain cuando exista integracion activa.",
-        "Si la integracion falla, el evento operativo permanece valido en base de datos.",
-        "Los eventos anclados son los que se muestran como verificables en la vista publica.",
-        "Se prioriza anclar PLANTACION_INICIAL por ser el evento mas visible publicamente."
+        "Se prioriza anclar PLANTACION_INICIAL por ser el evento mas visible publicamente.",
+        "El anclaje es complementario, no indispensable.",
+        "No hay correcciones operativas en MVP."
       ]
     },
     {
-      "codigo": "RF-PLA-12",
+      "codigo": "RF-PLA-17",
       "modulo": "Plantacion",
-      "nombre": "Roles y permisos del modulo",
-      "descripcion": "Mapear los permisos del modulo sobre los roles existentes de la plataforma y el nuevo rol COORDINADOR.",
+      "nombre": "Roles y permisos",
+      "descripcion": "Mapear permisos del modulo sobre roles existentes mas el nuevo rol COORDINADOR.",
       "campos": [
-        "ADMIN: gestion global, crea campañas, asigna globalmente, cierra campañas",
-        "COORDINADOR: gestiona campañas asignadas, asigna/devuelve arboles, opera como operario",
-        "GENERAL (operario): registra plantaciones, reposiciones y mortandad",
+        "ADMIN: crea campañas y subcampañas, asigna coordinadores, cierra a FINALIZADA_PARCIAL, gestiona organizaciones",
+        "COORDINADOR (nuevo): gestiona sus subcampañas asignadas, asigna/devuelve lotes, gestiona equipo, opera como operario",
+        "GENERAL (operario): registra plantaciones, reposiciones y mortandad en subcampañas donde es parte del equipo",
         "VALIDADOR: rol global, sin flujo especial en este modulo en MVP",
         "VOLUNTARIO: sin permisos operativos criticos salvo habilitacion explicita"
       ],
       "validaciones": [
-        "Solo ADMIN puede crear, completar manualmente o cancelar campañas en el MVP.",
-        "COORDINADOR solo puede operar sobre sus campañas asignadas.",
-        "GENERAL solo puede registrar plantaciones en campañas donde es miembro del equipo.",
-        "La membresia en el equipo de una campaña se valida al registrar eventos operativos."
+        "Solo ADMIN crea campañas y subcampañas en MVP.",
+        "Solo ADMIN cierra a FINALIZADA_PARCIAL.",
+        "COORDINADOR opera solo sobre sus subcampañas asignadas.",
+        "GENERAL solo registra en subcampañas donde es parte del equipo.",
+        "La membresia en equipo se valida al registrar eventos operativos."
       ],
       "reglas_adicionales": [
         "COORDINADOR es un rol nuevo a crear en el enum rol_usuario.",
-        "Un usuario COORDINADOR tambien actua como GENERAL en sus campañas (puede plantar).",
-        "Un usuario puede ser COORDINADOR de varias campañas simultaneamente.",
-        "Las asignaciones masivas y las devoluciones grandes pueden requerir confirmacion adicional para coordinador (configurable fuera del MVP)."
+        "Un usuario COORDINADOR tambien actua como GENERAL en sus subcampañas.",
+        "Un usuario puede ser COORDINADOR de varias subcampañas simultaneamente."
       ]
     }
   ]

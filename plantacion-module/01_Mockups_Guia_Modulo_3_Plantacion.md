@@ -10,9 +10,28 @@
 
 El **Módulo 3 (Plantación)** es donde se concreta el objetivo del proyecto: **reforestar, arborizar o forestar** zonas y comunidades.
 
-Los árboles vienen del **Módulo 2 (Vivero)** y se plantan dentro de **campañas** que organiza el administrador o un coordinador de proyecto.
+Los árboles vienen del **Módulo 2 (Vivero)** y se plantan dentro de **subcampañas operativas** que pertenecen a **campañas estratégicas** organizadas por el administrador.
 
 El módulo es un **proyecto blockchain de transparencia**, por lo tanto los datos son públicos y auditables.
+
+### Arquitectura de dos niveles
+
+- **Campaña:** contenedor estratégico del proyecto. Tiene nombre, descripción, organizaciones asociadas. No tiene polígono ni meta propia.
+- **Subcampaña:** unidad operativa real. Tiene polígono, meta, coordinador, equipo, mix de especies y estado propio.
+
+Una campaña tiene N subcampañas (al menos 1).
+
+### Estados operativos de subcampaña
+
+- `BORRADOR` — en planificación
+- `ACTIVA` — operativa, recibe plantaciones
+- `COMPLETADA` — meta alcanzada (cierre automático)
+- `FINALIZADA_PARCIAL` — cerrada antes de meta (cierre manual del admin)
+
+### Fase de mantenimiento (paralela al estado)
+
+- `MANTENIMIENTO_ACTIVO` — primeros 3 años post-cierre, se esperan reposiciones
+- `MONITOREO_HISTORICO` — 3+ años post-cierre, solo seguimiento histórico
 
 ---
 
@@ -20,43 +39,44 @@ El módulo es un **proyecto blockchain de transparencia**, por lo tanto los dato
 
 ### 2.1. Administrador
 **Qué necesita ver y hacer:**
-- Crear y planificar nuevas campañas (zona, meta de árboles, mix de especies, polígono del área).
-- Asignar árboles desde lotes de vivero hacia campañas.
-- Ver el progreso global de todas las campañas.
-- Designar coordinadores y operarios a las campañas.
-- Cerrar, pausar o cancelar campañas.
+- Crear campañas con sus organizaciones asociadas.
+- Crear subcampañas dentro de cada campaña.
+- Asignar coordinadores a subcampañas.
+- Asignar lotes de vivero a subcampañas (con propósito).
+- Ver el progreso global de todas las campañas y subcampañas.
+- Cerrar subcampañas manualmente a FINALIZADA_PARCIAL.
 
 **Tono de la interfaz:** densa en datos, orientada a planificación, tablas y dashboards.
 
-### 2.2. Coordinador de campaña
+### 2.2. Coordinador de subcampaña
 **Qué necesita ver y hacer:**
-- Gestionar las campañas a su cargo.
-- Asignar/devolver árboles entre vivero y su campaña.
-- Ver el progreso detallado de su campaña.
-- Ver el desempeño de los operarios de su equipo.
+- Gestionar sus subcampañas asignadas.
+- Asignar/devolver árboles entre vivero y su subcampaña.
+- Ver el progreso detallado de su subcampaña.
+- Gestionar el equipo (agregar/remover operarios).
 - También puede operar (plantar y registrar como un operario).
 
-**Tono de la interfaz:** intermedio entre admin y operario, foco en su campaña.
+**Tono de la interfaz:** intermedio entre admin y operario.
 
 ### 2.3. Operario
 **Qué necesita ver y hacer:**
-- Ver las campañas disponibles donde puede plantar hoy.
-- Registrar plantaciones de forma rápida en campo (foto + GPS + especies + cantidades).
-- Ver cuánto plantó él/su equipo en el día y en la campaña.
-- Reportar mortandad de plantaciones anteriores cuando hace visitas.
+- Ver las subcampañas donde es parte del equipo.
+- Registrar plantaciones rápidas en campo (foto + GPS + especies + cantidades + selección de lote).
+- Ver cuánto plantó él/su equipo en el día.
+- Reportar mortandad en visitas posteriores.
 - Registrar reposiciones.
 
-**Tono de la interfaz:** mobile-first, muy operativa, pocos pasos, botones grandes, optimizada para uso en exterior con sol.
+**Tono de la interfaz:** mobile-first, muy operativa, botones grandes, optimizada para exterior.
 
 ### 2.4. Público general (alcaldes, ciudadanos, donantes)
 **Qué necesita ver:**
 - Cuánto se ha plantado y dónde (mapa interactivo).
 - Estimación de captura de carbono.
-- Detalle de cada campaña activa o histórica.
+- Detalle de campañas con sus subcampañas y organizaciones asociadas.
 - Evidencia: fotos, ubicaciones, especies plantadas.
-- Datos de transparencia: quién plantó, cuándo, de dónde vinieron los árboles.
+- Trazabilidad completa hasta el origen.
 
-**Tono de la interfaz:** atractiva, narrativa, visual, mapa central, gráficos y barras de progreso. No requiere login. Es la cara pública del proyecto.
+**Tono de la interfaz:** atractiva, narrativa, visual, mapa central. No requiere login.
 
 ---
 
@@ -64,253 +84,323 @@ El módulo es un **proyecto blockchain de transparencia**, por lo tanto los dato
 
 ### 3.1. PWA pública — Home sin autenticación
 
-**Objetivo:** mostrar el impacto del proyecto a cualquier visitante.
+**Objetivo:** mostrar el impacto del proyecto.
 
 **Componentes clave:**
-- **Hero / encabezado:** título del proyecto, totalizadores grandes (árboles plantados, captura estimada de CO₂, campañas activas, comunidades alcanzadas).
+- **Hero/encabezado:** título del proyecto, totalizadores grandes (árboles plantados, captura estimada CO₂, subcampañas activas, comunidades alcanzadas).
 - **Mapa interactivo principal:**
-  - Polígonos de las zonas/comunidades con campañas activas o completadas.
+  - Polígonos de subcampañas activas, completadas o finalizadas parciales.
   - Pines GPS dentro de los polígonos por cada registro de plantación.
-  - Color del polígono según % de avance.
-  - Click en polígono → panel lateral con resumen de la campaña.
-  - Click en pin → mini-tarjeta con foto, fecha, especies, cantidad, operario.
-- **Barras de progreso destacadas:** listado de campañas activas con su avance ("Arborización San Miguel: 340/1000 árboles plantados").
-- **Sección de campañas completadas:** mosaico de campañas terminadas con fotos.
-- **Sección de transparencia:** "Este proyecto vive en blockchain. Todos los datos son auditables." → link a explorador blockchain.
+  - Color del polígono según fase: ACTIVA (verde brillante), MANTENIMIENTO_ACTIVO (azul), MONITOREO_HISTORICO (gris).
+  - Click en polígono → panel con resumen.
+  - Click en pin → mini-tarjeta con foto, fecha, especies, cantidad, operario, lote origen.
+- **Barras de progreso destacadas:** subcampañas activas con su avance.
+- **Sección de campañas:** mosaico de campañas con sus subcampañas anidadas.
+- **Sección de transparencia:** "Este proyecto vive en blockchain. Todos los datos son auditables."
 
 ### 3.2. Detalle público de campaña
 
-Cuando el visitante hace click en una campaña desde la home.
+**Componentes:**
+- Cabecera con nombre, descripción, organizaciones asociadas (con logos), fechas estimadas.
+- Estado derivado de la campaña (ACTIVA / EN_MANTENIMIENTO / MONITOREO_HISTORICO).
+- Listado de sus subcampañas con barras de progreso individuales.
+- Totalizadores agregados de toda la campaña.
+- Mapa con todos los polígonos de las subcampañas.
+
+### 3.3. Detalle público de subcampaña
+
+Cuando el visitante hace click en una subcampaña.
 
 **Componentes:**
-- Cabecera con nombre, tipo (reforestación / arborización / forestación), zona, estado, fechas, polígono del área.
+- Cabecera con nombre, tipo (reforestación / arborización / forestación), zona, estado operativo, fase de mantenimiento, fechas, polígono.
 - Barra de progreso grande: árboles plantados / meta, % completado.
-- Mini-barras del mix de especies: cada especie con su % real vs % planificado.
-- Mapa con los pines de las plantaciones realizadas dentro del polígono.
-- Timeline visual de plantaciones (por día/semana).
+- Si está en MANTENIMIENTO_ACTIVO: contador "X meses restantes de mantenimiento activo".
+- Mini-barras del mix de especies: real vs planificado.
+- Mapa con los pines de las plantaciones realizadas.
+- Timeline visual de eventos (plantaciones, reposiciones, mortandad).
 - Galería de fotos.
-- Métricas: árboles vivos actuales, mortandad acumulada, reposiciones realizadas, captura estimada de CO₂.
-- Trazabilidad: link a "ver origen de estos árboles" (lleva a vivero/recolección si el usuario quiere profundizar).
-- Equipo: coordinador y operarios que participaron.
+- Métricas: árboles vivos actuales, mortandad acumulada, reposiciones realizadas, captura estimada CO₂.
+- Trazabilidad: link a "ver origen de estos árboles" → Vivero → Recolección.
+- Equipo: coordinador y operarios participantes con sus aportes.
 
-### 3.3. Dashboard del administrador
+### 3.4. Dashboard del administrador
 
 **Objetivo:** vista de comando central.
 
 **Componentes:**
-- KPIs en tarjetas superiores: total de árboles plantados, campañas activas, árboles asignados sin plantar, mortandad acumulada del mes.
-- Tabla de campañas activas con: nombre, zona, coordinador, meta, plantados, % avance, estado, acciones.
-- Filtros: por estado, por zona, por coordinador.
-- Botón destacado: "Crear nueva campaña".
-- Acceso rápido a: gestión de coordinadores, asignaciones pendientes, alertas.
+- KPIs superiores: total árboles plantados, subcampañas activas, en mantenimiento, asignaciones pendientes.
+- Tabs:
+  - **Campañas:** tabla con sus subcampañas anidadas, organizaciones, estado derivado.
+  - **Subcampañas:** tabla plana con todas las subcampañas, sus coordinadores, % avance, fase de mantenimiento.
+  - **Asignaciones:** tabla de asignaciones vivero → subcampaña con propósito.
+  - **Alertas:** subcampañas próximas a cerrar, mantenimientos pendientes, etc.
+- Botones: "Crear campaña", "Crear subcampaña", "Asignar lotes".
 
-### 3.4. Crear / editar campaña (admin)
+### 3.5. Crear campaña (admin)
+
+**Wizard simple:**
+
+**Paso 1: Datos generales**
+- Nombre obligatorio.
+- Descripción opcional.
+- Fechas estimadas globales (opcional, solo futuras).
+
+**Paso 2: Organizaciones asociadas**
+- Selector múltiple del catálogo `ORGANIZACION`.
+- Puede ser 1 o más, recomendado al menos 1.
+- Botón "Crear nueva organización" si no existe.
+
+**Paso 3: Revisión**
+- Resumen.
+- Botones: "Crear campaña vacía" (sin subcampañas) o "Crear campaña y agregar subcampaña" (continúa al wizard de subcampaña).
+
+### 3.6. Crear / editar subcampaña (admin)
 
 Wizard de varios pasos.
 
 **Paso 1: Datos generales**
-- Nombre de la campaña.
-- Tipo (selector: reforestación / arborización / forestación).
-- Descripción opcional.
-- Coordinador asignado (selector de usuario).
-- Operarios del equipo (selector múltiple).
-- Campaña padre (opcional, si es una fase de otra campaña).
+- Campaña padre (preseleccionada si viene del flujo anterior).
+- Nombre de la subcampaña.
+- Tipo: reforestación / arborización / forestación.
+- Zona/comunidad (selector jerárquico del catálogo).
+- Coordinador asignado (obligatorio).
+- Fechas estimadas (solo futuras).
 
-**Paso 2: Zona y polígono**
-- Selector de país/departamento/provincia/comunidad o zona (jerárquico, desde catálogo).
-- Posibilidad de agregar **múltiples zonas** con sub-metas por zona.
-- Componente de mapa para **dibujar el polígono** del área a intervenir (obligatorio).
-- Vista previa del polígono con su área calculada en hectáreas (referencial).
+**Paso 2: Polígono**
+- Componente de mapa para dibujar polígono (obligatorio para activar).
+- Vista previa del polígono con área calculada automáticamente en hectáreas.
+- **No hay input manual de área.**
 
-**Paso 3: Meta de árboles y especies**
+**Paso 3: Meta y especies**
 - Meta total de árboles.
-- Si hay múltiples zonas: distribución de la meta entre zonas (sub-metas).
-- Mix de especies: agregar especies del catálogo y asignar % máximo a cada una (ej: Jacarandá 40%, Molle 40%, otras 20%).
+- Mix de especies: agregar especies del catálogo y asignar % máximo a cada una.
 - Validación visual: la suma de % no debe pasar el 100%.
 
-**Paso 4: Asignación inicial de árboles desde vivero (opcional en creación)**
-- Listado de lotes de vivero disponibles con stock vivo.
-- Selección de cantidades a asignar desde cada lote.
-- Esta asignación puede ampliarse después.
+**Paso 4: Equipo (opcional al crear)**
+- Selector múltiple de operarios para conformar el equipo.
 
-**Paso 5: Revisión y publicación**
-- Resumen visual de toda la campaña.
-- Botones: "Guardar como borrador" / "Activar campaña".
+**Paso 5: Asignación inicial de lotes (opcional al crear)**
+- Listado de lotes de vivero con stock vivo disponible.
+- Para cada lote a asignar: cantidad absoluta y **propósito** (PLANTACION_INICIAL / REPOSICION).
+- El sistema muestra el % equivalente como ayuda visual ("estás asignando el 37.5% del lote").
+- Total asignado vs meta: barra visual.
 
-### 3.5. Detalle de campaña (admin/coordinador)
+**Paso 6: Revisión y activación**
+- Resumen completo.
+- Si el stock asignado < meta: advertencia clara ("Solo el 30% de la meta tiene stock asignado. Puedes activar igual y asignar más después").
+- Botones: "Guardar como borrador" / "Activar subcampaña".
+
+### 3.7. Detalle de subcampaña (admin/coordinador)
 
 **Componentes:**
-- Cabecera con estado de la campaña (BORRADOR / ACTIVA / PAUSADA / COMPLETADA / CANCELADA) y acciones según el estado.
+- Cabecera con estado operativo + fase de mantenimiento (badges separados).
+- Acciones según estado:
+  - ACTIVA: "Marcar como FINALIZADA_PARCIAL" (solo admin, con confirmación + motivo).
+  - COMPLETADA / FINALIZADA_PARCIAL: "Asignar más lotes para reposición".
 - Tabs:
-  - **Resumen:** progreso, mapa con pines, métricas clave.
-  - **Plantaciones:** listado de cada registro de plantación con filtros (operario, fecha, zona, especie). Cada fila expandible muestra fotos, GPS, cantidades por especie.
-  - **Asignaciones:** tabla de lotes de vivero asignados a la campaña, cuánto se plantó de cada uno, cuánto queda disponible. Botón "Asignar más árboles" y "Devolver al vivero".
-  - **Mortandad y reposiciones:** registro de mortandades reportadas por grupo, reposiciones realizadas, % de supervivencia.
-  - **Equipo:** coordinador y operarios participantes con sus aportes individuales.
-  - **Historial:** timeline append-only de todos los eventos de la campaña.
+  - **Resumen:** progreso, mapa con pines, métricas clave, fechas clave (incluyendo `fecha_fin_mantenimiento`).
+  - **Plantaciones:** listado con filtros (operario, fecha, especie, lote). Cada fila expandible con fotos, GPS, cantidades por especie y lote origen.
+  - **Asignaciones:** tabla con propósito (PLANTACION_INICIAL / REPOSICION), cantidad asignada, consumida, devuelta, disponible. Botones "Asignar más", "Devolver al vivero".
+  - **Mortandad y reposiciones:** registros con % supervivencia y semáforo.
+  - **Equipo:** coordinador + operarios con aportes individuales. Botones "Agregar operario" / "Remover" (con confirmación).
+  - **Historial:** timeline append-only completo.
 
-### 3.6. Vista del operario (mobile-first, PWA)
+### 3.8. Vista del operario (mobile-first, PWA)
 
-**Objetivo:** registrar plantaciones en campo de forma ultra rápida.
-
-#### 3.6.1. Home del operario
+#### 3.8.1. Home del operario
 - Saludo + nombre.
-- Tarjetas grandes de **campañas activas donde puede plantar**.
-- Cada tarjeta muestra: nombre de la campaña, zona, % de avance, "X árboles disponibles para plantar hoy".
-- Botón destacado en cada tarjeta: **"Registrar plantación"**.
-- Acceso rápido: "Reportar mortandad", "Mi historial del día".
+- Tarjetas grandes de **subcampañas donde puede plantar**.
+- Cada tarjeta: nombre subcampaña, nombre campaña padre (más pequeño), zona, % avance, stock disponible.
+- Botón destacado: **"Registrar plantación"**.
+- Accesos rápidos: "Reportar mortandad", "Registrar reposición", "Mi historial".
 
-#### 3.6.2. Registrar plantación (flujo principal)
-**Diseño:** pasos cortos, un dato por pantalla idealmente, validación inmediata.
+#### 3.8.2. Registrar plantación (flujo principal)
 
-**Paso 1: Selección de campaña**
-- Si entró desde la tarjeta de una campaña, se asume preseleccionada.
-- Sino, selector grande.
+**Paso 1: Selección de subcampaña**
+- Si entró desde la tarjeta, preseleccionada.
 
-**Paso 2: Captura de foto + GPS**
+**Paso 2: Captura de fotos + GPS**
 - Botón gigante para tomar foto.
-- Permite tomar **varias fotos** (galería del grupo plantado).
-- GPS se captura automáticamente en cada foto.
-- Indicador visible de "GPS capturado ✓" o "Activando GPS...".
+- Permite varias fotos.
+- GPS automático con indicador "GPS capturado ✓" o "Activando GPS...".
 
-**Paso 3: Especies y cantidades plantadas**
-- Lista de especies disponibles para esa campaña (basadas en el mix planificado).
-- Para cada especie: input numérico con +/- para sumar cantidad.
-- Total visible en grande arriba.
-- Si la especie supera su % máximo: advertencia visible pero **permite continuar** (es guía, no bloqueo en MVP).
+**Paso 3: Especies, cantidades y selección de lote**
+- Lista de especies disponibles para la subcampaña (basadas en el mix planificado).
+- Para cada especie:
+  - Input de cantidad con +/-.
+  - **Selector de lote de origen** (entre los asignados con propósito PLANTACION_INICIAL a esta subcampaña).
+  - Si solo hay un lote disponible, se preselecciona.
+  - Si hay varios, el operario indica cantidad por lote.
+- Validación visual: stock disponible por lote.
+- Si la especie excede su % máximo: advertencia visible pero permite continuar.
 
 **Paso 4: Co-responsables (opcional)**
-- "¿Plantaste con alguien más hoy?"
-- Selector múltiple del equipo de la campaña.
+- "¿Plantaste con alguien más?"
+- Selector múltiple del equipo de la subcampaña.
 
 **Paso 5: Observaciones (opcional)**
-- Campo de texto libre, corto.
 
 **Paso 6: Confirmar**
-- Resumen: campaña, cantidad total, especies, ubicación en mini-mapa, fotos.
-- Botón grande "Registrar plantación".
-- Confirmación visual + animación al guardar.
+- Resumen: subcampaña, cantidad total, especies, lotes, ubicación en mini-mapa, fotos.
+- Botón "Registrar plantación".
 
-#### 3.6.3. Reportar mortandad
-- Selector de campaña.
-- Selector del **grupo de plantación** (lista de registros previos con foto, fecha y ubicación).
-- Al seleccionar grupo: muestra histórico ("plantados: 50, ya reportados muertos: 10, vivos estimados: 40").
+#### 3.8.3. Reportar mortandad (mobile)
+- Selector de subcampaña.
+- Selector del **grupo de plantación** (lista de registros previos con foto, fecha, ubicación).
+- Al seleccionar grupo: muestra histórico ("plantados: 50, muertos reportados previamente: 10, vivos estimados: 40").
+- **Captura de foto + GPS obligatorios**.
 - Input: "¿Cuántos más murieron?" (delta).
-- Foto opcional de evidencia.
-- Observación opcional (causa probable).
+- Selector de causa.
+- Observación opcional.
 - Confirmar.
 
-#### 3.6.4. Registrar reposición
-- Similar a registrar plantación, pero con flag visual "REPOSICIÓN".
-- Pide vincular al grupo original que está reponiendo.
-- Misma captura de foto, GPS, especies y cantidades.
-- Se descuenta del saldo asignado a la campaña como cualquier plantación.
+#### 3.8.4. Registrar reposición (mobile)
+- Selector de subcampaña.
+- Selector del grupo origen (debe tener mortandad reportada previamente).
+- Muestra "puedes reponer hasta X árboles".
+- Captura de foto + GPS.
+- Selección de especies con cantidades.
+- **Selección de lote** entre los asignados con propósito REPOSICION.
+- Confirmar.
+- Visual: badge "REPOSICIÓN" prominente.
 
-#### 3.6.5. Mi historial del día / semana
-- Lista cronológica de lo que registró.
-- Por cada registro: campaña, hora, cantidad, foto miniatura.
-- Acumulado: "Hoy plantaste 87 árboles en 2 campañas".
+#### 3.8.5. Mi historial
+- Lista cronológica con filtros (hoy, esta semana, este mes).
+- Por registro: subcampaña, hora, tipo (plantación / reposición / mortandad), cantidad, foto miniatura.
+- Acumulado: "Esta semana: 87 árboles plantados, 5 repuestos, 12 muertos reportados".
 
-### 3.7. Vista del coordinador
+### 3.9. Vista del coordinador
 
-Combinación de:
-- Su panel de campañas (similar al admin pero filtrado a sus campañas).
-- Vista del operario (porque también puede plantar).
+Combinación:
+- Panel de sus subcampañas (filtrado).
+- Vista del operario (porque también opera).
 - Vista de equipo: desempeño individual de sus operarios.
 
-### 3.8. Gestión de asignaciones (admin / coordinador)
+### 3.10. Gestión de asignaciones (admin / coordinador)
 
-**Objetivo:** mover árboles entre vivero y campañas.
+**Objetivo:** mover árboles entre vivero y subcampañas.
 
 **Componentes:**
-- Tabla de asignaciones activas: campaña, lote de vivero origen, especie, cantidad asignada, cantidad plantada, cantidad disponible.
-- Acción "Asignar árboles a campaña":
-  - Selector de campaña destino.
-  - Listado de lotes de vivero con stock vivo disponible.
-  - Input de cantidad a asignar por lote.
+- Tabla de asignaciones activas:
+  - Subcampaña destino.
+  - Lote de vivero origen.
+  - Especie principal del lote.
+  - **Propósito** (PLANTACION_INICIAL / REPOSICION).
+  - Cantidad asignada.
+  - Consumida.
+  - Devuelta.
+  - Disponible.
+- Acción "Asignar lotes a subcampaña":
+  - Selector de subcampaña destino.
+  - Listado de lotes con stock vivo disponible.
+  - Por lote: cantidad absoluta + propósito.
+  - El sistema impide propósito PLANTACION_INICIAL si la subcampaña ya está cerrada.
   - Confirmar.
 - Acción "Devolver al vivero":
-  - Permitido solo sobre cantidad **no plantada todavía**.
-  - Confirmación con motivo de devolución.
+  - Solo sobre cantidad no consumida.
+  - Motivo obligatorio.
+
+### 3.11. Pantalla "marcar como FINALIZADA_PARCIAL" (solo admin)
+
+- Solo accesible si la subcampaña está ACTIVA.
+- Muestra el progreso actual ("Has plantado 700 de 1000 árboles, 70%").
+- Advertencia clara: "Esta acción cierra la subcampaña antes de alcanzar la meta. Después solo podrás registrar mantenimiento (mortandad y reposiciones). No se puede deshacer ni reabrir. Si quieres continuar plantando, deberás crear una nueva subcampaña."
+- Selector de motivo (catálogo + OTRO).
+- Campo de observaciones.
+- Confirmación con texto explícito.
 
 ---
 
 ## 4. Componentes recurrentes / patrones visuales
 
-- **Barra de progreso de campaña:** muy presente, debe ser visual y atractiva. Mostrar plantados / meta y % en grande.
-- **Mini-barras de especies:** barras horizontales agrupadas que muestren % real vs % planificado por especie.
-- **Tarjetas de plantación:** miniatura de foto + cantidad + especie + fecha + ubicación. Reutilizable en muchas pantallas.
-- **Mapa con polígonos y pines:** componente clave reutilizado en home pública, detalle de campaña, dashboard. Debe ser interactivo y responsivo.
-- **Timeline / historial append-only:** lista vertical de eventos con icono por tipo de evento (plantación, mortandad, reposición, asignación, cierre).
-- **Badge de estado:** ACTIVA, PAUSADA, COMPLETADA, CANCELADA, BORRADOR. Colores diferenciados.
-- **Badge de tipo de campaña:** REFORESTACIÓN, ARBORIZACIÓN, FORESTACIÓN.
+- **Barra de progreso de subcampaña:** muy presente, visual y atractiva. Plantados / meta y %.
+- **Mini-barras de especies:** barras horizontales que muestran % real vs % planificado.
+- **Tarjetas de plantación:** miniatura de foto + cantidad + especie + lote origen + fecha + ubicación.
+- **Mapa con polígonos y pines:** componente clave reutilizado en home pública, detalle, dashboard.
+- **Timeline append-only:** lista vertical con icono por tipo de evento.
+- **Badge de estado operativo:** ACTIVA, COMPLETADA, FINALIZADA_PARCIAL, BORRADOR. Colores diferenciados.
+- **Badge de fase de mantenimiento:** MANTENIMIENTO_ACTIVO (azul), MONITOREO_HISTORICO (gris). Visible solo cuando aplica.
+- **Badge de tipo de subcampaña:** REFORESTACIÓN, ARBORIZACIÓN, FORESTACIÓN.
+- **Badge de propósito de asignación:** PLANTACION_INICIAL (verde), REPOSICION (naranja).
+- **Contador de mantenimiento:** "X meses restantes" en subcampañas cerradas.
 
 ---
 
 ## 5. Estados y feedback visual
 
-- **Borrador:** gris, badge "BORRADOR", acciones limitadas.
-- **Activa:** verde, badge "ACTIVA", todas las acciones operativas habilitadas.
-- **Pausada:** ámbar, badge "PAUSADA", solo lectura para operarios.
-- **Completada:** azul, badge "COMPLETADA", solo permite reposiciones.
-- **Cancelada:** rojo claro, badge "CANCELADA", solo lectura.
+### Estado operativo:
+- **BORRADOR:** gris, acciones limitadas.
+- **ACTIVA:** verde, todas las acciones operativas.
+- **COMPLETADA:** azul, badge "META ALCANZADA", solo mantenimiento.
+- **FINALIZADA_PARCIAL:** ámbar, badge "CERRADA PARCIALMENTE", solo mantenimiento.
 
-Para la mortandad: mostrar siempre el porcentaje de supervivencia con colores semáforo (verde >85%, ámbar 70-85%, rojo <70%).
+### Fase de mantenimiento:
+- **MANTENIMIENTO_ACTIVO:** badge azul con contador de tiempo restante.
+- **MONITOREO_HISTORICO:** badge gris, sin alertas.
+
+### Mortandad:
+- Semáforo en % supervivencia: verde >85%, ámbar 70-85%, rojo <70%.
 
 ---
 
 ## 6. Consideraciones mobile
 
-La PWA debe funcionar bien en celulares de gama media-baja, posiblemente con conexión intermitente en campo. Los mockups deben mostrar:
-
 - Botones grandes, mínimo 48x48px touch target.
 - Tipografía generosa para uso en exteriores.
 - Alto contraste.
-- Indicadores claros de "guardando..." y "guardado ✓".
-- Eventual indicador de "sin conexión, se sincronizará después" (offline-first queda fuera del MVP pero el diseño puede anticiparlo visualmente).
+- Indicadores "guardando..." y "guardado ✓".
+- Indicador de "sin conexión" (offline-first queda fuera del MVP pero el diseño puede anticiparlo).
+- Selector de lote optimizado: si hay un solo lote disponible, preseleccionarlo.
 
 ---
 
 ## 7. Datos referenciales para mockups
 
-Para que los mockups se vean realistas, usar estos datos como base:
-
 **Campañas de ejemplo:**
-- "Arborización La Paz 2026" — tipo arborización — zonas: Cota Cota, San Miguel, Hernán — meta: 3000 árboles (1000 por zona) — coordinador: Ing. María López.
-- "Reforestación Hampaturi Fase 1" — tipo reforestación — comunidad Hampaturi — meta: 5000 árboles — mix: Queñua 40%, Kewiña 40%, otras nativas 20%.
+- "Reforestación La Paz 2026" — organizaciones: Alcaldía La Paz + ONG VerdesAndinos.
+  - Subcampaña: "Arborización Cota Cota" (1000 árboles, urbano).
+  - Subcampaña: "Arborización San Miguel" (1000 árboles, urbano).
+  - Subcampaña: "Arborización Hernán" (1000 árboles, urbano).
+- "Reforestación Hampaturi 2026" — organizaciones: TIPNIS Foundation + Coca-Cola Bolivia.
+  - Subcampaña: "Hampaturi Norte" (5000 árboles, nativo).
 
 **Especies de ejemplo:**
-- Jacarandá, Molle, Ceibo, Queñua, Kewiña, Aliso, Pino radiata.
+- Jacarandá, Molle, Ceibo (urbano).
+- Queñua, Kewiña, Aliso (nativo).
 
 **Operarios de ejemplo:**
 - Juan Mamani, Rosa Quispe, Carlos Apaza, Ana Condori.
 
-**Métricas de ejemplo a mostrar:**
+**Coordinadores:**
+- Ing. María López, Ing. Pedro Choque.
+
+**Métricas de ejemplo:**
 - "12,847 árboles plantados en total"
 - "Captura estimada: 235 toneladas de CO₂ proyectadas"
-- "8 campañas activas"
+- "5 subcampañas activas en 2 campañas"
 - "92% de supervivencia promedio"
+- "Hampaturi Norte: 18 meses restantes de mantenimiento activo"
 
 ---
 
-## 8. Tono visual sugerido
+## 8. Tono visual
 
 - Colores: verdes naturales como primario, terracota o tierra como secundario, blancos amplios.
-- Estética: limpia, moderna, con foco en la transparencia y la naturaleza.
-- Inspiración: dashboards de proyectos de impacto, apps de cripto/blockchain con foco en transparencia, plataformas de ciencia ciudadana.
-- Evitar: estética corporativa fría, demasiado tecnológica sin alma, o demasiado infantil.
+- Estética: limpia, moderna, transparencia y naturaleza.
+- Inspiración: dashboards de proyectos de impacto, apps blockchain con foco en transparencia.
 
 ---
 
 ## 9. Pantallas prioritarias para los primeros mockups
 
-Si hay que priorizar, este es el orden sugerido para validar primero con el dueño del proyecto:
+Orden sugerido para validar primero:
 
-1. **Home pública con mapa** (es la cara del proyecto, lo que verá el alcalde/ciudadanos).
-2. **Detalle público de campaña** (drill-down del mapa).
-3. **Vista mobile del operario — registrar plantación** (el flujo más crítico operativamente).
+1. **Home pública con mapa** (cara del proyecto).
+2. **Detalle público de subcampaña** (drill-down del mapa).
+3. **Vista mobile del operario — registrar plantación con selección de lote** (flujo más crítico operativamente y el más nuevo conceptualmente).
 4. **Dashboard del administrador** (planificación y comando).
-5. **Crear nueva campaña (wizard del admin)** (planificación inicial).
-6. **Detalle de campaña para admin/coordinador** (gestión diaria).
+5. **Crear campaña + crear subcampaña** (wizards del admin).
+6. **Detalle de subcampaña para admin/coordinador** (gestión diaria, incluye tabs).
 7. **Reportar mortandad y reposición desde mobile.**
-8. **Gestión de asignaciones vivero → campaña.**
+8. **Gestión de asignaciones vivero → subcampaña con propósito.**
+9. **Pantalla "marcar como FINALIZADA_PARCIAL"** (acción delicada).

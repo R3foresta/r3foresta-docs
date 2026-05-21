@@ -2,7 +2,7 @@
 
 ## 1. Propósito
 
-El **Módulo 3 (Plantación)** registra el momento en que los árboles producidos en el **Módulo 2 (Vivero)** se plantan efectivamente en una zona o comunidad, dentro de una **campaña** planificada por el administrador o un coordinador de proyecto.
+El **Módulo 3 (Plantación)** registra el momento en que los árboles producidos en el **Módulo 2 (Vivero)** se plantan efectivamente en una zona o comunidad, dentro de una **subcampaña** operativa que pertenece a una **campaña** estratégica planificada por el administrador.
 
 Su objetivo es generar un historial auditable de:
 
@@ -10,127 +10,205 @@ Su objetivo es generar un historial auditable de:
 - **dónde se plantó** (zona/comunidad + GPS + polígono certificable),
 - **cuándo se plantó** (fecha del registro),
 - **quién lo plantó** (responsable y co-responsables),
-- **bajo qué campaña** (planificación y meta),
+- **bajo qué subcampaña** (planificación y meta operativa),
+- **bajo qué campaña** (proyecto estratégico, organizaciones asociadas),
 - **con qué evidencia** (fotografías por micro-ubicación),
-- **cómo evolucionó** (mortandad y reposiciones para captura de carbono),
-- **y de qué origen vino** (trazabilidad hacia vivero y recolección).
+- **de qué lote específico de vivero salió** (trazabilidad explícita al lote),
+- **cómo evolucionó** (mortandad y reposiciones durante el ciclo de mantenimiento),
+- **y de qué origen vino** (drill-down hacia Vivero y Recolección).
 
-Este módulo es la cara visible del proyecto y la base operativa de los **bonos de carbono**. Toda la información del módulo es de transparencia pública, salvo lo expresamente restringido.
+Este módulo es la cara visible del proyecto y la base operativa de los **bonos de carbono**. Toda la información del módulo es de transparencia pública, alineada con el carácter blockchain del proyecto.
 
 ---
 
 ## 2. Conceptos clave
 
-### 2.1. Campaña = unidad de planificación
+### 2.1. Arquitectura de dos niveles: Campaña ↔ Subcampaña
 
-- Una **campaña** es la unidad central del módulo: representa un proyecto de **reforestación**, **arborización** o **forestación** en una o más zonas.
-- Toda plantación debe pertenecer a **una campaña activa**.
-- Una campaña define la meta de árboles, el mix de especies con sus topes porcentuales, el polígono del área a intervenir y el equipo responsable.
+El módulo separa **planificación estratégica** de **operación real**:
 
-✅ Esto permite agrupar y reportar de forma coherente: progreso global, progreso por zona, captura de carbono proyectada y supervivencia.
+- **Campaña (nivel estratégico):** contenedor lógico que agrupa el proyecto. Tiene nombre, descripción, organizaciones asociadas, fechas estimadas globales. **No tiene polígono propio ni meta operativa propia.**
+- **Subcampaña (nivel operativo):** unidad de trabajo real. Tiene su propio coordinador, equipo, polígono, mix de especies, meta de árboles, asignaciones de lotes y estado operativo.
 
-### 2.2. Campañas con sub-metas y fases
-
-- Una campaña puede abarcar **varias zonas o comunidades**, cada una con su propia **sub-meta**.
-- Una campaña puede tener **campañas hijas** que representan **fases** sucesivas.
-- La campaña padre acumula el progreso global; las hijas tienen sus propias metas, estados, fechas y polígonos.
+Una campaña contiene **N subcampañas** (al menos 1, sin límite superior).
 
 Ejemplo:
 
-- Campaña padre: "Arborización La Paz 2026" (meta: 3000 árboles).
-  - Hija fase 1: "Cota Cota" (meta: 1000).
-  - Hija fase 2: "San Miguel" (meta: 1000).
-  - Hija fase 3: "Hernán" (meta: 1000).
+- Campaña: "Arborización La Paz 2026" (organizaciones: Alcaldía La Paz + ONG VerdesAndinos).
+  - Subcampaña 1: "Cota Cota" (coordinador A, meta 1000 árboles, polígono A, mix urbano).
+  - Subcampaña 2: "San Miguel" (coordinador B, meta 1000 árboles, polígono B, mix urbano).
+  - Subcampaña 3: "Hampaturi" (coordinador C, meta 5000 árboles, polígono C, mix nativo).
 
-Una campaña hija puede crearse después si la campaña padre llegó al 100% pero se quiere ampliar la cobertura.
+Si se quiere ampliar el proyecto, **se crea una nueva subcampaña** dentro de la misma campaña. No existe el concepto de "fases" ni "campañas hijas".
 
-### 2.3. Mix de especies con topes (biodiversidad)
+### 2.2. Estado derivado de la campaña padre
 
-- Toda campaña debe definir un **mix de especies permitidas** con un **porcentaje máximo por especie**.
-- La suma de los topes puede ser ≤ 100%.
-- El sistema **advierte** si el operario excede el tope al registrar, pero **no bloquea** (el tope es guía, no restricción dura en MVP).
-- La biodiversidad es relevante para certificación y bonos de carbono.
+La campaña padre **no tiene estado propio persistido**. Su estado se calcula en tiempo real a partir de sus subcampañas:
 
-Ejemplo: en Hampaturi se permite máximo 40% de Queñua, 40% de Kewiña y 20% de otras especies nativas.
+| Si las subcampañas son... | La campaña se muestra como... |
+|---------------------------|-------------------------------|
+| Todas en BORRADOR | BORRADOR |
+| Al menos una ACTIVA | ACTIVA |
+| Todas COMPLETADAS o FINALIZADA_PARCIAL en MANTENIMIENTO_ACTIVO | EN_MANTENIMIENTO |
+| Todas en MONITOREO_HISTORICO | MONITOREO_HISTORICO |
 
-### 2.4. Asignación: vínculo Vivero ↔ Campaña
+Esto evita inconsistencias entre campaña padre y subcampañas. La fuente única de verdad es la subcampaña.
 
-- Los árboles del Módulo 2 se vinculan a una campaña mediante una **asignación**.
-- Una asignación **reserva** árboles vivos de un lote de vivero hacia una campaña, pero **no los despacha todavía**.
-- El despacho real del Módulo 2 se dispara recién cuando el árbol se planta efectivamente.
+### 2.3. Organizaciones asociadas
 
-✅ Esto permite planificar sin descontar prematuramente del saldo vivo del vivero.
+Una campaña puede tener **1 o más organizaciones asociadas** (relación N:M).
 
-Reglas clave de asignación:
+Esto permite reflejar:
+- Sponsors corporativos.
+- Convenios con ONGs.
+- Alianzas público-privadas.
+- Transparencia pública sobre quién respalda cada proyecto.
 
-- Un lote de vivero puede asignar árboles a **varias campañas**.
-- Una campaña puede recibir asignaciones de **varios lotes de vivero**.
-- La cantidad asignada no puede superar el saldo vivo disponible del lote.
-- Las asignaciones son **flexibles**: pueden ampliarse, reducirse o devolverse al vivero, siempre que la cantidad afectada todavía no haya sido plantada.
+En MVP las organizaciones pueden modelarse con un catálogo simple (`ORGANIZACION`).
 
-### 2.5. Sin "salida de campo" en el MVP
+### 2.4. Estados operativos de la subcampaña
 
-- El MVP **no modela** la fase intermedia "el operario tiene árboles en su poder".
-- El descuento del saldo asignado y el despacho real del Módulo 2 ocurren **al registrar la plantación efectiva**.
-- Las **devoluciones al vivero** existen como evento explícito sobre la asignación: el coordinador o admin puede devolver árboles asignados pero no plantados, y el saldo vuelve al lote de vivero.
+La subcampaña tiene los siguientes estados operativos:
 
-### 2.6. Registro de plantación = unidad atómica
+- **BORRADOR:** en planificación, editable libremente, no acepta operaciones.
+- **ACTIVA:** habilitada para plantar, recibir asignaciones, registrar mantenimiento.
+- **COMPLETADA:** meta de árboles alcanzada al 100%. Cierre automático.
+- **FINALIZADA_PARCIAL:** cerrada antes de alcanzar la meta. Cierre manual por admin.
 
-- Un **registro de plantación** representa un grupo de árboles plantados en una **micro-ubicación** específica, dentro de una jornada.
-- Cada registro captura: fotos, GPS, especies y cantidades, campaña asociada, responsable y co-responsables opcionales.
-- Una jornada del operario puede generar **múltiples registros** en distintas micro-ubicaciones.
-- Una jornada puede tocar **múltiples campañas** (un operario puede plantar en dos campañas el mismo día).
+Estados reservados para implementación futura (existen en el enum pero **no se usan en MVP**):
 
-### 2.7. Geolocalización dual: puntos + polígono
+- `PAUSADA`
+- `CANCELADA`
 
-- **Polígono de campaña (obligatorio):** lo define el admin/coordinador al crear la campaña. Representa el área certificable.
-- **Puntos GPS (obligatorios):** los captura el operario en cada registro de plantación. Validan la presencia física en el área.
+Transiciones permitidas en MVP:
 
-Esta doble lectura permite:
+- `BORRADOR → ACTIVA` (al activar)
+- `ACTIVA → COMPLETADA` (automático al alcanzar meta)
+- `ACTIVA → FINALIZADA_PARCIAL` (manual por admin, requiere motivo)
 
-- Verificación operativa (puntos dentro del polígono).
-- Certificación para bonos de carbono (polígono delimitado).
+No hay reapertura: si una subcampaña queda en FINALIZADA_PARCIAL y aparece stock nuevo después, se crea una **nueva subcampaña** dentro de la misma campaña, no se reabre la anterior.
 
-### 2.8. Trazabilidad por asignación, no por árbol
+### 2.5. Fase de mantenimiento (segunda dimensión, derivada por fecha)
 
-- En el MVP, **no se trackea de qué lote individual vino cada árbol plantado**.
-- La trazabilidad se mantiene a nivel de **asignación**: se sabe qué lotes de vivero alimentaron qué campaña y en qué cantidades.
-- El descuento del saldo asignado al plantar usa **FIFO automático** entre los lotes asignados.
+Independiente del estado operativo, la subcampaña tiene una **fase de mantenimiento** que se calcula automáticamente por tiempo:
 
-✅ Esto reduce drásticamente la carga operativa del operario en campo sin perder trazabilidad relevante para bonos de carbono.
+| Fase | Cuándo aplica | Comportamiento |
+|------|---------------|----------------|
+| `NO_APLICA` | Mientras la subcampaña está en BORRADOR o ACTIVA | Sin lógica especial |
+| `MANTENIMIENTO_ACTIVO` | Desde el cierre (COMPLETADA o FINALIZADA_PARCIAL) hasta 3 años después | Se esperan reposiciones y reportes de pérdidas |
+| `MONITOREO_HISTORICO` | Desde 3 años después del cierre en adelante | Solo seguimiento de captura de CO₂; no se esperan reposiciones, aunque se siguen aceptando |
 
-### 2.9. Snapshots oficiales (siguiendo el patrón de M1 y M2)
+La ventana de **3 años** es configurable a nivel sistema.
 
-Al registrar una plantación se congelan snapshots oficiales en el registro:
+### 2.6. Mantenimiento es transversal
 
-- `nombre_campania_snapshot`
+El mantenimiento (registro de pérdidas + reposiciones) se acepta en **todos los estados operativos posteriores a BORRADOR**:
+
+| Estado | Plantación inicial | Pérdidas | Reposiciones | Asignación nueva |
+|--------|--------------------|----------|--------------|------------------|
+| BORRADOR | No | No | No | No |
+| ACTIVA | Sí | Sí | Sí | Sí (cualquier propósito) |
+| COMPLETADA | No | Sí | Sí | Sí (solo propósito REPOSICION) |
+| FINALIZADA_PARCIAL | No | Sí | Sí | Sí (solo propósito REPOSICION) |
+
+### 2.7. Asignación de lotes con propósito explícito
+
+Cada asignación de lote a subcampaña lleva un campo `proposito_asignacion`:
+
+- `PLANTACION_INICIAL`: el stock asignado se consume en plantaciones iniciales (avanzan la meta).
+- `REPOSICION`: el stock asignado se consume exclusivamente en reposiciones (no avanzan la meta).
+
+Reglas:
+
+- Mientras la subcampaña está `ACTIVA`, se aceptan asignaciones con ambos propósitos.
+- Una vez `COMPLETADA` o `FINALIZADA_PARCIAL`, solo se aceptan asignaciones con propósito `REPOSICION`.
+- Una asignación con propósito `PLANTACION_INICIAL` **no puede consumirse** en una reposición y viceversa.
+
+### 2.8. Asignación de lotes con selección explícita por el operario
+
+El operario, al registrar una plantación, **selecciona explícitamente de qué lote(s) sale el material**. Esto reemplaza el FIFO automático que estaba en versiones anteriores del documento.
+
+Razones:
+
+- **Trazabilidad real al lote:** cada plantación queda vinculada a un lote concreto, no a una "asignación promedio".
+- **Bonos de carbono y certificación:** los lotes pueden venir de comunidades distintas con valores narrativos diferentes.
+- **Transparencia blockchain:** datos más ricos para auditoría pública.
+- **Realidad operativa:** el operario ya sabe físicamente de qué cajón saca los árboles; formalizar es bajo costo.
+
+UX simplificada:
+
+- El operario solo elige entre lotes **asignados a su subcampaña**, no entre todos los lotes del sistema.
+- Si solo hay un lote asignado para esa especie, el sistema lo **preselecciona automáticamente**.
+- Si hay varios lotes, el operario indica cantidad por lote.
+
+### 2.9. Consumo parcial con cantidad absoluta
+
+Las asignaciones se cargan en **cantidad absoluta** (árboles) como fuente de verdad. El porcentaje sobre el saldo del lote se muestra solo como ayuda visual ("estás asignando 300 del lote, equivale al 37.5%"), no se persiste.
+
+Una subcampaña puede consumir parcialmente varios lotes. Un lote puede asignar a varias subcampañas. Solo se valida que las asignaciones activas de un lote no superen su saldo vivo disponible.
+
+### 2.10. Equipo de la subcampaña
+
+Cada subcampaña tiene:
+
+- **Coordinador (1, obligatorio):** designado por el admin. Gestiona la subcampaña, asigna/devuelve lotes, también puede operar.
+- **Equipo (N, opcional):** lista de operarios autorizados a registrar plantaciones en esa subcampaña.
+
+Reglas:
+
+- Al registrar una plantación, el operario debe ser miembro del equipo (o el coordinador).
+- Los **co-responsables** del registro deben ser un **subconjunto del equipo** (no se aceptan usuarios fuera del equipo como co-responsables).
+- El equipo se puede ampliar o reducir mientras la subcampaña no está terminal.
+
+No hay porcentaje de participación entre miembros del equipo. Todos los co-responsables de un registro son tratados por igual.
+
+### 2.11. Geolocalización dual: puntos + polígono
+
+- **Polígono de la subcampaña (obligatorio para activar):** lo define el admin/coordinador. Representa el área certificable.
+- **Puntos GPS (obligatorios):** los captura el operario en cada registro de plantación, reposición o reporte de pérdida.
+
+El área en hectáreas se **calcula automáticamente desde el polígono** como dato referencial. No se ingresa manualmente.
+
+### 2.12. Mix de especies a nivel subcampaña
+
+El mix de especies con topes porcentuales se define **por subcampaña**, no por campaña padre. Cada zona puede tener su propio mix (urbano vs nativo, por ejemplo).
+
+- La suma de topes puede ser ≤ 100%.
+- El sistema **advierte** si se excede el tope al plantar, pero **no bloquea** (guía, no restricción dura en MVP).
+
+### 2.13. Activación con stock parcial
+
+Una subcampaña se puede **activar sin tener el 100% del stock asignado**. Por ejemplo, meta de 10.000 árboles con solo 3.000 asignados.
+
+El sistema:
+
+- Permite la activación con advertencia visual clara.
+- Muestra siempre el % de stock asignado respecto a la meta.
+- Permite ampliar asignaciones en cualquier momento durante el estado ACTIVA.
+
+### 2.14. Snapshots oficiales (siguiendo el patrón de M1 y M2)
+
+Al activar una subcampaña se congelan snapshots de identidad:
+
 - `nombre_zona_snapshot`
+- `nombre_coordinador_snapshot`
+- `nombres_organizaciones_snapshot` (lista)
+
+Al registrar una plantación se congelan snapshots adicionales:
+
+- `nombre_subcampania_snapshot`
 - `nombre_responsable_snapshot`
-- mix de especies plantadas con sus snapshots de identidad heredados del Módulo 2.
+- Por cada especie plantada, los snapshots heredados desde el lote de vivero (científico, comercial, variedad).
 
-Al crear una campaña se congelan snapshots de la zona/comunidad y del coordinador.
-
-### 2.10. Mortandad y reposiciones (clave para bonos de carbono)
-
-- La **mortandad** se reporta en visitas posteriores a un grupo previamente plantado.
-- Se reporta como **delta de muertos** sobre el grupo ("se reportan 10 muertos más en el grupo X").
-- El sistema muestra siempre el histórico para evitar doble conteo.
-- La **reposición** es una plantación nueva marcada con flag `REPOSICION`, vinculada al grupo original, que consume saldo de la asignación de la campaña.
-
-Para bonos de carbono se trackean **ambas dimensiones**:
-
-- Histórico total plantado (incluye los que después murieron).
-- Saldo vivo actual (plantado − muertos + repuestos).
-
-### 2.11. Estados del registro vs estado operativo
-
-- **Estado de la campaña:** `BORRADOR | ACTIVA | PAUSADA | COMPLETADA | CANCELADA`
-- **Estado del registro de plantación:** se considera inmutable (append-only). Su "estado operativo" deriva del saldo vivo del grupo.
-- **Estado de la asignación:** `ACTIVA | AGOTADA | DEVUELTA` (derivado del saldo asignado y plantado).
-
-### 2.12. Eventos append-only
+### 2.15. Eventos append-only
 
 Como en los módulos anteriores, todos los eventos operativos son **append-only**: se agregan al historial y no se reescriben ni eliminan. No hay correcciones en el MVP.
+
+### 2.16. Sin "salida de campo" en el MVP
+
+El MVP **no modela** la fase intermedia "el operario tiene árboles en su poder". El descuento del saldo asignado y el despacho real del Módulo 2 ocurren **al registrar la plantación efectiva**.
+
+Las devoluciones al vivero son un evento explícito sobre la asignación: el coordinador o admin puede devolver árboles asignados pero no plantados, y el saldo vuelve al lote de vivero.
 
 ---
 
@@ -138,210 +216,272 @@ Como en los módulos anteriores, todos los eventos operativos son **append-only*
 
 ### 3.1. Creación de la campaña (admin)
 
-**Objetivo:** planificar el proyecto antes de operar.
+**Objetivo:** crear el contenedor estratégico del proyecto.
 
 Datos mínimos:
 
-- Nombre de la campaña.
-- Tipo: `REFORESTACION | ARBORIZACION | FORESTACION`.
-- Coordinador asignado (obligatorio).
-- Operarios del equipo (opcional al crear, ampliable después).
-- Una o más zonas/comunidades (catálogo administrativo).
-- Sub-metas por zona si hay varias.
-- Meta total de árboles (> 0).
-- Mix de especies con tope % por especie.
-- **Polígono del área** (obligatorio en MVP).
-- Campaña padre (opcional, si es una fase).
-- Fechas estimadas (opcional).
+- Nombre de la campaña (obligatorio).
+- Descripción (opcional).
+- Una o más organizaciones asociadas (opcional pero recomendado).
+- Fecha estimada de inicio y fin global (opcional, solo referenciales).
 
-Mientras la campaña está en `BORRADOR`:
+La campaña se crea **sin subcampañas**, en estado derivado `BORRADOR` (porque todavía no tiene subcampañas activas). Las subcampañas se agregan a continuación.
+
+### 3.2. Creación de subcampañas (admin)
+
+**Objetivo:** definir las unidades operativas dentro de la campaña.
+
+Datos mínimos por subcampaña:
+
+- Nombre de la subcampaña.
+- Tipo: `REFORESTACION | ARBORIZACION | FORESTACION`.
+- Zona o comunidad (catálogo administrativo).
+- Coordinador asignado (obligatorio, rol COORDINADOR o ADMIN).
+- Equipo de operarios (opcional al crear, ampliable después).
+- Polígono del área (obligatorio para activar).
+- Meta total de árboles (> 0).
+- Mix de especies con topes porcentuales.
+- Fechas estimadas de inicio y fin (solo futuras).
+
+En `BORRADOR`:
 
 - Es editable libremente.
 - No acepta asignaciones ni plantaciones.
 - Puede eliminarse con soft delete.
 
-Al activar la campaña pasa a `ACTIVA` y queda habilitada para operar.
+### 3.3. Activación de la subcampaña (admin)
 
-### 3.2. Asignación de árboles desde vivero
+**Objetivo:** habilitar la subcampaña para operar.
 
-**Objetivo:** vincular stock vivo del vivero a la campaña.
+Validaciones para activar:
+
+- Polígono presente.
+- Mix de especies definido (al menos una especie con tope > 0).
+- Coordinador asignado.
+- Meta total > 0.
+
+Si todas las validaciones pasan, la subcampaña pasa a `ACTIVA`. Si la subcampaña se activa sin stock asignado al 100%, el sistema muestra advertencia pero permite continuar.
+
+### 3.4. Asignación de árboles desde Vivero a subcampaña
+
+**Objetivo:** vincular stock vivo del vivero a la subcampaña operativa.
 
 - El admin o coordinador selecciona lotes de vivero con saldo vivo disponible.
-- Define la cantidad a asignar de cada lote.
-- El sistema crea una `ASIGNACION_VIVERO` por cada lote-campaña.
-- El saldo vivo del lote en Módulo 2 **no se descuenta todavía**; se reserva lógicamente.
+- Define la cantidad a asignar de cada lote (cantidad absoluta).
+- Define el **propósito**: `PLANTACION_INICIAL` o `REPOSICION`.
+- El sistema crea una `ASIGNACION_VIVERO_SUBCAMPANIA` por cada lote-subcampaña-propósito.
 
 Restricciones:
 
-- La cantidad asignada no puede exceder el saldo vivo del lote.
-- Solo se pueden asignar lotes de vivero en estado `ACTIVO`.
-- La asignación puede ampliarse después, agregando más lotes o más cantidad.
+- La cantidad asignada no puede exceder el saldo vivo disponible del lote (saldo_vivo_actual − asignaciones_activas_de_ese_lote).
+- Solo se pueden asignar lotes en estado `ACTIVO` en el Módulo 2.
+- Asignaciones con propósito `PLANTACION_INICIAL` solo se aceptan en subcampañas `ACTIVA`.
+- Asignaciones con propósito `REPOSICION` se aceptan en `ACTIVA`, `COMPLETADA` o `FINALIZADA_PARCIAL`.
 
-### 3.3. Registro de plantación (operario en campo)
+La asignación **no genera evento en el Módulo 2** porque es una reserva lógica; el saldo vivo del lote no se descuenta hasta que se planta efectivamente.
+
+### 3.5. Devolución al vivero
+
+**Objetivo:** liberar reservas de árboles que no se plantarán.
+
+- Solo aplica sobre cantidad asignada pero no plantada.
+- El admin o coordinador inicia la devolución indicando cantidad y motivo (obligatorio).
+- El sistema:
+  - Reduce el saldo asignado de la asignación.
+  - Libera la reserva lógica sobre el lote de vivero.
+  - Registra evento `DEVOLUCION_A_VIVERO` append-only.
+
+No genera evento en el Módulo 2 porque los árboles nunca salieron físicamente.
+
+### 3.6. Registro de plantación inicial (operario en campo)
 
 **Objetivo:** registrar la plantación efectiva en una micro-ubicación.
 
-Datos mínimos:
+Flujo del operario:
 
-- `campania_id` (debe estar `ACTIVA`).
-- `responsable_id` (operario logueado).
-- `co_responsables_ids` (opcional, equipo que plantó junto).
-- Fecha del registro (no futura, hasta 10 días en el pasado).
-- **Foto(s)** con GPS embebido (mínimo 1, recomendado varias).
-- **Latitud y longitud** capturadas automáticamente.
-- Lista de **especies plantadas** con sus cantidades (al menos una especie con cantidad > 0).
-- Observaciones (opcional).
+1. Selecciona la **subcampaña** donde va a operar.
+2. Toma fotos con GPS embebido.
+3. Indica especies y cantidades plantadas.
+4. Para cada especie, **selecciona el lote de vivero** del cual sale el material (entre los asignados con propósito `PLANTACION_INICIAL` a esa subcampaña).
+   - Si solo hay un lote disponible para esa especie, se preselecciona.
+   - Si hay varios, indica cantidad por lote.
+5. Selecciona co-responsables (subconjunto del equipo).
+6. Observaciones opcionales.
+7. Confirma.
 
-Flujo al guardar:
+Al guardar, el sistema:
 
-1. El sistema valida que la campaña esté `ACTIVA`.
-2. Verifica que el GPS esté **dentro del polígono** de la campaña (o de alguna de sus zonas si tiene sub-metas).
-3. Verifica que las especies plantadas estén dentro del mix permitido.
-4. Si una especie excede el tope %, **advierte pero no bloquea**.
-5. Descuenta la cantidad plantada del saldo asignado, usando **FIFO** entre los lotes asignados a esa campaña.
-6. Genera automáticamente un `DESPACHO` en Módulo 2 con `destino_tipo = PLANTACION_CAMPAÑA` y referencia a la campaña.
+1. Valida que la subcampaña esté `ACTIVA`.
+2. Verifica que el GPS esté dentro del polígono de la subcampaña (con tolerancia configurable).
+3. Verifica que las especies estén en el mix permitido. Si exceden tope %, advierte pero permite.
+4. Verifica que las cantidades por lote no superen los saldos asignados disponibles.
+5. Descuenta las cantidades de cada asignación afectada.
+6. Genera atómicamente un evento `DESPACHO` en `EVENTO_LOTE_VIVERO` por cada lote afectado, con:
+   - `destino_tipo = PLANTACION_CAMPAÑA`.
+   - `origen_despacho = AUTOMATICO_PLANTACION`.
+   - `destino_referencia = REGISTRO_PLANTACION.id`.
+   - `subcampania_id` y `campania_id` para drill-down.
+   - `comunidad_destino_id` heredada de la subcampaña.
 7. Congela snapshots oficiales en el registro.
-8. Crea el registro en `REGISTRO_PLANTACION` como append-only.
-9. Vincula evidencias fotográficas al registro.
+8. Crea el `REGISTRO_PLANTACION` como append-only.
+9. Vincula las evidencias fotográficas.
+10. Si la suma de plantaciones iniciales alcanza la meta, dispara **cierre automático** a `COMPLETADA`.
 
-Reglas estrictas:
+### 3.7. Cierre automático a COMPLETADA
 
-- No se puede plantar más de lo asignado disponible.
-- Si la suma plantada llega a la meta de la campaña, el sistema **bloquea nuevos registros iniciales** y la campaña pasa a `COMPLETADA`.
-- Solo se permite plantación inicial si la meta no se ha alcanzado.
+Cuando `SUM(PLANTACION_INICIAL.cantidad_total) >= meta_total`:
 
-### 3.4. Reporte de mortandad
+- La subcampaña pasa automáticamente a `COMPLETADA`.
+- Se congela `fecha_cierre_operativo = NOW()`.
+- Se calcula `fecha_fin_mantenimiento = fecha_cierre_operativo + 3 años`.
+- Se registra evento `SUBCAMPANIA_COMPLETADA` en `SUBCAMPANIA_HISTORIAL`.
+- No se aceptan más plantaciones iniciales.
+- Continúan permitidos: mortandad, reposición, asignaciones con propósito REPOSICION.
+
+### 3.8. Cierre manual a FINALIZADA_PARCIAL (admin)
+
+**Objetivo:** cerrar una subcampaña antes de alcanzar la meta.
+
+- Solo ADMIN puede ejecutar esta acción.
+- Requiere motivo obligatorio (catálogo + OTRO).
+- La subcampaña pasa a `FINALIZADA_PARCIAL`.
+- Se congela `fecha_cierre_operativo` y se calcula `fecha_fin_mantenimiento`.
+- Se registra evento `SUBCAMPANIA_FINALIZADA_PARCIAL` en `SUBCAMPANIA_HISTORIAL`.
+
+Comportamiento posterior idéntico a COMPLETADA: sin plantaciones iniciales, con mantenimiento permitido.
+
+### 3.9. Reporte de pérdidas (mortandad)
 
 **Objetivo:** registrar pérdidas observadas en visitas posteriores.
 
-Datos mínimos:
+Datos obligatorios:
 
-- `registro_plantacion_id` del grupo afectado (obligatorio).
+- `registro_plantacion_id` del grupo afectado.
 - Fecha del reporte (no futura).
-- `cantidad_muerta_delta` > 0 (cuántos más murieron desde el último reporte).
-- Causa probable (catálogo + "OTRO").
-- Foto opcional de evidencia.
-- Observación opcional.
+- `cantidad_muerta_delta > 0` (delta desde el último reporte).
+- Causa de mortandad (catálogo `causa_mortandad_plantacion` + OTRO).
+- **Foto con GPS obligatoria** (mínimo 1).
+- Observaciones opcionales.
 
 El sistema:
 
-- Muestra al operario el histórico del grupo antes de confirmar.
-- Valida que `cantidad_muerta_acumulada + delta ≤ cantidad_plantada_inicial + reposiciones`.
-- Crea un evento `MORTANDAD_REPORTADA` append-only vinculado al grupo.
+- Muestra al operario el histórico del grupo antes de confirmar (plantado, muertos previos, vivos estimados) para evitar doble conteo.
+- Valida que `cantidad_muerta_acumulada + delta ≤ plantado_inicial + reposiciones_acumuladas`.
+- Crea evento `MORTANDAD_REPORTADA` append-only.
 - Recalcula el saldo vivo del grupo.
 
-### 3.5. Reposición
+Permitido en estados: `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`. También permitido durante `MONITOREO_HISTORICO` aunque no se espere activamente.
+
+### 3.10. Registro de reposición
 
 **Objetivo:** plantar árboles nuevos para reemplazar muertos previos.
 
-- Funciona como una plantación normal **vinculada al grupo original** mediante `registro_plantacion_origen_id`.
-- Lleva flag `es_reposicion = true`.
-- Consume saldo asignado de la campaña como cualquier plantación.
-- Genera evento `REPOSICION` append-only.
+Funciona como una plantación pero:
 
-Reglas:
+- Vinculada al grupo origen mediante `registro_plantacion_origen_id`.
+- Flag `es_reposicion = true`.
+- Solo consume asignaciones con propósito `REPOSICION`.
+- **No avanza la meta** de la subcampaña.
 
-- Solo se permite reposición sobre grupos con mortandad reportada.
-- La cantidad repuesta no puede exceder la mortandad acumulada del grupo.
-- La reposición está permitida incluso si la campaña está en `COMPLETADA` (es parte del compromiso de carbono).
-- No tiene límite temporal en el MVP.
+Validaciones específicas:
 
-### 3.6. Devolución al vivero
+- El grupo origen debe tener mortandad reportada previamente.
+- `cantidad_repuesta ≤ cantidad_muerta_acumulada − cantidad_repuesta_acumulada` del grupo.
+- Permitido en `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`.
+- Sin límite temporal estricto, pero el sistema diferencia visualmente las reposiciones hechas durante `MANTENIMIENTO_ACTIVO` vs `MONITOREO_HISTORICO`.
 
-**Objetivo:** liberar árboles asignados que no se van a plantar.
+Genera el mismo flujo atómico de `DESPACHO` automático en Módulo 2 que una plantación inicial.
 
-- Solo aplica sobre **cantidad asignada pero no plantada**.
-- El admin o coordinador inicia la devolución indicando lote, cantidad y motivo.
-- El sistema:
-  - Reduce el saldo asignado.
-  - Devuelve la cantidad al saldo vivo del lote de vivero.
-  - Genera evento `DEVOLUCION_A_VIVERO` append-only.
+### 3.11. Transición automática a MONITOREO_HISTORICO
 
-### 3.7. Cierre de campaña
+Cuando `today >= fecha_fin_mantenimiento`:
 
-Una campaña puede llegar a `COMPLETADA` por:
-
-- Alcanzar su meta de árboles plantados (cierre automático).
-- Decisión del admin (cierre manual anticipado).
-
-Una vez `COMPLETADA`:
-
-- No se permiten más plantaciones iniciales.
-- Sí se permiten reposiciones.
-- Sí se permite reportar mortandad.
-- Sí se permite devolver saldo asignado no plantado al vivero.
-
-Una campaña en `CANCELADA`:
-
-- Se decide explícitamente cancelar antes de cumplir la meta.
-- No permite nuevas plantaciones, reposiciones ni reportes.
-- El saldo asignado no plantado debe devolverse al vivero.
-
-Una campaña en `PAUSADA`:
-
-- Operación temporalmente suspendida.
-- No acepta nuevos registros.
-- Puede reactivarse a `ACTIVA`.
+- La subcampaña pasa automáticamente de `MANTENIMIENTO_ACTIVO` a `MONITOREO_HISTORICO`.
+- No cambia el estado operativo (`COMPLETADA` o `FINALIZADA_PARCIAL` se mantiene).
+- Se registra evento `TRANSICION_A_MONITOREO_HISTORICO` en `SUBCAMPANIA_HISTORIAL`.
+- El sistema deja de generar alertas activas de monitoreo.
+- Se sigue aceptando mortandad y reposición pero ya no se esperan rutinariamente.
 
 ---
 
 ## 4. Eventos y movimientos
 
-### 4.1. Historial de ciclo de vida de la campaña
+### 4.1. Historial de ciclo de vida de la campaña y subcampaña
 
-`CAMPANIA_HISTORIAL` registra el timeline del registro, no el saldo:
+`CAMPANIA_HISTORIAL`:
+
+- `CAMPANIA_CREADA`
+- `ORGANIZACION_ASOCIADA_AGREGADA`
+- `ORGANIZACION_ASOCIADA_REMOVIDA`
+
+`SUBCAMPANIA_HISTORIAL`:
 
 - `BORRADOR_CREADO`
-- `CAMPANIA_ACTIVADA`
-- `CAMPANIA_PAUSADA`
-- `CAMPANIA_REACTIVADA`
-- `CAMPANIA_COMPLETADA`
-- `CAMPANIA_CANCELADA`
+- `SUBCAMPANIA_ACTIVADA`
+- `SUBCAMPANIA_COMPLETADA` (automático)
+- `SUBCAMPANIA_FINALIZADA_PARCIAL` (manual)
+- `TRANSICION_A_MONITOREO_HISTORICO` (automático por fecha)
+- `EQUIPO_AMPLIADO` / `EQUIPO_REDUCIDO`
+- `COORDINADOR_CAMBIADO`
 
 ### 4.2. Eventos operativos de plantación
 
-`EVENTO_PLANTACION` registra operaciones que afectan la campaña o un grupo plantado:
+`EVENTO_PLANTACION`:
 
-- `PLANTACION_INICIAL` (saldo plantado +N)
-- `REPOSICION` (saldo plantado +N, vinculado a grupo origen)
-- `MORTANDAD_REPORTADA` (saldo vivo −N en grupo)
 - `ASIGNACION_VIVERO` (saldo asignado +N)
 - `DEVOLUCION_A_VIVERO` (saldo asignado −N)
+- `PLANTACION_INICIAL` (avanza meta)
+- `REPOSICION` (no avanza meta)
+- `MORTANDAD_REPORTADA` (saldo vivo del grupo −N)
 
 Fuera del MVP:
 
 - `CORRECCION_MORTANDAD`
 - `AJUSTE_MIGRACION`
+- `PAUSAR_SUBCAMPANIA` / `REACTIVAR_SUBCAMPANIA` (reservado para futuro)
+- `CANCELAR_SUBCAMPANIA` (reservado para futuro)
 
 ---
 
-## 5. Estados y transiciones
+## 5. Estados y dimensiones
 
-### 5.1. Estados de la campaña
+### 5.1. Estado operativo de la subcampaña
 
-- **BORRADOR:** editable, no operativa, soft delete permitido.
-- **ACTIVA:** habilitada para asignar árboles, plantar, reportar mortandad y reposiciones.
-- **PAUSADA:** temporalmente detenida. No acepta nuevos registros. Reactivable.
-- **COMPLETADA:** meta alcanzada o cerrada anticipadamente. Solo reposiciones y reportes de mortandad.
-- **CANCELADA:** cerrada definitivamente. Solo lectura.
+- **BORRADOR:** editable, soft delete permitido, sin operaciones.
+- **ACTIVA:** acepta todo: plantación inicial, mortandad, reposición, asignaciones.
+- **COMPLETADA:** meta 100% alcanzada. No acepta plantación inicial. Acepta mortandad, reposición, asignaciones con propósito REPOSICION.
+- **FINALIZADA_PARCIAL:** cerrada antes de meta. Mismo comportamiento que COMPLETADA.
 
-Transiciones permitidas:
+Estados reservados para futuro (en enum pero sin flujos en MVP): `PAUSADA`, `CANCELADA`.
 
-- `BORRADOR → ACTIVA | (soft delete)`
-- `ACTIVA → PAUSADA | COMPLETADA | CANCELADA`
-- `PAUSADA → ACTIVA | CANCELADA`
-- `COMPLETADA → CANCELADA` (excepcional, solo admin)
-- `CANCELADA → (terminal)`
+### 5.2. Fase de mantenimiento (derivada por fecha)
 
-### 5.2. Estado de la asignación (derivado)
+- **NO_APLICA:** mientras la subcampaña está en BORRADOR o ACTIVA.
+- **MANTENIMIENTO_ACTIVO:** desde cierre operativo hasta 3 años después. Sistema espera monitoreo activo.
+- **MONITOREO_HISTORICO:** 3+ años desde cierre. Solo seguimiento histórico.
 
-- `ACTIVA`: saldo asignado disponible > 0 y campaña no terminal.
-- `AGOTADA`: saldo asignado consumido en plantaciones.
+La transición es automática por fecha, sin acción manual.
+
+### 5.3. Estado derivado de la campaña padre
+
+No se persiste. Se calcula en tiempo real desde las subcampañas:
+
+| Subcampañas | Campaña se muestra como |
+|-------------|-------------------------|
+| Todas BORRADOR | BORRADOR |
+| Al menos una ACTIVA | ACTIVA |
+| Todas cerradas + al menos una en MANTENIMIENTO_ACTIVO | EN_MANTENIMIENTO |
+| Todas en MONITOREO_HISTORICO | MONITOREO_HISTORICO |
+
+### 5.4. Estado de la asignación (derivado)
+
+- `ACTIVA`: saldo asignado disponible > 0 y subcampaña no terminal.
+- `AGOTADA`: saldo asignado consumido completamente en plantaciones/reposiciones.
 - `DEVUELTA`: saldo asignado devuelto al vivero.
 
-### 5.3. Saldo vivo del grupo plantado (derivado)
+### 5.5. Saldo vivo del grupo plantado (derivado)
 
-`saldo_vivo_grupo = cantidad_plantada_inicial + reposiciones − mortandad_acumulada`
+`saldo_vivo_grupo = cantidad_plantada_inicial + reposiciones_acumuladas − mortandad_acumulada`
 
 Reglas:
 
@@ -354,159 +494,189 @@ Reglas:
 
 ### 6.1. Fotografías
 
-- Obligatorias en `PLANTACION_INICIAL` y `REPOSICION` (mínimo 1, recomendado varias por micro-ubicación).
-- Opcionales en `MORTANDAD_REPORTADA` (pero recomendadas).
+- Obligatorias en `PLANTACION_INICIAL` y `REPOSICION` (mínimo 1).
+- Obligatorias en `MORTANDAD_REPORTADA` (mínimo 1).
 - Formato: JPG/PNG.
 - Tamaño máximo: 5 MB por foto.
 - Modelo polimórfico: `EVIDENCIAS_TRAZABILIDAD` vinculadas a `EVENTO_PLANTACION.id`.
 
 ### 6.2. GPS por registro
 
-- Latitud y longitud obligatorias en cada `PLANTACION_INICIAL` y `REPOSICION`.
+- Latitud y longitud obligatorias en plantación, reposición y reporte de mortandad.
 - Rango: latitud `[-90, 90]`, longitud `[-180, 180]`, 6 decimales.
-- Validación: el punto debe estar **dentro del polígono** de la campaña o de alguna de sus zonas.
-- Tolerancia configurable (margen en metros) para evitar bloqueos por imprecisión del GPS.
+- Validación: el punto debe estar dentro del polígono de la subcampaña con tolerancia configurable (default sugerido: 50 metros).
+- Si excede la tolerancia, se bloquea el registro.
 
-### 6.3. Polígono de campaña
+### 6.3. Polígono de la subcampaña
 
-- Obligatorio al activar la campaña.
-- Se almacena como GeoJSON o equivalente.
-- Si la campaña tiene sub-metas por zona, cada zona puede tener su propio sub-polígono.
-- El área en hectáreas se calcula automáticamente como dato referencial (no es meta).
+- Obligatorio para activar.
+- GeoJSON o equivalente.
+- El área en hectáreas se calcula automáticamente como referencial.
+- No se ingresa manualmente un área alternativa.
 
 ---
 
 ## 7. Reglas temporales
 
-- Fecha del registro de plantación: no futura, hasta **10 días** retroactivo.
-- Fecha del reporte de mortandad: no futura, sin restricción retroactiva fuerte (las visitas pueden ser meses después).
-- `created_at` siempre se registra automáticamente.
-- `updated_at` y `updated_by` se mantienen en entidades editables (campaña en BORRADOR, asignaciones activas).
+- Fecha de plantación: no futura, hasta 10 días retroactivo.
+- Fecha de reporte de mortandad: no futura, sin restricción retroactiva fuerte (las visitas pueden ser meses o años después).
+- Fecha de reposición: no futura, hasta 10 días retroactivo.
+- `fecha_cierre_operativo`: timestamp del cierre (automático en COMPLETADA, manual en FINALIZADA_PARCIAL).
+- `fecha_fin_mantenimiento = fecha_cierre_operativo + 3 años` (ventana configurable).
+- Fechas estimadas de subcampaña: solo futuras al crear.
+- `created_at`, `updated_at`, `updated_by` se mantienen para entidades editables.
 
 ---
 
 ## 8. Reglas de consistencia de cantidades
 
-### 8.1. Conservación del saldo asignado
+### 8.1. Conservación del saldo asignado por asignación
 
-`saldo_asignado_disponible = cantidad_asignada − cantidad_plantada − cantidad_devuelta`
+`saldo_asignado_disponible = cantidad_asignada − cantidad_consumida − cantidad_devuelta`
 
-Reglas:
+Donde `cantidad_consumida` solo cuenta plantaciones/reposiciones que efectivamente consumieron de esa asignación específica.
 
-- Nunca negativo.
-- Al llegar a 0, la asignación queda `AGOTADA`.
+### 8.2. Conservación del saldo plantado de la subcampaña
 
-### 8.2. Conservación del saldo plantado de la campaña
+`plantado_inicial_subcampania = SUM(PLANTACION_INICIAL.cantidad_total)`
 
-`plantado_campaña = SUM(PLANTACION_INICIAL) + SUM(REPOSICION)`
+`progreso_meta = plantado_inicial_subcampania / meta_total`
 
-Para la barra de progreso de la meta, **solo cuenta `PLANTACION_INICIAL`**:
+**Las reposiciones NO cuentan para la meta**, solo para el saldo vivo del grupo origen.
 
-`progreso_campaña = SUM(PLANTACION_INICIAL) / meta_total`
+Cierre automático a COMPLETADA cuando `plantado_inicial_subcampania >= meta_total`.
 
-Las reposiciones **no cuentan** para la meta, porque su propósito es mantener el saldo vivo, no avanzar la meta.
+### 8.3. Conservación del saldo vivo por grupo
 
-### 8.3. Conservación del saldo vivo
+`saldo_vivo_grupo = plantado_inicial + reposiciones_sobre_grupo − mortandad_acumulada_grupo`
 
-Por cada grupo plantado:
+Por subcampaña:
 
-`saldo_vivo_grupo = cantidad_plantada_inicial − mortandad_acumulada + reposiciones_acumuladas_sobre_grupo`
-
-Por la campaña:
-
-`saldo_vivo_campaña = SUM(saldo_vivo_grupo)`
+`saldo_vivo_subcampania = SUM(saldo_vivo_grupo)`
 
 ---
 
 ## 9. Integración con Módulo 2 (Vivero)
 
-### 9.1. Contrato Asignación ↔ Vivero
+### 9.1. Contrato Asignación ↔ Vivero (sin evento en M2)
 
-- Una `ASIGNACION_VIVERO` reserva saldo vivo del lote de vivero pero **no genera evento en el Módulo 2**.
-- El saldo asignado se descuenta lógicamente: `saldo_vivo_lote − asignaciones_activas` es lo disponible para nuevas asignaciones.
+- Una `ASIGNACION_VIVERO_SUBCAMPANIA` reserva saldo vivo del lote pero **no genera evento en Módulo 2**.
+- El saldo disponible para nuevas asignaciones se calcula como:
 
-### 9.2. Contrato Plantación ↔ Despacho
+`saldo_vivo_disponible_asignacion = LOTE_VIVERO.saldo_vivo_actual − SUM(asignaciones_activas_del_lote)`
 
-Cada `PLANTACION_INICIAL` y cada `REPOSICION` genera **atómicamente**:
+### 9.2. Contrato Plantación/Reposición ↔ Despacho (con evento automático en M2)
 
-- Un evento `DESPACHO` en `EVENTO_LOTE_VIVERO` por cada lote afectado (FIFO).
-- `destino_tipo = PLANTACION_CAMPAÑA` (nuevo valor del enum `destino_tipo_vivero`).
-- `destino_referencia` apunta al `REGISTRO_PLANTACION.id`.
-- `comunidad_destino_id` se hereda de la campaña.
+Cada `PLANTACION_INICIAL` y `REPOSICION` genera **atómicamente** uno o más eventos `DESPACHO` en `EVENTO_LOTE_VIVERO` (uno por lote afectado), con:
 
-Invariantes obligatorias:
+- `destino_tipo = PLANTACION_CAMPAÑA`.
+- `origen_despacho = AUTOMATICO_PLANTACION`.
+- `destino_referencia = REGISTRO_PLANTACION.id`.
+- `subcampania_id` y `campania_id` para drill-down.
+- `comunidad_destino_id` heredada de la subcampaña.
+- `unidad_medida_evento = UNIDAD`.
 
-- `SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.cantidad_total_plantada`
-- `EVENTO_LOTE_VIVERO.unidad_medida_evento = UNIDAD`
-- Si una plantación toca varios lotes (FIFO), se generan varios DESPACHO atómicamente.
+Invariantes:
 
-### 9.3. Contrato Devolución ↔ Vivero
+- `SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.cantidad_total_plantada`.
+- La evidencia del despacho automático **se hereda** del REGISTRO_PLANTACION; el operario de vivero no sube fotos adicionales.
 
-Cada `DEVOLUCION_A_VIVERO` **no genera evento** en el Módulo 2 porque no afecta saldo vivo real (los árboles nunca salieron físicamente). Solo libera la reserva lógica.
+### 9.3. Contrato Devolución (sin evento en M2)
+
+`DEVOLUCION_A_VIVERO` no genera evento en M2 porque los árboles nunca salieron físicamente. Solo libera la reserva lógica.
+
+### 9.4. Mermas del vivero sobre saldo asignado
+
+Cuando ocurre una merma en un lote con asignaciones activas, la política del MVP es:
+
+1. La merma afecta primero el **saldo no asignado** del lote.
+2. Si la merma excede el saldo no asignado, afecta asignaciones en orden **FIFO** (la asignación más antigua primero).
+3. Si una asignación queda con menos saldo que su comprometido, el sistema **notifica al coordinador** de la(s) subcampaña(s) afectada(s).
+
+Esta política se documenta en el addendum del Módulo 2.
 
 ---
 
 ## 10. Auditoría y estrategia blockchain (MVP)
 
 - El historial vive primero en base de datos.
-- El timeline se construye combinando `CAMPANIA_HISTORIAL`, `EVENTO_PLANTACION` y los eventos heredados de Módulo 2.
-- Anclajes blockchain candidatos en el MVP:
-  - Activación de campaña (`CAMPANIA_ACTIVADA`).
-  - Cada `PLANTACION_INICIAL` y `REPOSICION` (porque son los eventos públicamente verificables).
-  - Cierre de campaña (`CAMPANIA_COMPLETADA`).
-- El anclaje es complementario; si la integración falla, el evento operativo permanece válido.
-- Roles MVP:
-  - `ADMIN`: crea/edita campañas, gestiona asignaciones globales, cierra campañas.
-  - `COORDINADOR`: gestiona sus campañas asignadas, asigna/devuelve árboles, también puede operar.
-  - `GENERAL` (operario): registra plantaciones, reposiciones y mortandad.
-  - `VALIDADOR`: rol global de plataforma, sin flujo especial en este módulo en MVP.
-  - `VOLUNTARIO`: sin permisos operativos críticos salvo habilitación explícita.
+- Anclajes blockchain candidatos:
+  - `SUBCAMPANIA_ACTIVADA`
+  - `PLANTACION_INICIAL`
+  - `REPOSICION`
+  - `SUBCAMPANIA_COMPLETADA`
+  - `SUBCAMPANIA_FINALIZADA_PARCIAL`
+- El anclaje es complementario. Si falla, el evento operativo permanece válido.
+- Se prioriza anclar `PLANTACION_INICIAL` por ser el evento más visible públicamente.
 
 ---
 
 ## 11. Vista pública (transparencia)
 
-Toda la información de campañas activas y completadas es **pública sin autenticación**, accesible desde el home de la PWA:
+Toda la información de subcampañas activas, completadas y finalizadas parciales es **pública sin autenticación**:
 
-- Mapa interactivo con polígonos de zonas y pines GPS de plantaciones.
-- Totalizadores: árboles plantados, captura estimada de CO₂, campañas activas, comunidades alcanzadas.
-- Detalle de campaña con barra de progreso, mix de especies real vs planificado, galería de fotos, equipo participante.
-- Drill-down de trazabilidad hacia Módulo 2 y Módulo 1.
-- Estimación de captura de CO₂ por especie + edad + cantidad (fórmulas referenciales del MVP).
+- Mapa interactivo con polígonos de subcampañas y pines GPS de plantaciones.
+- Totalizadores: árboles plantados, captura estimada de CO₂, subcampañas activas, comunidades alcanzadas.
+- Detalle por campaña con sus subcampañas, organizaciones asociadas.
+- Detalle por subcampaña con barra de progreso, mix de especies real vs planificado, galería de fotos, equipo participante.
+- Drill-down hacia Módulo 2 (lote de vivero específico) y Módulo 1 (recolección origen).
+- Las subcampañas en `BORRADOR` no son públicas.
 
-Información sensible: en MVP **todo es público** porque el proyecto es de blockchain y la transparencia es un valor central. Sin restricciones especiales sobre nombres de operarios, coordinadores ni ubicaciones.
+En MVP toda la información es pública (alineado con el carácter blockchain del proyecto). Sin restricciones sobre nombres de operarios, coordinadores o ubicaciones.
 
 ---
 
-## 12. Alcance MVP y futuro
+## 12. Roles (MVP)
+
+- **ADMIN:** crea campañas y subcampañas, asigna coordinadores, cierra manualmente a FINALIZADA_PARCIAL, gestiona organizaciones.
+- **COORDINADOR (rol nuevo):** gestiona sus subcampañas asignadas (asignaciones, equipo, devoluciones), también puede operar como operario.
+- **GENERAL (operario):** registra plantaciones, reposiciones y mortandad en subcampañas donde es parte del equipo.
+- **VALIDADOR:** rol global de plataforma, sin flujo especial en este módulo en MVP.
+- **VOLUNTARIO:** sin permisos operativos críticos salvo habilitación explícita.
+
+---
+
+## 13. Alcance MVP y futuro
 
 ### MVP incluye
 
-- Campañas con tipo, zona(s), sub-metas, mix de especies con topes %, polígono obligatorio.
-- Campañas hijas (fases).
-- Estados: BORRADOR / ACTIVA / PAUSADA / COMPLETADA / CANCELADA.
-- Asignación flexible Vivero → Campaña, ampliable y devolvible.
-- Sin "salida de campo": descuento atómico al plantar (FIFO).
-- Registro de plantación con foto + GPS + especies + cantidades.
-- Co-responsables (equipo).
-- Reportes de mortandad como delta sobre grupo.
-- Reposiciones vinculadas a grupo origen, permitidas incluso post-cierre.
-- Integración atómica con DESPACHO del Módulo 2.
+- Campaña con organizaciones asociadas (relación N:M).
+- Subcampañas como entidades de primera clase (N por campaña).
+- Estado derivado de la campaña padre desde sus subcampañas.
+- Estados operativos: BORRADOR, ACTIVA, COMPLETADA, FINALIZADA_PARCIAL.
+- Fase de mantenimiento derivada: NO_APLICA, MANTENIMIENTO_ACTIVO, MONITOREO_HISTORICO.
+- Ventana de mantenimiento de 3 años configurable.
+- Cierre automático a COMPLETADA por alcance de meta.
+- Cierre manual a FINALIZADA_PARCIAL por admin con motivo.
+- Mantenimiento (mortandad + reposición) transversal: permitido en ACTIVA, COMPLETADA y FINALIZADA_PARCIAL.
+- Asignaciones con propósito explícito: PLANTACION_INICIAL o REPOSICION.
+- Selección explícita de lote por el operario al plantar.
+- Cantidad absoluta como fuente de verdad (porcentaje solo visual).
+- Equipo a nivel subcampaña; co-responsables subconjunto del equipo, sin porcentajes.
+- Polígono obligatorio por subcampaña; GPS validado dentro del polígono.
+- Mix de especies por subcampaña con topes %.
+- Foto + GPS obligatorios en plantación, reposición y mortandad.
+- Activación con stock parcial permitida.
+- No reapertura: si se cerró parcialmente y aparece stock, se crea nueva subcampaña.
+- Vista pública sin autenticación con drill-down completo.
 - Eventos append-only.
-- Snapshots oficiales en campaña y en cada registro.
-- Vista pública sin autenticación.
-- Anclaje blockchain en eventos clave.
+
+### Estados reservados (en enum, no implementados)
+
+- `PAUSADA`
+- `CANCELADA`
 
 ### Futuro
 
+- Implementar PAUSADA y CANCELADA con sus flujos.
 - Correcciones auditadas de mortandad y plantación.
-- Trazabilidad por árbol individual (no solo por asignación).
+- Trazabilidad por árbol individual (no solo por lote).
 - Salida de campo modelada (árboles "en mano del operario" entre vivero y plantación).
 - Offline-first para operarios en zonas sin señal.
-- Polígonos dinámicos calculados desde los puntos GPS plantados.
+- Polígonos dinámicos calculados desde puntos GPS plantados.
 - Cálculos avanzados de captura de CO₂ por especie con curvas de crecimiento.
-- Monitoreo programado con notificaciones de visitas pendientes.
+- Monitoreo programado con notificaciones de visitas pendientes durante MANTENIMIENTO_ACTIVO.
 - Validación comunitaria de plantaciones.
 - Detección automática de duplicados de GPS.
-- Restricciones temporales para reposiciones (ej: 2 años post-plantación).
-- Permisos granulares para vista pública (ocultar info según contexto).
+- Permisos granulares para vista pública.
+- Catálogo robusto de organizaciones con metadatos (tipo, sitio web, logo).
