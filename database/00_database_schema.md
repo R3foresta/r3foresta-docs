@@ -236,8 +236,12 @@ EVENTO_LOTE_VIVERO {
     numeric cantidad_afectada "nullable - plantas o unidades según tipo_evento"
     ENUM(unidad_medida) unidad_medida_evento "nullable - UNIDAD | G"
     ENUM(causa_merma_vivero) causa_merma "nullable - solo aplica en MERMA"
-    ENUM(destino_tipo_vivero) destino_tipo "nullable - solo aplica en DESPACHO"
-    text destino_referencia "nullable - solo aplica en DESPACHO"
+    ENUM(destino_tipo_vivero) destino_tipo "nullable - solo aplica en DESPACHO; incluye PLANTACION_CAMPANIA"
+    ENUM(origen_despacho_vivero) origen_despacho "nullable - solo aplica en DESPACHO; MANUAL | AUTOMATICO_PLANTACION; default MANUAL"
+    text destino_referencia "nullable - solo aplica en DESPACHO manual; texto libre"
+    bigint subcampania_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK pendiente a SUBCAMPANIA cuando se cree Modulo 3"
+    bigint campania_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK pendiente a CAMPANIA"
+    bigint registro_plantacion_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK pendiente a REGISTRO_PLANTACION"
     bigint comunidad_destino_id FK "nullable - referencia a DIVISION_ADMINISTRATIVA(id), solo aplica en DESPACHO"
     ENUM(subetapa_adaptabilidad) subetapa_destino "nullable - SOMBRA | MEDIA_SOMBRA | SOL_DIRECTO"
     int saldo_vivo_antes "nullable - calculado por sistema"
@@ -246,6 +250,22 @@ EVENTO_LOTE_VIVERO {
     bigint ref_evento_trigger_id FK "nullable - autorreferencia, solo aplica en CIERRE_AUTOMATICO"
     jsonb metadata_blockchain "nullable - solo aplica en DESPACHO con anclaje activo"
     text observaciones "nullable"
+}
+
+ASIGNACION_VIVERO_SUBCAMPANIA {
+    bigint id PK
+    bigint subcampania_id FK "NOT NULL - FK pendiente a SUBCAMPANIA cuando se cree Modulo 3"
+    bigint lote_vivero_id FK "NOT NULL - el lote de vivero que reserva"
+    ENUM(proposito_asignacion) proposito "NOT NULL - PLANTACION_INICIAL | REPOSICION"
+    ENUM(estado_asignacion_vivero) estado "NOT NULL - ACTIVA | AGOTADA | DEVUELTA; default ACTIVA; derivado por trigger"
+    int cantidad_asignada "NOT NULL - inmutable, > 0, siempre UNIDAD"
+    int cantidad_consumida "NOT NULL default 0 - aumenta con cada DESPACHO automatico que consume de esta asignacion"
+    int cantidad_devuelta "NOT NULL default 0 - aumenta con cada DEVOLUCION_A_VIVERO en M3"
+    int cantidad_mermada "NOT NULL default 0 - aumenta cuando una MERMA del lote agota saldo no asignado y desborda a esta asignacion por FIFO"
+    int saldo_asignado_disponible "GENERATED ALWAYS AS (cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada) STORED"
+    bigint usuario_asignacion_id FK "NOT NULL - ADMIN o COORDINADOR de la subcampania"
+    timestamptz fecha_asignacion "NOT NULL default now()"
+    timestamptz updated_at "NOT NULL"
 }
 
   PLANTACION {
@@ -357,6 +377,13 @@ EVENTO_LOTE_VIVERO {
 
   RECOLECCION_MOVIMIENTO }o--|| LOTE_VIVERO : "registra consumo en M1"
 
+  %% === Relaciones vivero ↔ plantación (integración M2 ↔ M3) ===
+
+  LOTE_VIVERO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "reserva logica para subcampania"
+  USUARIO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "asigna"
+  %% ASIGNACION_VIVERO_SUBCAMPANIA }o--|| SUBCAMPANIA  -- pendiente: cuando se cree Modulo 3
+  %% EVENTO_LOTE_VIVERO (origen_despacho = AUTOMATICO_PLANTACION) referencia REGISTRO_PLANTACION, SUBCAMPANIA y CAMPANIA -- pendiente: cuando se cree Modulo 3
+
   TIPOS_ENTIDAD_EVIDENCIA ||--o{ EVIDENCIAS_TRAZABILIDAD : tipo
 
   %% === Relaciones plantación — sin cambio ===
@@ -407,8 +434,19 @@ causa_merma_vivero = [
 ]
 
 destino_tipo_vivero = [
-  PLANTACION_PROPIA, PLANTACION_COMUNIDAD, DONACION, VENTA, OTRO
+  PLANTACION_CAMPANIA, PLANTACION_PROPIA, PLANTACION_COMUNIDAD, DONACION, VENTA, OTRO
 ]
+// Nota: PLANTACION_CAMPANIA se agrega por integracion con Modulo 3.
+// Solo aplica cuando origen_despacho = AUTOMATICO_PLANTACION.
+// El renombrado de PLANTACION_COMUNIDAD/DONACION a DONACION_COMUNIDAD queda como decision abierta.
+
+origen_despacho_vivero = [MANUAL, AUTOMATICO_PLANTACION]
+// MANUAL: despacho registrado directamente desde Vivero por usuario autorizado.
+// AUTOMATICO_PLANTACION: generado por el sistema desde Modulo 3 al guardar PLANTACION_INICIAL o REPOSICION.
+
+proposito_asignacion = [PLANTACION_INICIAL, REPOSICION]
+estado_asignacion_vivero = [ACTIVA, AGOTADA, DEVUELTA]
+// AFECTADA_POR_MERMA no se modela como estado; se muestra como badge derivado cuando cantidad_mermada > 0.
 
 motivo_cierre_lote = [DESPACHO_TOTAL, PERDIDA_TOTAL, MIXTO]
 estado_operativo_recoleccion = [ABIERTO, CERRADO]

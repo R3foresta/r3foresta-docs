@@ -584,3 +584,70 @@ Alcance recomendado:
 * modelado agronómico detallado por especie,
 * división y fusión de lotes,
 * y flujos complejos offline-first.
+
+---
+
+## 13. Integración con Módulo 3 (Plantación)
+
+> Esta sección resume el contrato Vivero ↔ Plantación. El documento operativo completo vive en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md) y la especificación técnica detallada en [03_Addendum_Modulo_2_por_Modulo_3.md](./03_Addendum_Modulo_2_por_Modulo_3.md). Las reglas formales son `RN-VIV-47` a `RN-VIV-59`.
+
+### 13.1. Cómo se consume el vivero
+
+Un lote de vivero puede consumirse por cuatro caminos:
+
+1. **Asignación** a una subcampaña — reserva lógica, sin evento en M2, sin tocar `saldo_vivo_actual`.
+2. **Devolución** de saldo asignado — libera la reserva, sin evento en M2.
+3. **Despacho automático** generado desde M3 al registrar una plantación o reposición — salida real, baja saldo.
+4. **Despacho manual** hacia destinos fuera de subcampañas (donaciones, ventas, otros) — salida real, baja saldo.
+
+### 13.2. Los tres saldos del lote
+
+| Saldo | Origen | Significado |
+|-------|--------|-------------|
+| `saldo_vivo_actual` | Persistido en `LOTE_VIVERO` | Plantas físicamente vivas en el vivero |
+| `saldo_asignado_total` | Derivado de asignaciones activas | Plantas reservadas por subcampañas, aún en el vivero |
+| `saldo_vivo_disponible_asignacion` | Derivado: `vivo_actual − asignado_total` | Plantas libres para nuevas asignaciones o despachos manuales |
+
+Identidad invariante: `saldo_vivo_actual = saldo_vivo_disponible_asignacion + saldo_asignado_total`.
+
+### 13.3. Cambios de comportamiento respecto al MVP previo
+
+Para el equipo de vivero, tres cambios prácticos:
+
+- **El operario de vivero ya no puede despachar manualmente saldo reservado.** La validación cambia de `saldo_vivo_actual` a `saldo_vivo_disponible_asignacion`.
+- **Aparecen despachos automáticos en el historial del lote.** Los genera el sistema, no el operario. Tienen badge `POR PLANTACIÓN` y enlazan a la subcampaña + registro de plantación.
+- **Las mermas pueden afectar reservas activas** (política FIFO). Cuando ocurre, se notifica al coordinador de la subcampaña afectada.
+
+### 13.4. Asignación con propósito
+
+Toda asignación lleva un `proposito_asignacion`:
+
+- `PLANTACION_INICIAL`: solo se consume en plantaciones iniciales (avanzan meta).
+- `REPOSICION`: solo se consume en reposiciones (no avanzan meta).
+
+Esta restricción se valida en el handler de M3 al consumir; no se cruza.
+
+### 13.5. Diferencias entre despacho manual y automático
+
+| Aspecto | `MANUAL` | `AUTOMATICO_PLANTACION` |
+|---------|----------|--------------------------|
+| Quién lo crea | Operario de vivero o ADMIN | Sistema, desde el handler de M3 |
+| Evento que lo dispara | Despacho manual desde Vivero | `PLANTACION_INICIAL` o `REPOSICION` en M3 |
+| `destino_tipo` permitido | Todo excepto `PLANTACION_CAMPANIA` | Solo `PLANTACION_CAMPANIA` |
+| Evidencia | Propia obligatoria (mínimo 1 foto en M2) | Heredada del `REGISTRO_PLANTACION` (no requiere foto propia) |
+| `subcampania_id` / `campania_id` / `registro_plantacion_id` | Todos `NULL` | Todos obligatorios |
+| Validación de saldo | Contra `saldo_vivo_disponible_asignacion` | Contra `saldo_asignado_disponible` de la asignación específica |
+
+### 13.6. Atomicidad del despacho automático
+
+Un `REGISTRO_PLANTACION` puede tocar N lotes. En ese caso se generan N eventos `DESPACHO`, **todos en la misma transacción** que el registro de M3 + la actualización de las asignaciones. Si algo falla, todo se revierte.
+
+### 13.7. Política FIFO de mermas
+
+Cuando una `MERMA` en un lote excede su saldo no asignado, el excedente se distribuye sobre las asignaciones activas en orden **FIFO por `fecha_asignacion`**, aumentando `cantidad_mermada` de cada una. `cantidad_asignada` nunca se toca.
+
+Cada afectación dispara una notificación al coordinador de la subcampaña dueña.
+
+### 13.8. Estado actual de la integración
+
+El esquema lógico está definido y documentado. La implementación física se está aplicando por tareas en [tareas/modulo-2-integracion-modulo-3/](../tareas/modulo-2-integracion-modulo-3/). Hasta que todas las tareas estén cerradas, partes del comportamiento descrito aquí pueden no estar activas en producción. Consultar el README de tareas para el estado actual.

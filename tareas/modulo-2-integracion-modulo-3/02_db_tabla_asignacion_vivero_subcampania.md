@@ -104,17 +104,28 @@ El último índice soporta la política FIFO de mermas (tarea 04).
 ```sql
 create or replace function asignacion_vivero_subcampania_actualizar_estado()
 returns trigger language plpgsql as $$
+declare
+  v_saldo_disponible int;
 begin
+  -- saldo_asignado_disponible es GENERATED STORED y todavia es NULL en BEFORE trigger,
+  -- por eso lo calculamos a mano aqui.
+  v_saldo_disponible := new.cantidad_asignada
+                      - new.cantidad_consumida
+                      - new.cantidad_devuelta
+                      - new.cantidad_mermada;
+
   new.updated_at := now();
-  if new.saldo_asignado_disponible = 0
+
+  if v_saldo_disponible = 0
      and new.cantidad_consumida = 0
      and new.cantidad_devuelta = new.cantidad_asignada then
     new.estado := 'DEVUELTA';
-  elsif new.saldo_asignado_disponible = 0 then
+  elsif v_saldo_disponible = 0 then
     new.estado := 'AGOTADA';
   else
     new.estado := 'ACTIVA';
   end if;
+
   return new;
 end $$;
 
@@ -124,7 +135,7 @@ create trigger asignacion_vivero_subcampania_estado_trg
   for each row execute function asignacion_vivero_subcampania_actualizar_estado();
 ```
 
-> **Nota:** `saldo_asignado_disponible` es columna `GENERATED ALWAYS AS ... STORED`, así que ya se recalcula automáticamente. El trigger solo deriva el `estado` desde los conteos.
+> **Importante:** `saldo_asignado_disponible` es columna `GENERATED ALWAYS AS ... STORED`. En Postgres, las columnas GENERATED se computan **después** de los BEFORE triggers, así que dentro del trigger ese campo todavía es `NULL`. Por eso el trigger recalcula el saldo a mano usando las cuatro columnas base.
 
 ---
 

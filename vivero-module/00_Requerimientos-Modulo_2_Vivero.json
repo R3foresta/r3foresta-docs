@@ -32,8 +32,8 @@
     "Aplica en MVP": "Si",
     "Aporta a carbono": "Alta",
     "Campos clave y obligatoriedad": "Obligatorio:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- cantidad_afectada\n- unidad_medida_evento = UNIDAD\n- causa_merma\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\nOpcional:\n- observaciones",
-    "Reglas y validaciones": "- cantidad_afectada > 0.\n- cantidad_afectada <= saldo_vivo_disponible.\n- La merma siempre usa UNIDAD.\n- saldo_vivo_despues no puede ser negativo.\n- fecha_evento: no futura; permitida hasta 10 dias en el pasado.\n- No se permite MERMA sin EMBOLSADO previo.\n- causa_merma debe pertenecer al enum causa_merma_vivero.\n- Si el saldo llega a 0, activa cierre automatico (RF-VIV-08).\n- El saldo vivo debe ser calculado por el sistema.",
-    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo MERMA.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Recalcula LOTE_VIVERO.saldo_vivo_actual.\n- Si corresponde, activa la logica de cierre automatico."
+    "Reglas y validaciones": "- cantidad_afectada > 0.\n- cantidad_afectada <= saldo_vivo_disponible.\n- La merma siempre usa UNIDAD.\n- saldo_vivo_despues no puede ser negativo.\n- fecha_evento: no futura; permitida hasta 10 dias en el pasado.\n- No se permite MERMA sin EMBOLSADO previo.\n- causa_merma debe pertenecer al enum causa_merma_vivero.\n- Si el saldo llega a 0, activa cierre automatico (RF-VIV-08).\n- El saldo vivo debe ser calculado por el sistema.\n- Si el lote tiene asignaciones activas a subcampañas, la merma aplica politica FIFO: afecta primero el saldo no asignado; si excede, distribuye el excedente sobre asignaciones activas en orden FIFO por fecha_asignacion, aumentando cantidad_mermada de cada asignacion afectada sin modificar cantidad_asignada.\n- Cuando una asignacion resulta afectada, se debe notificar al coordinador de la subcampania correspondiente.",
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo MERMA.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Recalcula LOTE_VIVERO.saldo_vivo_actual.\n- Si la merma afecta asignaciones, actualiza cantidad_mermada de las asignaciones afectadas (FIFO) y guarda el detalle en metadata del evento.\n- Encola notificacion al coordinador de cada subcampania afectada.\n- Si corresponde, activa la logica de cierre automatico."
   },
   {
     "ID": "RF-VIV-04",
@@ -50,14 +50,14 @@
   {
     "ID": "RF-VIV-05",
     "Seccion": "Vivero",
-    "Nombre": "Despacho: Registrar salida parcial o total hacia plantacion",
-    "Objetivo": "Registrar la salida del lote hacia plantacion manteniendo saldo vivo, destino estructurado y evidencia obligatoria.",
+    "Nombre": "Despacho: Registrar salida parcial o total hacia plantacion u otros destinos",
+    "Objetivo": "Registrar la salida del lote hacia un destino (subcampania de plantacion u otro), manteniendo saldo vivo, destino estructurado y evidencia segun el origen del despacho.",
     "Severidad": "BLOQUEANTE",
     "Aplica en MVP": "Si",
     "Aporta a carbono": "Alta",
-    "Campos clave y obligatoriedad": "Obligatorio:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- cantidad_afectada\n- unidad_medida_evento = UNIDAD\n- destino_tipo\n- destino_referencia\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\nCondicional:\n- comunidad_destino_id cuando aplique\nOpcional:\n- observaciones\n- metadata_blockchain si existe anclaje activo",
-    "Reglas y validaciones": "- cantidad_afectada > 0.\n- cantidad_afectada <= saldo_vivo_disponible.\n- fecha_evento >= fecha del EMBOLSADO.\n- No se permite DESPACHO sin EMBOLSADO previo.\n- ADAPTABILIDAD no es requisito para despachar.\n- Permite multiples despachos parciales.\n- destino_tipo debe pertenecer al enum destino_tipo_vivero.\n- comunidad_destino_id referencia DIVISION_ADMINISTRATIVA(id) cuando aplique.\n- No se permite despacho sin evidencia.\n- Si saldo_vivo_despues = 0, activa cierre automatico (RF-VIV-08).\n- El saldo vivo debe ser calculado por el sistema.",
-    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo DESPACHO.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Actualiza LOTE_VIVERO.saldo_vivo_actual.\n- Si corresponde, finaliza el lote y calcula motivo_cierre."
+    "Campos clave y obligatoriedad": "Obligatorio siempre:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- cantidad_afectada\n- unidad_medida_evento = UNIDAD\n- destino_tipo (enum destino_tipo_vivero)\n- origen_despacho (enum origen_despacho_vivero, default MANUAL)\n\nObligatorio cuando origen_despacho = MANUAL:\n- destino_referencia (texto libre)\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\n- subcampania_id, campania_id y registro_plantacion_id deben estar en NULL\n\nObligatorio cuando origen_despacho = AUTOMATICO_PLANTACION:\n- destino_tipo = PLANTACION_CAMPANIA\n- subcampania_id\n- campania_id\n- registro_plantacion_id\n- comunidad_destino_id (heredada de la subcampania)\n- NO requiere evidencia propia; la evidencia se hereda del REGISTRO_PLANTACION asociado en M3\n\nCondicional:\n- comunidad_destino_id cuando el destino lo requiera\n\nOpcional:\n- observaciones\n- metadata_blockchain si existe anclaje activo",
+    "Reglas y validaciones": "- cantidad_afectada > 0.\n- cantidad_afectada <= saldo_vivo_disponible_asignacion del lote.\n- Para despachos MANUAL: la cantidad no puede tocar saldo reservado por asignaciones activas; debe validar contra saldo_vivo_disponible_asignacion, no contra saldo_vivo_actual.\n- Para despachos MANUAL: destino_tipo no puede ser PLANTACION_CAMPANIA.\n- Para despachos AUTOMATICO_PLANTACION: destino_tipo debe ser PLANTACION_CAMPANIA.\n- Para despachos AUTOMATICO_PLANTACION: el despacho solo se genera desde el handler de M3 al guardar PLANTACION_INICIAL o REPOSICION; no se acepta crear directamente via API de M2.\n- Para despachos AUTOMATICO_PLANTACION: cantidad_afectada debe consumir saldo_asignado_disponible de la asignacion correspondiente (cantidad_consumida += N en ASIGNACION_VIVERO_SUBCAMPANIA).\n- Invariante por registro de plantacion: SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.cantidad_total_plantada.\n- fecha_evento >= fecha del EMBOLSADO.\n- No se permite DESPACHO sin EMBOLSADO previo.\n- ADAPTABILIDAD no es requisito para despachar.\n- Permite multiples despachos parciales.\n- destino_tipo debe pertenecer al enum destino_tipo_vivero.\n- origen_despacho debe pertenecer al enum origen_despacho_vivero.\n- comunidad_destino_id referencia DIVISION_ADMINISTRATIVA(id) cuando aplique.\n- Si saldo_vivo_despues = 0, activa cierre automatico (RF-VIV-08).\n- El saldo vivo debe ser calculado por el sistema.\n- CHECK constraint a nivel BD: consistencia entre origen_despacho y los FKs hacia M3 (ver tarea 01 de integracion M2/M3).",
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo DESPACHO con el origen_despacho correspondiente.\n- Para AUTOMATICO_PLANTACION: el insert ocurre dentro de la transaccion atomica del handler de M3 que tambien inserta REGISTRO_PLANTACION y actualiza ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_consumida.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Actualiza LOTE_VIVERO.saldo_vivo_actual.\n- Si corresponde, finaliza el lote y calcula motivo_cierre."
   },
   {
     "ID": "RF-VIV-06",
@@ -68,7 +68,7 @@
     "Aplica en MVP": "Si",
     "Aporta a carbono": "Alta",
     "Campos clave y obligatoriedad": "Obligatorio:\n- tipo_entidad_id asociado a evento de vivero\n- entidad_id = EVENTO_LOTE_VIVERO.id\n- referencia a evidencia_trazabilidad valida",
-    "Reglas y validaciones": "- La evidencia se asocia por evento usando EVIDENCIAS_TRAZABILIDAD.\n- En el MVP, INICIO, EMBOLSADO, MERMA y DESPACHO requieren minimo una foto obligatoria.\n- ADAPTABILIDAD puede registrar evidencia, pero no es obligatoria; sus subetapas pueden registrarse sin foto.\n- Si un evento requiere evidencia y no tiene soporte valido, no debe registrarse.\n- No se aceptan excepciones de evidencia para eventos obligatorios en el MVP.\n- No se acepta evidencia tardia en el MVP para eventos que exigen evidencia.",
+    "Reglas y validaciones": "- La evidencia se asocia por evento usando EVIDENCIAS_TRAZABILIDAD.\n- En el MVP, INICIO, EMBOLSADO, MERMA requieren minimo una foto obligatoria.\n- DESPACHO con origen_despacho = MANUAL requiere minimo una foto propia obligatoria.\n- DESPACHO con origen_despacho = AUTOMATICO_PLANTACION NO requiere evidencia propia; su evidencia se hereda del REGISTRO_PLANTACION asociado en M3 (excepcion controlada al patron general).\n- La validacion de evidencia obligatoria del REGISTRO_PLANTACION ocurre en M3 antes del commit; si el registro no tiene evidencia valida, la transaccion no genera el DESPACHO automatico.\n- ADAPTABILIDAD puede registrar evidencia, pero no es obligatoria; sus subetapas pueden registrarse sin foto.\n- Si un evento requiere evidencia y no tiene soporte valido, no debe registrarse.\n- No se aceptan excepciones de evidencia para eventos obligatorios en el MVP.\n- No se acepta evidencia tardia en el MVP para eventos que exigen evidencia.\n- La UI del historial del lote debe mostrar la evidencia heredada cuando origen_despacho = AUTOMATICO_PLANTACION, buscandola via registro_plantacion_id.",
     "Comportamiento al Guardar": "- Vincula EVIDENCIAS_TRAZABILIDAD al EVENTO_LOTE_VIVERO mediante tipo_entidad_id + entidad_id.\n- Valida obligatoriedad antes de confirmar el registro."
   },
   {
@@ -103,8 +103,8 @@
     "Severidad": "BLOQUEANTE",
     "Aplica en MVP": "Si",
     "Aporta a carbono": "Media",
-    "Campos clave y obligatoriedad": "La vista debe permitir mostrar y filtrar por:\n- estado_lote\n- vivero\n- planta/especie\n- recoleccion_id\n- lote_vivero_id\n- motivo_cierre\n- saldo_vivo_actual",
-    "Reglas y validaciones": "- Debe mostrar lotes ACTIVO y FINALIZADO.\n- Debe permitir diferenciar cierres por despacho vs perdida para lectura operativa y reportes.\n- Debe servir como pantalla de entrada principal del modulo.",
+    "Campos clave y obligatoriedad": "La vista debe permitir mostrar y filtrar por:\n- estado_lote\n- vivero\n- planta/especie\n- recoleccion_id\n- lote_vivero_id\n- motivo_cierre\n- saldo_vivo_actual\n- saldo_asignado_total (derivado)\n- saldo_vivo_disponible_asignacion (derivado)\n- cantidad de asignaciones activas\n- subcampania (filtro por lotes que contribuyen a una subcampania)\n\nDesglose expandible por lote:\n- por cada ASIGNACION_VIVERO_SUBCAMPANIA activa: subcampania, campania, proposito (PLANTACION_INICIAL | REPOSICION), cantidad_asignada, cantidad_consumida, cantidad_devuelta, cantidad_mermada, saldo_asignado_disponible, coordinador, fecha_asignacion.",
+    "Reglas y validaciones": "- Debe mostrar lotes ACTIVO y FINALIZADO.\n- Debe permitir diferenciar cierres por despacho vs perdida para lectura operativa y reportes.\n- Debe servir como pantalla de entrada principal del modulo.\n- Debe exponer los tres saldos (vivo_actual, asignado_total, disponible_para_asignacion) para que el operario y el admin entiendan el compromiso real de cada lote.\n- saldo_vivo_disponible_asignacion se calcula como vista o query derivada: saldo_vivo_actual - SUM(saldo_asignado_disponible de asignaciones activas del lote).\n- Si saldo_vivo_disponible_asignacion = 0, el lote no acepta nuevas asignaciones ni despachos manuales; la UI debe deshabilitar esas acciones con tooltip explicativo.\n- Si cantidad_mermada > 0 en alguna asignacion, mostrar badge visual de advertencia (no se modela como estado del enum).",
     "Comportamiento al Guardar": "- No aplica (solo consulta)."
   },
   {
@@ -118,5 +118,53 @@
     "Campos clave y obligatoriedad": "Opcional si se implementa en MVP:\n- evento_lote_vivero_id\n- tipo_evento = DESPACHO\n- metadata_blockchain\nContenido recomendado dentro de metadata_blockchain:\n- blockchain_url\n- token_id\n- transaction_hash",
     "Reglas y validaciones": "- El historial operativo del MVP vive primero en base de datos.\n- Blockchain no debe bloquear el registro, consulta ni cierre confiable del lote.\n- Si se implementa en el MVP, solo DESPACHO es candidato a anclaje.\n- El anclaje se guarda dentro de EVENTO_LOTE_VIVERO.metadata_blockchain.\n- El anclaje es complementario y no indispensable para el funcionamiento base del modulo.\n- No hay correcciones operativas en el MVP una vez registrado el evento.",
     "Comportamiento al Guardar": "- Registra metadata_blockchain cuando exista integracion activa.\n- Si la integracion falla, el evento operativo permanece valido en base de datos."
+  },
+  {
+    "ID": "RF-VIV-11",
+    "Seccion": "Vivero",
+    "Nombre": "Asignacion de lote a subcampania (reserva logica)",
+    "Objetivo": "Permitir reservar parte del saldo vivo de un lote para una subcampania de Plantacion, sin descontar saldo vivo del lote ni generar evento en M2.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- subcampania_id\n- lote_vivero_id\n- proposito (enum proposito_asignacion: PLANTACION_INICIAL | REPOSICION)\n- cantidad_asignada (int > 0, siempre UNIDAD)\n- usuario_asignacion_id (ADMIN o COORDINADOR de la subcampania)\n- fecha_asignacion (automatica)\nDerivado:\n- estado (ACTIVA | AGOTADA | DEVUELTA)\n- cantidad_consumida (default 0)\n- cantidad_devuelta (default 0)\n- cantidad_mermada (default 0)\n- saldo_asignado_disponible (GENERATED)",
+    "Reglas y validaciones": "- cantidad_asignada > 0.\n- cantidad_asignada <= saldo_vivo_disponible_asignacion del lote en el momento de la asignacion.\n- cantidad_asignada es INMUTABLE una vez creada la asignacion.\n- El lote debe estar en estado ACTIVO.\n- proposito PLANTACION_INICIAL solo se acepta si la subcampania esta ACTIVA.\n- proposito REPOSICION se acepta en subcampania ACTIVA, COMPLETADA o FINALIZADA_PARCIAL.\n- Una asignacion no genera evento en EVENTO_LOTE_VIVERO (es reserva logica, no salida fisica).\n- Solo ADMIN o COORDINADOR de la subcampania pueden asignar.\n- Un mismo lote puede tener varias asignaciones activas a subcampanias distintas; la suma de saldos disponibles no puede exceder saldo_vivo_actual.\n- Estados derivados (calculados por trigger): si saldo_asignado_disponible = 0 y cantidad_consumida = 0 y cantidad_devuelta = cantidad_asignada -> DEVUELTA; si saldo_asignado_disponible = 0 -> AGOTADA; en otro caso -> ACTIVA.",
+    "Comportamiento al Guardar": "- Crea fila en ASIGNACION_VIVERO_SUBCAMPANIA con estado ACTIVA.\n- No modifica LOTE_VIVERO.saldo_vivo_actual.\n- saldo_vivo_disponible_asignacion del lote (derivado) disminuye en cantidad_asignada.\n- No crea evento en EVENTO_LOTE_VIVERO."
+  },
+  {
+    "ID": "RF-VIV-12",
+    "Seccion": "Vivero",
+    "Nombre": "Devolucion de saldo asignado al lote (liberacion de reserva)",
+    "Objetivo": "Permitir liberar saldo reservado de una asignacion que no se va a consumir, devolviendo disponibilidad al lote sin generar evento en M2.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- asignacion_id\n- cantidad_devuelta > 0\n- motivo_devolucion (enum motivo_devolucion_plantacion)\n- usuario_devolucion_id (ADMIN o COORDINADOR de la subcampania)\n- fecha_devolucion (automatica)\nOpcional:\n- observaciones",
+    "Reglas y validaciones": "- cantidad_devuelta > 0.\n- cantidad_devuelta <= saldo_asignado_disponible de la asignacion.\n- La asignacion no puede estar en estado DEVUELTA.\n- Solo ADMIN o COORDINADOR de la subcampania pueden devolver.\n- No se modifica cantidad_asignada (es inmutable); se aumenta cantidad_devuelta.\n- No se crea evento en EVENTO_LOTE_VIVERO porque los arboles nunca salieron fisicamente.\n- En M3 se registra evento DEVOLUCION_A_VIVERO en EVENTO_PLANTACION (append-only).",
+    "Comportamiento al Guardar": "- Aumenta ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_devuelta.\n- El trigger recalcula saldo_asignado_disponible y deriva estado nuevo.\n- saldo_vivo_disponible_asignacion del lote (derivado) aumenta en cantidad_devuelta.\n- No modifica LOTE_VIVERO.saldo_vivo_actual.\n- No crea evento en EVENTO_LOTE_VIVERO."
+  },
+  {
+    "ID": "RF-VIV-13",
+    "Seccion": "Vivero",
+    "Nombre": "Saldos derivados del lote con asignaciones activas",
+    "Objetivo": "Exponer los tres saldos relevantes del lote (vivo, asignado, disponible para asignar) como datos derivados consistentes y consultables.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Saldos derivados expuestos por lote:\n- saldo_vivo_actual (persistido en LOTE_VIVERO)\n- saldo_asignado_total = SUM(saldo_asignado_disponible de asignaciones activas del lote)\n- saldo_vivo_disponible_asignacion = saldo_vivo_actual - saldo_asignado_total\n\nSaldo derivado por asignacion (GENERATED en BD):\n- saldo_asignado_disponible = cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada",
+    "Reglas y validaciones": "- Identidad fundamental: saldo_vivo_actual = saldo_vivo_disponible_asignacion + saldo_asignado_total.\n- Si la identidad se rompe en algun momento, es bug critico.\n- saldo_vivo_disponible_asignacion se implementa como vista SQL o consulta derivada; no se persiste como fuente de verdad.\n- saldo_asignado_disponible es columna GENERATED STORED en ASIGNACION_VIVERO_SUBCAMPANIA.\n- saldo_asignado_disponible no puede ser negativo (CHECK constraint).\n- El backend debe exponer estos saldos en al menos un endpoint: GET /api/lotes-vivero/:id/saldos con desglose por asignacion activa.\n- Validaciones que dependen de estos saldos: nueva asignacion (validar contra saldo_vivo_disponible_asignacion), nuevo despacho manual (validar contra saldo_vivo_disponible_asignacion), nueva mortandad/reposicion en M3 (validar contra saldo_asignado_disponible de la asignacion).",
+    "Comportamiento al Guardar": "- No aplica (solo consulta y validacion derivada)."
+  },
+  {
+    "ID": "RF-VIV-14",
+    "Seccion": "Vivero",
+    "Nombre": "Politica FIFO de mermas sobre asignaciones activas",
+    "Objetivo": "Distribuir el impacto de una merma sobre las asignaciones activas del lote cuando la merma excede el saldo no asignado, sin modificar cantidad_asignada.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Inputs:\n- merma registrada en EVENTO_LOTE_VIVERO tipo MERMA con cantidad_afectada\n- estado actual del lote (saldo_vivo_actual, asignaciones activas con fechas)\nOutputs:\n- actualizacion de cantidad_mermada en N asignaciones afectadas\n- metadata.afectacion_asignaciones en el evento MERMA con array {asignacion_id, cantidad}\n- notificaciones encoladas a los coordinadores de las subcampanias afectadas",
+    "Reglas y validaciones": "- saldo_no_asignado = saldo_vivo_actual - SUM(saldo_asignado_disponible de asignaciones activas del lote).\n- Si cantidad_merma <= saldo_no_asignado: no se tocan asignaciones.\n- Si cantidad_merma > saldo_no_asignado: el excedente (cantidad_merma - saldo_no_asignado) se distribuye sobre asignaciones activas en orden FIFO por fecha_asignacion asc, aumentando cantidad_mermada de cada una.\n- Nunca se modifica cantidad_asignada de una asignacion (es inmutable).\n- Una merma no puede dejar saldo_asignado_disponible < 0 (el algoritmo distribuye exactamente lo necesario, hasta agotar cada asignacion).\n- Una merma no puede exceder saldo_vivo_actual del lote (validar al inicio).\n- Concurrencia: la transaccion debe lockear con SELECT FOR UPDATE la fila del lote y las asignaciones activas afectadas para evitar races entre mermas paralelas.\n- Cuando una asignacion resulta afectada (cantidad_mermada aumenta), debe notificarse al coordinador de la subcampania correspondiente.",
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo MERMA con metadata.afectacion_asignaciones = [{asignacion_id, cantidad}, ...] cuando aplique.\n- Actualiza cantidad_mermada de cada asignacion afectada.\n- El trigger existente de MERMA actualiza LOTE_VIVERO.saldo_vivo_actual.\n- Si saldo llega a 0, activa cierre automatico (RF-VIV-08).\n- Encola notificacion al coordinador de cada subcampania afectada con: subcampania, lote, cantidad mermada sobre su asignacion, nuevo saldo_asignado_disponible, fecha, causa, responsable."
   }
 ]

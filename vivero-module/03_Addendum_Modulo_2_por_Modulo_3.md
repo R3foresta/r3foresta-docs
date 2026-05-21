@@ -1,10 +1,20 @@
 # Addendum al Módulo 2 (Vivero) — Integración con Módulo 3 (Plantación)
 
+> **Estado:** ABSORBIDO en la documentación oficial del Módulo 2 el 2026-05-21.
+>
+> - JSON de requerimientos actualizado: RF-VIV-03, RF-VIV-05, RF-VIV-06, RF-VIV-09 extendidos; agregados RF-VIV-11 (asignación), RF-VIV-12 (devolución), RF-VIV-13 (saldos derivados), RF-VIV-14 (política FIFO mermas).
+> - Reglas de negocio agregadas: RN-VIV-47 a RN-VIV-59 (sección 13 del MD de reglas).
+> - Guía operativa: sección 13 nueva con resumen del contrato M2 ↔ M3.
+> - Documento operativo dedicado: [04_consumo_de_vivero.md](./04_consumo_de_vivero.md).
+> - Esquema ER: `EVENTO_LOTE_VIVERO` extendido y nueva entidad `ASIGNACION_VIVERO_SUBCAMPANIA` agregadas en [database/00_database_schema.md](../database/00_database_schema.md).
+>
+> Este archivo se conserva como **referencia histórica del contrato negociado** y porque las tareas técnicas en [tareas/modulo-2-integracion-modulo-3/](../tareas/modulo-2-integracion-modulo-3/) lo referencian sección por sección. **No es la fuente operativa**: para uso diario, ir a los documentos oficiales del módulo.
+
+---
+
 > Este documento consolida las correcciones, agregados y aclaraciones que el Módulo 2 (Vivero) necesita incorporar para integrarse correctamente con el Módulo 3 (Plantación).
 >
 > Los cambios complementan los requerimientos originales del Módulo 2 y permiten soportar subcampañas, asignaciones, reservas lógicas, despachos automáticos, devoluciones y trazabilidad completa hacia Plantación.
->
-> Este addendum debe integrarse posteriormente al MD y JSON originales del Módulo 2 cuando se realice la próxima revisión consolidada. Mientras tanto, sirve como contrato de integración M2 ↔ M3.
 
 ---
 

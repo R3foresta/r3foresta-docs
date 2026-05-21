@@ -77,4 +77,58 @@ Cada archivo de tarea contiene:
 5. **Choques con el sistema actual** — qué rompe, qué hay que migrar, qué hay que coordinar.
 6. **Referencias** — sección exacta del addendum y requerimientos afectados.
 
-Al cerrar una tarea, actualizar la tabla resumen arriba con el estado (✅ Hecha / 🚧 En curso / ⏸️ Bloqueada).
+---
+
+## Flujo de cierre de una tarea
+
+**Importante:** Claude no ve el código de los repos de implementación. El usuario implementa la tarea en su repo y le pasa un resumen del resultado. A partir de ahí, Claude cierra el ciclo.
+
+### Pasos al terminar una tarea
+
+1. **El usuario reporta** que la tarea está aplicada y comparte un resumen: qué se hizo, qué se desvió del spec, qué quedó pendiente, qué decisiones nuevas se tomaron, links a commits/PRs si existen.
+
+2. **Claude agrega un bloque `## Resultado` al final del archivo de tarea** con esta estructura:
+
+   ```markdown
+   ---
+
+   ## Resultado
+
+   **Fecha de cierre:** YYYY-MM-DD
+   **Estado:** ✅ Hecha
+
+   ### Qué se hizo
+   - …
+
+   ### Desviaciones del spec original
+   - …
+
+   ### Decisiones nuevas tomadas durante la implementación
+   - …
+
+   ### Pendientes derivados (si los hay)
+   - …
+
+   ### Referencias
+   - Commit / PR: …
+   ```
+
+3. **Claude actualiza la tabla de la sección "Resumen de tareas"** de este README marcando la tarea con ✅ y cambiando el link para apuntar a `./completadas/NN_*.md`.
+
+4. **Claude mueve el archivo** a `./completadas/` dentro de esta misma carpeta, preservando el nombre original. Ej: `01_db_migraciones_esquema.md` → `completadas/01_db_migraciones_esquema.md`.
+
+5. **Claude propaga a documentación canónica** los cambios que afecten dominio: JSON de requerimientos, MD de reglas, esquema ER, addendum, decisiones cerradas/abiertas.
+
+6. **Si la tarea cerró una "decisión abierta"** listada en este README, Claude la mueve a "Decisiones cerradas" con la justificación.
+
+### Estados posibles
+
+- 🆕 Pendiente — sin empezar
+- 🚧 En curso — el usuario está implementando
+- ⏸️ Bloqueada — depende de algo no listo (anotar qué)
+- ✅ Hecha — cerrada con bloque de Resultado
+- ❌ Descartada — decidimos no hacerla (anotar por qué)
+
+### Por qué este protocolo
+
+El objetivo es que cualquier futura conversación (o cualquier persona que entre al repo) pueda reconstruir el estado real del proyecto leyendo solo los archivos, sin depender de la memoria de la conversación. Claude es el cerebro que mantiene esa coherencia.
