@@ -60,7 +60,6 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
 ## Decisiones todavía abiertas
 
 - ¿`saldo_vivo_disponible_asignacion` se expone como vista SQL, como columna materializada con trigger, o como query en el endpoint? (Ver tarea 05.)
-- ¿`saldo_vivo_disponible_asignacion` se expone como vista SQL, como columna materializada con trigger, o como query en el endpoint? (Ver tarea 05.)
 - ¿Las notificaciones por merma usan el sistema de notificaciones existente o uno nuevo? (Ver tarea 08.)
 
 Estas se cierran al ejecutar la tarea correspondiente.
