@@ -423,3 +423,39 @@ Antes de mergear:
 | `database/supabase/02_alter_evento_lote_vivero_m3__paso1_enums.sql` | Crear nuevo |
 | `database/supabase/03_alter_evento_lote_vivero_m3__paso2_columnas.sql` | Crear nuevo |
 | [database/00_database_schema.md](../../database/00_database_schema.md) | Ya actualizado (refleja el estado post-migración) |
+
+---
+
+## Resultado
+
+**Fecha de cierre:** 2026-05-21
+**Estado:** ✅ Hecha
+
+### Qué se hizo
+
+- Creado `migrations/023_vivero_despacho_automatico_m3.sql` (114 líneas, idempotente) consolidando los dos pasos del spec en un único archivo.
+- Agregado `PLANTACION_CAMPANIA` a `destino_tipo_vivero` con `ALTER TYPE ... ADD VALUE IF NOT EXISTS`.
+- Creado el enum `origen_despacho_vivero ('MANUAL', 'AUTOMATICO_PLANTACION')` con DO block guard.
+- Agregadas cuatro columnas con `ADD COLUMN IF NOT EXISTS`: `origen_despacho origen_despacho_vivero NOT NULL DEFAULT 'MANUAL'`, y `subcampania_id`, `campania_id`, `registro_plantacion_id` como `BIGINT` nullable.
+- Agregados ambos CHECK constraints con DO blocks idempotentes.
+- Aplicado exitosamente en el SQL Editor de Supabase.
+- Estado del enum `destino_tipo_vivero` confirmado en Supabase antes de migrar: `PLANTACION_PROPIA, PLANTACION_COMUNIDAD, DONACION, VENTA, OTRO` (la migration 006 del repo tenía `DONACION_COMUNIDAD`; había drift — el valor real en Supabase es el correcto).
+
+### Desviaciones del spec original
+
+- **Un solo archivo en lugar de dos.** El spec indicaba separar en `paso1_enums.sql` y `paso2_columnas.sql`. Se consolidó en un único archivo.
+- **CHECK constraints usan `::text` en lugar de `::enum`.** El primer intento falló con error Postgres 55P04 (`unsafe use of new value "PLANTACION_CAMPANIA"`): el SQL Editor de Supabase envuelve el script en una sola transacción, impidiendo usar en la misma transacción un valor recién agregado con `ALTER TYPE ADD VALUE`. Solución: las expresiones dentro de los CHECK constraints comparan con `columna::text = 'VALOR'` en lugar de `columna = 'VALOR'::enum`. La restricción es funcionalmente idéntica.
+- El nombre del archivo en el repo de implementación es `023_vivero_despacho_automatico_m3.sql`, no los nombres propuestos en el spec.
+
+### Decisiones nuevas tomadas durante la implementación
+
+- **`::text` como workaround permanente para CHECK constraints que referencian valores de enum recién agregados.** Aplicar este patrón en cualquier futura migración que combine `ALTER TYPE ADD VALUE` y CHECK constraints en el mismo archivo ejecutado desde el SQL Editor de Supabase.
+
+### Pendientes derivados
+
+- Las FKs reales hacia `SUBCAMPANIA`, `CAMPANIA`, `REGISTRO_PLANTACION` siguen diferidas hasta que esas tablas existan en BD (Módulo 3).
+- Si el proyecto adopta un migration runner con transacciones automáticas, los `ALTER TYPE ADD VALUE` deben ir en archivos separados o con flag `executeInTransaction=false`.
+
+### Referencias
+
+- Archivo en repo de implementación: `migrations/023_vivero_despacho_automatico_m3.sql`

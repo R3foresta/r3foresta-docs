@@ -16,8 +16,8 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
 
 | # | Tarea | Área | Severidad | Bloquea a |
 |---|-------|------|-----------|-----------|
-| [01](./01_db_migraciones_esquema.md) | Migraciones de esquema (enums + columnas + constraints) | DB | Crítica | 02, 03, 04, 05 |
-| [02](./02_db_tabla_asignacion_vivero_subcampania.md) | Crear tabla `ASIGNACION_VIVERO_SUBCAMPANIA` | DB | Crítica | 03, 04, 05 |
+| [01 ✅](./completadas/01_db_migraciones_esquema.md) | Migraciones de esquema (enums + columnas + constraints) | DB | Crítica | 02, 03, 04, 05 |
+| [02 ✅](./completadas/02_db_tabla_asignacion_vivero_subcampania.md) | Crear tabla `ASIGNACION_VIVERO_SUBCAMPANIA` | DB | Crítica | 03, 04, 05 |
 | [03](./03_backend_despacho_automatico_atomico.md) | Generación atómica de `DESPACHO` desde M3 | Backend | Crítica | 06 |
 | [04](./04_backend_politica_mermas_fifo.md) | Política FIFO de mermas sobre asignaciones | Backend | Importante | 07 |
 | [05](./05_backend_saldos_derivados.md) | Cálculo de `saldo_vivo_disponible_asignacion` y `saldo_asignado_disponible` | Backend | Importante | 06 |
@@ -53,12 +53,13 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
 - El despacho automático **hereda evidencia** del `REGISTRO_PLANTACION` asociado; no requiere fotos propias.
 - Las mermas afectan asignaciones por **FIFO** (asignación más antigua primero).
 - El saldo disponible para asignar es **derivado**, no persistido como fuente de verdad.
+- `AFECTADA_POR_MERMA` **no es un valor de enum** en `estado_asignacion_vivero`; se expone como badge derivado cuando `cantidad_mermada > 0`. El enum queda con tres valores: `ACTIVA`, `AGOTADA`, `DEVUELTA`.
 
 ---
 
 ## Decisiones todavía abiertas
 
-- ¿`estado_asignacion` incluye `AFECTADA_POR_MERMA` como valor de enum, o se maneja como badge derivado de `cantidad_mermada > 0`? (Ver tarea 02.)
+- ¿`saldo_vivo_disponible_asignacion` se expone como vista SQL, como columna materializada con trigger, o como query en el endpoint? (Ver tarea 05.)
 - ¿`saldo_vivo_disponible_asignacion` se expone como vista SQL, como columna materializada con trigger, o como query en el endpoint? (Ver tarea 05.)
 - ¿Las notificaciones por merma usan el sistema de notificaciones existente o uno nuevo? (Ver tarea 08.)
 

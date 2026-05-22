@@ -162,3 +162,37 @@ create trigger asignacion_vivero_subcampania_estado_trg
 
 - Nuevo: `database/supabase/03_create_asignacion_vivero_subcampania.sql`
 - Actualizar: [database/00_database_schema.md](../../database/00_database_schema.md) — agregar entidad y relaciones.
+
+---
+
+## Resultado
+
+**Fecha de cierre:** 2026-05-21
+**Estado:** ✅ Hecha
+
+### Qué se hizo
+
+- Creado `migrations/024_vivero_asignacion_subcampania.sql` (156 líneas, idempotente).
+- Enums `proposito_asignacion (PLANTACION_INICIAL, REPOSICION)` y `estado_asignacion_vivero (ACTIVA, AGOTADA, DEVUELTA)` creados con DO block guard.
+- Tabla `asignacion_vivero_subcampania` con columna `saldo_asignado_disponible GENERATED ALWAYS AS STORED`, 5 CHECK constraints, FKs a `lote_vivero` y `usuario`.
+- Tres índices: por lote activo, por subcampaña, y FIFO (`lote_vivero_id, fecha_asignacion`) para soporte de tarea 04.
+- Trigger `BEFORE INSERT OR UPDATE` que recalcula `estado` y `updated_at`; recalcula saldo a mano porque columnas GENERATED son NULL en BEFORE triggers.
+- Aplicado exitosamente en el SQL Editor de Supabase.
+
+### Desviaciones del spec original
+
+- Nombre del archivo en el repo de implementación: `024_vivero_asignacion_subcampania.sql` (no el nombre propuesto en el spec).
+- `AFECTADA_POR_MERMA` omitido del enum tal como recomienda el spec (badge derivado cuando `cantidad_mermada > 0`). Decisión abierta cerrada: se mantiene como derivado.
+
+### Decisiones nuevas tomadas durante la implementación
+
+- **`AFECTADA_POR_MERMA` como badge derivado, no valor de enum.** Cerrada la decisión abierta del README: `estado_asignacion_vivero` queda con tres valores (`ACTIVA`, `AGOTADA`, `DEVUELTA`). El frontend deriva el badge leyendo `cantidad_mermada > 0`.
+
+### Pendientes derivados
+
+- FK real hacia `SUBCAMPANIA` diferida a cuando existan las tablas de M3 en BD.
+- Backfill de asignaciones históricas: se trata como dato cero del MVP (no hay historial a migrar).
+
+### Referencias
+
+- Archivo en repo de implementación: `migrations/024_vivero_asignacion_subcampania.sql`
