@@ -683,3 +683,155 @@ El diseño del MVP debe dejar preparada una evolución futura para incorporar, s
 * correcciones auditadas,
 * blockchain ampliada,
 * y mayor profundidad operativa.
+
+---
+
+## 13. Integración con Módulo 3 (Plantación)
+
+> Estas reglas formalizan el contrato M2 ↔ M3 descrito en [03_Addendum_Modulo_2_por_Modulo_3.md](./03_Addendum_Modulo_2_por_Modulo_3.md) y operativizado en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md). Tienen numeración estable y no deben renumerarse aunque la implementación se difiera por tarea.
+
+### RN-VIV-47 — Asignación de lote a subcampaña es reserva lógica
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Asignar saldo de un lote a una subcampaña de Plantación es una **reserva lógica**: queda registrada en `ASIGNACION_VIVERO_SUBCAMPANIA` pero **no genera evento** en `EVENTO_LOTE_VIVERO` y **no modifica** `LOTE_VIVERO.saldo_vivo_actual`. Los árboles siguen físicamente en el vivero.
+
+### RN-VIV-48 — Devolución de saldo asignado al vivero no genera evento en M2
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Cuando el Módulo 3 procesa una `DEVOLUCION_A_VIVERO`, el Módulo 2 **no genera evento alguno**. Los árboles nunca salieron físicamente. Solo cambia `cantidad_devuelta` en la asignación y, por derivación, `saldo_asignado_disponible` y `saldo_vivo_disponible_asignacion` del lote.
+
+### RN-VIV-49 — `cantidad_asignada` es inmutable
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+`ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_asignada` representa la reserva original y no debe modificarse después de creada. Los consumos, devoluciones y afectaciones por merma se registran en campos separados (`cantidad_consumida`, `cantidad_devuelta`, `cantidad_mermada`).
+
+Modificar `cantidad_asignada` para "compensar" una merma o devolución borra historia y dificulta auditoría.
+
+### RN-VIV-50 — Política FIFO de mermas sobre asignaciones
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Cuando una `MERMA` excede el saldo no asignado del lote, el excedente se distribuye sobre las asignaciones activas en orden **FIFO por `fecha_asignacion` ascendente**. Cada asignación afectada aumenta su `cantidad_mermada` por la cantidad correspondiente, sin modificar `cantidad_asignada`.
+
+El algoritmo no puede dejar `saldo_asignado_disponible < 0` ni `saldo_vivo_actual < 0`.
+
+### RN-VIV-51 — Notificación al coordinador por merma sobre asignación
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
+
+Si una merma del vivero afecta la asignación de una subcampaña (regla RN-VIV-50), el sistema debe notificar al coordinador de esa subcampaña con los datos mínimos: subcampaña, lote, cantidad mermada sobre su asignación, nuevo saldo asignado disponible, fecha, causa y responsable de la merma.
+
+El canal exacto (push, email, dashboard pull) se define operativamente; el dato debe llegar.
+
+### RN-VIV-52 — Despacho automático heredado desde Plantación
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Cada `PLANTACION_INICIAL` y cada `REPOSICION` registrada en Módulo 3 genera atómicamente uno o más eventos `DESPACHO` en `EVENTO_LOTE_VIVERO`, uno por cada lote afectado, con:
+
+* `origen_despacho = AUTOMATICO_PLANTACION`,
+* `destino_tipo = PLANTACION_CAMPANIA`,
+* `subcampania_id`, `campania_id`, `registro_plantacion_id` poblados (no nulos),
+* `comunidad_destino_id` heredada de la subcampaña,
+* `unidad_medida_evento = UNIDAD`.
+
+El despacho automático **nunca se crea por API directa de Vivero**; solo lo emite el handler de Módulo 3.
+
+### RN-VIV-53 — Invariante de conservación por registro de plantación
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Para todo `REGISTRO_PLANTACION` se cumple:
+
+```
+SUM(DESPACHO.cantidad_afectada
+    where registro_plantacion_id = X
+      and origen_despacho = AUTOMATICO_PLANTACION)
+= REGISTRO_PLANTACION.cantidad_total_plantada
+```
+
+Si esa identidad no se cumple, el registro y sus despachos están inconsistentes y debe revisarse.
+
+### RN-VIV-54 — Evidencia heredada en despacho automático
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Un `DESPACHO` con `origen_despacho = AUTOMATICO_PLANTACION` **no requiere evidencia propia** en `EVIDENCIAS_TRAZABILIDAD`. Su evidencia es la del `REGISTRO_PLANTACION` asociado en M3. Esta es una excepción explícita y controlada a la regla general `RN-VIV-26`.
+
+La excepción solo es válida si el `REGISTRO_PLANTACION` tiene evidencia válida. Si no la tiene, la transacción atómica no debe llegar al commit y el despacho automático no debe crearse.
+
+### RN-VIV-55 — Despacho manual no puede tener destino `PLANTACION_CAMPANIA`
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Un `DESPACHO` con `origen_despacho = MANUAL` **no puede** tener `destino_tipo = PLANTACION_CAMPANIA`, ni traer `subcampania_id`, `campania_id` ni `registro_plantacion_id` poblados.
+
+Cualquier salida hacia subcampañas tiene que originarse en un registro de plantación de M3.
+
+Esta regla se materializa como CHECK constraint a nivel BD.
+
+### RN-VIV-56 — Despacho manual valida contra saldo libre, no saldo vivo
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Un `DESPACHO` con `origen_despacho = MANUAL` valida su cantidad contra `saldo_vivo_disponible_asignacion` del lote, **no contra** `saldo_vivo_actual`. Esto significa que el operario de vivero **no puede tocar stock reservado** por subcampañas activas.
+
+Si se quiere despachar manualmente más de lo libre, primero hay que devolver reservas (acción del coordinador, regla RN-VIV-48).
+
+### RN-VIV-57 — Saldos derivados del lote
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+El módulo debe exponer tres saldos para cada lote:
+
+* `saldo_vivo_actual` (persistido en `LOTE_VIVERO`),
+* `saldo_asignado_total` (derivado: suma de `saldo_asignado_disponible` de asignaciones activas),
+* `saldo_vivo_disponible_asignacion` (derivado: `saldo_vivo_actual − saldo_asignado_total`).
+
+Identidad invariante: `saldo_vivo_actual = saldo_vivo_disponible_asignacion + saldo_asignado_total`.
+
+### RN-VIV-58 — Asignación con propósito tipado
+
+* **Severidad:** BLOQUEANTE
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Alta
+
+Toda asignación tiene un `proposito_asignacion` obligatorio:
+
+* `PLANTACION_INICIAL`: solo puede consumirse en plantaciones iniciales (que avanzan la meta).
+* `REPOSICION`: solo puede consumirse en reposiciones (que no avanzan la meta).
+
+Una asignación con un propósito **no puede** consumirse para el otro. La restricción se valida en el handler de M3 al consumir.
+
+### RN-VIV-59 — `AFECTADA_POR_MERMA` no es estado del enum
+
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
+
+El enum `estado_asignacion_vivero` contiene únicamente `ACTIVA | AGOTADA | DEVUELTA`. El hecho de que una asignación tenga `cantidad_mermada > 0` se muestra como **badge visual** en la UI, no como estado lógico, para no solapar con `ACTIVA`.

@@ -47,6 +47,16 @@ Estas son decisiones cerradas y deben preservarse al redactar nueva documentaci�
 - **Trazabilidad de vivero:** formato `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`.
 - **Historial:** append-only en `recoleccion_historial` y `evento_lote_vivero`.
 - **Recolección — evidencia:** mínimo 2 fotos JPG/PNG para validar, GPS obligatorio.
+- **Vivero ↔ Plantación — asignación es reserva lógica:** crear o devolver una `ASIGNACION_VIVERO_SUBCAMPANIA` **no genera evento** en `EVENTO_LOTE_VIVERO` y no toca `LOTE_VIVERO.saldo_vivo_actual`. Solo plantar (en M3) o despachar manualmente (en M2) baja el saldo vivo.
+- **Vivero ↔ Plantación — `cantidad_asignada` inmutable:** una vez creada la asignación, `cantidad_asignada` no se modifica nunca. Consumos, devoluciones y afectaciones por merma viven en columnas separadas. `saldo_asignado_disponible = cantidad_asignada − cantidad_consumida − cantidad_devuelta − cantidad_mermada` (columna `GENERATED STORED`).
+- **Vivero ↔ Plantación — mermas FIFO sobre asignaciones:** una `MERMA` que excede el saldo no asignado del lote distribuye el excedente sobre asignaciones activas en orden FIFO por `fecha_asignacion`, sin modificar `cantidad_asignada`.
+- **Despacho automático vs manual:** un `DESPACHO` en `EVENTO_LOTE_VIVERO` con `origen_despacho = AUTOMATICO_PLANTACION` lo emite **solo el handler de M3** y obliga a `destino_tipo = PLANTACION_CAMPANIA` + `subcampania_id` + `campania_id` + `registro_plantacion_id` no nulos. Hereda evidencia del `REGISTRO_PLANTACION`. Un `DESPACHO` manual exige los tres FKs en `NULL`, `destino_tipo ≠ PLANTACION_CAMPANIA` y evidencia propia. La regla se materializa como CHECK constraint en BD.
+- **Despacho manual valida contra saldo libre:** los despachos manuales validan cantidad contra `saldo_vivo_disponible_asignacion`, no `saldo_vivo_actual`. No pueden tocar stock reservado.
+- **Plantación — rol `COORDINADOR` pendiente:** el rol `COORDINADOR` que aparece en docs de Módulo 3 todavía **no se decide** si rompe el invariante de roles cerrados o se modela como membresía. Decisión abierta hasta que se modele M3 en BD.
+
+## Estado de iniciativas en curso
+
+- **Integración M2 ↔ M3:** documentación absorbida (2026-05-21). Implementación pendiente, organizada en [tareas/modulo-2-integracion-modulo-3/](tareas/modulo-2-integracion-modulo-3/). Hasta que las tareas se cierren, el comportamiento descrito en los docs de M2 sobre asignaciones, devoluciones, despacho automático y FIFO de mermas todavía **no está en producción**. Consultar el README de tareas para el estado actual de cada pieza.
 
 ## SQL en `database/supabase/`
 
@@ -58,3 +68,29 @@ Scripts PostgreSQL idempotentes para Supabase. Convenciones observadas:
 - FKs nombradas explícitamente con sufijo `_fk`.
 
 Mantener idempotencia al añadir migraciones nuevas.
+
+## Modo de trabajo con Claude (cerebro del proyecto)
+
+Claude actúa como **cerebro del proyecto**: orquesta diseño, planifica tareas, revisa especs, mantiene coherencia entre módulos y registra estado. **El usuario es quien implementa** (backend, BD, frontend) en sus repos de código.
+
+Claude **no ve el código de los repos de implementación**. El usuario le pasa resúmenes del resultado de aplicar los cambios (queries probadas, ajustes hechos, errores encontrados, decisiones tomadas en el camino). A partir de esos resúmenes, Claude actualiza la documentación canónica y cierra la tarea.
+
+### Tareas en `tareas/`
+
+Las tareas operativas viven en [tareas/](tareas/), organizadas por iniciativa (ej. `tareas/modulo-2-integracion-modulo-3/`). Cada carpeta tiene:
+
+- `README.md` — índice con tabla de estado por tarea y dependencias.
+- Archivos numerados por tarea (`01_*.md`, `02_*.md`, ...) con contexto, spec técnico, criterios de aceptación y choques.
+
+### Protocolo de cierre de tarea
+
+Cuando el usuario informa que una tarea está aplicada en su repo:
+
+1. **Pedirle un resumen breve** si no lo trajo: qué se hizo, qué se desvió del spec, qué quedó pendiente, qué decisiones nuevas se tomaron.
+2. **Agregar un bloque "Resultado" al final del archivo de tarea** con fecha (formato `YYYY-MM-DD`), resumen, desviaciones del spec original, decisiones nuevas, links a commits/PRs si los hay, y notas para futuras tareas que dependan de esta.
+3. **Actualizar el estado en el `README.md`** de la carpeta de tareas (✅ Hecha).
+4. **Mover el archivo a `completadas/`** dentro de la misma carpeta de iniciativa, preservando el nombre original (ej. `tareas/modulo-2-integracion-modulo-3/completadas/01_db_migraciones_esquema.md`). Ajustar el link en el README para apuntar a la nueva ruta.
+5. **Propagar a la documentación canónica** los cambios que afecten al dominio: actualizar JSON de requerimientos, MD de reglas de negocio, esquema ER, o decisiones cerradas/abiertas del addendum correspondiente.
+6. **Notar invariantes nuevos** en CLAUDE.md si la tarea cerró una decisión que estaba abierta o estableció un patrón a respetar.
+
+El objetivo: que cualquier futura conversación pueda reconstruir el estado del proyecto leyendo solo los archivos del repo, sin tener que recordar la historia de la implementación.
