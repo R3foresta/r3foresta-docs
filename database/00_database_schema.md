@@ -239,9 +239,9 @@ EVENTO_LOTE_VIVERO {
     ENUM(destino_tipo_vivero) destino_tipo "nullable - solo aplica en DESPACHO; incluye PLANTACION_CAMPANIA"
     ENUM(origen_despacho_vivero) origen_despacho "nullable - solo aplica en DESPACHO; MANUAL | AUTOMATICO_PLANTACION; default MANUAL"
     text destino_referencia "nullable - solo aplica en DESPACHO manual; texto libre"
-    bigint subcampania_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK pendiente a SUBCAMPANIA cuando se cree Modulo 3"
-    bigint campania_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK pendiente a CAMPANIA"
-    bigint registro_plantacion_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK pendiente a REGISTRO_PLANTACION"
+    bigint subcampania_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK fisico pendiente de ALTER en BD"
+    bigint campania_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK fisico pendiente de ALTER en BD"
+    bigint registro_plantacion_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK fisico pendiente de ALTER en BD"
     bigint comunidad_destino_id FK "nullable - referencia a DIVISION_ADMINISTRATIVA(id), solo aplica en DESPACHO"
     ENUM(subetapa_adaptabilidad) subetapa_destino "nullable - SOMBRA | MEDIA_SOMBRA | SOL_DIRECTO"
     int saldo_vivo_antes "nullable - calculado por sistema"
@@ -254,7 +254,7 @@ EVENTO_LOTE_VIVERO {
 
 ASIGNACION_VIVERO_SUBCAMPANIA {
     bigint id PK
-    bigint subcampania_id FK "NOT NULL - FK pendiente a SUBCAMPANIA cuando se cree Modulo 3"
+    bigint subcampania_id FK "NOT NULL - FK fisico pendiente de ALTER en BD"
     bigint lote_vivero_id FK "NOT NULL - el lote de vivero que reserva"
     ENUM(proposito_asignacion) proposito "NOT NULL - PLANTACION_INICIAL | REPOSICION"
     ENUM(estado_asignacion_vivero) estado "NOT NULL - ACTIVA | AGOTADA | DEVUELTA; default ACTIVA; derivado por trigger"
@@ -268,76 +268,156 @@ ASIGNACION_VIVERO_SUBCAMPANIA {
     timestamptz updated_at "NOT NULL"
 }
 
-  PLANTACION {
+ORGANIZACION {
     bigint id PK
-    text codigo_trazabilidad "UNIQUE"
-    text destino
-    int ubicacion_id FK
-    int cantidad_arboles
-    date fecha_plantacion
-    numeric superficie_m2
-    numeric tamano_promedio_cm
-    text propietario
-    text origen_propiedad
-    int frecuencia_monitoreo_dias
-    int created_by FK
+    text nombre "NOT NULL"
+    boolean activo "NOT NULL default true"
     timestamptz created_at
-  }
+    timestamptz updated_at
+}
+%% Placeholder defensivo (modulo General aun no la define). Reemplazar cuando exista la version oficial.
 
-  TIPO_ABONO {
-    int id PK
+CAMPANIA {
+    bigint id PK
     text nombre "UNIQUE"
     text descripcion
-  }
-
-  TIPO_RIEGO {
-    int id PK
-    text nombre "UNIQUE"
-    text descripcion
-  }
-
-  PLANTACION_ABONO {
-    bigint plantacion_id PK
-    int tipo_abono_id PK
-  }
-
-  PLANTACION_RIEGO {
-    bigint plantacion_id PK
-    int tipo_riego_id PK
-  }
-
-  PLANTACION_USUARIO {
-    bigint plantacion_id PK
-    int usuario_id PK
-    text rol
-  }
-
-  PLANTACION_FOTO {
-    bigint id PK
-    bigint plantacion_id FK
-    text url
-    int peso_bytes
-    text formato
-    text descripcion
-  }
-
-  PLANTACION_MONITOREO {
-    bigint id PK
-    bigint plantacion_id FK
-    date fecha_monitoreo
-    int arboles_vivos
-    int arboles_muertos
-    int arboles_reemplazados
-    text notas
-    int usuario_id FK
+    date fecha_estimada_inicio
+    date fecha_estimada_fin
+    text codigo_trazabilidad "UNIQUE - formato CMP-YYYY-NNN"
     timestamptz created_at
-  }
+    timestamptz updated_at
+    bigint created_by FK
+    bigint updated_by FK
+    timestamptz deleted_at "nullable - soft delete"
+    bigint deleted_by FK "nullable"
+    jsonb metadata_blockchain "nullable"
+}
+%% Sin columna de estado: el estado se deriva via vista campania_estado (invariante CLAUDE.md).
 
-  PLANTACION_LOTE_VIVERO {
-    bigint plantacion_id PK
-    bigint lote_vivero_id PK
-    int cantidad_plantines_usados
-  }
+CAMPANIA_ORGANIZACION {
+    bigint id PK
+    bigint campania_id FK "NOT NULL - ON DELETE CASCADE"
+    bigint organizacion_id FK "NOT NULL"
+    timestamptz created_at
+    bigint created_by FK
+}
+
+SUBCAMPANIA {
+    bigint id PK
+    bigint campania_id FK "NOT NULL"
+    text nombre
+    text descripcion
+    ENUM(tipo_subcampania) tipo "NOT NULL - REFORESTACION | ARBORIZACION | FORESTACION"
+    ENUM(estado_subcampania) estado "NOT NULL default BORRADOR"
+    ENUM(fase_mantenimiento_subcampania) fase_mantenimiento "NOT NULL default NO_APLICA"
+    bigint zona_id FK "NOT NULL - DIVISION_ADMINISTRATIVA"
+    geometry poligono_geom "nullable - Polygon WGS84; obligatorio para activar (CHECK)"
+    numeric area_hectareas "nullable"
+    int meta_total_arboles "NOT NULL > 0"
+    date fecha_estimada_inicio "nullable"
+    date fecha_estimada_fin "nullable"
+    timestamptz fecha_cierre_operativo "nullable - obligatorio si estado en (COMPLETADA, FINALIZADA_PARCIAL)"
+    date fecha_fin_mantenimiento "nullable - obligatorio si estado en (COMPLETADA, FINALIZADA_PARCIAL)"
+    ENUM(motivo_cierre_parcial) motivo_cierre_parcial "nullable - obligatorio si estado = FINALIZADA_PARCIAL"
+    text observaciones_cierre
+    int tolerancia_gps_metros "NOT NULL default 50"
+    text nombre_zona_snapshot "nullable - congelado al activar"
+    text nombre_coordinador_snapshot "nullable - congelado al activar"
+    ARRAY nombres_organizaciones_snapshot "text[] - congelado al activar"
+    text codigo_trazabilidad "UNIQUE - formato SUB-NNN-CMP-YYYY-NNN"
+    int total_plantado_inicial "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
+    int total_repuesto "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
+    int total_muerto_acumulado "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
+    int saldo_vivo_actual "GENERATED ALWAYS AS (total_plantado_inicial + total_repuesto - total_muerto_acumulado) STORED"
+    timestamptz created_at
+    timestamptz updated_at
+    bigint created_by FK
+    bigint updated_by FK
+    timestamptz deleted_at "nullable"
+    bigint deleted_by FK "nullable"
+    jsonb metadata_blockchain "nullable"
+}
+%% Indice GIST sobre poligono_geom para PostGIS. Sin columna coordinador_id (membresia via SUBCAMPANIA_EQUIPO).
+
+SUBCAMPANIA_EQUIPO {
+    bigint id PK
+    bigint subcampania_id FK "NOT NULL - ON DELETE CASCADE"
+    bigint usuario_id FK "NOT NULL"
+    ENUM(rol_en_subcampania) rol "NOT NULL - COORDINADOR | OPERARIO"
+    timestamptz agregado_at "NOT NULL default now()"
+    bigint agregado_by FK "NOT NULL"
+}
+%% Unique parcial WHERE rol = COORDINADOR garantiza 1 coordinador por subcampania. VOLUNTARIO no puede ser miembro (validacion en handler).
+
+REGISTRO_PLANTACION {
+    bigint id PK
+    bigint subcampania_id FK "NOT NULL"
+    boolean es_reposicion "NOT NULL default false"
+    bigint registro_plantacion_origen_id FK "self - NOT NULL si es_reposicion=true; NULL si false (CHECK)"
+    date fecha_plantacion "NOT NULL"
+    bigint responsable_id FK "NOT NULL - USUARIO miembro de SUBCAMPANIA_EQUIPO (handler valida)"
+    numeric latitud "NOT NULL"
+    numeric longitud "NOT NULL"
+    boolean gps_dentro_poligono "NOT NULL - calculado con gps_dentro_poligono_con_tolerancia"
+    numeric gps_distancia_a_poligono_m "nullable"
+    int cantidad_total_plantada "NOT NULL > 0"
+    int cantidad_muerta_acumulada "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
+    int cantidad_repuesta_acumulada "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
+    int saldo_vivo_grupo "GENERATED ALWAYS AS (cantidad_total_plantada + cantidad_repuesta_acumulada - cantidad_muerta_acumulada) STORED"
+    text nombre_subcampania_snapshot "nullable - congelado al insertar"
+    text nombre_zona_snapshot "nullable - congelado al insertar"
+    text nombre_responsable_snapshot "nullable - congelado al insertar"
+    text observaciones
+    text codigo_trazabilidad "UNIQUE - formato PLT-NNN-SUB-NNN"
+    timestamptz created_at
+    bigint created_by FK
+    jsonb metadata_blockchain "nullable"
+}
+%% es_reposicion = true cuelga del grupo origen via registro_plantacion_origen_id. Sin mix de especies en MVP.
+
+REGISTRO_PLANTACION_DETALLE {
+    bigint id PK
+    bigint registro_plantacion_id FK "NOT NULL - ON DELETE CASCADE"
+    bigint asignacion_id FK "NOT NULL - ASIGNACION_VIVERO_SUBCAMPANIA"
+    bigint lote_vivero_id FK "NOT NULL - redundante con asignacion.lote_vivero_id; debe coincidir"
+    bigint planta_id FK "NOT NULL"
+    int cantidad "NOT NULL > 0"
+    text nombre_cientifico_snapshot
+    text nombre_comercial_snapshot
+    text variedad_snapshot
+    bigint evento_lote_vivero_despacho_id FK "nullable solo en intermedio de transaccion; FK al DESPACHO automatico que crea tarea 03"
+    timestamptz created_at
+}
+%% Unique (registro_plantacion_id, asignacion_id, planta_id). Una linea por (registro, asignacion, planta).
+
+REGISTRO_PLANTACION_CORESPONSABLE {
+    bigint id PK
+    bigint registro_plantacion_id FK "NOT NULL - ON DELETE CASCADE"
+    bigint usuario_id FK "NOT NULL - subset de SUBCAMPANIA_EQUIPO (handler valida)"
+    timestamptz created_at
+}
+
+EVENTO_PLANTACION {
+    bigint id PK
+    ENUM(tipo_evento_plantacion) tipo_evento "NOT NULL - ASIGNACION_VIVERO | DEVOLUCION_A_VIVERO | MORTANDAD_REPORTADA"
+    bigint subcampania_id FK "NOT NULL"
+    bigint registro_plantacion_id FK "nullable - obligatorio en MORTANDAD_REPORTADA"
+    bigint asignacion_id FK "nullable - obligatorio en DEVOLUCION_A_VIVERO y ASIGNACION_VIVERO"
+    timestamptz fecha_evento "NOT NULL"
+    bigint responsable_id FK "NOT NULL"
+    text observaciones "nullable"
+    int cantidad_muerta_delta "nullable - solo MORTANDAD_REPORTADA, > 0"
+    ENUM(causa_mortandad_plantacion) causa_mortandad "nullable - solo MORTANDAD_REPORTADA"
+    numeric latitud "nullable - solo MORTANDAD_REPORTADA"
+    numeric longitud "nullable - solo MORTANDAD_REPORTADA"
+    int cantidad_devuelta "nullable - solo DEVOLUCION_A_VIVERO, > 0"
+    ENUM(motivo_devolucion_plantacion) motivo_devolucion "nullable - solo DEVOLUCION_A_VIVERO"
+    int cantidad_asignada_evento "nullable - solo ASIGNACION_VIVERO, > 0; fuente de verdad es ASIGNACION_VIVERO_SUBCAMPANIA"
+    timestamptz created_at
+    bigint created_by FK
+    jsonb metadata_blockchain "nullable"
+}
+%% Append-only. PLANTACION_INICIAL y REPOSICION NO van aqui; viven como filas en REGISTRO_PLANTACION con es_reposicion = false | true. CHECKs por tipo_evento garantizan coherencia.
 
   %% === Relaciones sin cambio ===
 
@@ -381,26 +461,46 @@ ASIGNACION_VIVERO_SUBCAMPANIA {
 
   LOTE_VIVERO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "reserva logica para subcampania"
   USUARIO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "asigna"
-  %% ASIGNACION_VIVERO_SUBCAMPANIA }o--|| SUBCAMPANIA  -- pendiente: cuando se cree Modulo 3
-  %% EVENTO_LOTE_VIVERO (origen_despacho = AUTOMATICO_PLANTACION) referencia REGISTRO_PLANTACION, SUBCAMPANIA y CAMPANIA -- pendiente: cuando se cree Modulo 3
+  SUBCAMPANIA ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "lotes asignados"
+  %% FK fisico asignacion.subcampania_id -> subcampania(id) pendiente de ALTER en BD
+  EVENTO_LOTE_VIVERO }o--o| SUBCAMPANIA : "DESPACHO automatico (subcampania_id)"
+  EVENTO_LOTE_VIVERO }o--o| CAMPANIA : "DESPACHO automatico (campania_id)"
+  EVENTO_LOTE_VIVERO }o--o| REGISTRO_PLANTACION : "DESPACHO automatico (registro_plantacion_id)"
+  %% FKs fisicos evento_lote_vivero -> {subcampania, campania, registro_plantacion} pendientes de ALTER en BD
 
   TIPOS_ENTIDAD_EVIDENCIA ||--o{ EVIDENCIAS_TRAZABILIDAD : tipo
 
-  %% === Relaciones plantación — sin cambio ===
+  %% === Relaciones modulo plantacion (M3) ===
 
-  UBICACION ||--o{ PLANTACION : lugar
-  USUARIO ||--o{ PLANTACION : created_by
-  PLANTACION ||--o{ PLANTACION_FOTO : fotos
-  PLANTACION ||--o{ PLANTACION_MONITOREO : monitoreos
-  USUARIO ||--o{ PLANTACION_MONITOREO : registra
-  PLANTACION ||--o{ PLANTACION_ABONO : usa
-  TIPO_ABONO ||--o{ PLANTACION_ABONO : tipo
-  PLANTACION ||--o{ PLANTACION_RIEGO : usa
-  TIPO_RIEGO ||--o{ PLANTACION_RIEGO : tipo
-  PLANTACION ||--o{ PLANTACION_USUARIO : asigna
-  USUARIO ||--o{ PLANTACION_USUARIO : participa
-  PLANTACION ||--o{ PLANTACION_LOTE_VIVERO : usa_lote
-  LOTE_VIVERO ||--o{ PLANTACION_LOTE_VIVERO : se_usa_en
+  ORGANIZACION ||--o{ CAMPANIA_ORGANIZACION : participa_en
+  CAMPANIA ||--o{ CAMPANIA_ORGANIZACION : tiene_organizaciones
+  USUARIO ||--o{ CAMPANIA : created_by
+  USUARIO ||--o{ CAMPANIA_ORGANIZACION : created_by
+
+  CAMPANIA ||--o{ SUBCAMPANIA : contiene
+  DIVISION_ADMINISTRATIVA ||--o{ SUBCAMPANIA : zona
+  USUARIO ||--o{ SUBCAMPANIA : created_by
+
+  SUBCAMPANIA ||--o{ SUBCAMPANIA_EQUIPO : tiene_equipo
+  USUARIO ||--o{ SUBCAMPANIA_EQUIPO : participa
+
+  SUBCAMPANIA ||--o{ REGISTRO_PLANTACION : "registros de plantacion"
+  USUARIO ||--o{ REGISTRO_PLANTACION : responsable
+  REGISTRO_PLANTACION ||--o{ REGISTRO_PLANTACION : "reposicion (self)"
+  REGISTRO_PLANTACION ||--o{ REGISTRO_PLANTACION_DETALLE : detalle
+  REGISTRO_PLANTACION ||--o{ REGISTRO_PLANTACION_CORESPONSABLE : coresponsables
+  USUARIO ||--o{ REGISTRO_PLANTACION_CORESPONSABLE : firma
+
+  ASIGNACION_VIVERO_SUBCAMPANIA ||--o{ REGISTRO_PLANTACION_DETALLE : "consumida via detalle"
+  LOTE_VIVERO ||--o{ REGISTRO_PLANTACION_DETALLE : "lote consumido"
+  PLANTA ||--o{ REGISTRO_PLANTACION_DETALLE : especie
+  EVENTO_LOTE_VIVERO ||--o{ REGISTRO_PLANTACION_DETALLE : "despacho automatico generado"
+
+  SUBCAMPANIA ||--o{ EVENTO_PLANTACION : "historial append-only"
+  REGISTRO_PLANTACION ||--o{ EVENTO_PLANTACION : "evento sobre grupo"
+  ASIGNACION_VIVERO_SUBCAMPANIA ||--o{ EVENTO_PLANTACION : "evento sobre asignacion"
+  USUARIO ||--o{ EVENTO_PLANTACION : responsable
+
 ENUMS
 RECOLECCION
 tipo_material_origen = [SEMILLA, ESQUEJE]
@@ -451,7 +551,24 @@ estado_asignacion_vivero = [ACTIVA, AGOTADA, DEVUELTA]
 motivo_cierre_lote = [DESPACHO_TOTAL, PERDIDA_TOTAL, MIXTO]
 estado_operativo_recoleccion = [ABIERTO, CERRADO]
 
-PLANTACION
+PLANTACION (M3)
+tipo_subcampania = [REFORESTACION, ARBORIZACION, FORESTACION]
+
+estado_subcampania = [
+  BORRADOR, ACTIVA, COMPLETADA, FINALIZADA_PARCIAL,
+  PAUSADA,   // reservado, sin flujo en MVP
+  CANCELADA  // reservado, sin flujo en MVP
+]
+
+fase_mantenimiento_subcampania = [NO_APLICA, MANTENIMIENTO_ACTIVO, MONITOREO_HISTORICO]
+// Persistida con default NO_APLICA. Transita a MANTENIMIENTO_ACTIVO al cerrar y a MONITOREO_HISTORICO 3 anos despues via job nocturno (pendiente).
+
+rol_en_subcampania = [COORDINADOR, OPERARIO]
+// Membresia por subcampania (no rol global). Unique parcial garantiza 1 COORDINADOR por subcampania. VOLUNTARIO no puede ser miembro.
+
+tipo_evento_plantacion = [ASIGNACION_VIVERO, DEVOLUCION_A_VIVERO, MORTANDAD_REPORTADA]
+// PLANTACION_INICIAL y REPOSICION NO van aqui; viven como filas en REGISTRO_PLANTACION con es_reposicion = false | true.
+
 motivo_cierre_parcial = [
   FALTA_STOCK, PROBLEMAS_CLIMATICOS, CANCELACION_CONVENIO,
   CONFLICTO_SOCIAL, ACCESO_RESTRINGIDO, CAMBIO_PRIORIDAD_INSTITUCIONAL,
@@ -475,3 +592,16 @@ USUARIO
 rol_usuario = [ADMIN, GENERAL, VALIDADOR, VOLUNTARIO]
 UNIDADES
 unidad_medida = [UNIDAD, G]
+
+OBJETOS DERIVADOS / FUNCIONES (no son tablas, no aparecen en el ER)
+
+vista campania_estado (subcampania) -> {campania_id, estado_derivado}
+// Calcula al leer el estado de CAMPANIA desde el conjunto de sus SUBCAMPANIA segun §2.2 / §5.3 del Modulo 3.
+// Valores: BORRADOR | ACTIVA | EN_MANTENIMIENTO | MONITOREO_HISTORICO. No materializar.
+
+funcion gps_dentro_poligono_con_tolerancia(p_subcampania_id, p_lat, p_lng) -> {dentro, distancia_m}
+// PostGIS. Fuente de verdad para validar GPS de REGISTRO_PLANTACION contra el poligono de la subcampania
+// aplicando subcampania.tolerancia_gps_metros. Turf.js en frontend es opcional, solo para feedback UX.
+
+EXTENSIONES POSTGRES
+postgis (requerida por SUBCAMPANIA.poligono_geom y gps_dentro_poligono_con_tolerancia)

@@ -26,7 +26,8 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
 | [08](./08_notificaciones_merma_coordinador.md) | Notificación al coordinador por merma sobre asignación | Backend + Frontend | Importante | 04 |
 | [09](./09_docs_integrar_addendum_a_modulo_2.md) | Integrar addendum al MD y JSON oficiales del Módulo 2 | Docs | Mejora | — |
 | [10 ✅](./completadas/10_docs_flujo_reposicion_y_mortandad.md) | Cerrar decisiones M3 en docs: reposición libre de especie, mortandad multi-rol, UX pre-confirmación, COORDINADOR como membresía, sin mix de especies, estado campaña derivado | Docs | Importante | 11 |
-| [11](./11_db_modelado_m3_base.md) | Modelar tablas base de M3 en BD: PostGIS + enums + CAMPANIA + SUBCAMPANIA + REGISTRO_PLANTACION + EVENTO_PLANTACION + vista de estado + función GPS | DB | Crítica | 03 |
+| [11 ✅](./completadas/11_db_modelado_m3_base.md) | Modelar tablas base de M3 en BD: PostGIS + enums + CAMPANIA + SUBCAMPANIA + REGISTRO_PLANTACION + EVENTO_PLANTACION + vista de estado + función GPS | DB | Crítica | 03 |
+| [12](./12_db_drop_legacy_plantacion.md) | Eliminar de BD el boceto legacy de plantación (tablas PLANTACION + PLANTACION_*) superado por el modelo M3 | DB | Mejora | — |
 
 ---
 
@@ -40,11 +41,12 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
          └── 05 (saldos derivados)
                └── 06 / 07 (UI lectura)
 
-10 (docs decisiones M3)
-   └── 11 (modelado M3 en BD)
+10 (docs decisiones M3) ✅
+   └── 11 (modelado M3 en BD) ✅
          └── 03 (despacho automático)
                └── 06 (UI lectura)
 
+12 (drop legacy PLANTACION) puede ir en paralelo con cualquiera
 09 (docs integrar addendum) puede ir en paralelo con cualquiera
 ```
 

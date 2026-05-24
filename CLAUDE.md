@@ -20,7 +20,7 @@ general-module (catálogos maestros) ──► recoleccion-module ──► vive
 - **`general-module/`** — Catálogos transversales (USUARIO, UBICACION, PAIS, DIVISION_ADMINISTRATIVA, VIVERO, PLANTA, TIPO_PLANTA, EVIDENCIAS_TRAZABILIDAD, METODO_RECOLECCION). Es la fuente viva de las entidades maestras; los demás módulos consumen vía snapshots congelados.
 - **`recoleccion-module/`** — Módulo 1. Registro del lote origen con evidencia fotográfica, GPS y validación. Persistencia multicapa: Supabase DB (tabular) + Supabase Storage (binarios) + IPFS/Pinata (metadata NFT) + Blockchain (mint).
 - **`vivero-module/`** — Módulo 2. Maduración pre-plantación. Modelo híbrido (estado actual + historial append-only de eventos), no event sourcing puro. El **lote de vivero** es el agregado central con **un único origen** desde Recolección.
-- **`plantacion-module/`** — Módulo 3 (en diseño, solo diagrama base).
+- **`plantacion-module/`** — Módulo 3. Modelado base en BD (CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION) aplicado vía migraciones 027–032. Pendientes: handler atómico de despacho automático (tarea 03), triggers de mantenimiento de contadores materializados (tarea 13 sugerida), historiales de ciclo de vida y job nocturno de transición a `MONITOREO_HISTORICO`.
 - **`database/`** — Esquema ER consolidado (`00_database_schema.md` en sintaxis mermaid `erDiagram`), planeación de arquitectura, decisiones críticas, y scripts SQL en `database/supabase/`.
 
 ## Convenciones documentales

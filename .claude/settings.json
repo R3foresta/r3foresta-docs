@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk 'NR==689' /Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tareas/modulo-2-integracion-modulo-3/completadas/11_db_modelado_m3_base.md)",
+      "Bash(head -688 /Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tareas/modulo-2-integracion-modulo-3/completadas/11_db_modelado_m3_base.md)",
+      "Read(//tmp/**)"
+    ],
+    "additionalDirectories": [
+      "/tmp",
+      "/private/tmp"
+    ]
+  }
+}
