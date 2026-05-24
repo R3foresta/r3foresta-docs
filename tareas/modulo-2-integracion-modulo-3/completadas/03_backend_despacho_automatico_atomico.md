@@ -115,3 +115,21 @@ El `DESPACHO` automático **no exige fotos propias** en `EVIDENCIAS_TRAZABILIDAD
 - Backend del módulo M3: handler de creación de plantación.
 - Backend M2: revisar API de creación manual de despachos para rechazar `AUTOMATICO_PLANTACION`.
 - Tests de integración nuevos: `despacho_automatico.spec.ts` (o equivalente).
+
+---
+
+SQL (ya aplicado en Supabase):
+
+migrations/033_m3_seed_tipo_entidad_registro_plantacion.sql — seed idempotente de REGISTRO_PLANTACION en tipos_entidad_evidencia.
+migrations/034_m3_registrar_plantacion_rpc.sql — RPC fn_m3_registrar_plantacion atómica que valida subcampaña ACTIVA, GPS contra polígono, equipo (responsable + coresponsables ∈ SUBCAMPANIA_EQUIPO), saldos por asignación y por lote, EMBOLSADO previo, inserta REGISTRO_PLANTACION + DETALLE + CORESPONSABLES, emite un DESPACHO AUTOMATICO_PLANTACION por lote (con pg_advisory_xact_lock para evitar carrera en el código PLT-NNN-SUB-NNN), descuenta saldos, cierra lote vía fn_vivero_cerrar_lote_si_corresponde si llega a 0, vincula evidencias y verifica el invariante SUM(despachos.cantidad_afectada) == cantidad_total_plantada.
+Módulo NestJS nuevo src/plantaciones/:
+
+Controller api/plantaciones.controller.ts con POST /registros-plantacion y POST /registros-plantacion/evidencias-pendientes.
+DTOs con class-validator (registrar-plantacion.dto.ts, detalle-plantacion.dto.ts, crear-evidencia-pendiente-plantacion.dto.ts).
+Swagger en api/docs/plantaciones.swagger.ts como named factories.
+Servicios layered: plantaciones.service.ts (orquestador), plantacion-auth.service.ts, plantacion-creation.service.ts, plantacion-evidencias.service.ts (bucket recoleccion_fotos con prefix plantaciones/registros/pendientes/).
+Policies puras TS en domain/policies/ (detalles, coresponsables, reposición).
+Módulo wireado en src/app.module.ts.
+Tests: 37 nuevos en src/plantaciones/tests/ — todos pasan. Las 10 fallas pre-existentes en lotes-vivero/tests/ no son mías (confirmado con git stash).
+
+Verificación pendiente: smoke test manual contra Supabase (sección 5 del plan): crear campaña + subcampaña ACTIVA con polígono, agregar usuario al equipo, asignación con saldo, subir evidencias → POST registro → verificar atomicidad en DB.
