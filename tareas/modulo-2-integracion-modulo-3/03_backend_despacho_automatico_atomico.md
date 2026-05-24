@@ -2,9 +2,24 @@
 
 **Área:** Backend
 **Severidad:** Crítica
-**Depende de:** 01, 02
+**Depende de:** 01, 02, **10** (decisiones M3 en docs), **11** (modelado físico de M3 en BD)
 **Bloquea a:** 06
 **Referencias:** Addendum secciones 3.3, 4.3, 5, 13.3, 13.4, 13.5
+
+---
+
+## 0. Prerequisitos descubiertos durante el intento de implementación
+
+Al intentar implementar esta tarea (conversación 2026-05-24), el backend encontró que **las tablas de M3 no existen todavía en BD**. El handler atómico necesita escribir FKs hacia `subcampania_id`, `campania_id` y `registro_plantacion_id` reales, lo que disparó 6 preguntas de diseño (M1 a M6). Esas 6 preguntas se convirtieron en dos tareas prerequisito:
+
+1. **[Tarea 10](./10_docs_flujo_reposicion_y_mortandad.md)** — Cerrar 6 decisiones de diseño en documentación (COORDINADOR como membresía, mix de especies fuera de MVP, estado de campaña derivado, reposición libre de especie, mortandad multi-rol, UX pre-confirmación).
+2. **[Tarea 11](./11_db_modelado_m3_base.md)** — Modelar físicamente las tablas base de M3 en BD respetando las decisiones de la 10 (`CAMPANIA`, `SUBCAMPANIA`, `SUBCAMPANIA_EQUIPO`, `REGISTRO_PLANTACION`, `REGISTRO_PLANTACION_DETALLE`, `REGISTRO_PLANTACION_CORESPONSABLE`, `EVENTO_PLANTACION`, vista `campania_estado`, función `gps_dentro_poligono_con_tolerancia`).
+
+Esta tarea 03 queda **bloqueada** hasta que la 10 y la 11 estén aplicadas. Una vez aplicadas:
+- Los FKs hacia `subcampania`, `campania` y `registro_plantacion` resuelven correctamente.
+- El handler puede llenar `registro_plantacion_detalle.evento_lote_vivero_despacho_id` con el id del `DESPACHO` automático generado.
+- El handler puede usar `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)` para la validación GPS.
+- La validación de permisos del responsable cambia: en lugar de revisar el rol global, el handler verifica que `responsable_id ∈ SUBCAMPANIA_EQUIPO` de la subcampaña destino.
 
 ---
 
@@ -91,7 +106,7 @@ El `DESPACHO` automático **no exige fotos propias** en `EVIDENCIAS_TRAZABILIDAD
 
 - **Tipo de evento `DESPACHO` ya existe** en `EVENTO_LOTE_VIVERO`. El trigger que recalcula `saldo_vivo_actual` debe seguir funcionando sin modificación, porque la diferencia entre manual y automático es solo el `origen_despacho`. **Validar** que el trigger no asume `origen_despacho = MANUAL`.
 - **API de creación de DESPACHO manual del M2** debe seguir aceptando `origen_despacho = 'MANUAL'` por default y **rechazar** explícitamente cualquier intento de pasar `'AUTOMATICO_PLANTACION'` por esa vía. Solo el handler del M3 debe poder generarlo.
-- **Permisos:** validar que el `responsable_id` del `REGISTRO_PLANTACION` tiene permiso operativo en M3, no se hereda del rol "operario de vivero".
+- **Permisos:** validar que el `responsable_id` del `REGISTRO_PLANTACION` está en `SUBCAMPANIA_EQUIPO` de la subcampaña destino (con `rol_en_subcampania = 'COORDINADOR'` o `'OPERARIO'`). No se hereda del rol global del usuario ni del rol "operario de vivero" — el permiso es contextual a la subcampaña. Para co-responsables, mismo criterio: deben ser subset de `SUBCAMPANIA_EQUIPO`.
 
 ---
 
