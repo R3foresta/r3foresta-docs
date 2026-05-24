@@ -194,7 +194,7 @@
       "reglas_adicionales": [
         "El operario selecciona explicitamente el lote por especie; si solo hay un lote disponible se preselecciona.",
         "Por cada lote afectado se genera atomicamente un DESPACHO en EVENTO_LOTE_VIVERO del Modulo 2.",
-        "DESPACHO.destino_tipo = PLANTACION_CAMPAÑA.",
+        "DESPACHO.destino_tipo = PLANTACION_CAMPANIA.",
         "DESPACHO.origen_despacho = AUTOMATICO_PLANTACION.",
         "DESPACHO.destino_referencia = REGISTRO_PLANTACION.id.",
         "DESPACHO lleva referencias subcampania_id y campania_id para drill-down.",
@@ -322,7 +322,7 @@
       ],
       "reglas_adicionales": [
         "La reposicion consume saldo asignado con proposito REPOSICION.",
-        "Genera DESPACHO atomico en Modulo 2 con destino_tipo = PLANTACION_CAMPAÑA y origen_despacho = AUTOMATICO_PLANTACION.",
+        "Genera DESPACHO atomico en Modulo 2 con destino_tipo = PLANTACION_CAMPANIA y origen_despacho = AUTOMATICO_PLANTACION.",
         "Se registra como evento REPOSICION en EVENTO_PLANTACION, append-only.",
         "Las reposiciones NO cuentan para la meta; suman al saldo vivo del grupo origen.",
         "Sin limite temporal en el MVP: una reposicion puede registrarse meses o anos despues.",

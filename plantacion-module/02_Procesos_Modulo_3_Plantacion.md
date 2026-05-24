@@ -592,7 +592,7 @@ Por subcampaña:
 
 Cada `PLANTACION_INICIAL` y `REPOSICION` genera **atómicamente** uno o más eventos `DESPACHO` en `EVENTO_LOTE_VIVERO` (uno por lote afectado), con:
 
-- `destino_tipo = PLANTACION_CAMPAÑA`.
+- `destino_tipo = PLANTACION_CAMPANIA`.
 - `origen_despacho = AUTOMATICO_PLANTACION`.
 - `destino_referencia = REGISTRO_PLANTACION.id`.
 - `subcampania_id` y `campania_id` para drill-down.
