@@ -18,7 +18,7 @@
         "Nombre obligatorio y unico dentro del sistema (recomendado).",
         "Las organizaciones asociadas deben existir en el catalogo ORGANIZACION.",
         "Las fechas estimadas, si se cargan, deben ser coherentes (fin >= inicio).",
-        "La campaña no tiene poligono, meta ni mix propios; esos viven en subcampaña."
+        "La campaña no tiene poligono ni meta propios; esos viven en subcampaña."
       ],
       "reglas_adicionales": [
         "El estado de la campaña padre se calcula en tiempo real: BORRADOR si todas las subcampañas son BORRADOR; ACTIVA si al menos una subcampaña esta ACTIVA; EN_MANTENIMIENTO si todas estan cerradas y al menos una en MANTENIMIENTO_ACTIVO; MONITOREO_HISTORICO si todas estan en MONITOREO_HISTORICO.",
@@ -41,13 +41,12 @@
         "Estado operativo: BORRADOR (default) / ACTIVA / COMPLETADA / FINALIZADA_PARCIAL",
         "Estados reservados en enum sin flujo en MVP: PAUSADA / CANCELADA",
         "Fase de mantenimiento (derivada por fecha): NO_APLICA / MANTENIMIENTO_ACTIVO / MONITOREO_HISTORICO",
-        "Coordinador obligatorio (usuario con rol COORDINADOR o ADMIN)",
-        "Equipo de operarios (lista de usuarios, opcional al crear)",
+        "Coordinador obligatorio al activar (membresia en SUBCAMPANIA_EQUIPO con rol_en_subcampania = COORDINADOR; el usuario debe tener rol global GENERAL, ADMIN o VALIDADOR)",
+        "Equipo de operarios (membresias en SUBCAMPANIA_EQUIPO con rol_en_subcampania = OPERARIO, opcional al crear)",
         "Zona/comunidad del catalogo administrativo obligatoria",
         "Poligono (GeoJSON) obligatorio para activar",
         "Area en hectareas derivada del poligono, no editable manualmente",
         "Meta total de arboles > 0",
-        "Mix de especies con tope porcentual por especie",
         "Fechas estimadas de inicio y fin (opcionales, solo futuras al crear)",
         "fecha_cierre_operativo (timestamp del cierre, automatico o manual)",
         "fecha_fin_mantenimiento (calculada como fecha_cierre_operativo + 3 anos)",
@@ -55,8 +54,7 @@
       ],
       "validaciones": [
         "Meta total > 0.",
-        "La suma de topes porcentuales de especies debe ser <= 100%.",
-        "El coordinador debe existir y tener rol COORDINADOR o ADMIN.",
+        "El coordinador debe existir como usuario activo con rol global GENERAL, ADMIN o VALIDADOR; se materializa como fila unica en SUBCAMPANIA_EQUIPO con rol_en_subcampania = COORDINADOR (constraint partial unique a nivel BD).",
         "La zona debe existir en el catalogo administrativo.",
         "Las fechas estimadas deben ser futuras al crear.",
         "El area no se ingresa manualmente; se calcula desde el poligono.",
@@ -85,8 +83,7 @@
       ],
       "validaciones": [
         "Poligono presente.",
-        "Mix de especies definido (al menos una especie con tope > 0).",
-        "Coordinador asignado.",
+        "Coordinador asignado (fila en SUBCAMPANIA_EQUIPO con rol_en_subcampania = COORDINADOR).",
         "Meta total > 0.",
         "Zona y campaña padre validas."
       ],
@@ -185,8 +182,6 @@
         "Cada cantidad por especie-lote > 0.",
         "Cada lote seleccionado debe tener asignacion ACTIVA con proposito PLANTACION_INICIAL a esa subcampaña.",
         "La cantidad por lote no puede exceder el saldo_asignado_disponible de esa asignacion.",
-        "Cada especie debe pertenecer al mix permitido de la subcampaña.",
-        "Si una especie excede su tope porcentual, advertir pero NO bloquear (guia, no restriccion dura en MVP).",
         "Latitud en [-90, 90] con 6 decimales.",
         "Longitud en [-180, 180] con 6 decimales.",
         "El punto GPS debe estar dentro del poligono de la subcampaña con tolerancia configurable (default 50m); fuera de tolerancia se bloquea.",
@@ -320,8 +315,10 @@
         "Cada lote seleccionado debe tener asignacion ACTIVA con proposito REPOSICION en esa subcampaña.",
         "Permitido en estados operativos: ACTIVA, COMPLETADA, FINALIZADA_PARCIAL.",
         "Permitido en fase MANTENIMIENTO_ACTIVO y MONITOREO_HISTORICO.",
-        "Validaciones de GPS, poligono y mix identicas a PLANTACION_INICIAL.",
-        "El responsable debe ser miembro del equipo o coordinador."
+        "Validaciones de GPS y poligono identicas a PLANTACION_INICIAL (PostGIS via gps_dentro_poligono_con_tolerancia).",
+        "Especie libre: no se exige que la especie repuesta coincida con la del grupo origen (RN-VIV-60). El grupo puede quedar con composicion mixta.",
+        "El responsable debe ser miembro de SUBCAMPANIA_EQUIPO (sea COORDINADOR u OPERARIO) de la subcampaña destino.",
+        "UX pre-confirmacion obligatoria: antes de confirmar la reposicion el sistema muestra cantidad_plantada_inicial, cantidad_muerta_acumulada, cantidad_repuesta_acumulada y cantidad_pendiente_reposicion = muerta - repuesta. Si la cantidad ingresada excede cantidad_pendiente_reposicion, se bloquea el registro."
       ],
       "reglas_adicionales": [
         "La reposicion consume saldo asignado con proposito REPOSICION.",
@@ -441,7 +438,7 @@
         "Home publico con totalizadores globales",
         "Mapa interactivo con poligonos de subcampañas y pines GPS",
         "Listado de campañas con sus subcampañas y organizaciones asociadas",
-        "Detalle de subcampaña con barra de progreso, mix de especies real vs planificado, galeria, equipo",
+        "Detalle de subcampaña con barra de progreso, composicion real de especies plantadas, galeria, equipo",
         "Drill-down hacia Modulo 2 y Modulo 1",
         "Estimacion de captura de CO2 (formulas referenciales)"
       ],

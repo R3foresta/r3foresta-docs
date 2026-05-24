@@ -835,3 +835,11 @@ Una asignación con un propósito **no puede** consumirse para el otro. La restr
 * **Relevancia carbono:** Media
 
 El enum `estado_asignacion_vivero` contiene únicamente `ACTIVA | AGOTADA | DEVUELTA`. El hecho de que una asignación tenga `cantidad_mermada > 0` se muestra como **badge visual** en la UI, no como estado lógico, para no solapar con `ACTIVA`.
+
+### RN-VIV-60 — Reposición no exige misma especie que el grupo origen
+
+* **Severidad:** ADVERTENCIA
+* **Aplica en MVP:** Sí
+* **Relevancia carbono:** Media
+
+Una reposición puede usar stock de cualquier especie disponible en una asignación con propósito `REPOSICION`. No se exige que coincida con la especie del grupo plantado origen. El sistema registra la especie real en el evento `REPOSICION` y el grupo plantado puede quedar con composición mixta. Esta política es revisable post-MVP si la certificación de carbono exige homogeneidad por grupo.

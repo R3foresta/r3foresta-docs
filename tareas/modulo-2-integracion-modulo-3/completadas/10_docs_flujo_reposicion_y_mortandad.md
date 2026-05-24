@@ -204,3 +204,67 @@ Cuando se modele M3 en BD, estos puntos deben respetarse:
 - **Sin validación de mix de especies** en handlers de plantación.
 
 - **Bloque informativo pre-confirmación** en UI tanto para mortandad como para reposición.
+
+---
+
+## Resultado
+
+**Fecha de cierre:** 2026-05-24
+**Estado:** ✅ Hecha
+
+### Qué se hizo
+
+- **`vivero-module/01_regas_de_negocio_vivero.md`:** agregada `RN-VIV-60` al final de la sección 13 (reposición no exige misma especie que el grupo origen — ADVERTENCIA / MVP / Relevancia carbono Media). Numeración preservada.
+- **`plantacion-module/02_Procesos_Modulo_3_Plantacion.md`:** reescritura de las secciones afectadas:
+  - §2.1: removida la mención a "mix de especies" en la descripción de subcampaña; reemplazada por un puntero a §2.12 con la decisión.
+  - §2.10: reescrita completa. Equipo modelado como `SUBCAMPANIA_EQUIPO` con `rol_en_subcampania ENUM(COORDINADOR | OPERARIO)`. Constraint partial unique "1 COORDINADOR por subcampaña". Co-responsables ahora subset de `SUBCAMPANIA_EQUIPO`.
+  - §2.12: convertida en "Mix de especies (fuera del MVP)" con justificación y puntero a esta tarea.
+  - §3.2: ajustado dato "Coordinador asignado" para reflejar membresía via `SUBCAMPANIA_EQUIPO`. Quitada línea "Mix de especies con topes porcentuales".
+  - §3.3: quitada la validación de mix. Validación de coordinador alineada a `SUBCAMPANIA_EQUIPO`.
+  - §3.6: renumerados los pasos (5 a 9). Quitado paso 3 de validación de mix. Agregado puntero a `gps_dentro_poligono_con_tolerancia` como fuente PostGIS. Corregido `PLANTACION_CAMPAÑA` → `PLANTACION_CAMPANIA` (sin ñ, alineado a decisión cerrada). Evidencia heredada al `REGISTRO_PLANTACION` con cita a `RN-VIV-54`.
+  - §3.9: agregada lista explícita de quién puede reportar mortandad (OPERARIO miembro del equipo, COORDINADOR de la subcampaña, ADMIN). Aclarado que la UX informativa se muestra a los tres roles. Evento referenciado como `MORTANDAD_REPORTADA` en `EVENTO_PLANTACION`.
+  - §3.10: agregado bullet "Especie libre" con cita a `RN-VIV-60`. Bloque "UX de pre-confirmación obligatoria" con los cuatro datos y regla de bloqueo (no advertencia).
+  - §11: cambiada "mix de especies real vs planificado" por "composición real de especies plantadas" (la primera asume un plan que el MVP no tiene).
+  - §12: reescrita completa. Catálogo cerrado `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO` preservado. COORDINADOR redefinido como membresía, con constraint partial unique en BD y compatibilidad con múltiples subcampañas. `VOLUNTARIO` explícitamente sin permisos operativos en M3.
+  - §13: removidos del MVP "Mix de especies por subcampaña con topes %"; agregado a "Futuro" como "Mix de especies por subcampaña con topes porcentuales y validación contra plan".
+- **`plantacion-module/00_Requerimientos_Modulo_3_Plantacion.json`:** mismo tratamiento aplicado al JSON estructurado:
+  - `RF-PLA-01`: validación "no tiene poligono, meta ni mix propios" → "no tiene poligono ni meta propios".
+  - `RF-PLA-02`: coordinador y equipo redefinidos como membresía; campo "Mix de especies con tope porcentual por especie" eliminado; validación "suma de topes <= 100%" eliminada; validación de coordinador alineada al constraint de BD.
+  - `RF-PLA-03`: validación de mix eliminada; coordinador validado como `SUBCAMPANIA_EQUIPO`.
+  - `RF-PLA-06`: eliminadas validaciones de mix (pertenencia al mix permitido y advertencia por tope %).
+  - `RF-PLA-10` (reposición): "Validaciones de GPS, poligono y mix idénticas" → "GPS y poligono idénticas (PostGIS via gps_dentro_poligono_con_tolerancia)". Agregadas: "Especie libre" con cita a RN-VIV-60, responsable validado contra `SUBCAMPANIA_EQUIPO`, y UX pre-confirmación obligatoria con bloqueo.
+  - `RF-PLA-15`: "mix de especies real vs planificado" → "composición real de especies plantadas".
+  - JSON re-validado con `python3 -c "import json; json.load(...)"`.
+- **`CLAUDE.md`:**
+  - Eliminado el bullet "Plantación — rol `COORDINADOR` pendiente" del bloque de invariantes.
+  - Agregados cinco invariantes nuevos en el mismo bloque, en orden:
+    1. "Plantación — COORDINADOR es membresía, no rol global."
+    2. "Plantación — Estado de campaña derivado, no persistido."
+    3. "Plantación — Mix de especies fuera del MVP."
+    4. "Plantación — Reposición libre de especie (`RN-VIV-60`)."
+    5. "Plantación — Validación GPS con PostGIS como fuente de verdad."
+
+### Desviaciones del spec original
+
+- **Más invariantes en CLAUDE.md de los pedidos.** El spec sólo pedía dos (COORDINADOR + estado derivado); se agregaron tres adicionales (mix fuera del MVP, reposición libre de especie, PostGIS como fuente de verdad) porque son decisiones cerradas en esta misma tarea con riesgo real de regresión si futuros diseños las olvidan. Mantener el invariante explícito es más barato que perseguir el error después.
+- **§3.6 (M3): corrección colateral del valor de enum.** El doc decía `destino_tipo = PLANTACION_CAMPAÑA` (con ñ); migración 023 y el README de tareas tienen como decisión cerrada que el valor es `PLANTACION_CAMPANIA` (sin ñ, por compatibilidad técnica). Se aprovechó la edición para corregirlo. No estaba listado en los criterios de aceptación pero era un bug latente que iba a generar choque al implementar.
+- **§3.6 (M3): renumeración de pasos.** El paso 3 (validar mix) se eliminó; los pasos posteriores se renumeraron (5 a 9). El spec sólo pedía "quitar la validación", pero dejarla con un hueco numérico (1, 2, 4, 5, 6...) era ruido visual evitable.
+
+### Decisiones nuevas tomadas durante la implementación
+
+- **`VOLUNTARIO` no puede ser miembro de `SUBCAMPANIA_EQUIPO`** (escrito explícito en §12). El spec no lo decía, pero al redefinir COORDINADOR como membresía habilitada a `GENERAL | ADMIN | VALIDADOR` quedó implícito que `VOLUNTARIO` queda fuera. Cerrar la duda ahora para no abrir una nueva discusión al implementar la tarea 11.
+- **El campo `destino_referencia` en el DESPACHO automático no se usa como FK directo a `REGISTRO_PLANTACION.id`.** El spec original de §3.6 lo escribía como `destino_referencia = REGISTRO_PLANTACION.id`, pero el modelo correcto (consistente con migración 023 + 025) es usar la columna `registro_plantacion_id` poblada como FK. `destino_referencia` queda como texto descriptivo (heredado de M2) — cuando es automático se puede dejar NULL o con un texto humano-legible. Aclarado en el doc M3 §3.6.
+
+### Pendientes derivados (alimentan tarea 11)
+
+- `SUBCAMPANIA_EQUIPO` con índice único parcial `(subcampania_id) WHERE rol = 'COORDINADOR'`.
+- `CAMPANIA` sin columna de estado; vista `campania_estado` derivada.
+- `REGISTRO_PLANTACION_CORESPONSABLE` como tabla puente con validación de subset contra `SUBCAMPANIA_EQUIPO` en el handler.
+- Validación de equipo del responsable de `REGISTRO_PLANTACION` y del responsable de `EVENTO_PLANTACION` (mortandad) en el handler, no en BD.
+- Sin tabla `subcampania_especie_permitida`.
+- `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)` como función SQL en M3.
+
+### Referencias
+
+- Commit: pendiente (será un commit único en `r3foresta-docs/` con todos los cambios de esta tarea).
+- Tareas que se desbloquean: [tarea 11](./11_db_modelado_m3_base.md) — modelado físico de M3 en BD.

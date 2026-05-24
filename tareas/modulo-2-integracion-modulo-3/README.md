@@ -25,7 +25,7 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
 | [07](./07_frontend_historial_diferenciado.md) | Historial de lote: diferenciar manual vs automático + evidencia heredada | Frontend | Importante | — |
 | [08](./08_notificaciones_merma_coordinador.md) | Notificación al coordinador por merma sobre asignación | Backend + Frontend | Importante | 04 |
 | [09](./09_docs_integrar_addendum_a_modulo_2.md) | Integrar addendum al MD y JSON oficiales del Módulo 2 | Docs | Mejora | — |
-| [10](./10_docs_flujo_reposicion_y_mortandad.md) | Cerrar decisiones M3 en docs: reposición libre de especie, mortandad multi-rol, UX pre-confirmación, COORDINADOR como membresía, sin mix de especies, estado campaña derivado | Docs | Importante | 11 |
+| [10 ✅](./completadas/10_docs_flujo_reposicion_y_mortandad.md) | Cerrar decisiones M3 en docs: reposición libre de especie, mortandad multi-rol, UX pre-confirmación, COORDINADOR como membresía, sin mix de especies, estado campaña derivado | Docs | Importante | 11 |
 | [11](./11_db_modelado_m3_base.md) | Modelar tablas base de M3 en BD: PostGIS + enums + CAMPANIA + SUBCAMPANIA + REGISTRO_PLANTACION + EVENTO_PLANTACION + vista de estado + función GPS | DB | Crítica | 03 |
 
 ---
@@ -62,13 +62,13 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
 - El saldo disponible para asignar es **derivado**, no persistido como fuente de verdad.
 - `AFECTADA_POR_MERMA` **no es un valor de enum** en `estado_asignacion_vivero`; se expone como badge derivado cuando `cantidad_mermada > 0`. El enum queda con tres valores: `ACTIVA`, `AGOTADA`, `DEVUELTA`.
 
-### Decisiones de M3 cerradas en conversación 2026-05-24 (propagación pendiente vía tarea 10)
+### Decisiones de M3 cerradas en conversación 2026-05-24 (propagadas vía [tarea 10 ✅](./completadas/10_docs_flujo_reposicion_y_mortandad.md))
 
-- **COORDINADOR es membresía por subcampaña**, no rol global. Vive en `SUBCAMPANIA_EQUIPO.rol_en_subcampania ENUM(COORDINADOR | OPERARIO)`. El catálogo cerrado de `rol_usuario` (ADMIN | GENERAL | VALIDADOR | VOLUNTARIO) se mantiene intacto. Una subcampaña tiene exactamente un COORDINADOR (constraint partial unique).
+- **COORDINADOR es membresía por subcampaña**, no rol global. Vive en `SUBCAMPANIA_EQUIPO.rol_en_subcampania ENUM(COORDINADOR | OPERARIO)`. El catálogo cerrado de `rol_usuario` (ADMIN | GENERAL | VALIDADOR | VOLUNTARIO) se mantiene intacto. Una subcampaña tiene exactamente un COORDINADOR (constraint partial unique). `VOLUNTARIO` no puede ser miembro de `SUBCAMPANIA_EQUIPO`.
 - **Mix de especies con topes porcentuales queda fuera del MVP.** No hay tabla `subcampania_especie_permitida` ni validación de topes. La composición real se registra en `REGISTRO_PLANTACION_DETALLE` pero no se valida contra plan.
 - **`CAMPANIA` no persiste estado.** El estado se calcula al leer vía vista `campania_estado` desde el conjunto de subcampañas.
-- **Reposición no exige misma especie** que el grupo origen en MVP (`RN-VIV-60`). Revisable post-MVP.
-- **Mortandad puede reportarla** cualquier OPERARIO o COORDINADOR (membresía de la subcampaña) o ADMIN.
+- **Reposición no exige misma especie** que el grupo origen en MVP (`RN-VIV-60`). UX pre-confirmación obligatoria con bloqueo si la cantidad excede `cantidad_pendiente_reposicion`. Revisable post-MVP.
+- **Mortandad puede reportarla** cualquier OPERARIO o COORDINADOR (membresía de la subcampaña) o ADMIN. La UX informativa se muestra a los tres roles.
 - **PostGIS es la fuente de verdad** para validación GPS dentro de polígono (función `gps_dentro_poligono_con_tolerancia`). Turf.js opcional en frontend solo para feedback visual.
 - **`EVENTO_PLANTACION` unificada** (no tablas separadas por tipo). Sigue el patrón de `EVENTO_LOTE_VIVERO` de M2. Captura mortandad, devolución y registro de asignación; los registros de plantación inicial y reposición viven directamente en `REGISTRO_PLANTACION`.
 

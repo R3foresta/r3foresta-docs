@@ -28,16 +28,16 @@ Este módulo es la cara visible del proyecto y la base operativa de los **bonos 
 El módulo separa **planificación estratégica** de **operación real**:
 
 - **Campaña (nivel estratégico):** contenedor lógico que agrupa el proyecto. Tiene nombre, descripción, organizaciones asociadas, fechas estimadas globales. **No tiene polígono propio ni meta operativa propia.**
-- **Subcampaña (nivel operativo):** unidad de trabajo real. Tiene su propio coordinador, equipo, polígono, mix de especies, meta de árboles, asignaciones de lotes y estado operativo.
+- **Subcampaña (nivel operativo):** unidad de trabajo real. Tiene su propio coordinador (membresía contextual, ver §2.10), equipo, polígono, meta de árboles, asignaciones de lotes y estado operativo. La composición real de especies se registra en `REGISTRO_PLANTACION_DETALLE`; el control de mix con topes queda fuera del MVP (ver §2.12).
 
 Una campaña contiene **N subcampañas** (al menos 1, sin límite superior).
 
 Ejemplo:
 
 - Campaña: "Arborización La Paz 2026" (organizaciones: Alcaldía La Paz + ONG VerdesAndinos).
-  - Subcampaña 1: "Cota Cota" (coordinador A, meta 1000 árboles, polígono A, mix urbano).
-  - Subcampaña 2: "San Miguel" (coordinador B, meta 1000 árboles, polígono B, mix urbano).
-  - Subcampaña 3: "Hampaturi" (coordinador C, meta 5000 árboles, polígono C, mix nativo).
+  - Subcampaña 1: "Cota Cota" (coordinador A, meta 1000 árboles, polígono A).
+  - Subcampaña 2: "San Miguel" (coordinador B, meta 1000 árboles, polígono B).
+  - Subcampaña 3: "Hampaturi" (coordinador C, meta 5000 árboles, polígono C).
 
 Si se quiere ampliar el proyecto, **se crea una nueva subcampaña** dentro de la misma campaña. No existe el concepto de "fases" ni "campañas hijas".
 
@@ -151,16 +151,21 @@ Una subcampaña puede consumir parcialmente varios lotes. Un lote puede asignar 
 
 ### 2.10. Equipo de la subcampaña
 
+El equipo se modela en la tabla puente `SUBCAMPANIA_EQUIPO` con un campo `rol_en_subcampania ENUM(COORDINADOR | OPERARIO)`. La membresía es **contextual a la subcampaña** y no afecta el rol global del usuario en `USUARIO.rol` (ver §12).
+
 Cada subcampaña tiene:
 
-- **Coordinador (1, obligatorio):** designado por el admin. Gestiona la subcampaña, asigna/devuelve lotes, también puede operar.
-- **Equipo (N, opcional):** lista de operarios autorizados a registrar plantaciones en esa subcampaña.
+- **Coordinador (1, obligatorio):** exactamente un miembro con `rol_en_subcampania = 'COORDINADOR'`. Designado por el admin al activar. Gestiona la subcampaña (asigna/devuelve lotes, edita equipo, cierra parcial) y también puede operar como cualquier OPERARIO.
+- **Operarios (N, opcional):** miembros con `rol_en_subcampania = 'OPERARIO'`, autorizados a registrar plantaciones, reposiciones y reportes de mortandad en esa subcampaña.
+
+Constraint en BD: índice único parcial `(subcampania_id) where rol = 'COORDINADOR'` que garantiza exactamente 1 COORDINADOR por subcampaña. Constraint adicional `unique (subcampania_id, usuario_id)` para evitar dobles membresías.
 
 Reglas:
 
-- Al registrar una plantación, el operario debe ser miembro del equipo (o el coordinador).
-- Los **co-responsables** del registro deben ser un **subconjunto del equipo** (no se aceptan usuarios fuera del equipo como co-responsables).
+- Al registrar una plantación, el `responsable_id` debe pertenecer a `SUBCAMPANIA_EQUIPO` de la subcampaña destino (sea COORDINADOR u OPERARIO).
+- Los **co-responsables** del registro deben ser un **subconjunto de `SUBCAMPANIA_EQUIPO`** (no se aceptan usuarios fuera del equipo como co-responsables).
 - El equipo se puede ampliar o reducir mientras la subcampaña no está terminal.
+- Un mismo usuario puede ser COORDINADOR de una subcampaña y OPERARIO de otras en paralelo. La membresía no rota su rol global.
 
 No hay porcentaje de participación entre miembros del equipo. Todos los co-responsables de un registro son tratados por igual.
 
@@ -171,12 +176,11 @@ No hay porcentaje de participación entre miembros del equipo. Todos los co-resp
 
 El área en hectáreas se **calcula automáticamente desde el polígono** como dato referencial. No se ingresa manualmente.
 
-### 2.12. Mix de especies a nivel subcampaña
+### 2.12. Mix de especies (fuera del MVP)
 
-El mix de especies con topes porcentuales se define **por subcampaña**, no por campaña padre. Cada zona puede tener su propio mix (urbano vs nativo, por ejemplo).
+El control de mix de especies con topes porcentuales por subcampaña queda **fuera del MVP**. La composición real de especies se registra a través de los detalles de cada `REGISTRO_PLANTACION` (`REGISTRO_PLANTACION_DETALLE.planta_id`), pero no hay validación contra un plan ni advertencias por exceso de tope. Se incorpora en una fase posterior.
 
-- La suma de topes puede ser ≤ 100%.
-- El sistema **advierte** si se excede el tope al plantar, pero **no bloquea** (guía, no restricción dura en MVP).
+Decisión cerrada 2026-05-24 (ver [tareas/.../completadas/10_docs_flujo_reposicion_y_mortandad.md](../tareas/modulo-2-integracion-modulo-3/completadas/10_docs_flujo_reposicion_y_mortandad.md)).
 
 ### 2.13. Activación con stock parcial
 
@@ -238,11 +242,10 @@ Datos mínimos por subcampaña:
 - Nombre de la subcampaña.
 - Tipo: `REFORESTACION | ARBORIZACION | FORESTACION`.
 - Zona o comunidad (catálogo administrativo).
-- Coordinador asignado (obligatorio, rol COORDINADOR o ADMIN).
-- Equipo de operarios (opcional al crear, ampliable después).
+- Coordinador asignado (obligatorio al activar; se materializa como fila en `SUBCAMPANIA_EQUIPO` con `rol_en_subcampania = 'COORDINADOR'`).
+- Equipo de operarios (opcional al crear, ampliable después en `SUBCAMPANIA_EQUIPO`).
 - Polígono del área (obligatorio para activar).
 - Meta total de árboles (> 0).
-- Mix de especies con topes porcentuales.
 - Fechas estimadas de inicio y fin (solo futuras).
 
 En `BORRADOR`:
@@ -258,8 +261,7 @@ En `BORRADOR`:
 Validaciones para activar:
 
 - Polígono presente.
-- Mix de especies definido (al menos una especie con tope > 0).
-- Coordinador asignado.
+- Coordinador asignado (`SUBCAMPANIA_EQUIPO` con `rol_en_subcampania = 'COORDINADOR'`).
 - Meta total > 0.
 
 Si todas las validaciones pasan, la subcampaña pasa a `ACTIVA`. Si la subcampaña se activa sin stock asignado al 100%, el sistema muestra advertencia pero permite continuar.
@@ -314,20 +316,19 @@ Flujo del operario:
 Al guardar, el sistema:
 
 1. Valida que la subcampaña esté `ACTIVA`.
-2. Verifica que el GPS esté dentro del polígono de la subcampaña (con tolerancia configurable).
-3. Verifica que las especies estén en el mix permitido. Si exceden tope %, advierte pero permite.
-4. Verifica que las cantidades por lote no superen los saldos asignados disponibles.
-5. Descuenta las cantidades de cada asignación afectada.
-6. Genera atómicamente un evento `DESPACHO` en `EVENTO_LOTE_VIVERO` por cada lote afectado, con:
-   - `destino_tipo = PLANTACION_CAMPAÑA`.
+2. Verifica que el GPS esté dentro del polígono de la subcampaña (con tolerancia configurable). PostGIS es la fuente de verdad vía `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)`.
+3. Verifica que las cantidades por lote no superen los saldos asignados disponibles.
+4. Descuenta las cantidades de cada asignación afectada.
+5. Genera atómicamente un evento `DESPACHO` en `EVENTO_LOTE_VIVERO` por cada lote afectado, con:
+   - `destino_tipo = PLANTACION_CAMPANIA`.
    - `origen_despacho = AUTOMATICO_PLANTACION`.
-   - `destino_referencia = REGISTRO_PLANTACION.id`.
+   - `registro_plantacion_id` poblado.
    - `subcampania_id` y `campania_id` para drill-down.
-   - `comunidad_destino_id` heredada de la subcampaña.
-7. Congela snapshots oficiales en el registro.
-8. Crea el `REGISTRO_PLANTACION` como append-only.
-9. Vincula las evidencias fotográficas.
-10. Si la suma de plantaciones iniciales alcanza la meta, dispara **cierre automático** a `COMPLETADA`.
+   - `comunidad_destino_id` heredada de `subcampania.zona_id`.
+6. Congela snapshots oficiales en el registro.
+7. Crea el `REGISTRO_PLANTACION` como append-only.
+8. Vincula las evidencias fotográficas al `REGISTRO_PLANTACION` (el `DESPACHO` automático las hereda, ver RN-VIV-54).
+9. Si la suma de plantaciones iniciales alcanza la meta, dispara **cierre automático** a `COMPLETADA`.
 
 ### 3.7. Cierre automático a COMPLETADA
 
@@ -356,6 +357,14 @@ Comportamiento posterior idéntico a COMPLETADA: sin plantaciones iniciales, con
 
 **Objetivo:** registrar pérdidas observadas en visitas posteriores.
 
+**Quién puede reportar mortandad:**
+
+- Cualquier **OPERARIO** miembro de `SUBCAMPANIA_EQUIPO` de la subcampaña.
+- El **COORDINADOR** de la subcampaña (membresía, ver §2.10).
+- **ADMIN** (rol global).
+
+No hay diferencias de permisos entre ellos para este evento.
+
 Datos obligatorios:
 
 - `registro_plantacion_id` del grupo afectado.
@@ -367,9 +376,9 @@ Datos obligatorios:
 
 El sistema:
 
-- Muestra al operario el histórico del grupo antes de confirmar (plantado, muertos previos, vivos estimados) para evitar doble conteo.
+- Muestra al usuario que reporta (sea OPERARIO, COORDINADOR o ADMIN) el histórico del grupo antes de confirmar (plantado, muertos previos, vivos estimados) para evitar doble conteo.
 - Valida que `cantidad_muerta_acumulada + delta ≤ plantado_inicial + reposiciones_acumuladas`.
-- Crea evento `MORTANDAD_REPORTADA` append-only.
+- Crea evento `MORTANDAD_REPORTADA` en `EVENTO_PLANTACION` append-only.
 - Recalcula el saldo vivo del grupo.
 
 Permitido en estados: `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`. También permitido durante `MONITOREO_HISTORICO` aunque no se espere activamente.
@@ -384,6 +393,18 @@ Funciona como una plantación pero:
 - Flag `es_reposicion = true`.
 - Solo consume asignaciones con propósito `REPOSICION`.
 - **No avanza la meta** de la subcampaña.
+- **Especie libre:** no se exige que la especie repuesta coincida con la del grupo origen. El operario puede usar cualquier especie disponible en asignaciones `REPOSICION` (ver `RN-VIV-60`). El grupo resultante puede quedar con composición mixta y se registra fielmente en `REGISTRO_PLANTACION_DETALLE`.
+
+**UX de pre-confirmación (obligatoria):**
+
+Antes de confirmar la reposición, el sistema muestra al operario el estado del grupo origen:
+
+- `cantidad_plantada_inicial`
+- `cantidad_muerta_acumulada`
+- `cantidad_repuesta_acumulada`
+- `cantidad_pendiente_reposicion = cantidad_muerta_acumulada − cantidad_repuesta_acumulada`
+
+Si la cantidad ingresada por el operario excede `cantidad_pendiente_reposicion`, el sistema **bloquea el registro** con mensaje claro (no es advertencia opcional).
 
 Validaciones específicas:
 
@@ -620,7 +641,7 @@ Toda la información de subcampañas activas, completadas y finalizadas parciale
 - Mapa interactivo con polígonos de subcampañas y pines GPS de plantaciones.
 - Totalizadores: árboles plantados, captura estimada de CO₂, subcampañas activas, comunidades alcanzadas.
 - Detalle por campaña con sus subcampañas, organizaciones asociadas.
-- Detalle por subcampaña con barra de progreso, mix de especies real vs planificado, galería de fotos, equipo participante.
+- Detalle por subcampaña con barra de progreso, composición real de especies plantadas, galería de fotos, equipo participante.
 - Drill-down hacia Módulo 2 (lote de vivero específico) y Módulo 1 (recolección origen).
 - Las subcampañas en `BORRADOR` no son públicas.
 
@@ -630,11 +651,13 @@ En MVP toda la información es pública (alineado con el carácter blockchain de
 
 ## 12. Roles (MVP)
 
-- **ADMIN:** crea campañas y subcampañas, asigna coordinadores, cierra manualmente a FINALIZADA_PARCIAL, gestiona organizaciones.
-- **COORDINADOR (rol nuevo):** gestiona sus subcampañas asignadas (asignaciones, equipo, devoluciones), también puede operar como operario.
-- **GENERAL (operario):** registra plantaciones, reposiciones y mortandad en subcampañas donde es parte del equipo.
-- **VALIDADOR:** rol global de plataforma, sin flujo especial en este módulo en MVP.
-- **VOLUNTARIO:** sin permisos operativos críticos salvo habilitación explícita.
+El catálogo cerrado de roles globales se preserva: `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`. La coordinación de una subcampaña **no introduce un rol global nuevo**: se modela como **membresía contextual** en `SUBCAMPANIA_EQUIPO.rol_en_subcampania ENUM(COORDINADOR | OPERARIO)`.
+
+- **ADMIN:** crea campañas y subcampañas, asigna el coordinador inicial al activar, edita equipo, cierra manualmente a FINALIZADA_PARCIAL, gestiona organizaciones.
+- **COORDINADOR (membresía por subcampaña, no rol global):** cualquier USUARIO con rol global `GENERAL`, `ADMIN` o `VALIDADOR` puede ser COORDINADOR de una subcampaña a través de `SUBCAMPANIA_EQUIPO.rol_en_subcampania = 'COORDINADOR'`. Gestiona sus subcampañas asignadas (asignaciones, equipo, devoluciones, cierre parcial si tiene rol global ADMIN) y también puede operar como operario. Una subcampaña tiene **exactamente un** COORDINADOR (constraint partial unique en BD); un usuario puede ser COORDINADOR de varias subcampañas distintas y/o OPERARIO en otras simultáneamente.
+- **GENERAL (operario):** rol global. Registra plantaciones, reposiciones y mortandad en las subcampañas donde es miembro de `SUBCAMPANIA_EQUIPO` (como `OPERARIO` o `COORDINADOR`).
+- **VALIDADOR:** rol global de plataforma, sin flujo especial en este módulo en MVP. Puede ser COORDINADOR u OPERARIO de subcampañas vía membresía.
+- **VOLUNTARIO:** sin permisos operativos críticos en M3. No puede ser miembro de `SUBCAMPANIA_EQUIPO` ni registrar eventos.
 
 ---
 
@@ -655,8 +678,7 @@ En MVP toda la información es pública (alineado con el carácter blockchain de
 - Selección explícita de lote por el operario al plantar.
 - Cantidad absoluta como fuente de verdad (porcentaje solo visual).
 - Equipo a nivel subcampaña; co-responsables subconjunto del equipo, sin porcentajes.
-- Polígono obligatorio por subcampaña; GPS validado dentro del polígono.
-- Mix de especies por subcampaña con topes %.
+- Polígono obligatorio por subcampaña; GPS validado dentro del polígono (PostGIS como fuente de verdad).
 - Foto + GPS obligatorios en plantación, reposición y mortandad.
 - Activación con stock parcial permitida.
 - No reapertura: si se cerró parcialmente y aparece stock, se crea nueva subcampaña.
@@ -721,6 +743,7 @@ Definidos formalmente en `database/00_database_schema.md`. Los valores `OTRO` se
 
 ### Futuro
 
+- Mix de especies por subcampaña con topes porcentuales y validación contra plan.
 - Implementar PAUSADA y CANCELADA con sus flujos.
 - Correcciones auditadas de mortandad y plantación.
 - Trazabilidad por árbol individual (no solo por lote).
