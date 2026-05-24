@@ -25,6 +25,7 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
 | [07](./07_frontend_historial_diferenciado.md) | Historial de lote: diferenciar manual vs automático + evidencia heredada | Frontend | Importante | — |
 | [08](./08_notificaciones_merma_coordinador.md) | Notificación al coordinador por merma sobre asignación | Backend + Frontend | Importante | 04 |
 | [09](./09_docs_integrar_addendum_a_modulo_2.md) | Integrar addendum al MD y JSON oficiales del Módulo 2 | Docs | Mejora | — |
+| [10](./10_docs_flujo_reposicion_y_mortandad.md) | Documentar flujo de reposición y reporte de mortandad (especie libre, UX pre-confirmación, roles) | Docs | Importante | modelado de M3 en BD |
 
 ---
 
@@ -41,6 +42,7 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
          └── 06 / 07 (UI lectura)
 
 09 (docs) puede ir en paralelo con cualquiera
+10 (docs reposición + mortandad) independiente; debería cerrarse antes de modelar M3 en BD
 ```
 
 ---

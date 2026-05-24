@@ -429,33 +429,38 @@ Antes de mergear:
 ## Resultado
 
 **Fecha de cierre:** 2026-05-21
-**Estado:** ✅ Hecha
+**Estado:** ✅ Hecha (con fix posterior aplicado el mismo día)
 
 ### Qué se hizo
 
 - Creado `migrations/023_vivero_despacho_automatico_m3.sql` (114 líneas, idempotente) consolidando los dos pasos del spec en un único archivo.
 - Agregado `PLANTACION_CAMPANIA` a `destino_tipo_vivero` con `ALTER TYPE ... ADD VALUE IF NOT EXISTS`.
 - Creado el enum `origen_despacho_vivero ('MANUAL', 'AUTOMATICO_PLANTACION')` con DO block guard.
-- Agregadas cuatro columnas con `ADD COLUMN IF NOT EXISTS`: `origen_despacho origen_despacho_vivero NOT NULL DEFAULT 'MANUAL'`, y `subcampania_id`, `campania_id`, `registro_plantacion_id` como `BIGINT` nullable.
-- Agregados ambos CHECK constraints con DO blocks idempotentes.
+- Agregadas cuatro columnas a `evento_lote_vivero`: `origen_despacho` y los tres IDs hacia M3 (`subcampania_id`, `campania_id`, `registro_plantacion_id`) como `BIGINT` nullable.
+- Agregados ambos CHECK constraints (consistencia con M3 + unidad UNIDAD obligatoria en automáticos).
 - Aplicado exitosamente en el SQL Editor de Supabase.
 - Estado del enum `destino_tipo_vivero` confirmado en Supabase antes de migrar: `PLANTACION_PROPIA, PLANTACION_COMUNIDAD, DONACION, VENTA, OTRO` (la migration 006 del repo tenía `DONACION_COMUNIDAD`; había drift — el valor real en Supabase es el correcto).
+- **Fix posterior:** creado `migrations/025_fix_origen_despacho_solo_en_despacho.sql` para corregir un error semántico de la 023 (ver siguiente sección).
 
 ### Desviaciones del spec original
 
 - **Un solo archivo en lugar de dos.** El spec indicaba separar en `paso1_enums.sql` y `paso2_columnas.sql`. Se consolidó en un único archivo.
 - **CHECK constraints usan `::text` en lugar de `::enum`.** El primer intento falló con error Postgres 55P04 (`unsafe use of new value "PLANTACION_CAMPANIA"`): el SQL Editor de Supabase envuelve el script en una sola transacción, impidiendo usar en la misma transacción un valor recién agregado con `ALTER TYPE ADD VALUE`. Solución: las expresiones dentro de los CHECK constraints comparan con `columna::text = 'VALOR'` en lugar de `columna = 'VALOR'::enum`. La restricción es funcionalmente idéntica.
+- **`origen_despacho` debió crearse como nullable, no como `NOT NULL DEFAULT 'MANUAL'`.** El spec proponía `DEFAULT 'MANUAL'` con el razonamiento de que los eventos existentes eran todos despachos manuales. Pero la columna se aplicó a TODAS las filas de `evento_lote_vivero`, no solo a las de `tipo_evento = 'DESPACHO'`. Eso dejó eventos `INICIO`, `EMBOLSADO`, `ADAPTABILIDAD`, `MERMA` y `CIERRE_AUTOMATICO` con un `origen_despacho = 'MANUAL'` semánticamente incorrecto (esos eventos no son despachos, no tienen origen). Detectado al revisar datos en Supabase. Corregido en migración 025: columna nullable, backfill a NULL para no-DESPACHO, CHECK constraint endurecido con tres ramas mutuamente exclusivas (no-DESPACHO → NULL, DESPACHO MANUAL → 'MANUAL', DESPACHO AUTOMATICO → 'AUTOMATICO_PLANTACION' + IDs de M3).
 - El nombre del archivo en el repo de implementación es `023_vivero_despacho_automatico_m3.sql`, no los nombres propuestos en el spec.
 
 ### Decisiones nuevas tomadas durante la implementación
 
 - **`::text` como workaround permanente para CHECK constraints que referencian valores de enum recién agregados.** Aplicar este patrón en cualquier futura migración que combine `ALTER TYPE ADD VALUE` y CHECK constraints en el mismo archivo ejecutado desde el SQL Editor de Supabase.
+- **`origen_despacho` es nullable y solo se pobla cuando `tipo_evento = 'DESPACHO'`.** El backend que inserta despachos manuales debe setear explícitamente `origen_despacho = 'MANUAL'`; ya no hay DEFAULT que lo rellene automáticamente. El CHECK constraint rechazará un DESPACHO con `origen_despacho IS NULL`. Esto se valida desde la API en tarea 03.
 
 ### Pendientes derivados
 
 - Las FKs reales hacia `SUBCAMPANIA`, `CAMPANIA`, `REGISTRO_PLANTACION` siguen diferidas hasta que esas tablas existan en BD (Módulo 3).
 - Si el proyecto adopta un migration runner con transacciones automáticas, los `ALTER TYPE ADD VALUE` deben ir en archivos separados o con flag `executeInTransaction=false`.
+- **Tarea 03 hereda:** el handler de despacho manual del M2 debe setear `origen_despacho = 'MANUAL'` explícitamente al insertar. Antes funcionaba gracias al DEFAULT; ahora es responsabilidad del backend.
 
 ### Referencias
 
 - Archivo en repo de implementación: `migrations/023_vivero_despacho_automatico_m3.sql`
+- Fix de invariante: `migrations/025_fix_origen_despacho_solo_en_despacho.sql`
