@@ -103,7 +103,7 @@ Al final del commit exitoso, si `afectaciones` no está vacío:
 
 - **Handler actual de `MERMA`:** asume que solo afecta saldo vivo del lote, sin contemplar reservas. Hay que extenderlo. **No introducir un endpoint nuevo**: la operación de merma sigue siendo una sola desde la perspectiva del usuario de vivero.
 - **Lectura de saldos en UI:** cualquier vista del operario de vivero que muestre "saldo disponible" debe pasar a usar `saldo_vivo_disponible_asignacion` (tarea 05), no `saldo_vivo_actual`. Hasta que esa tarea esté lista, el operario podría tratar de despachar manualmente lo que está reservado. **Mitigación temporal:** la API de despacho manual debe validar contra `saldo_vivo_disponible_asignacion`.
-- **Índice existente:** `asignacion_vivero_subcampania_fecha_fifo_idx` sobre `(lote_vivero_id, fecha_asignacion)` soporta igualmente el orden LIFO (Postgres puede scanear un índice en reversa). El nombre es cosméticamente incorrecto pero no afecta funcionalidad; se puede renombrar en una migración futura menor.
+- **Índice existente:** `asignacion_vivero_subcampania_fecha_fifo_idx` sobre `(lote_vivero_id, fecha_asignacion)` soporta igualmente el orden LIFO (Postgres puede scanear un índice en reversa). El nombre es cosméticamente incorrecto mejor si lo renombramos ahora a `asignacion_vivero_subcampania_fecha_lifo_idx`
 
 ---
 
