@@ -123,3 +123,21 @@ cantidad_despachada <= saldo_vivo_disponible_asignacion del lote
 - Backend M2: endpoint `GET /api/lotes-vivero/:id/saldos`.
 - Backend M2: validación en handler de despacho manual.
 - Backend M3: validación en handler de creación de asignación.
+
+---
+
+## Tarea terminada:
+- migrations/035: vista v_lote_vivero_saldos con saldo_asignado_total
+  y saldo_vivo_disponible_asignacion por lote (idempotente).
+- ViveroSaldosService: obtenerSaldos() para el endpoint con detalle
+  de asignaciones activas + nombre de subcampaña; leerSaldoDisponible()
+  para validación pre-despacho; fallback a tablas base si la vista no
+  está en el schema cache de PostgREST.
+- GET /lotes-vivero/:id/saldos: nuevo endpoint con swagger.
+- ViveroDespachoService.registrar(): valida cantidad_afectada contra
+  saldo_vivo_disponible_asignacion antes de llamar la RPC; devuelve 422
+  si el stock requerido está reservado para subcampañas.
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+EOF
+)
