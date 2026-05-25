@@ -616,7 +616,7 @@ Para el equipo de vivero, tres cambios prácticos:
 
 - **El operario de vivero ya no puede despachar manualmente saldo reservado.** La validación cambia de `saldo_vivo_actual` a `saldo_vivo_disponible_asignacion`.
 - **Aparecen despachos automáticos en el historial del lote.** Los genera el sistema, no el operario. Tienen badge `POR PLANTACIÓN` y enlazan a la subcampaña + registro de plantación.
-- **Las mermas pueden afectar reservas activas** (política FIFO). Cuando ocurre, se notifica al coordinador de la subcampaña afectada.
+- **Las mermas pueden afectar reservas activas** (política LIFO — la asignación más nueva primero). Cuando ocurre, se notifica al coordinador de la subcampaña afectada.
 
 ### 13.4. Asignación con propósito
 
@@ -642,9 +642,11 @@ Esta restricción se valida en el handler de M3 al consumir; no se cruza.
 
 Un `REGISTRO_PLANTACION` puede tocar N lotes. En ese caso se generan N eventos `DESPACHO`, **todos en la misma transacción** que el registro de M3 + la actualización de las asignaciones. Si algo falla, todo se revierte.
 
-### 13.7. Política FIFO de mermas
+### 13.7. Política LIFO de mermas
 
-Cuando una `MERMA` en un lote excede su saldo no asignado, el excedente se distribuye sobre las asignaciones activas en orden **FIFO por `fecha_asignacion`**, aumentando `cantidad_mermada` de cada una. `cantidad_asignada` nunca se toca.
+Cuando una `MERMA` en un lote excede su saldo no asignado, el excedente se distribuye sobre las asignaciones activas en orden **LIFO por `fecha_asignacion DESC, id DESC`** (la asignación más nueva primero), aumentando `cantidad_mermada` de cada una. `cantidad_asignada` nunca se toca.
+
+La política LIFO protege las asignaciones más antiguas — que corresponden a las plantaciones más urgentes — y carga la pérdida sobre las reservas más recientes, que tienen mayor margen temporal para reorganizarse.
 
 Cada afectación dispara una notificación al coordinador de la subcampaña dueña.
 

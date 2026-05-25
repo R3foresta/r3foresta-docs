@@ -716,13 +716,15 @@ Cuando el Módulo 3 procesa una `DEVOLUCION_A_VIVERO`, el Módulo 2 **no genera 
 
 Modificar `cantidad_asignada` para "compensar" una merma o devolución borra historia y dificulta auditoría.
 
-### RN-VIV-50 — Política FIFO de mermas sobre asignaciones
+### RN-VIV-50 — Política LIFO de mermas sobre asignaciones
 
 * **Severidad:** BLOQUEANTE
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Alta
 
-Cuando una `MERMA` excede el saldo no asignado del lote, el excedente se distribuye sobre las asignaciones activas en orden **FIFO por `fecha_asignacion` ascendente**. Cada asignación afectada aumenta su `cantidad_mermada` por la cantidad correspondiente, sin modificar `cantidad_asignada`.
+Cuando una `MERMA` excede el saldo no asignado del lote, el excedente se distribuye sobre las asignaciones activas en orden **LIFO por `fecha_asignacion DESC, id DESC`** (la asignación más nueva primero). Cada asignación afectada aumenta su `cantidad_mermada` por la cantidad correspondiente, sin modificar `cantidad_asignada`.
+
+**Justificación:** la asignación más antigua es la que planta primero; afectarla primero dejaría sin árboles a la actividad más urgente. La política LIFO protege los compromisos más inminentes y carga la pérdida sobre las reservas con mayor margen temporal.
 
 El algoritmo no puede dejar `saldo_asignado_disponible < 0` ni `saldo_vivo_actual < 0`.
 

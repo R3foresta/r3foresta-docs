@@ -97,7 +97,7 @@ create index if not exists asignacion_vivero_subcampania_fecha_fifo_idx
   where estado = 'ACTIVA';
 ```
 
-El último índice soporta la política FIFO de mermas (tarea 04).
+El último índice soporta la política LIFO de mermas (tarea 04) — Postgres puede scanearlo en reversa (`DESC`) sin índice adicional.
 
 ### 2.4. Trigger de transición de estado (opcional, recomendado)
 
@@ -175,7 +175,7 @@ create trigger asignacion_vivero_subcampania_estado_trg
 - Creado `migrations/024_vivero_asignacion_subcampania.sql` (156 líneas, idempotente).
 - Enums `proposito_asignacion (PLANTACION_INICIAL, REPOSICION)` y `estado_asignacion_vivero (ACTIVA, AGOTADA, DEVUELTA)` creados con DO block guard.
 - Tabla `asignacion_vivero_subcampania` con columna `saldo_asignado_disponible GENERATED ALWAYS AS STORED`, 5 CHECK constraints, FKs a `lote_vivero` y `usuario`.
-- Tres índices: por lote activo, por subcampaña, y FIFO (`lote_vivero_id, fecha_asignacion`) para soporte de tarea 04.
+- Tres índices: por lote activo, por subcampaña, y de ordenación temporal (`lote_vivero_id, fecha_asignacion`) para soporte de tarea 04 (LIFO; el índice `_fecha_fifo_idx` tiene nombre cosméticamente incorrecto pero funciona igual ya que Postgres puede scanearlo en reversa).
 - Trigger `BEFORE INSERT OR UPDATE` que recalcula `estado` y `updated_at`; recalcula saldo a mano porque columnas GENERATED son NULL en BEFORE triggers.
 - Aplicado exitosamente en el SQL Editor de Supabase.
 

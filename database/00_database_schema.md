@@ -261,7 +261,7 @@ ASIGNACION_VIVERO_SUBCAMPANIA {
     int cantidad_asignada "NOT NULL - inmutable, > 0, siempre UNIDAD"
     int cantidad_consumida "NOT NULL default 0 - aumenta con cada DESPACHO automatico que consume de esta asignacion"
     int cantidad_devuelta "NOT NULL default 0 - aumenta con cada DEVOLUCION_A_VIVERO en M3"
-    int cantidad_mermada "NOT NULL default 0 - aumenta cuando una MERMA del lote agota saldo no asignado y desborda a esta asignacion por FIFO"
+    int cantidad_mermada "NOT NULL default 0 - aumenta cuando una MERMA del lote agota saldo no asignado y desborda a esta asignacion por LIFO (la mas nueva primero)"
     int saldo_asignado_disponible "GENERATED ALWAYS AS (cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada) STORED"
     bigint usuario_asignacion_id FK "NOT NULL - ADMIN o COORDINADOR de la subcampania"
     timestamptz fecha_asignacion "NOT NULL default now()"

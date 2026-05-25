@@ -9,7 +9,7 @@
 
 ## 1. Contexto
 
-Cuando una merma en un lote afecta una asignación activa de una subcampaña, el coordinador de esa subcampaña debe enterarse sin tener que monitorear el vivero. La política FIFO de mermas (tarea 04) ya identifica qué asignaciones se afectan; falta la pieza de notificación.
+Cuando una merma en un lote afecta una asignación activa de una subcampaña, el coordinador de esa subcampaña debe enterarse sin tener que monitorear el vivero. La política LIFO de mermas (tarea 04) ya identifica qué asignaciones se afectan; falta la pieza de notificación.
 
 ---
 

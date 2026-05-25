@@ -1,4 +1,4 @@
-# Tarea 04 — Política FIFO de mermas sobre asignaciones
+# Tarea 04 — Política LIFO de mermas sobre asignaciones
 
 **Área:** Backend
 **Severidad:** Importante
@@ -13,8 +13,10 @@
 Cuando ocurre una `MERMA` en un lote que tiene asignaciones activas en M3, el sistema debe decidir cómo absorbe esa pérdida sin romper saldos. La política aprobada es:
 
 1. La merma afecta primero el **saldo no asignado** del lote.
-2. Si excede el saldo no asignado, el remanente se distribuye sobre **asignaciones activas en orden FIFO** (asignación más antigua primero).
+2. Si excede el saldo no asignado, el remanente se distribuye sobre **asignaciones activas en orden LIFO** (`fecha_asignacion DESC, id DESC` — asignación más nueva primero).
 3. `cantidad_asignada` **nunca se modifica**: se aumenta `cantidad_mermada`.
+
+**Por qué LIFO y no FIFO:** la asignación más antigua corresponde a la plantación más urgente (en la gran mayoría de los casos se planta en el orden en que se asignó). Afectarla primero (FIFO) dejaría sin árboles a la actividad más inminente. LIFO protege los compromisos más urgentes y carga la pérdida sobre las reservas más recientes, que tienen mayor margen temporal para reorganizarse o recibir nueva asignación.
 
 Hoy el flujo de `MERMA` en M2 no sabe nada de asignaciones, así que afecta el `saldo_vivo_actual` global del lote sin contemplar reservas.
 
@@ -29,7 +31,7 @@ Pseudocódigo del handler de `MERMA` (extiende el existente):
 ```
 crear_merma(lote_id, cantidad_merma, causa, responsable_id):
   begin transaction
-    lock_filas_asignacion_activa(lote_id) for update
+    lock_filas_asignacion_activa(lote_id) for update  -- ORDER BY id ASC para anti-deadlock
 
     saldo_no_asignado = lote.saldo_vivo_actual
                       - sum(asignacion.saldo_asignado_disponible
@@ -40,10 +42,10 @@ crear_merma(lote_id, cantidad_merma, causa, responsable_id):
       insertar evento MERMA con afectacion_asignaciones = []
     else:
       excedente = cantidad_merma - saldo_no_asignado
-      asignaciones_fifo = asignaciones activas del lote ordenadas por fecha_asignacion asc
+      asignaciones_lifo = asignaciones activas del lote ordenadas por fecha_asignacion DESC, id DESC
       afectaciones = []
 
-      for asig in asignaciones_fifo:
+      for asig in asignaciones_lifo:
         if excedente <= 0: break
         a_mermar = min(asig.saldo_asignado_disponible, excedente)
         update asignacion set cantidad_mermada = cantidad_mermada + a_mermar
@@ -59,6 +61,8 @@ crear_merma(lote_id, cantidad_merma, causa, responsable_id):
   commit
 ```
 
+> **Nota sobre lock anti-deadlock:** el `FOR UPDATE` de las asignaciones se hace ordenado por `id ASC` (no por LIFO) para evitar deadlocks entre transacciones concurrentes. La ordenación LIFO solo aplica al bucle de distribución de excedente, después de haber bloqueado todas las filas.
+
 ### 2.2. Almacenamiento de afectaciones
 
 Hay dos opciones para registrar qué asignaciones fueron afectadas:
@@ -66,7 +70,7 @@ Hay dos opciones para registrar qué asignaciones fueron afectadas:
 - **Opción A (recomendada):** usar `metadata jsonb` en el evento `MERMA` con un array de `{asignacion_id, cantidad}`. No requiere tabla nueva. Fácil de leer en auditoría.
 - **Opción B:** crear una tabla `merma_afectacion_asignacion (evento_id, asignacion_id, cantidad)`. Más normalizada, requiere migración.
 
-**Decisión recomendada:** Opción A para el MVP. Migrar a tabla relacional si la auditoría granular lo demanda.
+**Decisión:** Opción A para el MVP. Migrar a tabla relacional si la auditoría granular lo demanda.
 
 ### 2.3. Validaciones
 
@@ -86,11 +90,11 @@ Al final del commit exitoso, si `afectaciones` no está vacío:
 ## 3. Criterios de aceptación
 
 - [ ] Merma menor que saldo no asignado: ninguna asignación cambia.
-- [ ] Merma que excede el saldo no asignado: la asignación más antigua se afecta primero, hasta agotarse, luego la siguiente.
+- [ ] Merma que excede el saldo no asignado: la asignación más nueva se afecta primero, hasta agotarse, luego la anterior.
 - [ ] `cantidad_asignada` nunca se modifica.
 - [ ] Si la merma supera el saldo vivo del lote, la operación falla completa (rollback).
 - [ ] El evento `MERMA` queda con `metadata.afectacion_asignaciones` poblado correctamente cuando hubo afectación.
-- [ ] Concurrencia: dos mermas paralelas sobre el mismo lote no producen saldos inconsistentes (lock pesimista).
+- [ ] Concurrencia: dos mermas paralelas sobre el mismo lote no producen saldos inconsistentes (lock pesimista por `id ASC`).
 - [ ] Tras la merma, la suma de todos los saldos de las asignaciones + saldo no asignado = `saldo_vivo_actual` del lote.
 
 ---
@@ -99,11 +103,12 @@ Al final del commit exitoso, si `afectaciones` no está vacío:
 
 - **Handler actual de `MERMA`:** asume que solo afecta saldo vivo del lote, sin contemplar reservas. Hay que extenderlo. **No introducir un endpoint nuevo**: la operación de merma sigue siendo una sola desde la perspectiva del usuario de vivero.
 - **Lectura de saldos en UI:** cualquier vista del operario de vivero que muestre "saldo disponible" debe pasar a usar `saldo_vivo_disponible_asignacion` (tarea 05), no `saldo_vivo_actual`. Hasta que esa tarea esté lista, el operario podría tratar de despachar manualmente lo que está reservado. **Mitigación temporal:** la API de despacho manual debe validar contra `saldo_vivo_disponible_asignacion`.
+- **Índice existente:** `asignacion_vivero_subcampania_fecha_fifo_idx` sobre `(lote_vivero_id, fecha_asignacion)` soporta igualmente el orden LIFO (Postgres puede scanear un índice en reversa). El nombre es cosméticamente incorrecto pero no afecta funcionalidad; se puede renombrar en una migración futura menor.
 
 ---
 
 ## 5. Archivos a tocar
 
-- Backend M2: handler de creación de evento `MERMA`.
+- Backend M2: handler de creación de evento `MERMA` (`fn_vivero_registrar_merma` en migración o servicio NestJS).
 - Backend M2: validación de despacho manual contra saldo disponible (mitigación).
-- Tests de integración: `merma_fifo.spec.ts`.
+- Tests de integración: `merma_lifo.spec.ts`.

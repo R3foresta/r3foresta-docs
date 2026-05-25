@@ -2,7 +2,7 @@
 
 > **Estado:** ABSORBIDO en la documentación oficial del Módulo 2 el 2026-05-21.
 >
-> - JSON de requerimientos actualizado: RF-VIV-03, RF-VIV-05, RF-VIV-06, RF-VIV-09 extendidos; agregados RF-VIV-11 (asignación), RF-VIV-12 (devolución), RF-VIV-13 (saldos derivados), RF-VIV-14 (política FIFO mermas).
+> - JSON de requerimientos actualizado: RF-VIV-03, RF-VIV-05, RF-VIV-06, RF-VIV-09 extendidos; agregados RF-VIV-11 (asignación), RF-VIV-12 (devolución), RF-VIV-13 (saldos derivados), RF-VIV-14 (política LIFO mermas).
 > - Reglas de negocio agregadas: RN-VIV-47 a RN-VIV-59 (sección 13 del MD de reglas).
 > - Guía operativa: sección 13 nueva con resumen del contrato M2 ↔ M3.
 > - Documento operativo dedicado: [04_consumo_de_vivero.md](./04_consumo_de_vivero.md).
@@ -261,7 +261,7 @@ La política recomendada para el MVP es:
 
 1. La merma afecta primero el saldo no asignado del lote.
 2. Si la merma excede el saldo no asignado, el excedente afecta asignaciones activas.
-3. Las asignaciones se afectan en orden FIFO, desde la asignación activa más antigua.
+3. Las asignaciones se afectan en orden LIFO, desde la asignación activa más nueva (la más antigua se protege, pues corresponde a la plantación más urgente).
 4. No se debe sobrescribir ni reducir `cantidad_asignada`.
 5. La afectación debe registrarse en `cantidad_mermada`.
 6. El sistema debe notificar al coordinador de cada subcampaña afectada.
@@ -296,7 +296,7 @@ Entonces:
 excedente_merma = cantidad_merma - saldo_no_asignado
 ```
 
-Ese excedente se distribuye sobre las asignaciones activas por FIFO, aumentando `cantidad_mermada` en cada asignación afectada.
+Ese excedente se distribuye sobre las asignaciones activas por LIFO (`fecha_asignacion DESC, id DESC`), aumentando `cantidad_mermada` en cada asignación afectada.
 
 ### 7.4. Regla de auditoría
 
@@ -684,7 +684,7 @@ Para mantener consistencia entre módulos, estas invariantes deben respetarse:
 
 6. Implementar constraints o validaciones equivalentes según origen de despacho.
 7. Implementar generación atómica de `DESPACHO` desde M3 al guardar `PLANTACION_INICIAL` o `REPOSICION`.
-8. Implementar política FIFO de mermas sobre asignaciones cuando corresponda.
+8. Implementar política LIFO de mermas sobre asignaciones cuando corresponda.
 
 ### 14.2. Frontend
 

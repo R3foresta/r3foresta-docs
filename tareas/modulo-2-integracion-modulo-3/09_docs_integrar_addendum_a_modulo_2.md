@@ -19,7 +19,7 @@ Mientras el addendum exista como archivo separado, los lectores tienen que cruza
 
 ### 2.1. Actualizar [vivero-module/00_Requerimientos-Modulo_2_Vivero.json](../../vivero-module/00_Requerimientos-Modulo_2_Vivero.json)
 
-- **RF-VIV-03 (mermas):** agregar la política FIFO sobre asignaciones. Mencionar que `cantidad_asignada` es inmutable y que se usa `cantidad_mermada` separado.
+- **RF-VIV-03 (mermas):** agregar la política LIFO sobre asignaciones. Mencionar que `cantidad_asignada` es inmutable y que se usa `cantidad_mermada` separado.
 - **RF-VIV-05 (despachos):** agregar `origen_despacho`, los nuevos FKs (`subcampania_id`, `campania_id`, `registro_plantacion_id`), el valor `PLANTACION_CAMPANIA` en `destino_tipo_vivero`, y las restricciones por origen.
 - **RF-VIV-06 (evidencia):** documentar la excepción de evidencia heredada en despachos automáticos.
 - **RF-VIV-09 (vista operativa):** ampliar con los saldos derivados (`saldo_asignado_total`, `saldo_vivo_disponible_asignacion`).
@@ -32,7 +32,7 @@ Agregar reglas nuevas (manteniendo numeración estable, sin renumerar existentes
 - `RN-VIV-NN` — Asignación es reserva lógica que no toca `saldo_vivo_actual`.
 - `RN-VIV-NN` — Devolución desde M3 no genera evento en M2.
 - `RN-VIV-NN` — `cantidad_asignada` es inmutable; las mermas usan `cantidad_mermada`.
-- `RN-VIV-NN` — Mermas afectan asignaciones por FIFO cuando el saldo no asignado no alcanza.
+- `RN-VIV-NN` — Mermas afectan asignaciones por LIFO (más nueva primero) cuando el saldo no asignado no alcanza.
 - `RN-VIV-NN` — Despacho automático hereda evidencia del `REGISTRO_PLANTACION` asociado.
 - `RN-VIV-NN` — Despacho manual no puede usar `destino_tipo = PLANTACION_CAMPANIA`.
 

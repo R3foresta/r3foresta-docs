@@ -40,7 +40,7 @@ Todo lo demás (asignaciones, devoluciones, reservas) es **contabilidad lógica*
 | Saldo | Qué cuenta | Dónde vive | Cuándo cambia |
 |-------|------------|------------|---------------|
 | `saldo_vivo_actual` | Plantas físicamente vivas en el vivero | `LOTE_VIVERO` | Sube en `EMBOLSADO`; baja en `MERMA` y `DESPACHO` |
-| `saldo_asignado_total` | Plantas vivas **reservadas** por subcampañas pero todavía no despachadas | Derivado de `ASIGNACION_VIVERO_SUBCAMPANIA` activas | Sube al asignar; baja al consumir, devolver o por merma FIFO |
+| `saldo_asignado_total` | Plantas vivas **reservadas** por subcampañas pero todavía no despachadas | Derivado de `ASIGNACION_VIVERO_SUBCAMPANIA` activas | Sube al asignar; baja al consumir, devolver o por merma LIFO |
 | `saldo_vivo_disponible_asignacion` | Plantas vivas **libres** para asignar a nuevas subcampañas o despachar manualmente | Derivado: `saldo_vivo_actual − saldo_asignado_total` | Cambia indirectamente cuando cualquiera de los dos anteriores cambia |
 
 Identidad fundamental:
@@ -234,16 +234,18 @@ Esto es un **cambio respecto al comportamiento anterior** al Módulo 3: antes, e
 
 ---
 
-## 4. Política de mermas sobre saldo asignado (FIFO)
+## 4. Política de mermas sobre saldo asignado (LIFO)
 
 Una `MERMA` en un lote con asignaciones activas requiere decidir quién absorbe la pérdida.
 
 ### 4.1. Regla
 
 1. La merma afecta primero el **saldo no asignado** del lote.
-2. Si la merma excede el saldo no asignado, el excedente se distribuye sobre las asignaciones activas en orden **FIFO** (la asignación con `fecha_asignacion` más antigua, primero).
+2. Si la merma excede el saldo no asignado, el excedente se distribuye sobre las asignaciones activas en orden **LIFO** (`fecha_asignacion DESC, id DESC` — la asignación más nueva primero).
 3. Cada asignación afectada aumenta su `cantidad_mermada`.
 4. `cantidad_asignada` **nunca se modifica**.
+
+**Por qué LIFO:** la asignación más antigua corresponde a la plantación más próxima en el tiempo. Afectarla primero (FIFO) dejaría sin árboles a la actividad más urgente. LIFO protege los compromisos más inminentes y carga la pérdida sobre las reservas más recientes, que tienen mayor margen para reorganizarse.
 
 ### 4.2. Fórmula
 
@@ -256,7 +258,7 @@ si cantidad_merma <= saldo_no_asignado:
 
 si cantidad_merma > saldo_no_asignado:
     excedente = cantidad_merma − saldo_no_asignado
-    distribuir excedente sobre asignaciones activas FIFO
+    distribuir excedente sobre asignaciones activas LIFO (fecha_asignacion DESC, id DESC)
     cada asignacion afectada: cantidad_mermada += su_parte
     saldo_vivo_actual baja en cantidad_merma
 ```
@@ -280,7 +282,7 @@ Cuando una merma afecta una asignación activa, el coordinador de la subcampaña
 | Plantación inicial / reposición (M3) | Operario M3 | M3 (atómico) | Sí: `DESPACHO` con `origen_despacho = AUTOMATICO_PLANTACION` | Baja en N | Sin cambio | +N | — | — | Heredada del `REGISTRO_PLANTACION` |
 | Despacho manual | Operario vivero / ADMIN | M2 | Sí: `DESPACHO` con `origen_despacho = MANUAL` | Baja en N | Sin cambio (no toca asignaciones) | — | — | — | Obligatoria propia |
 | Merma (sin afectar asignaciones) | Operario vivero / ADMIN | M2 | Sí: `MERMA` | Baja en N | Sin cambio | — | — | — | Obligatoria propia |
-| Merma (con desborde a asignaciones por FIFO) | Operario vivero / ADMIN | M2 | Sí: `MERMA` con metadata de afectación | Baja en N | Sin cambio | — | — | +N (distribuido FIFO) | Obligatoria propia |
+| Merma (con desborde a asignaciones por LIFO) | Operario vivero / ADMIN | M2 | Sí: `MERMA` con metadata de afectación | Baja en N | Sin cambio | — | — | +N (distribuido LIFO) | Obligatoria propia |
 | Mortandad en M3 | Operario M3 | M3 | No genera | Sin cambio | Sin cambio | — | — | — | Propia en M3, no en M2 |
 
 ---
@@ -318,7 +320,7 @@ Las reglas formales viven en [01_regas_de_negocio_vivero.md](./01_regas_de_negoc
 - Asignación es reserva lógica; no genera evento en M2.
 - Devolución no genera evento en M2.
 - `cantidad_asignada` es inmutable.
-- Mermas afectan asignaciones por FIFO; no reescriben `cantidad_asignada`.
+- Mermas afectan asignaciones por LIFO (más nueva primero); no reescriben `cantidad_asignada`.
 - Despacho automático hereda evidencia del registro de plantación; despacho manual exige evidencia propia.
 - Despacho manual no puede tener `destino_tipo = PLANTACION_CAMPANIA`.
 - Despacho automático solo puede tener `destino_tipo = PLANTACION_CAMPANIA`.
@@ -359,16 +361,16 @@ Asignación Cota Cota: cantidad_consumida=40, saldo_asignado_disponible=160
 Asignación San Miguel: sin cambio
 ```
 
-**Paso 3 — Merma de 250 en el lote.** El operario de vivero registra una merma por sequía. Saldo no asignado del lote = 200; excedente = 50. FIFO afecta a Cota Cota primero (más antigua). Resultado:
+**Paso 3 — Merma de 250 en el lote.** El operario de vivero registra una merma por sequía. Saldo no asignado del lote = 200; excedente = 50. LIFO afecta a San Miguel primero (más nueva — tiene más margen temporal). Resultado:
 
 ```
 LOTE: saldo_vivo_actual = 210
        saldo_asignado_total = 210
        saldo_vivo_disponible_asignacion = 0
 
-Asignación Cota Cota: cantidad_mermada=50, saldo_asignado_disponible=110
-Asignación San Miguel: sin cambio
-Notificación enviada a María (coordinadora de Cota Cota).
+Asignación Cota Cota: sin cambio, saldo_asignado_disponible=160  (protegida — planta antes)
+Asignación San Miguel: cantidad_mermada=50, saldo_asignado_disponible=50
+Notificación enviada a Pedro (coordinador de San Miguel).
 ```
 
 **Paso 4 — Devolución parcial.** María decide devolver 20 de su asignación porque ya no los va a usar. Resultado:
@@ -394,7 +396,7 @@ Esto es exactamente el comportamiento deseado: las reservas están protegidas.
 - **Despacho automático:** generado por el sistema al registrar una plantación en M3. `origen_despacho = AUTOMATICO_PLANTACION`.
 - **Despacho manual:** registrado directamente por un usuario de vivero. `origen_despacho = MANUAL`.
 - **Evidencia heredada:** las fotos del `REGISTRO_PLANTACION` cuentan como evidencia del `DESPACHO` automático asociado.
-- **FIFO de mermas:** cuando una merma desborda el saldo no asignado, la asignación más antigua se afecta primero.
+- **LIFO de mermas:** cuando una merma desborda el saldo no asignado, la asignación más nueva se afecta primero; protege los compromisos más urgentes.
 - **Saldo asignado disponible:** `cantidad_asignada − cantidad_consumida − cantidad_devuelta − cantidad_mermada`. Es el saldo realmente comprometido y todavía consumible.
 
 ---
