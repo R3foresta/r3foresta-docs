@@ -175,7 +175,7 @@ create trigger asignacion_vivero_subcampania_estado_trg
 - Creado `migrations/024_vivero_asignacion_subcampania.sql` (156 líneas, idempotente).
 - Enums `proposito_asignacion (PLANTACION_INICIAL, REPOSICION)` y `estado_asignacion_vivero (ACTIVA, AGOTADA, DEVUELTA)` creados con DO block guard.
 - Tabla `asignacion_vivero_subcampania` con columna `saldo_asignado_disponible GENERATED ALWAYS AS STORED`, 5 CHECK constraints, FKs a `lote_vivero` y `usuario`.
-- Tres índices: por lote activo, por subcampaña, y de ordenación temporal (`lote_vivero_id, fecha_asignacion`) para soporte de tarea 04 (LIFO; el índice `_fecha_fifo_idx` tiene nombre cosméticamente incorrecto pero funciona igual ya que Postgres puede scanearlo en reversa).
+- Tres índices: por lote activo, por subcampaña, y temporal (`lote_vivero_id, fecha_asignacion`). El índice `_fecha_fifo_idx` ya no es el criterio de distribución de merma (tarea 04 usa `subcampania.fecha_estimada_inicio`), pero sigue siendo útil para lock anti-deadlock y consultas de saldo. Nombre cosméticamente incorrecto; renombrar en migración menor cuando corresponda.
 - Trigger `BEFORE INSERT OR UPDATE` que recalcula `estado` y `updated_at`; recalcula saldo a mano porque columnas GENERATED son NULL en BEFORE triggers.
 - Aplicado exitosamente en el SQL Editor de Supabase.
 

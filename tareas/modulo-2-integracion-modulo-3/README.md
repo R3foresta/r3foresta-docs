@@ -60,7 +60,7 @@ Toda la especificación funcional vive en [vivero-module/03_Addendum_Modulo_2_po
 - `cantidad_asignada` es **inmutable** una vez creada la asignación; las mermas y consumos van a campos separados.
 - Las devoluciones desde M3 **no generan evento** en `EVENTO_LOTE_VIVERO`.
 - El despacho automático **hereda evidencia** del `REGISTRO_PLANTACION` asociado; no requiere fotos propias.
-- Las mermas afectan asignaciones por **LIFO** (asignación más nueva primero, `fecha_asignacion DESC, id DESC`). La asignación más antigua planta primero, por lo que se protege; la más nueva tiene mayor margen temporal para absorber la pérdida.
+- Las mermas afectan asignaciones ordenando por **`subcampania.fecha_estimada_inicio DESC NULLS FIRST`**: la subcampaña con inicio más lejano absorbe la pérdida primero (tiene más margen); la más próxima queda protegida (es la más urgente). Subcampañas sin fecha = absorben antes que cualquier fecha concreta. `cantidad_asignada` nunca se modifica.
 - El saldo disponible para asignar es **derivado**, no persistido como fuente de verdad.
 - `AFECTADA_POR_MERMA` **no es un valor de enum** en `estado_asignacion_vivero`; se expone como badge derivado cuando `cantidad_mermada > 0`. El enum queda con tres valores: `ACTIVA`, `AGOTADA`, `DEVUELTA`.
 

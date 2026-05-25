@@ -613,7 +613,7 @@ Invariantes:
 Cuando ocurre una merma en un lote con asignaciones activas, la política del MVP es:
 
 1. La merma afecta primero el **saldo no asignado** del lote.
-2. Si la merma excede el saldo no asignado, afecta asignaciones en orden **LIFO** (la asignación más nueva primero — la más antigua corresponde a la plantación más urgente y se protege).
+2. Si la merma excede el saldo no asignado, afecta asignaciones ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST` — la subcampaña con inicio más lejano absorbe primero; la más próxima queda protegida (es la más urgente).
 3. Si una asignación queda con menos saldo que su comprometido, el sistema **notifica al coordinador** de la(s) subcampaña(s) afectada(s).
 
 Esta política se documenta en el addendum del Módulo 2.

@@ -642,11 +642,9 @@ Esta restricción se valida en el handler de M3 al consumir; no se cruza.
 
 Un `REGISTRO_PLANTACION` puede tocar N lotes. En ese caso se generan N eventos `DESPACHO`, **todos en la misma transacción** que el registro de M3 + la actualización de las asignaciones. Si algo falla, todo se revierte.
 
-### 13.7. Política LIFO de mermas
+### 13.7. Política de mermas por urgencia de subcampaña
 
-Cuando una `MERMA` en un lote excede su saldo no asignado, el excedente se distribuye sobre las asignaciones activas en orden **LIFO por `fecha_asignacion DESC, id DESC`** (la asignación más nueva primero), aumentando `cantidad_mermada` de cada una. `cantidad_asignada` nunca se toca.
-
-La política LIFO protege las asignaciones más antiguas — que corresponden a las plantaciones más urgentes — y carga la pérdida sobre las reservas más recientes, que tienen mayor margen temporal para reorganizarse.
+Cuando una `MERMA` en un lote excede su saldo no asignado, el excedente se distribuye sobre las asignaciones activas ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST` — la subcampaña con inicio más lejano absorbe primero (tiene mayor margen); la más próxima queda protegida (es la más urgente). Las asignaciones sin `fecha_estimada_inicio` en su subcampaña absorben antes que cualquier fecha concreta. `cantidad_asignada` nunca se toca.
 
 Cada afectación dispara una notificación al coordinador de la subcampaña dueña.
 

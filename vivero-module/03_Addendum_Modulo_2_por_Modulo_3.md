@@ -261,7 +261,7 @@ La política recomendada para el MVP es:
 
 1. La merma afecta primero el saldo no asignado del lote.
 2. Si la merma excede el saldo no asignado, el excedente afecta asignaciones activas.
-3. Las asignaciones se afectan en orden LIFO, desde la asignación activa más nueva (la más antigua se protege, pues corresponde a la plantación más urgente).
+3. Las asignaciones se afectan ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST`: la subcampaña con inicio más lejano absorbe primero; la más próxima queda protegida (es la más urgente). Sin fecha = absorbe antes que cualquier fecha concreta.
 4. No se debe sobrescribir ni reducir `cantidad_asignada`.
 5. La afectación debe registrarse en `cantidad_mermada`.
 6. El sistema debe notificar al coordinador de cada subcampaña afectada.
@@ -296,7 +296,7 @@ Entonces:
 excedente_merma = cantidad_merma - saldo_no_asignado
 ```
 
-Ese excedente se distribuye sobre las asignaciones activas por LIFO (`fecha_asignacion DESC, id DESC`), aumentando `cantidad_mermada` en cada asignación afectada.
+Ese excedente se distribuye sobre las asignaciones activas ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST, asignacion.id DESC`, aumentando `cantidad_mermada` en cada asignación afectada.
 
 ### 7.4. Regla de auditoría
 

@@ -234,18 +234,18 @@ Esto es un **cambio respecto al comportamiento anterior** al Módulo 3: antes, e
 
 ---
 
-## 4. Política de mermas sobre saldo asignado (LIFO)
+## 4. Política de mermas sobre saldo asignado (por urgencia de subcampaña)
 
 Una `MERMA` en un lote con asignaciones activas requiere decidir quién absorbe la pérdida.
 
 ### 4.1. Regla
 
 1. La merma afecta primero el **saldo no asignado** del lote.
-2. Si la merma excede el saldo no asignado, el excedente se distribuye sobre las asignaciones activas en orden **LIFO** (`fecha_asignacion DESC, id DESC` — la asignación más nueva primero).
+2. Si la merma excede el saldo no asignado, el excedente se distribuye sobre las asignaciones activas ordenando por **`subcampania.fecha_estimada_inicio DESC NULLS FIRST`**: la subcampaña con inicio más lejano absorbe primero (mayor margen temporal); la más próxima queda protegida (más urgente). Las subcampañas sin fecha (`NULL`) se tratan como no urgentes y absorben antes que cualquier fecha concreta.
 3. Cada asignación afectada aumenta su `cantidad_mermada`.
 4. `cantidad_asignada` **nunca se modifica**.
 
-**Por qué LIFO:** la asignación más antigua corresponde a la plantación más próxima en el tiempo. Afectarla primero (FIFO) dejaría sin árboles a la actividad más urgente. LIFO protege los compromisos más inminentes y carga la pérdida sobre las reservas más recientes, que tienen mayor margen para reorganizarse.
+**Por qué `fecha_estimada_inicio` y no `fecha_asignacion`:** `fecha_asignacion` solo dice cuándo se hizo la reserva. `fecha_estimada_inicio` de la subcampaña dice cuándo se va a plantar — esa es la fuente de verdad sobre la urgencia operativa.
 
 ### 4.2. Fórmula
 
@@ -258,7 +258,8 @@ si cantidad_merma <= saldo_no_asignado:
 
 si cantidad_merma > saldo_no_asignado:
     excedente = cantidad_merma − saldo_no_asignado
-    distribuir excedente sobre asignaciones activas LIFO (fecha_asignacion DESC, id DESC)
+    distribuir excedente:
+      JOIN subcampania ORDER BY fecha_estimada_inicio DESC NULLS FIRST, asignacion.id DESC
     cada asignacion afectada: cantidad_mermada += su_parte
     saldo_vivo_actual baja en cantidad_merma
 ```
@@ -361,14 +362,14 @@ Asignación Cota Cota: cantidad_consumida=40, saldo_asignado_disponible=160
 Asignación San Miguel: sin cambio
 ```
 
-**Paso 3 — Merma de 250 en el lote.** El operario de vivero registra una merma por sequía. Saldo no asignado del lote = 200; excedente = 50. LIFO afecta a San Miguel primero (más nueva — tiene más margen temporal). Resultado:
+**Paso 3 — Merma de 250 en el lote.** El operario de vivero registra una merma por sequía. Saldo no asignado del lote = 200; excedente = 50. El sistema ordena por `subcampania.fecha_estimada_inicio DESC NULLS FIRST`: asumiendo que Cota Cota empieza antes (fecha más próxima), San Miguel absorbe el excedente primero (fecha más lejana = mayor margen). Resultado:
 
 ```
 LOTE: saldo_vivo_actual = 210
        saldo_asignado_total = 210
        saldo_vivo_disponible_asignacion = 0
 
-Asignación Cota Cota: sin cambio, saldo_asignado_disponible=160  (protegida — planta antes)
+Asignación Cota Cota: sin cambio, saldo_asignado_disponible=160  (protegida — su subcampaña empieza antes)
 Asignación San Miguel: cantidad_mermada=50, saldo_asignado_disponible=50
 Notificación enviada a Pedro (coordinador de San Miguel).
 ```
@@ -396,7 +397,7 @@ Esto es exactamente el comportamiento deseado: las reservas están protegidas.
 - **Despacho automático:** generado por el sistema al registrar una plantación en M3. `origen_despacho = AUTOMATICO_PLANTACION`.
 - **Despacho manual:** registrado directamente por un usuario de vivero. `origen_despacho = MANUAL`.
 - **Evidencia heredada:** las fotos del `REGISTRO_PLANTACION` cuentan como evidencia del `DESPACHO` automático asociado.
-- **LIFO de mermas:** cuando una merma desborda el saldo no asignado, la asignación más nueva se afecta primero; protege los compromisos más urgentes.
+- **Merma por urgencia:** cuando una merma desborda el saldo no asignado, la asignación cuya subcampaña tiene `fecha_estimada_inicio` más lejana se afecta primero; la más próxima queda protegida.
 - **Saldo asignado disponible:** `cantidad_asignada − cantidad_consumida − cantidad_devuelta − cantidad_mermada`. Es el saldo realmente comprometido y todavía consumible.
 
 ---
