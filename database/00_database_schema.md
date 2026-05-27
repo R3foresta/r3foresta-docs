@@ -275,7 +275,7 @@ ORGANIZACION {
     timestamptz created_at
     timestamptz updated_at
     text logo_url
-    ENUM(tipo_organizacion) tipo "NOT NULL - ONG | EMPRESA_PRIVADA | EMPRESA_PUBLICA | FUNDACION | ETFs | ALCALDIA | ASOCIACION_CIUDADANA | COMUNIDAD | ALCALDIA | OTRO"
+    ENUM(tipo_organizacion) tipo "NOT NULL - ONG | EMPRESA_PRIVADA | EMPRESA_PUBLICA | FUNDACION | ETFs | ALCALDIA | ASOCIACION_CIUDADANA | OTRO"
 }
 %% Placeholder defensivo (modulo General aun no la define). Reemplazar cuando exista la version oficial.
 
@@ -565,7 +565,7 @@ estado_subcampania = [
   CANCELADA  // reservado, sin flujo en MVP
 ]
 
-tipo_organizacion = [ONG | EMPRESA_PRIVADA | EMPRESA_PUBLICA | FUNDACION | ETFs | ALCALDIA | ASOCIACION_CIUDADANA | COMUNIDAD | ALCALDIA | OTRO]
+tipo_organizacion = [ONG | EMPRESA_PRIVADA | EMPRESA_PUBLICA | FUNDACION | ETFs | ALCALDIA | ASOCIACION_CIUDADANA | OTRO]
 
 fase_mantenimiento_subcampania = [NO_APLICA, MANTENIMIENTO_ACTIVO, MONITOREO_HISTORICO]
 // Persistida con default NO_APLICA. Transita a MANTENIMIENTO_ACTIVO al cerrar y a MONITOREO_HISTORICO 3 anos despues via job nocturno (pendiente).
