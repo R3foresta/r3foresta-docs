@@ -274,6 +274,7 @@ ORGANIZACION {
     boolean activo "NOT NULL default true"
     timestamptz created_at
     timestamptz updated_at
+    text logo_url
 }
 %% Placeholder defensivo (modulo General aun no la define). Reemplazar cuando exista la version oficial.
 
