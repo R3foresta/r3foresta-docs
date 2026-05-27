@@ -281,6 +281,7 @@ CAMPANIA {
     bigint id PK
     text nombre "UNIQUE"
     text descripcion
+    ENUM(tipo_subcampania) tipo "NOT NULL - REFORESTACION | ARBORIZACION | FORESTACION; define el tipo de toda subcampania hija"
     date fecha_estimada_inicio
     date fecha_estimada_fin
     text codigo_trazabilidad "UNIQUE - formato CMP-YYYY-NNN"
@@ -293,6 +294,7 @@ CAMPANIA {
     jsonb metadata_blockchain "nullable"
 }
 %% Sin columna de estado: el estado se deriva via vista campania_estado (invariante CLAUDE.md).
+%% tipo es inmutable una vez creada la campania (no se puede cambiar si ya tiene subcampanias). El enum tipo_subcampania se reusa porque ambos representan el mismo concepto.
 
 CAMPANIA_ORGANIZACION {
     bigint id PK
@@ -307,7 +309,7 @@ SUBCAMPANIA {
     bigint campania_id FK "NOT NULL"
     text nombre
     text descripcion
-    ENUM(tipo_subcampania) tipo "NOT NULL - REFORESTACION | ARBORIZACION | FORESTACION"
+    ENUM(tipo_subcampania) tipo "NOT NULL - REFORESTACION | ARBORIZACION | FORESTACION; CHECK debe coincidir con CAMPANIA.tipo de la campania padre"
     ENUM(estado_subcampania) estado "NOT NULL default BORRADOR"
     ENUM(fase_mantenimiento_subcampania) fase_mantenimiento "NOT NULL default NO_APLICA"
     bigint zona_id FK "NOT NULL - DIVISION_ADMINISTRATIVA"
@@ -553,6 +555,7 @@ estado_operativo_recoleccion = [ABIERTO, CERRADO]
 
 PLANTACION (M3)
 tipo_subcampania = [REFORESTACION, ARBORIZACION, FORESTACION]
+// Compartido por CAMPANIA.tipo y SUBCAMPANIA.tipo. La campania declara el tipo al crearse y todas sus subcampanias hijas deben heredarlo (CHECK constraint o trigger). El nombre del enum se conserva por compatibilidad con migracion 027.
 
 estado_subcampania = [
   BORRADOR, ACTIVA, COMPLETADA, FINALIZADA_PARCIAL,

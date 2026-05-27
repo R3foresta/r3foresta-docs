@@ -9,6 +9,7 @@
         "Identificador unico de campaña",
         "Nombre obligatorio",
         "Descripcion opcional",
+        "Tipo: REFORESTACION / ARBORIZACION / FORESTACION obligatorio (define el tipo de toda subcampaña hija)",
         "Fecha estimada de inicio global opcional",
         "Fecha estimada de fin global opcional",
         "Lista de organizaciones asociadas (relacion N:M con catalogo ORGANIZACION)",
@@ -16,12 +17,14 @@
       ],
       "validaciones": [
         "Nombre obligatorio y unico dentro del sistema (recomendado).",
+        "Tipo obligatorio; debe pertenecer al enum tipo_subcampania (compartido con SUBCAMPANIA).",
         "Las organizaciones asociadas deben existir en el catalogo ORGANIZACION.",
         "Las fechas estimadas, si se cargan, deben ser coherentes (fin >= inicio).",
         "La campaña no tiene poligono ni meta propios; esos viven en subcampaña."
       ],
       "reglas_adicionales": [
         "El estado de la campaña padre se calcula en tiempo real: BORRADOR si todas las subcampañas son BORRADOR; ACTIVA si al menos una subcampaña esta ACTIVA; EN_MANTENIMIENTO si todas estan cerradas y al menos una en MANTENIMIENTO_ACTIVO; MONITOREO_HISTORICO si todas estan en MONITOREO_HISTORICO.",
+        "El tipo de la campaña es inmutable una vez creada si ya tiene subcampañas; toda subcampaña hija hereda obligatoriamente el tipo de la campaña padre.",
         "Una campaña puede tener 1 o mas organizaciones asociadas (relacion many-to-many).",
         "Si se quiere ampliar el proyecto, se crea una nueva subcampaña dentro de la misma campaña; no existe el concepto de fases ni campañas hijas.",
         "Solo ADMIN puede crear campañas en el MVP.",
@@ -37,7 +40,7 @@
         "Identificador unico de subcampaña",
         "campania_id obligatorio (campaña padre)",
         "Nombre obligatorio",
-        "Tipo: REFORESTACION / ARBORIZACION / FORESTACION obligatorio",
+        "Tipo: REFORESTACION / ARBORIZACION / FORESTACION obligatorio; debe coincidir con el tipo de la campaña padre (se hereda y valida con CHECK)",
         "Estado operativo: BORRADOR (default) / ACTIVA / COMPLETADA / FINALIZADA_PARCIAL",
         "Estados reservados en enum sin flujo en MVP: PAUSADA / CANCELADA",
         "Fase de mantenimiento (derivada por fecha): NO_APLICA / MANTENIMIENTO_ACTIVO / MONITOREO_HISTORICO",
@@ -58,7 +61,7 @@
         "La zona debe existir en el catalogo administrativo.",
         "Las fechas estimadas deben ser futuras al crear.",
         "El area no se ingresa manualmente; se calcula desde el poligono.",
-        "Tipo debe pertenecer al enum tipo_subcampania."
+        "Tipo debe pertenecer al enum tipo_subcampania y ser identico al CAMPANIA.tipo de la campaña padre (CHECK constraint en BD)."
       ],
       "reglas_adicionales": [
         "En BORRADOR se permite edicion libre y soft delete.",

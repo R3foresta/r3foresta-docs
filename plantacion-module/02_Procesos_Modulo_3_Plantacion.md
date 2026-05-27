@@ -228,10 +228,13 @@ Datos mínimos:
 
 - Nombre de la campaña (obligatorio).
 - Descripción (opcional).
+- **Tipo: `REFORESTACION | ARBORIZACION | FORESTACION` (obligatorio).** Define el tipo de toda subcampaña hija. Una campaña no puede mezclar tipos: si la campaña es FORESTACION, todas sus subcampañas son FORESTACION.
 - Una o más organizaciones asociadas (opcional pero recomendado).
 - Fecha estimada de inicio y fin global (opcional, solo referenciales).
 
 La campaña se crea **sin subcampañas**, en estado derivado `BORRADOR` (porque todavía no tiene subcampañas activas). Las subcampañas se agregan a continuación.
+
+El tipo de la campaña es **inmutable una vez que tiene al menos una subcampaña**. Si se necesita operar con un tipo distinto, se crea una campaña separada.
 
 ### 3.2. Creación de subcampañas (admin)
 
@@ -240,7 +243,7 @@ La campaña se crea **sin subcampañas**, en estado derivado `BORRADOR` (porque 
 Datos mínimos por subcampaña:
 
 - Nombre de la subcampaña.
-- Tipo: `REFORESTACION | ARBORIZACION | FORESTACION`.
+- Tipo: `REFORESTACION | ARBORIZACION | FORESTACION`. **Se hereda de la campaña padre y no es editable**; el formulario lo muestra precargado y bloqueado. Un CHECK en BD garantiza que `SUBCAMPANIA.tipo = CAMPANIA.tipo`.
 - Zona o comunidad (catálogo administrativo).
 - Coordinador asignado (obligatorio al activar; se materializa como fila en `SUBCAMPANIA_EQUIPO` con `rol_en_subcampania = 'COORDINADOR'`).
 - Equipo de operarios (opcional al crear, ampliable después en `SUBCAMPANIA_EQUIPO`).
