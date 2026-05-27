@@ -143,6 +143,7 @@ Cuando el visitante hace click en una subcampaña.
 **Paso 1: Datos generales**
 - Nombre obligatorio.
 - Descripción opcional.
+- **Tipo obligatorio:** reforestación / arborización / forestación. _Nota: Define el tipo de todas las subcampañas hijas; inmutable una vez creada la campaña._
 - Fechas estimadas globales (opcional, solo futuras).
 
 **Paso 2: Organizaciones asociadas**
@@ -151,7 +152,7 @@ Cuando el visitante hace click en una subcampaña.
 - Botón "Crear nueva organización" si no existe.
 
 **Paso 3: Revisión**
-- Resumen.
+- Resumen (incluye tipo seleccionado).
 - Botones: "Crear campaña vacía" (sin subcampañas) o "Crear campaña y agregar subcampaña" (continúa al wizard de subcampaña).
 
 ### 3.6. Crear / editar subcampaña (admin)
@@ -159,9 +160,8 @@ Cuando el visitante hace click en una subcampaña.
 Wizard de varios pasos.
 
 **Paso 1: Datos generales**
-- Campaña padre (preseleccionada si viene del flujo anterior).
+- Campaña padre (preseleccionada si viene del flujo anterior). _Nota: El tipo se hereda automáticamente de la campaña padre._
 - Nombre de la subcampaña.
-- Tipo: reforestación / arborización / forestación.
 - Zona/comunidad (selector jerárquico del catálogo).
 - Coordinador asignado (obligatorio).
 - Fechas estimadas (solo futuras).
