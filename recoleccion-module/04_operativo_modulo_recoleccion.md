@@ -39,7 +39,7 @@ En este módulo todavía **no** se trabaja plantas vivas; eso empieza recién en
 - `kg` solo existe como input; nunca se persiste.
 - `ESQUEJE` solo admite `UNIDAD`, entero estricto, sin decimales.
 - `SEMILLA` puede persistirse en `G` o `UNIDAD`, según la captura funcional.
-- Para solicitar validación se exigen mínimo 2 fotos y ubicación válida.
+- Para solicitar validación se exigen mínimo 2 fotos (1 de Lugar + 1 de Total recolectado) y ubicación válida.
 - El saldo nunca puede quedar negativo.
 - `CONSUMO_A_VIVERO` y `DESECHO` usan `delta` negativo.
 - El consumo hacia Vivero debe ser atómico con la creación del lote de vivero.

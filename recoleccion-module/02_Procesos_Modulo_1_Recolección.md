@@ -92,7 +92,7 @@ Datos mínimos recomendados para permitir guardar BORRADOR:
 - recolector (por defecto el usuario autenticado)
 - vivero de almacenamiento (catálogo RF-GEN-02)
 - observaciones (opcional)
-- fotos (2 minimo)
+- fotos (mínimo 1 de Lugar + 1 de Total recolectado = 2 total, máximo 5+5 = 10)
 - ubicación (lat/long mínimo, niveles administrativos osea Comunidad-Zona)
 
 > Nota MVP: ubicación y fotos tampocopueden faltar en BORRADOR pero si se pueden editar, y son **obligatorias** para pasar a `PENDIENTE_VALIDACION`.
@@ -113,7 +113,7 @@ En `BORRADOR`:
 
 Requisitos para avanzar hacia validación:
 
-- **Fotografías:** mínimo 2 (especie + cantidad)
+- **Fotografías:** mínimo 1 por sección (Lugar + Total recolectado = 2 total mínimo, 10 máximo)
     - JPG/PNG
     - máximo 5MB por foto
 - **Ubicación estructurada (RF-REC-02):**
@@ -302,7 +302,7 @@ Fuera del MVP:
 - Se vuelve elegible para **consumo** hacia el Módulo 2 (Vivero).
 
 **Condiciones para ser aprobado como `VALIDADO` (MVP):**
-- Evidencia mínima completa (≥ 2 fotos).
+- Evidencia mínima completa (≥ 2 fotos: 1 de Lugar + 1 de Total recolectado).
 - Ubicación con **latitud/longitud** válidas.
 - Campos mínimos completos (especie, tipo material, fecha, cantidad inicial, método, vivero).
 - Revisión/aprobación del validador.
@@ -335,7 +335,7 @@ Si se detecta un error después de validar, en el MVP no se corrige la recolecci
 
 ## 6. Evidencia fotográfica y excepciones
 
-- Las fotos son obligatorias para crear un **BORRADOR** y para enviarlo a `PENDIENTE_VALIDACION` también (mínimo 2).
+- Las fotos son obligatorias para crear un **BORRADOR** y para enviarlo a `PENDIENTE_VALIDACION` también (mínimo 1 por sección: Lugar y Total recolectado, 2 fotos total mínimo).
 - En MVP, no se permiten “validaciones sin evidencia” (para no abrir un agujero de trazabilidad).
 - Futuro: se puede permitir excepción con motivo y aprobación (similar al el Modulo 2), pero no en el MVP.
 
@@ -398,7 +398,7 @@ Roles (MVP):
 - Soft delete solo para BORRADOR
 - Persistencia oficial de unidades: `UNIDAD | G`
 - Ubicación con lat/long obligatorias para validar
-- Evidencia mínima (2 fotos) para validar
+- Evidencia mínima (2 fotos: 1 de Lugar + 1 de Total recolectado) para validar
 - `RECOLECCION_HISTORIAL` preparado para ciclo de vida mínimo del registro
 - Motivo de descarte obligatorio
 - `RECOLECCION_MOVIMIENTO` reservado para consumo automático desde el Modulo 2 y descarte

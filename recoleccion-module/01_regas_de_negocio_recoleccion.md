@@ -28,7 +28,7 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
   * `kg` no se persiste en base de datos.
 * **Estados:** `BORRADOR/VALIDADO` (registro) y `ABIERTO/CERRADO` (operativo, derivado del saldo).
 * **Ubicación estructurada:** latitud/longitud obligatorias **para validar** + datos administrativos opcionales (catálogos).
-* **Evidencia:** fotos obligatorias **para validar** (mínimo 2), formato JPG/PNG.
+* **Evidencia:** fotos obligatorias **para validar** (mínimo 1 de Lugar + 1 de Total recolectado = 2 total, máximo 5+5 = 10 total), formato JPG/PNG.
 * **Historial:** bitácora inmutable de cambios (quién/cuándo/antes-después).
 * **Snapshot:** copia congelada de datos oficiales de identidad en un momento formal del proceso, para que cambios posteriores en tablas maestras no alteren el historial ya validado.
 
@@ -214,11 +214,12 @@ Para `ESQUEJE`:
 ### RN-REC-14 — Evidencia mínima obligatoria
 
 - En `BORRADOR`: su porposito es evitar subir registros errados a blockchain si no se esta seguro de los datos ya que es editable, fotos y ubicación son obligatorias para crear un borrador y evitar huecos de trazabilidad.
-- Para pasar a `PENDIENTE_VALIDACION`: se exige **mínimo 2 fotografías**:
-  - 1 foto que evidencie la especie,
-  - 1 foto que evidencie la cantidad/volumen recolectado (o su contenedor/medición).
+- Para pasar a `PENDIENTE_VALIDACION`: se exige **mínimo 1 fotografía por sección** (2 secciones: Lugar y Total recolectado):
+  - **Sección "Lugar":** mínimo 1, máximo 5 fotos que evidencien el lugar de recolección.
+  - **Sección "Total recolectado":** mínimo 1, máximo 5 fotos que evidencien la cantidad/volumen recolectado.
+  - Total mínimo: 2 fotos (1+1). Total máximo: 10 fotos (5+5).
 
-Se pueden agregar más.
+Se pueden agregar más dentro de los límites por sección.
 
 
 (Fuera del MVP: se puede evaluar validacion comunitaria adicional, con registro explicito de quienes validaron y cuando.)
@@ -339,7 +340,7 @@ Solo se puede iniciar un lote de vivero desde una recolección que esté:
 
 - `estado_registro = VALIDADO`
 - `estado_operativo = ABIERTO`
-- con evidencia mínima completa (≥ 2 fotos)
+- con evidencia mínima completa (≥ 2 fotos: 1 de Lugar + 1 de Total recolectado)
 - con ubicación válida (lat/long)
 - con tipo_material definido
 - con `saldo_actual` suficiente para el consumo

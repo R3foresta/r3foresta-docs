@@ -30,7 +30,7 @@ flowchart TD
   Sin blockchain]
 
   b2 --> evloc[Completar evidencia y ubicacion
-  Fotos minimo 2
+  Fotos minimo 1 de Lugar + 1 de Total recolectado
   JPG o PNG
   Max 5MB por foto
   Lat y Long obligatorias
@@ -125,7 +125,7 @@ flowchart TD
   Guardar cambios]
 
   b1 --> req{Listo para solicitar validacion
-  Fotos minimo 2
+  Fotos minimo 1 por seccion Lugar y Total
   Lat y Long validas
   Campos min completos}
 
