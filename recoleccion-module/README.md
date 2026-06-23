@@ -3,7 +3,7 @@
 Este documento describe el flujo funcional y técnico para el registro de material vegetal, asegurando la trazabilidad mediante tecnología Blockchain.
 
 ## Descripción del Proceso
-1. **Captura de Datos**: El usuario inicia el flujo en la PWA ingresando datos técnicos, ubicación GPS automática y hasta 5 evidencias fotográficas.
+1. **Captura de Datos**: El usuario inicia el flujo en la PWA ingresando datos técnicos, ubicación GPS automática y hasta 10 evidencias fotográficas (5 de Lugar + 5 de Total recolectado).
 2. **Validación de Seguridad**: El backend (NestJS) verifica la identidad mediante el header `x-auth-id` y aplica permisos segun el catalogo oficial de roles del MVP: `ADMIN`, `GENERAL`, `VALIDADOR`, `VOLUNTARIO`.
 3. **Persistencia Multicapa**: Los datos se distribuyen entre Supabase Database (información tabular), Supabase Storage (archivos binarios) e IPFS/Pinata (metadata NFT).
 4. **Inmutabilidad**: El proceso finaliza con el acuñado (mint) de un NFT en la Blockchain, guardando el hash de transacción y el token ID para garantizar la transparencia.
