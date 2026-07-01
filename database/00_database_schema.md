@@ -277,7 +277,7 @@ ORGANIZACION {
     text logo_url
     ENUM(tipo_organizacion) tipo "NOT NULL - ONG | EMPRESA_PRIVADA | EMPRESA_PUBLICA | FUNDACION | ETFs | ALCALDIA | ASOCIACION_CIUDADANA | OTRO"
 }
-%% Entidad maestra documentada en general-module/00_Requerimientos_Modulo_General.json (RF-GEN-07) y general-module/01_reglas_de_negocio_general.md (RN-GEN-27..29).
+%% Entidad maestra documentada en 00-general-module/00_Requerimientos_Modulo_General.json (RF-GEN-07) y 00-general-module/01_reglas_de_negocio_general.md (RN-GEN-27..29).
 
 CAMPANIA {
     bigint id PK

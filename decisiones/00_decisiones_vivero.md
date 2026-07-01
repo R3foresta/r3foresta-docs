@@ -216,7 +216,7 @@ Porque eso abre inconsistencias difíciles de auditar justo en el punto más sen
 Si las tres piezas no coinciden, la trazabilidad se rompe desde el arranque del lote.
 
 ### Invariantes obligatorias
-Ver el enunciado completo (4 ecuaciones) en RN-VIV-17A (`vivero-module/01_reglas_de_negocio_vivero.md`) y RN-REC-24A (`recoleccion-module/01_reglas_de_negocio_recoleccion.md`) — fuente canónica de este contrato.
+Ver el enunciado completo (4 ecuaciones) en RN-VIV-17A (`02-vivero-module/01_reglas_de_negocio_vivero.md`) y RN-REC-24A (`01-recoleccion-module/01_reglas_de_negocio_recoleccion.md`) — fuente canónica de este contrato.
 
 ### Lo que se sacrificó
 Flexibilidad para desacoplar lecturas o tolerar diferencias operativas.
@@ -240,7 +240,7 @@ Porque una sola convención fuerte simplifica backend, frontend, base de datos y
 Tampoco se debe mezclar `G` con `GR`, porque eso introduce ruido semántico sin valor funcional.
 
 ### Reglas derivadas
-Ver el enunciado completo en RN-VIV-17B (`vivero-module/01_reglas_de_negocio_vivero.md`) — fuente canónica de la convención de normalización y reglas numéricas.
+Ver el enunciado completo en RN-VIV-17B (`02-vivero-module/01_reglas_de_negocio_vivero.md`) — fuente canónica de la convención de normalización y reglas numéricas.
 
 ### Lo que se sacrificó
 Flexibilidad temprana para soportar más unidades.

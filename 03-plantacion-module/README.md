@@ -13,12 +13,12 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 * `02_Procesos_Modulo_3_Plantacion.md`: proceso detallado.
 * `03_Mockups_Guia_Modulo_3_Plantacion.md`: guía UX.
 
-**Nota estructural:** el contrato de integración M2↔M3 (asignaciones, devoluciones, despacho automático, mermas sobre asignaciones) **no vive aquí**: su fuente canónica es `RN-VIV-47..60` en [`../vivero-module/01_reglas_de_negocio_vivero.md`](../vivero-module/01_reglas_de_negocio_vivero.md). `01_reglas_de_negocio_plantacion.md` referencia esas reglas, no las duplica.
+**Nota estructural:** el contrato de integración M2↔M3 (asignaciones, devoluciones, despacho automático, mermas sobre asignaciones) **no vive aquí**: su fuente canónica es `RN-VIV-47..60` en [`../02-vivero-module/01_reglas_de_negocio_vivero.md`](../02-vivero-module/01_reglas_de_negocio_vivero.md). `01_reglas_de_negocio_plantacion.md` referencia esas reglas, no las duplica.
 
 ## Dependencias
 
-* Consume [vivero-module](../vivero-module/README.md): asignaciones y despacho automático de lotes.
-* Consume [general-module](../general-module/README.md): `ORGANIZACION`, zona/territorios.
+* Consume [02-vivero-module](../02-vivero-module/README.md): asignaciones y despacho automático de lotes.
+* Consume [00-general-module](../00-general-module/README.md): `ORGANIZACION`, zona/territorios.
 * Ver estado real de la integración M2↔M3 (piezas pendientes vs. en producción) en [ESTADO.md](../ESTADO.md).
 
 ## Invariantes clave

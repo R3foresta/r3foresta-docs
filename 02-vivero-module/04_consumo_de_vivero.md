@@ -37,7 +37,7 @@ Todo lo demás (asignaciones, devoluciones, reservas) es **contabilidad lógica*
 
 ## 2. Los tres saldos que conviven
 
-> Fuente canónica de las fórmulas y la identidad de esta sección: RN-VIV-57 y RN-VIV-49 en `vivero-module/01_reglas_de_negocio_vivero.md`. Lo que sigue es la explicación operativa, no una definición independiente.
+> Fuente canónica de las fórmulas y la identidad de esta sección: RN-VIV-57 y RN-VIV-49 en `02-vivero-module/01_reglas_de_negocio_vivero.md`. Lo que sigue es la explicación operativa, no una definición independiente.
 
 | Saldo | Qué cuenta | Dónde vive | Cuándo cambia |
 |-------|------------|------------|---------------|
@@ -163,7 +163,7 @@ fecha_evento = registro_plantacion.fecha_plantacion
 
 Un solo `REGISTRO_PLANTACION` puede tocar varios lotes (una especie por lote). En ese caso se generan **N eventos `DESPACHO`**, uno por lote, **todos en la misma transacción** que el registro. Si algo falla, todo se revierte.
 
-Invariante por registro (fuente canónica: RN-VIV-53 en `vivero-module/01_reglas_de_negocio_vivero.md`):
+Invariante por registro (fuente canónica: RN-VIV-53 en `02-vivero-module/01_reglas_de_negocio_vivero.md`):
 
 ```
 SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.cantidad_total_plantada
@@ -240,7 +240,7 @@ Esto es un **cambio respecto al comportamiento anterior** al Módulo 3: antes, e
 
 ## 4. Política de mermas sobre saldo asignado (por urgencia de subcampaña)
 
-> Fuente canónica de esta política: RN-VIV-50 en `vivero-module/01_reglas_de_negocio_vivero.md`. Esta sección la explica en detalle con fórmula y ejemplo operativo, sin sustituir la regla.
+> Fuente canónica de esta política: RN-VIV-50 en `02-vivero-module/01_reglas_de_negocio_vivero.md`. Esta sección la explica en detalle con fórmula y ejemplo operativo, sin sustituir la regla.
 
 Una `MERMA` en un lote con asignaciones activas requiere decidir quién absorbe la pérdida.
 
@@ -412,6 +412,6 @@ Esto es exactamente el comportamiento deseado: las reservas están protegidas.
 
 - [Reglas de negocio Vivero (fuente canónica del contrato M2 ↔ M3: RN-VIV-47 a RN-VIV-60)](./01_reglas_de_negocio_vivero.md)
 - [Addendum del Módulo 2 (referencia histórica de la negociación del contrato, ya absorbida)](../decisiones/_historico/vivero-addendum-m2-m3.md)
-- [Procesos del Módulo 3 — Plantación](../plantacion-module/02_Procesos_Modulo_3_Plantacion.md)
+- [Procesos del Módulo 3 — Plantación](../03-plantacion-module/02_Procesos_Modulo_3_Plantacion.md)
 - [Esquema ER](../database/00_database_schema.md)
 - [Estado de implementación](../ESTADO.md)

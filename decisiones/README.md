@@ -7,7 +7,7 @@ Registro único de decisiones de arquitectura y diseño cerradas para el MVP, co
 | Rango | Documento | Alcance |
 |---|---|---|
 | `ADR-VIV-01` … `ADR-VIV-14` | [`00_decisiones_vivero.md`](00_decisiones_vivero.md) | Arquitectura de base de datos del módulo Vivero (modelo híbrido, origen único, saldo, eventos, evidencia, blockchain). Migrado desde `database/`. |
-| `ADR-GEN-01` … `ADR-GEN-07` | [`01_decisiones_general.md`](01_decisiones_general.md) | Decisiones cerradas del módulo General (comunidad, naming de planta, roles, ubicación, evidencia). Migrado desde `general-module/`. |
+| `ADR-GEN-01` … `ADR-GEN-07` | [`01_decisiones_general.md`](01_decisiones_general.md) | Decisiones cerradas del módulo General (comunidad, naming de planta, roles, ubicación, evidencia). Migrado desde `00-general-module/`. |
 
 ## Invariantes de dominio
 
@@ -18,7 +18,7 @@ Los invariantes de dominio listados en [`CLAUDE.md`](../CLAUDE.md#invariantes-de
 Material de trabajo superado, conservado solo como referencia (no es fuente operativa ni de diseño): [`_historico/`](_historico/).
 
 * [`_historico/planeacion-bd-vivero.md`](_historico/planeacion-bd-vivero.md) — comparativa de alternativas de arquitectura, superada por `00_decisiones_vivero.md`.
-* [`_historico/vivero-addendum-m2-m3.md`](_historico/vivero-addendum-m2-m3.md) — negociación original del contrato Vivero↔Plantación, ya absorbida en `vivero-module/01_reglas_de_negocio_vivero.md` (RN-VIV-47 a RN-VIV-60).
+* [`_historico/vivero-addendum-m2-m3.md`](_historico/vivero-addendum-m2-m3.md) — negociación original del contrato Vivero↔Plantación, ya absorbida en `02-vivero-module/01_reglas_de_negocio_vivero.md` (RN-VIV-47 a RN-VIV-60).
 
 ## Convención
 

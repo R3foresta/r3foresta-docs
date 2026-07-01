@@ -27,7 +27,7 @@
         "La fecha no puede ser futura.",
         "La cantidad inicial debe ser > 0.",
         "Persistencia oficial: ENUM(unidad_medida) = [UNIDAD, G].",
-        "Normalizacion de entrada (kg/g/unidad -> unidad canonica): ver RN-VIV-17B en vivero-module/01_reglas_de_negocio_vivero.md (fuente canonica).",
+        "Normalizacion de entrada (kg/g/unidad -> unidad canonica): ver RN-VIV-17B en 02-vivero-module/01_reglas_de_negocio_vivero.md (fuente canonica).",
         "SEMILLA puede persistirse en G o UNIDAD segun la captura funcional.",
         "ESQUEJE solo admite UNIDAD, entero estricto y sin decimales."
       ],

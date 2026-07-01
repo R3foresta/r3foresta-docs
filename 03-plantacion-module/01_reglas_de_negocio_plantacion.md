@@ -4,7 +4,7 @@
 
 Estas reglas cubren el comportamiento propio del Modulo 3 (Plantacion): ciclo de vida de campaña y subcampaña, planificacion por especie, coordinacion como membresia, registro de plantacion, mortandad, reposicion, geolocalizacion y transparencia publica.
 
-El contrato de integracion entre Vivero (M2) y Plantacion (M3) — asignaciones, devoluciones, despacho automatico y mermas sobre asignaciones — **no se duplica aqui**. Su fuente canonica es `RN-VIV-47` a `RN-VIV-60` en [`../vivero-module/01_reglas_de_negocio_vivero.md`](../vivero-module/01_reglas_de_negocio_vivero.md). Este documento referencia esas reglas cuando aplica, no las copia.
+El contrato de integracion entre Vivero (M2) y Plantacion (M3) — asignaciones, devoluciones, despacho automatico y mermas sobre asignaciones — **no se duplica aqui**. Su fuente canonica es `RN-VIV-47` a `RN-VIV-60` en [`../02-vivero-module/01_reglas_de_negocio_vivero.md`](../02-vivero-module/01_reglas_de_negocio_vivero.md). Este documento referencia esas reglas cuando aplica, no las copia.
 
 Fuente de estas reglas: `02_Procesos_Modulo_3_Plantacion.md` y `00_Requerimientos_Modulo_3_Plantacion.json` (`RF-PLA-*`) de este modulo, y `database/00_database_schema.md`.
 
@@ -143,7 +143,7 @@ La subcampaña debe estar `ACTIVA`. Cada especie plantada debe existir en `SUBCA
 
 ### RN-PLA-26 - Plantar genera despacho automatico en M2
 
-Cada `PLANTACION_INICIAL` y `REPOSICION` genera atomicamente uno o mas eventos `DESPACHO` en `EVENTO_LOTE_VIVERO` (uno por lote afectado). El contrato completo de ese despacho (campos obligatorios, herencia de evidencia, invariante de conservacion) es el fijado en `RN-VIV-52..56` en `vivero-module/01_reglas_de_negocio_vivero.md`; no se repite aqui.
+Cada `PLANTACION_INICIAL` y `REPOSICION` genera atomicamente uno o mas eventos `DESPACHO` en `EVENTO_LOTE_VIVERO` (uno por lote afectado). El contrato completo de ese despacho (campos obligatorios, herencia de evidencia, invariante de conservacion) es el fijado en `RN-VIV-52..56` en `02-vivero-module/01_reglas_de_negocio_vivero.md`; no se repite aqui.
 
 ---
 
@@ -197,4 +197,4 @@ El catalogo cerrado de roles globales (`ADMIN | GENERAL | VALIDADOR | VOLUNTARIO
 
 ## 12. Referencia al contrato M2 ↔ M3
 
-Las reglas del contrato de integracion entre Vivero y Plantacion (asignacion como reserva logica, `cantidad_asignada` inmutable, mermas por urgencia sobre asignaciones, despacho automatico vs. manual, despacho manual contra saldo libre, especie libre en reposicion) viven exclusivamente en `RN-VIV-47` a `RN-VIV-60` de [`../vivero-module/01_reglas_de_negocio_vivero.md`](../vivero-module/01_reglas_de_negocio_vivero.md). Este documento no las duplica; las reglas de esta seccion (`RN-PLA-*`) solo cubren el comportamiento propio de M3.
+Las reglas del contrato de integracion entre Vivero y Plantacion (asignacion como reserva logica, `cantidad_asignada` inmutable, mermas por urgencia sobre asignaciones, despacho automatico vs. manual, despacho manual contra saldo libre, especie libre en reposicion) viven exclusivamente en `RN-VIV-47` a `RN-VIV-60` de [`../02-vivero-module/01_reglas_de_negocio_vivero.md`](../02-vivero-module/01_reglas_de_negocio_vivero.md). Este documento no las duplica; las reglas de esta seccion (`RN-PLA-*`) solo cubren el comportamiento propio de M3.

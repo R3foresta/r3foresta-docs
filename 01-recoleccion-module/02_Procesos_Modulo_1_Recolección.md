@@ -55,7 +55,7 @@ El módulo también separa dos momentos para la identidad:
 - **ESQUEJE:** unidades enteras (1, 2, 3…)
 - **SEMILLA:** peso o unidades enteras, con persistencia oficial en `G` o `UNIDAD` según la regla funcional del material.
 
-Convención oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]` — ver RN-VIV-17B en `vivero-module/01_reglas_de_negocio_vivero.md` para la convención completa de normalización (`kg`/`g`/`unidad`).
+Convención oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]` — ver RN-VIV-17B en `02-vivero-module/01_reglas_de_negocio_vivero.md` para la convención completa de normalización (`kg`/`g`/`unidad`).
 
 Reglas por tipo de material:
 
@@ -179,7 +179,7 @@ El lote de vivero usa un `vivero_id` seleccionado en Módulo 2; no se hereda aut
 
 El `codigo_trazabilidad` del lote de vivero debe quedar como `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`.
 
-Contrato estricto entre Módulo 1 y Módulo 2 en `INICIO`: cantidades y unidades alineadas (RN-VIV-17A / RN-REC-24A) y snapshots heredados alineados (RN-VIV-16A) — ver `vivero-module/01_reglas_de_negocio_vivero.md` y `recoleccion-module/01_reglas_de_negocio_recoleccion.md` para el enunciado completo.
+Contrato estricto entre Módulo 1 y Módulo 2 en `INICIO`: cantidades y unidades alineadas (RN-VIV-17A / RN-REC-24A) y snapshots heredados alineados (RN-VIV-16A) — ver `02-vivero-module/01_reglas_de_negocio_vivero.md` y `01-recoleccion-module/01_reglas_de_negocio_recoleccion.md` para el enunciado completo.
 
 Restricciones del MVP:
 

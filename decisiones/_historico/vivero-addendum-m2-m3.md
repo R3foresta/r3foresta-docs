@@ -5,7 +5,7 @@
 > - JSON de requerimientos actualizado: RF-VIV-03, RF-VIV-05, RF-VIV-06, RF-VIV-09 extendidos; agregados RF-VIV-11 (asignación), RF-VIV-12 (devolución), RF-VIV-13 (saldos derivados), RF-VIV-14 (política de urgencia de mermas).
 > - Reglas de negocio agregadas: RN-VIV-47 a RN-VIV-59 (sección 13 del MD de reglas).
 > - Guía operativa: sección 13 nueva con resumen del contrato M2 ↔ M3.
-> - Documento operativo dedicado: [04_consumo_de_vivero.md](../../vivero-module/04_consumo_de_vivero.md).
+> - Documento operativo dedicado: [04_consumo_de_vivero.md](../../02-vivero-module/04_consumo_de_vivero.md).
 > - Esquema ER: `EVENTO_LOTE_VIVERO` extendido y nueva entidad `ASIGNACION_VIVERO_SUBCAMPANIA` agregadas en [database/00_database_schema.md](../../database/00_database_schema.md).
 > - Nota posterior (2026-07-01): la idea de evidencia heredada para `DESPACHO` automático fue retirada. Todo despacho, manual o automático, requiere evidencia propia asociada al evento de vivero.
 >

@@ -83,7 +83,7 @@ Todavía no hablamos de plantas vivas. Eso empieza recién en `EMBOLSADO`.
 
 ### 2.5. Convención oficial de unidades
 
-Convención oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]`. Ver RN-VIV-17B en `vivero-module/01_reglas_de_negocio_vivero.md` para la convención completa (normalización `kg`/`g`/`unidad`, reglas numéricas de decimales, no mezclar `G`/`GR`).
+Convención oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]`. Ver RN-VIV-17B en `02-vivero-module/01_reglas_de_negocio_vivero.md` para la convención completa (normalización `kg`/`g`/`unidad`, reglas numéricas de decimales, no mezclar `G`/`GR`).
 
 ### 2.6. Inicio no equivale a plantas vivas
 
@@ -229,7 +229,7 @@ Reglas importantes:
 * El evento `INICIO` queda persistido como un registro append-only en `EVENTO_LOTE_VIVERO`.
 * No se permite edición posterior del evento.
 
-Invariantes obligatorias entre Módulo 1 y Módulo 2: ver RN-VIV-17A (`vivero-module/01_reglas_de_negocio_vivero.md`) y RN-REC-24A (`recoleccion-module/01_reglas_de_negocio_recoleccion.md`) — fuente canónica de las 4 ecuaciones.
+Invariantes obligatorias entre Módulo 1 y Módulo 2: ver RN-VIV-17A (`02-vivero-module/01_reglas_de_negocio_vivero.md`) y RN-REC-24A (`01-recoleccion-module/01_reglas_de_negocio_recoleccion.md`) — fuente canónica de las 4 ecuaciones.
 
 Restricciones:
 

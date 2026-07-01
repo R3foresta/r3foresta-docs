@@ -16,9 +16,9 @@ Modelar el ciclo de vida de un **lote de vivero**, agregado central del módulo,
 
 ## Dependencias
 
-* Consume catálogos maestros de [general-module](../general-module/README.md).
-* Recibe el lote origen de [recoleccion-module](../recoleccion-module/README.md) mediante contrato atómico en el evento `INICIO`.
-* Se integra con [plantacion-module](../plantacion-module/README.md): asignaciones, devoluciones y despacho automático (ver estado de esta integración en [ESTADO.md](../ESTADO.md)).
+* Consume catálogos maestros de [00-general-module](../00-general-module/README.md).
+* Recibe el lote origen de [01-recoleccion-module](../01-recoleccion-module/README.md) mediante contrato atómico en el evento `INICIO`.
+* Se integra con [03-plantacion-module](../03-plantacion-module/README.md): asignaciones, devoluciones y despacho automático (ver estado de esta integración en [ESTADO.md](../ESTADO.md)).
 
 ## Invariantes clave
 

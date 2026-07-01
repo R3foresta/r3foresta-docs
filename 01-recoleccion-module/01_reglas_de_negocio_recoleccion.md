@@ -24,7 +24,7 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
   * Persistencia oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]`.
   * Para `ESQUEJE`: solo `UNIDAD`, entero estricto, sin decimales.
   * Para `SEMILLA`: puede capturarse por peso o por conteo, pero solo se persiste en `G` o `UNIDAD`.
-  * Convención de normalización de entrada (`kg`/`g`/`unidad` → unidad canónica): ver RN-VIV-17B en `vivero-module/01_reglas_de_negocio_vivero.md` (fuente canónica).
+  * Convención de normalización de entrada (`kg`/`g`/`unidad` → unidad canónica): ver RN-VIV-17B en `02-vivero-module/01_reglas_de_negocio_vivero.md` (fuente canónica).
 * **Estados del registro:** `BORRADOR`, `PENDIENTE_VALIDACION`, `VALIDADO`, `RECHAZADO`.
 * **Estado operativo:** `ABIERTO` o `CERRADO`, derivado del saldo.
 * **Ubicación estructurada:** latitud/longitud obligatorias desde `BORRADOR` + datos administrativos opcionales (catálogos).

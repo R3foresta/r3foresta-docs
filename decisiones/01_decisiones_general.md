@@ -1,6 +1,6 @@
 # ADR-GEN — Decisiones cerradas — Módulo General (MVP)
 
-> Parte del registro de decisiones del proyecto: ver [índice](README.md). Migrado desde el antiguo documento de decisiones cerradas que vivía en `general-module/`.
+> Parte del registro de decisiones del proyecto: ver [índice](README.md). Migrado desde el antiguo documento de decisiones cerradas que vivía en `00-general-module/`.
 
 ## ADR-GEN-01 — Comunidad: decision cerrada para MVP
 

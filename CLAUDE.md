@@ -13,14 +13,14 @@ Archivos `.excalidraw` son material de trabajo en equipo, no documentación can�
 R3Foresta modela la cadena de custodia de material biológico para reforestación con trazabilidad blockchain. Tres módulos operativos más uno transversal:
 
 ```
-general-module (catálogos maestros) ──► recoleccion-module ──► vivero-module ──► plantacion-module
+00-general-module (catálogos maestros) ──► 01-recoleccion-module ──► 02-vivero-module ──► 03-plantacion-module
                   (RF-GEN-*)              (lote origen)         (maduración)        (campo)
 ```
 
-- **`general-module/`** — Catálogos transversales (USUARIO, UBICACION, PAIS, DIVISION_ADMINISTRATIVA, VIVERO, PLANTA, TIPO_PLANTA, EVIDENCIAS_TRAZABILIDAD, METODO_RECOLECCION). Es la fuente viva de las entidades maestras; los demás módulos consumen vía snapshots congelados.
-- **`recoleccion-module/`** — Módulo 1. Registro del lote origen con evidencia fotográfica, GPS y validación. Persistencia multicapa: Supabase DB (tabular) + Supabase Storage (binarios) + IPFS/Pinata (metadata NFT) + Blockchain (mint).
-- **`vivero-module/`** — Módulo 2. Maduración pre-plantación. Modelo híbrido (estado actual + historial append-only de eventos), no event sourcing puro. El **lote de vivero** es el agregado central con **un único origen** desde Recolección.
-- **`plantacion-module/`** — Módulo 3. Modelado base en BD (CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION) aplicado vía migraciones 027–032. Pendientes: handler atómico de despacho automático, triggers de mantenimiento de contadores materializados, historiales de ciclo de vida y job nocturno de transición a `MONITOREO_HISTORICO`; ver [ESTADO.md](ESTADO.md) para el detalle pieza por pieza.
+- **`00-general-module/`** — Catálogos transversales (USUARIO, UBICACION, PAIS, DIVISION_ADMINISTRATIVA, VIVERO, PLANTA, TIPO_PLANTA, EVIDENCIAS_TRAZABILIDAD, METODO_RECOLECCION). Es la fuente viva de las entidades maestras; los demás módulos consumen vía snapshots congelados.
+- **`01-recoleccion-module/`** — Módulo 1. Registro del lote origen con evidencia fotográfica, GPS y validación. Persistencia multicapa: Supabase DB (tabular) + Supabase Storage (binarios) + IPFS/Pinata (metadata NFT) + Blockchain (mint).
+- **`02-vivero-module/`** — Módulo 2. Maduración pre-plantación. Modelo híbrido (estado actual + historial append-only de eventos), no event sourcing puro. El **lote de vivero** es el agregado central con **un único origen** desde Recolección.
+- **`03-plantacion-module/`** — Módulo 3. Modelado base en BD (CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION) aplicado vía migraciones 027–032. Pendientes: handler atómico de despacho automático, triggers de mantenimiento de contadores materializados, historiales de ciclo de vida y job nocturno de transición a `MONITOREO_HISTORICO`; ver [ESTADO.md](ESTADO.md) para el detalle pieza por pieza.
 - **`database/`** — Esquema ER consolidado (`00_database_schema.md` en sintaxis mermaid `erDiagram`), planeación de arquitectura, decisiones críticas, y scripts SQL en `database/supabase/`.
 
 ## Convenciones documentales

@@ -633,7 +633,7 @@ Por subcampaña:
 
 ## 9. Integración con Módulo 2 (Vivero)
 
-> Fuente canónica de las reglas y fórmulas de esta sección: RN-VIV-47 a RN-VIV-60 en `vivero-module/01_reglas_de_negocio_vivero.md` y el esquema en `database/00_database_schema.md`. Esta sección resume el contrato desde la perspectiva de M3.
+> Fuente canónica de las reglas y fórmulas de esta sección: RN-VIV-47 a RN-VIV-60 en `02-vivero-module/01_reglas_de_negocio_vivero.md` y el esquema en `database/00_database_schema.md`. Esta sección resume el contrato desde la perspectiva de M3.
 
 ### 9.1. Contrato Asignación ↔ Vivero (sin evento en M2)
 
@@ -670,7 +670,7 @@ Cuando ocurre una merma en un lote con asignaciones activas, la política del MV
 2. Si la merma excede el saldo no asignado, afecta asignaciones ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST` — la subcampaña con inicio más lejano absorbe primero; la más próxima queda protegida (es la más urgente).
 3. Si una asignación queda con menos saldo que su comprometido, el sistema **notifica al coordinador** de la(s) subcampaña(s) afectada(s).
 
-Ver RN-VIV-50 en `vivero-module/01_reglas_de_negocio_vivero.md` y `vivero-module/04_consumo_de_vivero.md` §4 para la fórmula y el ejemplo operativo completos.
+Ver RN-VIV-50 en `02-vivero-module/01_reglas_de_negocio_vivero.md` y `02-vivero-module/04_consumo_de_vivero.md` §4 para la fórmula y el ejemplo operativo completos.
 
 ---
 

@@ -6,13 +6,13 @@ La cadena del dominio: `general (maestros) → recolección (origen) → vivero 
 
 ## Índice
 
-* [general-module/README.md](general-module/README.md)
+* [00-general-module/README.md](00-general-module/README.md)
   Catálogos y maestros transversales: usuarios, territorios, viveros, plantas, evidencias, `ORGANIZACION`.
-* [recoleccion-module/README.md](recoleccion-module/README.md)
+* [01-recoleccion-module/README.md](01-recoleccion-module/README.md)
   Módulo 1: registro del lote origen, evidencia, validación, saldo.
-* [vivero-module/README.md](vivero-module/README.md)
+* [02-vivero-module/README.md](02-vivero-module/README.md)
   Módulo 2: maduración pre-plantación, eventos append-only, saldo vivo.
-* [plantacion-module/README.md](plantacion-module/README.md)
+* [03-plantacion-module/README.md](03-plantacion-module/README.md)
   Módulo 3: campañas/subcampañas, plantación en campo, mantenimiento, vista pública.
 * [database/README.md](database/README.md)
   Esquema ER canónico y scripts.
