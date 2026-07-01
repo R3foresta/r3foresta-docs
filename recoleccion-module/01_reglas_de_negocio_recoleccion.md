@@ -226,7 +226,7 @@ Para `ESQUEJE`:
 Se pueden agregar más dentro de los límites por sección.
 
 
-(Fuera del MVP: se puede evaluar validacion comunitaria adicional, con registro explicito de quienes validaron y cuando.)
+(Fuera del MVP: se puede evaluar validación comunitaria adicional, con registro explícito de quiénes validaron y cuándo.)
 
 ### RN-REC-15 — Formato y tamaño por foto
 

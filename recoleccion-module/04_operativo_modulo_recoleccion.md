@@ -16,7 +16,7 @@ En este módulo todavía **no** se trabaja plantas vivas; eso empieza recién en
 ## 2. Entidades principales
 
 - **RECOLECCION**: ficha principal del lote origen.
-- **EVIDENCIAS_TRAZABILIDAD**: aca se registran las fotos que sirven de evidencia. 
+- **EVIDENCIAS_TRAZABILIDAD**: registra las fotos que sirven de evidencia.
 - **RECOLECCION_HISTORIAL**: historial del ciclo de vida del registro.
 - **RECOLECCION_MOVIMIENTO**: movimientos que afectan saldo.
 - **UBICACION**: latitud, longitud y referencia territorial.
@@ -26,12 +26,14 @@ En este módulo todavía **no** se trabaja plantas vivas; eso empieza recién en
 ## 3. Reglas bloqueantes
 
 - Toda recolección nace en `BORRADOR`.
+- `BORRADOR` requiere evidencia mínima y ubicación GPS desde la creación.
 - Solo una recolección en `VALIDADO` puede alimentar Vivero.
 - `PENDIENTE_VALIDACION` congela la ficha mientras revisa el validador.
 - `RECHAZADO` no habilita consumo, pero permite corregir y reenviar.
 - En `VALIDADO` no se edita la ficha; solo se permiten movimientos de saldo.
+- Los campos snapshot son `NOT NULL` desde `BORRADOR`.
+- En `BORRADOR` y `RECHAZADO`, el snapshot puede recalcularse desde fuentes vivas.
 - El snapshot oficial de identidad se congela solo al aprobar la validación.
-- En `BORRADOR` y `RECHAZADO`, el snapshot puede recalcularse.
 - El naming oficial es `nombre_comercial_snapshot`; no `nombre_comun_snapshot`.
 - El soft delete solo está permitido para `BORRADOR`.
 - La fecha de recolección no puede ser futura y puede ser retroactiva hasta 45 días.

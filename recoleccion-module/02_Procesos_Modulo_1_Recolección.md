@@ -71,7 +71,7 @@ Reglas por tipo de material:
 
 ## 3. Flujo del proceso (etapas)
 
-El lote origen atraviesa 4 etapas operativas (no confundir con estados):
+El lote origen atraviesa estas etapas operativas (no confundir con estados):
 
 ### 3.1. Creación del BORRADOR
 
