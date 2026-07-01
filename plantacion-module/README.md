@@ -8,11 +8,12 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 
 ## Documentos de este módulo
 
-* `00_Requerimientos_Modulo_3_Plantacion.json`: requerimientos funcionales (`RF-PLA-01..17`).
+* `00_Requerimientos_Modulo_3_Plantacion.json`: requerimientos funcionales (`RF-PLA-01..18`).
+* `01_reglas_de_negocio_plantacion.md`: reglas propias de M3 (`RN-PLA-01..35`) — ciclo de vida de campaña/subcampaña, plan por especie, coordinación como membresía, plantación inicial, mortandad, reposición, GPS/PostGIS, vista pública y roles.
 * `02_Procesos_Modulo_3_Plantacion.md`: proceso detallado.
 * `03_Mockups_Guia_Modulo_3_Plantacion.md`: guía UX.
 
-**Nota estructural:** este módulo no tiene un `01_reglas_de_negocio` propio. Parte de sus reglas viven como `RN-VIV-47..60` en [`../vivero-module/01_reglas_de_negocio_vivero.md`](../vivero-module/01_reglas_de_negocio_vivero.md) — es el contrato de integración M2↔M3. No buscarlas en este módulo.
+**Nota estructural:** el contrato de integración M2↔M3 (asignaciones, devoluciones, despacho automático, mermas sobre asignaciones) **no vive aquí**: su fuente canónica es `RN-VIV-47..60` en [`../vivero-module/01_reglas_de_negocio_vivero.md`](../vivero-module/01_reglas_de_negocio_vivero.md). `01_reglas_de_negocio_plantacion.md` referencia esas reglas, no las duplica.
 
 ## Dependencias
 

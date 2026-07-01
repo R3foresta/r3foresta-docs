@@ -180,3 +180,19 @@ Los datos maestros pueden cambiar en el tiempo. Por eso cada modulo operativo de
 ### RN-GEN-26 - No se permiten duplicados semanticos por modulo
 
 No debe existir un catalogo de plantas en Recoleccion, otro distinto en Vivero y otro distinto en Plantacion. La entidad maestra es una sola, aunque los modulos proyecten snapshots propios.
+
+---
+
+## 9. Reglas de organizaciones
+
+### RN-GEN-27 - La organizacion es catalogo maestro real
+
+`ORGANIZACION` se administra como entidad maestra al mismo nivel que `USUARIO`, `VIVERO` o `PLANTA`. No debe modelarse como texto libre ni como catalogo embebido dentro de Plantacion u otro modulo operativo.
+
+### RN-GEN-28 - El tipo de organizacion es controlado por catalogo
+
+`tipo` no puede ser texto libre. La lista oficial del MVP es: `ONG`, `EMPRESA_PRIVADA`, `EMPRESA_PUBLICA`, `FUNDACION`, `ETFs`, `ALCALDIA`, `ASOCIACION_CIUDADANA`, `OTRO`.
+
+### RN-GEN-29 - Inactivar una organizacion no rompe el historial
+
+Una organizacion puede quedar inactiva (`activo = false`) para nuevo uso, pero las campañas del Modulo 3 que ya la tengan asociada via `CAMPANIA_ORGANIZACION` siguen mostrando el snapshot de su nombre congelado al activar la subcampaña (`nombres_organizaciones_snapshot`).

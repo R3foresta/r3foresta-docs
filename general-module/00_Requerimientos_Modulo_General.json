@@ -171,6 +171,30 @@
         "Cada modulo define obligatoriedad, pero el modelo comun vive aqui.",
         "eliminado_en queda reservado para futuro; en el MVP no se usara como parte del flujo funcional."
       ]
+    },
+    {
+      "codigo": "RF-GEN-07",
+      "modulo": "General",
+      "nombre": "Gestionar organizaciones",
+      "descripcion": "Mantener un catalogo maestro de organizaciones (ONGs, empresas, alcaldias, fundaciones, etc.) que puedan asociarse como respaldo de campañas del Modulo 3 Plantacion.",
+      "campos": [
+        "id",
+        "nombre",
+        "activo",
+        "logo_url opcional",
+        "tipo"
+      ],
+      "validaciones": [
+        "nombre es obligatorio.",
+        "activo tiene valor por defecto true.",
+        "tipo debe pertenecer al catalogo oficial: ONG, EMPRESA_PRIVADA, EMPRESA_PUBLICA, FUNDACION, ETFs, ALCALDIA, ASOCIACION_CIUDADANA, OTRO.",
+        "La inactivacion impide nuevo uso, pero no altera historial ya congelado en campañas existentes."
+      ],
+      "reglas_adicionales": [
+        "ORGANIZACION es tabla maestra real, al mismo nivel que USUARIO, VIVERO o PLANTA; no se modela como texto libre ni catalogo embebido en Plantacion.",
+        "El Modulo 3 (Plantacion) consume esta entidad a traves del puente N:M CAMPANIA_ORGANIZACION.",
+        "La inactivacion de una organizacion no rompe historial: las campañas que la tengan asociada siguen mostrando el snapshot de su nombre congelado al activar la subcampaña (nombres_organizaciones_snapshot)."
+      ]
     }
   ]
 }

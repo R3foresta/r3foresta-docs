@@ -28,6 +28,7 @@ La idea es evitar que cada módulo vuelva a definir estos conceptos por separado
 * `TIPOS_ENTIDAD_EVIDENCIA`
 * `EVIDENCIAS_TRAZABILIDAD`
 * `METODO_RECOLECCION`
+* `ORGANIZACION`
 
 ## Documentos de este módulo
 
@@ -40,4 +41,5 @@ La idea es evitar que cada módulo vuelva a definir estos conceptos por separado
 
 * Recolección usa este módulo para `RF-GEN-01`, `RF-GEN-02`, `RF-GEN-03`, `RF-GEN-04` y `RF-GEN-05`.
 * Vivero hereda snapshots desde Recolección, pero la fuente maestra original de plantas, usuarios, viveros y territorios vive aquí.
+* Plantación (Módulo 3) consume `ORGANIZACION` (`RF-GEN-07`) vía el puente `CAMPANIA_ORGANIZACION`.
 * Base de datos usa este módulo como contrato semántico para tablas maestras.
