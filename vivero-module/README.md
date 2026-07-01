@@ -13,7 +13,7 @@ Modelar el ciclo de vida de un **lote de vivero**, agregado central del módulo,
 * `02_doc_guia_vivero.md`: guía operativa y de proceso.
 * `03_operativo_modulo_vivero.md`: resumen operativo del módulo.
 * `04_consumo_de_vivero.md`: operativo del consumo de saldo hacia plantación.
-* [`../historico/vivero-addendum-m2-m3.md`](../historico/vivero-addendum-m2-m3.md): referencia histórica del contrato M2↔M3 (ya absorbido en `01_reglas_de_negocio_vivero.md`), archivada — no es fuente operativa.
+* [`../decisiones/_historico/vivero-addendum-m2-m3.md`](../decisiones/_historico/vivero-addendum-m2-m3.md): referencia histórica del contrato M2↔M3 (ya absorbido en `01_reglas_de_negocio_vivero.md`), archivada — no es fuente operativa.
 
 ## Dependencias
 

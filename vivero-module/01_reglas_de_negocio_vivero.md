@@ -363,13 +363,19 @@ Para `ADAPTABILIDAD`, si el modelo persiste `cantidad_afectada`, esta debe expre
 
 Toda pérdida operativa debe registrarse mediante un evento `MERMA` con causa, cantidad y responsable.
 
-### RN-VIV-20 — Despachos y mermas no pueden exceder el saldo
+### RN-VIV-20 — Despachos y mermas no pueden exceder el saldo aplicable
 
 * **Severidad:** BLOQUEANTE
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Alta
 
-La cantidad perdida o despachada no puede superar el saldo vivo disponible al momento del evento.
+La cantidad perdida o despachada no puede superar el saldo aplicable al momento del evento.
+
+Reglas por tipo:
+
+* `MERMA`: `cantidad_afectada <= saldo_vivo_actual`. Las asignaciones no impiden registrar la merma; si la merma excede el saldo no asignado, se aplica la política de urgencia de RN-VIV-50.
+* `DESPACHO` manual: valida contra `saldo_vivo_disponible_asignacion` para no tocar stock reservado.
+* `DESPACHO` automático desde Plantación: valida contra `saldo_asignado_disponible` de la asignación consumida y no puede dejar `saldo_vivo_actual < 0`.
 
 ### RN-VIV-21 — El saldo vivo no puede ser negativo
 
@@ -688,7 +694,7 @@ El diseño del MVP debe dejar preparada una evolución futura para incorporar, s
 
 ## 13. Integración con Módulo 3 (Plantación)
 
-> Estas reglas formalizan el contrato M2 ↔ M3, descrito originalmente en [../historico/vivero-addendum-m2-m3.md](../historico/vivero-addendum-m2-m3.md) (referencia histórica, ya absorbida aquí) y operativizado en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md). Tienen numeración estable y no deben renumerarse aunque la implementación se difiera por tarea.
+> Estas reglas formalizan el contrato M2 ↔ M3, descrito originalmente en [../decisiones/_historico/vivero-addendum-m2-m3.md](../decisiones/_historico/vivero-addendum-m2-m3.md) (referencia histórica, ya absorbida aquí) y operativizado en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md). Tienen numeración estable y no deben renumerarse aunque la implementación se difiera por tarea.
 
 ### RN-VIV-47 — Asignación de lote a subcampaña es reserva lógica
 
@@ -771,15 +777,15 @@ SUM(DESPACHO.cantidad_afectada
 
 Si esa identidad no se cumple, el registro y sus despachos están inconsistentes y debe revisarse.
 
-### RN-VIV-54 — Evidencia heredada en despacho automático
+### RN-VIV-54 — Evidencia propia obligatoria en despacho automático
 
 * **Severidad:** BLOQUEANTE
 * **Aplica en MVP:** Sí
 * **Relevancia carbono:** Alta
 
-Un `DESPACHO` con `origen_despacho = AUTOMATICO_PLANTACION` **no requiere evidencia propia** en `EVIDENCIAS_TRAZABILIDAD`. Su evidencia es la del `REGISTRO_PLANTACION` asociado en M3. Esta es una excepción explícita y controlada a la regla general `RN-VIV-26`.
+Un `DESPACHO` con `origen_despacho = AUTOMATICO_PLANTACION` **requiere evidencia propia** en `EVIDENCIAS_TRAZABILIDAD`, vinculada directamente al `EVENTO_LOTE_VIVERO.id`.
 
-La excepción solo es válida si el `REGISTRO_PLANTACION` tiene evidencia válida. Si no la tiene, la transacción atómica no debe llegar al commit y el despacho automático no debe crearse.
+La evidencia del `REGISTRO_PLANTACION` asociado puede mostrarse como contexto cruzado, pero no reemplaza la evidencia del despacho. La transacción atómica no debe llegar al commit si el evento `DESPACHO` automático no trae al menos una foto válida del material despachado.
 
 ### RN-VIV-55 — Despacho manual no puede tener destino `PLANTACION_CAMPANIA`
 

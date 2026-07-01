@@ -9,10 +9,9 @@ Mantener el esquema ER canónico y las decisiones de diseño de base de datos qu
 ## Documentos
 
 * `00_database_schema.md`: esquema ER canónico (sintaxis mermaid `erDiagram`) + enums + funciones. Fuente de verdad estructural de todo el proyecto.
-* `04_decisiones_bd_vivero_final.md`: decisiones de arquitectura cerradas, alcance vivero.
 * `supabase/01_create_recoleccion_historial.sql`: script SQL de ejemplo/soporte.
 
-La planeación de arquitectura previa (comparativa de alternativas, alcance vivero) fue superada por `04_decisiones_bd_vivero_final.md` y archivada: ver [../historico/planeacion-bd-vivero.md](../historico/planeacion-bd-vivero.md).
+Las decisiones de arquitectura de BD cerradas para vivero se migraron al registro unificado: ver [`../decisiones/00_decisiones_vivero.md`](../decisiones/00_decisiones_vivero.md) (índice en [`../decisiones/README.md`](../decisiones/README.md)). La planeación previa (comparativa de alternativas) quedó archivada en [`../decisiones/_historico/planeacion-bd-vivero.md`](../decisiones/_historico/planeacion-bd-vivero.md).
 
 ## Aclaración importante
 

@@ -15,11 +15,14 @@ La cadena del dominio: `general (maestros) → recolección (origen) → vivero 
 * [plantacion-module/README.md](plantacion-module/README.md)
   Módulo 3: campañas/subcampañas, plantación en campo, mantenimiento, vista pública.
 * [database/README.md](database/README.md)
-  Esquema ER canónico, decisiones de arquitectura y scripts.
+  Esquema ER canónico y scripts.
+* [decisiones/README.md](decisiones/README.md)
+  Registro unificado de decisiones de arquitectura y diseño (ADR) de todos los módulos.
 
 ## Otros documentos raíz
 
 * [database/00_database_schema.md](database/00_database_schema.md) — fuente de verdad estructural del proyecto (tablas + enums en mermaid).
+* [glosario.md](glosario.md) — términos clave del dominio, con enlace a su fuente canónica.
 * [ESTADO.md](ESTADO.md) — estado vivo de implementación: qué está en producción vs. pendiente.
 * [CLAUDE.md](CLAUDE.md) — convenciones e invariantes de dominio del proyecto.
 * [AUDITORIA-DOCUMENTACION.md](AUDITORIA-DOCUMENTACION.md) — informe de auditoría de la documentación.

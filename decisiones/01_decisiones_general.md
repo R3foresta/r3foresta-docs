@@ -1,4 +1,8 @@
-## 1. Comunidad: decision cerrada para MVP
+# ADR-GEN — Decisiones cerradas — Módulo General (MVP)
+
+> Parte del registro de decisiones del proyecto: ver [índice](README.md). Migrado desde el antiguo documento de decisiones cerradas que vivía en `general-module/`.
+
+## ADR-GEN-01 — Comunidad: decision cerrada para MVP
 
 ### Situacion actual
 
@@ -17,7 +21,7 @@ No se crea una tabla separada `COMUNIDAD` en el MVP.
 
 ---
 
-## 2. Naming oficial de planta: decision cerrada para MVP
+## ADR-GEN-02 — Naming oficial de planta: decision cerrada para MVP
 
 ### Situacion actual
 
@@ -38,7 +42,7 @@ En snapshots operativos se mantiene el nombre de campo `nombre_comercial_snapsho
 
 ---
 
-## 3. Tipo de material permitido por planta
+## ADR-GEN-03 — Tipo de material permitido por planta
 
 ### Situacion actual
 
@@ -53,7 +57,9 @@ Se agrega una regla maestra por planta para indicar material permitido:
 
 No se usa `AMBOS` en el MVP. Cada planta queda configurada como esqueje o semilla.
 
-## 4. Roles oficiales del sistema
+---
+
+## ADR-GEN-04 — Roles oficiales del sistema
 
 ### Situacion actual
 
@@ -68,7 +74,9 @@ Los roles oficiales del MVP quedan en:
 * `VALIDADOR`
 * `VOLUNTARIO`
 
-## 5. Alta de nuevas comunidades y zonas
+---
+
+## ADR-GEN-05 — Alta de nuevas comunidades y zonas
 
 ### Situacion actual
 
@@ -80,7 +88,7 @@ Solamente `ADMIN` puede crear nuevas comunidades o zonas. Los usuarios operativo
 
 ---
 
-## 6. Ubicacion reutilizable vs ubicacion embebida
+## ADR-GEN-06 — Ubicacion reutilizable vs ubicacion embebida
 
 ### Situacion actual
 
@@ -92,7 +100,7 @@ Siempre se va a usar la tabla `UBICACION` para guardar coordenadas y comunidad. 
 
 ---
 
-## 7. Evidencia: politica de eliminacion y reemplazo
+## ADR-GEN-07 — Evidencia: politica de eliminacion y reemplazo
 
 ### Situacion actual
 
@@ -104,14 +112,14 @@ Existe `eliminado_en` en `EVIDENCIAS_TRAZABILIDAD`, pero no esta formalizada la 
 
 ---
 
-## 8. Estado actual
+## Estado actual
 
 Con estas definiciones, los puntos base del modulo general quedan cerrados para el MVP.
 
 Todavia pueden existir decisiones futuras de ampliacion, pero ya no quedan abiertos como bloqueo para documentacion o desarrollo base:
 
-* comunidad se resuelve con `DIVISION_ADMINISTRATIVA`,
-* el naming maestro vivo de planta es `nombre_comun_principal`,
-* los snapshots conservan `nombre_comercial_snapshot`,
-* los roles oficiales estan cerrados,
-* y las coordenadas viven siempre en `UBICACION`.
+* comunidad se resuelve con `DIVISION_ADMINISTRATIVA` (ADR-GEN-01),
+* el naming maestro vivo de planta es `nombre_comun_principal` (ADR-GEN-02),
+* los snapshots conservan `nombre_comercial_snapshot` (ADR-GEN-02),
+* los roles oficiales estan cerrados (ADR-GEN-04),
+* y las coordenadas viven siempre en `UBICACION` (ADR-GEN-06).

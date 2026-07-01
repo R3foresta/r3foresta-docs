@@ -410,7 +410,7 @@ Esto es exactamente el comportamiento deseado: las reservas están protegidas.
 ## 11. Referencias
 
 - [Reglas de negocio Vivero (fuente canónica del contrato M2 ↔ M3: RN-VIV-47 a RN-VIV-60)](./01_reglas_de_negocio_vivero.md)
-- [Addendum del Módulo 2 (referencia histórica de la negociación del contrato, ya absorbida)](../historico/vivero-addendum-m2-m3.md)
+- [Addendum del Módulo 2 (referencia histórica de la negociación del contrato, ya absorbida)](../decisiones/_historico/vivero-addendum-m2-m3.md)
 - [Procesos del Módulo 3 — Plantación](../plantacion-module/02_Procesos_Modulo_3_Plantacion.md)
 - [Esquema ER](../database/00_database_schema.md)
 - [Estado de implementación](../ESTADO.md)
