@@ -83,29 +83,7 @@ Todavía no hablamos de plantas vivas. Eso empieza recién en `EMBOLSADO`.
 
 ### 2.5. Convención oficial de unidades
 
-La convención oficial del sistema en base de datos, backend, frontend y documentación es:
-
-* `ENUM(unidad_medida) = [UNIDAD, G]`
-* no se deben mezclar `G` y `GR`
-
-Entrada permitida desde frontend:
-
-* `kg`
-* `g`
-* `unidad`
-
-Normalización backend:
-
-* `kg -> G`
-* `g -> G`
-* `unidad -> UNIDAD`
-
-Reglas numéricas:
-
-* `G` permite decimales
-* `UNIDAD` no permite decimales
-* `kg` no se persiste
-* no se aceptan otras unidades en el MVP
+Convención oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]`. Ver RN-VIV-17B en `vivero-module/01_reglas_de_negocio_vivero.md` para la convención completa (normalización `kg`/`g`/`unidad`, reglas numéricas de decimales, no mezclar `G`/`GR`).
 
 ### 2.6. Inicio no equivale a plantas vivas
 
@@ -251,12 +229,7 @@ Reglas importantes:
 * El evento `INICIO` queda persistido como un registro append-only en `EVENTO_LOTE_VIVERO`.
 * No se permite edición posterior del evento.
 
-Invariantes obligatorias entre Módulo 1 y Módulo 2:
-
-* `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`
-* `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
-* `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
-* `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
+Invariantes obligatorias entre Módulo 1 y Módulo 2: ver RN-VIV-17A (`vivero-module/01_reglas_de_negocio_vivero.md`) y RN-REC-24A (`recoleccion-module/01_reglas_de_negocio_recoleccion.md`) — fuente canónica de las 4 ecuaciones.
 
 Restricciones:
 
@@ -360,7 +333,7 @@ Cada despacho registra:
 * `unidad_medida_evento = UNIDAD`
 * `fecha_evento`
 * `responsable_id`
-* `destino_tipo` (`PLANTACION_PROPIA`, `PLANTACION_COMUNIDAD`, `DONACION`, `VENTA`, `OTRO`)
+* `destino_tipo` (ver enum canónico `destino_tipo_vivero` en `database/00_database_schema.md`; qué valores aplican según despacho manual/automático se detalla en §13.5)
 * `destino_referencia`
 * `comunidad_destino_id` cuando aplique
 * `saldo_vivo_antes`
@@ -589,7 +562,7 @@ Alcance recomendado:
 
 ## 13. Integración con Módulo 3 (Plantación)
 
-> Esta sección resume el contrato Vivero ↔ Plantación. El documento operativo completo vive en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md) y la especificación técnica detallada en [03_Addendum_Modulo_2_por_Modulo_3.md](./03_Addendum_Modulo_2_por_Modulo_3.md). Las reglas formales son `RN-VIV-47` a `RN-VIV-59`.
+> Esta sección resume el contrato Vivero ↔ Plantación. El documento operativo completo vive en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md); la negociación histórica del contrato está archivada en [../historico/vivero-addendum-m2-m3.md](../historico/vivero-addendum-m2-m3.md) (no es fuente operativa). Las reglas formales son `RN-VIV-47` a `RN-VIV-60`.
 
 ### 13.1. Cómo se consume el vivero
 
@@ -616,7 +589,7 @@ Para el equipo de vivero, tres cambios prácticos:
 
 - **El operario de vivero ya no puede despachar manualmente saldo reservado.** La validación cambia de `saldo_vivo_actual` a `saldo_vivo_disponible_asignacion`.
 - **Aparecen despachos automáticos en el historial del lote.** Los genera el sistema, no el operario. Tienen badge `POR PLANTACIÓN` y enlazan a la subcampaña + registro de plantación.
-- **Las mermas pueden afectar reservas activas** (política LIFO — la asignación más nueva primero). Cuando ocurre, se notifica al coordinador de la subcampaña afectada.
+- **Las mermas pueden afectar reservas activas** según la política de urgencia de subcampaña: primero se consume saldo no asignado y, si no alcanza, absorben antes las subcampañas con inicio más lejano. Cuando ocurre, se notifica al coordinador de la subcampaña afectada.
 
 ### 13.4. Asignación con propósito
 
@@ -650,4 +623,4 @@ Cada afectación dispara una notificación al coordinador de la subcampaña due�
 
 ### 13.8. Estado actual de la integración
 
-El esquema lógico está definido y documentado. La implementación física se está aplicando por tareas en [tareas/modulo-2-integracion-modulo-3/](../tareas/modulo-2-integracion-modulo-3/). Hasta que todas las tareas estén cerradas, partes del comportamiento descrito aquí pueden no estar activas en producción. Consultar el README de tareas para el estado actual.
+El esquema lógico está definido y documentado. La implementación física está en curso; partes del comportamiento descrito aquí pueden no estar activas en producción todavía. Consultar [ESTADO.md](../ESTADO.md) para el estado actual pieza por pieza.

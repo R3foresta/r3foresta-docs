@@ -78,7 +78,7 @@ Su objetivo operativo es:
 - `tipo_evento_vivero = [INICIO, EMBOLSADO, ADAPTABILIDAD, MERMA, DESPACHO, CIERRE_AUTOMATICO]`
 - `subetapa_adaptabilidad = [SOMBRA, MEDIA_SOMBRA, SOL_DIRECTO]`
 - `causa_merma_vivero = [PLAGA, ENFERMEDAD, SEQUIA, DANO_FISICO, MUERTE_NATURAL, OTRO]`
-- `destino_tipo_vivero = [PLANTACION_PROPIA, PLANTACION_COMUNIDAD, DONACION, VENTA, OTRO]`
+- `destino_tipo_vivero = [PLANTACION_CAMPANIA, PLANTACION_PROPIA, PLANTACION_COMUNIDAD, DONACION, VENTA, OTRO]` (ver enum canónico en `database/00_database_schema.md`)
 - `motivo_cierre_lote = [DESPACHO_TOTAL, PERDIDA_TOTAL, MIXTO]`
 - `unidad_medida = [UNIDAD, G]`
 

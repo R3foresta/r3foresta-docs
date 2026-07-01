@@ -34,7 +34,7 @@ La idea es evitar que cada módulo vuelva a definir estos conceptos por separado
 * `00_Requerimientos_Modulo_General.json`: requerimientos funcionales base.
 * `01_reglas_de_negocio_general.md`: reglas transversales del dominio.
 * `02_guia_operativa_modulo_general.md`: cómo se administran los catálogos y maestros.
-* `03_decisiones_pendientes_general.md`: puntos todavía no cerrados y propuesta base para MVP.
+* `03_decisiones_cerradas_general.md`: decisiones de diseño cerradas para el MVP (comunidad, naming de planta, roles, ubicación, evidencia).
 
 ## Dependencias con otros módulos
 

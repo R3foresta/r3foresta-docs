@@ -2,13 +2,13 @@
 
 > **Estado:** ABSORBIDO en la documentación oficial del Módulo 2 el 2026-05-21.
 >
-> - JSON de requerimientos actualizado: RF-VIV-03, RF-VIV-05, RF-VIV-06, RF-VIV-09 extendidos; agregados RF-VIV-11 (asignación), RF-VIV-12 (devolución), RF-VIV-13 (saldos derivados), RF-VIV-14 (política LIFO mermas).
+> - JSON de requerimientos actualizado: RF-VIV-03, RF-VIV-05, RF-VIV-06, RF-VIV-09 extendidos; agregados RF-VIV-11 (asignación), RF-VIV-12 (devolución), RF-VIV-13 (saldos derivados), RF-VIV-14 (política de urgencia de mermas).
 > - Reglas de negocio agregadas: RN-VIV-47 a RN-VIV-59 (sección 13 del MD de reglas).
 > - Guía operativa: sección 13 nueva con resumen del contrato M2 ↔ M3.
-> - Documento operativo dedicado: [04_consumo_de_vivero.md](./04_consumo_de_vivero.md).
+> - Documento operativo dedicado: [04_consumo_de_vivero.md](../vivero-module/04_consumo_de_vivero.md).
 > - Esquema ER: `EVENTO_LOTE_VIVERO` extendido y nueva entidad `ASIGNACION_VIVERO_SUBCAMPANIA` agregadas en [database/00_database_schema.md](../database/00_database_schema.md).
 >
-> Este archivo se conserva como **referencia histórica del contrato negociado** y porque las tareas técnicas en [tareas/modulo-2-integracion-modulo-3/](../tareas/modulo-2-integracion-modulo-3/) lo referencian sección por sección. **No es la fuente operativa**: para uso diario, ir a los documentos oficiales del módulo.
+> Este archivo se conserva como **referencia histórica del contrato negociado**. **No es la fuente operativa**: para uso diario, ir a los documentos oficiales del módulo.
 
 ---
 
@@ -68,7 +68,7 @@ No se debe usar `PLANTACION_CAMPAÑA` como valor de enum.
 
 Agregar el valor `PLANTACION_CAMPANIA` al enum `destino_tipo_vivero`.
 
-Valores consolidados recomendados:
+Valores consolidados recomendados (propuesta original de este addendum):
 
 ```txt
 PLANTACION_CAMPANIA
@@ -77,6 +77,8 @@ DONACION_COMUNIDAD
 VENTA
 OTRO
 ```
+
+> **Nota (2026-07-01):** la fusión a `DONACION_COMUNIDAD` propuesta arriba **no se adoptó**. Decisión cerrada: se mantienen `PLANTACION_COMUNIDAD` y `DONACION` como valores separados. Enum canónico vigente (6 valores) en `database/00_database_schema.md`.
 
 ### 3.3. Comportamiento
 
@@ -471,7 +473,7 @@ EVENTO_LOTE_VIVERO {
   bigint id PK
   bigint lote_id FK
   ENUM(tipo_evento_vivero) tipo_evento "INICIO | EMBOLSADO | ADAPTABILIDAD | MERMA | DESPACHO | CIERRE_AUTOMATICO"
-  ENUM(destino_tipo_vivero) destino_tipo "PLANTACION_CAMPANIA | PLANTACION_PROPIA | DONACION_COMUNIDAD | VENTA | OTRO"
+  ENUM(destino_tipo_vivero) destino_tipo "PLANTACION_CAMPANIA | PLANTACION_PROPIA | PLANTACION_COMUNIDAD | DONACION | VENTA | OTRO (ver enum canónico en database/00_database_schema.md)"
   ENUM(origen_despacho_vivero) origen_despacho "MANUAL | AUTOMATICO_PLANTACION"
   bigint subcampania_id FK "solo si origen_despacho = AUTOMATICO_PLANTACION"
   bigint campania_id FK "solo si origen_despacho = AUTOMATICO_PLANTACION"
@@ -684,7 +686,7 @@ Para mantener consistencia entre módulos, estas invariantes deben respetarse:
 
 6. Implementar constraints o validaciones equivalentes según origen de despacho.
 7. Implementar generación atómica de `DESPACHO` desde M3 al guardar `PLANTACION_INICIAL` o `REPOSICION`.
-8. Implementar política LIFO de mermas sobre asignaciones cuando corresponda.
+8. Implementar política de urgencia de mermas sobre asignaciones cuando corresponda.
 
 ### 14.2. Frontend
 

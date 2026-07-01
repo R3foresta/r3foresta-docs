@@ -214,10 +214,7 @@ Porque eso abre inconsistencias difíciles de auditar justo en el punto más sen
 Si las tres piezas no coinciden, la trazabilidad se rompe desde el arranque del lote.
 
 ### Invariantes obligatorias
-- `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`
-- `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
-- `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
-- `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
+Ver el enunciado completo (4 ecuaciones) en RN-VIV-17A (`vivero-module/01_reglas_de_negocio_vivero.md`) y RN-REC-24A (`recoleccion-module/01_reglas_de_negocio_recoleccion.md`) — fuente canónica de este contrato.
 
 ### Lo que se sacrificó
 Flexibilidad para desacoplar lecturas o tolerar diferencias operativas.
@@ -241,11 +238,7 @@ Porque una sola convención fuerte simplifica backend, frontend, base de datos y
 Tampoco se debe mezclar `G` con `GR`, porque eso introduce ruido semántico sin valor funcional.
 
 ### Reglas derivadas
-- frontend acepta `kg`, `g` y `unidad`
-- backend normaliza `kg -> G`, `g -> G`, `unidad -> UNIDAD`
-- `kg` no se persiste
-- `G` permite decimales
-- `UNIDAD` no permite decimales
+Ver el enunciado completo en RN-VIV-17B (`vivero-module/01_reglas_de_negocio_vivero.md`) — fuente canónica de la convención de normalización y reglas numéricas.
 
 ### Lo que se sacrificó
 Flexibilidad temprana para soportar más unidades.

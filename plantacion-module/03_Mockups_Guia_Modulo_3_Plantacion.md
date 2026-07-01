@@ -17,7 +17,7 @@ El módulo es un **proyecto blockchain de transparencia**, por lo tanto los dato
 ### Arquitectura de dos niveles
 
 - **Campaña:** contenedor estratégico del proyecto. Tiene nombre, descripción, organizaciones asociadas. No tiene polígono ni meta propia.
-- **Subcampaña:** unidad operativa real. Tiene polígono, meta, coordinador, equipo, mix de especies y estado propio.
+- **Subcampaña:** unidad operativa real. Tiene polígono, meta total, plan de metas por especie, coordinador, equipo y estado propio.
 
 Una campaña tiene N subcampañas (al menos 1).
 
@@ -115,7 +115,7 @@ Cuando el visitante hace click en una subcampaña.
 - Cabecera con nombre, tipo (reforestación / arborización / forestación), zona, estado operativo, fase de mantenimiento, fechas, polígono.
 - Barra de progreso grande: árboles plantados / meta, % completado.
 - Si está en MANTENIMIENTO_ACTIVO: contador "X meses restantes de mantenimiento activo".
-- Mini-barras del mix de especies: real vs planificado.
+- Mini-barras de metas por especie: avance inicial vs planificado.
 - Mapa con los pines de las plantaciones realizadas.
 - Timeline visual de eventos (plantaciones, reposiciones, mortandad).
 - Galería de fotos.
@@ -173,8 +173,10 @@ Wizard de varios pasos.
 
 **Paso 3: Meta y especies**
 - Meta total de árboles.
-- Mix de especies: agregar especies del catálogo y asignar % máximo a cada una.
-- Validación visual: la suma de % no debe pasar el 100%.
+- Plan de metas por especie: agregar especies del catálogo y asignar porcentaje objetivo.
+- Cantidad objetivo calculada por especie según la meta total, editable solo para ajuste de redondeo.
+- Validación visual: la suma de % debe cerrar en 100% para activar.
+- Ejemplo visible: 1000 árboles = 20% Molle (200), 30% Jacarandá (300), 50% Queñua (500).
 
 **Paso 4: Equipo (opcional al crear)**
 - Selector múltiple de operarios para conformar el equipo.
@@ -225,14 +227,15 @@ Wizard de varios pasos.
 - GPS automático con indicador "GPS capturado ✓" o "Activando GPS...".
 
 **Paso 3: Especies, cantidades y selección de lote**
-- Lista de especies disponibles para la subcampaña (basadas en el mix planificado).
+- Lista de especies disponibles para la subcampaña (basadas en el plan de metas por especie).
 - Para cada especie:
   - Input de cantidad con +/-.
+  - Progreso visible de la especie: plantado / cantidad objetivo.
   - **Selector de lote de origen** (entre los asignados con propósito PLANTACION_INICIAL a esta subcampaña).
   - Si solo hay un lote disponible, se preselecciona.
   - Si hay varios, el operario indica cantidad por lote.
 - Validación visual: stock disponible por lote.
-- Si la especie excede su % máximo: advertencia visible pero permite continuar.
+- Si la cantidad excede la meta de esa especie: bloqueo claro y sugerencia de pedir ajuste del plan al coordinador/admin.
 
 **Paso 4: Co-responsables (opcional)**
 - "¿Plantaste con alguien más?"
@@ -290,11 +293,17 @@ Combinación:
   - Consumida.
   - Devuelta.
   - Disponible.
+- Panel de cobertura por especie:
+  - Meta por especie.
+  - Stock inicial asignado por especie.
+  - Plantado inicial por especie.
+  - Estado: sin stock / parcial / cubierto / sobrecubierto.
 - Acción "Asignar lotes a subcampaña":
   - Selector de subcampaña destino.
   - Listado de lotes con stock vivo disponible.
   - Por lote: cantidad absoluta + propósito.
   - El sistema impide propósito PLANTACION_INICIAL si la subcampaña ya está cerrada.
+  - El sistema marca si la especie del lote no pertenece al plan de la subcampaña.
   - Confirmar.
 - Acción "Devolver al vivero":
   - Solo sobre cantidad no consumida.
@@ -314,7 +323,7 @@ Combinación:
 ## 4. Componentes recurrentes / patrones visuales
 
 - **Barra de progreso de subcampaña:** muy presente, visual y atractiva. Plantados / meta y %.
-- **Mini-barras de especies:** barras horizontales que muestran % real vs % planificado.
+- **Mini-barras de especies:** barras horizontales que muestran plantado inicial vs cantidad objetivo y composición viva actual.
 - **Tarjetas de plantación:** miniatura de foto + cantidad + especie + lote origen + fecha + ubicación.
 - **Mapa con polígonos y pines:** componente clave reutilizado en home pública, detalle, dashboard.
 - **Timeline append-only:** lista vertical con icono por tipo de evento.

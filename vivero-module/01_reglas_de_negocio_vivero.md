@@ -688,7 +688,7 @@ El diseño del MVP debe dejar preparada una evolución futura para incorporar, s
 
 ## 13. Integración con Módulo 3 (Plantación)
 
-> Estas reglas formalizan el contrato M2 ↔ M3 descrito en [03_Addendum_Modulo_2_por_Modulo_3.md](./03_Addendum_Modulo_2_por_Modulo_3.md) y operativizado en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md). Tienen numeración estable y no deben renumerarse aunque la implementación se difiera por tarea.
+> Estas reglas formalizan el contrato M2 ↔ M3, descrito originalmente en [../historico/vivero-addendum-m2-m3.md](../historico/vivero-addendum-m2-m3.md) (referencia histórica, ya absorbida aquí) y operativizado en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md). Tienen numeración estable y no deben renumerarse aunque la implementación se difiera por tarea.
 
 ### RN-VIV-47 — Asignación de lote a subcampaña es reserva lógica
 

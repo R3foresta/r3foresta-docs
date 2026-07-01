@@ -24,11 +24,11 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
   * Persistencia oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]`.
   * Para `ESQUEJE`: solo `UNIDAD`, entero estricto, sin decimales.
   * Para `SEMILLA`: puede capturarse por peso o por conteo, pero solo se persiste en `G` o `UNIDAD`.
-  * El frontend puede aceptar `kg`, `g` y `unidad`; el backend normaliza `kg -> G`, `g -> G` y `unidad -> UNIDAD`.
-  * `kg` no se persiste en base de datos.
-* **Estados:** `BORRADOR/VALIDADO` (registro) y `ABIERTO/CERRADO` (operativo, derivado del saldo).
-* **Ubicación estructurada:** latitud/longitud obligatorias **para validar** + datos administrativos opcionales (catálogos).
-* **Evidencia:** fotos obligatorias **para validar** (mínimo 1 de Lugar + 1 de Total recolectado = 2 total, máximo 5+5 = 10 total), formato JPG/PNG.
+  * Convención de normalización de entrada (`kg`/`g`/`unidad` → unidad canónica): ver RN-VIV-17B en `vivero-module/01_reglas_de_negocio_vivero.md` (fuente canónica).
+* **Estados del registro:** `BORRADOR`, `PENDIENTE_VALIDACION`, `VALIDADO`, `RECHAZADO`.
+* **Estado operativo:** `ABIERTO` o `CERRADO`, derivado del saldo.
+* **Ubicación estructurada:** latitud/longitud obligatorias desde `BORRADOR` + datos administrativos opcionales (catálogos).
+* **Evidencia:** fotos obligatorias desde `BORRADOR` (mínimo 1 de Lugar + 1 de Total recolectado = 2 total, máximo 5+5 = 10 total), formato JPG/PNG.
 * **Historial:** bitácora inmutable de cambios (quién/cuándo/antes-después).
 * **Snapshot:** copia congelada de datos oficiales de identidad en un momento formal del proceso, para que cambios posteriores en tablas maestras no alteren el historial ya validado.
 
@@ -52,11 +52,15 @@ Una recolección **es** un “lote origen” para los módulos siguientes. Por t
 * Debe poder **ser referenciada** desde Vivero (M2).
 * Debe poder **cambiar de estado** por uso/consumo (manual o automático según reglas).
 
-### RN-REC-03A — Snapshot oficial de identidad en validación
+### RN-REC-03A — Snapshot de identidad y congelamiento en validación
 
-El sistema debe guardar en `RECOLECCION` un snapshot oficial de identidad al momento de aprobar la validación.
+`RECOLECCION` debe mantener campos snapshot `NOT NULL` desde `BORRADOR`.
 
-Ese snapshot debe incluir, como mínimo:
+Mientras el registro está en `BORRADOR` o `RECHAZADO`, esos campos pueden recalcularse desde las fuentes vivas (`PLANTA`, comunidad y recolector) porque la ficha todavía es editable.
+
+Al aprobar la validación, esos mismos campos quedan congelados como snapshot oficial. Desde `VALIDADO` no se recalculan ni se modifican.
+
+Los campos snapshot mínimos son:
 
 - `nombre_cientifico_snapshot`
 - `nombre_comercial_snapshot`
@@ -138,7 +142,7 @@ Si está en `BORRADOR`, `PENDIENTE_VALIDACION`, `RECHAZADO` o `CERRADO`, **no pu
 
 ### RN-REC-10D — El snapshot oficial se fija solo al validar
 
-- En `BORRADOR` y `RECHAZADO`, los datos derivados para snapshot pueden recalcularse libremente.
+- En `BORRADOR` y `RECHAZADO`, los campos snapshot son `NOT NULL`, pero sus valores pueden recalcularse desde fuentes vivas.
 - En `PENDIENTE_VALIDACION`, la ficha queda congelada mientras se revisa.
 - El snapshot oficial se fija recién al aprobar la validación.
 - Una vez `VALIDADO`, el snapshot oficial no debe recalcularse ni sobrescribirse por cambios posteriores en tablas maestras.
@@ -213,7 +217,7 @@ Para `ESQUEJE`:
 
 ### RN-REC-14 — Evidencia mínima obligatoria
 
-- En `BORRADOR`: su porposito es evitar subir registros errados a blockchain si no se esta seguro de los datos ya que es editable, fotos y ubicación son obligatorias para crear un borrador y evitar huecos de trazabilidad.
+- En `BORRADOR`: las fotos son obligatorias desde la creación del registro. Pueden modificarse mientras la ficha siga editable, pero no se permite guardar un borrador sin evidencia mínima.
 - Para pasar a `PENDIENTE_VALIDACION`: se exige **mínimo 1 fotografía por sección** (2 secciones: Lugar y Total recolectado):
   - **Sección "Lugar":** mínimo 1, máximo 5 fotos que evidencien el lugar de recolección.
   - **Sección "Total recolectado":** mínimo 1, máximo 5 fotos que evidencien la cantidad/volumen recolectado.
@@ -262,7 +266,7 @@ País/Departamento/Provincia/Comunidad-Zona:
 - Son opcionales,
 - Se seleccionan de catálogos (cuando existan),
 - Si un dato no existe en catálogo, el sistema debe impedir “inventar” valores.
-  - Alternativa MVP: permitir por defualt “SIN ESPECIFICAR” en niveles administrativos.
+  - Alternativa MVP: permitir por defecto “SIN ESPECIFICAR” en niveles administrativos.
 
 ### RN-REC-19 — Coherencia mínima de estructura
 
@@ -395,7 +399,7 @@ Fuera del MVP:
 
 (Futuro: se pueden agregar roles de “comunidad” para validación colaborativa, con registro de quién validó qué y cuándo.)
 
-### RN-REC-26 — Para registrar recolecciones nuevas solo se usan las plantas del catalog
+### RN-REC-26 — Para registrar recolecciones nuevas solo se usan las plantas del catálogo
 
 No se permite registrar una recolección con un nombre científico que no exista en el catálogo de plantas (RF-GEN-03). Esto garantiza que cada recolección esté vinculada a una planta con identidad oficial.
 

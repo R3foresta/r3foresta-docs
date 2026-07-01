@@ -28,7 +28,7 @@ Este módulo es la cara visible del proyecto y la base operativa de los **bonos 
 El módulo separa **planificación estratégica** de **operación real**:
 
 - **Campaña (nivel estratégico):** contenedor lógico que agrupa el proyecto. Tiene nombre, descripción, organizaciones asociadas, fechas estimadas globales. **No tiene polígono propio ni meta operativa propia.**
-- **Subcampaña (nivel operativo):** unidad de trabajo real. Tiene su propio coordinador (membresía contextual, ver §2.10), equipo, polígono, meta de árboles, asignaciones de lotes y estado operativo. La composición real de especies se registra en `REGISTRO_PLANTACION_DETALLE`; el control de mix con topes queda fuera del MVP (ver §2.12).
+- **Subcampaña (nivel operativo):** unidad de trabajo real. Tiene su propio coordinador (membresía contextual, ver §2.10), equipo, polígono, meta total de árboles, plan de metas por especie, asignaciones de lotes y estado operativo. La composición real de especies se registra en `REGISTRO_PLANTACION_DETALLE` y se compara contra el plan de `SUBCAMPANIA_META_ESPECIE` (ver §2.12).
 
 Una campaña contiene **N subcampañas** (al menos 1, sin límite superior).
 
@@ -176,11 +176,33 @@ No hay porcentaje de participación entre miembros del equipo. Todos los co-resp
 
 El área en hectáreas se **calcula automáticamente desde el polígono** como dato referencial. No se ingresa manualmente.
 
-### 2.12. Mix de especies (fuera del MVP)
+### 2.12. Plan de metas por especie
 
-El control de mix de especies con topes porcentuales por subcampaña queda **fuera del MVP**. La composición real de especies se registra a través de los detalles de cada `REGISTRO_PLANTACION` (`REGISTRO_PLANTACION_DETALLE.planta_id`), pero no hay validación contra un plan ni advertencias por exceso de tope. Se incorpora en una fase posterior.
+La meta de una subcampaña no puede quedarse solo en "N árboles". Debe poder descomponerse en especies planificadas para expresar la intención técnica del proyecto.
 
-Decisión cerrada 2026-05-24 (ver [tareas/.../completadas/10_docs_flujo_reposicion_y_mortandad.md](../tareas/modulo-2-integracion-modulo-3/completadas/10_docs_flujo_reposicion_y_mortandad.md)).
+Ejemplo: subcampaña con `meta_total_arboles = 1000`:
+
+| Especie | Porcentaje objetivo | Cantidad objetivo |
+|---------|---------------------|-------------------|
+| Molle | 20% | 200 |
+| Jacarandá | 30% | 300 |
+| Queñua | 50% | 500 |
+
+La planificación vive en `SUBCAMPANIA_META_ESPECIE`, no en la asignación de vivero. La asignación sigue siendo una reserva física de árboles desde uno o más lotes; el plan por especie es la referencia operativa para saber si el stock asignado y lo plantado cubren la meta.
+
+Reglas:
+
+- En `BORRADOR`, el admin puede editar libremente el plan de especies.
+- Para activar, la subcampaña debe tener al menos una especie planificada.
+- Al activar, `SUM(porcentaje_objetivo) = 100` y `SUM(cantidad_objetivo) = meta_total_arboles`.
+- Cada `planta_id` aparece una sola vez por subcampaña.
+- Si se edita el plan con la subcampaña `ACTIVA`, ninguna `cantidad_objetivo` puede quedar por debajo de lo ya plantado inicialmente para esa especie.
+- En `COMPLETADA` o `FINALIZADA_PARCIAL`, el plan queda congelado.
+- Una `PLANTACION_INICIAL` solo puede registrar especies incluidas en el plan y no puede hacer que el acumulado plantado de esa especie supere su `cantidad_objetivo`.
+
+Las reposiciones no avanzan la meta y mantienen la política vigente de especie libre (`RN-VIV-60`). La vista pública debe mostrar dos lecturas separadas: cumplimiento de la meta inicial por especie y composición viva actual después de mortandad/reposiciones.
+
+Decisión actualizada 2026-07-01.
 
 ### 2.13. Activación con stock parcial
 
@@ -249,6 +271,7 @@ Datos mínimos por subcampaña:
 - Equipo de operarios (opcional al crear, ampliable después en `SUBCAMPANIA_EQUIPO`).
 - Polígono del área (obligatorio para activar).
 - Meta total de árboles (> 0).
+- Plan de metas por especie: `planta_id`, `porcentaje_objetivo` y `cantidad_objetivo`.
 - Fechas estimadas de inicio y fin (solo futuras).
 
 En `BORRADOR`:
@@ -266,8 +289,9 @@ Validaciones para activar:
 - Polígono presente.
 - Coordinador asignado (`SUBCAMPANIA_EQUIPO` con `rol_en_subcampania = 'COORDINADOR'`).
 - Meta total > 0.
+- Plan de metas por especie completo: al menos una especie, suma de porcentajes = 100 y suma de cantidades = meta total.
 
-Si todas las validaciones pasan, la subcampaña pasa a `ACTIVA`. Si la subcampaña se activa sin stock asignado al 100%, el sistema muestra advertencia pero permite continuar.
+Si todas las validaciones pasan, la subcampaña pasa a `ACTIVA`. Si la subcampaña se activa sin stock asignado al 100%, el sistema muestra advertencia pero permite continuar. La advertencia debe mostrar cobertura total y cobertura por especie.
 
 ### 3.4. Asignación de árboles desde Vivero a subcampaña
 
@@ -277,13 +301,16 @@ Si todas las validaciones pasan, la subcampaña pasa a `ACTIVA`. Si la subcampa�
 - Define la cantidad a asignar de cada lote (cantidad absoluta).
 - Define el **propósito**: `PLANTACION_INICIAL` o `REPOSICION`.
 - El sistema crea una `ASIGNACION_VIVERO_SUBCAMPANIA` por cada lote-subcampaña-propósito.
+- Para `PLANTACION_INICIAL`, el sistema muestra la cobertura contra `SUBCAMPANIA_META_ESPECIE` usando la especie del lote (`LOTE_VIVERO.planta_id`).
 
 Restricciones:
 
 - La cantidad asignada no puede exceder el saldo vivo disponible del lote (saldo_vivo_actual − asignaciones_activas_de_ese_lote).
 - Solo se pueden asignar lotes en estado `ACTIVO` en el Módulo 2.
 - Asignaciones con propósito `PLANTACION_INICIAL` solo se aceptan en subcampañas `ACTIVA`.
+- Asignaciones con propósito `PLANTACION_INICIAL` solo pueden tomar lotes cuya especie esté en el plan de metas de la subcampaña.
 - Asignaciones con propósito `REPOSICION` se aceptan en `ACTIVA`, `COMPLETADA` o `FINALIZADA_PARCIAL`.
+- Si una asignación inicial deja una especie con stock reservado por encima de su `cantidad_objetivo`, se permite pero debe mostrarse como sobrecobertura para que el coordinador devuelva o reasigne antes del cierre.
 
 La asignación **no genera evento en el Módulo 2** porque es una reserva lógica; el saldo vivo del lote no se descuenta hasta que se planta efectivamente.
 
@@ -320,18 +347,20 @@ Al guardar, el sistema:
 
 1. Valida que la subcampaña esté `ACTIVA`.
 2. Verifica que el GPS esté dentro del polígono de la subcampaña (con tolerancia configurable). PostGIS es la fuente de verdad vía `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)`.
-3. Verifica que las cantidades por lote no superen los saldos asignados disponibles.
-4. Descuenta las cantidades de cada asignación afectada.
-5. Genera atómicamente un evento `DESPACHO` en `EVENTO_LOTE_VIVERO` por cada lote afectado, con:
+3. Verifica que cada especie plantada exista en `SUBCAMPANIA_META_ESPECIE`.
+4. Verifica que el acumulado plantado inicial por especie no supere su `cantidad_objetivo`.
+5. Verifica que las cantidades por lote no superen los saldos asignados disponibles.
+6. Descuenta las cantidades de cada asignación afectada.
+7. Genera atómicamente un evento `DESPACHO` en `EVENTO_LOTE_VIVERO` por cada lote afectado, con:
    - `destino_tipo = PLANTACION_CAMPANIA`.
    - `origen_despacho = AUTOMATICO_PLANTACION`.
    - `registro_plantacion_id` poblado.
    - `subcampania_id` y `campania_id` para drill-down.
    - `comunidad_destino_id` heredada de `subcampania.zona_id`.
-6. Congela snapshots oficiales en el registro.
-7. Crea el `REGISTRO_PLANTACION` como append-only.
-8. Vincula las evidencias fotográficas al `REGISTRO_PLANTACION` (el `DESPACHO` automático las hereda, ver RN-VIV-54).
-9. Si la suma de plantaciones iniciales alcanza la meta, dispara **cierre automático** a `COMPLETADA`.
+8. Congela snapshots oficiales en el registro.
+9. Crea el `REGISTRO_PLANTACION` como append-only.
+10. Vincula las evidencias fotográficas al `REGISTRO_PLANTACION` (el `DESPACHO` automático las hereda, ver RN-VIV-54).
+11. Si la suma de plantaciones iniciales alcanza la meta, dispara **cierre automático** a `COMPLETADA`.
 
 ### 3.7. Cierre automático a COMPLETADA
 
@@ -558,7 +587,7 @@ Reglas:
 
 ### 8.1. Conservación del saldo asignado por asignación
 
-`saldo_asignado_disponible = cantidad_asignada − cantidad_consumida − cantidad_devuelta`
+`saldo_asignado_disponible = cantidad_asignada − cantidad_consumida − cantidad_devuelta − cantidad_mermada`
 
 Donde `cantidad_consumida` solo cuenta plantaciones/reposiciones que efectivamente consumieron de esa asignación específica.
 
@@ -572,7 +601,27 @@ Donde `cantidad_consumida` solo cuenta plantaciones/reposiciones que efectivamen
 
 Cierre automático a COMPLETADA cuando `plantado_inicial_subcampania >= meta_total`.
 
-### 8.3. Conservación del saldo vivo por grupo
+### 8.3. Conservación de la meta por especie
+
+Para cada subcampaña:
+
+`SUM(SUBCAMPANIA_META_ESPECIE.cantidad_objetivo) = SUBCAMPANIA.meta_total_arboles`
+
+`SUM(SUBCAMPANIA_META_ESPECIE.porcentaje_objetivo) = 100`
+
+Para cada especie planificada:
+
+`plantado_inicial_especie = SUM(REGISTRO_PLANTACION_DETALLE.cantidad donde es_reposicion = false y planta_id = especie)`
+
+`progreso_especie = plantado_inicial_especie / cantidad_objetivo`
+
+Regla de control:
+
+`plantado_inicial_especie <= cantidad_objetivo`
+
+El sistema debe bloquear una plantación inicial que exceda la meta de una especie. Si el plan ya no corresponde a la realidad operativa, el admin o coordinador ajusta el plan antes de continuar, respetando que ninguna meta por especie quede por debajo de lo ya plantado.
+
+### 8.4. Conservación del saldo vivo por grupo
 
 `saldo_vivo_grupo = plantado_inicial + reposiciones_sobre_grupo − mortandad_acumulada_grupo`
 
@@ -583,6 +632,8 @@ Por subcampaña:
 ---
 
 ## 9. Integración con Módulo 2 (Vivero)
+
+> Fuente canónica de las reglas y fórmulas de esta sección: RN-VIV-47 a RN-VIV-60 en `vivero-module/01_reglas_de_negocio_vivero.md` y el esquema en `database/00_database_schema.md`. Esta sección resume el contrato desde la perspectiva de M3.
 
 ### 9.1. Contrato Asignación ↔ Vivero (sin evento en M2)
 
@@ -619,7 +670,7 @@ Cuando ocurre una merma en un lote con asignaciones activas, la política del MV
 2. Si la merma excede el saldo no asignado, afecta asignaciones ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST` — la subcampaña con inicio más lejano absorbe primero; la más próxima queda protegida (es la más urgente).
 3. Si una asignación queda con menos saldo que su comprometido, el sistema **notifica al coordinador** de la(s) subcampaña(s) afectada(s).
 
-Esta política se documenta en el addendum del Módulo 2.
+Ver RN-VIV-50 en `vivero-module/01_reglas_de_negocio_vivero.md` y `vivero-module/04_consumo_de_vivero.md` §4 para la fórmula y el ejemplo operativo completos.
 
 ---
 
@@ -677,6 +728,7 @@ El catálogo cerrado de roles globales se preserva: `ADMIN | GENERAL | VALIDADOR
 - Cierre automático a COMPLETADA por alcance de meta.
 - Cierre manual a FINALIZADA_PARCIAL por admin con motivo.
 - Mantenimiento (mortandad + reposición) transversal: permitido en ACTIVA, COMPLETADA y FINALIZADA_PARCIAL.
+- Plan de metas por especie en subcampaña: porcentaje objetivo, cantidad objetivo, cobertura y progreso por especie.
 - Asignaciones con propósito explícito: PLANTACION_INICIAL o REPOSICION.
 - Selección explícita de lote por el operario al plantar.
 - Cantidad absoluta como fuente de verdad (porcentaje solo visual).
@@ -746,7 +798,7 @@ Definidos formalmente en `database/00_database_schema.md`. Los valores `OTRO` se
 
 ### Futuro
 
-- Mix de especies por subcampaña con topes porcentuales y validación contra plan.
+- Tolerancias avanzadas y aprobaciones excepcionales para desviarse del plan de especies sin editar la meta base.
 - Implementar PAUSADA y CANCELADA con sus flujos.
 - Correcciones auditadas de mortandad y plantación.
 - Trazabilidad por árbol individual (no solo por lote).

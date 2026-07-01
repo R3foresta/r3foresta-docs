@@ -47,21 +47,15 @@ Esto sigue la misma lógica general de Vivero, pero en Recolección conviene sep
 
 El módulo también separa dos momentos para la identidad:
 
-- mientras la recolección está en borrador, la identidad visible puede recalcularse si cambia la fuente maestra,
-- cuando la recolección se aprueba, se guarda un **snapshot oficial** en la propia recolección para congelar el dato validado.
+- mientras la recolección está en `BORRADOR` o `RECHAZADO`, los campos snapshot son `NOT NULL` pero pueden recalcularse desde la fuente maestra,
+- cuando la recolección se aprueba, esos mismos campos quedan congelados como **snapshot oficial** y ya no se modifican.
 
 ### 2.3. Cantidad y unidad canónica
 
 - **ESQUEJE:** unidades enteras (1, 2, 3…)
 - **SEMILLA:** peso o unidades enteras, con persistencia oficial en `G` o `UNIDAD` según la regla funcional del material.
 
-Convención oficial del sistema:
-
-- `ENUM(unidad_medida) = [UNIDAD, G]`
-- el frontend puede aceptar `kg`, `g` y `unidad`
-- el backend normaliza `kg -> G`, `g -> G` y `unidad -> UNIDAD`
-- `kg` no se persiste
-- no se deben mezclar `G` y `GR`
+Convención oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]` — ver RN-VIV-17B en `vivero-module/01_reglas_de_negocio_vivero.md` para la convención completa de normalización (`kg`/`g`/`unidad`).
 
 Reglas por tipo de material:
 
@@ -70,8 +64,8 @@ Reglas por tipo de material:
 
 ### 2.4. Consumo automático hacia Vivero
 
-- El consumo del lote origen **no se registra manualmente** en Recolección, es decir no hay una pantalla u opción dentro del modulo de recolección donde se registra el consumo del material biológico.
-- Se descuenta **automáticamente** cuando en el Modulo 2 se crea un lote de germinación/embolsado seleccionando esta recolección como origen, es decir al crear un nuevo lote en el modulo dos se selecciona la cantidad.
+- El consumo del lote origen **no se registra manualmente** en Recolección; no hay una pantalla u opción dentro del módulo de Recolección para registrar ese consumo.
+- Se descuenta **automáticamente** cuando en el Módulo 2 se crea un lote de germinación/embolsado seleccionando esta recolección como origen.
 
 ---
 
@@ -81,21 +75,22 @@ El lote origen atraviesa 4 etapas operativas (no confundir con estados):
 
 ### 3.1. Creación del BORRADOR
 
-**Objetivo:** capturar el registro con opción a editar despues y agregar detalles o modificaciones sin costos elevados.
+**Objetivo:** capturar el registro con opción a editar después y agregar detalles o modificaciones sin costos elevados.
 
-Datos mínimos recomendados para permitir guardar BORRADOR:
+Datos mínimos obligatorios para permitir guardar `BORRADOR`:
 
 - fecha de recolección (≤ 45 días atrás, no futura)
 - tipo de material (semilla/esqueje)
 - especie (nombre científico + comercial)
+- método de recolección
 - cantidad inicial (válida según material)
 - recolector (por defecto el usuario autenticado)
 - vivero de almacenamiento (catálogo RF-GEN-02)
 - observaciones (opcional)
 - fotos (mínimo 1 de Lugar + 1 de Total recolectado = 2 total, máximo 5+5 = 10)
-- ubicación (lat/long mínimo, niveles administrativos osea Comunidad-Zona)
+- ubicación GPS (lat/long obligatorias; niveles administrativos como Comunidad-Zona según catálogo)
 
-> Nota MVP: ubicación y fotos tampocopueden faltar en BORRADOR pero si se pueden editar, y son **obligatorias** para pasar a `PENDIENTE_VALIDACION`.
+> Nota MVP: ubicación GPS y fotos no pueden faltar en `BORRADOR`, pero sí pueden editarse mientras el registro siga en `BORRADOR` o `RECHAZADO`.
 > 
 
 En `BORRADOR`:
@@ -143,7 +138,7 @@ Si el validador **aprueba**:
 
 - se registran `usuario_validacion` y `fecha_validacion`,
 - se registra un historial `VALIDACION_APROBADA`,
-- se congelan en `RECOLECCION` los snapshots oficiales de identidad:
+- se congelan en `RECOLECCION` los campos snapshot como identidad oficial:
   - `nombre_cientifico_snapshot`
   - `nombre_comercial_snapshot`
   - `variedad_snapshot`
@@ -166,15 +161,15 @@ Mientras el registro está en `PENDIENTE_VALIDACION`, la ficha queda congelada.
 
 ### 3.4. Uso en Vivero (consumo automático)
 
-**Objetivo:** iniciar el Modulo 2 usando un origen validado, descontando saldo de forma atómica.
+**Objetivo:** iniciar el Módulo 2 usando un origen validado, descontando saldo de forma atómica.
 
-Cuando desde el Modulo 2 se crea un lote seleccionando una recolección:
+Cuando desde el Módulo 2 se crea un lote seleccionando una recolección:
 
 - el sistema verifica que la recolección esté:
     - `VALIDADO`
     - operativamente `ABIERTO` (saldo > 0)
     - con saldo suficiente para la cantidad solicitada
-- crea el lote de vivero (el Modulo 2)
+- crea el lote de vivero en el Módulo 2
 - registra un movimiento **CONSUMO_A_VIVERO** en la recolección
 - descuenta saldo automáticamente
 - enlaza `recolección_id → lote_vivero_id`
@@ -184,15 +179,7 @@ El lote de vivero usa un `vivero_id` seleccionado en Módulo 2; no se hereda aut
 
 El `codigo_trazabilidad` del lote de vivero debe quedar como `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`.
 
-Contrato estricto entre Módulo 1 y Módulo 2 en `INICIO`:
-
-- `abs(RECOLECCION_MOVIMIENTO.delta) = LOTE_VIVERO.cantidad_inicial_en_proceso`
-- `LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada`
-- `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial`
-- `LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento`
-- `LOTE_VIVERO.nombre_cientifico_snapshot = RECOLECCION.nombre_cientifico_snapshot`
-- `LOTE_VIVERO.nombre_comercial_snapshot = RECOLECCION.nombre_comercial_snapshot`
-- `LOTE_VIVERO.variedad_snapshot = RECOLECCION.variedad_snapshot`
+Contrato estricto entre Módulo 1 y Módulo 2 en `INICIO`: cantidades y unidades alineadas (RN-VIV-17A / RN-REC-24A) y snapshots heredados alineados (RN-VIV-16A) — ver `vivero-module/01_reglas_de_negocio_vivero.md` y `recoleccion-module/01_reglas_de_negocio_recoleccion.md` para el enunciado completo.
 
 Restricciones del MVP:
 
@@ -201,10 +188,10 @@ Restricciones del MVP:
 - `CONSUMO_A_VIVERO` usa `delta` negativo
 - `DESECHO` usa `delta` negativo
 
-**Regla crítica:** creación el Modulo 2 + consumo deben ser **atómicos**:
+**Regla crítica:** creación del lote en Módulo 2 + consumo deben ser **atómicos**:
 
-- si falla el Modulo 2, no se descuenta saldo
-- si falla el descuento, no se crea el Modulo 2
+- si falla el Módulo 2, no se descuenta saldo
+- si falla el descuento, no se crea el lote en Módulo 2
 
 ---
 
@@ -245,7 +232,7 @@ En el MVP, esta tabla se deja preparada para no mezclar ciclo de vida con invent
 
 Movimientos típicos:
 
-- **CONSUMO_A_VIVERO** (automático desde el Modulo 2)
+- **CONSUMO_A_VIVERO** (automático desde el Módulo 2)
 - **DESECHO** (parcial o total, con motivo obligatorio)
 
 Fuera del MVP:
@@ -262,7 +249,7 @@ Fuera del MVP:
 **Objetivo:** permitir captura rápida en campo sin perder consistencia mínima.
 
 - **Editable** (se puede corregir lo que esté mal).
-- **Incompletitud controlada:** a pesar de ser un BORRADOR requerie compos minimos para no caer en basura.
+- **Incompletitud controlada:** aunque es un `BORRADOR`, requiere campos mínimos para no guardar basura operativa.
 - **No se ancla a blockchain** (no es “historia oficial” todavía).
 - **Eliminable solo con soft delete**.
 
@@ -280,6 +267,8 @@ Fuera del MVP:
 - Especie obligatoria.
 - Cantidad inicial **> 0**.
 - Fecha **no futura** (y dentro del rango permitido por reglas temporales del módulo).
+- Evidencia mínima obligatoria: 1 foto de Lugar + 1 foto de Total recolectado.
+- Ubicación GPS obligatoria: latitud y longitud válidas.
 
 **Auditoría mínima (Web2):**
 - `creado_por`, `creado_en`, `actualizado_por`, `actualizado_en`.
@@ -312,7 +301,7 @@ Fuera del MVP:
   - `CONSUMO_A_VIVERO` (automático desde Módulo 2)
   - `DESECHO` (con motivo)
   
-(Fuera del MVP: se puede evaluar validacion comunitaria adicional, con registro explicito de quienes validaron y cuando.)
+(Fuera del MVP: se puede evaluar validación comunitaria adicional, con registro explícito de quiénes validaron y cuándo.)
 
 ### 5.4. RECHAZADO
 
@@ -337,7 +326,7 @@ Si se detecta un error después de validar, en el MVP no se corrige la recolecci
 
 - Las fotos son obligatorias para crear un **BORRADOR** y para enviarlo a `PENDIENTE_VALIDACION` también (mínimo 1 por sección: Lugar y Total recolectado, 2 fotos total mínimo).
 - En MVP, no se permiten “validaciones sin evidencia” (para no abrir un agujero de trazabilidad).
-- Futuro: se puede permitir excepción con motivo y aprobación (similar al el Modulo 2), pero no en el MVP.
+- Futuro: se puede permitir excepción con motivo y aprobación (similar al Módulo 2), pero no en el MVP.
 
 ---
 
@@ -383,10 +372,10 @@ Para evitar gas innecesario:
 
 Roles (MVP):
 
-- `ADMIN`: administra catalogos y puede consultar o intervenir segun permisos de negocio.
-- `GENERAL`: crea `BORRADOR`, edita la ficha y solicita validacion.
+- `ADMIN`: administra catálogos y puede consultar o intervenir según permisos de negocio.
+- `GENERAL`: crea `BORRADOR`, edita la ficha y solicita validación.
 - `VALIDADOR`: revisa `PENDIENTE_VALIDACION` y aprueba o rechaza.
-- `VOLUNTARIO`: no deberia tener permisos operativos criticos salvo habilitacion explicita.
+- `VOLUNTARIO`: no debería tener permisos operativos críticos salvo habilitación explícita.
 
 ---
 
@@ -401,8 +390,8 @@ Roles (MVP):
 - Evidencia mínima (2 fotos: 1 de Lugar + 1 de Total recolectado) para validar
 - `RECOLECCION_HISTORIAL` preparado para ciclo de vida mínimo del registro
 - Motivo de descarte obligatorio
-- `RECOLECCION_MOVIMIENTO` reservado para consumo automático desde el Modulo 2 y descarte
-- Integración con el Modulo 2 con consumo automático y transacción atómica
+- `RECOLECCION_MOVIMIENTO` reservado para consumo automático desde el Módulo 2 y descarte
+- Integración con el Módulo 2 con consumo automático y transacción atómica
 - Catálogos administrados + “SIN ESPECIFICAR” para niveles administrativos
 
 **Futuro**
@@ -413,4 +402,4 @@ Roles (MVP):
 - Alta de nuevas comunidades/zonas solo por `ADMIN`
 - Offline-first (captura en campo sin señal: fotos/local → subida posterior)
 - Métricas de calidad de evidencia (ej. obligatoriedad de foto GPS/EXIF si se quiere subir el estándar)
-- Fuera del MVP se puede evaluar validacion comunitaria adicional, con registro explicito en historial y, si aplica, en blockchain.
+- Fuera del MVP se puede evaluar validación comunitaria adicional, con registro explícito en historial y, si aplica, en blockchain.

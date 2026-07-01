@@ -11,7 +11,7 @@
         "Estado operativo derivado: ABIERTO / CERRADO",
         "Fecha de recoleccion obligatoria",
         "Especie: nombre cientifico + nombre comercial obligatorios",
-        "Snapshots oficiales en RECOLECCION: nombre_cientifico_snapshot, nombre_comercial_snapshot, variedad_snapshot, nombre_comunidad_snapshot, nombre_recolector_snapshot",
+        "Campos snapshot NOT NULL en RECOLECCION: nombre_cientifico_snapshot, nombre_comercial_snapshot, variedad_snapshot, nombre_comunidad_snapshot, nombre_recolector_snapshot",
         "Metodo de recoleccion obligatorio",
         "Tipo de material: SEMILLA o ESQUEJE obligatorio",
         "Cantidad inicial obligatoria",
@@ -20,16 +20,14 @@
         "Recolector obligatorio",
         "Lugar de almacenamiento (vivero) obligatorio",
         "Ubicacion RF-REC-02 obligatoria",
-        "Fotografias obligatorias",
+        "Fotografias obligatorias desde BORRADOR: minimo 1 de Lugar + 1 de Total recolectado",
         "Observaciones opcionales"
       ],
       "validaciones": [
         "La fecha no puede ser futura.",
         "La cantidad inicial debe ser > 0.",
         "Persistencia oficial: ENUM(unidad_medida) = [UNIDAD, G].",
-        "Frontend puede aceptar kg, g y unidad.",
-        "Backend normaliza kg -> G, g -> G y unidad -> UNIDAD.",
-        "kg no se persiste en base de datos.",
+        "Normalizacion de entrada (kg/g/unidad -> unidad canonica): ver RN-VIV-17B en vivero-module/01_reglas_de_negocio_vivero.md (fuente canonica).",
         "SEMILLA puede persistirse en G o UNIDAD segun la captura funcional.",
         "ESQUEJE solo admite UNIDAD, entero estricto y sin decimales."
       ],
@@ -37,7 +35,8 @@
         "En BORRADOR no se considera registro sellado.",
         "En BORRADOR se permite soft delete.",
         "No se deben mezclar G y GR en documentacion, backend, frontend ni DB.",
-        "En BORRADOR y RECHAZADO los datos del snapshot pueden recalcularse libremente.",
+        "En BORRADOR y RECHAZADO los campos snapshot son NOT NULL pero pueden recalcularse desde las fuentes vivas.",
+        "Al VALIDAR, esos campos snapshot quedan congelados como identidad oficial y no se pueden modificar.",
         "Se registran automaticamente campos de auditoria (creado_por/creado_en/actualizado_por/actualizado_en)."
       ]
     },

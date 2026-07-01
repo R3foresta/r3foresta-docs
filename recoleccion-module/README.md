@@ -1,14 +1,19 @@
-# Documentación del Módulo de Recolección - R3Foresta
+# Módulo 1 - Recolección
 
-Este documento describe el flujo funcional y técnico para el registro de material vegetal, asegurando la trazabilidad mediante tecnología Blockchain.
+Este directorio documenta el módulo que registra el origen del material biológico y crea el lote origen que alimenta a Vivero.
 
-## Descripción del Proceso
-1. **Captura de Datos**: El usuario inicia el flujo en la PWA ingresando datos técnicos, ubicación GPS automática y hasta 10 evidencias fotográficas (5 de Lugar + 5 de Total recolectado).
-2. **Validación de Seguridad**: El backend (NestJS) verifica la identidad mediante el header `x-auth-id` y aplica permisos segun el catalogo oficial de roles del MVP: `ADMIN`, `GENERAL`, `VALIDADOR`, `VOLUNTARIO`.
-3. **Persistencia Multicapa**: Los datos se distribuyen entre Supabase Database (información tabular), Supabase Storage (archivos binarios) e IPFS/Pinata (metadata NFT).
-4. **Inmutabilidad**: El proceso finaliza con el acuñado (mint) de un NFT en la Blockchain, guardando el hash de transacción y el token ID para garantizar la transparencia.
+## Orden de lectura
 
-## Observaciones y Mejoras Identificadas
-* **Feedback de Procesos Largos**: Se recomienda implementar una barra de progreso por etapas (DB, IPFS, Blockchain) para evitar la incertidumbre del usuario durante el registro.
-* **Resiliencia en Blockchain**: Implementar un sistema de reintentos para el minteo de NFT en caso de fallos de red, evitando que registros de Supabase queden sin su respaldo on-chain.
-* **Pre-validación en Frontend**: Validar el tamaño (<5MB) y formato de las imágenes en la PWA antes del envío para mejorar la experiencia del usuario y optimizar recursos del servidor.
+1. `00_Requerimientos_Modulo_1_Recoleccion.json` - requerimientos funcionales `RF-REC-*`.
+2. `01_reglas_de_negocio_recoleccion.md` - fuente canonica de reglas `RN-REC-*`.
+3. `02_Procesos_Modulo_1_Recolección.md` - flujo narrativo del proceso operativo.
+4. `03_procesos_diagrama.md` - diagramas Mermaid del flujo principal y máquina de estados.
+5. `04_operativo_modulo_recoleccion.md` - resumen corto para implementación, QA y operación diaria.
+
+## Fuentes de verdad
+
+- Reglas del módulo: `01_reglas_de_negocio_recoleccion.md`.
+- Esquema, tablas y enums: `../database/00_database_schema.md`.
+- Contrato Recoleccion -> Vivero: `RN-REC-24A` y reglas equivalentes de Vivero.
+
+El README solo funciona como índice. Las reglas de dominio deben mantenerse en los documentos canónicos para evitar duplicación.

@@ -20,7 +20,7 @@ general-module (catálogos maestros) ──► recoleccion-module ──► vive
 - **`general-module/`** — Catálogos transversales (USUARIO, UBICACION, PAIS, DIVISION_ADMINISTRATIVA, VIVERO, PLANTA, TIPO_PLANTA, EVIDENCIAS_TRAZABILIDAD, METODO_RECOLECCION). Es la fuente viva de las entidades maestras; los demás módulos consumen vía snapshots congelados.
 - **`recoleccion-module/`** — Módulo 1. Registro del lote origen con evidencia fotográfica, GPS y validación. Persistencia multicapa: Supabase DB (tabular) + Supabase Storage (binarios) + IPFS/Pinata (metadata NFT) + Blockchain (mint).
 - **`vivero-module/`** — Módulo 2. Maduración pre-plantación. Modelo híbrido (estado actual + historial append-only de eventos), no event sourcing puro. El **lote de vivero** es el agregado central con **un único origen** desde Recolección.
-- **`plantacion-module/`** — Módulo 3. Modelado base en BD (CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION) aplicado vía migraciones 027–032. Pendientes: handler atómico de despacho automático (tarea 03), triggers de mantenimiento de contadores materializados (tarea 13 sugerida), historiales de ciclo de vida y job nocturno de transición a `MONITOREO_HISTORICO`.
+- **`plantacion-module/`** — Módulo 3. Modelado base en BD (CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION) aplicado vía migraciones 027–032. Pendientes: handler atómico de despacho automático, triggers de mantenimiento de contadores materializados, historiales de ciclo de vida y job nocturno de transición a `MONITOREO_HISTORICO`; ver [ESTADO.md](ESTADO.md) para el detalle pieza por pieza.
 - **`database/`** — Esquema ER consolidado (`00_database_schema.md` en sintaxis mermaid `erDiagram`), planeación de arquitectura, decisiones críticas, y scripts SQL en `database/supabase/`.
 
 ## Convenciones documentales
@@ -55,13 +55,13 @@ Estas son decisiones cerradas y deben preservarse al redactar nueva documentaci�
 - **Plantación — COORDINADOR es membresía, no rol global.** El catálogo cerrado de `rol_usuario` (`ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`) se mantiene. La coordinación vive en `SUBCAMPANIA_EQUIPO.rol_en_subcampania ENUM(COORDINADOR | OPERARIO)`. Una subcampaña tiene exactamente un COORDINADOR (constraint partial unique en BD); un usuario puede ser COORDINADOR de N subcampañas y simultáneamente OPERARIO en otras. Cualquier propuesta de schema con un FK directo `coordinador_id` en `SUBCAMPANIA` es incorrecta.
 - **Plantación — Estado de campaña derivado, no persistido.** `CAMPANIA` no tiene columna de estado. Su estado (`BORRADOR | ACTIVA | EN_MANTENIMIENTO | MONITOREO_HISTORICO`) se deriva al leer desde el conjunto de sus subcampañas según las reglas de §2.2 y §5.3 del Módulo 3 (vista `campania_estado`). Cualquier diseño de BD que materialice estado de campaña como columna está prohibido.
 - **Plantación — Tipo de campaña heredado por todas las subcampañas.** `CAMPANIA.tipo` (ENUM `tipo_subcampania`, reutilizado) es obligatorio al crear la campaña y define el tipo de toda subcampaña hija. `SUBCAMPANIA.tipo` debe ser idéntico a `CAMPANIA.tipo` (CHECK constraint en BD). El tipo de la campaña es inmutable una vez que tiene al menos una subcampaña; mezclar tipos dentro de una misma campaña no está permitido — para operar con otro tipo se crea una campaña separada. El enum `tipo_subcampania` se reutiliza por compatibilidad con migración 027; no introducir `tipo_campania` como enum separado.
-- **Plantación — Mix de especies fuera del MVP.** No existe tabla `subcampania_especie_permitida` ni validación de topes porcentuales. La composición real se registra en `REGISTRO_PLANTACION_DETALLE` pero no se valida contra plan. Se incorpora post-MVP.
+- **Plantación — metas por especie en subcampaña.** `CAMPANIA` no tiene meta operativa propia; la meta vive en `SUBCAMPANIA`. Cada subcampaña debe poder planificar su composición en `SUBCAMPANIA_META_ESPECIE`: porcentaje objetivo y cantidad objetivo por `planta_id`, con suma de porcentajes = 100 y suma de cantidades = `SUBCAMPANIA.meta_total_arboles` al activar. La asignación de vivero sigue siendo reserva física por lote; el plan por especie vive en M3 y se usa para cobertura, progreso y validación de `PLANTACION_INICIAL`.
 - **Plantación — Reposición libre de especie (`RN-VIV-60`).** Una reposición puede usar cualquier especie disponible en una asignación con propósito `REPOSICION`; no se exige coincidir con la especie del grupo origen. El grupo puede quedar con composición mixta. Revisable post-MVP si certificación de carbono exige homogeneidad.
 - **Plantación — Validación GPS con PostGIS como fuente de verdad.** La función `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)` es la autoridad. Turf.js u otro chequeo en frontend es opcional, solo para feedback de UX.
 
 ## Estado de iniciativas en curso
 
-- **Integración M2 ↔ M3:** documentación absorbida (2026-05-21). Implementación pendiente, organizada en [tareas/modulo-2-integracion-modulo-3/](tareas/modulo-2-integracion-modulo-3/). Hasta que las tareas se cierren, el comportamiento descrito en los docs de M2 sobre asignaciones, devoluciones, despacho automático y LIFO de mermas todavía **no está en producción**. Consultar el README de tareas para el estado actual de cada pieza.
+- **Integración M2 ↔ M3:** documentación absorbida (2026-05-21). Implementación pendiente. El comportamiento descrito en los docs de M2 sobre asignaciones, devoluciones, despacho automático y mermas sobre asignaciones todavía **no está en producción** en su totalidad. Consultar [ESTADO.md](ESTADO.md) para el estado actual de cada pieza.
 
 ## SQL en `database/supabase/`
 
@@ -80,22 +80,17 @@ Claude actúa como **cerebro del proyecto**: orquesta diseño, planifica tareas,
 
 Claude **no ve el código de los repos de implementación**. El usuario le pasa resúmenes del resultado de aplicar los cambios (queries probadas, ajustes hechos, errores encontrados, decisiones tomadas en el camino). A partir de esos resúmenes, Claude actualiza la documentación canónica y cierra la tarea.
 
-### Tareas en `tareas/`
+### Estado de implementación
 
-Las tareas operativas viven en [tareas/](tareas/), organizadas por iniciativa (ej. `tareas/modulo-2-integracion-modulo-3/`). Cada carpeta tiene:
-
-- `README.md` — índice con tabla de estado por tarea y dependencias.
-- Archivos numerados por tarea (`01_*.md`, `02_*.md`, ...) con contexto, spec técnico, criterios de aceptación y choques.
+El avance de implementación (qué está en producción vs. pendiente) se registra en [ESTADO.md](ESTADO.md), un documento vivo. La documentación de diseño canónica sigue viviendo en los módulos operativos y en `database/00_database_schema.md`; `ESTADO.md` solo trackea avance, no diseño.
 
 ### Protocolo de cierre de tarea
 
 Cuando el usuario informa que una tarea está aplicada en su repo:
 
 1. **Pedirle un resumen breve** si no lo trajo: qué se hizo, qué se desvió del spec, qué quedó pendiente, qué decisiones nuevas se tomaron.
-2. **Agregar un bloque "Resultado" al final del archivo de tarea** con fecha (formato `YYYY-MM-DD`), resumen, desviaciones del spec original, decisiones nuevas, links a commits/PRs si los hay, y notas para futuras tareas que dependan de esta.
-3. **Actualizar el estado en el `README.md`** de la carpeta de tareas (✅ Hecha).
-4. **Mover el archivo a `completadas/`** dentro de la misma carpeta de iniciativa, preservando el nombre original (ej. `tareas/modulo-2-integracion-modulo-3/completadas/01_db_migraciones_esquema.md`). Ajustar el link en el README para apuntar a la nueva ruta.
-5. **Propagar a la documentación canónica** los cambios que afecten al dominio: actualizar JSON de requerimientos, MD de reglas de negocio, esquema ER, o decisiones cerradas/abiertas del addendum correspondiente.
-6. **Notar invariantes nuevos** en CLAUDE.md si la tarea cerró una decisión que estaba abierta o estableció un patrón a respetar.
+2. **Propagar a la documentación canónica** los cambios que afecten al dominio: actualizar JSON de requerimientos, MD de reglas de negocio, esquema ER, o decisiones cerradas/abiertas del addendum correspondiente.
+3. **Notar invariantes nuevos** en CLAUDE.md si la tarea cerró una decisión que estaba abierta o estableció un patrón a respetar.
+4. **Actualizar la fila correspondiente en `ESTADO.md`** con el nuevo estado de esa pieza.
 
 El objetivo: que cualquier futura conversación pueda reconstruir el estado del proyecto leyendo solo los archivos del repo, sin tener que recordar la historia de la implementación.

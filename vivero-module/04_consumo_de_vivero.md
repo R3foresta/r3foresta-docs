@@ -37,10 +37,12 @@ Todo lo demás (asignaciones, devoluciones, reservas) es **contabilidad lógica*
 
 ## 2. Los tres saldos que conviven
 
+> Fuente canónica de las fórmulas y la identidad de esta sección: RN-VIV-57 y RN-VIV-49 en `vivero-module/01_reglas_de_negocio_vivero.md`. Lo que sigue es la explicación operativa, no una definición independiente.
+
 | Saldo | Qué cuenta | Dónde vive | Cuándo cambia |
 |-------|------------|------------|---------------|
 | `saldo_vivo_actual` | Plantas físicamente vivas en el vivero | `LOTE_VIVERO` | Sube en `EMBOLSADO`; baja en `MERMA` y `DESPACHO` |
-| `saldo_asignado_total` | Plantas vivas **reservadas** por subcampañas pero todavía no despachadas | Derivado de `ASIGNACION_VIVERO_SUBCAMPANIA` activas | Sube al asignar; baja al consumir, devolver o por merma LIFO |
+| `saldo_asignado_total` | Plantas vivas **reservadas** por subcampañas pero todavía no despachadas | Derivado de `ASIGNACION_VIVERO_SUBCAMPANIA` activas | Sube al asignar; baja al consumir, devolver o por merma sobre asignaciones según urgencia de subcampaña |
 | `saldo_vivo_disponible_asignacion` | Plantas vivas **libres** para asignar a nuevas subcampañas o despachar manualmente | Derivado: `saldo_vivo_actual − saldo_asignado_total` | Cambia indirectamente cuando cualquiera de los dos anteriores cambia |
 
 Identidad fundamental:
@@ -161,7 +163,7 @@ fecha_evento = registro_plantacion.fecha_plantacion
 
 Un solo `REGISTRO_PLANTACION` puede tocar varios lotes (una especie por lote). En ese caso se generan **N eventos `DESPACHO`**, uno por lote, **todos en la misma transacción** que el registro. Si algo falla, todo se revierte.
 
-Invariante por registro:
+Invariante por registro (fuente canónica: RN-VIV-53 en `vivero-module/01_reglas_de_negocio_vivero.md`):
 
 ```
 SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.cantidad_total_plantada
@@ -171,7 +173,7 @@ SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.ca
 
 1. Subcampaña activa (o aceptando reposiciones).
 2. GPS dentro del polígono (con tolerancia configurable).
-3. Especies dentro del mix permitido.
+3. Especies dentro del plan de metas por especie de la subcampaña (`SUBCAMPANIA_META_ESPECIE`).
 4. Cada lote elegido tiene asignación activa con propósito coherente (`PLANTACION_INICIAL` para plantación inicial; `REPOSICION` para reposición).
 5. `cantidad_solicitada_del_lote <= saldo_asignado_disponible` de esa asignación.
 6. El registro tiene al menos 1 foto válida y GPS válido (sin esto, no se inserta nada).
@@ -206,7 +208,8 @@ El handler debe lockear con `SELECT ... FOR UPDATE` las filas de `asignacion_viv
 tipo_evento = DESPACHO
 origen_despacho = MANUAL
 destino_tipo = (PLANTACION_PROPIA | PLANTACION_COMUNIDAD | DONACION | VENTA | OTRO)
-                ← NO puede ser PLANTACION_CAMPANIA
+                ← NO puede ser PLANTACION_CAMPANIA (ese valor es exclusivo del despacho automático)
+                (subconjunto del enum canónico destino_tipo_vivero, ver `database/00_database_schema.md`)
 destino_referencia = <texto libre con contexto>
 subcampania_id = NULL
 campania_id = NULL
@@ -235,6 +238,8 @@ Esto es un **cambio respecto al comportamiento anterior** al Módulo 3: antes, e
 ---
 
 ## 4. Política de mermas sobre saldo asignado (por urgencia de subcampaña)
+
+> Fuente canónica de esta política: RN-VIV-50 en `vivero-module/01_reglas_de_negocio_vivero.md`. Esta sección la explica en detalle con fórmula y ejemplo operativo, sin sustituir la regla.
 
 Una `MERMA` en un lote con asignaciones activas requiere decidir quién absorbe la pérdida.
 
@@ -283,7 +288,7 @@ Cuando una merma afecta una asignación activa, el coordinador de la subcampaña
 | Plantación inicial / reposición (M3) | Operario M3 | M3 (atómico) | Sí: `DESPACHO` con `origen_despacho = AUTOMATICO_PLANTACION` | Baja en N | Sin cambio | +N | — | — | Heredada del `REGISTRO_PLANTACION` |
 | Despacho manual | Operario vivero / ADMIN | M2 | Sí: `DESPACHO` con `origen_despacho = MANUAL` | Baja en N | Sin cambio (no toca asignaciones) | — | — | — | Obligatoria propia |
 | Merma (sin afectar asignaciones) | Operario vivero / ADMIN | M2 | Sí: `MERMA` | Baja en N | Sin cambio | — | — | — | Obligatoria propia |
-| Merma (con desborde a asignaciones por LIFO) | Operario vivero / ADMIN | M2 | Sí: `MERMA` con metadata de afectación | Baja en N | Sin cambio | — | — | +N (distribuido LIFO) | Obligatoria propia |
+| Merma (con desborde a asignaciones por urgencia) | Operario vivero / ADMIN | M2 | Sí: `MERMA` con metadata de afectación | Baja en N | Sin cambio | — | — | +N (distribuido por urgencia de subcampaña) | Obligatoria propia |
 | Mortandad en M3 | Operario M3 | M3 | No genera | Sin cambio | Sin cambio | — | — | — | Propia en M3, no en M2 |
 
 ---
@@ -316,12 +321,12 @@ Tres cambios de comportamiento que el equipo de vivero debe internalizar:
 
 ## 8. Reglas de negocio que sostienen este flujo
 
-Las reglas formales viven en [01_regas_de_negocio_vivero.md](./01_regas_de_negocio_vivero.md), sección de integración con Plantación (`RN-VIV-47` en adelante). En resumen, los invariantes innegociables son:
+Las reglas formales viven en [01_reglas_de_negocio_vivero.md](./01_reglas_de_negocio_vivero.md), sección de integración con Plantación (`RN-VIV-47` en adelante). En resumen, los invariantes innegociables son:
 
 - Asignación es reserva lógica; no genera evento en M2.
 - Devolución no genera evento en M2.
 - `cantidad_asignada` es inmutable.
-- Mermas afectan asignaciones por LIFO (más nueva primero); no reescriben `cantidad_asignada`.
+- Mermas afectan asignaciones por urgencia de subcampaña; no reescriben `cantidad_asignada`.
 - Despacho automático hereda evidencia del registro de plantación; despacho manual exige evidencia propia.
 - Despacho manual no puede tener `destino_tipo = PLANTACION_CAMPANIA`.
 - Despacho automático solo puede tener `destino_tipo = PLANTACION_CAMPANIA`.
@@ -404,8 +409,8 @@ Esto es exactamente el comportamiento deseado: las reservas están protegidas.
 
 ## 11. Referencias
 
-- [Addendum del Módulo 2 (fuente canónica del contrato M2 ↔ M3)](./03_Addendum_Modulo_2_por_Modulo_3.md)
-- [Reglas de negocio Vivero](./01_regas_de_negocio_vivero.md)
+- [Reglas de negocio Vivero (fuente canónica del contrato M2 ↔ M3: RN-VIV-47 a RN-VIV-60)](./01_reglas_de_negocio_vivero.md)
+- [Addendum del Módulo 2 (referencia histórica de la negociación del contrato, ya absorbida)](../historico/vivero-addendum-m2-m3.md)
 - [Procesos del Módulo 3 — Plantación](../plantacion-module/02_Procesos_Modulo_3_Plantacion.md)
 - [Esquema ER](../database/00_database_schema.md)
-- [Tareas pendientes de implementación](../tareas/modulo-2-integracion-modulo-3/README.md)
+- [Estado de implementación](../ESTADO.md)

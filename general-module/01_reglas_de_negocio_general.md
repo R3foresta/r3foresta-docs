@@ -157,6 +157,14 @@ La evidencia debe indicar a que entidad pertenece y, cuando aplique, quien la su
 
 Aunque `EVIDENCIAS_TRAZABILIDAD` tenga campos para eliminacion logica, esa capacidad queda reservada para fases futuras y no forma parte del flujo funcional del MVP.
 
+### RN-GEN-23a - Evidencia auditable no se comprime en frontend
+
+Aplica a evidencia operativa/auditable de M1 Recoleccion, M2 Vivero (eventos `INICIO`, `EMBOLSADO`, `ADAPTABILIDAD` con evidencia, `MERMA`, `DESPACHO`) y M3 Plantacion, y en general a cualquier evidencia de trazabilidad asociada a procesos, estados, movimientos o validaciones. Imagenes decorativas o de catalogo si pueden comprimirse; la evidencia auditable, no.
+
+Backend no debe reemplazar el archivo original con una version comprimida como unica copia. El flujo correcto es: guardar el archivo original intacto, calcular hash del original, guardar metadata tecnica y, si hace falta, generar una copia optimizada/thumbnail solo para visualizacion.
+
+**Pendiente para M3 Plantacion:** cuando se implemente, toda evidencia de plantacion debe subir el archivo original (sin compresion frontend, sin `nonEvidenceImageCompression`, usando frontend solo para validacion/previews); backend debe guardar original + hash + metadata y puede generar thumbnails/derivados para visualizacion; el frontend debe enviar los archivos por `multipart/form-data` en un campo acordado, idealmente `fotos`.
+
 ---
 
 ## 8. Reglas de integracion con otros modulos

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git -C /Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs log --oneline -5)",
+      "Bash(python3 -c \"import json; json.load\\(open\\('/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/plantacion-module/00_Requerimientos_Modulo_3_Plantacion.json'\\)\\); print\\('JSON OK'\\)\")",
+      "Read(//Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/migrations/**)",
+      "Bash(git -C /Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs log --oneline -5 -- database/00_database_schema.md)",
+      "Read(//Users/pabloandresfernandezcari/Projects/R3foresta/**)",
+      "Bash(awk 'NR==662 {for \\(i=1;i<=length\\($0\\);i++\\) printf \"%d:%s \", i, substr\\($0,i,1\\); print \"\"}' /Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tareas/modulo-2-integracion-modulo-3/completadas/11_db_modelado_m3_base.md)",
+      "Bash(awk 'NR>=691 && NR<=691' /Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tareas/modulo-2-integracion-modulo-3/completadas/11_db_modelado_m3_base.md)"
+    ]
+  }
+}

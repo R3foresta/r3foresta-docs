@@ -144,11 +144,11 @@ erDiagram
     bigint id PK
     date fecha
     ENUM(tipo_material_origen) tipo_material
-    text nombre_cientifico_snapshot "NOT NULL - snapshot oficial se congela al VALIDAR"
-    text nombre_comercial_snapshot "NOT NULL - snapshot se congela al VALIDAR; en MVP se alimenta desde PLANTA.nombre_comun_principal"
-    text variedad_snapshot "NOT NULL - snapshot oficial se congela al VALIDARr"
-    text nombre_comunidad_snapshot "NOT NULL - comunidad donde se recolectó; snapshot oficial se congela al VALIDAR"
-    text nombre_recolector_snapshot "NOT NULL - snapshot oficial se congela al VALIDAR"
+    text nombre_cientifico_snapshot "NOT NULL - recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR"
+    text nombre_comercial_snapshot "NOT NULL - recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR; en MVP se alimenta desde PLANTA.nombre_comun_principal"
+    text variedad_snapshot "NOT NULL - recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR"
+    text nombre_comunidad_snapshot "NOT NULL - comunidad donde se recolectó; recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR"
+    text nombre_recolector_snapshot "NOT NULL - recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR"
     boolean especie_nueva
     text observaciones
     bigint usuario_id FK
@@ -261,7 +261,7 @@ ASIGNACION_VIVERO_SUBCAMPANIA {
     int cantidad_asignada "NOT NULL - inmutable, > 0, siempre UNIDAD"
     int cantidad_consumida "NOT NULL default 0 - aumenta con cada DESPACHO automatico que consume de esta asignacion"
     int cantidad_devuelta "NOT NULL default 0 - aumenta con cada DEVOLUCION_A_VIVERO en M3"
-    int cantidad_mermada "NOT NULL default 0 - aumenta cuando una MERMA del lote agota saldo no asignado y desborda a esta asignacion por LIFO (la mas nueva primero)"
+    int cantidad_mermada "NOT NULL default 0 - aumenta cuando una MERMA del lote agota saldo no asignado y desborda a esta asignacion segun urgencia de subcampania"
     int saldo_asignado_disponible "GENERATED ALWAYS AS (cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada) STORED"
     bigint usuario_asignacion_id FK "NOT NULL - ADMIN o COORDINADOR de la subcampania"
     timestamptz fecha_asignacion "NOT NULL default now()"
@@ -343,6 +343,20 @@ SUBCAMPANIA {
 }
 %% Indice GIST sobre poligono_geom para PostGIS. Sin columna coordinador_id (membresia via SUBCAMPANIA_EQUIPO).
 
+SUBCAMPANIA_META_ESPECIE {
+    bigint id PK
+    bigint subcampania_id FK "NOT NULL - ON DELETE CASCADE"
+    bigint planta_id FK "NOT NULL"
+    numeric porcentaje_objetivo "NOT NULL > 0 y <= 100"
+    int cantidad_objetivo "NOT NULL > 0 - calculada desde meta_total_arboles y ajustada por redondeo"
+    timestamptz created_at
+    timestamptz updated_at
+    bigint created_by FK
+    bigint updated_by FK
+}
+%% Unique (subcampania_id, planta_id). Al activar: SUM(porcentaje_objetivo)=100 y SUM(cantidad_objetivo)=SUBCAMPANIA.meta_total_arboles.
+%% No es una asignacion de vivero: define la meta de composicion planificada para PLANTACION_INICIAL.
+
 SUBCAMPANIA_EQUIPO {
     bigint id PK
     bigint subcampania_id FK "NOT NULL - ON DELETE CASCADE"
@@ -377,7 +391,8 @@ REGISTRO_PLANTACION {
     bigint created_by FK
     jsonb metadata_blockchain "nullable"
 }
-%% es_reposicion = true cuelga del grupo origen via registro_plantacion_origen_id. Sin mix de especies en MVP.
+%% es_reposicion = true cuelga del grupo origen via registro_plantacion_origen_id.
+%% La validacion de especie planificada para PLANTACION_INICIAL usa SUBCAMPANIA_META_ESPECIE.
 
 REGISTRO_PLANTACION_DETALLE {
     bigint id PK
@@ -485,6 +500,10 @@ EVENTO_PLANTACION {
   DIVISION_ADMINISTRATIVA ||--o{ SUBCAMPANIA : zona
   USUARIO ||--o{ SUBCAMPANIA : created_by
 
+  SUBCAMPANIA ||--o{ SUBCAMPANIA_META_ESPECIE : "meta por especie"
+  PLANTA ||--o{ SUBCAMPANIA_META_ESPECIE : "especie planificada"
+  USUARIO ||--o{ SUBCAMPANIA_META_ESPECIE : created_by
+
   SUBCAMPANIA ||--o{ SUBCAMPANIA_EQUIPO : tiene_equipo
   USUARIO ||--o{ SUBCAMPANIA_EQUIPO : participa
 
@@ -542,7 +561,7 @@ destino_tipo_vivero = [
 ]
 // Nota: PLANTACION_CAMPANIA se agrega por integracion con Modulo 3.
 // Solo aplica cuando origen_despacho = AUTOMATICO_PLANTACION.
-// El renombrado de PLANTACION_COMUNIDAD/DONACION a DONACION_COMUNIDAD queda como decision abierta.
+// Decision cerrada (2026-07-01): se mantienen PLANTACION_COMUNIDAD y DONACION como valores separados (no se fusionan a DONACION_COMUNIDAD).
 
 origen_despacho_vivero = [MANUAL, AUTOMATICO_PLANTACION]
 // MANUAL: despacho registrado directamente desde Vivero por usuario autorizado.

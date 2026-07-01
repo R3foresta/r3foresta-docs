@@ -33,7 +33,7 @@
     "Aporta a carbono": "Alta",
     "Campos clave y obligatoriedad": "Obligatorio:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- cantidad_afectada\n- unidad_medida_evento = UNIDAD\n- causa_merma\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\nOpcional:\n- observaciones",
     "Reglas y validaciones": "- cantidad_afectada > 0.\n- cantidad_afectada <= saldo_vivo_disponible.\n- La merma siempre usa UNIDAD.\n- saldo_vivo_despues no puede ser negativo.\n- fecha_evento: no futura; permitida hasta 10 dias en el pasado.\n- No se permite MERMA sin EMBOLSADO previo.\n- causa_merma debe pertenecer al enum causa_merma_vivero.\n- Si el saldo llega a 0, activa cierre automatico (RF-VIV-08).\n- El saldo vivo debe ser calculado por el sistema.\n- Si el lote tiene asignaciones activas a subcampañas, la merma aplica politica de urgencia: afecta primero el saldo no asignado; si excede, distribuye el excedente sobre asignaciones activas ordenando por subcampania.fecha_estimada_inicio DESC NULLS FIRST, asignacion.id DESC (subcampania con inicio mas lejano absorbe primero; NULL = sin fecha = absorbe antes que cualquier fecha concreta), aumentando cantidad_mermada de cada asignacion afectada sin modificar cantidad_asignada.\n- Cuando una asignacion resulta afectada, se debe notificar al coordinador de la subcampania correspondiente.",
-    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo MERMA.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Recalcula LOTE_VIVERO.saldo_vivo_actual.\n- Si la merma afecta asignaciones, actualiza cantidad_mermada de las asignaciones afectadas (LIFO, la mas nueva primero) y guarda el detalle en metadata del evento.\n- Encola notificacion al coordinador de cada subcampania afectada.\n- Si corresponde, activa la logica de cierre automatico."
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo MERMA.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Recalcula LOTE_VIVERO.saldo_vivo_actual.\n- Si la merma afecta asignaciones, actualiza cantidad_mermada de las asignaciones afectadas segun politica de urgencia de subcampania y guarda el detalle en metadata del evento.\n- Encola notificacion al coordinador de cada subcampania afectada.\n- Si corresponde, activa la logica de cierre automatico."
   },
   {
     "ID": "RF-VIV-04",
@@ -158,7 +158,7 @@
   {
     "ID": "RF-VIV-14",
     "Seccion": "Vivero",
-    "Nombre": "Politica LIFO de mermas sobre asignaciones activas",
+    "Nombre": "Politica de urgencia de mermas sobre asignaciones activas",
     "Objetivo": "Distribuir el impacto de una merma sobre las asignaciones activas del lote cuando la merma excede el saldo no asignado, sin modificar cantidad_asignada.",
     "Severidad": "BLOQUEANTE",
     "Aplica en MVP": "Si",

@@ -50,6 +50,7 @@
         "Poligono (GeoJSON) obligatorio para activar",
         "Area en hectareas derivada del poligono, no editable manualmente",
         "Meta total de arboles > 0",
+        "Plan de metas por especie: planta_id, porcentaje_objetivo y cantidad_objetivo por especie",
         "Fechas estimadas de inicio y fin (opcionales, solo futuras al crear)",
         "fecha_cierre_operativo (timestamp del cierre, automatico o manual)",
         "fecha_fin_mantenimiento (calculada como fecha_cierre_operativo + 3 anos)",
@@ -57,6 +58,9 @@
       ],
       "validaciones": [
         "Meta total > 0.",
+        "Para activar debe existir al menos una especie planificada en SUBCAMPANIA_META_ESPECIE.",
+        "Al activar, SUM(porcentaje_objetivo) del plan de especies debe ser 100.",
+        "Al activar, SUM(cantidad_objetivo) del plan de especies debe ser igual a meta_total_arboles.",
         "El coordinador debe existir como usuario activo con rol global GENERAL, ADMIN o VALIDADOR; se materializa como fila unica en SUBCAMPANIA_EQUIPO con rol_en_subcampania = COORDINADOR (constraint partial unique a nivel BD).",
         "La zona debe existir en el catalogo administrativo.",
         "Las fechas estimadas deben ser futuras al crear.",
@@ -65,6 +69,7 @@
       ],
       "reglas_adicionales": [
         "En BORRADOR se permite edicion libre y soft delete.",
+        "En BORRADOR el plan de especies se puede editar libremente.",
         "En BORRADOR la subcampaña no acepta asignaciones ni plantaciones.",
         "Una campaña tiene al menos 1 subcampaña; sin limite superior.",
         "La ventana de mantenimiento (3 anos) es configurable a nivel sistema.",
@@ -88,11 +93,12 @@
         "Poligono presente.",
         "Coordinador asignado (fila en SUBCAMPANIA_EQUIPO con rol_en_subcampania = COORDINADOR).",
         "Meta total > 0.",
+        "Plan de metas por especie completo: al menos una especie, suma porcentual 100 y suma de cantidades igual a la meta total.",
         "Zona y campaña padre validas."
       ],
       "reglas_adicionales": [
         "Una subcampaña puede activarse sin tener el 100% del stock asignado en lotes.",
-        "Si se activa con stock parcial, el sistema muestra advertencia visual clara mostrando el % de cobertura.",
+        "Si se activa con stock parcial, el sistema muestra advertencia visual clara mostrando el % de cobertura total y por especie.",
         "El sistema permite ampliar asignaciones en cualquier momento durante el estado ACTIVA.",
         "La activacion congela snapshots oficiales de identidad (zona, coordinador, organizaciones)."
       ]
@@ -112,7 +118,9 @@
         "Estado derivado: ACTIVA / AGOTADA / DEVUELTA",
         "Cantidad consumida acumulada (derivada)",
         "Cantidad devuelta acumulada (derivada)",
+        "Cantidad mermada acumulada (derivada desde mermas de vivero que afecten la reserva)",
         "Saldo asignado disponible (derivado)",
+        "Cobertura contra meta por especie cuando proposito_asignacion = PLANTACION_INICIAL",
         "usuario_asignacion y fecha_asignacion automaticos"
       ],
       "validaciones": [
@@ -120,6 +128,7 @@
         "Las asignaciones se cargan en cantidad absoluta; el porcentaje sobre saldo del lote es solo ayuda visual.",
         "El lote de vivero debe estar en estado ACTIVO.",
         "Asignaciones con proposito PLANTACION_INICIAL solo se aceptan en subcampañas ACTIVA.",
+        "Asignaciones con proposito PLANTACION_INICIAL solo pueden usar lotes cuya planta_id exista en SUBCAMPANIA_META_ESPECIE para esa subcampaña.",
         "Asignaciones con proposito REPOSICION se aceptan en ACTIVA, COMPLETADA o FINALIZADA_PARCIAL.",
         "No se aceptan asignaciones en subcampañas BORRADOR.",
         "Solo ADMIN o COORDINADOR de la subcampaña pueden asignar."
@@ -127,9 +136,10 @@
       "reglas_adicionales": [
         "Una asignacion no genera evento en el Modulo 2; es una reserva logica.",
         "Un lote puede asignar a varias subcampañas; una subcampaña puede recibir de varios lotes.",
+        "La asignacion inicial muestra cobertura por especie contra el plan; puede quedar sobrecubierta como reserva, pero la PLANTACION_INICIAL no puede exceder la cantidad objetivo de la especie.",
         "Una asignacion con proposito PLANTACION_INICIAL solo puede consumirse en plantaciones iniciales; no en reposiciones.",
         "Una asignacion con proposito REPOSICION solo puede consumirse en reposiciones; no en plantaciones iniciales.",
-        "saldo_asignado_disponible = cantidad_asignada - cantidad_consumida - cantidad_devuelta.",
+        "saldo_asignado_disponible = cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada.",
         "Si saldo_asignado_disponible = 0, estado = AGOTADA.",
         "Si toda la cantidad fue devuelta sin consumir, estado = DEVUELTA.",
         "Cada asignacion debe registrarse como evento ASIGNACION_VIVERO en EVENTO_PLANTACION."
@@ -183,6 +193,8 @@
       "validaciones": [
         "La subcampaña debe estar ACTIVA.",
         "Cada cantidad por especie-lote > 0.",
+        "Cada especie plantada debe existir en SUBCAMPANIA_META_ESPECIE para la subcampaña.",
+        "El acumulado de PLANTACION_INICIAL por especie no puede superar la cantidad_objetivo de esa especie.",
         "Cada lote seleccionado debe tener asignacion ACTIVA con proposito PLANTACION_INICIAL a esa subcampaña.",
         "La cantidad por lote no puede exceder el saldo_asignado_disponible de esa asignacion.",
         "Latitud en [-90, 90] con 6 decimales.",
@@ -196,6 +208,7 @@
       ],
       "reglas_adicionales": [
         "El operario selecciona explicitamente el lote por especie; si solo hay un lote disponible se preselecciona.",
+        "El flujo muestra progreso por especie: plantado inicial / cantidad objetivo.",
         "Por cada lote afectado se genera atomicamente un DESPACHO en EVENTO_LOTE_VIVERO del Modulo 2.",
         "DESPACHO.destino_tipo = PLANTACION_CAMPANIA.",
         "DESPACHO.origen_despacho = AUTOMATICO_PLANTACION.",
@@ -368,7 +381,7 @@
       ],
       "validaciones": [
         "Solo ADMIN o COORDINADOR de la subcampaña pueden gestionar el equipo.",
-        "El usuario a agregar debe existir y tener rol compatible (GENERAL, COORDINADOR o ADMIN).",
+        "El usuario a agregar debe existir y tener rol global compatible (GENERAL, ADMIN o VALIDADOR). COORDINADOR no es rol global; es membresia en la subcampaña.",
         "No se puede remover al coordinador via gestion de equipo (debe usarse el flujo de cambio de coordinador).",
         "No se permite gestion de equipo en BORRADOR (la subcampaña no esta operativa).",
         "Si un operario se remueve, sus registros previos permanecen intactos (append-only)."
@@ -481,13 +494,14 @@
       "codigo": "RF-PLA-17",
       "modulo": "Plantacion",
       "nombre": "Roles y permisos",
-      "descripcion": "Mapear permisos del modulo sobre roles existentes mas el nuevo rol COORDINADOR.",
+      "descripcion": "Mapear permisos del modulo sobre roles globales existentes y membresias contextuales de subcampaña.",
       "campos": [
         "ADMIN: crea campañas y subcampañas, asigna coordinadores, cierra a FINALIZADA_PARCIAL, gestiona organizaciones",
-        "COORDINADOR (nuevo): gestiona sus subcampañas asignadas, asigna/devuelve lotes, gestiona equipo, opera como operario",
+        "COORDINADOR: membresia contextual en SUBCAMPANIA_EQUIPO.rol_en_subcampania, no rol global nuevo",
+        "COORDINADOR gestiona sus subcampañas asignadas, asigna/devuelve lotes, gestiona equipo y opera como operario",
         "GENERAL (operario): registra plantaciones, reposiciones y mortandad en subcampañas donde es parte del equipo",
         "VALIDADOR: rol global, sin flujo especial en este modulo en MVP",
-        "VOLUNTARIO: sin permisos operativos criticos salvo habilitacion explicita"
+        "VOLUNTARIO: sin permisos operativos criticos y no puede ser miembro de SUBCAMPANIA_EQUIPO en el MVP"
       ],
       "validaciones": [
         "Solo ADMIN crea campañas y subcampañas en MVP.",
@@ -497,9 +511,39 @@
         "La membresia en equipo se valida al registrar eventos operativos."
       ],
       "reglas_adicionales": [
-        "COORDINADOR es un rol nuevo a crear en el enum rol_usuario.",
-        "Un usuario COORDINADOR tambien actua como GENERAL en sus subcampañas.",
-        "Un usuario puede ser COORDINADOR de varias subcampañas simultaneamente."
+        "No se crea COORDINADOR en el enum rol_usuario; el enum global se mantiene ADMIN / GENERAL / VALIDADOR / VOLUNTARIO.",
+        "Un usuario con membresia COORDINADOR tambien puede operar dentro de esa subcampaña.",
+        "Un usuario puede ser COORDINADOR de varias subcampañas simultaneamente y OPERARIO en otras."
+      ]
+    },
+    {
+      "codigo": "RF-PLA-18",
+      "modulo": "Plantacion",
+      "nombre": "Planificar metas por especie de subcampaña",
+      "descripcion": "Permitir definir la composicion planificada de una subcampaña a partir de su meta total de arboles, asignando porcentajes y cantidades objetivo por especie.",
+      "campos": [
+        "subcampania_id obligatorio",
+        "planta_id obligatorio por especie planificada",
+        "porcentaje_objetivo > 0 y <= 100",
+        "cantidad_objetivo > 0, calculada desde meta_total_arboles y ajustada por redondeo",
+        "created_by / updated_by y timestamps de auditoria",
+        "Indicadores derivados: plantado_inicial_especie, progreso_especie, stock_asignado_inicial_especie y cobertura_especie"
+      ],
+      "validaciones": [
+        "Una misma planta no puede repetirse dentro de la misma subcampaña.",
+        "Al activar la subcampaña, SUM(porcentaje_objetivo) debe ser 100.",
+        "Al activar la subcampaña, SUM(cantidad_objetivo) debe ser igual a SUBCAMPANIA.meta_total_arboles.",
+        "En BORRADOR el plan se puede editar libremente.",
+        "En ACTIVA se puede editar solo si ninguna cantidad_objetivo queda por debajo de lo ya plantado inicialmente para esa especie.",
+        "En COMPLETADA o FINALIZADA_PARCIAL el plan queda congelado.",
+        "PLANTACION_INICIAL solo acepta especies incluidas en el plan.",
+        "PLANTACION_INICIAL no puede hacer que plantado_inicial_especie supere cantidad_objetivo."
+      ],
+      "reglas_adicionales": [
+        "El plan de especies vive en SUBCAMPANIA_META_ESPECIE, no en ASIGNACION_VIVERO_SUBCAMPANIA.",
+        "Las asignaciones con proposito PLANTACION_INICIAL muestran cobertura contra este plan usando la especie del lote de vivero.",
+        "Las reposiciones no avanzan la meta y mantienen la politica de especie libre definida en RN-VIV-60.",
+        "La vista publica debe mostrar cumplimiento de meta inicial por especie y composicion viva actual como metricas separadas."
       ]
     }
   ]

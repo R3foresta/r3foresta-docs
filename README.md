@@ -1,14 +1,25 @@
 # r3foresta-docs
 
-Base documental de R3Foresta para modulos funcionales, decisiones de dominio y soporte de arquitectura.
+Base documental de R3Foresta: trazabilidad de material biológico para reforestación, con bonos de carbono y transparencia mediante blockchain.
 
-## Modulos
+La cadena del dominio: `general (maestros) → recolección (origen) → vivero (maduración) → plantación (campo)`.
 
-* [general-module/README.md](/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/general-module/README.md)
-  Catalogos y maestros transversales: usuarios, comunidades, ubicaciones, viveros, plantas y evidencias.
-* [recoleccion-module/README.md](/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/recoleccion-module/README.md)
-  Registro del lote origen, evidencia, validacion y movimientos de saldo.
-* `vivero-module`
-  Maduracion operativa del material y trazabilidad pre-plantacion.
-* `database`
-  Esquema, decisiones y scripts base de persistencia.
+## Índice
+
+* [general-module/README.md](general-module/README.md)
+  Catálogos y maestros transversales: usuarios, territorios, viveros, plantas, evidencias, `ORGANIZACION`.
+* [recoleccion-module/README.md](recoleccion-module/README.md)
+  Módulo 1: registro del lote origen, evidencia, validación, saldo.
+* [vivero-module/README.md](vivero-module/README.md)
+  Módulo 2: maduración pre-plantación, eventos append-only, saldo vivo.
+* [plantacion-module/README.md](plantacion-module/README.md)
+  Módulo 3: campañas/subcampañas, plantación en campo, mantenimiento, vista pública.
+* [database/README.md](database/README.md)
+  Esquema ER canónico, decisiones de arquitectura y scripts.
+
+## Otros documentos raíz
+
+* [database/00_database_schema.md](database/00_database_schema.md) — fuente de verdad estructural del proyecto (tablas + enums en mermaid).
+* [ESTADO.md](ESTADO.md) — estado vivo de implementación: qué está en producción vs. pendiente.
+* [CLAUDE.md](CLAUDE.md) — convenciones e invariantes de dominio del proyecto.
+* [AUDITORIA-DOCUMENTACION.md](AUDITORIA-DOCUMENTACION.md) — informe de auditoría de la documentación.
