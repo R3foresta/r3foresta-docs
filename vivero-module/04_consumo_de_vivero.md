@@ -176,19 +176,20 @@ SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.ca
 3. Especies dentro del plan de metas por especie de la subcampaña (`SUBCAMPANIA_META_ESPECIE`).
 4. Cada lote elegido tiene asignación activa con propósito coherente (`PLANTACION_INICIAL` para plantación inicial; `REPOSICION` para reposición).
 5. `cantidad_solicitada_del_lote <= saldo_asignado_disponible` de esa asignación.
-6. El registro tiene al menos 1 foto válida y GPS válido (sin esto, no se inserta nada).
+6. El registro tiene GPS válido y la evidencia operativa requerida.
+7. Cada `DESPACHO` automático a generar trae al menos 1 foto válida propia del material despachado.
 
 Si todas pasan, dentro de la misma transacción:
 
 - Se inserta `REGISTRO_PLANTACION`.
 - Por cada lote afectado: `update asignacion set cantidad_consumida = cantidad_consumida + N`.
-- Por cada lote afectado: `insert into evento_lote_vivero` con los campos de despacho automático.
+- Por cada lote afectado: `insert into evento_lote_vivero` con los campos de despacho automático y su evidencia propia.
 - El trigger existente de M2 descuenta `saldo_vivo_actual`.
 - Commit.
 
-#### Evidencia heredada
+#### Evidencia propia obligatoria
 
-Un `DESPACHO` automático **no tiene fotos propias** en `EVIDENCIAS_TRAZABILIDAD`. Su evidencia es la del `REGISTRO_PLANTACION` asociado. Esto es una excepción explícita a la regla general de Módulo 2 de "todo despacho requiere evidencia propia". La validez de la excepción depende de que el registro de plantación tenga evidencia válida; sin ella, la transacción no llega al commit.
+Un `DESPACHO` automático **requiere fotos propias** en `EVIDENCIAS_TRAZABILIDAD`, asociadas directamente al `EVENTO_LOTE_VIVERO.id`. La evidencia del `REGISTRO_PLANTACION` puede mostrarse como contexto, pero no reemplaza la foto del despacho. Sin al menos una foto válida del material despachado, la transacción no debe llegar al commit.
 
 #### Concurrencia
 
@@ -285,7 +286,7 @@ Cuando una merma afecta una asignación activa, el coordinador de la subcampaña
 |-----------|-------|-------------------|----------------------|---------------------|---------------------|----------------------|---------------------|--------------------|-----------|
 | Asignación | ADMIN / COORDINADOR | M3 (admin/coord. de subcampaña) | No genera | Sin cambio | Se crea fija | — | — | — | No requiere |
 | Devolución | ADMIN / COORDINADOR | M3 | No genera | Sin cambio | Sin cambio | — | +N | — | No requiere |
-| Plantación inicial / reposición (M3) | Operario M3 | M3 (atómico) | Sí: `DESPACHO` con `origen_despacho = AUTOMATICO_PLANTACION` | Baja en N | Sin cambio | +N | — | — | Heredada del `REGISTRO_PLANTACION` |
+| Plantación inicial / reposición (M3) | Operario M3 | M3 (atómico) | Sí: `DESPACHO` con `origen_despacho = AUTOMATICO_PLANTACION` | Baja en N | Sin cambio | +N | — | — | Obligatoria propia |
 | Despacho manual | Operario vivero / ADMIN | M2 | Sí: `DESPACHO` con `origen_despacho = MANUAL` | Baja en N | Sin cambio (no toca asignaciones) | — | — | — | Obligatoria propia |
 | Merma (sin afectar asignaciones) | Operario vivero / ADMIN | M2 | Sí: `MERMA` | Baja en N | Sin cambio | — | — | — | Obligatoria propia |
 | Merma (con desborde a asignaciones por urgencia) | Operario vivero / ADMIN | M2 | Sí: `MERMA` con metadata de afectación | Baja en N | Sin cambio | — | — | +N (distribuido por urgencia de subcampaña) | Obligatoria propia |
@@ -327,7 +328,7 @@ Las reglas formales viven en [01_reglas_de_negocio_vivero.md](./01_reglas_de_neg
 - Devolución no genera evento en M2.
 - `cantidad_asignada` es inmutable.
 - Mermas afectan asignaciones por urgencia de subcampaña; no reescriben `cantidad_asignada`.
-- Despacho automático hereda evidencia del registro de plantación; despacho manual exige evidencia propia.
+- Todo despacho, manual o automático, exige evidencia propia asociada al evento de vivero.
 - Despacho manual no puede tener `destino_tipo = PLANTACION_CAMPANIA`.
 - Despacho automático solo puede tener `destino_tipo = PLANTACION_CAMPANIA`.
 - Cualquier despacho automático debe traer `subcampania_id`, `campania_id` y `registro_plantacion_id` no nulos.
@@ -401,7 +402,7 @@ Esto es exactamente el comportamiento deseado: las reservas están protegidas.
 - **Salida real:** despacho (manual o automático) o merma; baja `saldo_vivo_actual`.
 - **Despacho automático:** generado por el sistema al registrar una plantación en M3. `origen_despacho = AUTOMATICO_PLANTACION`.
 - **Despacho manual:** registrado directamente por un usuario de vivero. `origen_despacho = MANUAL`.
-- **Evidencia heredada:** las fotos del `REGISTRO_PLANTACION` cuentan como evidencia del `DESPACHO` automático asociado.
+- **Evidencia propia del despacho:** foto asociada directamente al evento `DESPACHO` de vivero; la evidencia de plantación puede mostrarse como contexto, pero no la sustituye.
 - **Merma por urgencia:** cuando una merma desborda el saldo no asignado, la asignación cuya subcampaña tiene `fecha_estimada_inicio` más lejana se afecta primero; la más próxima queda protegida.
 - **Saldo asignado disponible:** `cantidad_asignada − cantidad_consumida − cantidad_devuelta − cantidad_mermada`. Es el saldo realmente comprometido y todavía consumible.
 

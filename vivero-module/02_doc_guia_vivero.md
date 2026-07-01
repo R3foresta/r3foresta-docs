@@ -607,7 +607,7 @@ Esta restricción se valida en el handler de M3 al consumir; no se cruza.
 | Quién lo crea | Operario de vivero o ADMIN | Sistema, desde el handler de M3 |
 | Evento que lo dispara | Despacho manual desde Vivero | `PLANTACION_INICIAL` o `REPOSICION` en M3 |
 | `destino_tipo` permitido | Todo excepto `PLANTACION_CAMPANIA` | Solo `PLANTACION_CAMPANIA` |
-| Evidencia | Propia obligatoria (mínimo 1 foto en M2) | Heredada del `REGISTRO_PLANTACION` (no requiere foto propia) |
+| Evidencia | Propia obligatoria (mínimo 1 foto en M2) | Propia obligatoria asociada al `DESPACHO` automático |
 | `subcampania_id` / `campania_id` / `registro_plantacion_id` | Todos `NULL` | Todos obligatorios |
 | Validación de saldo | Contra `saldo_vivo_disponible_asignacion` | Contra `saldo_asignado_disponible` de la asignación específica |
 

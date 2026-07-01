@@ -5,8 +5,9 @@
 > - JSON de requerimientos actualizado: RF-VIV-03, RF-VIV-05, RF-VIV-06, RF-VIV-09 extendidos; agregados RF-VIV-11 (asignación), RF-VIV-12 (devolución), RF-VIV-13 (saldos derivados), RF-VIV-14 (política de urgencia de mermas).
 > - Reglas de negocio agregadas: RN-VIV-47 a RN-VIV-59 (sección 13 del MD de reglas).
 > - Guía operativa: sección 13 nueva con resumen del contrato M2 ↔ M3.
-> - Documento operativo dedicado: [04_consumo_de_vivero.md](../vivero-module/04_consumo_de_vivero.md).
-> - Esquema ER: `EVENTO_LOTE_VIVERO` extendido y nueva entidad `ASIGNACION_VIVERO_SUBCAMPANIA` agregadas en [database/00_database_schema.md](../database/00_database_schema.md).
+> - Documento operativo dedicado: [04_consumo_de_vivero.md](../../vivero-module/04_consumo_de_vivero.md).
+> - Esquema ER: `EVENTO_LOTE_VIVERO` extendido y nueva entidad `ASIGNACION_VIVERO_SUBCAMPANIA` agregadas en [database/00_database_schema.md](../../database/00_database_schema.md).
+> - Nota posterior (2026-07-01): la idea de evidencia heredada para `DESPACHO` automático fue retirada. Todo despacho, manual o automático, requiere evidencia propia asociada al evento de vivero.
 >
 > Este archivo se conserva como **referencia histórica del contrato negociado**. **No es la fuente operativa**: para uso diario, ir a los documentos oficiales del módulo.
 
@@ -27,7 +28,7 @@
 | 3 | Agregar referencias tipadas `subcampania_id`, `campania_id` y `registro_plantacion_id` al `DESPACHO` automático | Crítico | RF-VIV-05 |
 | 4 | Definir saldo derivado `saldo_vivo_disponible_asignacion` | Importante | Conceptos clave + RF-VIV-09 |
 | 5 | Definir política de mermas sobre saldo asignado usando `cantidad_mermada`, sin sobrescribir `cantidad_asignada` | Importante | RF-VIV-03 |
-| 6 | Definir evidencia heredada en `DESPACHO` automático como excepción controlada a la evidencia propia de M2 | Importante | RF-VIV-05 + RF-VIV-06 |
+| 6 | Definir evidencia propia obligatoria en `DESPACHO` automático, sin heredar evidencia desde M3 | Importante | RF-VIV-05 + RF-VIV-06 |
 | 7 | Aclarar que las devoluciones del Módulo 3 no generan evento en Módulo 2 | Aclaración | RF-VIV-05 |
 | 8 | Ampliar la vista operativa de lotes con columnas derivadas de asignación | Mejora | RF-VIV-09 |
 | 9 | Agregar restricciones de consistencia según el origen del despacho | Crítico | RF-VIV-05 |
@@ -128,7 +129,7 @@ MANUAL
 |---------|----------|--------------------------|
 | Quién lo registra | Operario o usuario autorizado de Vivero | Sistema, desde Módulo 3 |
 | Acción que lo origina | Despacho manual | `PLANTACION_INICIAL` o `REPOSICION` |
-| Evidencia | Evidencia propia obligatoria en M2 | Evidencia heredada desde M3 |
+| Evidencia | Evidencia propia obligatoria en M2 | Evidencia propia obligatoria en M2 |
 | `destino_tipo` permitido | Todos excepto `PLANTACION_CAMPANIA` | Solo `PLANTACION_CAMPANIA` |
 | `subcampania_id` | Debe ser `NULL` | Obligatorio |
 | `campania_id` | Debe ser `NULL` | Obligatorio |
@@ -344,13 +345,13 @@ Esta política es adecuada para el MVP porque:
 
 ---
 
-## 8. Evidencia heredada en `DESPACHO` automático
+## 8. Evidencia propia en `DESPACHO` automático
 
 ### 8.1. Regla general original
 
 En Módulo 2, los eventos críticos como `DESPACHO` requieren evidencia obligatoria.
 
-### 8.2. Excepción controlada
+### 8.2. Regla vigente
 
 Los `DESPACHO` con:
 
@@ -358,20 +359,20 @@ Los `DESPACHO` con:
 origen_despacho = AUTOMATICO_PLANTACION
 ```
 
-no requieren evidencia propia en `EVENTO_LOTE_VIVERO`, porque su evidencia obligatoria proviene del `REGISTRO_PLANTACION` asociado en Módulo 3.
+requieren evidencia propia en `EVENTO_LOTE_VIVERO`, vinculada directamente al evento de vivero. La evidencia del `REGISTRO_PLANTACION` asociado puede mostrarse como contexto, pero no reemplaza la evidencia del despacho.
 
 ### 8.3. Condición obligatoria
 
-Esta excepción solo es válida si el `REGISTRO_PLANTACION` asociado tiene evidencia válida.
+La condición obligatoria es que el `DESPACHO` automático tenga al menos una foto válida propia del material despachado.
 
-Si el registro de plantación o reposición no tiene evidencia válida, no debe guardarse el registro de M3 y, por tanto, tampoco debe generarse el `DESPACHO` automático en M2.
+Si el despacho automático no tiene evidencia propia válida, no debe generarse el `DESPACHO` en M2 ni completarse la transacción atómica.
 
 ### 8.4. Matriz de evidencia
 
 | Caso | Evidencia requerida |
 |------|---------------------|
 | `DESPACHO` + `MANUAL` | Evidencia propia obligatoria en M2 |
-| `DESPACHO` + `AUTOMATICO_PLANTACION` | Evidencia heredada desde M3 |
+| `DESPACHO` + `AUTOMATICO_PLANTACION` | Evidencia propia obligatoria en M2 |
 | `PLANTACION_INICIAL` en M3 | Evidencia propia obligatoria en M3 |
 | `REPOSICION` en M3 | Evidencia propia obligatoria en M3 |
 
@@ -383,7 +384,7 @@ Ejemplo de lectura:
 
 ```txt
 DESPACHO automático a campaña
-Evidencia: ver fotos del REGISTRO_PLANTACION asociado
+Evidencia: fotos propias del despacho en EVENTO_LOTE_VIVERO
 ```
 
 ---
@@ -641,11 +642,11 @@ Para mantener consistencia entre módulos, estas invariantes deben respetarse:
    Una merma no puede dejar saldo_asignado_disponible < 0.
    ```
 
-10. **Evidencia heredada:**
+10. **Evidencia propia de despacho:**
 
     ```txt
-    Los DESPACHO con origen_despacho = AUTOMATICO_PLANTACION no tienen evidencia propia en M2.
-    Su evidencia se obtiene desde REGISTRO_PLANTACION.
+    Los DESPACHO con origen_despacho = AUTOMATICO_PLANTACION tienen evidencia propia en M2.
+    La evidencia de REGISTRO_PLANTACION puede mostrarse como contexto, pero no la sustituye.
     ```
 
 ---
@@ -739,7 +740,7 @@ Este addendum queda aprobado conceptualmente con las siguientes decisiones clave
 - `PLANTACION_CAMPANIA` se usa sin `Ñ`.
 - `AUTOMATICO_PLANTACION` distingue despachos generados desde M3.
 - `registro_plantacion_id` se agrega como referencia tipada obligatoria en despachos automáticos.
-- La evidencia del despacho automático se hereda desde M3.
+- La evidencia del despacho automático se registra como evidencia propia en M2.
 - Las devoluciones no generan evento en M2.
 - Las mermas no reducen `cantidad_asignada`; se registran en `cantidad_mermada`.
 - El saldo disponible para asignar es derivado y debe recalcularse desde asignaciones activas.

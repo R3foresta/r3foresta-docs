@@ -329,9 +329,9 @@ SUBCAMPANIA {
     text nombre_coordinador_snapshot "nullable - congelado al activar"
     ARRAY nombres_organizaciones_snapshot "text[] - congelado al activar"
     text codigo_trazabilidad "UNIQUE - formato SUB-NNN-CMP-YYYY-NNN"
-    int total_plantado_inicial "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
-    int total_repuesto "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
-    int total_muerto_acumulado "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
+    int total_plantado_inicial "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
+    int total_repuesto "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
+    int total_muerto_acumulado "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
     int saldo_vivo_actual "GENERATED ALWAYS AS (total_plantado_inicial + total_repuesto - total_muerto_acumulado) STORED"
     timestamptz created_at
     timestamptz updated_at
@@ -379,8 +379,8 @@ REGISTRO_PLANTACION {
     boolean gps_dentro_poligono "NOT NULL - calculado con gps_dentro_poligono_con_tolerancia"
     numeric gps_distancia_a_poligono_m "nullable"
     int cantidad_total_plantada "NOT NULL > 0"
-    int cantidad_muerta_acumulada "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
-    int cantidad_repuesta_acumulada "NOT NULL default 0 - materializado por trigger (tarea pendiente)"
+    int cantidad_muerta_acumulada "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
+    int cantidad_repuesta_acumulada "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
     int saldo_vivo_grupo "GENERATED ALWAYS AS (cantidad_total_plantada + cantidad_repuesta_acumulada - cantidad_muerta_acumulada) STORED"
     text nombre_subcampania_snapshot "nullable - congelado al insertar"
     text nombre_zona_snapshot "nullable - congelado al insertar"
@@ -404,7 +404,7 @@ REGISTRO_PLANTACION_DETALLE {
     text nombre_cientifico_snapshot
     text nombre_comercial_snapshot
     text variedad_snapshot
-    bigint evento_lote_vivero_despacho_id FK "nullable solo en intermedio de transaccion; FK al DESPACHO automatico que crea tarea 03"
+    bigint evento_lote_vivero_despacho_id FK "nullable solo en intermedio de transaccion; FK al DESPACHO automatico generado por el handler M3"
     timestamptz created_at
 }
 %% Unique (registro_plantacion_id, asignacion_id, planta_id). Una linea por (registro, asignacion, planta).
