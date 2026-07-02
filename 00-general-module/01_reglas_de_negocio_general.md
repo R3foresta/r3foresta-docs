@@ -159,7 +159,7 @@ Aunque `EVIDENCIAS_TRAZABILIDAD` tenga campos para eliminacion logica, esa capac
 
 ### RN-GEN-23a - Evidencia auditable no se comprime en frontend
 
-Aplica a evidencia operativa/auditable de M1 Recoleccion, M2 Vivero (eventos `INICIO`, `EMBOLSADO`, `ADAPTABILIDAD` con evidencia, `MERMA`, `DESPACHO`) y M3 Plantacion, y en general a cualquier evidencia de trazabilidad asociada a procesos, estados, movimientos o validaciones. Imagenes decorativas o de catalogo si pueden comprimirse; la evidencia auditable, no.
+Aplica a evidencia operativa/auditable de M1 Recoleccion, M2 Vivero (eventos `INICIO`, `EMBOLSADO`, `DESCARTE_PRE_EMBOLSADO`, `ADAPTABILIDAD` con evidencia, `MERMA`, `DESPACHO`) y M3 Plantacion, y en general a cualquier evidencia de trazabilidad asociada a procesos, estados, movimientos o validaciones. Imagenes decorativas o de catalogo si pueden comprimirse; la evidencia auditable, no.
 
 Backend no debe reemplazar el archivo original con una version comprimida como unica copia. El flujo correcto es: guardar el archivo original intacto, calcular hash del original, guardar metadata tecnica y, si hace falta, generar una copia optimizada/thumbnail solo para visualizacion.
 

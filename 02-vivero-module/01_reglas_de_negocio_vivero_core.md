@@ -8,6 +8,7 @@ Estas reglas definen el nucleo operativo de Vivero sin mezclar contratos de inte
 - origen unico,
 - eventos append-only,
 - nacimiento y control del saldo vivo,
+- descarte pre-embolsado,
 - merma,
 - despacho manual,
 - evidencia obligatoria,
@@ -32,7 +33,7 @@ Los contratos entre modulos viven fuera de este directorio:
 - **Adaptabilidad:** seguimiento opcional del fortalecimiento en ambientes controlados; no bloquea despacho.
 - **Estado del lote:** `ACTIVO | FINALIZADO`.
 - **Eventos de vivero:** registros append-only y definitivos una vez insertados.
-- **Motivo de cierre:** `DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO`.
+- **Motivo de cierre:** `DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO | DESCARTE_PRE_EMBOLSADO`.
 
 ## 3. Identidad y trazabilidad del lote
 
@@ -94,9 +95,11 @@ Un mismo lote origen puede abastecer a multiples lotes de vivero, siempre que ca
 Todo lote de vivero debe iniciar con:
 
 1. `INICIO`
-2. `EMBOLSADO`
+2. `EMBOLSADO` o `DESCARTE_PRE_EMBOLSADO`
 
-Luego puede registrar `ADAPTABILIDAD`, `MERMA` y `DESPACHO` manual, hasta cerrar automaticamente cuando `saldo_vivo_actual = 0`.
+Si sigue el camino de `EMBOLSADO`, luego puede registrar `ADAPTABILIDAD`, `MERMA` y `DESPACHO` manual, hasta cerrar automaticamente cuando `saldo_vivo_actual = 0`.
+
+Si el lote nunca produce plantas vivas, debe cerrarse con `DESCARTE_PRE_EMBOLSADO` y no quedar activo indefinidamente.
 
 ### RN-VIV-09 - Adaptabilidad como seguimiento operativo
 
@@ -123,6 +126,8 @@ En el MVP:
 No se permite registrar:
 
 - `EMBOLSADO` sin `INICIO` previo,
+- `DESCARTE_PRE_EMBOLSADO` sin `INICIO` previo,
+- `DESCARTE_PRE_EMBOLSADO` si ya existe `EMBOLSADO`,
 - `MERMA` sin `EMBOLSADO` previo,
 - `DESPACHO` manual sin `EMBOLSADO` previo,
 - `ADAPTABILIDAD` sin `EMBOLSADO` previo.
@@ -138,6 +143,37 @@ No se permite registrar:
 El saldo de plantas vivas nace unicamente en el evento `EMBOLSADO`. Antes de ese hito solo existe material en proceso.
 
 El evento `EMBOLSADO` solo puede registrarse una vez por lote.
+
+### RN-VIV-11A - Descarte pre-embolsado cierra lotes sin plantas vivas
+
+- **Severidad:** BLOQUEANTE
+- **Aplica en MVP:** Si
+- **Relevancia carbono:** Alta
+
+Cuando un lote ya tuvo `INICIO`, todavia no tuvo `EMBOLSADO` y se determina que no producira plantas vivas, debe registrarse `DESCARTE_PRE_EMBOLSADO`.
+
+Este evento aplica, entre otros, a:
+
+- semilla que no germino,
+- esqueje que no enraizo,
+- contaminacion,
+- perdida total del material,
+- material no viable,
+- dano antes de formar plantas vivas.
+
+Reglas obligatorias:
+
+- requiere `INICIO` previo,
+- no puede registrarse si ya existe `EMBOLSADO`,
+- no opera sobre `saldo_vivo_actual`, porque el saldo vivo todavia no existe,
+- debe cerrar el lote inmediatamente,
+- debe exigir evidencia obligatoria,
+- debe registrar causa mediante `causa_descarte_pre_embolsado`,
+- debe registrar `cantidad_material_afectado` y `unidad_medida_evento`,
+- debe registrar `motivo_cierre = DESCARTE_PRE_EMBOLSADO`,
+- debe dejar `plantas_vivas_iniciales = null` y `saldo_vivo_actual = null`.
+
+El descarte pre-embolsado es total sobre el material en proceso del lote. No se permite usar este evento para descartes parciales.
 
 ## 5. Estados y validacion
 
@@ -265,7 +301,9 @@ Reglas obligatorias por evento:
 
 - `INICIO`: usa la misma unidad definida por el contrato Recoleccion -> Vivero.
 - `EMBOLSADO`: `cantidad_afectada = plantas_vivas_iniciales` y `unidad_medida_evento = UNIDAD`.
-- `ADAPTABILIDAD`, `MERMA`, `DESPACHO` manual y `CIERRE_AUTOMATICO`: operan sobre saldo vivo en `UNIDAD`.
+- `DESCARTE_PRE_EMBOLSADO`: usa la unidad del material en proceso (`UNIDAD` o `G`) y no crea saldo vivo.
+- `ADAPTABILIDAD`, `MERMA` y `DESPACHO` manual operan sobre saldo vivo en `UNIDAD`.
+- `CIERRE_AUTOMATICO` hereda la semantica del evento que lo dispara: saldo vivo `0` si viene de `MERMA`/`DESPACHO`, o saldo vivo nulo si viene de `DESCARTE_PRE_EMBOLSADO`.
 
 Para `ADAPTABILIDAD`, si el modelo persiste `cantidad_afectada`, esta debe expresarse en `UNIDAD` y referir al saldo vivo observado; no modifica el saldo.
 
@@ -276,6 +314,8 @@ Para `ADAPTABILIDAD`, si el modelo persiste `cantidad_afectada`, esta debe expre
 - **Relevancia carbono:** Alta
 
 Toda perdida operativa debe registrarse mediante un evento `MERMA` con causa, cantidad y responsable.
+
+Excepcion semantica: si la perdida ocurre antes de `EMBOLSADO`, no es `MERMA`; debe registrarse como `DESCARTE_PRE_EMBOLSADO`.
 
 ### RN-VIV-20 - Despachos manuales y mermas no pueden exceder el saldo aplicable
 
@@ -317,6 +357,8 @@ No se permiten incrementos de saldo vivo una vez nacido en `EMBOLSADO`.
 
 Cuando el saldo vivo llegue a `0`, el lote debe pasar automaticamente a estado `FINALIZADO`.
 
+Si el lote nunca llega a `EMBOLSADO`, el cierre ocurre por `DESCARTE_PRE_EMBOLSADO` y no por saldo vivo `0`.
+
 ### RN-VIV-24 - Motivo de cierre obligatorio
 
 - **Severidad:** BLOQUEANTE
@@ -328,6 +370,9 @@ Todo cierre automatico debe calcular y guardar un `motivo_cierre`:
 - `DESPACHO_TOTAL`
 - `PERDIDA_TOTAL`
 - `MIXTO`
+- `DESCARTE_PRE_EMBOLSADO`
+
+`PERDIDA_TOTAL` solo aplica cuando ya existio saldo vivo y se perdio todo por `MERMA`. Si nunca hubo plantas vivas, el motivo correcto es `DESCARTE_PRE_EMBOLSADO`.
 
 ### RN-VIV-25 - Lote finalizado no admite eventos operativos nuevos
 
@@ -349,6 +394,7 @@ En el MVP, cada evento principal requiere minimo 1 foto como evidencia:
 
 - `INICIO` requiere evidencia,
 - `EMBOLSADO` requiere evidencia,
+- `DESCARTE_PRE_EMBOLSADO` requiere evidencia,
 - `MERMA` requiere evidencia,
 - `DESPACHO` manual requiere evidencia.
 
@@ -445,6 +491,7 @@ Los tipos de evento minimos del core MVP son:
 
 - `INICIO`
 - `EMBOLSADO`
+- `DESCARTE_PRE_EMBOLSADO`
 - `ADAPTABILIDAD`
 - `MERMA`
 - `DESPACHO`
@@ -501,7 +548,7 @@ Los saldos derivados por asignaciones pertenecen al contrato Vivero -> Plantacio
 
 La consulta del lote debe hacer visible la secuencia:
 
-`recoleccion origen -> contrato de consumo -> INICIO -> EMBOLSADO -> ADAPTABILIDAD -> MERMA/DESPACHO MANUAL -> CIERRE_AUTOMATICO`
+`recoleccion origen -> contrato de consumo -> INICIO -> (DESCARTE_PRE_EMBOLSADO -> CIERRE_AUTOMATICO | EMBOLSADO -> ADAPTABILIDAD -> MERMA/DESPACHO MANUAL -> CIERRE_AUTOMATICO)`
 
 ### RN-VIV-41 - Reportes distinguen tipos de cierre
 
@@ -514,6 +561,7 @@ Los reportes deben diferenciar claramente los lotes cerrados por:
 - `DESPACHO_TOTAL`
 - `PERDIDA_TOTAL`
 - `MIXTO`
+- `DESCARTE_PRE_EMBOLSADO`
 
 ## 11. Roles minimos del MVP
 
@@ -600,5 +648,4 @@ Las reglas originales `RN-VIV-47` a `RN-VIV-60` ya no pertenecen al core puro de
 
 ## 14. TODO / Decision pendiente
 
-- **Fallo antes de embolsado:** evaluar evento `FALLO_PRE_EMBOLSADO` o `DESCARTE_PRE_EMBOLSADO` para casos donde un lote inicia en vivero pero nunca llega a `EMBOLSADO` (semilla que no germina, esqueje que no enraiza, material contaminado o perdida total antes de plantas vivas).
 - **Snapshot geografico de origen:** evaluar si Vivero debe guardar snapshot directo de division administrativa de origen, latitud de origen y longitud de origen. La recomendacion vive en el contrato Recoleccion -> Vivero.

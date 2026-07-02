@@ -6,7 +6,7 @@ Registro único de decisiones de arquitectura y diseño cerradas para el MVP, co
 
 | Rango | Documento | Alcance |
 |---|---|---|
-| `ADR-VIV-01` … `ADR-VIV-14` | [`00_decisiones_vivero.md`](00_decisiones_vivero.md) | Arquitectura de base de datos del módulo Vivero (modelo híbrido, origen único, saldo, eventos, evidencia, blockchain). Migrado desde `database/`. |
+| `ADR-VIV-01` … `ADR-VIV-15` | [`00_decisiones_vivero.md`](00_decisiones_vivero.md) | Arquitectura de base de datos del módulo Vivero (modelo híbrido, origen único, saldo, eventos, descarte pre-embolsado, evidencia, blockchain). Migrado desde `database/`. |
 | `ADR-GEN-01` … `ADR-GEN-07` | [`01_decisiones_general.md`](01_decisiones_general.md) | Decisiones cerradas del módulo General (comunidad, naming de planta, roles, ubicación, evidencia). Migrado desde `00-general-module/`. |
 
 ## Invariantes de dominio

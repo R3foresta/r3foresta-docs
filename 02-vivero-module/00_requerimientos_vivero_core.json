@@ -24,6 +24,18 @@
     "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo EMBOLSADO.\n- Materializa LOTE_VIVERO.plantas_vivas_iniciales y LOTE_VIVERO.saldo_vivo_actual.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Confirma el registro y muestra el timeline actualizado."
   },
   {
+    "ID": "RF-VIV-02A",
+    "Seccion": "Vivero Core",
+    "Nombre": "Descarte pre-embolsado: Cerrar lote que no produce plantas vivas",
+    "Objetivo": "Cerrar de forma auditable un lote que tuvo INICIO pero no llegara a EMBOLSADO, sin crear saldo vivo ni tratarlo como MERMA.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- causa_descarte_pre_embolsado\n- cantidad_material_afectado\n- unidad_medida_evento (UNIDAD o G, segun unidad del material en proceso)\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\nOpcional:\n- observaciones",
+    "Reglas y validaciones": "- No se permite DESCARTE_PRE_EMBOLSADO sin INICIO previo.\n- No se permite DESCARTE_PRE_EMBOLSADO si ya existe EMBOLSADO.\n- No opera sobre saldo vivo: plantas_vivas_iniciales y saldo_vivo_actual permanecen null.\n- El descarte pre-embolsado es total sobre el material en proceso; no permite parcialidad.\n- cantidad_material_afectado debe corresponder al material total en proceso del lote.\n- unidad_medida_evento debe coincidir con unidad_medida_inicial.\n- Debe registrar causa_descarte_pre_embolsado.\n- Debe exigir evidencia obligatoria.\n- Debe cerrar el lote inmediatamente con motivo_cierre = DESCARTE_PRE_EMBOLSADO.\n- Debe registrar evento CIERRE_AUTOMATICO con ref_evento_trigger_id apuntando al evento DESCARTE_PRE_EMBOLSADO.",
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo DESCARTE_PRE_EMBOLSADO.\n- Vincula evidencia obligatoria al evento.\n- Actualiza LOTE_VIVERO.estado_lote = FINALIZADO.\n- Actualiza LOTE_VIVERO.motivo_cierre = DESCARTE_PRE_EMBOLSADO.\n- Genera EVENTO_LOTE_VIVERO de tipo CIERRE_AUTOMATICO.\n- Muestra confirmacion y timeline actualizado."
+  },
+  {
     "ID": "RF-VIV-03",
     "Seccion": "Vivero Core",
     "Nombre": "Merma: Registrar perdida explicita por causa y cantidad",
@@ -68,7 +80,7 @@
     "Aplica en MVP": "Si",
     "Aporta a carbono": "Alta",
     "Campos clave y obligatoriedad": "Obligatorio:\n- tipo_entidad_id asociado a evento de vivero\n- entidad_id = EVENTO_LOTE_VIVERO.id\n- referencia a evidencia_trazabilidad valida",
-    "Reglas y validaciones": "- La evidencia se asocia por evento usando EVIDENCIAS_TRAZABILIDAD.\n- En el MVP, INICIO, EMBOLSADO, MERMA y DESPACHO MANUAL requieren minimo una foto obligatoria.\n- ADAPTABILIDAD puede registrar evidencia, pero no es obligatoria; sus subetapas pueden registrarse sin foto.\n- Si un evento requiere evidencia y no tiene soporte valido, no debe registrarse.\n- No se aceptan excepciones de evidencia para eventos obligatorios en el MVP.\n- No se acepta evidencia tardia en el MVP para eventos que exigen evidencia.",
+    "Reglas y validaciones": "- La evidencia se asocia por evento usando EVIDENCIAS_TRAZABILIDAD.\n- En el MVP, INICIO, EMBOLSADO, DESCARTE_PRE_EMBOLSADO, MERMA y DESPACHO MANUAL requieren minimo una foto obligatoria.\n- ADAPTABILIDAD puede registrar evidencia, pero no es obligatoria; sus subetapas pueden registrarse sin foto.\n- Si un evento requiere evidencia y no tiene soporte valido, no debe registrarse.\n- No se aceptan excepciones de evidencia para eventos obligatorios en el MVP.\n- No se acepta evidencia tardia en el MVP para eventos que exigen evidencia.",
     "Comportamiento al Guardar": "- Vincula EVIDENCIAS_TRAZABILIDAD al EVENTO_LOTE_VIVERO mediante tipo_entidad_id + entidad_id.\n- Valida obligatoriedad antes de confirmar el registro."
   },
   {
@@ -91,9 +103,9 @@
     "Severidad": "BLOQUEANTE",
     "Aplica en MVP": "Si",
     "Aporta a carbono": "Alta",
-    "Campos clave y obligatoriedad": "Automatico:\n- se evalua tras eventos que afectan saldo vivo\n- LOTE_VIVERO.estado_lote\n- LOTE_VIVERO.motivo_cierre\n- EVENTO_LOTE_VIVERO.tipo_evento = CIERRE_AUTOMATICO\n- EVENTO_LOTE_VIVERO.motivo_cierre_calculado\n- EVENTO_LOTE_VIVERO.ref_evento_trigger_id",
-    "Reglas y validaciones": "- Si saldo_vivo_actual = 0, estado_lote = FINALIZADO.\n- motivo_cierre = DESPACHO_TOTAL si el cierre ocurrio solo por despachos.\n- motivo_cierre = PERDIDA_TOTAL si ocurrio sin despachos y por perdidas.\n- motivo_cierre = MIXTO si combinaron despachos y perdidas.\n- Una vez FINALIZADO, bloquea nuevos eventos operativos normales.",
-    "Comportamiento al Guardar": "- Al guardar un evento que deja saldo en 0, el sistema finaliza LOTE_VIVERO.\n- Calcula y persiste motivo_cierre en el lote.\n- Genera EVENTO_LOTE_VIVERO de tipo CIERRE_AUTOMATICO con motivo_cierre_calculado y ref_evento_trigger_id.\n- Muestra mensaje de cierre y actualiza el timeline."
+    "Campos clave y obligatoriedad": "Automatico:\n- se evalua tras eventos que afectan saldo vivo y tras DESCARTE_PRE_EMBOLSADO\n- LOTE_VIVERO.estado_lote\n- LOTE_VIVERO.motivo_cierre\n- EVENTO_LOTE_VIVERO.tipo_evento = CIERRE_AUTOMATICO\n- EVENTO_LOTE_VIVERO.motivo_cierre_calculado\n- EVENTO_LOTE_VIVERO.ref_evento_trigger_id",
+    "Reglas y validaciones": "- Si saldo_vivo_actual = 0, estado_lote = FINALIZADO.\n- Si ocurre DESCARTE_PRE_EMBOLSADO, estado_lote = FINALIZADO aunque saldo_vivo_actual sea null.\n- motivo_cierre = DESPACHO_TOTAL si el cierre ocurrio solo por despachos.\n- motivo_cierre = PERDIDA_TOTAL si ocurrio sin despachos y por perdidas post-embolsado.\n- motivo_cierre = MIXTO si combinaron despachos y perdidas.\n- motivo_cierre = DESCARTE_PRE_EMBOLSADO si el lote nunca llego a EMBOLSADO.\n- Una vez FINALIZADO, bloquea nuevos eventos operativos normales.",
+    "Comportamiento al Guardar": "- Al guardar un evento que deja saldo en 0, o al registrar DESCARTE_PRE_EMBOLSADO, el sistema finaliza LOTE_VIVERO.\n- Calcula y persiste motivo_cierre en el lote.\n- Genera EVENTO_LOTE_VIVERO de tipo CIERRE_AUTOMATICO con motivo_cierre_calculado y ref_evento_trigger_id.\n- Muestra mensaje de cierre y actualiza el timeline."
   },
   {
     "ID": "RF-VIV-09",

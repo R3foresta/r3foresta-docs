@@ -45,7 +45,7 @@ Estas son decisiones cerradas y deben preservarse al redactar nueva documentaci�
 - **Inactivación, no borrado:** entidades con historial se inactivan (`activo = false`), no se borran.
 - **Roles MVP:** catálogo cerrado `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`. No introducir roles libres.
 - **Vivero — origen único:** un lote de vivero proviene de **una sola** recolección; un lote origen puede alimentar varios viveros pero cada consumo se registra individualmente.
-- **Vivero — orden de eventos:** `INICIO → EMBOLSADO → (MERMA | DESPACHO | ADAPTABILIDAD)* → CIERRE`. Saldo vivo solo existe desde `EMBOLSADO` y se maneja en `UNIDAD`.
+- **Vivero — orden de eventos:** `INICIO → (DESCARTE_PRE_EMBOLSADO → CIERRE | EMBOLSADO → (MERMA | DESPACHO | ADAPTABILIDAD)* → CIERRE)`. Saldo vivo solo existe desde `EMBOLSADO` y se maneja en `UNIDAD`; si nunca hay plantas vivas, el cierre usa `DESCARTE_PRE_EMBOLSADO`, no `PERDIDA_TOTAL`.
 - **Trazabilidad de vivero:** formato `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`.
 - **Historial:** append-only en `recoleccion_historial` y `evento_lote_vivero`.
 - **Recolección — evidencia:** mínimo 2 fotos JPG/PNG para validar, GPS obligatorio.

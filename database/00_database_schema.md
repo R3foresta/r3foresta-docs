@@ -220,7 +220,7 @@ erDiagram
     int saldo_vivo_actual "nullable - caché controlada, nunca editar directo"
     ENUM(subetapa_adaptabilidad) subetapa_actual "nullable - SOMBRA | MEDIA_SOMBRA | SOL_DIRECTO"
     ENUM(estado_lote_vivero) estado_lote "NOT NULL - ACTIVO | FINALIZADO, default ACTIVO"
-    ENUM(motivo_cierre_lote) motivo_cierre "nullable - DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO"
+    ENUM(motivo_cierre_lote) motivo_cierre "nullable - DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO | DESCARTE_PRE_EMBOLSADO"
     text codigo_trazabilidad "NOT NULL - UNIQUE - formato VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}"
     timestamptz created_at "NOT NULL"
     timestamptz updated_at "NOT NULL"
@@ -229,13 +229,14 @@ erDiagram
 EVENTO_LOTE_VIVERO {
     bigint id PK
     bigint lote_id FK "NOT NULL"
-    ENUM(tipo_evento_vivero) tipo_evento "NOT NULL - INICIO | EMBOLSADO | ADAPTABILIDAD | MERMA | DESPACHO | CIERRE_AUTOMATICO"
+    ENUM(tipo_evento_vivero) tipo_evento "NOT NULL - INICIO | EMBOLSADO | DESCARTE_PRE_EMBOLSADO | ADAPTABILIDAD | MERMA | DESPACHO | CIERRE_AUTOMATICO"
     date fecha_evento "NOT NULL"
     timestamptz created_at "NOT NULL - inmutable, cuándo se guardó realmente"
     bigint responsable_id FK "NOT NULL"
-    numeric cantidad_afectada "nullable - plantas o unidades según tipo_evento"
+    numeric cantidad_afectada "nullable - material o plantas segun tipo_evento; en DESCARTE_PRE_EMBOLSADO = cantidad_material_afectado"
     ENUM(unidad_medida) unidad_medida_evento "nullable - UNIDAD | G"
     ENUM(causa_merma_vivero) causa_merma "nullable - solo aplica en MERMA"
+    ENUM(causa_descarte_pre_embolsado) causa_descarte_pre_embolsado "nullable - solo aplica en DESCARTE_PRE_EMBOLSADO"
     ENUM(destino_tipo_vivero) destino_tipo "nullable - solo aplica en DESPACHO; incluye PLANTACION_CAMPANIA"
     ENUM(origen_despacho_vivero) origen_despacho "nullable - solo aplica en DESPACHO; MANUAL | AUTOMATICO_PLANTACION; default MANUAL"
     text destino_referencia "nullable - solo aplica en DESPACHO manual; texto libre"
@@ -246,7 +247,7 @@ EVENTO_LOTE_VIVERO {
     ENUM(subetapa_adaptabilidad) subetapa_destino "nullable - SOMBRA | MEDIA_SOMBRA | SOL_DIRECTO"
     int saldo_vivo_antes "nullable - calculado por sistema"
     int saldo_vivo_despues "nullable - calculado por sistema"
-    ENUM(motivo_cierre_lote) motivo_cierre_calculado "nullable - DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO"
+    ENUM(motivo_cierre_lote) motivo_cierre_calculado "nullable - DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO | DESCARTE_PRE_EMBOLSADO"
     bigint ref_evento_trigger_id FK "nullable - autorreferencia, solo aplica en CIERRE_AUTOMATICO"
     jsonb metadata_blockchain "nullable - solo aplica en DESPACHO con anclaje activo"
     text observaciones "nullable"
@@ -546,7 +547,7 @@ LOTE VIVIERO
 estado_lote_vivero = [ACTIVO, FINALIZADO]
 
 tipo_evento_vivero = [
-  INICIO, EMBOLSADO, ADAPTABILIDAD, MERMA, DESPACHO, CIERRE_AUTOMATICO
+  INICIO, EMBOLSADO, DESCARTE_PRE_EMBOLSADO, ADAPTABILIDAD, MERMA, DESPACHO, CIERRE_AUTOMATICO
 ]
 
 subetapa_adaptabilidad = [SOMBRA, MEDIA_SOMBRA, SOL_DIRECTO]
@@ -554,6 +555,11 @@ subetapa_adaptabilidad = [SOMBRA, MEDIA_SOMBRA, SOL_DIRECTO]
 causa_merma_vivero = [
   PLAGA, ENFERMEDAD, SEQUIA, DANO_FISICO,
   MUERTE_NATURAL, OTRO
+]
+
+causa_descarte_pre_embolsado = [
+  NO_GERMINACION, NO_ENRAIZAMIENTO, CONTAMINACION,
+  PERDIDA_TOTAL_MATERIAL, MATERIAL_NO_VIABLE, DANO_PRE_EMBOLSADO, OTRO
 ]
 
 destino_tipo_vivero = [
@@ -571,7 +577,7 @@ proposito_asignacion = [PLANTACION_INICIAL, REPOSICION]
 estado_asignacion_vivero = [ACTIVA, AGOTADA, DEVUELTA]
 // AFECTADA_POR_MERMA no se modela como estado; se muestra como badge derivado cuando cantidad_mermada > 0.
 
-motivo_cierre_lote = [DESPACHO_TOTAL, PERDIDA_TOTAL, MIXTO]
+motivo_cierre_lote = [DESPACHO_TOTAL, PERDIDA_TOTAL, MIXTO, DESCARTE_PRE_EMBOLSADO]
 estado_operativo_recoleccion = [ABIERTO, CERRADO]
 
 PLANTACION (M3)

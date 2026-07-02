@@ -29,6 +29,7 @@ Los contratos entre modulos no viven aqui, sino en:
 ## Lectura operativa rapida
 
 - `INICIO`: crea el lote y registra material en proceso; no crea saldo vivo.
+- `DESCARTE_PRE_EMBOLSADO`: cierra un lote iniciado que no producira plantas vivas; no crea saldo vivo.
 - `EMBOLSADO`: crea `plantas_vivas_iniciales` y `saldo_vivo_actual`, siempre en `UNIDAD`.
 - `ADAPTABILIDAD`: seguimiento opcional; no cambia saldo y no bloquea despacho.
 - `MERMA`: baja `saldo_vivo_actual`.
@@ -41,6 +42,7 @@ Los contratos entre modulos no viven aqui, sino en:
 - En MVP no se permite division ni fusion de lotes.
 - Los eventos son append-only.
 - El saldo vivo nace unicamente en `EMBOLSADO`.
+- Si el lote nunca llega a `EMBOLSADO`, se cierra con `DESCARTE_PRE_EMBOLSADO`, evidencia obligatoria y motivo de cierre propio.
 - `ADAPTABILIDAD` no bloquea `MERMA` ni `DESPACHO MANUAL`.
 - Blockchain es metadata opcional y no bloquea la operacion.
 

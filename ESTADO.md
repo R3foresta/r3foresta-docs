@@ -20,6 +20,19 @@
 
 Este estado se refinará cuando el usuario confirme, pieza por pieza, qué está realmente en producción. No se debe recrear el seguimiento anterior como carpeta separada; el estado vivo queda centralizado aquí.
 
+## Vivero Core — Descarte pre-embolsado
+
+| Pieza | Fuente documental | Estado |
+|---|---|---|
+| Diseño de dominio: evento `DESCARTE_PRE_EMBOLSADO`, causa propia, evidencia obligatoria y motivo de cierre propio | `02-vivero-module/01_reglas_de_negocio_vivero_core.md` (RN-VIV-11A), `02-vivero-module/02_flujo_operativo_vivero_core.md`, `decisiones/00_decisiones_vivero.md` (ADR-VIV-15) | ✅ documentado |
+| Migración BD `046_vivero_descarte_pre_embolsado.sql`: enums, columna `causa_descarte_pre_embolsado`, constraints y RPC `fn_vivero_registrar_descarte_pre_embolsado` | `database/migrations/046_vivero_descarte_pre_embolsado.sql` | ⏳ pendiente de aplicar/confirmar |
+| Backend: endpoint/servicio para registrar descarte pre-embolsado desde lote `ACTIVO` con `INICIO` y sin `EMBOLSADO` | `RF-VIV-02A` / migración 046 | ⏳ pendiente |
+| Backend: si el lote ya tiene `EMBOLSADO`, bloquear `DESCARTE_PRE_EMBOLSADO` y usar perdida total post-embolsado vía `MERMA` por todo `saldo_vivo_actual`; no permitir parcialidad en esa acción de perdida total | `02-vivero-module/02_flujo_operativo_vivero_core.md` §7.1 | ⏳ pendiente |
+| Backend: pruebas de negocio para inicio sin embolsado, bloqueo con embolsado existente, evidencia obligatoria, cierre automático y motivo `DESCARTE_PRE_EMBOLSADO` | `RF-VIV-02A` | ⏳ pendiente |
+| Frontend: en detalle/listado de lote, detectar `ACTIVO` + `INICIO` + sin `EMBOLSADO` y mostrar acción de descarte total pre-embolsado | `02-vivero-module/02_flujo_operativo_vivero_core.md` §7.2 | ⏳ pendiente |
+| Frontend: formulario con fecha, responsable, causa, cantidad total prellenada desde `cantidad_inicial_en_proceso`, unidad, observaciones y evidencia obligatoria | `RF-VIV-02A` | ⏳ pendiente |
+| Frontend: si el lote ya tiene `EMBOLSADO`, la acción equivalente debe registrar perdida total post-embolsado, no descarte pre-embolsado | `02-vivero-module/02_flujo_operativo_vivero_core.md` §7.2 | ⏳ pendiente |
+
 ## Observaciones para el auditor
 
 - Ninguna por el momento. Si en una futura revisión se detecta una pieza de diseño que no esté ya cubierta por un documento canónico, anotarla aquí para su resolución — no inventarla como si ya estuviera resuelta.

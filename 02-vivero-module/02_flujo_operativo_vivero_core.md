@@ -17,10 +17,9 @@ La integracion con Plantacion mediante asignaciones, devoluciones y despachos au
 ```text
 Recoleccion validada
 -> INICIO
--> EMBOLSADO
--> ADAPTABILIDAD opcional
--> MERMA y/o DESPACHO MANUAL
--> CIERRE_AUTOMATICO
+-> [DESCARTE_PRE_EMBOLSADO -> CIERRE_AUTOMATICO]
+   o
+   [EMBOLSADO -> ADAPTABILIDAD opcional -> MERMA y/o DESPACHO MANUAL -> CIERRE_AUTOMATICO]
 ```
 
 ## 3. Lectura de cada hito
@@ -47,7 +46,29 @@ En este punto:
 
 `fecha_inicio` del lote debe coincidir con `fecha_evento` del evento `INICIO`, salvo excepcion explicita documentada.
 
-### 3.2 EMBOLSADO
+### 3.2 DESCARTE_PRE_EMBOLSADO
+
+`DESCARTE_PRE_EMBOLSADO` cierra un lote que inicio en vivero pero nunca producira plantas vivas.
+
+Reglas clave:
+
+- requiere `INICIO` previo,
+- no puede registrarse si ya existe `EMBOLSADO`,
+- no opera sobre saldo vivo,
+- registra `cantidad_material_afectado`,
+- `unidad_medida_evento` usa la unidad del material en proceso (`UNIDAD` o `G`),
+- exige `causa_descarte_pre_embolsado`,
+- exige evidencia obligatoria,
+- cierra el lote inmediatamente,
+- `motivo_cierre = DESCARTE_PRE_EMBOLSADO`,
+- `plantas_vivas_iniciales = null`,
+- `saldo_vivo_actual = null`.
+
+Este evento se usa para semilla que no germino, esqueje que no enraizo, contaminacion, perdida total del material, material no viable o dano antes de formar plantas vivas.
+
+No se permite descarte pre-embolsado parcial. Si se confirma este evento, el lote queda `FINALIZADO`.
+
+### 3.3 EMBOLSADO
 
 `EMBOLSADO` marca el nacimiento del saldo vivo.
 
@@ -65,7 +86,7 @@ Reglas clave:
 
 El sistema no convierte automaticamente gramos en plantas vivas. El embolsado registra un conteo observado.
 
-### 3.3 ADAPTABILIDAD opcional
+### 3.4 ADAPTABILIDAD opcional
 
 `ADAPTABILIDAD` registra seguimiento operativo del fortalecimiento del lote.
 
@@ -85,7 +106,7 @@ Si el modelo guarda saldos en este evento:
 saldo_vivo_antes = saldo_vivo_despues = saldo_vivo_actual
 ```
 
-### 3.4 MERMA
+### 3.5 MERMA
 
 `MERMA` registra una perdida real del saldo vivo.
 
@@ -104,7 +125,7 @@ Si `saldo_vivo_actual` llega a `0`, se dispara `CIERRE_AUTOMATICO`.
 
 La politica de mermas sobre asignaciones activas pertenece al contrato Vivero -> Plantacion.
 
-### 3.5 DESPACHO MANUAL
+### 3.6 DESPACHO MANUAL
 
 `DESPACHO MANUAL` registra una salida real desde Vivero hacia un destino que no es despacho automatico de Plantacion.
 
@@ -123,12 +144,14 @@ En core puro valida contra `saldo_vivo_actual`.
 
 Cuando el contrato Vivero -> Plantacion esta activo, el despacho manual debe respetar saldo reservado y validar contra `saldo_vivo_disponible_asignacion`; esa regla no vive en este core, sino en el contrato.
 
-### 3.6 CIERRE_AUTOMATICO
+### 3.7 CIERRE_AUTOMATICO
 
 `CIERRE_AUTOMATICO` ocurre cuando:
 
 ```text
 saldo_vivo_actual = 0
+o
+evento trigger = DESCARTE_PRE_EMBOLSADO
 ```
 
 Reglas clave:
@@ -143,16 +166,23 @@ Motivos de cierre:
 - `DESPACHO_TOTAL`
 - `PERDIDA_TOTAL`
 - `MIXTO`
+- `DESCARTE_PRE_EMBOLSADO`
 
 ## 4. Secuencia valida
 
 ```text
 INICIO
+  -> DESCARTE_PRE_EMBOLSADO
+     -> CIERRE_AUTOMATICO
+
+o
+
+INICIO
   -> EMBOLSADO
-      -> ADAPTABILIDAD*
-      -> MERMA*
-      -> DESPACHO MANUAL*
-      -> CIERRE_AUTOMATICO cuando saldo_vivo_actual = 0
+     -> ADAPTABILIDAD*
+     -> MERMA*
+     -> DESPACHO MANUAL*
+     -> CIERRE_AUTOMATICO cuando saldo_vivo_actual = 0
 ```
 
 `ADAPTABILIDAD`, `MERMA` y `DESPACHO MANUAL` pueden intercalarse despues de `EMBOLSADO`, respetando fechas y saldo.
@@ -163,6 +193,7 @@ Eventos con evidencia obligatoria en core:
 
 - `INICIO`
 - `EMBOLSADO`
+- `DESCARTE_PRE_EMBOLSADO`
 - `MERMA`
 - `DESPACHO`
 
@@ -186,6 +217,24 @@ No forman parte de esta guia operativa:
 
 Estos puntos son contrato entre modulos y viven en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md).
 
-## 7. TODO / Decision pendiente
+## 7. Plan de implementacion
 
-Evaluar evento `FALLO_PRE_EMBOLSADO` o `DESCARTE_PRE_EMBOLSADO` para lotes que llegan a `INICIO` pero nunca alcanzan `EMBOLSADO`.
+### 7.1 Backend / BD
+
+- Agregar `DESCARTE_PRE_EMBOLSADO` a `tipo_evento_vivero`.
+- Agregar `DESCARTE_PRE_EMBOLSADO` a `motivo_cierre_lote`.
+- Crear `causa_descarte_pre_embolsado`.
+- Agregar `EVENTO_LOTE_VIVERO.causa_descarte_pre_embolsado`.
+- Crear RPC transaccional `fn_vivero_registrar_descarte_pre_embolsado`.
+- La RPC debe exigir evidencia, causa, cantidad total afectada, unidad y observaciones cuando aplique.
+- La RPC debe validar `INICIO` previo, ausencia de `EMBOLSADO`, lote `ACTIVO` y fecha operativa valida.
+- La RPC debe finalizar el lote con `motivo_cierre = DESCARTE_PRE_EMBOLSADO` y registrar `CIERRE_AUTOMATICO`.
+- Si el lote ya tiene `EMBOLSADO`, no se debe permitir `DESCARTE_PRE_EMBOLSADO`; para perdida total post-embolsado se usa `MERMA` por el total del `saldo_vivo_actual`.
+
+### 7.2 Frontend
+
+- En detalle de lote, si el lote esta `ACTIVO`, tiene `INICIO` y no tiene `EMBOLSADO`, mostrar accion para registrar descarte total pre-embolsado.
+- El formulario debe pedir fecha, responsable, causa, cantidad material afectado, unidad, observaciones y evidencia obligatoria.
+- La cantidad debe venir precargada con `cantidad_inicial_en_proceso` y no permitir parcialidad en esta accion.
+- Si el lote ya tiene `EMBOLSADO`, la accion equivalente debe usar perdida total post-embolsado (`MERMA` por todo el `saldo_vivo_actual`) y no `DESCARTE_PRE_EMBOLSADO`.
+- Al guardar, refrescar estado, motivo de cierre y timeline.

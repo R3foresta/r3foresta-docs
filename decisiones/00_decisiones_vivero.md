@@ -319,6 +319,36 @@ Claridad arquitectónica y menor riesgo de sobreingeniería.
 
 ---
 
+## ADR-VIV-15 — El lote sin embolsado se cierra con `DESCARTE_PRE_EMBOLSADO`
+
+### Decisión
+Si un lote ya tuvo `INICIO` pero nunca llega a `EMBOLSADO`, se cierra con el evento `DESCARTE_PRE_EMBOLSADO` y el motivo de cierre `DESCARTE_PRE_EMBOLSADO`.
+
+### La duda crítica
+“¿Por qué no llamarlo `FALLO_PRE_EMBOLSADO` o tratarlo como `PERDIDA_TOTAL`?”
+
+### Respuesta
+`FALLO_PRE_EMBOLSADO` sugiere error, culpa o falla humana. El caso que se quiere modelar es operativo y tecnico: semilla que no germina, esqueje que no enraiza, contaminacion, material no viable o perdida total antes de formar plantas vivas.
+
+Tampoco corresponde `PERDIDA_TOTAL`, porque ese motivo presupone que ya existio saldo vivo y se perdio todo por `MERMA`. Antes de `EMBOLSADO` no hay plantas vivas ni `saldo_vivo_actual`; hay material en proceso.
+
+### Reglas derivadas
+
+- `DESCARTE_PRE_EMBOLSADO` requiere `INICIO` previo.
+- No puede registrarse si ya existe `EMBOLSADO`.
+- No opera sobre saldo vivo.
+- Es total sobre el material en proceso; no permite parcialidad.
+- Exige causa y evidencia.
+- Finaliza el lote inmediatamente.
+
+### Lo que se sacrificó
+Reusar el flujo de `MERMA` para todos los casos de perdida.
+
+### Lo que se ganó
+Semántica correcta, cierre confiable de lotes que no producen plantas vivas y reportes que no confunden material descartado con saldo vivo perdido.
+
+---
+
 ## Conclusión de defensa
 
 La arquitectura no buscó ser la más abstracta ni la más extensible desde el inicio.  
@@ -333,6 +363,7 @@ Las decisiones más discutibles del modelo fueron tomadas a propósito:
 - germinación absorbida en lugar de formalizada,
 - transacción atómica entre módulos,
 - evidencia desacoplada,
+- descarte pre-embolsado como cierre propio,
 - y blockchain como componente accesorio.
 
 Todas esas decisiones responden al mismo criterio:
