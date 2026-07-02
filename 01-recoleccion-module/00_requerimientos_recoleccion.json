@@ -37,7 +37,7 @@
         "No se deben mezclar G y GR en documentacion, backend, frontend ni DB.",
         "En BORRADOR y RECHAZADO los campos snapshot son NOT NULL pero pueden recalcularse desde las fuentes vivas.",
         "Al VALIDAR, esos campos snapshot quedan congelados como identidad oficial y no se pueden modificar.",
-        "Se registran automaticamente campos de auditoria (creado_por/creado_en/actualizado_por/actualizado_en)."
+        "Se registran automaticamente campos de control (creado_por/creado_en/actualizado_por/actualizado_en)."
       ]
     },
     {
@@ -47,23 +47,27 @@
       "descripcion": "Permitir asociar ubicacion GPS y estructura administrativa por catalogos.",
       "campos": [
         "Pais obligatorio por catalogo, por defecto BOLIVIA",
-        "Comunidad o Localidad obligatoria por catalogo",
+        "Comunidad, localidad o zona obligatoria por catalogo o valor controlado permitido",
         "Latitud y Longitud obligatorias para BORRADOR y solicitar validacion"
       ],
       "validaciones": [
         "Latitud en rango [-90, 90] con 6 decimales.",
         "Longitud en rango [-180, 180] con 6 decimales.",
+        "Comunidad/localidad/zona debe existir en catalogo o resolverse mediante un valor controlado permitido por el sistema.",
+        "No se permite inventar comunidad/localidad/zona como texto libre.",
         "Si se envian IDs administrativos, deben existir en catalogo y ser coherentes."
       ],
       "reglas_adicionales": [
-        "Si un dato administrativo no existe en catalogo, usar SIN ESPECIFICAR en el MVP.",
+        "Pais puede tener valor por defecto BOLIVIA.",
+        "Departamento y provincia pueden mantenerse como parte de la estructura administrativa si existen en catalogo.",
+        "Comunidad, localidad y zona se tratan como el mismo nivel operativo de ubicacion dentro de Recoleccion.",
         "Para solicitar validacion, la informacion obligatoria debe existir y ser consistente con catalogo."
       ]
     },
     {
       "codigo": "RF-REC-03",
       "modulo": "Recoleccion",
-      "nombre": "Edicion y auditoria del registro",
+      "nombre": "Edicion e historial del registro",
       "descripcion": "Permitir editar la ficha en BORRADOR y RECHAZADO, congelarla en PENDIENTE_VALIDACION, y separar historial de ciclo de vida de los movimientos de inventario.",
       "campos": [
         "Usuario que modifico",
@@ -105,7 +109,7 @@
         "Identificador de anclaje en blockchain (tx o referencia)"
       ],
       "validaciones": [
-        "Para solicitar validacion se exige >= 2 fotos + lat/long validas + campos minimos completos.",
+        "Para solicitar validacion se exige >= 2 fotos + lat/long validas + comunidad/localidad/zona valida + campos minimos completos.",
         "Mientras esta en PENDIENTE_VALIDACION no se permite editar la ficha.",
         "Solo VALIDADO habilita consumo.",
         "RECHAZADO no habilita consumo."

@@ -27,9 +27,9 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
   * Convención de normalización de entrada (`kg`/`g`/`unidad` → unidad canónica): ver RN-VIV-17B en `02-vivero-module/01_reglas_de_negocio_vivero.md` (fuente canónica).
 * **Estados del registro:** `BORRADOR`, `PENDIENTE_VALIDACION`, `VALIDADO`, `RECHAZADO`.
 * **Estado operativo:** `ABIERTO` o `CERRADO`, derivado del saldo.
-* **Ubicación estructurada:** latitud/longitud obligatorias desde `BORRADOR` + datos administrativos opcionales (catálogos).
+* **Ubicación estructurada:** latitud/longitud obligatorias desde `BORRADOR` + comunidad/localidad/zona obligatoria por catálogo o valor controlado permitido.
 * **Evidencia:** fotos obligatorias desde `BORRADOR` (mínimo 1 de Lugar + 1 de Total recolectado = 2 total, máximo 5+5 = 10 total), formato JPG/PNG.
-* **Historial:** bitácora inmutable de cambios (quién/cuándo/antes-después).
+* **Historial:** bitácora inmutable de eventos del ciclo de vida del registro, indicando quién, cuándo y qué transición ocurrió.
 * **Snapshot:** copia congelada de datos oficiales de identidad en un momento formal del proceso, para que cambios posteriores en tablas maestras no alteren el historial ya validado.
 
 ---
@@ -157,9 +157,9 @@ Post-validación, el saldo solo cambia mediante **movimientos** (no edición dir
 
 Fuera del MVP:
 
-- `CORRECCION` (controlado) → delta positivo/negativo + **motivo obligatorio** + rol autorizado
+- `CORRECCION` queda reservada para una evolución futura controlada. No es una acción disponible del MVP y no habilita edición de recolecciones validadas.
 
-Los movimientos son **append-only**: no se editan ni se borran. Si más adelante se incorpora `CORRECCION`, deberá registrarse como un movimiento nuevo y auditable, no como edición del pasado.
+Los movimientos son **append-only**: no se editan ni se borran. Si más adelante se incorpora `CORRECCION`, deberá registrarse como un movimiento nuevo y verificable, no como edición del pasado.
 
 ### RN-REC-10C — Separación entre historial del registro y movimientos
 
@@ -259,18 +259,24 @@ Observaciones:
 
 Si faltan al validar: error indicando exactamente el campo faltante.
 
-### RN-REC-18 — Campos administrativos opcionales por catálogo
+### RN-REC-18 — Ubicación administrativa obligatoria por catálogo
 
-País/Departamento/Provincia/Comunidad-Zona:
+La ubicación administrativa se resuelve con estos criterios:
 
-- Son opcionales,
-- Se seleccionan de catálogos (cuando existan),
-- Si un dato no existe en catálogo, el sistema debe impedir “inventar” valores.
-  - Alternativa MVP: permitir por defecto “SIN ESPECIFICAR” en niveles administrativos.
+- `pais` puede tener valor por defecto `BOLIVIA`.
+- `departamento` y `provincia` pueden formar parte de la estructura administrativa si existen en catálogo.
+- `comunidad`, `localidad` y `zona` se tratan como el mismo nivel operativo de ubicación dentro de Recolección.
+- Desde `BORRADOR`, debe existir al menos una `comunidad`, `localidad` o `zona` válida.
+- Para solicitar validación, deben existir obligatoriamente:
+  - latitud válida,
+  - longitud válida,
+  - comunidad/localidad/zona válida por catálogo o valor controlado permitido.
+- Si la comunidad/localidad/zona no existe en catálogo, el sistema no debe inventarla como texto libre.
+- La resolución debe hacerse mediante catálogo o mediante un valor controlado definido por el sistema, no como dato libre ingresado en la ficha.
 
 ### RN-REC-19 — Coherencia mínima de estructura
 
-Si se envían valores administrativos, deben estar “bien formados” (IDs válidos / pertenecen al catálogo correspondiente). Si no: error.
+Los valores administrativos enviados deben estar bien formados: IDs válidos y pertenecientes al catálogo correspondiente cuando aplique. Si no cumplen, el sistema debe rechazar la operación con un error claro.
 
 ## 10. Reglas de edición + historial (RF-REC-03)
 
@@ -310,22 +316,23 @@ No hay correcciones operativas en el MVP una vez validado/subido el registro. El
 
 ### RN-REC-22 — Qué cambios deben registrar historial
 
-En el MVP se busca **trazabilidad razonable**, no auditoría exhaustiva de cada cambio en borrador.
+En el MVP se busca **trazabilidad razonable**, no registro exhaustivo de cada cambio en borrador.
 
-Por eso, el historial mínimo recomendado debe registrar:
+Por eso, `RECOLECCION_HISTORIAL` debe registrar como mínimo:
 
 - creación del borrador,
 - solicitud de validación,
 - aprobación del validador,
 - rechazo del validador,
-- eliminación de borrador,
-- y creación de movimientos (`CONSUMO_A_VIVERO`, `DESECHO`).
+- eliminación de borrador.
 
-La edición del borrador se resuelve con campos de auditoría de la ficha (`updated_at`, `updated_by`) y no con eventos por cada cambio de campo.
+Los movimientos `CONSUMO_A_VIVERO` y `DESECHO` pertenecen a `RECOLECCION_MOVIMIENTO`, porque afectan saldo. No deben registrarse en `RECOLECCION_HISTORIAL` como historial general de ficha.
 
-### RN-REC-22A — Datos automáticos en auditoría
+La edición del borrador se resuelve con campos de control de la ficha (`updated_at`, `updated_by`) y no con eventos por cada cambio de campo.
 
-Los datos de auditoría (usuario, timestamps) se toman automáticamente del sistema.
+### RN-REC-22A — Datos automáticos de control
+
+Los datos de control (usuario, timestamps) se toman automáticamente del sistema.
 
 ### RN-REC-22B — Cómo se construye el timeline mínimo del MVP
 
@@ -345,7 +352,7 @@ Solo se puede iniciar un lote de vivero desde una recolección que esté:
 - `estado_registro = VALIDADO`
 - `estado_operativo = ABIERTO`
 - con evidencia mínima completa (≥ 2 fotos: 1 de Lugar + 1 de Total recolectado)
-- con ubicación válida (lat/long)
+- con ubicación válida: latitud, longitud y comunidad/localidad/zona por catálogo o valor controlado permitido
 - con tipo_material definido
 - con `saldo_actual` suficiente para el consumo
 
@@ -387,15 +394,18 @@ Restricciones:
 
 Fuera del MVP:
 
-- `CORRECCION` podrá usar `delta` positivo o negativo según corresponda.
+- `CORRECCION` podrá definirse en una evolución futura y no forma parte de las acciones operativas del MVP.
 
 ## 12. Roles y estrategia blockchain (MVP)
 
 ### RN-REC-25 — Roles mínimos (MVP)
 
-* **Recolector:** crea borradores, edita borradores y envía a validación.
-* **VALIDADOR/Validador:** revisa registros en `PENDIENTE_VALIDACION` y los aprueba o rechaza.
-* **Auditor:** consulta historial completo.
+* **GENERAL:** crea borradores, edita borradores y solicita validación. En operación puede actuar como recolector.
+* **VALIDADOR:** revisa registros en `PENDIENTE_VALIDACION` y los aprueba o rechaza.
+* **ADMIN:** administra catálogos y puede intervenir según permisos del sistema.
+* **VOLUNTARIO:** no debe tener permisos operativos críticos salvo habilitación explícita.
+
+La consulta de historial debe tratarse como permiso de consulta asignable a roles existentes, no como un rol separado.
 
 (Futuro: se pueden agregar roles de “comunidad” para validación colaborativa, con registro de quién validó qué y cuándo.)
 

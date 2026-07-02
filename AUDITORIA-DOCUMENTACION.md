@@ -56,7 +56,7 @@ Todo el trabajo es en español y el sistema es un **MVP**: prioriza trazabilidad
 r3foresta-docs/
 ├─ README.md, CLAUDE.md
 ├─ 00-general-module/     README + 00_json + 01_reglas + 02_guia + 03_decisiones + agregar.md
-├─ 01-recoleccion-module/ README + 00_json + 01_reglas + 02_procesos + 03_diagrama + 04_operativo
+├─ 01-recoleccion-module/ README + 00_requerimientos + 01_reglas + 02_flujo + 03_checklist
 ├─ 02-vivero-module/      00_json + 01_reglas + 02_guia + 03_addendum + 03_operativo + 04_consumo + image.png
 ├─ 03-plantacion-module/  00_json + 02_procesos + 03_mockups        (sin 01_reglas, sin README)
 ├─ database/           00_schema + 03_planeacion + 04_decisiones + supabase/01_*.sql
@@ -68,7 +68,7 @@ La **intención** de la estructura es buena: un patrón numerado por módulo (`0
 
 | Dimensión | Estado | Evidencia |
 |---|---|---|
-| **Consistencia de nombres** | ⚠️ Débil | Typos en nombres de archivo: `00_Requerimientos_Moduulo _1_Recoleccion.json` (doble "u" + espacio suelto), `01_regas_de_negocio_*` (falta "l" en "reglas", en recolección **y** vivero), `02_doc_guia_viviero.md` ("viviero"). |
+| **Consistencia de nombres** | ⚠️ Débil | Typos en nombres de archivo: M1 ya fue normalizado a `00_requerimientos_recoleccion.json` y `01_reglas_de_negocio_recoleccion.md`; persisten otros typos fuera de M1 como `01_regas_de_negocio_*` y `02_doc_guia_viviero.md` ("viviero"). |
 | **Jerarquía de documentos** | ⚠️ Irregular | Numeración con huecos: plantación va `00,02,03` (falta `01`); database va `00,03,04` (faltan `01,02`). Vivero tiene **dos** archivos con prefijo `03` (`03_Addendum` y `03_operativo`). |
 | **Descubribilidad** | ⚠️ Débil | El `README.md` raíz no funciona como índice real (ver abajo). No hay glosario ni mapa de "qué doc es canónico". |
 | **Puntos de entrada** | ⚠️ Parcial | `CLAUDE.md` es un gran punto de entrada para agentes, pero apunta a `tareas/` que **no existe**. El README raíz está incompleto. |
@@ -99,11 +99,11 @@ Leyenda — **Utilidad**: Alta/Media/Baja. **Completitud**: Completo/Parcial. **
 | 7 | `00-general-module/03_decisiones_pendientes_general.md` | Decisiones de MVP | Media | Completo | Alta | Parcial | **Depurar/renombrar**: el título dice "pendientes" pero el contenido está **cerrado** |
 | 8 | `00-general-module/agregar.md` | Nota suelta sobre evidencia/compresión | Baja | Parcial | Media | Parcial (2026-06-23, el más reciente) | **Fusionar** en reglas de evidencia; nombre genérico sin prefijo |
 | 9 | `01-recoleccion-module/README.md` | Resumen del flujo M1 | Media | Parcial | Media | Sí | Mantener; sincronizar cifra de fotos |
-| 10 | `01-recoleccion-module/00_Requerimientos_Moduulo _1_Recoleccion.json` | RF-REC-01..05 | Alta | Completo | Alta | Sí | Mantener; **renombrar** archivo (typo + espacio) |
-| 11 | `01-recoleccion-module/01_regas_de_negocio_recoleccion.md` | RN-REC-01..27 | Alta | Completo | Alta | Sí | Mantener; renombrar (typo "regas") |
-| 12 | `01-recoleccion-module/02_Procesos_Modulo_1_Recolección.md` | Proceso M1 detallado | Alta | Completo | Alta | Sí | Mantener |
-| 13 | `01-recoleccion-module/03_procesos_diagrama.md` | 4 diagramas Mermaid de M1 | Media | Completo | Alta | Sí | Mantener |
-| 14 | `01-recoleccion-module/04_operativo_modulo_recoleccion.md` | Resumen operativo corto M1 | Media | Completo | Alta | Sí | Mantener (solapa parcial con 02) |
+| 10 | `01-recoleccion-module/00_requerimientos_recoleccion.json` | RF-REC-01..05 | Alta | Completo | Alta | Sí | Mantener |
+| 11 | `01-recoleccion-module/01_reglas_de_negocio_recoleccion.md` | RN-REC-01..27 | Alta | Completo | Alta | Sí | Mantener |
+| 12 | `01-recoleccion-module/02_flujo_operativo_recoleccion.md` | Flujo operativo fusionado de M1 | Alta | Completo | Alta | Sí | Mantener |
+| 13 | `01-recoleccion-module/03_checklist_validacion_recoleccion.md` | Checklist de desarrollo y QA de M1 | Media | Completo | Alta | Sí | Mantener |
+| 14 | Documentos M1 fusionados | Procesos, diagramas y operativo antiguo | Media | Fusionado | Alta | No | Eliminados tras fusionar en `02_flujo_operativo_recoleccion.md` |
 | 15 | `02-vivero-module/00_Requerimientos-Modulo_2_Vivero.json` | RF-VIV-01..14 | Alta | Completo | Media-Alta | Sí | Mantener; corregir "LIFO" en RF-VIV-03/14 |
 | 16 | `02-vivero-module/01_regas_de_negocio_vivero.md` | RN-VIV-01..60 (incl. contrato M3) | Alta | Completo | **Alta** (fuente correcta del criterio de merma) | Sí | **Mantener** — candidato a fuente de verdad de reglas |
 | 17 | `02-vivero-module/02_doc_guia_viviero.md` | Guía operativa M2 + §13 integración | Alta | Completo | Media | Sí | Mantener; renombrar (typo); resolver contradicción interna LIFO/urgencia |
@@ -277,7 +277,7 @@ r3foresta-docs/
 │   └─ 00_database_schema.md      # ÚNICA fuente de esquema + enums + funciones
 │   └─ supabase/                  # scripts; README aclara que no es el set real de migraciones
 ├─ 00-general-module/  README + 00_requerimientos + 01_reglas + 02_guia + 03_organizacion(nuevo)
-├─ 01-recoleccion-module/ README + 00_requerimientos + 01_reglas + 02_procesos + 03_diagrama
+├─ 01-recoleccion-module/ README + 00_requerimientos + 01_reglas + 02_flujo + 03_checklist
 ├─ 03-plantacion-module/ README(nuevo) + 00_requerimientos + 01_reglas(nuevo) + 02_procesos + 03_mockups
 └─ 02-vivero-module/   README(nuevo) + 00_requerimientos + 01_reglas + 02_procesos + 03_consumo(operativo único)
 ```
@@ -294,7 +294,7 @@ r3foresta-docs/
 
 - **Desaparecen como docs vivos** (van a `decisiones/_historico/`): `03_Addendum`, `database/03_planeacion`.
 - **Se fusionan**: `03_operativo_modulo_vivero.md` → dentro del operativo único de consumo; `agregar.md` → dentro de reglas de evidencia de general.
-- **Se renombran** (arreglar typos, cerrar huecos de numeración): `01_regas_*`→`01_reglas_*`, `02_doc_guia_viviero`→`02_procesos_vivero`, `00_Requerimientos_Moduulo _1_...`→sin espacio ni doble "u".
+- **Se renombran** (arreglar typos, cerrar huecos de numeración): M1 ya fue normalizado; quedan pendientes fuera de M1 casos como `01_regas_*`→`01_reglas_*` y `02_doc_guia_viviero`→`02_procesos_vivero`.
 - **Se depuran**: `general/03_decisiones_pendientes` (renombrar a "cerradas" o mover a ADR), `image.png` (si no se usa), mix de especies en mockups.
 
 ### Fuentes de verdad declaradas (tabla de canonicidad)
