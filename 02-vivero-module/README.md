@@ -1,40 +1,54 @@
-# Módulo Vivero — Maduración Pre-Plantación
+# Modulo Vivero - Core operativo
 
-Módulo 2. Documenta la maduración y trazabilidad del material vegetal entre su registro en Recolección y su plantación en campo.
+Modulo 2. Documenta el nucleo operativo de Vivero: maduracion, saldo vivo, eventos y cierre del lote.
 
-## Propósito
+## Alcance del modulo
 
-Modelar el ciclo de vida de un **lote de vivero**, agregado central del módulo, desde que ingresa (con **un único origen** en Recolección) hasta su cierre o despacho hacia Plantación. El modelo es híbrido: estado actual del lote + historial append-only de eventos (no event sourcing puro).
+Este directorio documenta el nucleo operativo de Vivero.
 
-## Documentos de este módulo
+Los contratos entre modulos no viven aqui, sino en:
 
-* `00_Requerimientos-Modulo_2_Vivero.json`: requerimientos funcionales (`RF-VIV-01..14`).
-* `01_reglas_de_negocio_vivero.md`: reglas de negocio (`RN-VIV-01..60`), incluye el contrato de integración con Módulo 3 (`RN-VIV-47..60`).
-* `02_doc_guia_vivero.md`: guía operativa y de proceso.
-* `04_consumo_de_vivero.md`: operativo del consumo de saldo hacia plantación.
-* [`../decisiones/_historico/vivero-addendum-m2-m3.md`](../decisiones/_historico/vivero-addendum-m2-m3.md): referencia histórica del contrato M2↔M3 (ya absorbido en `01_reglas_de_negocio_vivero.md`), archivada — no es fuente operativa.
+- [`../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md`](../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md)
+- [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md)
 
-## Dependencias
+## Documentos de este modulo
 
-* Consume catálogos maestros de [00-general-module](../00-general-module/README.md).
-* Recibe el lote origen de [01-recoleccion-module](../01-recoleccion-module/README.md) mediante contrato atómico en el evento `INICIO`.
-* Se integra con [03-plantacion-module](../03-plantacion-module/README.md): asignaciones, devoluciones y despacho automático (ver estado de esta integración en [ESTADO.md](../ESTADO.md)).
+- [`00_requerimientos_vivero_core.json`](00_requerimientos_vivero_core.json): requerimientos funcionales core (`RF-VIV-01..10`).
+- [`01_reglas_de_negocio_vivero_core.md`](01_reglas_de_negocio_vivero_core.md): reglas internas de Vivero Core.
+- [`02_flujo_operativo_vivero_core.md`](02_flujo_operativo_vivero_core.md): guia operativa del flujo core.
+- [`_legacy/`](_legacy/): respaldo historico de los documentos previos a la separacion.
 
-## Invariantes clave
+## Contratos relacionados
 
-Detalladas en `01_reglas_de_negocio_vivero.md` y en [CLAUDE.md](../CLAUDE.md); no se repiten aquí. Las de mayor impacto:
+- **Entrada desde Recoleccion:** [`../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md`](../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md)
+  Define elegibilidad del origen, snapshots heredados, `CONSUMO_A_VIVERO`, invariantes de cantidad/unidad y transaccion atomica.
 
-* Origen único por lote de vivero.
-* Orden de eventos: `INICIO → EMBOLSADO → (MERMA | DESPACHO | ADAPTABILIDAD)* → CIERRE`.
-* Saldo vivo solo existe desde `EMBOLSADO` y se maneja en `UNIDAD`.
-* Todo `DESPACHO`, manual o automático desde Plantación, requiere evidencia propia asociada al evento de vivero.
+- **Salida hacia Plantacion:** [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md)
+  Define asignaciones, devoluciones, saldos derivados, despacho automatico y mermas sobre asignaciones.
 
-## Lectura operativa rápida
+## Lectura operativa rapida
 
-* `INICIO`: entra material en proceso desde Recolección; todavía no existe saldo vivo.
-* `EMBOLSADO`: nacen `plantas_vivas_iniciales` y `saldo_vivo_actual`, siempre en `UNIDAD`.
-* `ADAPTABILIDAD`: seguimiento operativo opcional; no cambia saldo ni bloquea despacho.
-* `MERMA`: baja `saldo_vivo_actual`; valida contra el saldo vivo del lote. Si afecta reservas, se aplica la política de urgencia de subcampaña.
-* `DESPACHO` manual: baja saldo vivo y valida contra `saldo_vivo_disponible_asignacion`, sin tocar reservas activas.
-* `DESPACHO` automático: lo genera Módulo 3 al plantar o reponer; consume una asignación y también baja `saldo_vivo_actual`.
-* `CIERRE_AUTOMATICO`: ocurre cuando `saldo_vivo_actual = 0`.
+- `INICIO`: crea el lote y registra material en proceso; no crea saldo vivo.
+- `EMBOLSADO`: crea `plantas_vivas_iniciales` y `saldo_vivo_actual`, siempre en `UNIDAD`.
+- `ADAPTABILIDAD`: seguimiento opcional; no cambia saldo y no bloquea despacho.
+- `MERMA`: baja `saldo_vivo_actual`.
+- `DESPACHO MANUAL`: baja `saldo_vivo_actual` desde Vivero.
+- `CIERRE_AUTOMATICO`: ocurre cuando `saldo_vivo_actual = 0`.
+
+## Invariantes clave del core
+
+- Un lote de vivero tiene un unico origen.
+- En MVP no se permite division ni fusion de lotes.
+- Los eventos son append-only.
+- El saldo vivo nace unicamente en `EMBOLSADO`.
+- `ADAPTABILIDAD` no bloquea `MERMA` ni `DESPACHO MANUAL`.
+- Blockchain es metadata opcional y no bloquea la operacion.
+
+## Historico
+
+Los archivos originales se conservaron en [`_legacy/`](_legacy/) para auditoria y trazabilidad documental:
+
+- `_legacy/00_Requerimientos-Modulo_2_Vivero.json`
+- `_legacy/01_reglas_de_negocio_vivero.md`
+- `_legacy/02_doc_guia_vivero.md`
+- `_legacy/04_consumo_de_vivero.md`

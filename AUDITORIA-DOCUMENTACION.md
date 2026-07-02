@@ -109,7 +109,7 @@ Leyenda — **Utilidad**: Alta/Media/Baja. **Completitud**: Completo/Parcial. **
 | 17 | `02-vivero-module/02_doc_guia_viviero.md` | Guía operativa M2 + §13 integración | Alta | Completo | Media | Sí | Mantener; renombrar (typo); resolver contradicción interna LIFO/urgencia |
 | 18 | `02-vivero-module/03_Addendum_Modulo_2_por_Modulo_3.md` | Contrato negociado M2↔M3 | Media | Completo | Media | No (autodeclarado "ABSORBIDO") | **Archivar** a histórico/decisiones |
 | 19 | `02-vivero-module/03_operativo_modulo_vivero.md` | Resumen operativo corto M2 (pre-M3) | Media | Parcial | Media-Baja | Parcial | **Fusionar** con 04_consumo; enum `destino_tipo` viejo |
-| 20 | `02-vivero-module/04_consumo_de_vivero.md` | Operativo del consumo M2 (con M3) | Alta | Completo | Media-Alta | Sí | Mantener como operativo único de consumo |
+| 20 | `02-vivero-module/_legacy/04_consumo_de_vivero.md` | Operativo histórico del consumo M2 (con M3); fuente vigente en `90-contratos-integracion/02_contrato_vivero_a_plantacion.md` | Alta | Completo | Media-Alta | Sí | Mantener como respaldo histórico |
 | 21 | `02-vivero-module/image.png` | Imagen sin referencia hallada | Baja | — | — | No | **Depurar** (sin uso aparente en los `.md`) |
 | 22 | `03-plantacion-module/00_Requerimientos_Modulo_3_Plantacion.json` | RF-PLA-01..17 | Alta | Completo | **Media** (contiene ítems desactualizados) | Parcial | **Depurar**: RF-PLA-17 y RF-PLA-04 contradicen decisiones cerradas |
 | 23 | `03-plantacion-module/02_Procesos_Modulo_3_Plantacion.md` | Proceso M3 detallado | Alta | Completo | Alta | Sí | **Mantener** — mejor doc de M3 |
@@ -130,7 +130,7 @@ La duplicación es el problema **número uno** del repo. El principio de `CLAUDE
 ### 4.1. Política de merma sobre asignaciones — "LIFO" vs. "urgencia" (drift real)
 
 - **Fuente correcta (actual):** `RN-VIV-50` en `02-vivero-module/01_regas_de_negocio_vivero.md` — el excedente se distribuye ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST` (la subcampaña que empieza **más tarde** absorbe primero; la más urgente queda protegida). Coincide con `CLAUDE.md` (invariante), `plantacion §9.4`, `04_consumo §4` y `addendum §7`.
-- **Término obsoleto "LIFO" ("la más nueva primero")** sigue vivo en **6 archivos**: `database/00_database_schema.md:264` (comentario del esquema canónico), `03_Addendum:5,687`, `04_consumo_de_vivero.md:43,286,324`, `00_...Vivero.json:36,161` (título de RF-VIV-14 = "Politica LIFO"), `02_doc_guia_viviero.md:619`, y `CLAUDE.md:64`.
+- **Término obsoleto "LIFO" ("la más nueva primero")** sigue vivo en **6 archivos**: `database/00_database_schema.md:264` (comentario del esquema canónico), `03_Addendum:5,687`, `_legacy/04_consumo_de_vivero.md:43,286,324`, `00_...Vivero.json:36,161` (título de RF-VIV-14 = "Politica LIFO"), `02_doc_guia_viviero.md:619`, y `CLAUDE.md:64`.
 - **Contradicción interna:** en `04_consumo` y en `02_guia`, el **cuerpo** describe el orden por urgencia (`fecha_estimada_inicio DESC`) mientras el **rótulo/resumen** dice "LIFO". El mismo documento se contradice.
 - **Fuente de verdad recomendada:** `RN-VIV-50`. Todo lo demás debe referenciarla y eliminar el término "LIFO" (o dejarlo solo como nota histórica de que la política **cambió** de LIFO a urgencia).
 

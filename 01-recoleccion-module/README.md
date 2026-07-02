@@ -20,6 +20,6 @@ Este directorio documenta el módulo que registra el origen del material biológ
 
 - Reglas de negocio del módulo: `01_reglas_de_negocio_recoleccion.md`
 - Esquema, tablas y enums: `../database/00_database_schema.md`
-- Contrato Recolección -> Vivero: `RN-REC-24A` y reglas equivalentes de Vivero.
+- Contrato Recolección -> Vivero: [`../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md`](../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md)
 
 El README solo funciona como índice. Las reglas de dominio deben mantenerse en el documento canónico para evitar duplicación.

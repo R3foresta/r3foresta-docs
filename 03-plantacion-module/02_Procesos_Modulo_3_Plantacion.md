@@ -359,7 +359,7 @@ Al guardar, el sistema:
    - `comunidad_destino_id` heredada de `subcampania.zona_id`.
 8. Congela snapshots oficiales en el registro.
 9. Crea el `REGISTRO_PLANTACION` como append-only.
-10. Vincula las evidencias fotográficas al `REGISTRO_PLANTACION` (el `DESPACHO` automático las hereda, ver RN-VIV-54).
+10. Vincula las evidencias fotográficas al `REGISTRO_PLANTACION` y exige evidencia propia para cada `DESPACHO` automático de Vivero (ver RN-VIV-54 en el contrato Vivero → Plantación).
 11. Si la suma de plantaciones iniciales alcanza la meta, dispara **cierre automático** a `COMPLETADA`.
 
 ### 3.7. Cierre automático a COMPLETADA
@@ -633,7 +633,7 @@ Por subcampaña:
 
 ## 9. Integración con Módulo 2 (Vivero)
 
-> Fuente canónica de las reglas y fórmulas de esta sección: RN-VIV-47 a RN-VIV-60 en `02-vivero-module/01_reglas_de_negocio_vivero.md` y el esquema en `database/00_database_schema.md`. Esta sección resume el contrato desde la perspectiva de M3.
+> Fuente canónica de las reglas y fórmulas de esta sección: [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) (`RN-VIV-47` a `RN-VIV-60`) y el esquema en `database/00_database_schema.md`. Esta sección resume el contrato desde la perspectiva de M3.
 
 ### 9.1. Contrato Asignación ↔ Vivero (sin evento en M2)
 
@@ -656,7 +656,7 @@ Cada `PLANTACION_INICIAL` y `REPOSICION` genera **atómicamente** uno o más eve
 Invariantes:
 
 - `SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.cantidad_total_plantada`.
-- La evidencia del despacho automático **se hereda** del REGISTRO_PLANTACION; el operario de vivero no sube fotos adicionales.
+- El despacho automático requiere evidencia propia asociada al `EVENTO_LOTE_VIVERO`; la evidencia del `REGISTRO_PLANTACION` puede mostrarse como contexto, pero no la reemplaza.
 
 ### 9.3. Contrato Devolución (sin evento en M2)
 
@@ -670,7 +670,7 @@ Cuando ocurre una merma en un lote con asignaciones activas, la política del MV
 2. Si la merma excede el saldo no asignado, afecta asignaciones ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST` — la subcampaña con inicio más lejano absorbe primero; la más próxima queda protegida (es la más urgente).
 3. Si una asignación queda con menos saldo que su comprometido, el sistema **notifica al coordinador** de la(s) subcampaña(s) afectada(s).
 
-Ver RN-VIV-50 en `02-vivero-module/01_reglas_de_negocio_vivero.md` y `02-vivero-module/04_consumo_de_vivero.md` §4 para la fórmula y el ejemplo operativo completos.
+Ver `RN-VIV-50` en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) para la formula completa.
 
 ---
 

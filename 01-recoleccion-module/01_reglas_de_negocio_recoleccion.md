@@ -24,7 +24,7 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
   * Persistencia oficial del sistema: `ENUM(unidad_medida) = [UNIDAD, G]`.
   * Para `ESQUEJE`: solo `UNIDAD`, entero estricto, sin decimales.
   * Para `SEMILLA`: puede capturarse por peso o por conteo, pero solo se persiste en `G` o `UNIDAD`.
-  * Convención de normalización de entrada (`kg`/`g`/`unidad` → unidad canónica): ver RN-VIV-17B en `02-vivero-module/01_reglas_de_negocio_vivero.md` (fuente canónica).
+  * Convención de normalización de entrada (`kg`/`g`/`unidad` → unidad canónica): ver RN-VIV-17B en `02-vivero-module/01_reglas_de_negocio_vivero_core.md` (fuente canónica).
 * **Estados del registro:** `BORRADOR`, `PENDIENTE_VALIDACION`, `VALIDADO`, `RECHAZADO`.
 * **Estado operativo:** `ABIERTO` o `CERRADO`, derivado del saldo.
 * **Ubicación estructurada:** latitud/longitud obligatorias desde `BORRADOR` + comunidad/localidad/zona obligatoria por catálogo o valor controlado permitido.
@@ -374,6 +374,8 @@ Cuando se crea un lote de vivero desde una recolección, el sistema debe:
 > No existe “cambio a USADO” como estado absoluto: el consumo se modela como movimiento.
 
 ### RN-REC-24A — Contrato estricto con Vivero en el evento `INICIO`
+
+Fuente transversal: [`../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md`](../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md).
 
 Cuando se crea un `LOTE_VIVERO` desde una `RECOLECCION`, el movimiento `CONSUMO_A_VIVERO`, el lote y el evento `INICIO` deben quedar estrictamente alineados.
 

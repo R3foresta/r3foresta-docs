@@ -1,0 +1,122 @@
+[
+  {
+    "ID": "RF-VIV-01",
+    "Seccion": "Vivero Core",
+    "Nombre": "Inicio: Crear lote de vivero desde recoleccion validada",
+    "Objetivo": "Iniciar un lote de vivero desde un unico lote origen validado, manteniendo trazabilidad fuerte, snapshot de planta y alineacion con el contrato Recoleccion -> Vivero, sin crear saldo vivo todavia.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- recoleccion_id\n- vivero_id seleccionado para el lote, no heredado desde RECOLECCION\n- responsable_id\n- codigo_trazabilidad con formato VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}\n- fecha_inicio en LOTE_VIVERO\n- fecha_evento del EVENTO_LOTE_VIVERO tipo INICIO\n- cantidad_inicial_en_proceso\n- unidad_medida_inicial\n- cantidad_afectada del evento INICIO\n- unidad_medida_evento del evento INICIO\n- snapshots heredados definidos por el contrato Recoleccion -> Vivero\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\nOpcional:\n- observaciones",
+    "Reglas y validaciones": "- No se permite mezclar multiples lotes origen en un lote de vivero.\n- El lote origen debe cumplir el contrato Recoleccion -> Vivero antes de iniciar el lote.\n- La identidad de planta debe heredarse y congelarse como snapshot.\n- El vivero operativo del lote se selecciona en Vivero y no se hereda automaticamente desde RECOLECCION.vivero_id.\n- La fuente oficial del snapshot es RECOLECCION validada, no una lectura viva de PLANTA.\n- cantidad_inicial_en_proceso > 0.\n- unidad_medida_inicial debe alinearse con la unidad canonica del origen segun el contrato Recoleccion -> Vivero.\n- fecha_inicio y fecha_evento: no futuras; permitidas hasta 10 dias en el pasado.\n- fecha_inicio debe coincidir con fecha_evento del evento INICIO salvo excepcion documentada.\n- El evento INICIO no crea saldo vivo: saldo_vivo_antes y saldo_vivo_despues quedan en null.\n- Si tipo_material_snapshot = OTRO, queda fuera del flujo estandar del MVP.",
+    "Comportamiento al Guardar": "- Crea LOTE_VIVERO en ACTIVO.\n- Crea EVENTO_LOTE_VIVERO de tipo INICIO como registro append-only.\n- Ejecuta la operacion dentro de la transaccion atomica definida por el contrato Recoleccion -> Vivero.\n- Guarda los snapshots heredados desde RECOLECCION y la evidencia asociada.\n- Muestra confirmacion y resumen del lote."
+  },
+  {
+    "ID": "RF-VIV-02",
+    "Seccion": "Vivero Core",
+    "Nombre": "Embolsado: Registrar nacimiento del saldo vivo",
+    "Objetivo": "Marcar el momento en que nacen las plantas vivas observadas del proceso; siempre se registra en UNIDAD y solo una vez por lote.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- plantas_vivas_iniciales\n- cantidad_afectada = plantas_vivas_iniciales\n- unidad_medida_evento = UNIDAD\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\nOpcional:\n- observaciones",
+    "Reglas y validaciones": "- plantas_vivas_iniciales > 0.\n- fecha_evento >= fecha_inicio.\n- No se permite EMBOLSADO si el lote esta FINALIZADO.\n- No se permite EMBOLSADO sin INICIO previo.\n- El evento EMBOLSADO inaugura el saldo vivo del lote.\n- El evento EMBOLSADO solo puede registrarse una vez por lote.\n- saldo_vivo_antes = null.\n- saldo_vivo_despues = plantas_vivas_iniciales.\n- El saldo vivo debe ser calculado por el sistema.\n- El sistema no convierte automaticamente gramos en plantas; EMBOLSADO registra un dato observado del proceso.",
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo EMBOLSADO.\n- Materializa LOTE_VIVERO.plantas_vivas_iniciales y LOTE_VIVERO.saldo_vivo_actual.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Confirma el registro y muestra el timeline actualizado."
+  },
+  {
+    "ID": "RF-VIV-03",
+    "Seccion": "Vivero Core",
+    "Nombre": "Merma: Registrar perdida explicita por causa y cantidad",
+    "Objetivo": "Registrar perdidas reales del saldo vivo de forma auditable.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- cantidad_afectada\n- unidad_medida_evento = UNIDAD\n- causa_merma\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\nOpcional:\n- observaciones",
+    "Reglas y validaciones": "- cantidad_afectada > 0.\n- cantidad_afectada <= saldo_vivo_actual del lote.\n- La merma siempre usa UNIDAD.\n- saldo_vivo_despues no puede ser negativo.\n- fecha_evento: no futura; permitida hasta 10 dias en el pasado.\n- No se permite MERMA sin EMBOLSADO previo.\n- causa_merma debe pertenecer al enum causa_merma_vivero.\n- Si el saldo llega a 0, activa cierre automatico (RF-VIV-08).\n- El saldo vivo debe ser calculado por el sistema.\n- La politica de mermas sobre asignaciones activas pertenece al contrato Vivero -> Plantacion, no al core.",
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo MERMA.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Recalcula LOTE_VIVERO.saldo_vivo_actual.\n- Si corresponde, activa la logica de cierre automatico."
+  },
+  {
+    "ID": "RF-VIV-04",
+    "Seccion": "Vivero Core",
+    "Nombre": "Adaptabilidad: Registrar fortalecimiento en ambientes controlados",
+    "Objetivo": "Registrar el periodo en que la planta se fortalece en ambientes controlados antes de plantarse, como seguimiento operativo no bloqueante.",
+    "Severidad": "ADVERTENCIA",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Baja",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- subetapa_destino (SOMBRA, MEDIA_SOMBRA, SOL_DIRECTO)\nOpcional:\n- subetapa_origen (si no se infiere)\n- evidencia_trazabilidad asociada por tipo_entidad_id + entidad_id\n- observaciones tecnicas",
+    "Reglas y validaciones": "- fecha_evento >= fecha del evento EMBOLSADO del lote.\n- No se permite registrar ADAPTABILIDAD si el lote esta FINALIZADO.\n- No se permite ADAPTABILIDAD sin EMBOLSADO previo.\n- Puede registrarse multiples veces durante el ciclo del lote.\n- Permite secuencia flexible entre subetapas.\n- No bloquea MERMA ni DESPACHO MANUAL.\n- Aplica a todo el lote, no a una planta individual ni a una fraccion del lote.\n- No cambia el saldo vivo.\n- Si el modelo guarda saldo en todos los eventos, saldo_vivo_antes = saldo_vivo_despues = saldo_vivo_actual.\n- Si el modelo persiste cantidad_afectada en este evento, debe expresarse en UNIDAD.",
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo ADAPTABILIDAD.\n- Actualiza LOTE_VIVERO.subetapa_actual si el modelo la conserva.\n- Confirma el registro en el timeline."
+  },
+  {
+    "ID": "RF-VIV-05",
+    "Seccion": "Vivero Core",
+    "Nombre": "Despacho manual: Registrar salida real desde Vivero",
+    "Objetivo": "Registrar la salida parcial o total del lote hacia un destino manual de Vivero, manteniendo saldo vivo, destino estructurado y evidencia propia obligatoria.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- lote_vivero_id\n- fecha_evento\n- responsable_id\n- cantidad_afectada\n- unidad_medida_evento = UNIDAD\n- destino_tipo (enum destino_tipo_vivero, excluyendo PLANTACION_CAMPANIA)\n- destino_referencia (texto libre)\n- origen_despacho = MANUAL si el campo existe\n- subcampania_id, campania_id y registro_plantacion_id en NULL si los campos existen\n- al menos una evidencia_trazabilidad valida asociada por tipo_entidad_id + entidad_id\nCondicional:\n- comunidad_destino_id cuando el destino lo requiera\nOpcional:\n- observaciones\n- metadata_blockchain si existe anclaje activo",
+    "Reglas y validaciones": "- cantidad_afectada > 0.\n- DESPACHO MANUAL requiere al menos una evidencia propia valida asociada al EVENTO_LOTE_VIVERO.\n- destino_tipo no puede ser PLANTACION_CAMPANIA.\n- No se permite DESPACHO MANUAL sin EMBOLSADO previo.\n- ADAPTABILIDAD no es requisito para despachar.\n- Permite multiples despachos parciales.\n- comunidad_destino_id referencia DIVISION_ADMINISTRATIVA(id) cuando aplique.\n- En core puro valida contra saldo_vivo_actual.\n- Cuando el contrato Vivero -> Plantacion este activo, el despacho manual debe validar contra saldo_vivo_disponible_asignacion para no tocar reservas; esa regla vive en el contrato, no en este core.\n- Si saldo_vivo_despues = 0, activa cierre automatico (RF-VIV-08).\n- El saldo vivo debe ser calculado por el sistema.",
+    "Comportamiento al Guardar": "- Crea EVENTO_LOTE_VIVERO de tipo DESPACHO con origen MANUAL si existe ese campo.\n- Vincula la evidencia propia del despacho antes de confirmar la operacion.\n- Registra saldo_vivo_antes y saldo_vivo_despues calculados por el sistema.\n- Actualiza LOTE_VIVERO.saldo_vivo_actual.\n- Si corresponde, finaliza el lote y calcula motivo_cierre."
+  },
+  {
+    "ID": "RF-VIV-06",
+    "Seccion": "Vivero Core",
+    "Nombre": "Evidencia: Vincular soporte por evento",
+    "Objetivo": "Gestionar evidencias de trazabilidad por evento sin romper el historial y con una politica estricta en los eventos que la exigen.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Obligatorio:\n- tipo_entidad_id asociado a evento de vivero\n- entidad_id = EVENTO_LOTE_VIVERO.id\n- referencia a evidencia_trazabilidad valida",
+    "Reglas y validaciones": "- La evidencia se asocia por evento usando EVIDENCIAS_TRAZABILIDAD.\n- En el MVP, INICIO, EMBOLSADO, MERMA y DESPACHO MANUAL requieren minimo una foto obligatoria.\n- ADAPTABILIDAD puede registrar evidencia, pero no es obligatoria; sus subetapas pueden registrarse sin foto.\n- Si un evento requiere evidencia y no tiene soporte valido, no debe registrarse.\n- No se aceptan excepciones de evidencia para eventos obligatorios en el MVP.\n- No se acepta evidencia tardia en el MVP para eventos que exigen evidencia.",
+    "Comportamiento al Guardar": "- Vincula EVIDENCIAS_TRAZABILIDAD al EVENTO_LOTE_VIVERO mediante tipo_entidad_id + entidad_id.\n- Valida obligatoriedad antes de confirmar el registro."
+  },
+  {
+    "ID": "RF-VIV-07",
+    "Seccion": "Vivero Core",
+    "Nombre": "Historial y cadena de custodia: Consultar timeline auditable del lote",
+    "Objetivo": "Visualizar la historia completa del lote con eventos, evidencias, saldos y vinculos con su origen.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "La vista debe incluir:\n- lote_vivero_id\n- recoleccion_id\n- planta/especie (snapshots)\n- nombre_comunidad_origen_snapshot\n- nombre_responsable_snapshot\n- timeline por evento\n- estado_lote\n- responsable_id\n- fecha_evento y created_at\n- saldo antes/despues cuando aplique\n- evidencias_trazabilidad asociadas\n- motivo_cierre (si aplica)\nFiltros minimos:\n- por tipo de evento\n- por responsable\n- por rango de fechas",
+    "Reglas y validaciones": "- No se pueden ocultar eventos.\n- Debe visualizar la cadena completa desde la recoleccion origen hasta el cierre del lote.\n- Debe reflejar que los eventos son append-only.\n- Debe hacer visible la diferencia entre material en proceso y plantas vivas.\n- Debe mostrar la identidad congelada del lote sin recalcularla desde PLANTA.\n- Control de acceso por rol.",
+    "Comportamiento al Guardar": "- No aplica (solo consulta).\n- Permite preparar exportacion o reporte en futuras iteraciones."
+  },
+  {
+    "ID": "RF-VIV-08",
+    "Seccion": "Vivero Core",
+    "Nombre": "Cierre automatico: Finalizar lote y calcular motivo_cierre",
+    "Objetivo": "Finalizar automaticamente el lote cuando ya no existan plantas vivas disponibles y clasificar el tipo de cierre.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Automatico:\n- se evalua tras eventos que afectan saldo vivo\n- LOTE_VIVERO.estado_lote\n- LOTE_VIVERO.motivo_cierre\n- EVENTO_LOTE_VIVERO.tipo_evento = CIERRE_AUTOMATICO\n- EVENTO_LOTE_VIVERO.motivo_cierre_calculado\n- EVENTO_LOTE_VIVERO.ref_evento_trigger_id",
+    "Reglas y validaciones": "- Si saldo_vivo_actual = 0, estado_lote = FINALIZADO.\n- motivo_cierre = DESPACHO_TOTAL si el cierre ocurrio solo por despachos.\n- motivo_cierre = PERDIDA_TOTAL si ocurrio sin despachos y por perdidas.\n- motivo_cierre = MIXTO si combinaron despachos y perdidas.\n- Una vez FINALIZADO, bloquea nuevos eventos operativos normales.",
+    "Comportamiento al Guardar": "- Al guardar un evento que deja saldo en 0, el sistema finaliza LOTE_VIVERO.\n- Calcula y persiste motivo_cierre en el lote.\n- Genera EVENTO_LOTE_VIVERO de tipo CIERRE_AUTOMATICO con motivo_cierre_calculado y ref_evento_trigger_id.\n- Muestra mensaje de cierre y actualiza el timeline."
+  },
+  {
+    "ID": "RF-VIV-09",
+    "Seccion": "Vivero Core",
+    "Nombre": "Listado operativo: Consultar lotes activos y finalizados",
+    "Objetivo": "Permitir la gestion diaria del modulo mediante una vista operativa de busqueda y filtros.",
+    "Severidad": "BLOQUEANTE",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Media",
+    "Campos clave y obligatoriedad": "La vista core debe permitir mostrar y filtrar por:\n- estado_lote\n- vivero\n- planta/especie\n- recoleccion_id\n- lote_vivero_id\n- motivo_cierre\n- saldo_vivo_actual\n- fechas relevantes\n- responsable",
+    "Reglas y validaciones": "- Debe mostrar lotes ACTIVO y FINALIZADO.\n- Debe permitir diferenciar cierres por despacho vs perdida para lectura operativa y reportes.\n- Debe servir como pantalla de entrada principal del modulo.\n- Los saldos derivados por asignaciones pertenecen al contrato Vivero -> Plantacion.",
+    "Comportamiento al Guardar": "- No aplica (solo consulta)."
+  },
+  {
+    "ID": "RF-VIV-10",
+    "Seccion": "Vivero Core",
+    "Nombre": "Blockchain minima: Anclar despacho sin bloquear la operacion",
+    "Objetivo": "Permitir anclaje blockchain minimo y opcional sobre despachos, sin bloquear el nucleo operativo del modulo.",
+    "Severidad": "ADVERTENCIA",
+    "Aplica en MVP": "Si",
+    "Aporta a carbono": "Alta",
+    "Campos clave y obligatoriedad": "Opcional si se implementa en MVP:\n- evento_lote_vivero_id\n- tipo_evento = DESPACHO\n- metadata_blockchain\nContenido recomendado dentro de metadata_blockchain:\n- blockchain_url\n- token_id\n- transaction_hash",
+    "Reglas y validaciones": "- El historial operativo del MVP vive primero en base de datos.\n- Blockchain no debe bloquear el registro, consulta ni cierre confiable del lote.\n- Si se implementa en el MVP, solo DESPACHO es candidato a anclaje.\n- El anclaje se guarda dentro de EVENTO_LOTE_VIVERO.metadata_blockchain.\n- El anclaje es complementario y no indispensable para el funcionamiento base del modulo.\n- No hay correcciones operativas en el MVP una vez registrado el evento.",
+    "Comportamiento al Guardar": "- Registra metadata_blockchain cuando exista integracion activa.\n- Si la integracion falla, el evento operativo permanece valido en base de datos."
+  }
+]

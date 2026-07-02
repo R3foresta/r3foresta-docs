@@ -14,6 +14,8 @@ La cadena del dominio: `general (maestros) → recolección (origen) → vivero 
   Módulo 2: maduración pre-plantación, eventos append-only, saldo vivo.
 * [03-plantacion-module/README.md](03-plantacion-module/README.md)
   Módulo 3: campañas/subcampañas, plantación en campo, mantenimiento, vista pública.
+* [90-contratos-integracion/README.md](90-contratos-integracion/README.md)
+  Contratos entre módulos: Recolección → Vivero y Vivero → Plantación.
 * [database/README.md](database/README.md)
   Esquema ER canónico y scripts.
 * [decisiones/README.md](decisiones/README.md)

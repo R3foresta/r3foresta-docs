@@ -217,7 +217,7 @@
         "DESPACHO.comunidad_destino_id se hereda de la subcampaña.",
         "SUM(DESPACHO.cantidad_afectada) por registro = REGISTRO_PLANTACION.cantidad_total_plantada.",
         "Unidad siempre UNIDAD.",
-        "La evidencia del DESPACHO automatico se hereda del REGISTRO_PLANTACION; el operario de vivero no sube fotos adicionales.",
+        "Cada DESPACHO automatico requiere evidencia propia asociada al EVENTO_LOTE_VIVERO; la evidencia del REGISTRO_PLANTACION puede mostrarse como contexto, pero no la reemplaza.",
         "El registro es append-only: no se permite edicion posterior en el MVP.",
         "Cada registro debe registrarse como evento PLANTACION_INICIAL en EVENTO_PLANTACION.",
         "Las reposiciones NO cuentan para la meta; solo PLANTACION_INICIAL avanza la barra de progreso.",
