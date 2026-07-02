@@ -20,10 +20,11 @@
         "Tipo obligatorio; debe pertenecer al enum tipo_subcampania (compartido con SUBCAMPANIA).",
         "Las organizaciones asociadas deben existir en el catalogo ORGANIZACION.",
         "Las fechas estimadas, si se cargan, deben ser coherentes (fin >= inicio).",
-        "La campaña no tiene poligono ni meta propios; esos viven en subcampaña."
+        "La campaña no tiene poligono ni meta propios persistidos; esos viven en subcampaña. Expone una meta agregada derivada (meta_planificada_campania) solo para planeacion, calculada al leer."
       ],
       "reglas_adicionales": [
         "El estado de la campaña padre se calcula en tiempo real: BORRADOR si todas las subcampañas son BORRADOR; ACTIVA si al menos una subcampaña esta ACTIVA; EN_MANTENIMIENTO si todas estan cerradas y al menos una en MANTENIMIENTO_ACTIVO; MONITOREO_HISTORICO si todas estan en MONITOREO_HISTORICO.",
+        "La meta agregada de campaña se deriva como SUM(meta_total_arboles de subcampañas no CANCELADA) e incluye BORRADOR (planeacion admin); no se persiste como columna (RN-PLA-36). La vista publica agrega solo ACTIVA, COMPLETADA y FINALIZADA_PARCIAL.",
         "El tipo de la campaña es inmutable una vez creada si ya tiene subcampañas; toda subcampaña hija hereda obligatoriamente el tipo de la campaña padre.",
         "Una campaña puede tener 1 o mas organizaciones asociadas (relacion many-to-many).",
         "Si se quiere ampliar el proyecto, se crea una nueva subcampaña dentro de la misma campaña; no existe el concepto de fases ni campañas hijas.",
@@ -41,8 +42,8 @@
         "campania_id obligatorio (campaña padre)",
         "Nombre obligatorio",
         "Tipo: REFORESTACION / ARBORIZACION / FORESTACION obligatorio; debe coincidir con el tipo de la campaña padre (se hereda y valida con CHECK)",
-        "Estado operativo: BORRADOR (default) / ACTIVA / COMPLETADA / FINALIZADA_PARCIAL",
-        "Estados reservados en enum sin flujo en MVP: PAUSADA / CANCELADA",
+        "Estado operativo: BORRADOR (default) / ACTIVA / COMPLETADA / FINALIZADA_PARCIAL / CANCELADA",
+        "Estado reservado en enum sin flujo en MVP: PAUSADA. CANCELADA se usa de forma limitada (cancelacion sin plantaciones, ver RF-PLA-02 reglas y RN-PLA-37)",
         "Fase de mantenimiento (derivada por fecha): NO_APLICA / MANTENIMIENTO_ACTIVO / MONITOREO_HISTORICO",
         "Coordinador obligatorio al activar (membresia en SUBCAMPANIA_EQUIPO con rol_en_subcampania = COORDINADOR; el usuario debe tener rol global GENERAL, ADMIN o VALIDADOR)",
         "Equipo de operarios (membresias en SUBCAMPANIA_EQUIPO con rol_en_subcampania = OPERARIO, opcional al crear)",
@@ -68,12 +69,13 @@
         "Tipo debe pertenecer al enum tipo_subcampania y ser identico al CAMPANIA.tipo de la campaña padre (CHECK constraint en BD)."
       ],
       "reglas_adicionales": [
-        "En BORRADOR se permite edicion libre y soft delete.",
+        "En BORRADOR se permite edicion libre y cancelacion (pasa a CANCELADA; el registro se conserva, inactivacion no borrado fisico).",
         "En BORRADOR el plan de especies se puede editar libremente.",
-        "En BORRADOR la subcampaña no acepta asignaciones ni plantaciones.",
+        "En BORRADOR la subcampaña no acepta asignaciones ni plantaciones; las asignaciones se hacen despues de activar.",
         "Una campaña tiene al menos 1 subcampaña; sin limite superior.",
         "La ventana de mantenimiento (3 anos) es configurable a nivel sistema.",
-        "Estados PAUSADA y CANCELADA existen en el enum pero no se usan en MVP.",
+        "Cancelacion (RN-PLA-37): solo ADMIN, y solo si total_plantado_inicial = 0 (BORRADOR o ACTIVA sin plantar); si ya hay plantaciones, el cierre correcto es FINALIZADA_PARCIAL. Al cancelar se registra SUBCAMPANIA_CANCELADA, la meta sale del agregado de campaña y se liberan las asignaciones activas (devolucion logica, sin evento en M2).",
+        "PAUSADA existe en el enum pero no se usa en MVP.",
         "Se registran automaticamente campos de auditoria."
       ]
     },

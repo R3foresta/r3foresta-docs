@@ -17,7 +17,7 @@ Requerimientos movidos desde Vivero Core:
 
 Reglas movidas desde Vivero Core y conservadas con ID original:
 
-- `RN-VIV-47` a `RN-VIV-60`.
+- `RN-VIV-47` a `RN-VIV-61`.
 
 ## 2. Modulos involucrados
 
@@ -96,6 +96,8 @@ Validaciones:
 - `cantidad_asignada > 0`.
 - `cantidad_asignada <= saldo_vivo_disponible_asignacion`.
 - El lote debe estar `ACTIVO`.
+- **El lote debe tener un evento `EMBOLSADO` registrado.** Sin esto solo existe material en proceso, no plantas vivas para reservar.
+- `saldo_vivo_actual > 0` y `saldo_vivo_actual` no es `NULL`. Solo se asigna material vivo.
 - `PLANTACION_INICIAL` solo se acepta si la subcampania esta `ACTIVA`.
 - `REPOSICION` se acepta en subcampania `ACTIVA`, `COMPLETADA` o `FINALIZADA_PARCIAL`.
 - La asignacion tiene proposito tipado y no puede consumirse para otro proposito.
@@ -282,6 +284,17 @@ El enum `estado_asignacion_vivero` contiene unicamente `ACTIVA | AGOTADA | DEVUE
 ### RN-VIV-60 - Reposicion no exige misma especie que el grupo origen
 
 Una reposicion puede usar stock de cualquier especie disponible en una asignacion con proposito `REPOSICION`. No se exige que coincida con la especie del grupo plantado origen. El sistema registra la especie real en el evento `REPOSICION` y el grupo plantado puede quedar con composicion mixta. Esta politica es revisable post-MVP si la certificacion de carbono exige homogeneidad por grupo.
+
+### RN-VIV-61 - Asignacion requiere lote con EMBOLSADO y saldo vivo positivo
+
+Una asignacion solo puede crearse si el lote cumple todas estas condiciones:
+
+- Lote esta `ACTIVO`,
+- existe evento `EMBOLSADO` registrado en el lote (sin esto, el material aun esta en proceso de maduración, no hay plantas vivas para reservar),
+- `saldo_vivo_actual > 0`,
+- `saldo_vivo_actual` no es `NULL`.
+
+Esta regla previene que el sistema reserve material no viable (semillas, material pre-embolsado, etc.) como si fueran plantines listos para plantar. La asignacion es reserva de material vivo que ya paso por embolsado y tiene trazabilidad de saldo.
 
 ## 8. Politica de mermas sobre asignaciones
 

@@ -12,7 +12,7 @@ Fuente de estas reglas: `02_Procesos_Modulo_3_Plantacion.md` y `00_Requerimiento
 
 ## 2. Definiciones base
 
-* **Campaña:** contenedor estrategico. No tiene poligono ni meta operativa propia; su estado no se persiste.
+* **Campaña:** contenedor estrategico. No tiene poligono ni meta operativa propia persistida; su estado no se persiste. Expone un total de meta **derivado** para planeacion (`RN-PLA-36`).
 * **Subcampaña:** unidad operativa real: coordinador, equipo, poligono, meta total y plan por especie.
 * **Reserva logica:** asignacion de stock de vivero a subcampaña que no mueve saldo vivo real (contrato M2↔M3, ver `RN-VIV-47`).
 * **Despacho automatico:** evento en `EVENTO_LOTE_VIVERO` generado por M3 al plantar o reponer (ver `RN-VIV-52`).
@@ -41,13 +41,23 @@ Si se quiere ampliar el proyecto, se crea una nueva subcampaña dentro de la mis
 
 Una campaña puede tener 1 o mas organizaciones asociadas (relacion N:M via `CAMPANIA_ORGANIZACION`). `ORGANIZACION` es tabla maestra real del Modulo General (`RF-GEN-07`), no texto libre ni catalogo embebido en Plantacion. Ver `RN-GEN-27..29` para el comportamiento de la entidad maestra.
 
+### RN-PLA-36 - Meta agregada de campaña (derivada, no persistida) — añadida 2026-07-01
+
+La campaña sigue **sin meta propia persistida** (`RN-PLA-01`); no se agrega ninguna columna de meta a `CAMPANIA`. Para planificacion se expone un total **derivado**:
+
+```text
+meta_planificada_campania = SUM(SUBCAMPANIA.meta_total_arboles WHERE estado <> CANCELADA)
+```
+
+Incluye las subcampañas en `BORRADOR` — el sentido es que el admin planifique cuantos arboles debe conseguir y asignar antes de activar — y excluye las `CANCELADA` (cuya meta deja de contar, `RN-PLA-37`). Es una lectura de planificacion de uso interno (admin/coordinador). La **vista publica** sigue agregando unicamente subcampañas `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIAL` (`RN-PLA-34`), nunca borradores. Como el estado derivado de campaña (`RN-PLA-01/02`), se calcula al leer y **nunca se materializa como columna**.
+
 ---
 
 ## 4. Reglas de subcampaña: estados y transiciones
 
 ### RN-PLA-06 - Estados operativos y transiciones permitidas en MVP
 
-Estados: `BORRADOR`, `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`. Reservados sin flujo en MVP: `PAUSADA`, `CANCELADA`. Transiciones permitidas: `BORRADOR → ACTIVA` (al activar), `ACTIVA → COMPLETADA` (automatico al alcanzar meta), `ACTIVA → FINALIZADA_PARCIAL` (manual por ADMIN, con motivo obligatorio).
+Estados: `BORRADOR`, `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`, `CANCELADA`. Reservado sin flujo en MVP: `PAUSADA`. Transiciones permitidas: `BORRADOR → ACTIVA` (al activar), `ACTIVA → COMPLETADA` (automatico al alcanzar meta), `ACTIVA → FINALIZADA_PARCIAL` (manual por ADMIN, con motivo obligatorio), y `BORRADOR → CANCELADA` / `ACTIVA → CANCELADA` (cancelacion, solo si no hay ninguna `PLANTACION_INICIAL` registrada; ver `RN-PLA-37`).
 
 ### RN-PLA-07 - No hay reapertura de subcampaña
 
@@ -72,6 +82,19 @@ Solo `ADMIN` puede cerrar manualmente una subcampaña `ACTIVA` a `FINALIZADA_PAR
 ### RN-PLA-12 - Mantenimiento es transversal a los estados posteriores a BORRADOR
 
 Mortandad y reposicion se aceptan en `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIAL`. Plantacion inicial y asignaciones nuevas con cualquier proposito solo en `ACTIVA`; en `COMPLETADA` y `FINALIZADA_PARCIAL` solo se aceptan asignaciones con proposito `REPOSICION`.
+
+### RN-PLA-37 - Cancelacion de subcampaña sin plantaciones — añadida 2026-07-01
+
+Una subcampaña se cancela (`estado = CANCELADA`) **solo si no tiene ninguna `PLANTACION_INICIAL` registrada** (`total_plantado_inicial = 0`). Aplica al caso normal de descartar un `BORRADOR` de planificacion, y tambien a una subcampaña `ACTIVA` que aun no haya plantado nada. Si ya existe al menos una plantacion inicial, la subcampaña **no puede cancelarse**: el cierre anticipado correcto es `FINALIZADA_PARCIAL` (`RN-PLA-11`), que preserva lo ya plantado como valido. Solo `ADMIN` puede cancelar, con motivo obligatorio.
+
+Efectos:
+
+* La subcampaña pasa a `CANCELADA`; el registro **se conserva** (inactivacion, no borrado fisico) y se registra `SUBCAMPANIA_CANCELADA` en `SUBCAMPANIA_HISTORIAL`.
+* Su `meta_total_arboles` deja de sumar a la meta agregada de la campaña (`RN-PLA-36`).
+* Toda asignacion activa de la subcampaña se libera como devolucion logica al lote (aumenta el `saldo_vivo_disponible_asignacion` del lote); al ser reserva logica **no genera evento en Vivero** (coherente con `RN-VIV-48` del contrato M2↔M3).
+* Una subcampaña `CANCELADA` no es publica (`RN-PLA-34`) y no se reabre (`RN-PLA-07`); para retomar el trabajo se crea una subcampaña nueva.
+
+`PAUSADA` sigue reservado, sin flujo en MVP.
 
 ---
 

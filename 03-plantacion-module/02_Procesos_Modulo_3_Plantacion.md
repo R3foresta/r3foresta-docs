@@ -27,7 +27,7 @@ Este módulo es la cara visible del proyecto y la base operativa de los **bonos 
 
 El módulo separa **planificación estratégica** de **operación real**:
 
-- **Campaña (nivel estratégico):** contenedor lógico que agrupa el proyecto. Tiene nombre, descripción, organizaciones asociadas, fechas estimadas globales. **No tiene polígono propio ni meta operativa propia.**
+- **Campaña (nivel estratégico):** contenedor lógico que agrupa el proyecto. Tiene nombre, descripción, organizaciones asociadas, fechas estimadas globales. **No tiene polígono propio ni meta operativa propia persistida.** Sí expone una **meta agregada derivada** para planeación (`meta_planificada_campania` = suma de las metas de sus subcampañas no canceladas, incluyendo borradores); se calcula al leer, nunca se materializa. Ver `RN-PLA-36`.
 - **Subcampaña (nivel operativo):** unidad de trabajo real. Tiene su propio coordinador (membresía contextual, ver §2.10), equipo, polígono, meta total de árboles, plan de metas por especie, asignaciones de lotes y estado operativo. La composición real de especies se registra en `REGISTRO_PLANTACION_DETALLE` y se compara contra el plan de `SUBCAMPANIA_META_ESPECIE` (ver §2.12).
 
 Una campaña contiene **N subcampañas** (al menos 1, sin límite superior).
@@ -76,17 +76,18 @@ La subcampaña tiene los siguientes estados operativos:
 - **ACTIVA:** habilitada para plantar, recibir asignaciones, registrar mantenimiento.
 - **COMPLETADA:** meta de árboles alcanzada al 100%. Cierre automático.
 - **FINALIZADA_PARCIAL:** cerrada antes de alcanzar la meta. Cierre manual por admin.
+- **CANCELADA:** descartada sin haber plantado nada. Solo alcanzable si no hay ninguna plantación inicial registrada (ver §3.12 y `RN-PLA-37`). El registro se conserva; no es pública ni reabrible.
 
-Estados reservados para implementación futura (existen en el enum pero **no se usan en MVP**):
+Estado reservado para implementación futura (existe en el enum pero **no se usa en MVP**):
 
 - `PAUSADA`
-- `CANCELADA`
 
 Transiciones permitidas en MVP:
 
 - `BORRADOR → ACTIVA` (al activar)
 - `ACTIVA → COMPLETADA` (automático al alcanzar meta)
 - `ACTIVA → FINALIZADA_PARCIAL` (manual por admin, requiere motivo)
+- `BORRADOR → CANCELADA` y `ACTIVA → CANCELADA` (cancelación por admin, solo si no hay plantaciones iniciales; ver §3.12)
 
 No hay reapertura: si una subcampaña queda en FINALIZADA_PARCIAL y aparece stock nuevo después, se crea una **nueva subcampaña** dentro de la misma campaña, no se reabre la anterior.
 
@@ -206,12 +207,14 @@ Decisión actualizada 2026-07-01.
 
 ### 2.13. Activación con stock parcial
 
-Una subcampaña se puede **activar sin tener el 100% del stock asignado**. Por ejemplo, meta de 10.000 árboles con solo 3.000 asignados.
+**La meta es la capa de planeación; la asignación es el cumplimiento.** El plan de metas por especie (§2.12) se define y edita en `BORRADOR` y es lo que permite planear cuántos árboles conseguir y, después, asignar. Las asignaciones de lotes de vivero **no ocurren en `BORRADOR`** (una subcampaña en borrador no acepta asignaciones): se hacen una vez la subcampaña está `ACTIVA` (§3.4). Por eso una subcampaña se activa **primero** y **luego** se le asigna stock.
+
+Como consecuencia, una subcampaña se puede **activar sin tener el 100% del stock asignado — incluso con 0% asignado al momento de activar**. Por ejemplo, meta de 10.000 árboles con solo 3.000 asignados, o recién activada sin ninguna asignación todavía.
 
 El sistema:
 
-- Permite la activación con advertencia visual clara.
-- Muestra siempre el % de stock asignado respecto a la meta.
+- Permite la activación aunque no haya stock asignado, con advertencia visual clara.
+- Muestra siempre el % de stock asignado respecto a la meta (0% si aún no se asignó nada).
 - Permite ampliar asignaciones en cualquier momento durante el estado ACTIVA.
 
 ### 2.14. Snapshots oficiales (siguiendo el patrón de M1 y M2)
@@ -278,7 +281,7 @@ En `BORRADOR`:
 
 - Es editable libremente.
 - No acepta asignaciones ni plantaciones.
-- Puede eliminarse con soft delete.
+- Puede cancelarse: pasa a `CANCELADA` y el registro se conserva (inactivación, no borrado físico). Ver §3.12.
 
 ### 3.3. Activación de la subcampaña (admin)
 
@@ -457,6 +460,24 @@ Cuando `today >= fecha_fin_mantenimiento`:
 - El sistema deja de generar alertas activas de monitoreo.
 - Se sigue aceptando mortandad y reposición pero ya no se esperan rutinariamente.
 
+### 3.12. Cancelación de subcampaña sin plantaciones (admin)
+
+**Objetivo:** descartar una subcampaña que no llegó a plantar nada. El caso normal es cancelar un `BORRADOR` de planificación que ya no se va a ejecutar; también aplica a una subcampaña `ACTIVA` que aún no plantó.
+
+Condición y camino correcto:
+
+- Solo se puede cancelar si `total_plantado_inicial = 0` (no hay ninguna `PLANTACION_INICIAL`). Un `BORRADOR` cumple esto siempre.
+- Si **ya hubo plantaciones**, la subcampaña **no se cancela**: se usa el cierre manual a `FINALIZADA_PARCIAL` (§3.8), que deja lo plantado como válido. Regla que discrimina cancelar vs. finalizar: ¿se plantó algo? Si no, `CANCELADA`; si sí, `FINALIZADA_PARCIAL`.
+
+Solo ADMIN puede ejecutarla, con motivo obligatorio. El sistema:
+
+- Pasa la subcampaña a `CANCELADA`; conserva el registro (inactivación, no borrado físico) y registra `SUBCAMPANIA_CANCELADA` en `SUBCAMPANIA_HISTORIAL`.
+- Quita su `meta_total_arboles` de la meta agregada de la campaña (`meta_planificada_campania`, §2.1 / `RN-PLA-36`).
+- Libera toda asignación activa como devolución lógica al lote de vivero. Al ser reserva lógica, **no genera evento en el Módulo 2** (igual que una devolución normal; ver §9.3 y `RN-VIV-48`).
+- La subcampaña deja de ser visible en la vista pública y no se puede reabrir; para retomar el trabajo se crea una subcampaña nueva.
+
+Ver `RN-PLA-37` para la regla canónica.
+
 ---
 
 ## 4. Eventos y movimientos
@@ -475,6 +496,7 @@ Cuando `today >= fecha_fin_mantenimiento`:
 - `SUBCAMPANIA_ACTIVADA`
 - `SUBCAMPANIA_COMPLETADA` (automático)
 - `SUBCAMPANIA_FINALIZADA_PARCIAL` (manual)
+- `SUBCAMPANIA_CANCELADA` (manual; solo sin plantaciones, ver §3.12)
 - `TRANSICION_A_MONITOREO_HISTORICO` (automático por fecha)
 - `EQUIPO_AMPLIADO` / `EQUIPO_REDUCIDO`
 - `COORDINADOR_CAMBIADO`
@@ -494,7 +516,8 @@ Fuera del MVP:
 - `CORRECCION_MORTANDAD`
 - `AJUSTE_MIGRACION`
 - `PAUSAR_SUBCAMPANIA` / `REACTIVAR_SUBCAMPANIA` (reservado para futuro)
-- `CANCELAR_SUBCAMPANIA` (reservado para futuro)
+
+La cancelación **sí está en el MVP** (limitada a subcampañas sin plantaciones) y vive como `SUBCAMPANIA_CANCELADA` en `SUBCAMPANIA_HISTORIAL` (§4.1), no como evento de plantación.
 
 ---
 
@@ -502,12 +525,13 @@ Fuera del MVP:
 
 ### 5.1. Estado operativo de la subcampaña
 
-- **BORRADOR:** editable, soft delete permitido, sin operaciones.
-- **ACTIVA:** acepta todo: plantación inicial, mortandad, reposición, asignaciones.
+- **BORRADOR:** editable, cancelable (→ CANCELADA), sin operaciones.
+- **ACTIVA:** acepta todo: plantación inicial, mortandad, reposición, asignaciones. Cancelable solo si aún no plantó nada.
 - **COMPLETADA:** meta 100% alcanzada. No acepta plantación inicial. Acepta mortandad, reposición, asignaciones con propósito REPOSICION.
 - **FINALIZADA_PARCIAL:** cerrada antes de meta. Mismo comportamiento que COMPLETADA.
+- **CANCELADA:** descartada sin plantaciones (§3.12 / `RN-PLA-37`). Terminal, no pública, no reabrible.
 
-Estados reservados para futuro (en enum pero sin flujos en MVP): `PAUSADA`, `CANCELADA`.
+Estado reservado para futuro (en enum pero sin flujo en MVP): `PAUSADA`.
 
 ### 5.2. Fase de mantenimiento (derivada por fecha)
 
@@ -737,13 +761,14 @@ El catálogo cerrado de roles globales se preserva: `ADMIN | GENERAL | VALIDADOR
 - Foto + GPS obligatorios en plantación, reposición y mortandad.
 - Activación con stock parcial permitida.
 - No reapertura: si se cerró parcialmente y aparece stock, se crea nueva subcampaña.
+- Cancelación de subcampaña sin plantaciones (BORRADOR o ACTIVA sin plantar) → `CANCELADA`; si ya se plantó, el camino es `FINALIZADA_PARCIAL`.
+- Meta agregada de campaña derivada (suma de metas de subcampañas no canceladas, incluye borradores) para planeación; no persistida.
 - Vista pública sin autenticación con drill-down completo.
 - Eventos append-only.
 
 ### Estados reservados (en enum, no implementados)
 
 - `PAUSADA`
-- `CANCELADA`
 
 ### Catálogos cerrados del módulo (enums)
 
@@ -799,7 +824,7 @@ Definidos formalmente en `database/00_database_schema.md`. Los valores `OTRO` se
 ### Futuro
 
 - Tolerancias avanzadas y aprobaciones excepcionales para desviarse del plan de especies sin editar la meta base.
-- Implementar PAUSADA y CANCELADA con sus flujos.
+- Implementar PAUSADA con su flujo (CANCELADA ya está en MVP, limitada a subcampañas sin plantaciones).
 - Correcciones auditadas de mortandad y plantación.
 - Trazabilidad por árbol individual (no solo por lote).
 - Salida de campo modelada (árboles "en mano del operario" entre vivero y plantación).

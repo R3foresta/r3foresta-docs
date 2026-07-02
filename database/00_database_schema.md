@@ -297,6 +297,7 @@ CAMPANIA {
     jsonb metadata_blockchain "nullable"
 }
 %% Sin columna de estado: el estado se deriva via vista campania_estado (invariante CLAUDE.md).
+%% Sin columna de meta: la meta vive en SUBCAMPANIA. El total de planificacion de la campaña se deriva (meta_planificada_campania = SUM de metas de subcampañas no CANCELADA, incluye BORRADOR); ver RN-PLA-36. No materializar.
 %% tipo es inmutable una vez creada la campania (no se puede cambiar si ya tiene subcampanias). El enum tipo_subcampania se reusa porque ambos representan el mismo concepto.
 
 CAMPANIA_ORGANIZACION {
@@ -338,11 +339,12 @@ SUBCAMPANIA {
     timestamptz updated_at
     bigint created_by FK
     bigint updated_by FK
-    timestamptz deleted_at "nullable"
+    timestamptz deleted_at "nullable - timestamp de cancelacion (estado=CANCELADA); inactivacion, no borrado fisico"
     bigint deleted_by FK "nullable"
     jsonb metadata_blockchain "nullable"
 }
 %% Indice GIST sobre poligono_geom para PostGIS. Sin columna coordinador_id (membresia via SUBCAMPANIA_EQUIPO).
+%% Cancelacion (RN-PLA-37): permitida solo si total_plantado_inicial = 0. Al cancelar, estado=CANCELADA, el registro se conserva y se libera toda asignacion activa como devolucion logica (sin evento en M2).
 
 SUBCAMPANIA_META_ESPECIE {
     bigint id PK
@@ -586,8 +588,8 @@ tipo_subcampania = [REFORESTACION, ARBORIZACION, FORESTACION]
 
 estado_subcampania = [
   BORRADOR, ACTIVA, COMPLETADA, FINALIZADA_PARCIAL,
-  PAUSADA,   // reservado, sin flujo en MVP
-  CANCELADA  // reservado, sin flujo en MVP
+  CANCELADA, // en MVP: solo si no hay PLANTACION_INICIAL (BORRADOR, o ACTIVA sin plantar). Si ya hay plantado, el cierre anticipado es FINALIZADA_PARCIAL. Ver RN-PLA-37.
+  PAUSADA    // reservado, sin flujo en MVP
 ]
 
 tipo_organizacion = [ONG | EMPRESA_PRIVADA | EMPRESA_PUBLICA | FUNDACION | ETFs | ALCALDIA | ASOCIACION_CIUDADANA | OTRO]
@@ -630,6 +632,10 @@ OBJETOS DERIVADOS / FUNCIONES (no son tablas, no aparecen en el ER)
 vista campania_estado (subcampania) -> {campania_id, estado_derivado}
 // Calcula al leer el estado de CAMPANIA desde el conjunto de sus SUBCAMPANIA segun §2.2 / §5.3 del Modulo 3.
 // Valores: BORRADOR | ACTIVA | EN_MANTENIMIENTO | MONITOREO_HISTORICO. No materializar.
+
+lectura meta_planificada_campania (subcampania) -> {campania_id, meta_planificada}
+// meta_planificada = SUM(SUBCAMPANIA.meta_total_arboles WHERE estado <> CANCELADA); incluye BORRADOR.
+// Total de planificacion para admin/coordinador. La vista publica agrega solo ACTIVA | COMPLETADA | FINALIZADA_PARCIAL. Derivado, no materializar. Ver RN-PLA-36.
 
 funcion gps_dentro_poligono_con_tolerancia(p_subcampania_id, p_lat, p_lng) -> {dentro, distancia_m}
 // PostGIS. Fuente de verdad para validar GPS de REGISTRO_PLANTACION contra el poligono de la subcampania

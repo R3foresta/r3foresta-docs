@@ -181,24 +181,23 @@ Wizard de varios pasos.
 **Paso 4: Equipo (opcional al crear)**
 - Selector múltiple de operarios para conformar el equipo.
 
-**Paso 5: Asignación inicial de lotes (opcional al crear)**
-- Listado de lotes de vivero con stock vivo disponible.
-- Para cada lote a asignar: cantidad absoluta y **propósito** (PLANTACION_INICIAL / REPOSICION).
-- El sistema muestra el % equivalente como ayuda visual ("estás asignando el 37.5% del lote").
-- Total asignado vs meta: barra visual.
-
-**Paso 6: Revisión y activación**
-- Resumen completo.
-- Si el stock asignado < meta: advertencia clara ("Solo el 30% de la meta tiene stock asignado. Puedes activar igual y asignar más después").
+**Paso 5: Revisión y activación**
+- Resumen completo del borrador: datos generales, polígono con área, meta y plan por especie, equipo.
+- La **asignación de lotes de vivero no se hace en este wizard**: una subcampaña en BORRADOR no acepta asignaciones. Primero se activa (o se guarda como borrador) y la asignación de stock ocurre después, en la pantalla de gestión de asignaciones (§3.10).
+- Al activar sin stock aún asignado, el sistema lo permite y avisa: "Aún no hay stock asignado. Puedes activar y asignar lotes después." La cobertura de la meta (total y por especie) se muestra en la pantalla de asignaciones una vez activa.
 - Botones: "Guardar como borrador" / "Activar subcampaña".
+
+> Nota: la meta y el plan por especie (Paso 3) son la **planeación** y sí se definen aquí; la asignación de lotes es el **cumplimiento** posterior. Ver §2.13 de procesos.
 
 ### 3.7. Detalle de subcampaña (admin/coordinador)
 
 **Componentes:**
 - Cabecera con estado operativo + fase de mantenimiento (badges separados).
 - Acciones según estado:
-  - ACTIVA: "Marcar como FINALIZADA_PARCIAL" (solo admin, con confirmación + motivo).
+  - BORRADOR: "Editar", "Activar subcampaña", "Cancelar borrador" (pasa a CANCELADA, con confirmación + motivo).
+  - ACTIVA: "Marcar como FINALIZADA_PARCIAL" (solo admin, con confirmación + motivo); "Cancelar subcampaña" **solo visible si aún no hay plantaciones** (pasa a CANCELADA).
   - COMPLETADA / FINALIZADA_PARCIAL: "Asignar más lotes para reposición".
+  - CANCELADA: sin acciones (terminal); se muestra el motivo de cancelación.
 - Tabs:
   - **Resumen:** progreso, mapa con pines, métricas clave, fechas clave (incluyendo `fecha_fin_mantenimiento`).
   - **Plantaciones:** listado con filtros (operario, fecha, especie, lote). Cada fila expandible con fotos, GPS, cantidades por especie y lote origen.
@@ -327,7 +326,7 @@ Combinación:
 - **Tarjetas de plantación:** miniatura de foto + cantidad + especie + lote origen + fecha + ubicación.
 - **Mapa con polígonos y pines:** componente clave reutilizado en home pública, detalle, dashboard.
 - **Timeline append-only:** lista vertical con icono por tipo de evento.
-- **Badge de estado operativo:** ACTIVA, COMPLETADA, FINALIZADA_PARCIAL, BORRADOR. Colores diferenciados.
+- **Badge de estado operativo:** ACTIVA, COMPLETADA, FINALIZADA_PARCIAL, BORRADOR, CANCELADA. Colores diferenciados.
 - **Badge de fase de mantenimiento:** MANTENIMIENTO_ACTIVO (azul), MONITOREO_HISTORICO (gris). Visible solo cuando aplica.
 - **Badge de tipo de subcampaña:** REFORESTACIÓN, ARBORIZACIÓN, FORESTACIÓN.
 - **Badge de propósito de asignación:** PLANTACION_INICIAL (verde), REPOSICION (naranja).
@@ -342,6 +341,7 @@ Combinación:
 - **ACTIVA:** verde, todas las acciones operativas.
 - **COMPLETADA:** azul, badge "META ALCANZADA", solo mantenimiento.
 - **FINALIZADA_PARCIAL:** ámbar, badge "CERRADA PARCIALMENTE", solo mantenimiento.
+- **CANCELADA:** gris oscuro/rojo tenue, badge "CANCELADA", sin acciones; muestra el motivo. Solo para subcampañas sin plantaciones.
 
 ### Fase de mantenimiento:
 - **MANTENIMIENTO_ACTIVO:** badge azul con contador de tiempo restante.
