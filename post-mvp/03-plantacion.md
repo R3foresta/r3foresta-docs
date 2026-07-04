@@ -19,3 +19,37 @@ Para el MVP se permite editar datos generales, organizaciones y fechas; tambien 
 ### Condicion de salida
 
 Reabrir esta mejora solo si la operacion real muestra que los admins crean subcampañas muy temprano y luego necesitan corregir con frecuencia el alcance de campaña.
+
+## PMVP-PLA-02 — Dashboard avanzado de campaña
+
+### Idea
+
+Convertir el dashboard de campaña en una vista analitica mas completa, con formula de carbono validada, timeline canonico y conteo exhaustivo de eventos.
+
+### Por que queda fuera del MVP
+
+Para la primera version basta mostrar la idea de negocio operable: cards de subcampañas, metricas basicas, progreso y actividad reciente simple. Un dashboard tipo BI consume mas tiempo de modelado, pruebas y definiciones de producto.
+
+### Reglas a evaluar despues
+
+- Definir formula oficial de `co2_proyectado_ton` con producto/carbono.
+- Unificar una fuente canonica de actividad para plantaciones, historial de subcampaña, asignaciones, devoluciones, mermas afectadas y cambios de equipo.
+- Ampliar `eventos_count` para cubrir todos los eventos relevantes, no solo fuentes faciles del MVP.
+- Agregar filtros, paginacion y agrupaciones de actividad si la pantalla empieza a usarse como auditoria real.
+
+## PMVP-PLA-03 — Gestion avanzada de coordinador y equipo
+
+### Idea
+
+Agregar flujos completos para cambiar coordinador, auditar cambios de equipo y manejar reglas finas de membresia por estado.
+
+### Por que queda fuera del MVP
+
+El modelo base ya alcanza para operar: `SUBCAMPANIA_EQUIPO`, un `COORDINADOR` unico y N `OPERARIO`. Para MVP basta exigir coordinador al activar, mostrar equipo y validar membresia al registrar operaciones.
+
+### Reglas a evaluar despues
+
+- Flujo explicito de cambio de coordinador con historial.
+- Auditoria de altas/bajas de operarios.
+- Restricciones finas por estado de subcampaña para modificar equipo.
+- Indicadores de desempeño por miembro del equipo.
