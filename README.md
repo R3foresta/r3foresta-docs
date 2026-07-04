@@ -20,6 +20,8 @@ La cadena del dominio: `general (maestros) → recolección (origen) → vivero 
   Esquema ER canónico y scripts.
 * [decisiones/README.md](decisiones/README.md)
   Registro unificado de decisiones de arquitectura y diseño (ADR) de todos los módulos.
+* [post-mvp/README.md](post-mvp/README.md)
+  Ideas y mejoras deliberadamente fuera del MVP, conservadas para futuras iteraciones.
 
 ## Otros documentos raíz
 

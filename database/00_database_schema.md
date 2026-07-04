@@ -298,7 +298,8 @@ CAMPANIA {
 }
 %% Sin columna de estado: el estado se deriva via vista campania_estado (invariante CLAUDE.md).
 %% Sin columna de meta: la meta vive en SUBCAMPANIA. El total de planificacion de la campaña se deriva (meta_planificada_campania = SUM de metas de subcampañas no CANCELADA, incluye BORRADOR); ver RN-PLA-36. No materializar.
-%% tipo es inmutable una vez creada la campania (no se puede cambiar si ya tiene subcampanias). El enum tipo_subcampania se reusa porque ambos representan el mismo concepto.
+%% Edicion MVP: nombre, descripcion, fechas estimadas y organizaciones asociadas pueden corregirse como datos generales. tipo solo es editable si no existe ninguna SUBCAMPANIA con ese campania_id; ver RN-PLA-38.
+%% Desactivacion MVP: CAMPANIA puede marcar deleted_at/deleted_by si no tiene subcampanias o si todas sus subcampanias estan CANCELADA. DELETE fisico solo si no tiene subcampanias. El enum tipo_subcampania se reusa porque CAMPANIA.tipo y SUBCAMPANIA.tipo representan el mismo concepto.
 
 CAMPANIA_ORGANIZACION {
     bigint id PK
@@ -307,6 +308,7 @@ CAMPANIA_ORGANIZACION {
     timestamptz created_at
     bigint created_by FK
 }
+%% En MVP, insertar/eliminar/modificar organizaciones asociadas es permitido; las subcampanias ya activadas conservan sus snapshots de organizaciones. Ver RN-PLA-38.
 
 SUBCAMPANIA {
     bigint id PK

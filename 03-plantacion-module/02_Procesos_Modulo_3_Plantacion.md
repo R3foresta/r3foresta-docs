@@ -32,6 +32,8 @@ El módulo separa **planificación estratégica** de **operación real**:
 
 Una campaña contiene **N subcampañas** (al menos 1, sin límite superior).
 
+En el MVP, la campaña permite correcciones basicas de `nombre`, `descripcion`, fechas estimadas y organizaciones asociadas. El `tipo` solo se cambia antes de crear la primera subcampaña. La campaña se puede desactivar si no tiene subcampañas, o si todas sus subcampañas estan `CANCELADA`. Ver `RN-PLA-38`.
+
 Ejemplo:
 
 - Campaña: "Arborización La Paz 2026" (organizaciones: Alcaldía La Paz + ONG VerdesAndinos).
@@ -259,7 +261,7 @@ Datos mínimos:
 
 La campaña se crea **sin subcampañas**, en estado derivado `BORRADOR` (porque todavía no tiene subcampañas activas). Las subcampañas se agregan a continuación.
 
-El tipo de la campaña es **inmutable una vez que tiene al menos una subcampaña**. Si se necesita operar con un tipo distinto, se crea una campaña separada.
+Regla MVP: `nombre`, descripción, fechas estimadas y organizaciones asociadas pueden corregirse como datos generales. El `tipo` solo se edita mientras no exista ninguna subcampaña asociada. La campaña se puede desactivar si no tiene subcampañas, o si todas sus subcampañas estan `CANCELADA`; si hay alguna subcampaña en otro estado, no se desactiva. Si se necesita operar con otro tipo, se crea una campaña separada.
 
 ### 3.2. Creación de subcampañas (admin)
 

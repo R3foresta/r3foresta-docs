@@ -9,7 +9,7 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 ## Documentos de este módulo
 
 * `00_Requerimientos_Modulo_3_Plantacion.json`: requerimientos funcionales (`RF-PLA-01..18`).
-* `01_reglas_de_negocio_plantacion.md`: reglas propias de M3 (`RN-PLA-01..35`) — ciclo de vida de campaña/subcampaña, plan por especie, coordinación como membresía, plantación inicial, mortandad, reposición, GPS/PostGIS, vista pública y roles.
+* `01_reglas_de_negocio_plantacion.md`: reglas propias de M3 (`RN-PLA-*`) — ciclo de vida de campaña/subcampaña, plan por especie, coordinación como membresía, plantación inicial, mortandad, reposición, GPS/PostGIS, vista pública y roles.
 * `02_Procesos_Modulo_3_Plantacion.md`: proceso detallado.
 * `03_Mockups_Guia_Modulo_3_Plantacion.md`: guía UX.
 
@@ -27,6 +27,7 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 Detalladas en [CLAUDE.md](../CLAUDE.md); no se repiten aquí. Las de mayor impacto:
 
 * Estado de campaña derivado en tiempo real, nunca persistido como columna.
+* Edición básica de campaña en MVP; el tipo solo cambia antes de la primera subcampaña y la desactivación se permite si no hay subcampañas o todas estan `CANCELADA`.
 * Coordinador es membresía en `SUBCAMPANIA_EQUIPO.rol_en_subcampania`, no rol global.
 * Asignación y devolución de lote de vivero son reservas lógicas (no generan evento en M2).
 * Plantar o reponer en M3 genera un `DESPACHO` automático en M2 (`origen_despacho = AUTOMATICO_PLANTACION`).

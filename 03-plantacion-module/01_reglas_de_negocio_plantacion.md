@@ -31,7 +31,7 @@ El estado se deriva asi: `BORRADOR` si todas las subcampañas estan en `BORRADOR
 
 ### RN-PLA-03 - Tipo de campaña heredado e inmutable
 
-`CAMPANIA.tipo` (`REFORESTACION | ARBORIZACION | FORESTACION`, enum `tipo_subcampania` reutilizado) es obligatorio al crear la campaña y define el tipo de toda subcampaña hija. `SUBCAMPANIA.tipo` debe ser identico (CHECK constraint en BD). El tipo es inmutable una vez que la campaña tiene al menos una subcampaña; para operar con otro tipo se crea una campaña separada. No mezclar tipos dentro de una misma campaña.
+`CAMPANIA.tipo` (`REFORESTACION | ARBORIZACION | FORESTACION`, enum `tipo_subcampania` reutilizado) es obligatorio al crear la campaña y define el tipo de toda subcampaña hija. `SUBCAMPANIA.tipo` debe ser identico (CHECK constraint en BD). En MVP, el tipo ya no se modifica una vez que existe cualquier subcampaña asociada (`RN-PLA-38`), porque cambiarlo exigiria actualizar hijas en cascada. Para operar con otro tipo se crea una campaña separada. No mezclar tipos dentro de una misma campaña.
 
 ### RN-PLA-04 - Una campaña no tiene "fases" ni "campañas hijas"
 
@@ -50,6 +50,21 @@ meta_planificada_campania = SUM(SUBCAMPANIA.meta_total_arboles WHERE estado <> C
 ```
 
 Incluye las subcampañas en `BORRADOR` — el sentido es que el admin planifique cuantos arboles debe conseguir y asignar antes de activar — y excluye las `CANCELADA` (cuya meta deja de contar, `RN-PLA-37`). Es una lectura de planificacion de uso interno (admin/coordinador). La **vista publica** sigue agregando unicamente subcampañas `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIAL` (`RN-PLA-34`), nunca borradores. Como el estado derivado de campaña (`RN-PLA-01/02`), se calcula al leer y **nunca se materializa como columna**.
+
+### RN-PLA-38 - Edicion basica y desactivacion de campaña en MVP — añadida 2026-07-03, ajustada 2026-07-04
+
+En el MVP, `CAMPANIA` admite correcciones basicas sin romper trazabilidad:
+
+- `nombre`, `descripcion`, `fecha_estimada_inicio` y `fecha_estimada_fin` pueden editarse como datos generales/referenciales.
+- `CAMPANIA_ORGANIZACION` puede editarse. Las subcampañas ya activadas conservan sus `nombres_organizaciones_snapshot`; los cambios solo afectan la campaña y futuras activaciones.
+- `tipo` solo puede editarse mientras no exista ninguna `SUBCAMPANIA` asociada.
+- `codigo_trazabilidad` no se edita.
+
+La campaña se puede desactivar/eliminar logicamente (`deleted_at`, `deleted_by`) si no tiene ninguna subcampaña asociada, o si todas sus subcampañas asociadas estan en `CANCELADA`. Esto es seguro porque `CANCELADA` solo existe sin plantaciones iniciales (`RN-PLA-37`).
+
+Si existe al menos una subcampaña en `BORRADOR`, `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL` o `PAUSADA`, la campaña no puede desactivarse. El borrado fisico (`DELETE`) solo se permite cuando no existe ninguna subcampaña asociada.
+
+Campos tecnicos o de auditoria (`updated_at`, `updated_by`, `metadata_blockchain`, cuando aplique) pueden seguir actualizandose por procesos internos. La edicion flexible de `tipo` con subcampañas en `BORRADOR` queda fuera del MVP y se registra en `post-mvp/03-plantacion.md`.
 
 ---
 

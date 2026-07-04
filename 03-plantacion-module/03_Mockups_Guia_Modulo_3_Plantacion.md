@@ -143,7 +143,7 @@ Cuando el visitante hace click en una subcampaña.
 **Paso 1: Datos generales**
 - Nombre obligatorio.
 - Descripción opcional.
-- **Tipo obligatorio:** reforestación / arborización / forestación. _Nota: Define el tipo de todas las subcampañas hijas; inmutable una vez creada la campaña._
+- **Tipo obligatorio:** reforestación / arborización / forestación. _Nota: Define el tipo de todas las subcampañas hijas; en MVP solo se cambia mientras no exista ninguna subcampaña asociada._
 - Fechas estimadas globales (opcional, solo futuras).
 
 **Paso 2: Organizaciones asociadas**

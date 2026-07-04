@@ -20,12 +20,17 @@
         "Tipo obligatorio; debe pertenecer al enum tipo_subcampania (compartido con SUBCAMPANIA).",
         "Las organizaciones asociadas deben existir en el catalogo ORGANIZACION.",
         "Las fechas estimadas, si se cargan, deben ser coherentes (fin >= inicio).",
+        "En MVP, nombre, descripcion, fechas estimadas y organizaciones asociadas pueden corregirse como datos generales/referenciales.",
+        "En MVP, el tipo de la campaña solo se edita si no existe ninguna SUBCAMPANIA asociada.",
+        "En MVP, la campaña puede desactivarse/inactivarse si no tiene subcampañas o si todas sus subcampañas estan CANCELADA.",
         "La campaña no tiene poligono ni meta propios persistidos; esos viven en subcampaña. Expone una meta agregada derivada (meta_planificada_campania) solo para planeacion, calculada al leer."
       ],
       "reglas_adicionales": [
         "El estado de la campaña padre se calcula en tiempo real: BORRADOR si todas las subcampañas son BORRADOR; ACTIVA si al menos una subcampaña esta ACTIVA; EN_MANTENIMIENTO si todas estan cerradas y al menos una en MANTENIMIENTO_ACTIVO; MONITOREO_HISTORICO si todas estan en MONITOREO_HISTORICO.",
         "La meta agregada de campaña se deriva como SUM(meta_total_arboles de subcampañas no CANCELADA) e incluye BORRADOR (planeacion admin); no se persiste como columna (RN-PLA-36). La vista publica agrega solo ACTIVA, COMPLETADA y FINALIZADA_PARCIAL.",
-        "El tipo de la campaña es inmutable una vez creada si ya tiene subcampañas; toda subcampaña hija hereda obligatoriamente el tipo de la campaña padre.",
+        "Regla MVP: al existir cualquier subcampaña asociada queda bloqueado el cambio de tipo; para operar con otro tipo se crea otra campaña.",
+        "Regla MVP de desactivacion: si existe al menos una subcampaña BORRADOR, ACTIVA, COMPLETADA, FINALIZADA_PARCIAL o PAUSADA, la campaña no se desactiva; primero se resuelve la subcampaña.",
+        "Toda subcampaña hija hereda obligatoriamente el tipo de la campaña padre.",
         "Una campaña puede tener 1 o mas organizaciones asociadas (relacion many-to-many).",
         "Si se quiere ampliar el proyecto, se crea una nueva subcampaña dentro de la misma campaña; no existe el concepto de fases ni campañas hijas.",
         "Solo ADMIN puede crear campañas en el MVP.",
