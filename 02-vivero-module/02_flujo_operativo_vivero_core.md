@@ -127,7 +127,7 @@ La politica de mermas sobre asignaciones activas pertenece al contrato Vivero ->
 
 ### 3.6 DESPACHO MANUAL
 
-`DESPACHO MANUAL` registra una salida real desde Vivero hacia un destino que no es despacho automatico de Plantacion.
+`DESPACHO MANUAL` registra una salida real desde Vivero hacia un destino que no es una subcampaña de Plantacion.
 
 Reglas clave:
 
@@ -142,7 +142,7 @@ Reglas clave:
 
 En core puro valida contra `saldo_vivo_actual`.
 
-Cuando el contrato Vivero -> Plantacion esta activo, el despacho manual debe respetar saldo reservado y validar contra `saldo_vivo_disponible_asignacion`; esa regla no vive en este core, sino en el contrato.
+Cuando el contrato Vivero -> Plantacion esta activo, las asignaciones fisicas a subcampaña ya descuentan `saldo_vivo_actual`; por eso el despacho manual sigue validando contra saldo fisico del lote. La regla completa no vive en este core, sino en el contrato.
 
 ### 3.7 CIERRE_AUTOMATICO
 
@@ -207,13 +207,12 @@ La evidencia se vincula al `EVENTO_LOTE_VIVERO.id` mediante `EVIDENCIAS_TRAZABIL
 
 No forman parte de esta guia operativa:
 
-- asignacion de lote a subcampania,
-- devolucion de saldo asignado,
+- asignacion fisica de lote a subcampania,
+- devolucion fisica de saldo asignado,
 - saldo asignado,
-- saldo libre por asignaciones,
-- despacho automatico desde Plantacion,
+- consumo de stock asignado por Plantacion,
 - consumo de asignaciones por `PLANTACION_INICIAL` o `REPOSICION`,
-- mermas distribuidas sobre asignaciones activas.
+- mermas de stock asignado en campo.
 
 Estos puntos son contrato entre modulos y viven en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md).
 

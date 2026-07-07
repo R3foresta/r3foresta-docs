@@ -8,13 +8,14 @@
 
 | Pieza | Fuente documental | Estado |
 |---|---|---|
-| Enums `origen_despacho_vivero`, `proposito_asignacion`, `estado_asignacion_vivero`; valor `PLANTACION_CAMPANIA` en `destino_tipo_vivero` | `database/00_database_schema.md` (ENUMS) | ⏳ por confirmar |
-| Columnas nuevas en `EVENTO_LOTE_VIVERO` (`origen_despacho`, `subcampania_id`, `campania_id`, `registro_plantacion_id`) — **FK físicos** | schema: "FK fisico pendiente de ALTER en BD" | ⏳ FK físicos pendientes |
+| Enums `origen_despacho_vivero`, `proposito_asignacion`, `estado_asignacion_vivero`; valor `PLANTACION_CAMPANIA` en `destino_tipo_vivero`; nuevo origen esperado `ASIGNACION_SUBCAMPANIA` | `database/00_database_schema.md` (ENUMS) / contrato M2↔M3 | ⏳ por confirmar / pendiente de migración |
+| Columnas nuevas en `EVENTO_LOTE_VIVERO` (`origen_despacho`, `subcampania_id`, `campania_id`, `registro_plantacion_id`) — **FK físicos** y CHECK actualizado para asignación física | schema: "FK fisico pendiente de ALTER en BD" | ⏳ FK físicos y CHECK pendientes |
 | Tabla `ASIGNACION_VIVERO_SUBCAMPANIA` (+ `cantidad_mermada`, columna GENERATED `saldo_asignado_disponible`) — FK físico `subcampania_id` | schema | ⏳ FK físico pendiente |
-| CHECK constraint de consistencia `origen_despacho` ↔ FKs de M3 | schema / `90-contratos-integracion/02_contrato_vivero_a_plantacion.md` (RN-VIV-55) | ⏳ por confirmar |
-| Handler atómico de `DESPACHO` automático desde M3 (al guardar `PLANTACION_INICIAL` / `REPOSICION`) | `90-contratos-integracion/02_contrato_vivero_a_plantacion.md` | ⏳ pendiente |
+| Handler atómico de asignación física: crea `ASIGNACION_VIVERO_SUBCAMPANIA`, registra salida M2 hacia subcampaña, descuenta `LOTE_VIVERO.saldo_vivo_actual` y vincula evidencia | `90-contratos-integracion/02_contrato_vivero_a_plantacion.md` | ⏳ pendiente |
+| Handler de plantación/reposición: consume `saldo_asignado_disponible` sin generar `DESPACHO AUTOMATICO_PLANTACION` | `90-contratos-integracion/02_contrato_vivero_a_plantacion.md` / `03-plantacion-module` | ⏳ pendiente |
+| Devolución física: aumenta `cantidad_devuelta` y `LOTE_VIVERO.saldo_vivo_actual`; MVP sin fotos obligatorias | contrato M2↔M3 / `post-mvp/03-plantacion.md` | ⏳ pendiente |
 | Triggers de contadores materializados: `SUBCAMPANIA` (`total_plantado_inicial`, `total_repuesto`, `total_muerto_acumulado`) y `REGISTRO_PLANTACION` (`cantidad_muerta_acumulada`, `cantidad_repuesta_acumulada`) | `database/00_database_schema.md` / `03-plantacion-module/02_Procesos_Modulo_3_Plantacion.md` | ⏳ pendiente |
-| Política de merma por urgencia sobre asignaciones (RN-VIV-50) + notificación al coordinador (RN-VIV-51) | `90-contratos-integracion/02_contrato_vivero_a_plantacion.md` | ⏳ pendiente |
+| Merma de vivero separada de stock ya asignado; eventual merma de stock en campo afecta `cantidad_mermada` de la asignación | `90-contratos-integracion/02_contrato_vivero_a_plantacion.md` | ⏳ pendiente / flujo de campo fuera de MVP si no se prioriza |
 | Job nocturno de transición `MANTENIMIENTO_ACTIVO` → `MONITOREO_HISTORICO` (RF-PLA-11) | schema / `CLAUDE.md` | ⏳ pendiente |
 | Función PostGIS `gps_dentro_poligono_con_tolerancia` + vista `campania_estado` | schema (OBJETOS DERIVADOS) | ⏳ por confirmar |
 
@@ -38,7 +39,7 @@ Este estado se refinará cuando el usuario confirme, pieza por pieza, qué está
 | Pieza | Fuente documental | Estado |
 |---|---|---|
 | Diseño: cancelación de subcampaña sin plantaciones (BORRADOR o ACTIVA sin plantar) → `CANCELADA`; si hay plantado, `FINALIZADA_PARCIAL` | `03-plantacion-module/01_reglas_de_negocio_plantacion.md` (RN-PLA-37, RN-PLA-06), `02_Procesos...` §3.12, `database/00_database_schema.md` (enum `estado_subcampania`), `CLAUDE.md` | ✅ documentado |
-| Backend/BD: transición a `CANCELADA` (solo ADMIN, guard `total_plantado_inicial = 0`), evento `SUBCAMPANIA_CANCELADA`, liberación de asignaciones activas como devolución lógica (sin evento M2) | RN-PLA-37 | ✅ implementado (Backend-r3foresta migración `047_m3_cancelacion_subcampania_y_plan.sql` + `POST /api/subcampanias/:id/cancelar` con RPC atómico `fn_subcampania_cancelar`; ⏳ **migración pendiente de aplicar en Supabase**) |
+| Backend/BD: transición a `CANCELADA` (solo ADMIN, guard `total_plantado_inicial = 0`), evento `SUBCAMPANIA_CANCELADA`, resolución de asignaciones activas con devolución física si ya fueron entregadas | RN-PLA-37 / contrato M2↔M3 actualizado | ⚠️ implementación previa basada en devolución lógica; requiere ajuste al nuevo contrato físico |
 | Diseño: meta agregada de campaña derivada (`meta_planificada_campania`, incluye BORRADOR, excluye CANCELADA), no persistida | `01_reglas...` (RN-PLA-36), `02_Procesos...` §2.1, `database/00_database_schema.md` (OBJETOS DERIVADOS) | ✅ documentado |
 | Backend: lectura derivada `meta_planificada_campania` para vista admin; el público agrega solo ACTIVA/COMPLETADA/FINALIZADA_PARCIAL | RN-PLA-36 | ✅ implementado en `GET /api/campanias` y `GET /api/campanias/:id` (suma no persistida en `campanias-consultas.service.ts`). La vista pública (filtro `ACTIVA | COMPLETADA | FINALIZADA_PARCIAL`) queda a cargo del frontend. |
 | Diseño: edición básica y desactivación de campaña en MVP; `tipo` solo sin subcampañas, desactivación si no hay subcampañas o todas están `CANCELADA` | `01_reglas...` (RN-PLA-38), `02_Procesos...` §2.1/§3.1, `database/00_database_schema.md`, `decisiones/02_decisiones_plantacion.md` (ADR-PLA-01) | ✅ documentado |

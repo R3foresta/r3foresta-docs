@@ -24,7 +24,7 @@ Los contratos entre modulos no viven aqui, sino en:
   Define elegibilidad del origen, snapshots heredados, `CONSUMO_A_VIVERO`, invariantes de cantidad/unidad y transaccion atomica.
 
 - **Salida hacia Plantacion:** [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md)
-  Define asignaciones, devoluciones, saldos derivados, despacho automatico y mermas sobre asignaciones.
+  Define asignaciones fisicas, devoluciones fisicas, consumo de stock asignado y saldos derivados.
 
 ## Lectura operativa rapida
 

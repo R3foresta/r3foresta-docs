@@ -79,7 +79,7 @@
         "En BORRADOR la subcampaña no acepta asignaciones ni plantaciones; las asignaciones se hacen despues de activar.",
         "Una campaña tiene al menos 1 subcampaña; sin limite superior.",
         "La ventana de mantenimiento (3 anos) es configurable a nivel sistema.",
-        "Cancelacion (RN-PLA-37): solo ADMIN, y solo si total_plantado_inicial = 0 (BORRADOR o ACTIVA sin plantar); si ya hay plantaciones, el cierre correcto es FINALIZADA_PARCIAL. Al cancelar se registra SUBCAMPANIA_CANCELADA, la meta sale del agregado de campaña y se liberan las asignaciones activas (devolucion logica, sin evento en M2).",
+        "Cancelacion (RN-PLA-37): solo ADMIN, y solo si total_plantado_inicial = 0 (BORRADOR o ACTIVA sin plantar); si ya hay plantaciones, el cierre correcto es FINALIZADA_PARCIAL. Al cancelar se registra SUBCAMPANIA_CANCELADA, la meta sale del agregado de campaña y las asignaciones activas entregadas fisicamente deben resolverse con devolucion fisica al vivero.",
         "PAUSADA existe en el enum pero no se usa en MVP.",
         "Se registran automaticamente campos de auditoria."
       ]
@@ -113,10 +113,11 @@
     {
       "codigo": "RF-PLA-04",
       "modulo": "Plantacion",
-      "nombre": "Asignar lotes de vivero a subcampaña con proposito",
-      "descripcion": "Vincular stock vivo de lotes del Modulo 2 a una subcampaña, especificando el proposito de la asignacion (PLANTACION_INICIAL o REPOSICION).",
+      "nombre": "Asignar fisicamente lotes de vivero a subcampaña con proposito",
+      "descripcion": "Registrar la entrega fisica de stock vivo de lotes del Modulo 2 a una subcampaña activa, especificando el proposito de consumo de la asignacion (PLANTACION_INICIAL o REPOSICION).",
       "campos": [
         "Identificador unico de la asignacion",
+        "campania_id derivado desde la subcampaña o usado como contexto de UI",
         "subcampania_id obligatorio",
         "lote_vivero_id obligatorio",
         "cantidad_asignada > 0 (cantidad absoluta)",
@@ -125,15 +126,17 @@
         "Estado derivado: ACTIVA / AGOTADA / DEVUELTA",
         "Cantidad consumida acumulada (derivada)",
         "Cantidad devuelta acumulada (derivada)",
-        "Cantidad mermada acumulada (derivada desde mermas de vivero que afecten la reserva)",
+        "Cantidad mermada acumulada (derivada desde mermas de stock asignado en campo, si se implementa)",
         "Saldo asignado disponible (derivado)",
         "Cobertura contra meta por especie cuando proposito_asignacion = PLANTACION_INICIAL",
-        "usuario_asignacion y fecha_asignacion automaticos"
+        "usuario_asignacion y fecha_asignacion automaticos",
+        "Evidencia fotografica obligatoria de la entrega/salida desde vivero"
       ],
       "validaciones": [
-        "cantidad_asignada <= LOTE_VIVERO.saldo_vivo_actual - SUM(asignaciones_activas_del_lote).",
+        "cantidad_asignada <= LOTE_VIVERO.saldo_vivo_actual.",
         "Las asignaciones se cargan en cantidad absoluta; el porcentaje sobre saldo del lote es solo ayuda visual.",
         "El lote de vivero debe estar en estado ACTIVO.",
+        "El lote de vivero debe tener EMBOLSADO registrado.",
         "Asignaciones con proposito PLANTACION_INICIAL solo se aceptan en subcampañas ACTIVA.",
         "Asignaciones con proposito PLANTACION_INICIAL solo pueden usar lotes cuya planta_id exista en SUBCAMPANIA_META_ESPECIE para esa subcampaña.",
         "Asignaciones con proposito REPOSICION se aceptan en ACTIVA, COMPLETADA o FINALIZADA_PARCIAL.",
@@ -141,9 +144,12 @@
         "Solo ADMIN o COORDINADOR de la subcampaña pueden asignar."
       ],
       "reglas_adicionales": [
-        "Una asignacion no genera evento en el Modulo 2; es una reserva logica.",
+        "Una asignacion genera una salida fisica en el Modulo 2 y descuenta LOTE_VIVERO.saldo_vivo_actual.",
+        "El evento de salida usa destino_tipo = PLANTACION_CAMPANIA y un origen especifico de asignacion a subcampania, sugerido ASIGNACION_SUBCAMPANIA.",
+        "No se usa origen_despacho = AUTOMATICO_PLANTACION en este flujo.",
+        "registro_plantacion_id queda NULL en el despacho de asignacion porque todavia no existe una plantacion.",
         "Un lote puede asignar a varias subcampañas; una subcampaña puede recibir de varios lotes.",
-        "La asignacion inicial muestra cobertura por especie contra el plan; puede quedar sobrecubierta como reserva, pero la PLANTACION_INICIAL no puede exceder la cantidad objetivo de la especie.",
+        "La asignacion inicial muestra cobertura por especie contra el plan; puede quedar sobrecubierta como stock asignado, pero la PLANTACION_INICIAL no puede exceder la cantidad objetivo de la especie.",
         "Una asignacion con proposito PLANTACION_INICIAL solo puede consumirse en plantaciones iniciales; no en reposiciones.",
         "Una asignacion con proposito REPOSICION solo puede consumirse en reposiciones; no en plantaciones iniciales.",
         "saldo_asignado_disponible = cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada.",
@@ -156,7 +162,7 @@
       "codigo": "RF-PLA-05",
       "modulo": "Plantacion",
       "nombre": "Devolver arboles asignados al Vivero",
-      "descripcion": "Liberar reserva de arboles asignados que no se van a consumir, devolviendo saldo al lote de vivero. No genera evento en Modulo 2 porque los arboles nunca salieron fisicamente.",
+      "descripcion": "Registrar la devolucion fisica al vivero de arboles asignados a una subcampaña que no se van a consumir. En MVP no exige evidencia fotografica.",
       "campos": [
         "asignacion_id obligatorio",
         "cantidad_devuelta > 0",
@@ -170,16 +176,18 @@
         "Solo ADMIN o COORDINADOR de la subcampaña pueden devolver."
       ],
       "reglas_adicionales": [
-        "La devolucion no genera evento en el Modulo 2.",
-        "Reduce el saldo asignado y libera la reserva logica sobre el lote.",
-        "Debe registrarse como evento DEVOLUCION_A_VIVERO en EVENTO_PLANTACION."
+        "La devolucion aumenta ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_devuelta.",
+        "La devolucion aumenta LOTE_VIVERO.saldo_vivo_actual del lote origen.",
+        "Debe registrarse como evento DEVOLUCION_A_VIVERO en EVENTO_PLANTACION.",
+        "En MVP no requiere fotos ni evidencia obligatoria.",
+        "Cuando el esquema M2 lo soporte, debe registrarse un evento de entrada fisica en EVENTO_LOTE_VIVERO."
       ]
     },
     {
       "codigo": "RF-PLA-06",
       "modulo": "Plantacion",
-      "nombre": "Registrar plantacion inicial con seleccion explicita de lote",
-      "descripcion": "Registrar un grupo de arboles plantados en una micro-ubicacion, dentro de una subcampaña activa. El operario selecciona explicitamente de que lote(s) sale el material.",
+      "nombre": "Registrar plantacion inicial consumiendo stock asignado",
+      "descripcion": "Registrar un grupo de arboles plantados en una micro-ubicacion, dentro de una subcampaña activa, consumiendo exclusivamente stock fisicamente asignado a esa subcampaña.",
       "campos": [
         "Identificador unico del registro",
         "subcampania_id obligatorio (debe estar ACTIVA)",
@@ -188,7 +196,7 @@
         "fecha_plantacion obligatoria",
         "Latitud y Longitud obligatorias por GPS",
         "Fotografias obligatorias (minimo 1)",
-        "Lista de especies con cantidades y lote_vivero_origen por especie",
+        "Lista de especies con cantidades; el backend la resuelve contra asignaciones/lotes disponibles de la subcampaña",
         "Cantidad total plantada (derivada)",
         "Observaciones opcional",
         "Snapshots oficiales: nombre_subcampania_snapshot, nombre_zona_snapshot, nombre_responsable_snapshot, snapshots de especie por lote",
@@ -202,8 +210,8 @@
         "Cada cantidad por especie-lote > 0.",
         "Cada especie plantada debe existir en SUBCAMPANIA_META_ESPECIE para la subcampaña.",
         "El acumulado de PLANTACION_INICIAL por especie no puede superar la cantidad_objetivo de esa especie.",
-        "Cada lote seleccionado debe tener asignacion ACTIVA con proposito PLANTACION_INICIAL a esa subcampaña.",
-        "La cantidad por lote no puede exceder el saldo_asignado_disponible de esa asignacion.",
+        "Cada cantidad plantada debe cubrirse con asignaciones ACTIVAS con proposito PLANTACION_INICIAL de esa subcampaña.",
+        "La cantidad consumida no puede exceder el saldo_asignado_disponible de las asignaciones afectadas.",
         "Latitud en [-90, 90] con 6 decimales.",
         "Longitud en [-180, 180] con 6 decimales.",
         "El punto GPS debe estar dentro del poligono de la subcampaña con tolerancia configurable (default 50m); fuera de tolerancia se bloquea.",
@@ -214,19 +222,16 @@
         "Si la subcampaña esta COMPLETADA o FINALIZADA_PARCIAL, no se permite PLANTACION_INICIAL."
       ],
       "reglas_adicionales": [
-        "El operario selecciona explicitamente el lote por especie; si solo hay un lote disponible se preselecciona.",
-        "El flujo muestra progreso por especie: plantado inicial / cantidad objetivo.",
-        "Por cada lote afectado se genera atomicamente un DESPACHO en EVENTO_LOTE_VIVERO del Modulo 2.",
-        "DESPACHO.destino_tipo = PLANTACION_CAMPANIA.",
-        "DESPACHO.origen_despacho = AUTOMATICO_PLANTACION.",
-        "DESPACHO.destino_referencia = REGISTRO_PLANTACION.id.",
-        "DESPACHO lleva referencias subcampania_id y campania_id para drill-down.",
-        "DESPACHO.comunidad_destino_id se hereda de la subcampaña.",
-        "SUM(DESPACHO.cantidad_afectada) por registro = REGISTRO_PLANTACION.cantidad_total_plantada.",
+        "El flujo muestra progreso por especie: meta, plantado previo, plantando ahora y total proyectado.",
+        "El flujo muestra stock asignado disponible para consumir en la subcampaña.",
+        "Si solo hay una asignacion/lote disponible para la especie, el sistema puede consumirla automaticamente.",
+        "Si hay varias asignaciones/lotes para la especie, el MVP puede consumir automaticamente con orden estable o exponer seleccion manual; siempre debe persistir el detalle real por asignacion/lote/especie.",
+        "No genera DESPACHO en EVENTO_LOTE_VIVERO; el despacho fisico ya ocurrio al crear la asignacion.",
+        "No usa origen_despacho = AUTOMATICO_PLANTACION.",
+        "SUM(REGISTRO_PLANTACION_DETALLE.cantidad) por registro = REGISTRO_PLANTACION.cantidad_total_plantada.",
         "Unidad siempre UNIDAD.",
-        "Cada DESPACHO automatico requiere evidencia propia asociada al EVENTO_LOTE_VIVERO; la evidencia del REGISTRO_PLANTACION puede mostrarse como contexto, pero no la reemplaza.",
         "El registro es append-only: no se permite edicion posterior en el MVP.",
-        "Cada registro debe registrarse como evento PLANTACION_INICIAL en EVENTO_PLANTACION.",
+        "Cada plantacion inicial debe registrarse como fila en REGISTRO_PLANTACION con es_reposicion = false.",
         "Las reposiciones NO cuentan para la meta; solo PLANTACION_INICIAL avanza la barra de progreso.",
         "Sin porcentaje de participacion entre co-responsables; todos por igual."
       ]
@@ -241,7 +246,7 @@
         "Evento SUBCAMPANIA_COMPLETADA en SUBCAMPANIA_HISTORIAL",
         "fecha_cierre_operativo = NOW() del evento que dispara el cierre",
         "fecha_fin_mantenimiento = fecha_cierre_operativo + 3 anos",
-        "Referencia al evento PLANTACION_INICIAL que disparo el cierre"
+        "Referencia al REGISTRO_PLANTACION de plantacion inicial que disparo el cierre"
       ],
       "validaciones": [
         "Se evalua tras cada PLANTACION_INICIAL.",
@@ -345,8 +350,9 @@
       ],
       "reglas_adicionales": [
         "La reposicion consume saldo asignado con proposito REPOSICION.",
-        "Genera DESPACHO atomico en Modulo 2 con destino_tipo = PLANTACION_CAMPANIA y origen_despacho = AUTOMATICO_PLANTACION.",
-        "Se registra como evento REPOSICION en EVENTO_PLANTACION, append-only.",
+        "No genera DESPACHO atomico en Modulo 2; consume stock ya asignado fisicamente a la subcampaña.",
+        "No usa origen_despacho = AUTOMATICO_PLANTACION.",
+        "Se registra como fila en REGISTRO_PLANTACION con es_reposicion = true, append-only.",
         "Las reposiciones NO cuentan para la meta; suman al saldo vivo del grupo origen.",
         "Sin limite temporal en el MVP: una reposicion puede registrarse meses o anos despues.",
         "El sistema diferencia visualmente reposiciones hechas en MANTENIMIENTO_ACTIVO vs MONITOREO_HISTORICO."
@@ -404,13 +410,15 @@
       "nombre": "Evidencia y geolocalizacion estricta por evento",
       "descripcion": "Gestionar evidencias fotograficas y GPS como soportes obligatorios en todos los eventos operativos del MVP.",
       "campos": [
-        "Modelo polimorfico: tipo_entidad_id + entidad_id apuntando a EVENTO_PLANTACION.id",
+        "Modelo polimorfico: tipo_entidad_id + entidad_id apuntando a REGISTRO_PLANTACION, EVENTO_PLANTACION o EVENTO_LOTE_VIVERO segun corresponda",
         "Latitud/Longitud capturadas en PLANTACION_INICIAL, REPOSICION y MORTANDAD_REPORTADA",
         "Poligono GeoJSON de la subcampaña almacenado en SUBCAMPANIA",
         "Area en hectareas calculada automaticamente"
       ],
       "validaciones": [
         "PLANTACION_INICIAL, REPOSICION y MORTANDAD_REPORTADA requieren minimo 1 foto y GPS valido.",
+        "ASIGNACION fisica desde Vivero a subcampaña requiere evidencia fotografica de entrega/salida.",
+        "DEVOLUCION_A_VIVERO no requiere evidencia fotografica en MVP.",
         "El GPS debe estar dentro del poligono de la subcampaña con tolerancia configurable.",
         "Formato de fotos: JPG/PNG.",
         "Tamaño maximo por foto: 5 MB.",

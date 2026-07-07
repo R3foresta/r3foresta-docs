@@ -4,25 +4,33 @@
 
 Este contrato responde:
 
-> Como Plantacion reserva, consume o devuelve saldo vivo de Vivero?
+> Como Plantacion recibe, consume y devuelve plantas fisicamente entregadas desde Vivero?
 
 El contrato define la frontera entre Modulo 2 y Modulo 3. No convierte a Vivero Core en Plantacion ni duplica las reglas internas de Plantacion.
 
-Requerimientos movidos desde Vivero Core:
+Cambio estrategico vigente:
 
-- `RF-VIV-11` - Asignacion de lote a subcampania.
-- `RF-VIV-12` - Devolucion de saldo asignado.
-- `RF-VIV-13` - Saldos derivados con asignaciones.
-- `RF-VIV-14` - Politica de urgencia de mermas sobre asignaciones.
+- `ASIGNACION_VIVERO_SUBCAMPANIA` deja de significar "reserva logica".
+- `ASIGNACION_VIVERO_SUBCAMPANIA` pasa a significar **entrega fisica de plantas desde Vivero a una subcampania**.
+- Esas plantas son **stock de consumo de la subcampania**.
+- El registro de plantacion consume ese stock asignado; ya no genera un despacho automatico hacia Vivero.
+- `AUTOMATICO_PLANTACION` no debe usarse para el nuevo flujo de plantacion. Si existe en BD por migraciones anteriores, queda como legado a migrar/deprecar.
 
-Reglas movidas desde Vivero Core y conservadas con ID original:
+Requerimientos cubiertos:
+
+- `RF-VIV-11` - Asignacion fisica de lote a subcampania.
+- `RF-VIV-12` - Devolucion fisica de saldo asignado al vivero.
+- `RF-VIV-13` - Saldos derivados de stock de vivero y stock de subcampania.
+- `RF-VIV-14` - Mermas: separacion entre merma en vivero y merma de stock ya entregado.
+
+Reglas movidas desde Vivero Core y conservadas con ID original cuando aplica:
 
 - `RN-VIV-47` a `RN-VIV-61`.
 
 ## 2. Modulos involucrados
 
-- **Vivero (M2):** mantiene `LOTE_VIVERO`, saldo vivo real y eventos `EVENTO_LOTE_VIVERO`.
-- **Plantacion (M3):** gestiona `CAMPANIA`, `SUBCAMPANIA`, registros de plantacion, reposiciones, devoluciones y consumo de asignaciones.
+- **Vivero (M2):** mantiene `LOTE_VIVERO`, saldo vivo fisico que permanece en vivero y eventos `EVENTO_LOTE_VIVERO`.
+- **Plantacion (M3):** gestiona `CAMPANIA`, `SUBCAMPANIA`, stock asignado a subcampania, registros de plantacion, reposiciones, devoluciones y consumo de asignaciones.
 - **General:** aporta usuarios, territorios y evidencias transversales.
 
 ## 3. Entidades involucradas
@@ -33,36 +41,44 @@ Reglas movidas desde Vivero Core y conservadas con ID original:
 - `SUBCAMPANIA`
 - `CAMPANIA`
 - `REGISTRO_PLANTACION`
+- `REGISTRO_PLANTACION_DETALLE`
 - `EVENTO_PLANTACION`
 - `EVIDENCIAS_TRAZABILIDAD`
 
 ## 4. Conceptos base
 
-- **Saldo vivo real:** plantas fisicamente vivas en vivero (`LOTE_VIVERO.saldo_vivo_actual`).
-- **Asignacion:** reserva logica de saldo vivo para una subcampania. No mueve plantas fisicamente.
-- **Devolucion:** liberacion total o parcial de una reserva logica.
-- **Despacho automatico:** salida real emitida por el handler de M3 al registrar `PLANTACION_INICIAL` o `REPOSICION`.
-- **Despacho manual:** salida real emitida desde Vivero hacia un destino distinto de `PLANTACION_CAMPANIA`.
+- **Saldo vivo en vivero:** plantas fisicamente vivas que aun permanecen en el vivero (`LOTE_VIVERO.saldo_vivo_actual`).
+- **Asignacion fisica:** entrega real de una cantidad de plantas de un lote de vivero a una subcampania. Crea stock disponible para que esa subcampania lo consuma al registrar plantaciones o reposiciones.
+- **Stock de consumo de subcampania:** saldo disponible de una asignacion (`saldo_asignado_disponible`). Es el limite duro contra el que se valida cualquier plantacion o reposicion.
+- **Despacho por asignacion a subcampania:** salida real desde Vivero que ocurre al crear la asignacion fisica. Debe quedar registrada en `EVENTO_LOTE_VIVERO` con evidencia propia.
+- **Plantacion:** consumo de stock ya asignado fisicamente a la subcampania. No baja directamente `LOTE_VIVERO.saldo_vivo_actual`; solo aumenta `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_consumida`.
+- **Devolucion fisica:** retorno al vivero de plantas ya asignadas a una subcampania y aun no consumidas. En MVP se registra cantidad y motivo; la evidencia fotografica queda post-MVP.
 - **Proposito de asignacion:** `PLANTACION_INICIAL` o `REPOSICION`.
 
-## 5. Los tres saldos del lote
+## 5. Saldos
 
-### RF-VIV-13 - Saldos derivados del lote con asignaciones activas
+### 5.1 Saldo del lote de vivero
 
-El contrato expone tres saldos:
-
-- `saldo_vivo_actual`: persistido en `LOTE_VIVERO`.
-- `saldo_asignado_total`: derivado de asignaciones activas.
-- `saldo_vivo_disponible_asignacion`: derivado, libre para nuevas asignaciones o despachos manuales.
-
-Identidad fundamental:
+`LOTE_VIVERO.saldo_vivo_actual` representa un saldo fisico en vivero:
 
 ```text
-saldo_vivo_actual
-= saldo_vivo_disponible_asignacion + saldo_asignado_total
+saldo_vivo_actual_lote
+= plantas vivas que siguen fisicamente en vivero
 ```
 
-Saldo por asignacion:
+Por tanto, cuando se asignan fisicamente plantas a una subcampania, el saldo del lote baja en ese momento.
+
+Validacion para una nueva asignacion fisica:
+
+```text
+cantidad_asignada <= LOTE_VIVERO.saldo_vivo_actual
+```
+
+Ya no se resta `saldo_asignado_total` al validar una nueva asignacion, porque las asignaciones fisicas anteriores ya descontaron el saldo del lote.
+
+### 5.2 Saldo de la asignacion/subcampania
+
+La asignacion mantiene el stock entregado a la subcampania:
 
 ```text
 saldo_asignado_disponible
@@ -72,105 +88,162 @@ saldo_asignado_disponible
 - cantidad_mermada
 ```
 
-`cantidad_asignada` es inmutable. Si esta identidad se rompe, hay un bug critico.
+Interpretacion de columnas:
+
+- `cantidad_asignada`: cantidad fisicamente entregada a la subcampania. Es inmutable.
+- `cantidad_consumida`: cantidad plantada o repuesta desde esa asignacion.
+- `cantidad_devuelta`: cantidad fisicamente devuelta al vivero.
+- `cantidad_mermada`: cantidad perdida del stock de campo antes de ser plantada. En MVP puede quedar sin flujo operativo si no se implementa merma de campo.
+- `saldo_asignado_disponible`: stock disponible para consumir en una plantacion o reposicion.
+
+Si esta identidad se rompe, hay un bug critico.
 
 ## 6. Operaciones del contrato
 
-### 6.1 Asignacion
+### 6.1 Asignacion fisica a subcampania
 
 ### RF-VIV-11 - Asignacion de lote a subcampania
 
-La asignacion reserva parte del saldo vivo de un lote para una subcampania de Plantacion.
+La asignacion representa que una cantidad concreta de plantas sale del vivero y queda fisicamente disponible para una subcampania.
 
 Datos minimos:
 
+- `campania_id` derivado desde la subcampania o seleccionado como contexto de UI.
 - `subcampania_id`
 - `lote_vivero_id`
 - `proposito` (`PLANTACION_INICIAL | REPOSICION`)
 - `cantidad_asignada` en `UNIDAD`, entero positivo
 - `usuario_asignacion_id`
 - `fecha_asignacion`
+- evidencia fotografica del despacho/entrega
 
 Validaciones:
 
 - `cantidad_asignada > 0`.
-- `cantidad_asignada <= saldo_vivo_disponible_asignacion`.
+- `cantidad_asignada <= LOTE_VIVERO.saldo_vivo_actual`.
 - El lote debe estar `ACTIVO`.
-- **El lote debe tener un evento `EMBOLSADO` registrado.** Sin esto solo existe material en proceso, no plantas vivas para reservar.
-- `saldo_vivo_actual > 0` y `saldo_vivo_actual` no es `NULL`. Solo se asigna material vivo.
+- El lote debe tener un evento `EMBOLSADO` registrado. Sin esto solo existe material en proceso, no plantas vivas para entregar.
+- `saldo_vivo_actual > 0` y `saldo_vivo_actual` no es `NULL`.
+- La subcampania debe existir y no estar eliminada.
 - `PLANTACION_INICIAL` solo se acepta si la subcampania esta `ACTIVA`.
 - `REPOSICION` se acepta en subcampania `ACTIVA`, `COMPLETADA` o `FINALIZADA_PARCIAL`.
 - La asignacion tiene proposito tipado y no puede consumirse para otro proposito.
+- Solo `ADMIN` o `COORDINADOR` de la subcampania pueden registrar la asignacion.
 
-Efectos:
+Efectos atomicos:
 
 - Crea una fila en `ASIGNACION_VIVERO_SUBCAMPANIA`.
-- No modifica `LOTE_VIVERO.saldo_vivo_actual`.
-- No genera evento en `EVENTO_LOTE_VIVERO`.
-- Disminuye de forma derivada `saldo_vivo_disponible_asignacion`.
+- Registra un `EVENTO_LOTE_VIVERO` de salida fisica por asignacion.
+- Baja `LOTE_VIVERO.saldo_vivo_actual` en `cantidad_asignada`.
+- Vincula evidencia propia al evento de salida desde vivero.
+- Registra `ASIGNACION_VIVERO` en `EVENTO_PLANTACION` para la linea de tiempo de M3.
 
-### 6.2 Devolucion
+Datos esperados del evento de salida en M2:
+
+```text
+tipo_evento = DESPACHO
+origen_despacho = ASIGNACION_SUBCAMPANIA
+destino_tipo = PLANTACION_CAMPANIA
+subcampania_id = <id>
+campania_id = <id>
+registro_plantacion_id = NULL
+destino_referencia = <referencia de la asignacion>
+comunidad_destino_id = subcampania.zona_id
+unidad_medida_evento = UNIDAD
+cantidad_afectada = cantidad_asignada
+responsable_id = usuario_asignacion_id
+fecha_evento = fecha_asignacion
+```
+
+Nota de implementacion: `ASIGNACION_SUBCAMPANIA` es el origen de despacho que debe reemplazar el uso anterior de `AUTOMATICO_PLANTACION` para este caso. El CHECK de `EVENTO_LOTE_VIVERO` debe permitir `PLANTACION_CAMPANIA` con `registro_plantacion_id = NULL` cuando el origen sea `ASIGNACION_SUBCAMPANIA`.
+
+### 6.2 Registro de plantacion o reposicion
+
+La plantacion consume stock ya entregado a la subcampania. No genera despacho en Vivero.
+
+Datos relevantes:
+
+- `subcampania_id`
+- `responsable_id`
+- fecha
+- GPS
+- fotos de plantacion
+- detalles por especie/asignacion/lote
+- notas de campo
+
+Validaciones:
+
+- La subcampania debe estar en un estado permitido para el tipo de registro.
+- Cada cantidad por especie/asignacion debe ser mayor a 0.
+- La asignacion debe pertenecer a la subcampania.
+- La asignacion debe estar `ACTIVA`.
+- El proposito de la asignacion debe coincidir con el tipo de registro:
+  - `PLANTACION_INICIAL` consume asignaciones `PLANTACION_INICIAL`.
+  - `REPOSICION` consume asignaciones `REPOSICION`.
+- La cantidad a plantar no puede exceder `saldo_asignado_disponible`.
+- En plantacion inicial, la especie debe existir en `SUBCAMPANIA_META_ESPECIE` y no puede exceder la meta por especie.
+
+Efectos atomicos:
+
+- Crea `REGISTRO_PLANTACION`.
+- Crea `REGISTRO_PLANTACION_DETALLE`.
+- Aumenta `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_consumida`.
+- Vincula evidencia al `REGISTRO_PLANTACION`.
+- Actualiza contadores de subcampania/grupo cuando aplique.
+- No inserta `EVENTO_LOTE_VIVERO` tipo `DESPACHO`.
+- No modifica `LOTE_VIVERO.saldo_vivo_actual`.
+
+Invariante por registro:
+
+```text
+SUM(REGISTRO_PLANTACION_DETALLE.cantidad where registro_plantacion_id = X)
+= REGISTRO_PLANTACION.cantidad_total_plantada
+```
+
+Invariante contra asignacion:
+
+```text
+SUM(REGISTRO_PLANTACION_DETALLE.cantidad where asignacion_id = A)
+<= ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_asignada
+   - cantidad_devuelta
+   - cantidad_mermada
+```
+
+### 6.3 Devolucion fisica al vivero
 
 ### RF-VIV-12 - Devolucion de saldo asignado al lote
 
-La devolucion libera saldo reservado que no se consumira.
+La devolucion fisica retorna al vivero plantas asignadas a una subcampania que no fueron consumidas.
 
-Datos minimos:
+Datos minimos MVP:
 
 - `asignacion_id`
 - `cantidad_devuelta > 0`
 - `motivo_devolucion`
 - `usuario_devolucion_id`
 - `fecha_devolucion`
+- `observaciones` opcional
 
 Validaciones:
 
 - `cantidad_devuelta <= saldo_asignado_disponible`.
 - La asignacion no puede estar `DEVUELTA`.
 - `cantidad_asignada` no se modifica.
+- Solo `ADMIN` o `COORDINADOR` de la subcampania pueden devolver.
 
-Efectos:
+Efectos atomicos:
 
 - Aumenta `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_devuelta`.
-- Recalcula de forma derivada `saldo_asignado_disponible`.
-- Aumenta de forma derivada `saldo_vivo_disponible_asignacion`.
-- No modifica `LOTE_VIVERO.saldo_vivo_actual`.
-- No genera evento en `EVENTO_LOTE_VIVERO`.
-- En M3 se registra `DEVOLUCION_A_VIVERO` en `EVENTO_PLANTACION`.
+- Aumenta `LOTE_VIVERO.saldo_vivo_actual` del lote origen en `cantidad_devuelta`.
+- Registra `DEVOLUCION_A_VIVERO` en `EVENTO_PLANTACION`.
+- Registra, cuando el esquema lo soporte, un evento de entrada fisica en `EVENTO_LOTE_VIVERO` para que el historial del lote explique el aumento de saldo.
+- En MVP no exige evidencia fotografica de devolucion.
 
-### 6.3 Despacho automatico desde Plantacion
-
-El despacho automatico es una salida real desde Vivero disparada por M3.
-
-Datos del evento `DESPACHO`:
-
-```text
-tipo_evento = DESPACHO
-origen_despacho = AUTOMATICO_PLANTACION
-destino_tipo = PLANTACION_CAMPANIA
-subcampania_id = <id>
-campania_id = <id>
-registro_plantacion_id = <id>
-comunidad_destino_id = subcampania.zona_id
-unidad_medida_evento = UNIDAD
-cantidad_afectada = <cantidad del lote consumida>
-responsable_id = registro_plantacion.responsable_id
-fecha_evento = registro_plantacion.fecha_plantacion
-```
-
-Reglas:
-
-- Solo puede crearlo el handler de M3.
-- No se acepta crear directamente por API de M2.
-- Debe validar contra `saldo_asignado_disponible`.
-- Aumenta `cantidad_consumida` de la asignacion correspondiente.
-- Genera evento `DESPACHO` en M2.
-- Baja `LOTE_VIVERO.saldo_vivo_actual`.
-- Requiere evidencia propia asociada al evento de Vivero.
+Nota de implementacion: si `EVENTO_LOTE_VIVERO` aun no tiene un tipo de evento para devolucion fisica desde plantacion, debe agregarse uno antes de implementar el ajuste de saldo de forma productiva. Nombre sugerido: `DEVOLUCION_PLANTACION`.
 
 ### 6.4 Despacho manual desde Vivero
 
-El despacho manual es una salida real registrada por Vivero hacia un destino distinto de una subcampania de Plantacion.
+El despacho manual sigue siendo una salida real registrada por Vivero hacia un destino distinto de una subcampania de Plantacion.
 
 Datos minimos:
 
@@ -189,84 +262,82 @@ cantidad_afectada = <cantidad despachada>
 Reglas:
 
 - No puede usar `PLANTACION_CAMPANIA`.
-- No puede tocar saldo reservado.
-- Valida contra `saldo_vivo_disponible_asignacion`.
+- Valida contra `LOTE_VIVERO.saldo_vivo_actual`.
 - Genera evento `DESPACHO` en M2.
 - Baja `LOTE_VIVERO.saldo_vivo_actual`.
 - Requiere evidencia propia asociada al evento de Vivero.
 
 ## 7. Invariantes
 
-### RN-VIV-47 - Asignacion de lote a subcampania es reserva logica
+### RN-VIV-47 - Asignacion de lote a subcampania es entrega fisica
 
-Asignar saldo de un lote a una subcampania de Plantacion es una reserva logica: queda registrada en `ASIGNACION_VIVERO_SUBCAMPANIA` pero no genera evento en `EVENTO_LOTE_VIVERO` y no modifica `LOTE_VIVERO.saldo_vivo_actual`. Los arboles siguen fisicamente en el vivero.
+Asignar plantas de un lote a una subcampania de Plantacion significa entrega fisica. La asignacion crea stock de consumo para la subcampania y descuenta el saldo vivo del lote en vivero.
 
-### RN-VIV-48 - Devolucion de saldo asignado al vivero no genera evento en M2
+No se debe modelar como reserva logica en el MVP vigente.
 
-Cuando el Modulo 3 procesa una `DEVOLUCION_A_VIVERO`, el Modulo 2 no genera evento alguno. Los arboles nunca salieron fisicamente. Solo cambia `cantidad_devuelta` en la asignacion y, por derivacion, `saldo_asignado_disponible` y `saldo_vivo_disponible_asignacion` del lote.
+### RN-VIV-48 - Devolucion de saldo asignado al vivero es fisica
+
+Cuando Plantacion procesa una `DEVOLUCION_A_VIVERO`, las plantas vuelven fisicamente al vivero. La operacion aumenta `cantidad_devuelta` en la asignacion y aumenta `LOTE_VIVERO.saldo_vivo_actual` del lote origen.
+
+En MVP la devolucion no exige fotos. La evidencia de devolucion queda post-MVP.
 
 ### RN-VIV-49 - `cantidad_asignada` es inmutable
 
-`ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_asignada` representa la reserva original y no debe modificarse despues de creada. Los consumos, devoluciones y afectaciones por merma se registran en campos separados (`cantidad_consumida`, `cantidad_devuelta`, `cantidad_mermada`).
+`ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_asignada` representa la cantidad entregada originalmente a la subcampania y no debe modificarse despues de creada. Los consumos, devoluciones y mermas viven en columnas separadas (`cantidad_consumida`, `cantidad_devuelta`, `cantidad_mermada`).
 
-Modificar `cantidad_asignada` para compensar una merma o devolucion borra historia y dificulta auditoria.
+Modificar `cantidad_asignada` para compensar una merma, devolucion o error borra historia y dificulta auditoria.
 
-### RN-VIV-52 - Despacho automatico heredado desde Plantacion
+### RN-VIV-52 - Plantacion no genera despacho automatico en M2
 
-Cada `PLANTACION_INICIAL` y cada `REPOSICION` registrada en Modulo 3 genera atomicamente uno o mas eventos `DESPACHO` en `EVENTO_LOTE_VIVERO`, uno por cada lote afectado, con:
+Cada `PLANTACION_INICIAL` y cada `REPOSICION` consume stock ya asignado a la subcampania. Por tanto, no genera `EVENTO_LOTE_VIVERO` tipo `DESPACHO` ni usa `origen_despacho = AUTOMATICO_PLANTACION`.
 
-- `origen_despacho = AUTOMATICO_PLANTACION`,
-- `destino_tipo = PLANTACION_CAMPANIA`,
-- `subcampania_id`, `campania_id`, `registro_plantacion_id` poblados,
-- `comunidad_destino_id` heredada de la subcampania,
-- `unidad_medida_evento = UNIDAD`.
+El evento de salida desde vivero ya ocurrio al crear la asignacion fisica (`ASIGNACION_SUBCAMPANIA`).
 
-El despacho automatico nunca se crea por API directa de Vivero; solo lo emite el handler de Modulo 3.
-
-### RN-VIV-53 - Invariante de conservacion por registro de plantacion
+### RN-VIV-53 - Conservacion por registro de plantacion
 
 Para todo `REGISTRO_PLANTACION` se cumple:
 
 ```text
-SUM(DESPACHO.cantidad_afectada
-    where registro_plantacion_id = X
-      and origen_despacho = AUTOMATICO_PLANTACION)
+SUM(REGISTRO_PLANTACION_DETALLE.cantidad
+    where registro_plantacion_id = X)
 = REGISTRO_PLANTACION.cantidad_total_plantada
 ```
 
-Si esa identidad no se cumple, el registro y sus despachos estan inconsistentes.
+Si esa identidad no se cumple, el registro y sus detalles estan inconsistentes.
 
-### RN-VIV-54 - Evidencia propia obligatoria en despacho automatico
+### RN-VIV-54 - Evidencia obligatoria en la asignacion/despacho a subcampania
 
-Un `DESPACHO` con `origen_despacho = AUTOMATICO_PLANTACION` requiere evidencia propia en `EVIDENCIAS_TRAZABILIDAD`, vinculada directamente al `EVENTO_LOTE_VIVERO.id`.
+La salida fisica desde vivero hacia una subcampania requiere evidencia propia asociada al evento de Vivero que respalda la asignacion fisica.
 
-La evidencia del `REGISTRO_PLANTACION` asociado puede mostrarse como contexto cruzado, pero no reemplaza la evidencia del despacho. La transaccion atomica no debe llegar al commit si el evento `DESPACHO` automatico no trae al menos una foto valida del material despachado.
+La evidencia de la plantacion posterior no reemplaza la evidencia de entrega/asignacion. Son dos hechos distintos:
 
-### RN-VIV-55 - Despacho manual no puede tener destino `PLANTACION_CAMPANIA`
+- entrega fisica de plantas a la subcampania,
+- plantacion efectiva en campo.
 
-Un `DESPACHO` con `origen_despacho = MANUAL` no puede tener `destino_tipo = PLANTACION_CAMPANIA`, ni traer `subcampania_id`, `campania_id` ni `registro_plantacion_id` poblados.
+### RN-VIV-55 - `AUTOMATICO_PLANTACION` no se usa en el flujo vigente
 
-Cualquier salida hacia subcampanias tiene que originarse en un registro de plantacion de M3.
+El origen `AUTOMATICO_PLANTACION` queda obsoleto para el nuevo flujo. No debe emitirse al guardar `REGISTRO_PLANTACION`.
 
-### RN-VIV-56 - Despacho manual valida contra saldo libre, no saldo vivo
+Para salidas hacia subcampania se debe usar un origen especifico de asignacion fisica, sugerido: `ASIGNACION_SUBCAMPANIA`.
 
-Un `DESPACHO` con `origen_despacho = MANUAL` valida su cantidad contra `saldo_vivo_disponible_asignacion` del lote, no contra `saldo_vivo_actual`.
+### RN-VIV-56 - Despacho manual valida contra saldo fisico en vivero
 
-Esto significa que el operario de vivero no puede tocar stock reservado por subcampanias activas.
+Como las asignaciones fisicas ya descuentan el saldo del lote, un despacho manual valida contra `LOTE_VIVERO.saldo_vivo_actual`. No existe stock "reservado pero aun dentro del vivero" que deba restarse.
 
-### RN-VIV-57 - Saldos derivados del lote
+### RN-VIV-57 - Saldos derivados
 
-El contrato debe exponer tres saldos para cada lote:
+El contrato expone dos familias de saldo:
 
-- `saldo_vivo_actual` persistido en `LOTE_VIVERO`,
-- `saldo_asignado_total` derivado de asignaciones activas,
-- `saldo_vivo_disponible_asignacion` derivado.
+- Saldo del lote en vivero: `LOTE_VIVERO.saldo_vivo_actual`.
+- Saldo de stock asignado a subcampania: `ASIGNACION_VIVERO_SUBCAMPANIA.saldo_asignado_disponible`.
 
-Identidad invariante:
+La identidad antigua:
 
 ```text
 saldo_vivo_actual = saldo_vivo_disponible_asignacion + saldo_asignado_total
 ```
+
+ya no aplica al flujo vigente porque la asignacion es fisica y descuenta el saldo del lote.
 
 ### RN-VIV-58 - Asignacion con proposito tipado
 
@@ -289,110 +360,93 @@ Una reposicion puede usar stock de cualquier especie disponible en una asignacio
 
 Una asignacion solo puede crearse si el lote cumple todas estas condiciones:
 
-- Lote esta `ACTIVO`,
-- existe evento `EMBOLSADO` registrado en el lote (sin esto, el material aun esta en proceso de maduración, no hay plantas vivas para reservar),
-- `saldo_vivo_actual > 0`,
+- Lote esta `ACTIVO`.
+- Existe evento `EMBOLSADO` registrado en el lote.
+- `saldo_vivo_actual > 0`.
 - `saldo_vivo_actual` no es `NULL`.
 
-Esta regla previene que el sistema reserve material no viable (semillas, material pre-embolsado, etc.) como si fueran plantines listos para plantar. La asignacion es reserva de material vivo que ya paso por embolsado y tiene trazabilidad de saldo.
+Esta regla previene entregar material no viable (semillas, material pre-embolsado, etc.) como si fueran plantines listos para plantar.
 
-## 8. Politica de mermas sobre asignaciones
+## 8. Politica de mermas
 
-### RF-VIV-14 - Politica de urgencia de mermas sobre asignaciones activas
+### 8.1 Merma en vivero
 
-### RN-VIV-50 - Politica de mermas sobre asignaciones por urgencia de subcampania
+Una `MERMA` registrada en M2 solo afecta plantas que siguen fisicamente en vivero. Como las asignaciones a subcampania ya descontaron `LOTE_VIVERO.saldo_vivo_actual`, una merma posterior del lote no puede reducir asignaciones ya entregadas.
 
-Cuando una `MERMA` excede el saldo no asignado del lote, el excedente se distribuye sobre las asignaciones activas ordenando por:
+### 8.2 Merma de stock asignado en campo
 
-```text
-subcampania.fecha_estimada_inicio DESC NULLS FIRST,
-asignacion.id DESC
-```
+Si se necesita registrar perdida de plantas ya entregadas a una subcampania pero aun no plantadas, debe afectar `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_mermada`.
 
-La subcampania con `fecha_estimada_inicio` mas lejana absorbe primero porque tiene mayor margen operativo. La subcampania mas proxima queda protegida porque es mas urgente. Las subcampanias sin fecha (`NULL`) se tratan como no urgentes y absorben antes que cualquier fecha concreta.
+En MVP este flujo puede quedar fuera de alcance. Si se implementa, debe:
 
-Formula:
-
-```text
-saldo_no_asignado = saldo_vivo_actual - saldo_asignado_total
-
-si cantidad_merma <= saldo_no_asignado:
-    no se tocan asignaciones
-
-si cantidad_merma > saldo_no_asignado:
-    excedente = cantidad_merma - saldo_no_asignado
-    distribuir excedente sobre asignaciones activas por urgencia
-    cada asignacion afectada aumenta cantidad_mermada
-```
-
-Reglas:
-
-- `cantidad_asignada` nunca se modifica.
-- La merma no puede dejar `saldo_asignado_disponible < 0`.
-- La merma no puede dejar `saldo_vivo_actual < 0`.
-- El evento `MERMA` en M2 puede guardar `metadata.afectacion_asignaciones`.
-
-### RN-VIV-51 - Notificacion al coordinador por merma sobre asignacion
-
-Si una merma del vivero afecta la asignacion de una subcampania, el sistema debe notificar al coordinador de esa subcampania con los datos minimos:
-
-- subcampania,
-- lote,
-- cantidad mermada sobre su asignacion,
-- nuevo saldo asignado disponible,
-- fecha,
-- causa,
-- responsable de la merma.
-
-El canal exacto se define operativamente.
+- exigir cantidad > 0,
+- validar `cantidad_mermada <= saldo_asignado_disponible`,
+- registrar evento append-only en M3,
+- no modificar `LOTE_VIVERO.saldo_vivo_actual`,
+- diferenciarse de mortandad de plantas ya plantadas.
 
 ## 9. Evidencia requerida
 
-Todo despacho, manual o automatico, requiere evidencia propia asociada al evento de Vivero.
-
 Reglas:
 
+- La salida fisica de vivero hacia subcampania requiere evidencia propia.
 - La evidencia vive en `EVIDENCIAS_TRAZABILIDAD`.
-- La evidencia se vincula a `EVENTO_LOTE_VIVERO.id`.
-- La evidencia de `REGISTRO_PLANTACION` puede mostrarse como contexto, pero no reemplaza la evidencia propia del despacho automatico.
-- La asignacion y la devolucion no generan evento en M2 y no requieren evidencia de Vivero.
+- La evidencia de asignacion se vincula al evento de Vivero que respalda el despacho por asignacion.
+- La plantacion requiere evidencia propia vinculada a `REGISTRO_PLANTACION`.
+- La devolucion fisica al vivero no exige evidencia en MVP; evidencia de devolucion queda post-MVP.
 
 ## 10. Concurrencia y transacciones
 
-La transaccion de despacho automatico debe incluir:
+La transaccion de asignacion fisica debe incluir:
 
+- bloquear el lote de vivero,
+- validar saldo vivo actual,
+- insertar `ASIGNACION_VIVERO_SUBCAMPANIA`,
+- insertar `EVENTO_LOTE_VIVERO` de salida hacia subcampania,
+- descontar `LOTE_VIVERO.saldo_vivo_actual`,
+- vincular evidencia del despacho/asignacion,
+- registrar `ASIGNACION_VIVERO` en `EVENTO_PLANTACION`.
+
+La transaccion de plantacion debe incluir:
+
+- bloquear asignaciones afectadas,
+- validar `saldo_asignado_disponible`,
 - insertar `REGISTRO_PLANTACION`,
+- insertar `REGISTRO_PLANTACION_DETALLE`,
 - actualizar `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_consumida`,
-- insertar uno o mas `EVENTO_LOTE_VIVERO` tipo `DESPACHO`,
-- vincular evidencia propia de cada despacho,
-- recalcular o proyectar saldos correspondientes.
+- vincular evidencia de plantacion,
+- actualizar contadores de subcampania/grupo cuando aplique.
+
+La transaccion de devolucion fisica debe incluir:
+
+- bloquear la asignacion,
+- bloquear el lote de vivero,
+- validar `cantidad_devuelta <= saldo_asignado_disponible`,
+- aumentar `cantidad_devuelta`,
+- aumentar `LOTE_VIVERO.saldo_vivo_actual`,
+- registrar `DEVOLUCION_A_VIVERO` en `EVENTO_PLANTACION`,
+- registrar evento de entrada fisica en M2 cuando el esquema lo soporte.
 
 Si una parte falla, falla toda la operacion.
-
-El handler debe bloquear las filas involucradas con estrategia equivalente a `SELECT ... FOR UPDATE` sobre lote/asignaciones afectadas para evitar carreras entre:
-
-- dos plantaciones simultaneas sobre la misma asignacion,
-- devolucion y plantacion simultaneas,
-- merma y plantacion simultaneas,
-- despacho manual y nuevas asignaciones.
 
 ## 11. Responsabilidad de cada modulo
 
 **Vivero es responsable de:**
 
-- mantener `LOTE_VIVERO.saldo_vivo_actual`,
-- registrar eventos `MERMA` y `DESPACHO`,
-- exigir evidencia propia del despacho,
-- impedir que un despacho manual use `PLANTACION_CAMPANIA`,
-- impedir que un despacho manual toque saldo reservado.
+- mantener `LOTE_VIVERO.saldo_vivo_actual` como saldo fisico que permanece en vivero,
+- registrar eventos de salida fisica por asignacion a subcampania,
+- exigir evidencia propia para la salida hacia subcampania,
+- registrar mermas solo sobre stock que sigue en vivero,
+- impedir que un despacho manual use `PLANTACION_CAMPANIA`.
 
 **Plantacion es responsable de:**
 
 - crear y consumir asignaciones segun subcampania y proposito,
+- tratar la asignacion como stock fisico disponible para la subcampania,
 - registrar `REGISTRO_PLANTACION`,
-- registrar `EVENTO_PLANTACION` para devoluciones y eventos propios de M3,
-- disparar el despacho automatico mediante handler de M3,
-- validar que el consumo respete `saldo_asignado_disponible`.
+- registrar `EVENTO_PLANTACION` para asignaciones, devoluciones y eventos propios de M3,
+- validar que la plantacion respete `saldo_asignado_disponible`,
+- no generar despachos automaticos al plantar.
 
 **El contrato es responsable de:**
 
@@ -403,17 +457,25 @@ El handler debe bloquear las filas involucradas con estrategia equivalente a `SE
 
 ## 12. Estado de implementacion
 
-Contrato definido para el MVP.
+Contrato actualizado para el MVP bajo el enfoque de asignacion fisica.
 
-La implementacion puede estar parcial o diferida hasta Modulo 3. No asumir que asignaciones, devoluciones, despacho automatico, mermas sobre asignaciones o saldos derivados estan activos en produccion sin confirmarlo en [`../ESTADO.md`](../ESTADO.md).
+La implementacion puede estar parcial o diferida hasta Modulo 3. No asumir que el backend ya refleja este contrato sin confirmarlo en [`../ESTADO.md`](../ESTADO.md).
+
+Cambios de backend esperados respecto a la implementacion anterior:
+
+- agregar o reemplazar el origen de despacho `ASIGNACION_SUBCAMPANIA`,
+- ajustar CHECKs de `EVENTO_LOTE_VIVERO` para permitir `PLANTACION_CAMPANIA` sin `registro_plantacion_id` cuando el origen sea asignacion a subcampania,
+- dejar de generar `DESPACHO AUTOMATICO_PLANTACION` desde `fn_m3_registrar_plantacion`,
+- hacer que la creacion de asignacion descuente `LOTE_VIVERO.saldo_vivo_actual`,
+- hacer que la devolucion fisica aumente `LOTE_VIVERO.saldo_vivo_actual`,
+- agregar soporte de evento M2 para devolucion fisica o documentar explicitamente el ajuste transaccional hasta que exista.
 
 ## 13. TODO / Decision pendiente
 
-### Coordinador
+### Evento M2 para devolucion fisica
 
-Aclarar si `COORDINADOR` sera:
+Definir el nombre definitivo del evento de entrada fisica al vivero para devoluciones desde Plantacion. Nombre sugerido: `DEVOLUCION_PLANTACION`.
 
-- rol global en `rol_usuario`, o
-- responsabilidad funcional dentro de una subcampania.
+### Evidencia de devolucion
 
-Recomendacion documental actual: `COORDINADOR` no deberia ser rol global si ya existen `ADMIN` y `GENERAL`. Debe modelarse como usuario responsable/coordinador asociado a `SUBCAMPANIA`.
+En MVP la devolucion se registra solo con cantidad y motivo, sin fotos. La evidencia fotografica de devolucion queda para una fase posterior.

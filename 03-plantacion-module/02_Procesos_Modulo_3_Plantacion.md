@@ -191,7 +191,7 @@ Ejemplo: subcampaña con `meta_total_arboles = 1000`:
 | Jacarandá | 30% | 300 |
 | Queñua | 50% | 500 |
 
-La planificación vive en `SUBCAMPANIA_META_ESPECIE`, no en la asignación de vivero. La asignación sigue siendo una reserva física de árboles desde uno o más lotes; el plan por especie es la referencia operativa para saber si el stock asignado y lo plantado cubren la meta.
+La planificación vive en `SUBCAMPANIA_META_ESPECIE`, no en la asignación de vivero. La asignación es stock físico entregado desde uno o más lotes; el plan por especie es la referencia operativa para saber si el stock asignado y lo plantado cubren la meta.
 
 Reglas:
 
@@ -298,55 +298,84 @@ Validaciones para activar:
 
 Si todas las validaciones pasan, la subcampaña pasa a `ACTIVA`. Si la subcampaña se activa sin stock asignado al 100%, el sistema muestra advertencia pero permite continuar. La advertencia debe mostrar cobertura total y cobertura por especie.
 
-### 3.4. Asignación de árboles desde Vivero a subcampaña
+### 3.4. Asignación física de árboles desde Vivero a subcampaña
 
-**Objetivo:** vincular stock vivo del vivero a la subcampaña operativa.
+**Objetivo:** registrar que una cantidad concreta de árboles sale físicamente del vivero y queda disponible como stock de consumo de una subcampaña operativa.
 
+Entrada de UI:
+
+- Desde el dashboard de campaña se selecciona la campaña padre como contexto.
+- Dentro de esa campaña se selecciona la subcampaña activa que recibe las plantas.
 - El admin o coordinador selecciona lotes de vivero con saldo vivo disponible.
-- Define la cantidad a asignar de cada lote (cantidad absoluta).
+- Define la cantidad a entregar de cada lote (cantidad absoluta).
 - Define el **propósito**: `PLANTACION_INICIAL` o `REPOSICION`.
+- Adjunta evidencia fotografica de la entrega/salida desde vivero.
 - El sistema crea una `ASIGNACION_VIVERO_SUBCAMPANIA` por cada lote-subcampaña-propósito.
 - Para `PLANTACION_INICIAL`, el sistema muestra la cobertura contra `SUBCAMPANIA_META_ESPECIE` usando la especie del lote (`LOTE_VIVERO.planta_id`).
 
 Restricciones:
 
-- La cantidad asignada no puede exceder el saldo vivo disponible del lote (saldo_vivo_actual − asignaciones_activas_de_ese_lote).
+- La cantidad asignada no puede exceder `LOTE_VIVERO.saldo_vivo_actual`.
 - Solo se pueden asignar lotes en estado `ACTIVO` en el Módulo 2.
+- El lote debe tener `EMBOLSADO` registrado.
 - Asignaciones con propósito `PLANTACION_INICIAL` solo se aceptan en subcampañas `ACTIVA`.
 - Asignaciones con propósito `PLANTACION_INICIAL` solo pueden tomar lotes cuya especie esté en el plan de metas de la subcampaña.
 - Asignaciones con propósito `REPOSICION` se aceptan en `ACTIVA`, `COMPLETADA` o `FINALIZADA_PARCIAL`.
-- Si una asignación inicial deja una especie con stock reservado por encima de su `cantidad_objetivo`, se permite pero debe mostrarse como sobrecobertura para que el coordinador devuelva o reasigne antes del cierre.
+- Si una asignación inicial deja una especie con stock asignado por encima de su `cantidad_objetivo`, se permite pero debe mostrarse como sobrecobertura para que el coordinador devuelva o reasigne antes del cierre.
 
-La asignación **no genera evento en el Módulo 2** porque es una reserva lógica; el saldo vivo del lote no se descuenta hasta que se planta efectivamente.
+Al guardar, el sistema:
+
+1. Crea la `ASIGNACION_VIVERO_SUBCAMPANIA`.
+2. Registra un `EVENTO_LOTE_VIVERO` de salida física hacia la subcampaña.
+3. Usa `destino_tipo = PLANTACION_CAMPANIA`.
+4. Usa un origen de despacho específico para este flujo, sugerido: `ASIGNACION_SUBCAMPANIA`.
+5. No usa `AUTOMATICO_PLANTACION`.
+6. Pone `campania_id` y `subcampania_id` para drill-down.
+7. Mantiene `registro_plantacion_id = NULL`, porque todavía no existe una plantación.
+8. Descuenta `LOTE_VIVERO.saldo_vivo_actual`.
+9. Vincula la evidencia fotografica de entrega al evento de Vivero.
+10. Registra `ASIGNACION_VIVERO` en `EVENTO_PLANTACION` como linea de tiempo de M3.
+
+La asignación es desde este punto el **stock disponible para plantar** en esa subcampaña.
 
 ### 3.5. Devolución al vivero
 
-**Objetivo:** liberar reservas de árboles que no se plantarán.
+**Objetivo:** devolver fisicamente al vivero árboles que fueron asignados a una subcampaña y no se plantarán.
 
-- Solo aplica sobre cantidad asignada pero no plantada.
+- Solo aplica sobre cantidad asignada fisicamente pero no plantada.
 - El admin o coordinador inicia la devolución indicando cantidad y motivo (obligatorio).
 - El sistema:
   - Reduce el saldo asignado de la asignación.
-  - Libera la reserva lógica sobre el lote de vivero.
+  - Aumenta `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_devuelta`.
+  - Aumenta `LOTE_VIVERO.saldo_vivo_actual` del lote origen.
   - Registra evento `DEVOLUCION_A_VIVERO` append-only.
+  - Registra evento de entrada física en M2 cuando el esquema lo soporte.
 
-No genera evento en el Módulo 2 porque los árboles nunca salieron físicamente.
+En MVP la devolución se registra solo con cantidad, motivo y observaciones opcionales. No exige fotos. La evidencia fotografica de devolución queda para una fase posterior.
 
 ### 3.6. Registro de plantación inicial (operario en campo)
 
 **Objetivo:** registrar la plantación efectiva en una micro-ubicación.
 
+Entradas posibles:
+
+1. Desde el dashboard de campaña, botón `Registrar una plantación`.
+2. Desde la vista de trabajo del usuario (`mis plantaciones/asignaciones`), visible cuando el usuario es `COORDINADOR` u `OPERARIO` de una subcampaña.
+
 Flujo del operario:
 
-1. Selecciona la **subcampaña** donde va a operar.
-2. Toma fotos con GPS embebido.
-3. Indica especies y cantidades plantadas.
-4. Para cada especie, **selecciona el lote de vivero** del cual sale el material (entre los asignados con propósito `PLANTACION_INICIAL` a esa subcampaña).
-   - Si solo hay un lote disponible para esa especie, se preselecciona.
-   - Si hay varios, indica cantidad por lote.
-5. Selecciona co-responsables (subconjunto del equipo).
-6. Observaciones opcionales.
-7. Confirma.
+1. Selecciona la **subcampaña** donde va a operar, o llega con la subcampaña preseleccionada desde la pantalla anterior.
+2. Toma o sube fotos con GPS.
+3. Ve una pantalla de cantidades por especie:
+   - aparecen las especies del plan `SUBCAMPANIA_META_ESPECIE`,
+   - por cada especie se muestra meta, plantado previo, stock asignado disponible y cantidad que se está plantando ahora,
+   - la suma total se calcula automáticamente.
+4. Indica cuántas plantas se plantaron por especie.
+5. El sistema conecta esas cantidades con las asignaciones disponibles de la subcampaña.
+   - Si solo hay una asignación/lote disponible para la especie, se consume automáticamente.
+   - Si hay varias asignaciones/lotes, el MVP puede consumir automáticamente con orden estable y guardar el detalle real, o exponer selección manual si el producto lo requiere.
+6. Agrega notas de campo.
+7. Revisa resumen y confirma.
 
 Al guardar, el sistema:
 
@@ -354,18 +383,24 @@ Al guardar, el sistema:
 2. Verifica que el GPS esté dentro del polígono de la subcampaña (con tolerancia configurable). PostGIS es la fuente de verdad vía `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)`.
 3. Verifica que cada especie plantada exista en `SUBCAMPANIA_META_ESPECIE`.
 4. Verifica que el acumulado plantado inicial por especie no supere su `cantidad_objetivo`.
-5. Verifica que las cantidades por lote no superen los saldos asignados disponibles.
-6. Descuenta las cantidades de cada asignación afectada.
-7. Genera atómicamente un evento `DESPACHO` en `EVENTO_LOTE_VIVERO` por cada lote afectado, con:
-   - `destino_tipo = PLANTACION_CAMPANIA`.
-   - `origen_despacho = AUTOMATICO_PLANTACION`.
-   - `registro_plantacion_id` poblado.
-   - `subcampania_id` y `campania_id` para drill-down.
-   - `comunidad_destino_id` heredada de `subcampania.zona_id`.
+5. Verifica que la cantidad por especie pueda cubrirse con asignaciones activas de esa subcampaña y propósito `PLANTACION_INICIAL`.
+6. Verifica que las cantidades a consumir no superen `saldo_asignado_disponible`.
+7. Descuenta las cantidades de cada asignación afectada aumentando `cantidad_consumida`.
 8. Congela snapshots oficiales en el registro.
 9. Crea el `REGISTRO_PLANTACION` como append-only.
-10. Vincula las evidencias fotográficas al `REGISTRO_PLANTACION` y exige evidencia propia para cada `DESPACHO` automático de Vivero (ver RN-VIV-54 en el contrato Vivero → Plantación).
-11. Si la suma de plantaciones iniciales alcanza la meta, dispara **cierre automático** a `COMPLETADA`.
+10. Crea `REGISTRO_PLANTACION_DETALLE` con el desglose real por asignación/lote/especie.
+11. Vincula las evidencias fotográficas al `REGISTRO_PLANTACION`.
+12. No genera `DESPACHO` en `EVENTO_LOTE_VIVERO`; la salida física del vivero ya fue registrada al crear la asignación.
+13. Si la suma de plantaciones iniciales alcanza la meta, dispara **cierre automático** a `COMPLETADA`.
+
+La barra de progreso de esta pantalla debe mostrar:
+
+- meta total de la subcampaña,
+- plantado previo,
+- cantidad que se está registrando ahora,
+- total proyectado después de guardar,
+- stock asignado disponible para consumir,
+- avance por especie contra `SUBCAMPANIA_META_ESPECIE`.
 
 ### 3.7. Cierre automático a COMPLETADA
 
@@ -450,7 +485,7 @@ Validaciones específicas:
 - Permitido en `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`.
 - Sin límite temporal estricto, pero el sistema diferencia visualmente las reposiciones hechas durante `MANTENIMIENTO_ACTIVO` vs `MONITOREO_HISTORICO`.
 
-Genera el mismo flujo atómico de `DESPACHO` automático en Módulo 2 que una plantación inicial.
+Consume stock ya asignado con propósito `REPOSICION`; no genera `DESPACHO` automático en Módulo 2.
 
 ### 3.11. Transición automática a MONITOREO_HISTORICO
 
@@ -475,7 +510,7 @@ Solo ADMIN puede ejecutarla, con motivo obligatorio. El sistema:
 
 - Pasa la subcampaña a `CANCELADA`; conserva el registro (inactivación, no borrado físico) y registra `SUBCAMPANIA_CANCELADA` en `SUBCAMPANIA_HISTORIAL`.
 - Quita su `meta_total_arboles` de la meta agregada de la campaña (`meta_planificada_campania`, §2.1 / `RN-PLA-36`).
-- Libera toda asignación activa como devolución lógica al lote de vivero. Al ser reserva lógica, **no genera evento en el Módulo 2** (igual que una devolución normal; ver §9.3 y `RN-VIV-48`).
+- Resuelve toda asignación activa: si el stock fue entregado físicamente, se registra devolución física al vivero; si proviene de datos legados de reserva lógica, debe migrarse o corregirse antes de cancelar.
 - La subcampaña deja de ser visible en la vista pública y no se puede reabrir; para retomar el trabajo se crea una subcampaña nueva.
 
 Ver `RN-PLA-37` para la regla canónica.
@@ -507,11 +542,11 @@ Ver `RN-PLA-37` para la regla canónica.
 
 `EVENTO_PLANTACION`:
 
-- `ASIGNACION_VIVERO` (saldo asignado +N)
-- `DEVOLUCION_A_VIVERO` (saldo asignado −N)
-- `PLANTACION_INICIAL` (avanza meta)
-- `REPOSICION` (no avanza meta)
+- `ASIGNACION_VIVERO` (stock fisico entregado a subcampaña +N)
+- `DEVOLUCION_A_VIVERO` (stock asignado devuelto fisicamente al vivero −N)
 - `MORTANDAD_REPORTADA` (saldo vivo del grupo −N)
+
+`PLANTACION_INICIAL` y `REPOSICION` no viven en `EVENTO_PLANTACION`: se registran como filas en `REGISTRO_PLANTACION`, usando `es_reposicion = false | true`.
 
 Fuera del MVP:
 
@@ -558,7 +593,7 @@ No se persiste. Se calcula en tiempo real desde las subcampañas:
 
 - `ACTIVA`: saldo asignado disponible > 0 y subcampaña no terminal.
 - `AGOTADA`: saldo asignado consumido completamente en plantaciones/reposiciones.
-- `DEVUELTA`: saldo asignado devuelto al vivero.
+- `DEVUELTA`: saldo asignado devuelto fisicamente al vivero.
 
 ### 5.5. Saldo vivo del grupo plantado (derivado)
 
@@ -577,9 +612,11 @@ Reglas:
 
 - Obligatorias en `PLANTACION_INICIAL` y `REPOSICION` (mínimo 1).
 - Obligatorias en `MORTANDAD_REPORTADA` (mínimo 1).
+- Obligatorias en asignación física desde Vivero a subcampaña (evidencia de entrega/salida).
+- No obligatorias en devolución física al vivero durante el MVP.
 - Formato: JPG/PNG.
 - Tamaño máximo: 5 MB por foto.
-- Modelo polimórfico: `EVIDENCIAS_TRAZABILIDAD` vinculadas a `EVENTO_PLANTACION.id`.
+- Modelo polimórfico: `EVIDENCIAS_TRAZABILIDAD` vinculadas al `REGISTRO_PLANTACION`, `EVENTO_PLANTACION` o `EVENTO_LOTE_VIVERO` correspondiente según el hecho auditado.
 
 ### 6.2. GPS por registro
 
@@ -661,42 +698,47 @@ Por subcampaña:
 
 > Fuente canónica de las reglas y fórmulas de esta sección: [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) (`RN-VIV-47` a `RN-VIV-60`) y el esquema en `database/00_database_schema.md`. Esta sección resume el contrato desde la perspectiva de M3.
 
-### 9.1. Contrato Asignación ↔ Vivero (sin evento en M2)
+### 9.1. Contrato Asignación física ↔ Vivero
 
-- Una `ASIGNACION_VIVERO_SUBCAMPANIA` reserva saldo vivo del lote pero **no genera evento en Módulo 2**.
-- El saldo disponible para nuevas asignaciones se calcula como:
+- Una `ASIGNACION_VIVERO_SUBCAMPANIA` representa stock fisicamente entregado a la subcampaña.
+- La asignación genera una salida en M2 y descuenta `LOTE_VIVERO.saldo_vivo_actual`.
+- La validación de una nueva asignación usa:
 
-`saldo_vivo_disponible_asignacion = LOTE_VIVERO.saldo_vivo_actual − SUM(asignaciones_activas_del_lote)`
+`cantidad_asignada <= LOTE_VIVERO.saldo_vivo_actual`
 
-### 9.2. Contrato Plantación/Reposición ↔ Despacho (con evento automático en M2)
+El evento de salida usa `destino_tipo = PLANTACION_CAMPANIA` y un origen específico de asignación a subcampaña, sugerido `ASIGNACION_SUBCAMPANIA`. No usa `AUTOMATICO_PLANTACION`.
 
-Cada `PLANTACION_INICIAL` y `REPOSICION` genera **atómicamente** uno o más eventos `DESPACHO` en `EVENTO_LOTE_VIVERO` (uno por lote afectado), con:
+### 9.2. Contrato Plantación/Reposición ↔ Consumo de asignación
 
-- `destino_tipo = PLANTACION_CAMPANIA`.
-- `origen_despacho = AUTOMATICO_PLANTACION`.
-- `destino_referencia = REGISTRO_PLANTACION.id`.
-- `subcampania_id` y `campania_id` para drill-down.
-- `comunidad_destino_id` heredada de la subcampaña.
-- `unidad_medida_evento = UNIDAD`.
+Cada `PLANTACION_INICIAL` y `REPOSICION` consume `saldo_asignado_disponible` de asignaciones activas de la subcampaña.
 
 Invariantes:
 
-- `SUM(DESPACHO.cantidad_afectada) por registro_plantacion = REGISTRO_PLANTACION.cantidad_total_plantada`.
-- El despacho automático requiere evidencia propia asociada al `EVENTO_LOTE_VIVERO`; la evidencia del `REGISTRO_PLANTACION` puede mostrarse como contexto, pero no la reemplaza.
+- `SUM(REGISTRO_PLANTACION_DETALLE.cantidad) por registro_plantacion = REGISTRO_PLANTACION.cantidad_total_plantada`.
+- `cantidad_consumida` de la asignación aumenta con cada plantación/reposición que consuma de esa asignación.
+- Plantar o reponer no genera `EVENTO_LOTE_VIVERO`.
+- La evidencia de plantación vive en `REGISTRO_PLANTACION`.
 
-### 9.3. Contrato Devolución (sin evento en M2)
+### 9.3. Contrato Devolución física
 
-`DEVOLUCION_A_VIVERO` no genera evento en M2 porque los árboles nunca salieron físicamente. Solo libera la reserva lógica.
+`DEVOLUCION_A_VIVERO` representa retorno físico al vivero de plantas asignadas y no consumidas.
 
-### 9.4. Mermas del vivero sobre saldo asignado
+En MVP:
 
-Cuando ocurre una merma en un lote con asignaciones activas, la política del MVP es:
+- registra cantidad y motivo,
+- aumenta `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_devuelta`,
+- aumenta `LOTE_VIVERO.saldo_vivo_actual`,
+- no exige fotos.
 
-1. La merma afecta primero el **saldo no asignado** del lote.
-2. Si la merma excede el saldo no asignado, afecta asignaciones ordenando por `subcampania.fecha_estimada_inicio DESC NULLS FIRST` — la subcampaña con inicio más lejano absorbe primero; la más próxima queda protegida (es la más urgente).
-3. Si una asignación queda con menos saldo que su comprometido, el sistema **notifica al coordinador** de la(s) subcampaña(s) afectada(s).
+La evidencia fotografica y un evento M2 específico para devolución física quedan como mejora post-MVP si no están soportados al implementar.
 
-Ver `RN-VIV-50` en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) para la formula completa.
+### 9.4. Mermas
+
+La merma de Vivero solo afecta plantas que siguen físicamente en el vivero. No afecta asignaciones ya entregadas a subcampaña.
+
+Si se requiere registrar pérdida de plantas ya entregadas a subcampaña pero aún no plantadas, debe usarse un flujo separado de merma de stock asignado en campo, afectando `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_mermada`. Ese flujo puede quedar fuera del MVP.
+
+Ver `RN-VIV-47..61` en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) para el contrato completo.
 
 ---
 
@@ -755,8 +797,8 @@ El catálogo cerrado de roles globales se preserva: `ADMIN | GENERAL | VALIDADOR
 - Cierre manual a FINALIZADA_PARCIAL por admin con motivo.
 - Mantenimiento (mortandad + reposición) transversal: permitido en ACTIVA, COMPLETADA y FINALIZADA_PARCIAL.
 - Plan de metas por especie en subcampaña: porcentaje objetivo, cantidad objetivo, cobertura y progreso por especie.
-- Asignaciones con propósito explícito: PLANTACION_INICIAL o REPOSICION.
-- Selección explícita de lote por el operario al plantar.
+- Asignaciones físicas con propósito explícito: PLANTACION_INICIAL o REPOSICION.
+- Registro de plantación por especie contra stock asignado disponible; el detalle por lote/asignación se conserva en backend.
 - Cantidad absoluta como fuente de verdad (porcentaje solo visual).
 - Equipo a nivel subcampaña; co-responsables subconjunto del equipo, sin porcentajes.
 - Polígono obligatorio por subcampaña; GPS validado dentro del polígono (PostGIS como fuente de verdad).

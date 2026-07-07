@@ -329,7 +329,7 @@ Reglas por tipo:
 
 - `MERMA`: `cantidad_afectada <= saldo_vivo_actual`.
 - `DESPACHO` manual en core puro: `cantidad_afectada <= saldo_vivo_actual`.
-- `DESPACHO` manual con contrato Vivero -> Plantacion activo: valida contra `saldo_vivo_disponible_asignacion`; esa regla vive en el contrato, no en el core.
+- `DESPACHO` manual con contrato Vivero -> Plantacion activo: valida contra `saldo_vivo_actual`, porque las asignaciones fisicas a subcampania ya descontaron el saldo del lote. La regla completa vive en el contrato, no en el core.
 
 ### RN-VIV-21 - El saldo vivo no puede ser negativo
 
@@ -497,7 +497,7 @@ Los tipos de evento minimos del core MVP son:
 - `DESPACHO`
 - `CIERRE_AUTOMATICO`
 
-En core, `DESPACHO` significa despacho manual. El despacho automatico desde Plantacion se documenta en el contrato Vivero -> Plantacion.
+En core, `DESPACHO` significa despacho manual u otra salida propia de Vivero. La salida fisica hacia subcampanias de Plantacion y su origen de despacho se documentan en el contrato Vivero -> Plantacion.
 
 ### RN-VIV-37 - Blockchain no bloquea el nucleo operativo
 
@@ -627,7 +627,7 @@ Quedan fuera del core MVP:
 - modelado agronomico avanzado por especie,
 - division y fusion de lotes,
 - flujos complejos offline-first,
-- asignaciones, devoluciones y despacho automatico hacia Plantacion.
+- asignaciones fisicas, devoluciones fisicas y consumo de stock hacia Plantacion.
 
 ### RN-VIV-46 - Principio de crecimiento posterior
 

@@ -238,11 +238,11 @@ EVENTO_LOTE_VIVERO {
     ENUM(causa_merma_vivero) causa_merma "nullable - solo aplica en MERMA"
     ENUM(causa_descarte_pre_embolsado) causa_descarte_pre_embolsado "nullable - solo aplica en DESCARTE_PRE_EMBOLSADO"
     ENUM(destino_tipo_vivero) destino_tipo "nullable - solo aplica en DESPACHO; incluye PLANTACION_CAMPANIA"
-    ENUM(origen_despacho_vivero) origen_despacho "nullable - solo aplica en DESPACHO; MANUAL | AUTOMATICO_PLANTACION; default MANUAL"
-    text destino_referencia "nullable - solo aplica en DESPACHO manual; texto libre"
-    bigint subcampania_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK fisico pendiente de ALTER en BD"
-    bigint campania_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK fisico pendiente de ALTER en BD"
-    bigint registro_plantacion_id FK "nullable - obligatorio cuando origen_despacho = AUTOMATICO_PLANTACION; FK fisico pendiente de ALTER en BD"
+    ENUM(origen_despacho_vivero) origen_despacho "nullable - solo aplica en DESPACHO; MANUAL | ASIGNACION_SUBCAMPANIA; AUTOMATICO_PLANTACION legado"
+    text destino_referencia "nullable - texto libre en DESPACHO manual; referencia de asignacion en ASIGNACION_SUBCAMPANIA"
+    bigint subcampania_id FK "nullable - obligatorio cuando origen_despacho = ASIGNACION_SUBCAMPANIA; FK fisico pendiente de ALTER en BD"
+    bigint campania_id FK "nullable - obligatorio cuando origen_despacho = ASIGNACION_SUBCAMPANIA; FK fisico pendiente de ALTER en BD"
+    bigint registro_plantacion_id FK "nullable - NULL en ASIGNACION_SUBCAMPANIA; solo legado AUTOMATICO_PLANTACION lo poblaba"
     bigint comunidad_destino_id FK "nullable - referencia a DIVISION_ADMINISTRATIVA(id), solo aplica en DESPACHO"
     ENUM(subetapa_adaptabilidad) subetapa_destino "nullable - SOMBRA | MEDIA_SOMBRA | SOL_DIRECTO"
     int saldo_vivo_antes "nullable - calculado por sistema"
@@ -256,13 +256,13 @@ EVENTO_LOTE_VIVERO {
 ASIGNACION_VIVERO_SUBCAMPANIA {
     bigint id PK
     bigint subcampania_id FK "NOT NULL - FK fisico pendiente de ALTER en BD"
-    bigint lote_vivero_id FK "NOT NULL - el lote de vivero que reserva"
+    bigint lote_vivero_id FK "NOT NULL - el lote de vivero entregado fisicamente"
     ENUM(proposito_asignacion) proposito "NOT NULL - PLANTACION_INICIAL | REPOSICION"
     ENUM(estado_asignacion_vivero) estado "NOT NULL - ACTIVA | AGOTADA | DEVUELTA; default ACTIVA; derivado por trigger"
     int cantidad_asignada "NOT NULL - inmutable, > 0, siempre UNIDAD"
-    int cantidad_consumida "NOT NULL default 0 - aumenta con cada DESPACHO automatico que consume de esta asignacion"
-    int cantidad_devuelta "NOT NULL default 0 - aumenta con cada DEVOLUCION_A_VIVERO en M3"
-    int cantidad_mermada "NOT NULL default 0 - aumenta cuando una MERMA del lote agota saldo no asignado y desborda a esta asignacion segun urgencia de subcampania"
+    int cantidad_consumida "NOT NULL default 0 - aumenta con cada PLANTACION_INICIAL/REPOSICION que consume de esta asignacion"
+    int cantidad_devuelta "NOT NULL default 0 - aumenta con cada DEVOLUCION_A_VIVERO fisica en M3"
+    int cantidad_mermada "NOT NULL default 0 - aumenta por merma de stock asignado en campo, si ese flujo se implementa"
     int saldo_asignado_disponible "GENERATED ALWAYS AS (cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada) STORED"
     bigint usuario_asignacion_id FK "NOT NULL - ADMIN o COORDINADOR de la subcampania"
     timestamptz fecha_asignacion "NOT NULL default now()"
@@ -346,7 +346,7 @@ SUBCAMPANIA {
     jsonb metadata_blockchain "nullable"
 }
 %% Indice GIST sobre poligono_geom para PostGIS. Sin columna coordinador_id (membresia via SUBCAMPANIA_EQUIPO).
-%% Cancelacion (RN-PLA-37): permitida solo si total_plantado_inicial = 0. Al cancelar, estado=CANCELADA, el registro se conserva y se libera toda asignacion activa como devolucion logica (sin evento en M2).
+%% Cancelacion (RN-PLA-37): permitida solo si total_plantado_inicial = 0. Al cancelar, estado=CANCELADA, el registro se conserva y toda asignacion activa entregada fisicamente debe resolverse con devolucion fisica al vivero.
 
 SUBCAMPANIA_META_ESPECIE {
     bigint id PK
@@ -409,7 +409,7 @@ REGISTRO_PLANTACION_DETALLE {
     text nombre_cientifico_snapshot
     text nombre_comercial_snapshot
     text variedad_snapshot
-    bigint evento_lote_vivero_despacho_id FK "nullable solo en intermedio de transaccion; FK al DESPACHO automatico generado por el handler M3"
+    bigint evento_lote_vivero_despacho_id FK "legado/nullable - en el flujo vigente la plantacion no genera DESPACHO automatico"
     timestamptz created_at
 }
 %% Unique (registro_plantacion_id, asignacion_id, planta_id). Una linea por (registro, asignacion, planta).
@@ -483,13 +483,13 @@ EVENTO_PLANTACION {
 
   %% === Relaciones vivero ↔ plantación (integración M2 ↔ M3) ===
 
-  LOTE_VIVERO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "reserva logica para subcampania"
+  LOTE_VIVERO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "entrega fisica a subcampania"
   USUARIO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "asigna"
   SUBCAMPANIA ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "lotes asignados"
   %% FK fisico asignacion.subcampania_id -> subcampania(id) pendiente de ALTER en BD
-  EVENTO_LOTE_VIVERO }o--o| SUBCAMPANIA : "DESPACHO automatico (subcampania_id)"
-  EVENTO_LOTE_VIVERO }o--o| CAMPANIA : "DESPACHO automatico (campania_id)"
-  EVENTO_LOTE_VIVERO }o--o| REGISTRO_PLANTACION : "DESPACHO automatico (registro_plantacion_id)"
+  EVENTO_LOTE_VIVERO }o--o| SUBCAMPANIA : "DESPACHO por asignacion (subcampania_id)"
+  EVENTO_LOTE_VIVERO }o--o| CAMPANIA : "DESPACHO por asignacion (campania_id)"
+  EVENTO_LOTE_VIVERO }o--o| REGISTRO_PLANTACION : "legado: DESPACHO automatico (registro_plantacion_id)"
   %% FKs fisicos evento_lote_vivero -> {subcampania, campania, registro_plantacion} pendientes de ALTER en BD
 
   TIPOS_ENTIDAD_EVIDENCIA ||--o{ EVIDENCIAS_TRAZABILIDAD : tipo
@@ -522,7 +522,7 @@ EVENTO_PLANTACION {
   ASIGNACION_VIVERO_SUBCAMPANIA ||--o{ REGISTRO_PLANTACION_DETALLE : "consumida via detalle"
   LOTE_VIVERO ||--o{ REGISTRO_PLANTACION_DETALLE : "lote consumido"
   PLANTA ||--o{ REGISTRO_PLANTACION_DETALLE : especie
-  EVENTO_LOTE_VIVERO ||--o{ REGISTRO_PLANTACION_DETALLE : "despacho automatico generado"
+  EVENTO_LOTE_VIVERO ||--o{ REGISTRO_PLANTACION_DETALLE : "legado: despacho automatico generado"
 
   SUBCAMPANIA ||--o{ EVENTO_PLANTACION : "historial append-only"
   REGISTRO_PLANTACION ||--o{ EVENTO_PLANTACION : "evento sobre grupo"
@@ -553,6 +553,7 @@ estado_lote_vivero = [ACTIVO, FINALIZADO]
 tipo_evento_vivero = [
   INICIO, EMBOLSADO, DESCARTE_PRE_EMBOLSADO, ADAPTABILIDAD, MERMA, DESPACHO, CIERRE_AUTOMATICO
 ]
+// Pendiente de migracion para devolucion fisica desde Plantacion: agregar un tipo como DEVOLUCION_PLANTACION o documentar el ajuste transaccional equivalente.
 
 subetapa_adaptabilidad = [SOMBRA, MEDIA_SOMBRA, SOL_DIRECTO]
 
@@ -569,13 +570,14 @@ causa_descarte_pre_embolsado = [
 destino_tipo_vivero = [
   PLANTACION_CAMPANIA, PLANTACION_PROPIA, PLANTACION_COMUNIDAD, DONACION, VENTA, OTRO
 ]
-// Nota: PLANTACION_CAMPANIA se agrega por integracion con Modulo 3.
-// Solo aplica cuando origen_despacho = AUTOMATICO_PLANTACION.
+// Nota: PLANTACION_CAMPANIA se usa para salidas fisicas hacia subcampania.
+// En el flujo vigente aplica con origen_despacho = ASIGNACION_SUBCAMPANIA.
 // Decision cerrada (2026-07-01): se mantienen PLANTACION_COMUNIDAD y DONACION como valores separados (no se fusionan a DONACION_COMUNIDAD).
 
-origen_despacho_vivero = [MANUAL, AUTOMATICO_PLANTACION]
+origen_despacho_vivero = [MANUAL, ASIGNACION_SUBCAMPANIA, AUTOMATICO_PLANTACION]
 // MANUAL: despacho registrado directamente desde Vivero por usuario autorizado.
-// AUTOMATICO_PLANTACION: generado por el sistema desde Modulo 3 al guardar PLANTACION_INICIAL o REPOSICION.
+// ASIGNACION_SUBCAMPANIA: salida fisica desde Vivero al crear ASIGNACION_VIVERO_SUBCAMPANIA.
+// AUTOMATICO_PLANTACION: legado del flujo anterior; no debe usarse al guardar PLANTACION_INICIAL o REPOSICION en el contrato vigente.
 
 proposito_asignacion = [PLANTACION_INICIAL, REPOSICION]
 estado_asignacion_vivero = [ACTIVA, AGOTADA, DEVUELTA]

@@ -61,7 +61,7 @@ Una campaña tiene N subcampañas (al menos 1).
 ### 2.3. Operario
 **Qué necesita ver y hacer:**
 - Ver las subcampañas donde es parte del equipo.
-- Registrar plantaciones rápidas en campo (foto + GPS + especies + cantidades + selección de lote).
+- Registrar plantaciones rápidas en campo (foto + GPS + cantidades por especie contra stock asignado disponible).
 - Ver cuánto plantó él/su equipo en el día.
 - Reportar mortandad en visitas posteriores.
 - Registrar reposiciones.
@@ -225,15 +225,16 @@ Wizard de varios pasos.
 - Permite varias fotos.
 - GPS automático con indicador "GPS capturado ✓" o "Activando GPS...".
 
-**Paso 3: Especies, cantidades y selección de lote**
+**Paso 3: Especies y cantidades**
 - Lista de especies disponibles para la subcampaña (basadas en el plan de metas por especie).
 - Para cada especie:
   - Input de cantidad con +/-.
-  - Progreso visible de la especie: plantado / cantidad objetivo.
-  - **Selector de lote de origen** (entre los asignados con propósito PLANTACION_INICIAL a esta subcampaña).
-  - Si solo hay un lote disponible, se preselecciona.
-  - Si hay varios, el operario indica cantidad por lote.
-- Validación visual: stock disponible por lote.
+  - Progreso visible de la especie: meta, plantado previo, plantando ahora y total proyectado.
+  - Stock asignado disponible para plantar.
+  - Aviso si no hay stock asignado suficiente.
+- El detalle por asignación/lote se resuelve automáticamente cuando haya una sola opción o con un orden estable definido por backend.
+- Si hay varias asignaciones/lotes y la operación necesita precisión manual, la UI puede abrir un desglose avanzado por lote.
+- Validación visual: stock disponible por especie y saldo total de la subcampaña.
 - Si la cantidad excede la meta de esa especie: bloqueo claro y sugerencia de pedir ajuste del plan al coordinador/admin.
 
 **Paso 4: Co-responsables (opcional)**
@@ -280,7 +281,7 @@ Combinación:
 
 ### 3.10. Gestión de asignaciones (admin / coordinador)
 
-**Objetivo:** mover árboles entre vivero y subcampañas.
+**Objetivo:** registrar entrega fisica de árboles desde vivero hacia subcampañas y administrar el stock que luego se consume al plantar.
 
 **Componentes:**
 - Tabla de asignaciones activas:
@@ -298,15 +299,19 @@ Combinación:
   - Plantado inicial por especie.
   - Estado: sin stock / parcial / cubierto / sobrecubierto.
 - Acción "Asignar lotes a subcampaña":
+  - Selector de campaña padre como contexto.
   - Selector de subcampaña destino.
   - Listado de lotes con stock vivo disponible.
   - Por lote: cantidad absoluta + propósito.
+  - Adjuntar foto/evidencia de entrega o salida desde vivero.
+  - Al confirmar, se descuenta el saldo del lote de vivero y se crea stock consumible para la subcampaña.
   - El sistema impide propósito PLANTACION_INICIAL si la subcampaña ya está cerrada.
   - El sistema marca si la especie del lote no pertenece al plan de la subcampaña.
   - Confirmar.
 - Acción "Devolver al vivero":
   - Solo sobre cantidad no consumida.
   - Motivo obligatorio.
+  - En MVP no exige foto.
 
 ### 3.11. Pantalla "marcar como FINALIZADA_PARCIAL" (solo admin)
 
@@ -323,7 +328,7 @@ Combinación:
 
 - **Barra de progreso de subcampaña:** muy presente, visual y atractiva. Plantados / meta y %.
 - **Mini-barras de especies:** barras horizontales que muestran plantado inicial vs cantidad objetivo y composición viva actual.
-- **Tarjetas de plantación:** miniatura de foto + cantidad + especie + lote origen + fecha + ubicación.
+- **Tarjetas de plantación:** miniatura de foto + cantidad + especie + fecha + ubicación; el lote origen queda visible en detalle expandido.
 - **Mapa con polígonos y pines:** componente clave reutilizado en home pública, detalle, dashboard.
 - **Timeline append-only:** lista vertical con icono por tipo de evento.
 - **Badge de estado operativo:** ACTIVA, COMPLETADA, FINALIZADA_PARCIAL, BORRADOR, CANCELADA. Colores diferenciados.
@@ -359,7 +364,7 @@ Combinación:
 - Alto contraste.
 - Indicadores "guardando..." y "guardado ✓".
 - Indicador de "sin conexión" (offline-first queda fuera del MVP pero el diseño puede anticiparlo).
-- Selector de lote optimizado: si hay un solo lote disponible, preseleccionarlo.
+- Selección por especie optimizada: mostrar stock disponible y ocultar detalle de lote salvo cuando haya conflicto o varias opciones relevantes.
 
 ---
 
@@ -406,7 +411,7 @@ Orden sugerido para validar primero:
 
 1. **Home pública con mapa** (cara del proyecto).
 2. **Detalle público de subcampaña** (drill-down del mapa).
-3. **Vista mobile del operario — registrar plantación con selección de lote** (flujo más crítico operativamente y el más nuevo conceptualmente).
+3. **Vista mobile del operario — registrar plantación por especie contra stock asignado** (flujo más crítico operativamente y el más nuevo conceptualmente).
 4. **Dashboard del administrador** (planificación y comando).
 5. **Crear campaña + crear subcampaña** (wizards del admin).
 6. **Detalle de subcampaña para admin/coordinador** (gestión diaria, incluye tabs).

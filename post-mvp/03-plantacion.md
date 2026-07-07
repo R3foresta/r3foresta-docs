@@ -53,3 +53,20 @@ El modelo base ya alcanza para operar: `SUBCAMPANIA_EQUIPO`, un `COORDINADOR` un
 - Auditoria de altas/bajas de operarios.
 - Restricciones finas por estado de subcampaña para modificar equipo.
 - Indicadores de desempeño por miembro del equipo.
+
+## PMVP-PLA-04 — Evidencia completa para devolucion fisica al vivero
+
+### Idea
+
+Agregar fotos, GPS y auditoria visual a la devolucion fisica de plantas asignadas a subcampaña que vuelven al vivero.
+
+### Por que queda fuera del MVP
+
+Para la primera version la devolucion se registra con cantidad, motivo y usuario responsable. Esto mantiene control de stock sin agregar friccion operativa ni otro flujo fotografico.
+
+### Reglas a evaluar despues
+
+- Exigir minimo 1 foto de las plantas devueltas.
+- Vincular evidencia a `DEVOLUCION_A_VIVERO` y/o al evento fisico de entrada en M2.
+- Registrar GPS/lugar de entrega si la operacion no ocurre dentro del vivero.
+- Definir si la devolucion debe pasar por validacion del responsable de vivero antes de aumentar saldo disponible.

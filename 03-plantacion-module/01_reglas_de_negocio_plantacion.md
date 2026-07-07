@@ -4,7 +4,7 @@
 
 Estas reglas cubren el comportamiento propio del Modulo 3 (Plantacion): ciclo de vida de campaña y subcampaña, planificacion por especie, coordinacion como membresia, registro de plantacion, mortandad, reposicion, geolocalizacion y transparencia publica.
 
-El contrato de integracion entre Vivero (M2) y Plantacion (M3) — asignaciones, devoluciones, despacho automatico y mermas sobre asignaciones — **no se duplica aqui**. Su fuente canonica es [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md), donde viven `RN-VIV-47` a `RN-VIV-60`. Este documento referencia ese contrato cuando aplica, no lo copia.
+El contrato de integracion entre Vivero (M2) y Plantacion (M3) — asignaciones fisicas a subcampania, devoluciones fisicas, consumo de stock asignado y saldos derivados — **no se duplica aqui**. Su fuente canonica es [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md), donde viven `RN-VIV-47` a `RN-VIV-61`. Este documento referencia ese contrato cuando aplica, no lo copia.
 
 Fuente de estas reglas: `02_Procesos_Modulo_3_Plantacion.md` y `00_Requerimientos_Modulo_3_Plantacion.json` (`RF-PLA-*`) de este modulo, y `database/00_database_schema.md`.
 
@@ -14,8 +14,9 @@ Fuente de estas reglas: `02_Procesos_Modulo_3_Plantacion.md` y `00_Requerimiento
 
 * **Campaña:** contenedor estrategico. No tiene poligono ni meta operativa propia persistida; su estado no se persiste. Expone un total de meta **derivado** para planeacion (`RN-PLA-36`).
 * **Subcampaña:** unidad operativa real: coordinador, equipo, poligono, meta total y plan por especie.
-* **Reserva logica:** asignacion de stock de vivero a subcampaña que no mueve saldo vivo real (contrato M2↔M3, ver `RN-VIV-47`).
-* **Despacho automatico:** evento en `EVENTO_LOTE_VIVERO` generado por M3 al plantar o reponer (ver `RN-VIV-52`).
+* **Asignacion fisica:** entrega real de plantas desde Vivero a una subcampaña. Crea stock de consumo para M3 y descuenta el saldo vivo del lote en Vivero (contrato M2↔M3, ver `RN-VIV-47`).
+* **Stock de consumo de subcampaña:** saldo disponible de una asignacion (`saldo_asignado_disponible`) contra el que se validan plantaciones y reposiciones.
+* **Despacho por asignacion:** evento de salida en `EVENTO_LOTE_VIVERO` que ocurre al crear la asignacion fisica, no al registrar la plantacion (ver `RN-VIV-52`).
 
 ---
 
@@ -106,7 +107,7 @@ Efectos:
 
 * La subcampaña pasa a `CANCELADA`; el registro **se conserva** (inactivacion, no borrado fisico) y se registra `SUBCAMPANIA_CANCELADA` en `SUBCAMPANIA_HISTORIAL`.
 * Su `meta_total_arboles` deja de sumar a la meta agregada de la campaña (`RN-PLA-36`).
-* Toda asignacion activa de la subcampaña se libera como devolucion logica al lote (aumenta el `saldo_vivo_disponible_asignacion` del lote); al ser reserva logica **no genera evento en Vivero** (coherente con `RN-VIV-48` del contrato M2↔M3).
+* Toda asignacion activa de la subcampaña debe resolverse antes o durante la cancelacion: si las plantas ya fueron entregadas fisicamente, se registran como devolucion fisica al vivero; si no se entregaron por un flujo legado, se migran/corrigen antes de cerrar. En el contrato vigente la devolucion fisica aumenta `LOTE_VIVERO.saldo_vivo_actual` y registra `DEVOLUCION_A_VIVERO` en M3 (`RN-VIV-48`).
 * Una subcampaña `CANCELADA` no es publica (`RN-PLA-34`) y no se reabre (`RN-PLA-07`); para retomar el trabajo se crea una subcampaña nueva.
 
 `PAUSADA` sigue reservado, sin flujo en MVP.
@@ -167,21 +168,23 @@ Al registrar una plantacion, el `responsable_id` debe pertenecer a `SUBCAMPANIA_
 
 ## 8. Reglas de registro de plantacion inicial
 
-### RN-PLA-23 - Seleccion explicita de lote por el operario
+### RN-PLA-23 - Consumo de stock asignado por especie/lote
 
-El operario selecciona explicitamente de que lote(s) asignado(s) a su subcampaña sale el material al registrar una plantacion; no existe FIFO automatico. Si solo hay un lote disponible para la especie, el sistema lo preselecciona.
+Al registrar una plantacion, el sistema solo permite consumir plantas desde asignaciones fisicas activas de la misma subcampaña. La UI puede mostrar la seleccion agrupada por especie para simplificar el flujo; el backend debe persistir el detalle real por asignacion/lote en `REGISTRO_PLANTACION_DETALLE`.
+
+Para el MVP se permite que el backend consuma automaticamente desde las asignaciones disponibles de una misma especie con orden estable y documentado (por ejemplo, asignacion mas antigua primero), siempre que guarde el detalle exacto por `asignacion_id`, `lote_vivero_id`, `planta_id` y cantidad. Si el producto decide exponer varios lotes al usuario, la seleccion manual sigue siendo valida.
 
 ### RN-PLA-24 - Validaciones para registrar PLANTACION_INICIAL
 
-La subcampaña debe estar `ACTIVA`. Cada especie plantada debe existir en `SUBCAMPANIA_META_ESPECIE`. El acumulado por especie no puede superar su `cantidad_objetivo` (`RN-PLA-18`). Cada lote seleccionado debe tener asignacion activa con proposito `PLANTACION_INICIAL` a esa subcampaña, y la cantidad tomada no puede exceder el saldo asignado disponible de esa asignacion.
+La subcampaña debe estar `ACTIVA`. Cada especie plantada debe existir en `SUBCAMPANIA_META_ESPECIE`. El acumulado por especie no puede superar su `cantidad_objetivo` (`RN-PLA-18`). Cada cantidad plantada debe consumir una asignacion activa con proposito `PLANTACION_INICIAL` de esa subcampaña, y la cantidad tomada no puede exceder `saldo_asignado_disponible`.
 
 ### RN-PLA-25 - Registro append-only con snapshots
 
 `REGISTRO_PLANTACION` es append-only: no se permite edicion posterior en el MVP. Al registrar se congelan `nombre_subcampania_snapshot`, `nombre_responsable_snapshot` y, por cada especie, los snapshots heredados del lote de vivero (cientifico, comercial, variedad). Al activar la subcampaña ya se congelaron `nombre_zona_snapshot`, `nombre_coordinador_snapshot` y `nombres_organizaciones_snapshot`.
 
-### RN-PLA-26 - Plantar genera despacho automatico en M2
+### RN-PLA-26 - Plantar no genera despacho automatico en M2
 
-Cada `PLANTACION_INICIAL` y `REPOSICION` genera atomicamente uno o mas eventos `DESPACHO` en `EVENTO_LOTE_VIVERO` (uno por lote afectado). El contrato completo de ese despacho (campos obligatorios, evidencia propia, invariante de conservacion) es el fijado en `RN-VIV-52..56` en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md); no se repite aqui.
+Cada `PLANTACION_INICIAL` y `REPOSICION` consume stock ya asignado fisicamente a la subcampaña. No genera `DESPACHO` en `EVENTO_LOTE_VIVERO` y no usa `origen_despacho = AUTOMATICO_PLANTACION`. El descuento de `LOTE_VIVERO.saldo_vivo_actual` ya ocurrio al crear la asignacion fisica a subcampaña. El contrato completo vive en `RN-VIV-47..61` en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md).
 
 ---
 
@@ -197,7 +200,7 @@ Cualquier `OPERARIO` u `COORDINADOR` miembro de `SUBCAMPANIA_EQUIPO` de la subca
 
 ### RN-PLA-29 - Reposicion vinculada al grupo origen
 
-Una `REPOSICION` requiere `registro_plantacion_origen_id` con mortandad previamente reportada, consume exclusivamente asignaciones con proposito `REPOSICION`, y no avanza la meta de la subcampaña (`es_reposicion = true`).
+Una `REPOSICION` requiere `registro_plantacion_origen_id` con mortandad previamente reportada, consume exclusivamente asignaciones fisicas con proposito `REPOSICION`, y no avanza la meta de la subcampaña (`es_reposicion = true`).
 
 ### RN-PLA-30 - Bloqueo por exceso sobre pendiente de reposicion
 
@@ -235,4 +238,4 @@ El catalogo cerrado de roles globales (`ADMIN | GENERAL | VALIDADOR | VOLUNTARIO
 
 ## 12. Referencia al contrato M2 ↔ M3
 
-Las reglas del contrato de integracion entre Vivero y Plantacion (asignacion como reserva logica, `cantidad_asignada` inmutable, mermas por urgencia sobre asignaciones, despacho automatico vs. manual, despacho manual contra saldo libre, especie libre en reposicion) viven exclusivamente en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md). Este documento no las duplica; las reglas de esta seccion (`RN-PLA-*`) solo cubren el comportamiento propio de M3.
+Las reglas del contrato de integracion entre Vivero y Plantacion (asignacion fisica como stock consumible de subcampaña, `cantidad_asignada` inmutable, devolucion fisica, no uso de `AUTOMATICO_PLANTACION`, especie libre en reposicion y saldos derivados) viven exclusivamente en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md). Este documento no las duplica; las reglas de esta seccion (`RN-PLA-*`) solo cubren el comportamiento propio de M3.
