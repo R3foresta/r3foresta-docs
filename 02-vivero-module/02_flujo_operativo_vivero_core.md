@@ -8,7 +8,7 @@ El contrato por el cual Recoleccion habilita el inicio de un lote vive en:
 
 [`../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md`](../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md)
 
-La integracion con Plantacion mediante asignaciones, devoluciones y despachos automaticos se documenta en:
+La integracion con Plantacion mediante asignaciones fisicas, devoluciones fisicas y consumo posterior de stock asignado se documenta en:
 
 [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md)
 

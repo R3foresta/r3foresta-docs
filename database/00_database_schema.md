@@ -229,7 +229,7 @@ erDiagram
 EVENTO_LOTE_VIVERO {
     bigint id PK
     bigint lote_id FK "NOT NULL"
-    ENUM(tipo_evento_vivero) tipo_evento "NOT NULL - INICIO | EMBOLSADO | DESCARTE_PRE_EMBOLSADO | ADAPTABILIDAD | MERMA | DESPACHO | CIERRE_AUTOMATICO"
+    ENUM(tipo_evento_vivero) tipo_evento "NOT NULL - INICIO | EMBOLSADO | DESCARTE_PRE_EMBOLSADO | ADAPTABILIDAD | MERMA | DESPACHO | DEVOLUCION_PLANTACION | CIERRE_AUTOMATICO"
     date fecha_evento "NOT NULL"
     timestamptz created_at "NOT NULL - inmutable, cuándo se guardó realmente"
     bigint responsable_id FK "NOT NULL"
@@ -240,9 +240,10 @@ EVENTO_LOTE_VIVERO {
     ENUM(destino_tipo_vivero) destino_tipo "nullable - solo aplica en DESPACHO; incluye PLANTACION_CAMPANIA"
     ENUM(origen_despacho_vivero) origen_despacho "nullable - solo aplica en DESPACHO; MANUAL | ASIGNACION_SUBCAMPANIA; AUTOMATICO_PLANTACION legado"
     text destino_referencia "nullable - texto libre en DESPACHO manual; referencia de asignacion en ASIGNACION_SUBCAMPANIA"
-    bigint subcampania_id FK "nullable - obligatorio cuando origen_despacho = ASIGNACION_SUBCAMPANIA; FK fisico pendiente de ALTER en BD"
-    bigint campania_id FK "nullable - obligatorio cuando origen_despacho = ASIGNACION_SUBCAMPANIA; FK fisico pendiente de ALTER en BD"
+    bigint subcampania_id FK "nullable - obligatorio cuando origen_despacho = ASIGNACION_SUBCAMPANIA y en DEVOLUCION_PLANTACION"
+    bigint campania_id FK "nullable - obligatorio cuando origen_despacho = ASIGNACION_SUBCAMPANIA; opcional en DEVOLUCION_PLANTACION segun subcampania"
     bigint registro_plantacion_id FK "nullable - NULL en ASIGNACION_SUBCAMPANIA; solo legado AUTOMATICO_PLANTACION lo poblaba"
+    bigint asignacion_id FK "nullable - obligatorio en DESPACHO ASIGNACION_SUBCAMPANIA y DEVOLUCION_PLANTACION"
     bigint comunidad_destino_id FK "nullable - referencia a DIVISION_ADMINISTRATIVA(id), solo aplica en DESPACHO"
     ENUM(subetapa_adaptabilidad) subetapa_destino "nullable - SOMBRA | MEDIA_SOMBRA | SOL_DIRECTO"
     int saldo_vivo_antes "nullable - calculado por sistema"
@@ -255,7 +256,7 @@ EVENTO_LOTE_VIVERO {
 
 ASIGNACION_VIVERO_SUBCAMPANIA {
     bigint id PK
-    bigint subcampania_id FK "NOT NULL - FK fisico pendiente de ALTER en BD"
+    bigint subcampania_id FK "NOT NULL"
     bigint lote_vivero_id FK "NOT NULL - el lote de vivero entregado fisicamente"
     ENUM(proposito_asignacion) proposito "NOT NULL - PLANTACION_INICIAL | REPOSICION"
     ENUM(estado_asignacion_vivero) estado "NOT NULL - ACTIVA | AGOTADA | DEVUELTA; default ACTIVA; derivado por trigger"
@@ -484,9 +485,9 @@ EVENTO_PLANTACION {
   %% === Relaciones vivero ↔ plantación (integración M2 ↔ M3) ===
 
   LOTE_VIVERO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "entrega fisica a subcampania"
+  ASIGNACION_VIVERO_SUBCAMPANIA ||--o{ EVENTO_LOTE_VIVERO : "salida/devolucion fisica"
   USUARIO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "asigna"
   SUBCAMPANIA ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "lotes asignados"
-  %% FK fisico asignacion.subcampania_id -> subcampania(id) pendiente de ALTER en BD
   EVENTO_LOTE_VIVERO }o--o| SUBCAMPANIA : "DESPACHO por asignacion (subcampania_id)"
   EVENTO_LOTE_VIVERO }o--o| CAMPANIA : "DESPACHO por asignacion (campania_id)"
   EVENTO_LOTE_VIVERO }o--o| REGISTRO_PLANTACION : "legado: DESPACHO automatico (registro_plantacion_id)"
@@ -551,9 +552,9 @@ LOTE VIVIERO
 estado_lote_vivero = [ACTIVO, FINALIZADO]
 
 tipo_evento_vivero = [
-  INICIO, EMBOLSADO, DESCARTE_PRE_EMBOLSADO, ADAPTABILIDAD, MERMA, DESPACHO, CIERRE_AUTOMATICO
+  INICIO, EMBOLSADO, DESCARTE_PRE_EMBOLSADO, ADAPTABILIDAD, MERMA, DESPACHO, DEVOLUCION_PLANTACION, CIERRE_AUTOMATICO
 ]
-// Pendiente de migracion para devolucion fisica desde Plantacion: agregar un tipo como DEVOLUCION_PLANTACION o documentar el ajuste transaccional equivalente.
+// DEVOLUCION_PLANTACION: entrada fisica al vivero por devolucion desde Plantacion; explica el aumento de saldo del lote.
 
 subetapa_adaptabilidad = [SOMBRA, MEDIA_SOMBRA, SOL_DIRECTO]
 

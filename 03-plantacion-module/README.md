@@ -12,6 +12,7 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 * `01_reglas_de_negocio_plantacion.md`: reglas propias de M3 (`RN-PLA-*`) — ciclo de vida de campaña/subcampaña, plan por especie, coordinación como membresía, plantación inicial, mortandad, reposición, GPS/PostGIS, vista pública y roles.
 * `02_Procesos_Modulo_3_Plantacion.md`: proceso detallado.
 * `03_Mockups_Guia_Modulo_3_Plantacion.md`: guía UX.
+* `04_plan_frontend_m3.md`: plan operativo de implementación frontend por fases, pantallas, contratos de datos y criterios de cierre.
 
 **Nota estructural:** el contrato de integración M2↔M3 (asignaciones físicas, devoluciones físicas, consumo de stock asignado y saldos derivados) **no vive aquí**: su fuente canónica es [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md). `01_reglas_de_negocio_plantacion.md` referencia ese contrato, no lo duplica.
 

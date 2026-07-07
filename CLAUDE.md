@@ -20,7 +20,7 @@ R3Foresta modela la cadena de custodia de material biológico para reforestació
 - **`00-general-module/`** — Catálogos transversales (USUARIO, UBICACION, PAIS, DIVISION_ADMINISTRATIVA, VIVERO, PLANTA, TIPO_PLANTA, EVIDENCIAS_TRAZABILIDAD, METODO_RECOLECCION). Es la fuente viva de las entidades maestras; los demás módulos consumen vía snapshots congelados.
 - **`01-recoleccion-module/`** — Módulo 1. Registro del lote origen con evidencia fotográfica, GPS y validación. Persistencia multicapa: Supabase DB (tabular) + Supabase Storage (binarios) + IPFS/Pinata (metadata NFT) + Blockchain (mint).
 - **`02-vivero-module/`** — Módulo 2. Vivero Core: maduración pre-plantación, saldo vivo, eventos append-only y cierre. El **lote de vivero** es el agregado central con **un único origen** desde Recolección. Los contratos con Recolección y Plantación viven fuera del módulo, en `90-contratos-integracion/`.
-- **`03-plantacion-module/`** — Módulo 3. Modelado base en BD (CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION) aplicado vía migraciones 027–032. Pendientes: handler atómico de asignación física/consumo de stock, triggers de mantenimiento de contadores materializados, historiales de ciclo de vida y job nocturno de transición a `MONITOREO_HISTORICO`; ver [ESTADO.md](ESTADO.md) para el detalle pieza por pieza.
+- **`03-plantacion-module/`** — Módulo 3. Modelado base en BD (CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION) aplicado vía migraciones 027–032. La integración física M2↔M3 ya está implementada en el repo Backend mediante migraciones 051–055; quedan pendientes de confirmar la aplicación en Supabase, los e2e DB y flujos no incluidos como el job nocturno de transición a `MONITOREO_HISTORICO`. Ver [ESTADO.md](ESTADO.md).
 - **`90-contratos-integracion/`** — Contratos entre módulos. `01_contrato_recoleccion_a_vivero.md` define la entrada atómica desde Recolección; `02_contrato_vivero_a_plantacion.md` define asignaciones físicas, devoluciones físicas, consumo de stock asignado y saldos derivados entre Vivero y Plantación.
 - **`database/`** — Esquema ER consolidado (`00_database_schema.md` en sintaxis mermaid `erDiagram`), planeación de arquitectura, decisiones críticas, y scripts SQL en `database/supabase/`.
 
@@ -67,7 +67,7 @@ Estas son decisiones cerradas y deben preservarse al redactar nueva documentaci�
 
 ## Estado de iniciativas en curso
 
-- **Integración M2 ↔ M3:** contrato separado en [`90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](90-contratos-integracion/02_contrato_vivero_a_plantacion.md). Implementación pendiente o parcial. Asignaciones físicas, devoluciones físicas, consumo de stock asignado y mermas de stock en campo no pertenecen a Vivero Core y no deben asumirse en producción sin confirmarlo en [ESTADO.md](ESTADO.md).
+- **Integración M2 ↔ M3:** contrato separado en [`90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](90-contratos-integracion/02_contrato_vivero_a_plantacion.md). El repo Backend ya implementa asignación física, consumo por plantación/reposición, devolución física, cancelación con retorno de stock, saldos físicos y merma M2 separada (migraciones 051–055). Falta confirmar aplicación en Supabase/despliegue y correr e2e DB; no asumir producción sin revisar [ESTADO.md](ESTADO.md).
 
 ## SQL en `database/supabase/`
 

@@ -31,13 +31,13 @@ Todo el trabajo es en español y el sistema es un **MVP**: prioriza trazabilidad
 
 - **General** es consumido por los tres módulos operativos vía snapshots congelados (no se recalcula identidad ya validada).
 - **Recolección → Vivero**: contrato estricto en `INICIO`. Crear el lote de vivero y descontar el saldo del origen es **una transacción atómica**; cantidades y unidades quedan alineadas entre `RECOLECCION_MOVIMIENTO`, `LOTE_VIVERO` y `EVENTO_LOTE_VIVERO`.
-- **Vivero ↔ Plantación**: contrato de reservas. *Asignar* y *devolver* árboles a una subcampaña son **reservas lógicas** (no tocan `saldo_vivo_actual`, no generan evento en M2); *plantar* o *reponer* en M3 genera un `DESPACHO` automático que sí baja el saldo. Las mermas de vivero pueden desbordar sobre asignaciones activas.
+- **Vivero ↔ Plantación**: contrato físico vigente. *Asignar* árboles a una subcampaña es una **entrega física**: descuenta `LOTE_VIVERO.saldo_vivo_actual`, genera evento M2 `DESPACHO / ASIGNACION_SUBCAMPANIA` y crea stock consumible en M3. *Plantar* o *reponer* consume asignaciones y no genera `DESPACHO AUTOMATICO_PLANTACION`. *Devolver* retorna físicamente al vivero y aumenta el saldo del lote. Las mermas de vivero no afectan asignaciones ya entregadas.
 
 ### ¿Qué parece implementado vs. planeado?
 
-- **Modelado en BD (implementado o casi):** el esquema de los cuatro módulos existe en `00_database_schema.md`. Recolección tiene su script de historial (`database/supabase/01_create_recoleccion_historial.sql`). Según `CLAUDE.md`, Plantación está modelada vía migraciones 027–032.
-- **Pendiente (planeado):** el propio esquema marca como pendientes varios FKs físicos (`"FK fisico pendiente de ALTER en BD"`) y contadores materializados por trigger (`"materializado por trigger (tarea pendiente)"`). `CLAUDE.md` describe pendientes: handler atómico de despacho automático, triggers de contadores, job nocturno de transición a `MONITOREO_HISTORICO`. La **integración M2↔M3** está *documentada y absorbida* (2026-05-21) pero **no en producción** hasta cerrar tareas.
-- *(Suposición)*: como Claude no ve los repos de implementación (así lo dice `CLAUDE.md`), "implementado" aquí significa "documentado como aplicado", no verificado contra código.
+- **Modelado en BD:** el esquema de los cuatro módulos existe en `00_database_schema.md`. Recolección, Vivero y Plantación cuentan con migraciones documentales en `database/migrations/`. Plantación base está modelada vía migraciones 027–032 y la integración física M2↔M3 queda reflejada por las migraciones 051–055.
+- **Implementado en repo Backend, pendiente de aplicar/verificar:** la integración M2↔M3 física ya existe en código/migraciones/tests del backend; falta aplicar migraciones en Supabase, correr e2e DB y desplegar coordinadamente. Siguen pendientes flujos fuera de esa tanda, como el job nocturno de transición a `MONITOREO_HISTORICO`.
+- *(Nota 2026-07-07)*: "implementado en Backend" no equivale automáticamente a "en producción"; el estado operativo vivo se confirma en `ESTADO.md`.
 
 ### Documentos más importantes (núcleo del proyecto)
 
@@ -209,7 +209,7 @@ La duplicación es el problema **número uno** del repo. El principio de `CLAUDE
 ## 7. Documentación faltante (solo lo que aportaría de verdad — no se crea aquí)
 
 1. **Índice / mapa documental global** — un README raíz que funcione como tabla de contenidos navegable (los 4 módulos + database + qué doc es canónico para qué). Hoy no existe de forma utilizable.
-2. **Glosario canónico de términos** — `saldo_vivo_actual`, `saldo_asignado_disponible`, `saldo_vivo_disponible_asignacion`, "snapshot", "reserva lógica", "despacho automático vs. manual", "material en proceso vs. plantas vivas". Estos términos se re-explican en cada doc; deberían definirse una vez.
+2. **Glosario canónico de términos** — `saldo_vivo_actual`, `saldo_asignado_disponible`, `saldo_asignado_subcampanias`, `saldo_vivo_disponible_asignacion` (legado), "snapshot", "asignación física", "despacho manual vs. salida por asignación", "material en proceso vs. plantas vivas". Estos términos se re-explican en cada doc; deberían definirse una vez.
 3. **Catálogo de enums único** — hoy los enums viven en el schema pero se recopian y **divergen** (`destino_tipo_vivero`). Una sola fuente referenciable evitaría el problema de §4.4.
 4. **Registro de decisiones (ADR) unificado** — las decisiones están dispersas: `database/04` (solo vivero), `general/03`, invariantes de `CLAUDE.md`, "Decisión cerrada 2026-05-24" suelta en plantación. Un `decisiones/` central con una entrada por decisión.
 5. **Documento del maestro `ORGANIZACION` en `00-general-module/`** — el esquema mismo marca `%% Placeholder defensivo (modulo General aun no la define)`. Es una entidad maestra documentada solo en M3.
