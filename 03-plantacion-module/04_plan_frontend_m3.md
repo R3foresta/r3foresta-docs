@@ -36,7 +36,7 @@ La direccion practica para el MVP es:
 | Subcampanias admin | COMPLETADO/PARCIAL | Wizard de base, meta/especies, poligono, equipo, resumen, guardar y activar. Detalle existe, pero aun no es centro operativo completo. |
 | Asignacion fisica M2 -> M3 | PARCIAL | Crear/listar asignaciones ya existe desde detalle de lote de Vivero con evidencia y proposito. Falta operarlo desde la subcampania y falta UI de devolucion. |
 | Devolucion fisica | PARCIAL | API y service existen en Vivero; la UI esta deshabilitada. |
-| Plantacion inicial en campo | PENDIENTE/PARCIAL | No hay ruta ni pantalla. Backend confirmado: `POST /registros-plantacion/evidencias-pendientes` y `POST /registros-plantacion`. Falta endpoint de contexto para no resolver asignaciones a mano en el front. |
+| Plantacion inicial en campo | COMPLETADO | Ruta y flujo mobile de 3 pasos en `/app/planting/subcampanias/:subcampaniaId/plantaciones/new` (`src/modules/plantacion`). Consume `GET /subcampanias/:id/plantacion/context` (ya implementado en backend), `POST/DELETE /registros-plantacion/evidencias-pendientes` y `POST /registros-plantacion`. QA 2026-07-08 sin bloqueantes. |
 | Mortandad | PENDIENTE | No hay frontend ni endpoints conectados en Plantacion. |
 | Reposicion | PENDIENTE/PARCIAL | Backend puede registrar reposicion con `POST /registros-plantacion` usando `es_reposicion=true`, pero faltan UI, contexto y mortandad/origen visible. |
 | Finalizada parcial | PENDIENTE/PARCIAL | Backend real: `POST /subcampanias/:id/cerrar` con `estado_final=FINALIZADA_PARCIAL`. Falta accion frontend conectada. |
@@ -342,6 +342,8 @@ Datos minimos:
 Estado backend 2026-07-07: este endpoint no existe. Lo real hoy es `GET /lotes-vivero/:loteId/asignaciones`, que lista asignaciones activas por lote, no por subcampania. Se puede iniciar el MVP desde la vista de Vivero, pero para la pantalla operativa de subcampania conviene pedir `GET /subcampanias/:id/asignaciones` antes de construir un workaround grande en frontend.
 
 ### 5.2 Registrar plantacion inicial
+
+Estado 2026-07-08: COMPLETADO. Implementado en `pwa-r3foresta` (`src/modules/plantacion`): ruta `/app/planting/subcampanias/:subcampaniaId/plantaciones/new`, flujo de 3 pasos, resolucion automatica de `detalles` por asignacion (`utils/resolverDetallesAsignacion.ts`), guardado transaccional con limpieza de evidencias pendientes y comprobante con `consumos`. El endpoint de contexto `GET /subcampanias/:id/plantacion/context` ya existe en backend. QA cerrado sin bloqueantes.
 
 Objetivo: registrar desde campo lo que se planto, consumiendo stock ya asignado fisicamente a la subcampania.
 
@@ -809,6 +811,7 @@ Asignacion fisica M2 -> M3:
 
 Plantacion y reposicion:
 
+- `GET /subcampanias/:id/plantacion/context`
 - `POST /registros-plantacion/evidencias-pendientes`
 - `POST /registros-plantacion`
 
@@ -827,7 +830,6 @@ Plantacion y reposicion:
 - `GET /subcampanias/:id/asignaciones`
 - `GET /subcampanias/:id/progreso`
 - `GET /subcampanias/:id/historial`
-- `GET /subcampanias/:id/plantacion/context`
 - `POST /subcampanias/:id/plantaciones`
 - `POST /plantaciones/evidencias-pendientes`
 - `POST /subcampanias/:id/finalizar-parcial`
@@ -843,7 +845,6 @@ Prioridad alta para operar desde detalle de subcampania:
 
 ```text
 GET /subcampanias/:id/asignaciones
-GET /subcampanias/:id/plantacion/context
 GET /subcampanias/:id/progreso
 GET /subcampanias/:id/historial
 ```

@@ -70,3 +70,35 @@ Para la primera version la devolucion se registra con cantidad, motivo y usuario
 - Vincular evidencia a `DEVOLUCION_A_VIVERO` y/o al evento fisico de entrada en M2.
 - Registrar GPS/lugar de entrega si la operacion no ocurre dentro del vivero.
 - Definir si la devolucion debe pasar por validacion del responsable de vivero antes de aumentar saldo disponible.
+
+## PMVP-PLA-05 — Excedente operativo por especie en plantacion inicial
+
+### Idea
+
+Permitir que una plantacion inicial exceda la meta por especie cuando exista una justificacion de campo.
+
+### Por que queda fuera del MVP
+
+El contrato actual de backend bloquea exceder `cantidad_objetivo` por especie. Para MVP, el frontend debe respetar ese bloqueo y evitar enviar registros que la RPC rechazaria.
+
+### Reglas a evaluar despues
+
+- Cambiar la validacion de meta por especie en backend.
+- Requerir una justificacion cuando la cantidad plantada supere la meta de la especie.
+- Mostrar advertencia en frontend en vez de bloqueo, si producto aprueba el excedente operativo.
+
+## PMVP-PLA-06 — Ventana retroactiva configurable para plantacion
+
+### Idea
+
+Permitir configurar la ventana retroactiva de fechas por modulo o por operacion de Plantacion.
+
+### Por que queda fuera del MVP
+
+La ventana vigente de backend para fecha de plantacion es de 10 dias y es suficiente para la primera version.
+
+### Reglas a evaluar despues
+
+- Definir si la configuracion aplica por modulo, operacion o campania.
+- Exponer la regla al frontend desde el contexto operativo.
+- Auditar cambios de configuracion si afectan registros historicos o validaciones de campo.
