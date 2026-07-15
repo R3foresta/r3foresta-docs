@@ -245,7 +245,17 @@ Nota de implementacion: si `EVENTO_LOTE_VIVERO` aun no tiene un tipo de evento p
 
 El despacho manual sigue siendo una salida real registrada por Vivero hacia un destino distinto de una subcampania de Plantacion.
 
-Datos minimos:
+`campania_id`, `subcampania_id` y `registro_plantacion_id` son **siempre** `NULL` en `origen_despacho = MANUAL`, para cualquier `destino_tipo` — incluyendo `PLANTACION_PROPIA`. El formulario no debe solicitarlos en ningun caso de despacho manual. El campo condicionado por destino varia segun la siguiente matriz (ver `ADR-VIV-16`):
+
+| `destino_tipo` | Campo obligatorio | Campo opcional |
+|---|---|---|
+| `PLANTACION_PROPIA` | `destino_referencia` (texto libre) | — |
+| `DONACION` (UI: "Donacion a comunidad") | `comunidad_destino_id` (FK `DIVISION_ADMINISTRATIVA`) | `destino_referencia` |
+| `VENTA` | `destino_referencia` (texto libre) | — |
+| `OTRO` | `destino_referencia` (texto libre) | — |
+| `PLANTACION_COMUNIDAD` | Reservado — sin opcion de UI en el MVP | — |
+
+Datos minimos (ejemplo con `destino_referencia`; para `DONACION` agregar `comunidad_destino_id` segun la matriz):
 
 ```text
 tipo_evento = DESPACHO

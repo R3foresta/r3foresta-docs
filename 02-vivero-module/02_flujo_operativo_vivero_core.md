@@ -134,7 +134,7 @@ Reglas clave:
 - requiere `EMBOLSADO` previo,
 - `cantidad_afectada > 0`,
 - `unidad_medida_evento = UNIDAD`,
-- requiere destino estructurado,
+- requiere destino estructurado: el campo condicionado depende de `destino_tipo` (matriz completa en `RF-VIV-05` y `ADR-VIV-16`); ningun `destino_tipo` manual pide campania/subcampania, ni siquiera `PLANTACION_PROPIA`,
 - requiere evidencia propia obligatoria,
 - baja `saldo_vivo_actual`,
 - no puede dejar saldo negativo,

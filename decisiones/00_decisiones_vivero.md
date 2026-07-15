@@ -349,6 +349,35 @@ Semántica correcta, cierre confiable de lotes que no producen plantas vivas y r
 
 ---
 
+## ADR-VIV-16 — Matriz de campos condicionados por `destino_tipo` en despacho manual; ningún tipo manual usa campaña
+
+### Decisión
+En `DESPACHO` con `origen_despacho = MANUAL`, `campania_id`, `subcampania_id` y `registro_plantacion_id` van siempre en `NULL`, para **todo** `destino_tipo` distinto de `PLANTACION_CAMPANIA` — incluyendo `PLANTACION_PROPIA`, sin excepción. El campo condicionado varía por `destino_tipo`:
+
+| `destino_tipo` | Campo obligatorio | Campo opcional |
+|---|---|---|
+| `PLANTACION_PROPIA` | `destino_referencia` (texto libre) | — |
+| `DONACION` (UI: "Donación a comunidad") | `comunidad_destino_id` (FK `DIVISION_ADMINISTRATIVA`) | `destino_referencia` |
+| `VENTA` | `destino_referencia` (texto libre) | — |
+| `OTRO` | `destino_referencia` (texto libre) | — |
+| `PLANTACION_COMUNIDAD` | Reservado — sin opción de UI en el MVP | — |
+
+### La duda crítica
+"¿Por qué el formulario de despacho pedía 'Campaña destino' como obligatorio al elegir 'Plantación propia', si esa misma opción indica explícitamente que es una salida fuera de una campaña M3?"
+
+### Respuesta
+Porque el formulario no reflejaba un contrato que ya estaba cerrado: `origen_despacho = MANUAL` nunca lleva campaña (ver `90-contratos-integracion/02_contrato_vivero_a_plantacion.md` §6.4). El error no era del modelo de datos sino de un campo de UI mostrado fuera de su contexto. Para que no vuelva a pasar, se deja explícita la matriz de campo condicionado por `destino_tipo`, en vez de dejarlo implícito en la exclusión genérica de `PLANTACION_CAMPANIA`.
+
+Sobre `DONACION` vs `PLANTACION_COMUNIDAD`: el enum mantiene ambos valores separados por decisión previa (2026-07-01, no fusionar a `DONACION_COMUNIDAD`), pero el formulario solo expone una opción ("Donación a comunidad"). Se resuelve mapeando esa opción a `DONACION`; `PLANTACION_COMUNIDAD` queda reservado para un escenario futuro distinto (la comunidad ejecuta la plantación por su cuenta, fuera de una subcampaña M3) y no tiene opción de UI en el MVP. **Este mapeo es una recomendación a validar con producto, no una decisión cerrada como el resto de este documento.**
+
+### Lo que se sacrificó
+Simplicidad de un único campo "destino" genérico para todo despacho manual.
+
+### Lo que se ganó
+Un formulario que no puede pedir un dato que el contrato prohíbe, y una fuente única de verdad para el campo condicionado por tipo de destino.
+
+---
+
 ## Conclusión de defensa
 
 La arquitectura no buscó ser la más abstracta ni la más extensible desde el inicio.  
