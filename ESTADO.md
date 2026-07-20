@@ -32,6 +32,7 @@ El backend ya migró el flujo principal desde **reserva lógica + despacho autom
 3. Desplegar backend y frontend coordinados por los breaking changes de API.
 4. Confirmar en producción/staging que no existen escrituras nuevas con `AUTOMATICO_PLANTACION`.
 5. Implementar/ajustar frontend contra el contrato nuevo: asignación física con evidencia, plantación con `consumos`, devolución física y saldos separados.
+6. Corregir formulario de despacho manual en frontend: no debe solicitar campaña/subcampaña para ningún `destino_tipo` manual (incluye Plantación propia); aplicar matriz de campos condicionados por `destino_tipo` (ver `ADR-VIV-16` y `RF-VIV-05`).
 
 ## Integración Módulo 2 (Vivero) ↔ Módulo 3 (Plantación)
 
