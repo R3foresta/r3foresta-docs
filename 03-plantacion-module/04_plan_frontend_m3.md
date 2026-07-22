@@ -2,7 +2,7 @@
 
 > Documento operativo para planificar implementacion frontend. No reemplaza reglas de negocio ni contrato backend. La fuente canonica sigue en `01_reglas_de_negocio_plantacion.md`, `02_Procesos_Modulo_3_Plantacion.md` y `../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`.
 >
-> Actualizado contra el frontend real de `pwa-r3foresta` y contrastado contra backend `Backend-r3foresta` el 2026-07-07.
+> Actualizado contra el frontend real de `pwa-r3foresta` y contrastado contra backend `Backend-r3foresta` el 2026-07-21.
 >
 > Documentacion backend revisada:
 > - `/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/documentacion/frontend/api-reference.md`
@@ -31,11 +31,11 @@ La direccion practica para el MVP es:
 | Area | Estado | Realidad actual |
 |---|---|---|
 | Stack frontend | COMPLETADO | React + TypeScript + Vite + Tailwind. |
-| Capa API Plantacion | PARCIAL | Existe para campanias, subcampanias, equipo, poligono, plan, activar, cancelar, cerrar y registrar plantacion/reposicion via `POST /registros-plantacion`. Faltan contexto/listado por subcampania, historial HTTP, mortandad HTTP y asignaciones por subcampania. |
+| Capa API Plantacion | PARCIAL | Existe para campanias, subcampanias, equipo, poligono, plan, activar, cancelar, contexto de plantacion y registro via `POST /registros-plantacion`. Faltan historial/mortandad HTTP y asignaciones agregadas por subcampania. |
 | Campanias admin | COMPLETADO | Listado, creacion, edicion, detalle/dashboard, metricas y actividad reciente. |
-| Subcampanias admin | COMPLETADO/PARCIAL | Wizard de base, meta/especies, poligono, equipo, resumen, guardar y activar. Detalle existe, pero aun no es centro operativo completo. |
-| Asignacion fisica M2 -> M3 | PARCIAL | Crear/listar asignaciones ya existe desde detalle de lote de Vivero con evidencia y proposito. Falta operarlo desde la subcampania y falta UI de devolucion. |
-| Devolucion fisica | PARCIAL | API y service existen en Vivero; la UI esta deshabilitada. |
+| Subcampanias admin | COMPLETADO/PARCIAL | Wizard, detalle, equipo, mapa, activación, cancelación y CTA de registro de plantación están conectados. El detalle todavía no agrega una vista de asignaciones/historial. |
+| Asignacion fisica M2 -> M3 | COMPLETADO/PARCIAL | Crear/listar/asignar con evidencia y propósito funciona desde el detalle de lote de Vivero. Falta una vista agregada por subcampaña. |
+| Devolucion fisica | COMPLETADO/PARCIAL | La UI de devolución funciona desde el detalle de lote de Vivero; falta reflejar el desglose agregado en el detalle de subcampaña. |
 | Plantacion inicial en campo | COMPLETADO | Ruta y flujo mobile de 3 pasos en `/app/planting/subcampanias/:subcampaniaId/plantaciones/new` (`src/modules/plantacion`). Consume `GET /subcampanias/:id/plantacion/context` (ya implementado en backend), `POST/DELETE /registros-plantacion/evidencias-pendientes` y `POST /registros-plantacion`. QA 2026-07-08 sin bloqueantes. |
 | Mortandad | PENDIENTE | No hay frontend ni endpoints conectados en Plantacion. |
 | Reposicion | PENDIENTE/PARCIAL | Backend puede registrar reposicion con `POST /registros-plantacion` usando `es_reposicion=true`, pero faltan UI, contexto y mortandad/origen visible. |
@@ -95,13 +95,13 @@ Rutas ya implementadas:
 - `/app/planting/campanias/:campaniaId/edit`
 - `/app/planting/campanias/:campaniaId/subcampanias/new`
 - `/app/planting/subcampanias/:subcampaniaId`
-
-Rutas sugeridas para lo pendiente:
-
-- `/app/planting/subcampanias/:subcampaniaId/asignaciones`
 - `/app/planting/subcampanias/:subcampaniaId/plantaciones/new`
+
+Rutas todavía no implementadas:
+
 - `/app/planting/subcampanias/:subcampaniaId/mortandad/new`
 - `/app/planting/subcampanias/:subcampaniaId/reposiciones/new`
+- `/app/planting/subcampanias/:subcampaniaId/asignaciones` (requiere endpoint agregado por subcampaña)
 - `/app/campo` solo si se decide crear un home mobile especifico para operarios.
 
 Regla practica: no crear rutas publicas ni rutas fuera de `/app` para operaciones privadas.
@@ -176,21 +176,17 @@ Ya existe:
 
 Pendiente:
 
-- tab `Asignaciones`;
 - tab `Plantaciones`;
 - tab `Historial`;
-- CTA `Registrar plantacion`;
-- CTA `Asignar stock`;
-- CTA `Devolver stock`;
 - CTA `Finalizar parcial`;
 - mostrar fase de mantenimiento separada del estado operativo;
 - mostrar progreso por especie real, no solo meta total.
 
-El comentario TODO en `DetalleSubcampanaScreen.tsx` ya apunta a agregar `Asignaciones`; ese es el mejor punto de entrada para el siguiente ticket.
+El CTA `Registrar plantacion` ya está conectado. El comentario TODO de `DetalleSubcampanaScreen.tsx` sigue siendo válido para la futura vista agregada de asignaciones cuando exista `GET /subcampanias/:id/asignaciones`.
 
 ### 4.4 Asignacion fisica desde Vivero
 
-Estado: PARCIAL, pero reutilizable.
+Estado: COMPLETADO para el flujo actual desde Vivero; falta la vista agregada por subcampaña.
 
 Ya existe desde el detalle de lote de Vivero:
 
@@ -214,17 +210,17 @@ Archivos principales:
 - `src/services/lotes-vivero.service.ts`
 - `src/modules/vivero/types/contracts.ts`
 
-Pendiente para que Plantacion lo use bien:
+Pendiente para una experiencia centrada en Plantacion:
 
 - una vista por subcampania que muestre todas sus asignaciones;
 - selector de lotes asignables filtrado por especie/estado/saldo;
 - cobertura por especie contra el plan;
-- boton de devolucion funcional;
+- vista agregada por subcampaña;
 - lenguaje consistente: "entregado/asignado a subcampania", no "reserva logica".
 
 ### 4.5 Devolucion fisica
 
-Estado: PARCIAL.
+Estado: COMPLETADO para la operación desde Vivero; integración agregada en Plantación pendiente.
 
 Ya existe:
 
@@ -232,13 +228,7 @@ Ya existe:
 - `LotesViveroService.devolverAsignacion`;
 - validaciones frontend basicas de cantidad, motivo y fecha.
 
-Falta:
-
-- UI de devolucion;
-- confirmacion;
-- refetch del lote y de la subcampania;
-- mostrar si el lote se reabrio (`lote_reabierto`);
-- advertir antes de cancelar subcampania con asignaciones activas: el backend ya ejecuta devolucion fisica automatica en `POST /subcampanias/:id/cancelar`, pero la respuesta no trae el detalle de unidades/lotes devueltos; despues hay que reconsultar lotes/asignaciones.
+La UI de devolución valida cantidad, motivo y fecha, muestra confirmación, reconsulta el lote y comunica si el lote se reabrió (`lote_reabierto`). La cancelación transaccional del backend devuelve físicamente las asignaciones activas; queda pendiente mostrar el desglose agregado por lote/subcampaña.
 
 ## 5. Flujos pendientes del MVP
 
@@ -339,11 +329,11 @@ Datos minimos:
 }
 ```
 
-Estado backend 2026-07-07: este endpoint no existe. Lo real hoy es `GET /lotes-vivero/:loteId/asignaciones`, que lista asignaciones activas por lote, no por subcampania. Se puede iniciar el MVP desde la vista de Vivero, pero para la pantalla operativa de subcampania conviene pedir `GET /subcampanias/:id/asignaciones` antes de construir un workaround grande en frontend.
+Estado verificado 2026-07-21: este endpoint agregado no existe. Lo real hoy es `GET /lotes-vivero/:loteId/asignaciones`, que lista asignaciones por lote y ya se usa desde la vista de Vivero. Para la pantalla operativa de subcampaña conviene pedir `GET /subcampanias/:id/asignaciones` antes de construir un workaround grande en frontend.
 
 ### 5.2 Registrar plantacion inicial
 
-Estado 2026-07-08: COMPLETADO. Implementado en `pwa-r3foresta` (`src/modules/plantacion`): ruta `/app/planting/subcampanias/:subcampaniaId/plantaciones/new`, flujo de 3 pasos, resolucion automatica de `detalles` por asignacion (`utils/resolverDetallesAsignacion.ts`), guardado transaccional con limpieza de evidencias pendientes y comprobante con `consumos`. El endpoint de contexto `GET /subcampanias/:id/plantacion/context` ya existe en backend. QA cerrado sin bloqueantes.
+Estado verificado 2026-07-21: COMPLETADO. Implementado en `pwa-r3foresta` (`src/modules/plantacion`): ruta `/app/planting/subcampanias/:subcampaniaId/plantaciones/new`, flujo de 3 pasos, resolucion automatica de `detalles` por asignacion (`utils/resolverDetallesAsignacion.ts`), guardado transaccional con limpieza de evidencias pendientes y comprobante con `consumos`. El endpoint de contexto `GET /subcampanias/:id/plantacion/context` ya existe en backend. QA inicial cerrado sin bloqueantes.
 
 Objetivo: registrar desde campo lo que se planto, consumiendo stock ya asignado fisicamente a la subcampania.
 
@@ -527,7 +517,7 @@ MVP:
 - sin fotos en MVP, segun contrato;
 - confirmacion explicita porque aumenta saldo vivo del lote.
 
-Ya existe service. Falta UI.
+La UI ya existe desde el tab `Asignaciones` del detalle de lote de Vivero (`ViveroLotAsignacionesTab`). Falta integrarla en una vista agregada del detalle de subcampaña cuando exista el endpoint correspondiente.
 
 ENDPOINT confirmado:
 
@@ -572,7 +562,7 @@ Respuesta real resumida:
 Cancelacion:
 
 - ya existe cancelacion simple desde detalle de subcampania;
-- falta validar visualmente asignaciones activas no consumidas;
+- la confirmación muestra que la cancelación resuelve asignaciones activas; todavía no hay desglose visual de lotes/unidades devueltos;
 - `POST /subcampanias/:id/cancelar` ya es transaccional: si no hay plantaciones iniciales, cancela y devuelve fisicamente al vivero el saldo disponible de las asignaciones activas;
 - aclaracion de alineacion: la doc backend antigua que diga "devolucion logica/no genera evento M2" esta desactualizada por la migracion `054_m3_devolucion_fisica.sql`; lo vigente es devolucion fisica con eventos M2/M3;
 - como la respuesta de cancelar no trae desglose de lotes/unidades devueltas, el frontend debe mostrar confirmacion previa y refetch posterior.

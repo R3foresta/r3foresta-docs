@@ -2,9 +2,11 @@
 
 > Este documento registra el **avance de implementación** (qué está en el repo Backend, qué falta aplicar/verificar y qué queda pendiente), no el diseño. La documentación canónica del *diseño* del dominio vive en los módulos (`00-general-module/`, `01-recoleccion-module/`, `02-vivero-module/`, `03-plantacion-module/`), en los contratos de integración (`90-contratos-integracion/`) y en `database/00_database_schema.md`.
 >
-> **Actualización 2026-07-07:** este estado se actualizó a partir de la revisión local del repo `Backend-r3foresta`. Cuando un ítem dice "implementado en Backend" significa que existe en código/migraciones/tests del repo backend. No implica por sí solo que las migraciones ya estén aplicadas en Supabase ni que el despliegue productivo esté actualizado.
+> **Actualización 2026-07-21:** este estado se actualizó contrastando Backend, `pwa-r3foresta` y la documentación vigente. Cuando un ítem dice "implementado en Backend" significa que existe en código/migraciones/tests del repo backend. No implica por sí solo que las migraciones ya estén aplicadas en Supabase ni que el despliegue productivo esté actualizado.
 >
 > **Actualización 2026-07-08:** implementado en frontend el **registro de plantación inicial en campo** (flujo mobile de 3 pasos en `/app/planting/subcampanias/:id/plantaciones/new`) contra el contrato real (`GET /subcampanias/:id/plantacion/context`, `POST`/`DELETE /registros-plantacion/evidencias-pendientes`, `POST /registros-plantacion`). QA cerrado sin bloqueantes.
+
+> **Actualización 2026-07-21:** el frontend ya consume el contrato físico M2↔M3, el timeline de Vivero, el despacho manual, el descarte pre-embolsado y las devoluciones físicas. Los pendientes frontend reales quedan limitados a autenticación mock, la ruta legacy de Embolsado, paginación/estados de Recolección, idempotencia de eventos y cobertura automatizada.
 
 ## Snapshot actual — Integración M2 Vivero ↔ M3 Plantación
 
@@ -31,8 +33,8 @@ El backend ya migró el flujo principal desde **reserva lógica + despacho autom
 2. Ejecutar `npm run test:e2e:db` contra un entorno Supabase migrado y seguro.
 3. Desplegar backend y frontend coordinados por los breaking changes de API.
 4. Confirmar en producción/staging que no existen escrituras nuevas con `AUTOMATICO_PLANTACION`.
-5. Implementar/ajustar frontend contra el contrato nuevo: asignación física con evidencia, plantación con `consumos`, devolución física y saldos separados.
-6. Corregir formulario de despacho manual en frontend: no debe solicitar campaña/subcampaña para ningún `destino_tipo` manual (incluye Plantación propia); aplicar matriz de campos condicionados por `destino_tipo` (ver `ADR-VIV-16` y `RF-VIV-05`).
+5. Verificar en staging que el frontend publicado consume las migraciones y endpoints nuevos; el código de `pwa-r3foresta` ya contiene asignación física con evidencia, plantación con `consumos`, devolución física y saldos separados.
+6. Mantener la matriz de campos del despacho manual alineada con `ADR-VIV-16` y `RF-VIV-05`; la implementación actual no solicita campaña/subcampaña y exige destino estructurado, comunidad cuando aplica y evidencia.
 
 ## Integración Módulo 2 (Vivero) ↔ Módulo 3 (Plantación)
 
@@ -44,7 +46,7 @@ El backend ya migró el flujo principal desde **reserva lógica + despacho autom
 | Plantación/reposición como consumo de asignaciones, sin despacho M2 | contrato M2↔M3, M3 procesos, migración `053` | ✅ implementado en Backend: respuesta con `consumos`, detalles con `evento_lote_vivero_despacho_id = NULL`. |
 | Devolución física y cancelación de subcampaña | contrato M2↔M3, RN-PLA-37, migración `054` | ✅ implementado en Backend: RPC de devolución física, endpoint de devolución y cancelación con devolución física automática. |
 | Merma M2, saldos y despacho manual con semántica física | contrato M2↔M3, migración `055` | ✅ implementado en Backend: merma no toca asignaciones; despacho manual valida contra saldo físico; saldos separados. |
-| API/Swagger/documentación frontend del contrato nuevo | Backend docs / Swagger | ✅ implementado en Backend. ⏳ frontend consumidor pendiente/por confirmar. |
+| API/Swagger/documentación frontend del contrato nuevo | Backend docs / Swagger / `pwa-r3foresta` | ✅ implementado en Backend y consumido por el frontend. Verificar despliegue coordinado en staging. |
 | Pruebas de regresión y concurrencia | specs Backend | ✅ unitarios implementados y pasando. ✅ e2e DB nuevos en repo Backend (`asignacion_fisica`, `plantacion_fisica`). ⏳ pendiente correr e2e DB contra Supabase migrado. |
 | Merma de stock ya asignado en campo | contrato M2↔M3 §8.2 | ⏳ fuera del MVP backend actual; si se prioriza debe vivir en M3 y afectar `cantidad_mermada`. |
 | Job nocturno de transición `MANTENIMIENTO_ACTIVO` → `MONITOREO_HISTORICO` (RF-PLA-11) | schema / `CLAUDE.md` | ⏳ pendiente. |
@@ -59,9 +61,9 @@ El backend ya migró el flujo principal desde **reserva lógica + despacho autom
 | Backend: endpoint/servicio para registrar descarte pre-embolsado desde lote `ACTIVO` con `INICIO` y sin `EMBOLSADO` | `RF-VIV-02A` / migración 046 | ✅ implementado en Backend. |
 | Backend: si el lote ya tiene `EMBOLSADO`, bloquear `DESCARTE_PRE_EMBOLSADO` y usar pérdida total post-embolsado vía `MERMA` por todo `saldo_vivo_actual` | `02-vivero-module/02_flujo_operativo_vivero_core.md` §7.1 | ✅ implementado en Backend. |
 | Backend: pruebas de negocio para inicio sin embolsado, bloqueo con embolsado existente, evidencia obligatoria, cierre automático y motivo `DESCARTE_PRE_EMBOLSADO` | `RF-VIV-02A` | ✅ unitarios/e2e DB presentes en Backend. |
-| Frontend: en detalle/listado de lote, detectar `ACTIVO` + `INICIO` + sin `EMBOLSADO` y mostrar acción de descarte total pre-embolsado | `02-vivero-module/02_flujo_operativo_vivero_core.md` §7.2 | ⏳ pendiente/por confirmar. |
-| Frontend: formulario con fecha, responsable, causa, cantidad total prellenada desde `cantidad_inicial_en_proceso`, unidad, observaciones y evidencia obligatoria | `RF-VIV-02A` | ⏳ pendiente/por confirmar. |
-| Frontend: si el lote ya tiene `EMBOLSADO`, la acción equivalente debe registrar pérdida total post-embolsado, no descarte pre-embolsado | `02-vivero-module/02_flujo_operativo_vivero_core.md` §7.2 | ⏳ pendiente/por confirmar. |
+| Frontend: en detalle/listado de lote, detectar `ACTIVO` + `INICIO` + sin `EMBOLSADO` y mostrar acción de descarte total pre-embolsado | `02-vivero-module/02_flujo_operativo_vivero_core.md` §7.2 | ✅ implementado en `pwa-r3foresta` (`QuickActions`, `ViveroEventScreen`). |
+| Frontend: formulario con fecha, responsable, causa, cantidad total prellenada desde `cantidad_inicial_en_proceso`, unidad, observaciones y evidencia obligatoria | `RF-VIV-02A` | ✅ implementado en `DescartePreEmbolsadoForm`. |
+| Frontend: si el lote ya tiene `EMBOLSADO`, la acción equivalente debe registrar pérdida total post-embolsado, no descarte pre-embolsado | `02-vivero-module/02_flujo_operativo_vivero_core.md` §7.2 | ✅ implementado: la acción pre-embolsado se oculta y queda disponible `MERMA`. |
 
 ## Módulo 3 (Plantación) — Creación/planeación de subcampaña
 
@@ -74,8 +76,8 @@ El backend ya migró el flujo principal desde **reserva lógica + despacho autom
 | Diseño: edición básica y desactivación de campaña en MVP; `tipo` solo sin subcampañas, desactivación si no hay subcampañas o todas están `CANCELADA` | `01_reglas...` (RN-PLA-38), `02_Procesos...` §2.1/§3.1, `database/00_database_schema.md`, `decisiones/02_decisiones_plantacion.md` (ADR-PLA-01) | ✅ documentado |
 | BD: trigger para bloquear cambio de `tipo` con subcampañas, permitir soft-delete solo sin subcampañas o todas `CANCELADA`, y bloquear `DELETE` físico si hay subcampañas | `database/migrations/050_m3_campania_edicion_eliminacion_estricta_mvp.sql` | ✅ implementado como migración en Backend. ⏳ pendiente aplicar/confirmar en Supabase si no está aplicado. |
 | Aclaración cerrada: asignación de lotes solo post-`ACTIVA` (no en BORRADOR); activar con 0% de stock permitido | `02_Procesos...` §2.13, `00_...json` RF-PLA-02/03, `03_Mockups...` §3.6 | ✅ implementado bajo contrato físico: `POST /api/lotes-vivero/:id/asignaciones` rechaza BORRADOR/CANCELADA y valida propósito por estado; activación permite 0 asignaciones. |
-| Frontend: wizard de subcampaña sin paso de asignación (asignación en pantalla dedicada tras activar) + acción "Cancelar" según estado | `03_Mockups...` §3.6/§3.7/§3.10 | ⏳ en progreso/por confirmar. |
-| Frontend: planificación MVP completa para adaptar UI al flujo de asignación física, consumo de stock asignado, devoluciones y vista pública | `03-plantacion-module/04_plan_frontend_m3.md` | ✅ plan documentado; implementación parcial (ver filas específicas). |
+| Frontend: wizard de subcampaña sin paso de asignación + acción "Cancelar" según estado | `03_Mockups...` §3.6/§3.7/§3.10 | ✅ wizard y cancelación implementados; asignación física opera desde el detalle de lote de Vivero. |
+| Frontend: adaptación UI al flujo de asignación física, consumo de stock asignado y devoluciones | `03-plantacion-module/04_plan_frontend_m3.md` | ✅ implementado en `pwa-r3foresta`; la vista pública y mantenimiento avanzado siguen fuera de este cierre. |
 | Backend: `GET /subcampanias/:id/plantacion/context` (subcampaña, permisos, equipo, plan y stock asignado por especie con sus asignaciones, y reglas) | Backend `documentacion/postman/plantacion-context.md` | ✅ implementado en Backend. |
 | Frontend: **registro de plantación inicial en campo** — flujo mobile 3 pasos (evidencia+GPS, cantidades por especie, resolución automática de `detalles` por asignación `fecha_asignacion ASC, asignacion_id ASC`), guardado transaccional con limpieza de evidencias y comprobante con `consumos` | `03-plantacion-module/04_plan_frontend_m3.md` §5.2 / §9 Paso 3 | ✅ implementado en `pwa-r3foresta` (`src/modules/plantacion`, ruta `/app/planting/subcampanias/:id/plantaciones/new`). QA 2026-07-08 sin bloqueantes. |
 | BD: tabla `SUBCAMPANIA_HISTORIAL` (append-only, con enum `tipo_historial_subcampania`) para eventos de ciclo de vida (`BORRADOR_CREADO`, `SUBCAMPANIA_ACTIVADA`, `SUBCAMPANIA_CANCELADA`, y futuros) | `02_Procesos...` §4.1 | ✅ creada por migración `047` en repo Backend; creation/activation/cancelación escriben eventos. Los eventos `SUBCAMPANIA_COMPLETADA / FINALIZADA_PARCIAL / TRANSICION_A_MONITOREO_HISTORICO / EQUIPO_*` quedan pendientes de sus flujos respectivos. |

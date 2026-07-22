@@ -2,7 +2,7 @@
 
 > **Propósito:** entender el estado actual de la documentación y evaluar su calidad como lo haría un ingeniero senior que se incorpora al proyecto, **antes** de proponer cualquier refactor.
 > **Alcance:** todos los `.md`, `.json` y `.sql` del repo. Se **excluyen los `.excalidraw`** (`diagramas/`, `methodology/`) por indicación de `CLAUDE.md`: son material de trabajo en Excalidraw, no documentación canónica.
-> **Fecha:** 2026-07-01. **Autor:** auditoría asistida (solo lectura; no se modificó ningún documento del dominio).
+> **Auditoría inicial:** 2026-07-01. **Actualización de sincronización:** 2026-07-21. Se conservaron las observaciones históricas y se corrigieron las afirmaciones que ya no describían el estado actual.
 >
 > **Convención:** los enunciados son **hechos** verificados sobre los archivos salvo cuando digan explícitamente *(suposición)* o *(sin confirmar)*. Las citas usan `archivo:línea` donde aporta.
 > **Regla de oro respetada:** este documento **no reescribe, no inventa y no crea** documentación de dominio. Solo audita y propone.
@@ -37,7 +37,7 @@ Todo el trabajo es en español y el sistema es un **MVP**: prioriza trazabilidad
 
 - **Modelado en BD:** el esquema de los cuatro módulos existe en `00_database_schema.md`. Recolección, Vivero y Plantación cuentan con migraciones documentales en `database/migrations/`. Plantación base está modelada vía migraciones 027–032 y la integración física M2↔M3 queda reflejada por las migraciones 051–055.
 - **Implementado en repo Backend, pendiente de aplicar/verificar:** la integración M2↔M3 física ya existe en código/migraciones/tests del backend; falta aplicar migraciones en Supabase, correr e2e DB y desplegar coordinadamente. Siguen pendientes flujos fuera de esa tanda, como el job nocturno de transición a `MONITOREO_HISTORICO`.
-- *(Nota 2026-07-07)*: "implementado en Backend" no equivale automáticamente a "en producción"; el estado operativo vivo se confirma en `ESTADO.md`.
+- *(Nota 2026-07-21)*: "implementado en Backend" no equivale automáticamente a "en producción"; el estado operativo vivo se confirma en `ESTADO.md`, incluyendo ahora la integración del frontend `pwa-r3foresta`.
 
 ### Documentos más importantes (núcleo del proyecto)
 
@@ -199,7 +199,7 @@ La duplicación es el problema **número uno** del repo. El principio de `CLAUDE
 | **Claridad** | **7** | Los documentos **individuales** son de alta calidad: bien redactados, con ejemplos numéricos, matrices, diagramas Mermaid y decisiones justificadas. El problema no es la claridad local sino la coherencia global. |
 | **Consistencia** | **3** | Contradicciones verificadas (COORDINADOR, fórmula de saldo, LIFO/urgencia, 3 enums `destino_tipo`), typos en nombres de archivo, dos formatos de JSON, numeración con huecos, canonicidad circular addendum↔04_consumo. |
 | **Separación de responsabilidades** | **4** | Reglas de M3 en M2; ADRs de vivero en `database/`; `ORGANIZACION` (maestro) documentado solo en M3; addendum histórico junto a docs vigentes; `agregar.md` fuera del sistema numerado. |
-| **Onboarding de un dev nuevo** | **5** | `CLAUDE.md` es un excelente mapa mental… que apunta a `tareas/` inexistente. README raíz incompleto, sin glosario ni índice. Un recién llegado no sabe cuál doc manda entre addendum / 04_consumo / 02_guia / reglas. |
+| **Onboarding de un dev nuevo** | **6** | `CLAUDE.md`, README raíz, glosario y `ESTADO.md` ya forman un punto de entrada útil. Todavía hay documentos históricos que pueden confundir cuál fuente manda. |
 | **Facilidad de mantenimiento futuro** | **4** | Sin fuente única por concepto, el costo de mantener coherencia **crece con cada módulo nuevo**. La deuda ya presente (tareas fantasma, JSON rezagados) se acumulará. |
 
 **Salud global ponderada: ≈ 4.5 / 10.** Diagnóstico de una frase: **excelentes documentos individuales, arquitectura documental incoherente.** La buena noticia es que casi todo el material fuente es de calidad; el trabajo pesado es de **organización y consolidación**, no de reescritura de contenido.
@@ -208,12 +208,12 @@ La duplicación es el problema **número uno** del repo. El principio de `CLAUDE
 
 ## 7. Documentación faltante (solo lo que aportaría de verdad — no se crea aquí)
 
-1. **Índice / mapa documental global** — un README raíz que funcione como tabla de contenidos navegable (los 4 módulos + database + qué doc es canónico para qué). Hoy no existe de forma utilizable.
-2. **Glosario canónico de términos** — `saldo_vivo_actual`, `saldo_asignado_disponible`, `saldo_asignado_subcampanias`, `saldo_vivo_disponible_asignacion` (legado), "snapshot", "asignación física", "despacho manual vs. salida por asignación", "material en proceso vs. plantas vivas". Estos términos se re-explican en cada doc; deberían definirse una vez.
+1. **Índice / mapa documental global** — el README raíz ya enlaza los 4 módulos, database, decisiones, glosario, `ESTADO.md` y esta auditoría. Pendiente: añadir una tabla breve de canonicidad por concepto.
+2. **Glosario canónico de términos** — `glosario.md` ya existe y debe seguir siendo la fuente de `saldo_vivo_actual`, `saldo_asignado_disponible`, `saldo_asignado_subcampanias`, `saldo_vivo_disponible_asignacion` (legado), "snapshot", "asignación física", "despacho manual vs. salida por asignación" y "material en proceso vs. plantas vivas". Pendiente: completar términos que todavía se re-explican fuera del glosario.
 3. **Catálogo de enums único** — hoy los enums viven en el schema pero se recopian y **divergen** (`destino_tipo_vivero`). Una sola fuente referenciable evitaría el problema de §4.4.
 4. **Registro de decisiones (ADR) unificado** — las decisiones están dispersas: `database/04` (solo vivero), `general/03`, invariantes de `CLAUDE.md`, "Decisión cerrada 2026-05-24" suelta en plantación. Un `decisiones/` central con una entrada por decisión.
 5. **Documento del maestro `ORGANIZACION` en `00-general-module/`** — el esquema mismo marca `%% Placeholder defensivo (modulo General aun no la define)`. Es una entidad maestra documentada solo en M3.
-6. **Estado real de implementación (roadmap vivo)** — qué está en producción vs. pendiente. Hoy esa información vivía en `tareas/` (inexistente) y en notas sueltas del schema ("tarea pendiente").
+6. **Estado real de implementación (roadmap vivo)** — resuelto con `ESTADO.md`, que ahora registra Backend, frontend y pendientes de despliegue. Mantenerlo actualizado cuando cambie un contrato.
 7. **`03-plantacion-module/01_reglas_de_negocio_plantacion.md` + README del módulo** — para que M3 no dependa de reglas alojadas en M2.
 8. *(Opcional)* **Guía de contribución humana (`CONTRIBUTING`)** — las reglas del "bibliotecario" (no duplicar, numeración estable) están en `CLAUDE.md` para agentes; convendría una versión para colaboradores humanos.
 
@@ -370,4 +370,4 @@ r3foresta-docs/
 
 ### Resumen ejecutivo
 
-R3Foresta tiene **documentación de contenido excelente sobre una arquitectura documental frágil**. El dominio está bien pensado y bien escrito módulo por módulo. Los riesgos no están en lo que dice cada documento, sino en que **el mismo hecho se repite en muchos documentos y ya empezó a divergir** (fórmula de saldo, política de merma, rol de coordinador), y en que **el andamiaje de navegación se degradó** (carpeta `tareas/` fantasma, README raíz incompleto, addendum absorbido pero vivo). El camino de mayor retorno es **declarar fuentes de verdad y consolidar**, empezando por las contradicciones que podrían filtrarse al backend, y dejando la cosmética estructural para el final. Ningún paso exige reescribir el conocimiento del dominio: es, sobre todo, trabajo de bibliotecario.
+R3Foresta tiene **documentación de contenido excelente con una arquitectura documental en consolidación**. El dominio está bien pensado y bien escrito módulo por módulo. En esta sincronización se actualizó el README raíz, se incorporó `ESTADO.md` como roadmap vivo y se alinearon los estados del frontend M2↔M3. Permanecen riesgos reales en documentos históricos, canonicidad duplicada y términos que todavía requieren una fuente única. El siguiente retorno viene de mantener la matriz regla → endpoint → pantalla → prueba y archivar referencias históricas cuando dejen de ser necesarias.
