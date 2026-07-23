@@ -2,7 +2,7 @@
 
 > Documento operativo para planificar implementacion frontend. No reemplaza reglas de negocio ni contrato backend. La fuente canonica sigue en `01_reglas_de_negocio_plantacion.md`, `02_Procesos_Modulo_3_Plantacion.md` y `../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`.
 >
-> Actualizado contra el frontend real de `pwa-r3foresta` y contrastado contra backend `Backend-r3foresta` el 2026-07-21.
+> Actualizado contra el frontend real de `pwa-r3foresta` y contrastado contra backend `Backend-r3foresta` el 2026-07-23.
 >
 > Documentacion backend revisada:
 > - `/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/documentacion/frontend/api-reference.md`
@@ -34,7 +34,7 @@ La direccion practica para el MVP es:
 | Capa API Plantacion | PARCIAL | Existe para campanias, subcampanias, equipo, poligono, plan, activar, cancelar, contexto de plantacion y registro via `POST /registros-plantacion`. Faltan historial/mortandad HTTP y asignaciones agregadas por subcampania. |
 | Campanias admin | COMPLETADO | Listado, creacion, edicion, detalle/dashboard, metricas y actividad reciente. |
 | Subcampanias admin | COMPLETADO/PARCIAL | Wizard, detalle, equipo, mapa, activación, cancelación y CTA de registro de plantación están conectados. El detalle todavía no agrega una vista de asignaciones/historial. |
-| Asignacion fisica M2 -> M3 | COMPLETADO/PARCIAL | Crear/listar/asignar con evidencia y propósito funciona desde el detalle de lote de Vivero. Falta una vista agregada por subcampaña. |
+| Asignacion fisica M2 -> M3 | COMPLETADO/PARCIAL | Crear con evidencia y propósito funciona desde la acción/formulario propio `Asignacion`; el tab `Asignaciones` del lote queda para consulta y devolución. Falta una vista agregada por subcampaña. |
 | Devolucion fisica | COMPLETADO/PARCIAL | La UI de devolución funciona desde el detalle de lote de Vivero; falta reflejar el desglose agregado en el detalle de subcampaña. |
 | Plantacion inicial en campo | COMPLETADO | Ruta y flujo mobile de 3 pasos en `/app/planting/subcampanias/:subcampaniaId/plantaciones/new` (`src/modules/plantacion`). Consume `GET /subcampanias/:id/plantacion/context` (ya implementado en backend), `POST/DELETE /registros-plantacion/evidencias-pendientes` y `POST /registros-plantacion`. QA 2026-07-08 sin bloqueantes. |
 | Mortandad | PENDIENTE | No hay frontend ni endpoints conectados en Plantacion. |
@@ -190,9 +190,10 @@ Estado: COMPLETADO para el flujo actual desde Vivero; falta la vista agregada po
 
 Ya existe desde el detalle de lote de Vivero:
 
-- tab `asignaciones`;
-- listado de asignaciones activas por lote;
-- seleccion de subcampania;
+- acción rápida y tab operativo `Asignacion`;
+- ruta `/app/vivero/:loteId/event/asignacion`;
+- formulario propio `AsignacionForm`;
+- selección de campaña y subcampania;
 - proposito `PLANTACION_INICIAL` o `REPOSICION`;
 - cantidad absoluta;
 - fecha;
@@ -201,11 +202,15 @@ Ya existe desde el detalle de lote de Vivero:
 - `POST /lotes-vivero/:loteId/asignaciones`;
 - refetch del lote despues de asignar;
 - baja del saldo vivo del lote por respuesta backend;
-- success dialog.
+- success dialog y retorno a `?tab=asignaciones`;
+- tab `Asignaciones` dedicado al listado de asignaciones activas por lote y a la devolución.
 
 Archivos principales:
 
+- `src/modules/vivero/components/event/forms/AsignacionForm.tsx`
 - `src/modules/vivero/components/ViveroLotAsignacionesTab.tsx`
+- `src/modules/vivero/screens/ViveroEventScreen.tsx`
+- `src/modules/vivero/screens/ViveroDetailScreen.tsx`
 - `src/api/lotes-vivero.api.ts`
 - `src/services/lotes-vivero.service.ts`
 - `src/modules/vivero/types/contracts.ts`
@@ -517,7 +522,7 @@ MVP:
 - sin fotos en MVP, segun contrato;
 - confirmacion explicita porque aumenta saldo vivo del lote.
 
-La UI ya existe desde el tab `Asignaciones` del detalle de lote de Vivero (`ViveroLotAsignacionesTab`). Falta integrarla en una vista agregada del detalle de subcampaña cuando exista el endpoint correspondiente.
+La UI de devolución existe en el tab `Asignaciones` del detalle de lote de Vivero (`ViveroLotAsignacionesTab`), ahora separado del formulario de alta (`AsignacionForm`). Falta integrarla en una vista agregada del detalle de subcampaña cuando exista el endpoint correspondiente.
 
 ENDPOINT confirmado:
 

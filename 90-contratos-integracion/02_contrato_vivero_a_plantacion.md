@@ -247,13 +247,15 @@ El despacho manual sigue siendo una salida real registrada por Vivero hacia un d
 
 `campania_id`, `subcampania_id` y `registro_plantacion_id` son **siempre** `NULL` en `origen_despacho = MANUAL`, para cualquier `destino_tipo` — incluyendo `PLANTACION_PROPIA`. El formulario no debe solicitarlos en ningun caso de despacho manual. El campo condicionado por destino varia segun la siguiente matriz (ver `ADR-VIV-16`):
 
-| `destino_tipo` | Campo obligatorio | Campo opcional |
-|---|---|---|
-| `PLANTACION_PROPIA` | `destino_referencia` (texto libre) | — |
-| `DONACION` (UI: "Donacion a comunidad") | `comunidad_destino_id` (FK `DIVISION_ADMINISTRATIVA`) | `destino_referencia` |
-| `VENTA` | `destino_referencia` (texto libre) | — |
-| `OTRO` | `destino_referencia` (texto libre) | — |
-| `PLANTACION_COMUNIDAD` | Reservado — sin opcion de UI en el MVP | — |
+| `destino_tipo` | Campo obligatorio | Campo opcional | Expuesto en UI MVP |
+|---|---|---|---|
+| `PLANTACION_PROPIA` | `destino_referencia` (texto libre) | — | No |
+| `DONACION` | `comunidad_destino_id` (FK `DIVISION_ADMINISTRATIVA`) | `destino_referencia` | Si |
+| `VENTA` | `destino_referencia` (texto libre) | — | Si |
+| `OTRO` | `destino_referencia` (texto libre) | — | Si |
+| `PLANTACION_COMUNIDAD` | Reservado | — | No |
+
+La restriccion de UI no elimina valores del contrato backend. Desde el 2026-07-23, el frontend `pwa-r3foresta` muestra solo `DONACION`, `VENTA` y `OTRO` para nuevas operaciones de Despacho manual. Las salidas a subcampania se realizan mediante la accion independiente **Asignacion**, que usa `POST /lotes-vivero/:id/asignaciones`; el timeline conserva y muestra los eventos historicos.
 
 Datos minimos (ejemplo con `destino_referencia`; para `DONACION` agregar `comunidad_destino_id` segun la matriz):
 

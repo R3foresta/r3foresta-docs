@@ -144,6 +144,8 @@ En core puro valida contra `saldo_vivo_actual`.
 
 Cuando el contrato Vivero -> Plantacion esta activo, las asignaciones fisicas a subcampaña ya descuentan `saldo_vivo_actual`; por eso el despacho manual sigue validando contra saldo fisico del lote. La regla completa no vive en este core, sino en el contrato.
 
+En la UI MVP, Despacho manual expone solo `DONACION`, `VENTA` y `OTRO`. `PLANTACION_PROPIA` y `PLANTACION_COMUNIDAD` permanecen en el contrato backend, pero no se ofrecen para nuevas operaciones. La salida hacia una subcampaña se presenta como la accion independiente **Asignacion**.
+
 ### 3.7 CIERRE_AUTOMATICO
 
 `CIERRE_AUTOMATICO` ocurre cuando:

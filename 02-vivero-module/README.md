@@ -16,6 +16,7 @@ Los contratos entre modulos no viven aqui, sino en:
 - [`00_requerimientos_vivero_core.json`](00_requerimientos_vivero_core.json): requerimientos funcionales core (`RF-VIV-01..10`).
 - [`01_reglas_de_negocio_vivero_core.md`](01_reglas_de_negocio_vivero_core.md): reglas internas de Vivero Core.
 - [`02_flujo_operativo_vivero_core.md`](02_flujo_operativo_vivero_core.md): guia operativa del flujo core.
+- [`03_tarea_frontend_separar_despacho_asignacion.md`](03_tarea_frontend_separar_despacho_asignacion.md): tarea completada para separar Despacho manual y Asignacion a subcampania en la UI de Vivero, sin cambios de backend.
 - [`_legacy/`](_legacy/): respaldo historico de los documentos previos a la separacion.
 
 ## Contratos relacionados
