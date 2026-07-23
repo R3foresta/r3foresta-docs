@@ -2,7 +2,9 @@
 
 > Este documento registra el **avance de implementación** (qué está en el repo Backend, qué falta aplicar/verificar y qué queda pendiente), no el diseño. La documentación canónica del *diseño* del dominio vive en los módulos (`00-general-module/`, `01-recoleccion-module/`, `02-vivero-module/`, `03-plantacion-module/`), en los contratos de integración (`90-contratos-integracion/`) y en `database/00_database_schema.md`.
 >
-> **Actualización 2026-07-21:** este estado se actualizó contrastando Backend, `pwa-r3foresta` y la documentación vigente. Cuando un ítem dice "implementado en Backend" significa que existe en código/migraciones/tests del repo backend. No implica por sí solo que las migraciones ya estén aplicadas en Supabase ni que el despliegue productivo esté actualizado.
+> **Actualización 2026-07-23:** las migraciones `056` y `057` están aplicadas en Supabase de producción. Backend y frontend están desplegados en producción; se confirmó que pasaron unitarios Backend, e2e DB y build/lint Frontend.
+>
+> **Actualización 2026-07-21:** este estado se actualizó contrastando Backend, `pwa-r3foresta` y la documentación vigente. Cuando un ítem dice "implementado en Backend" significa que existe en código/migraciones/tests del repo backend. La confirmación explícita de producción se registra por separado.
 >
 > **Actualización 2026-07-08:** implementado en frontend el **registro de plantación inicial en campo** (flujo mobile de 3 pasos en `/app/planting/subcampanias/:id/plantaciones/new`) contra el contrato real (`GET /subcampanias/:id/plantacion/context`, `POST`/`DELETE /registros-plantacion/evidencias-pendientes`, `POST /registros-plantacion`). QA cerrado sin bloqueantes.
 
@@ -14,40 +16,47 @@ El backend ya migró el flujo principal desde **reserva lógica + despacho autom
 
 ### Verificado en Backend
 
-- Migraciones nuevas: `051_m2_m3_asignacion_fisica_schema.sql`, `052_vivero_asignar_stock_subcampania_rpc.sql`, `053_m3_registrar_plantacion_sin_despacho.sql`, `054_m3_devolucion_fisica.sql`, `055_vivero_merma_fisica.sql`.
+- Migraciones vigentes: `051_m2_m3_asignacion_fisica_schema.sql`, `052_vivero_asignar_stock_subcampania_rpc.sql`, `053_m3_registrar_plantacion_sin_despacho.sql`, `054_m3_devolucion_fisica.sql`, `055_vivero_merma_fisica.sql`, `056_fix_devolucion_saldo_constraint.sql` y `057_m3_campania_desactivacion_masiva.sql`.
 - `POST /lotes-vivero/:id/asignaciones` crea asignación física, exige evidencia, registra salida M2 `DESPACHO / ASIGNACION_SUBCAMPANIA`, descuenta `LOTE_VIVERO.saldo_vivo_actual` y registra evento M3 `ASIGNACION_VIVERO`.
 - `POST /lotes-vivero/:id/reservas` fue eliminado; `fn_vivero_reservar_stock_lote` queda dropeada por la migración `052`.
 - `fn_m3_registrar_plantacion` ya no genera `EVENTO_LOTE_VIVERO`, no usa `AUTOMATICO_PLANTACION` y no toca `LOTE_VIVERO.saldo_vivo_actual`; devuelve `consumos`.
 - Plantación inicial consume asignaciones `PLANTACION_INICIAL`; reposición consume asignaciones `REPOSICION`, permite subcampañas `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIAL`, y bloquea exceso sobre pendiente de reposición.
 - Devolución física implementada con `fn_m3_devolver_asignacion_vivero` y `POST /lotes-vivero/:id/asignaciones/:asignacionId/devolucion`: aumenta `cantidad_devuelta`, aumenta `LOTE_VIVERO.saldo_vivo_actual`, registra `DEVOLUCION_PLANTACION` en M2 y `DEVOLUCION_A_VIVERO` en M3. En MVP no exige evidencia fotográfica.
 - Cancelación de subcampaña usa `fn_subcampania_cancelar` v2: bloquea si `total_plantado_inicial > 0` y devuelve físicamente saldos disponibles de asignaciones activas antes de cancelar.
+- La restricción de saldo de `EVENTO_LOTE_VIVERO` permite y valida el incremento exacto producido por `DEVOLUCION_PLANTACION` (migración `056`).
+- Desactivación masiva de campaña implementada con preview y ejecución atómica: cancela subcampañas `BORRADOR`/`ACTIVA` sin plantaciones, devuelve stock y aplica soft-delete a la campaña (migración `057`).
 - Merma M2 vuelve a afectar solo stock físico en vivero: valida contra `LOTE_VIVERO.saldo_vivo_actual` y no modifica asignaciones entregadas.
 - Despacho manual valida contra saldo físico del lote y rechaza `destino_tipo = PLANTACION_CAMPANIA`.
 - Consultas de saldos exponen `saldo_vivo_actual` y `saldo_asignado_subcampanias`; ya no publican como vigente la identidad `saldo_vivo_actual - saldo_asignado_total`.
 - Swagger, documentación local de frontend, guía de migración y Postman fueron actualizados en el repo Backend.
-- Unit tests locales del Backend verificados el 2026-07-07: `npm test -- --runInBand` pasa (`388/388`) y `tsc -p tsconfig.build.json --noEmit` pasa limpio.
+- Verificaciones confirmadas el 2026-07-23: unitarios Backend, e2e DB y build/lint Frontend pasan.
 
-### Pendiente fuera del repo Backend
+### Producción confirmada — 2026-07-23
 
-1. Aplicar en Supabase las migraciones `051` a `055`, en orden.
-2. Ejecutar `npm run test:e2e:db` contra un entorno Supabase migrado y seguro.
-3. Desplegar backend y frontend coordinados por los breaking changes de API.
-4. Confirmar en producción/staging que no existen escrituras nuevas con `AUTOMATICO_PLANTACION`.
-5. Verificar en staging que el frontend publicado consume las migraciones y endpoints nuevos; el código de `pwa-r3foresta` ya contiene asignación física con evidencia, plantación con `consumos`, devolución física y saldos separados.
-6. Mantener la matriz de campos del despacho manual alineada con `ADR-VIV-16` y `RF-VIV-05`; la implementación actual no solicita campaña/subcampaña y exige destino estructurado, comunidad cuando aplica y evidencia.
+1. Migraciones `056` y `057` aplicadas en Supabase de producción.
+2. Backend y frontend desplegados coordinadamente en producción.
+3. Unitarios Backend, e2e DB y build/lint Frontend ejecutados correctamente.
+4. El frontend productivo consume el contrato físico M2↔M3 y la desactivación masiva de campaña.
+
+### Seguimiento operativo
+
+1. Vigilar que no aparezcan escrituras nuevas con `AUTOMATICO_PLANTACION`.
+2. Mantener la matriz de campos del despacho manual alineada con `ADR-VIV-16` y `RF-VIV-05`; la implementación actual no solicita campaña/subcampaña y exige destino estructurado, comunidad cuando aplica y evidencia.
 
 ## Integración Módulo 2 (Vivero) ↔ Módulo 3 (Plantación)
 
 | Pieza | Fuente documental | Estado |
 |---|---|---|
-| Enums y schema físico M2↔M3: `ASIGNACION_SUBCAMPANIA`, `DEVOLUCION_PLANTACION`, `evento_lote_vivero.asignacion_id`, FKs M3, CHECK que bloquea nuevas escrituras `AUTOMATICO_PLANTACION`, vista física `v_lote_vivero_saldos` | `database/00_database_schema.md`, migración `051` | ✅ implementado en Backend. ⏳ pendiente aplicar/confirmar en Supabase. |
+| Enums y schema físico M2↔M3: `ASIGNACION_SUBCAMPANIA`, `DEVOLUCION_PLANTACION`, `evento_lote_vivero.asignacion_id`, FKs M3, CHECK que bloquea nuevas escrituras `AUTOMATICO_PLANTACION`, vista física `v_lote_vivero_saldos` | `database/00_database_schema.md`, migración `051` | ✅ implementado en Backend. La actualización del 2026-07-23 confirmó específicamente la aplicación de `056` y `057`; no hizo una nueva auditoría individual de `051`–`055`. |
 | Handler atómico de asignación física | `90-contratos-integracion/02_contrato_vivero_a_plantacion.md`, migración `052` | ✅ implementado en Backend con `fn_vivero_asignar_stock_subcampania` y endpoint `POST /lotes-vivero/:id/asignaciones`. |
 | Eliminación del flujo de reserva lógica | contrato M2↔M3, migración `052` | ✅ implementado en Backend: se elimina alias `POST /:id/reservas` y se dropea `fn_vivero_reservar_stock_lote`. |
 | Plantación/reposición como consumo de asignaciones, sin despacho M2 | contrato M2↔M3, M3 procesos, migración `053` | ✅ implementado en Backend: respuesta con `consumos`, detalles con `evento_lote_vivero_despacho_id = NULL`. |
 | Devolución física y cancelación de subcampaña | contrato M2↔M3, RN-PLA-37, migración `054` | ✅ implementado en Backend: RPC de devolución física, endpoint de devolución y cancelación con devolución física automática. |
 | Merma M2, saldos y despacho manual con semántica física | contrato M2↔M3, migración `055` | ✅ implementado en Backend: merma no toca asignaciones; despacho manual valida contra saldo físico; saldos separados. |
-| API/Swagger/documentación frontend del contrato nuevo | Backend docs / Swagger / `pwa-r3foresta` | ✅ implementado en Backend y consumido por el frontend. Verificar despliegue coordinado en staging. |
-| Pruebas de regresión y concurrencia | specs Backend | ✅ unitarios implementados y pasando. ✅ e2e DB nuevos en repo Backend (`asignacion_fisica`, `plantacion_fisica`). ⏳ pendiente correr e2e DB contra Supabase migrado. |
+| Constraint de incremento por devolución | migración `056` | ✅ aplicada en producción: `DEVOLUCION_PLANTACION` puede incrementar saldo y el delta debe coincidir exactamente con `cantidad_afectada`. |
+| Desactivación atómica de campaña con cancelación masiva | RN-PLA-38, migración `057` | ✅ aplicada en producción: helper canónico compartido, devolución física, locks ordenados y rollback por campaña. |
+| API/Swagger/documentación frontend del contrato nuevo | Backend docs / Swagger / `pwa-r3foresta` | ✅ implementado, desplegado y consumido por el frontend en producción. |
+| Pruebas de regresión y concurrencia | specs Backend | ✅ unitarios y e2e DB confirmados el 2026-07-23. |
 | Merma de stock ya asignado en campo | contrato M2↔M3 §8.2 | ⏳ fuera del MVP backend actual; si se prioriza debe vivir en M3 y afectar `cantidad_mermada`. |
 | Job nocturno de transición `MANTENIMIENTO_ACTIVO` → `MONITOREO_HISTORICO` (RF-PLA-11) | schema / `CLAUDE.md` | ⏳ pendiente. |
 | Función PostGIS `gps_dentro_poligono_con_tolerancia` + vista `campania_estado` | schema / migraciones M3 previas | ✅ función PostGIS usada por plantación. ⏳ vista/uso público de `campania_estado` por confirmar. |
@@ -73,8 +82,10 @@ El backend ya migró el flujo principal desde **reserva lógica + despacho autom
 | Backend/BD: transición a `CANCELADA` (solo ADMIN, guard `total_plantado_inicial = 0`), evento `SUBCAMPANIA_CANCELADA`, resolución de asignaciones activas con devolución física si ya fueron entregadas | RN-PLA-37 / contrato M2↔M3 actualizado | ✅ implementado en Backend con `fn_subcampania_cancelar` v2 (migración `054`). |
 | Diseño: meta agregada de campaña derivada (`meta_planificada_campania`, incluye BORRADOR, excluye CANCELADA), no persistida | `01_reglas...` (RN-PLA-36), `02_Procesos...` §2.1, `database/00_database_schema.md` | ✅ documentado |
 | Backend: lectura derivada `meta_planificada_campania` para vista admin; el público agrega solo ACTIVA/COMPLETADA/FINALIZADA_PARCIAL | RN-PLA-36 | ✅ implementado en `GET /api/campanias` y `GET /api/campanias/:id`; vista pública a cargo del frontend. |
-| Diseño: edición básica y desactivación de campaña en MVP; `tipo` solo sin subcampañas, desactivación si no hay subcampañas o todas están `CANCELADA` | `01_reglas...` (RN-PLA-38), `02_Procesos...` §2.1/§3.1, `database/00_database_schema.md`, `decisiones/02_decisiones_plantacion.md` (ADR-PLA-01) | ✅ documentado |
-| BD: trigger para bloquear cambio de `tipo` con subcampañas, permitir soft-delete solo sin subcampañas o todas `CANCELADA`, y bloquear `DELETE` físico si hay subcampañas | `database/migrations/050_m3_campania_edicion_eliminacion_estricta_mvp.sql` | ✅ implementado como migración en Backend. ⏳ pendiente aplicar/confirmar en Supabase si no está aplicado. |
+| Diseño: edición básica y dos acciones explícitas de desactivación — estricta y atómica con cancelación masiva —; `tipo` solo sin subcampañas | `01_reglas...` (RN-PLA-38), `02_Procesos...` §2.1/§3.1, `database/00_database_schema.md`, `decisiones/02_decisiones_plantacion.md` (ADR-PLA-01) | ✅ documentado |
+| BD: desactivación estricta y desactivación atómica con cancelación de `BORRADOR`/`ACTIVA` sin plantaciones, devolución de stock y soft-delete de campaña | migraciones `050`, `056` y `057` | ✅ implementado y aplicado en Supabase de producción. |
+| Backend: preview de elegibilidad y ejecución masiva por campaña | `GET /api/campanias/:id/desactivacion/preview`, `POST /api/campanias/:id/desactivar` | ✅ implementado y desplegado en producción. |
+| Frontend: modal de preview, bloqueos, motivo, confirmación y resumen de devolución | `pwa-r3foresta`, `DesactivarCampaniaModal` | ✅ implementado, verificado y desplegado en producción. |
 | Aclaración cerrada: asignación de lotes solo post-`ACTIVA` (no en BORRADOR); activar con 0% de stock permitido | `02_Procesos...` §2.13, `00_...json` RF-PLA-02/03, `03_Mockups...` §3.6 | ✅ implementado bajo contrato físico: `POST /api/lotes-vivero/:id/asignaciones` rechaza BORRADOR/CANCELADA y valida propósito por estado; activación permite 0 asignaciones. |
 | Frontend: wizard de subcampaña sin paso de asignación + acción "Cancelar" según estado | `03_Mockups...` §3.6/§3.7/§3.10 | ✅ wizard y cancelación implementados; asignación física opera desde el detalle de lote de Vivero. |
 | Frontend: adaptación UI al flujo de asignación física, consumo de stock asignado y devoluciones | `03-plantacion-module/04_plan_frontend_m3.md` | ✅ implementado en `pwa-r3foresta`; la vista pública y mantenimiento avanzado siguen fuera de este cierre. |

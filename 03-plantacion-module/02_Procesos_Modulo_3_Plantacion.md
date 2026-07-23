@@ -32,7 +32,7 @@ El módulo separa **planificación estratégica** de **operación real**:
 
 Una campaña contiene **N subcampañas** (al menos 1, sin límite superior).
 
-En el MVP, la campaña permite correcciones basicas de `nombre`, `descripcion`, fechas estimadas y organizaciones asociadas. El `tipo` solo se cambia antes de crear la primera subcampaña. La campaña se puede desactivar si no tiene subcampañas, o si todas sus subcampañas estan `CANCELADA`. Ver `RN-PLA-38`.
+En el MVP, la campaña permite correcciones basicas de `nombre`, `descripcion`, fechas estimadas y organizaciones asociadas. El `tipo` solo se cambia antes de crear la primera subcampaña. La desactivacion estricta exige que no haya subcampañas vivas no canceladas; la accion masiva puede cancelar atomicamente hijas `BORRADOR`/`ACTIVA` sin plantaciones, devolver stock y desactivar la campaña. Ver `RN-PLA-38`.
 
 Ejemplo:
 

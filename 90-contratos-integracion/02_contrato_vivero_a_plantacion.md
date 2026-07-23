@@ -236,10 +236,10 @@ Efectos atomicos:
 - Aumenta `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_devuelta`.
 - Aumenta `LOTE_VIVERO.saldo_vivo_actual` del lote origen en `cantidad_devuelta`.
 - Registra `DEVOLUCION_A_VIVERO` en `EVENTO_PLANTACION`.
-- Registra, cuando el esquema lo soporte, un evento de entrada fisica en `EVENTO_LOTE_VIVERO` para que el historial del lote explique el aumento de saldo.
+- Registra un evento `DEVOLUCION_PLANTACION` en `EVENTO_LOTE_VIVERO` para que el historial del lote explique el aumento de saldo.
 - En MVP no exige evidencia fotografica de devolucion.
 
-Nota de implementacion: si `EVENTO_LOTE_VIVERO` aun no tiene un tipo de evento para devolucion fisica desde plantacion, debe agregarse uno antes de implementar el ajuste de saldo de forma productiva. Nombre sugerido: `DEVOLUCION_PLANTACION`.
+Nota de implementacion: el tipo de evento `DEVOLUCION_PLANTACION` existe en `EVENTO_LOTE_VIVERO` desde la migracion `051`; la migracion `054` implementa la RPC de devolucion fisica y la `056` corrige y endurece la constraint que valida el incremento de saldo. Ver estado real en [`../ESTADO.md`](../ESTADO.md).
 
 ### 6.4 Despacho manual desde Vivero
 
@@ -440,7 +440,7 @@ La transaccion de devolucion fisica debe incluir:
 - aumentar `cantidad_devuelta`,
 - aumentar `LOTE_VIVERO.saldo_vivo_actual`,
 - registrar `DEVOLUCION_A_VIVERO` en `EVENTO_PLANTACION`,
-- registrar evento de entrada fisica en M2 cuando el esquema lo soporte.
+- registrar el evento `DEVOLUCION_PLANTACION` en `EVENTO_LOTE_VIVERO` (M2).
 
 Si una parte falla, falla toda la operacion.
 
@@ -486,10 +486,6 @@ Cambios de backend esperados respecto a la implementacion anterior:
 - agregar soporte de evento M2 para devolucion fisica o documentar explicitamente el ajuste transaccional hasta que exista.
 
 ## 13. TODO / Decision pendiente
-
-### Evento M2 para devolucion fisica
-
-Definir el nombre definitivo del evento de entrada fisica al vivero para devoluciones desde Plantacion. Nombre sugerido: `DEVOLUCION_PLANTACION`.
 
 ### Evidencia de devolucion
 

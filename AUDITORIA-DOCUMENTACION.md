@@ -2,7 +2,7 @@
 
 > **Propósito:** entender el estado actual de la documentación y evaluar su calidad como lo haría un ingeniero senior que se incorpora al proyecto, **antes** de proponer cualquier refactor.
 > **Alcance:** todos los `.md`, `.json` y `.sql` del repo. Se **excluyen los `.excalidraw`** (`diagramas/`, `methodology/`) por indicación de `CLAUDE.md`: son material de trabajo en Excalidraw, no documentación canónica.
-> **Auditoría inicial:** 2026-07-01. **Actualización de sincronización:** 2026-07-21. Se conservaron las observaciones históricas y se corrigieron las afirmaciones que ya no describían el estado actual.
+> **Auditoría inicial:** 2026-07-01. **Actualización de sincronización:** 2026-07-23. Se conservaron las observaciones históricas y se corrigieron las afirmaciones que ya no describían el estado actual.
 >
 > **Convención:** los enunciados son **hechos** verificados sobre los archivos salvo cuando digan explícitamente *(suposición)* o *(sin confirmar)*. Las citas usan `archivo:línea` donde aporta.
 > **Regla de oro respetada:** este documento **no reescribe, no inventa y no crea** documentación de dominio. Solo audita y propone.
@@ -35,9 +35,9 @@ Todo el trabajo es en español y el sistema es un **MVP**: prioriza trazabilidad
 
 ### ¿Qué parece implementado vs. planeado?
 
-- **Modelado en BD:** el esquema de los cuatro módulos existe en `00_database_schema.md`. Recolección, Vivero y Plantación cuentan con migraciones documentales en `database/migrations/`. Plantación base está modelada vía migraciones 027–032 y la integración física M2↔M3 queda reflejada por las migraciones 051–055.
-- **Implementado en repo Backend, pendiente de aplicar/verificar:** la integración M2↔M3 física ya existe en código/migraciones/tests del backend; falta aplicar migraciones en Supabase, correr e2e DB y desplegar coordinadamente. Siguen pendientes flujos fuera de esa tanda, como el job nocturno de transición a `MONITOREO_HISTORICO`.
-- *(Nota 2026-07-21)*: "implementado en Backend" no equivale automáticamente a "en producción"; el estado operativo vivo se confirma en `ESTADO.md`, incluyendo ahora la integración del frontend `pwa-r3foresta`.
+- **Modelado en BD:** el esquema de los cuatro módulos existe en `00_database_schema.md`. Recolección, Vivero y Plantación cuentan con migraciones documentales en `database/migrations/`. Plantación base está modelada vía migraciones 027–032; la integración física M2↔M3 y la desactivación atómica de campaña quedan reflejadas por las migraciones 051–057.
+- **Implementado y desplegado:** el 2026-07-23 se confirmó específicamente que las migraciones 056/057 están aplicadas en Supabase de producción, Backend y Frontend están desplegados y pasaron unitarios Backend, e2e DB y build/lint Frontend. Siguen pendientes flujos fuera de esa tanda, como el job nocturno de transición a `MONITOREO_HISTORICO`.
+- *(Nota 2026-07-23)*: "implementado en Backend" no equivale automáticamente a "en producción"; cada confirmación operativa se registra explícitamente en `ESTADO.md`.
 
 ### Documentos más importantes (núcleo del proyecto)
 

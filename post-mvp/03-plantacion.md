@@ -8,13 +8,13 @@ Permitir que una campaña siga siendo editable cuando todas sus subcampañas aso
 
 ### Por que queda fuera del MVP
 
-Para el MVP se permite editar datos generales, organizaciones y fechas; tambien desactivar campañas sin subcampañas o con todas sus subcampañas `CANCELADA`. La variante flexible queda acotada al cambio de `tipo` con subcampañas en `BORRADOR`, porque exige propagacion de cambios y validaciones cruzadas que no son necesarias para salir con una version consistente.
+Para el MVP se permite editar datos generales, organizaciones y fechas. También existen la desactivación estricta y la desactivación atómica con cancelación masiva de subcampañas sin plantaciones. La variante flexible pendiente queda acotada al cambio de `tipo` con subcampañas en `BORRADOR`, porque exige propagacion de cambios y validaciones cruzadas.
 
 ### Reglas a evaluar despues
 
 - Cambiar `CAMPANIA.tipo` solo si todas las subcampañas estan en `BORRADOR`, actualizando `SUBCAMPANIA.tipo` en la misma transaccion.
 - Registrar evento de historial o auditoria cuando una campaña con subcampañas en borrador cambie de alcance.
-- Evaluar una accion separada de archivar/cancelar campaña con subcampañas en `BORRADOR`, sin borrado fisico y con reglas explicitas para sus subcampañas.
+- Mantener el cambio de `tipo` separado de la desactivación masiva ya implementada; desactivar una campaña no debe usarse como atajo para corregir su tipo.
 
 ### Condicion de salida
 

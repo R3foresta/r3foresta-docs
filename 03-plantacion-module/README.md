@@ -28,7 +28,7 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 Detalladas en [CLAUDE.md](../CLAUDE.md); no se repiten aquí. Las de mayor impacto:
 
 * Estado de campaña derivado en tiempo real, nunca persistido como columna.
-* Edición básica de campaña en MVP; el tipo solo cambia antes de la primera subcampaña y la desactivación se permite si no hay subcampañas o todas estan `CANCELADA`.
+* Edición básica de campaña en MVP; el tipo solo cambia antes de la primera subcampaña. La desactivación estricta exige que no haya hijas vivas no canceladas; la acción masiva puede cancelar atómicamente hijas `BORRADOR`/`ACTIVA` sin plantaciones, devolver stock y desactivar la campaña.
 * Coordinador es membresía en `SUBCAMPANIA_EQUIPO.rol_en_subcampania`, no rol global.
 * Asignación de lote a subcampaña es entrega física: genera salida en M2 y crea stock consumible en M3.
 * Plantar o reponer en M3 consume `saldo_asignado_disponible`; no genera `DESPACHO AUTOMATICO_PLANTACION`.
