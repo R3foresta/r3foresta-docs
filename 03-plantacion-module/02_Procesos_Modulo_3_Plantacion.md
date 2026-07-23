@@ -261,7 +261,12 @@ Datos mínimos:
 
 La campaña se crea **sin subcampañas**, en estado derivado `BORRADOR` (porque todavía no tiene subcampañas activas). Las subcampañas se agregan a continuación.
 
-Regla MVP: `nombre`, descripción, fechas estimadas y organizaciones asociadas pueden corregirse como datos generales. El `tipo` solo se edita mientras no exista ninguna subcampaña asociada. La campaña se puede desactivar si no tiene subcampañas, o si todas sus subcampañas estan `CANCELADA`; si hay alguna subcampaña en otro estado, no se desactiva. Si se necesita operar con otro tipo, se crea una campaña separada.
+Regla MVP: `nombre`, descripción, fechas estimadas y organizaciones asociadas pueden corregirse como datos generales. El `tipo` solo se edita mientras no exista ninguna subcampaña asociada. Si se necesita operar con otro tipo, se crea una campaña separada.
+
+La desactivacion tiene dos acciones separadas:
+
+- **estricta:** aplica soft-delete cuando no hay subcampañas vivas o todas ya estan `CANCELADA`, sin efectos implicitos sobre hijas;
+- **con cancelacion masiva:** primero muestra una previsualizacion. Si cada subcampaña viva es `BORRADOR`/`ACTIVA` sin plantaciones o ya `CANCELADA`, un `ADMIN` confirma con motivo y el sistema cancela las elegibles, devuelve fisicamente sus asignaciones al vivero y desactiva la campaña en una unica transaccion. Una subcampaña no elegible o un fallo de devolucion revierte todo.
 
 ### 3.2. Creación de subcampañas (admin)
 
@@ -499,7 +504,7 @@ Cuando `today >= fecha_fin_mantenimiento`:
 
 ### 3.12. Cancelación de subcampaña sin plantaciones (admin)
 
-**Objetivo:** descartar una subcampaña que no llegó a plantar nada. El caso normal es cancelar un `BORRADOR` de planificación que ya no se va a ejecutar; también aplica a una subcampaña `ACTIVA` que aún no plantó.
+**Objetivo:** descartar una subcampaña que no llegó a plantar nada. El caso normal es cancelar un `BORRADOR` de planificación que ya no se va a ejecutar; también aplica a una subcampaña `ACTIVA` que aún no plantó. El `BORRADOR` no necesita poligono para cancelarse: el poligono solo es obligatorio al activar y la cancelacion no crea geometria ficticia.
 
 Condición y camino correcto:
 
@@ -512,6 +517,7 @@ Solo ADMIN puede ejecutarla, con motivo obligatorio. El sistema:
 - Quita su `meta_total_arboles` de la meta agregada de la campaña (`meta_planificada_campania`, §2.1 / `RN-PLA-36`).
 - Resuelve toda asignación activa: si el stock fue entregado físicamente, se registra devolución física al vivero; si proviene de datos legados de reserva lógica, debe migrarse o corregirse antes de cancelar.
 - La subcampaña deja de ser visible en la vista pública y no se puede reabrir; para retomar el trabajo se crea una subcampaña nueva.
+- La misma cancelacion puede ejecutarse desde la accion atomica de desactivacion de campaña (§3.1). En ese caso el historial registra `origen = DESACTIVACION_CAMPANIA` y `campania_id`; el motivo de campaña se propaga a cada subcampaña.
 
 Ver `RN-PLA-37` para la regla canónica.
 

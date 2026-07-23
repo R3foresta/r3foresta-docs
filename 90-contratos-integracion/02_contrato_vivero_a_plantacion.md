@@ -291,6 +291,11 @@ Cuando Plantacion procesa una `DEVOLUCION_A_VIVERO`, las plantas vuelven fisicam
 
 En MVP la devolucion no exige fotos. La evidencia de devolucion queda post-MVP.
 
+La devolucion tambien se ejecuta automaticamente cuando `RN-PLA-37` cancela
+una subcampaña, incluida la cancelacion originada por la desactivacion atomica
+de su campaña (`RN-PLA-38`). Cada asignacion conserva los mismos efectos y
+eventos M2/M3; la operacion de campaña no introduce una semantica alternativa.
+
 ### RN-VIV-49 - `cantidad_asignada` es inmutable
 
 `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_asignada` representa la cantidad entregada originalmente a la subcampania y no debe modificarse despues de creada. Los consumos, devoluciones y mermas viven en columnas separadas (`cantidad_consumida`, `cantidad_devuelta`, `cantidad_mermada`).

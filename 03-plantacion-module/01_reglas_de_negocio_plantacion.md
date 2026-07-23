@@ -52,7 +52,7 @@ meta_planificada_campania = SUM(SUBCAMPANIA.meta_total_arboles WHERE estado <> C
 
 Incluye las subcampañas en `BORRADOR` — el sentido es que el admin planifique cuantos arboles debe conseguir y asignar antes de activar — y excluye las `CANCELADA` (cuya meta deja de contar, `RN-PLA-37`). Es una lectura de planificacion de uso interno (admin/coordinador). La **vista publica** sigue agregando unicamente subcampañas `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIAL` (`RN-PLA-34`), nunca borradores. Como el estado derivado de campaña (`RN-PLA-01/02`), se calcula al leer y **nunca se materializa como columna**.
 
-### RN-PLA-38 - Edicion basica y desactivacion de campaña en MVP — añadida 2026-07-03, ajustada 2026-07-04
+### RN-PLA-38 - Edicion basica y desactivacion de campaña en MVP — añadida 2026-07-03, ajustada 2026-07-23
 
 En el MVP, `CAMPANIA` admite correcciones basicas sin romper trazabilidad:
 
@@ -61,9 +61,18 @@ En el MVP, `CAMPANIA` admite correcciones basicas sin romper trazabilidad:
 - `tipo` solo puede editarse mientras no exista ninguna `SUBCAMPANIA` asociada.
 - `codigo_trazabilidad` no se edita.
 
-La campaña se puede desactivar/eliminar logicamente (`deleted_at`, `deleted_by`) si no tiene ninguna subcampaña asociada, o si todas sus subcampañas asociadas estan en `CANCELADA`. Esto es seguro porque `CANCELADA` solo existe sin plantaciones iniciales (`RN-PLA-37`).
+La desactivacion estricta de campaña se permite si no tiene subcampañas vivas, o si todas las subcampañas vivas ya estan en `CANCELADA`. Esta operacion aplica `deleted_at`/`deleted_by` a la campaña y no cancela subcampañas implicitamente.
 
-Si existe al menos una subcampaña en `BORRADOR`, `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL` o `PAUSADA`, la campaña no puede desactivarse. El borrado fisico (`DELETE`) solo se permite cuando no existe ninguna subcampaña asociada.
+Existe ademas una accion explicita de **desactivacion con cancelacion masiva** para `ADMIN`. Antes de confirmar muestra una previsualizacion de elegibilidad y efectos. Al ejecutar, bloquea la campaña y sus subcampañas vivas, repite las validaciones y, en una unica transaccion por campaña:
+
+1. admite subcampañas `BORRADOR` o `ACTIVA` solo cuando `total_plantado_inicial = 0`, y `CANCELADA` como postcondicion ya satisfecha;
+2. cancela cada `BORRADOR`/`ACTIVA` mediante la semantica canonica de `RN-PLA-37`, incluida la devolucion fisica de asignaciones de `RN-VIV-48`;
+3. registra el origen `DESACTIVACION_CAMPANIA` en el historial de cada subcampaña procesada;
+4. aplica soft-delete a la campaña.
+
+Una subcampaña con plantaciones o en `COMPLETADA`, `FINALIZADA_PARCIAL` o `PAUSADA` bloquea toda la operacion. Si una sola validacion o devolucion falla, se revierte la campaña completa. Una campaña sin subcampañas vivas sigue siendo elegible. La operacion atomica abarca una sola campaña; una seleccion de varias campañas se procesa de forma independiente.
+
+El borrado fisico (`DELETE`) solo se permite cuando no existe ninguna subcampaña asociada. La accion estricta y la accion masiva son contratos separados y explicitos.
 
 Campos tecnicos o de auditoria (`updated_at`, `updated_by`, `metadata_blockchain`, cuando aplique) pueden seguir actualizandose por procesos internos. La edicion flexible de `tipo` con subcampañas en `BORRADOR` queda fuera del MVP y se registra en `post-mvp/03-plantacion.md`.
 
@@ -101,7 +110,7 @@ Mortandad y reposicion se aceptan en `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIA
 
 ### RN-PLA-37 - Cancelacion de subcampaña sin plantaciones — añadida 2026-07-01
 
-Una subcampaña se cancela (`estado = CANCELADA`) **solo si no tiene ninguna `PLANTACION_INICIAL` registrada** (`total_plantado_inicial = 0`). Aplica al caso normal de descartar un `BORRADOR` de planificacion, y tambien a una subcampaña `ACTIVA` que aun no haya plantado nada. Si ya existe al menos una plantacion inicial, la subcampaña **no puede cancelarse**: el cierre anticipado correcto es `FINALIZADA_PARCIAL` (`RN-PLA-11`), que preserva lo ya plantado como valido. Solo `ADMIN` puede cancelar, con motivo obligatorio.
+Una subcampaña se cancela (`estado = CANCELADA`) **solo si no tiene ninguna `PLANTACION_INICIAL` registrada** (`total_plantado_inicial = 0`). Aplica al caso normal de descartar un `BORRADOR` de planificacion, y tambien a una subcampaña `ACTIVA` que aun no haya plantado nada. Un `BORRADOR` puede cancelarse aunque `poligono_geom` sea `NULL`: el poligono es requisito para activar, no para cancelar, y la cancelacion no inventa ni modifica geometria. Si ya existe al menos una plantacion inicial, la subcampaña **no puede cancelarse**: el cierre anticipado correcto es `FINALIZADA_PARCIAL` (`RN-PLA-11`), que preserva lo ya plantado como valido. Solo `ADMIN` puede cancelar, con motivo obligatorio.
 
 Efectos:
 
@@ -109,6 +118,7 @@ Efectos:
 * Su `meta_total_arboles` deja de sumar a la meta agregada de la campaña (`RN-PLA-36`).
 * Toda asignacion activa de la subcampaña debe resolverse antes o durante la cancelacion: si las plantas ya fueron entregadas fisicamente, se registran como devolucion fisica al vivero; si no se entregaron por un flujo legado, se migran/corrigen antes de cerrar. En el contrato vigente la devolucion fisica aumenta `LOTE_VIVERO.saldo_vivo_actual` y registra `DEVOLUCION_A_VIVERO` en M3 (`RN-VIV-48`).
 * Una subcampaña `CANCELADA` no es publica (`RN-PLA-34`) y no se reabre (`RN-PLA-07`); para retomar el trabajo se crea una subcampaña nueva.
+* La cancelacion puede originarse en la accion individual de subcampaña o en la desactivacion atomica de su campaña (`RN-PLA-38`). En el segundo caso el historial identifica `origen = DESACTIVACION_CAMPANIA` y la campaña responsable.
 
 `PAUSADA` sigue reservado, sin flujo en MVP.
 
