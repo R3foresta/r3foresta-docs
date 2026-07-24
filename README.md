@@ -25,6 +25,7 @@ La cadena del dominio: `general (maestros) → recolección (origen) → vivero 
 
 ## Otros documentos raíz
 
+* [ARCHITECTURE.md](ARCHITECTURE.md) — arquitectura integral observada: PWA, Backend, Supabase, flujos M1–M3, seguridad, despliegue, calidad y riesgos.
 * [database/00_database_schema.md](database/00_database_schema.md) — fuente de verdad estructural del proyecto (tablas + enums en mermaid).
 * [glosario.md](glosario.md) — términos clave del dominio, con enlace a su fuente canónica.
 * [ESTADO.md](ESTADO.md) — estado vivo de implementación: qué está en producción vs. pendiente.

@@ -43,7 +43,40 @@ El backend ya migró el flujo principal desde **reserva lógica + despacho autom
 ### Seguimiento operativo
 
 1. Vigilar que no aparezcan escrituras nuevas con `AUTOMATICO_PLANTACION`.
-2. Mantener la matriz de campos del despacho manual alineada con `ADR-VIV-16` y `RF-VIV-05`; la implementación actual no solicita campaña/subcampaña y exige destino estructurado, comunidad cuando aplica y evidencia.
+2. Alinear la implementación del despacho manual con la matriz de
+   `ADR-VIV-16` y `RF-VIV-05`: no debe solicitar campaña/subcampaña, debe
+   exigir comunidad para `DONACION`, aplicar `destino_referencia` según el tipo
+   y mantener evidencia obligatoria.
+
+### Hallazgos de auditoría Backend — 2026-07-23
+
+Estos puntos describen diferencias verificadas entre el contrato canónico y el
+repositorio `Backend-r3foresta`; no cambian las decisiones de dominio:
+
+1. **`RF-VIV-05` no está completamente aplicado en el contrato HTTP/SQL.**
+   `RegistrarDespachoDto` y `fn_vivero_registrar_despacho` exigen
+   `destino_referencia` para todo destino, aunque para `DONACION` es opcional;
+   a la vez, `comunidad_destino_id` sigue siendo opcional para `DONACION`,
+   aunque la matriz canónica lo exige. ⏳ pendiente alinear DTO, Swagger,
+   service, RPC y pruebas en un mismo cambio.
+2. **El replay de migraciones no reproduce el enum vivo
+   `destino_tipo_vivero`.** La migración `006` crea
+   `DONACION_COMUNIDAD`; el código y el schema canónico usan
+   `PLANTACION_COMUNIDAD` y `DONACION` como valores separados. La migración
+   `023` documenta el estado vivo y agrega `PLANTACION_CAMPANIA`, pero no
+   ejecuta la alineación previa. ⏳ pendiente una nueva migración idempotente y
+   una prueba desde BD vacía.
+3. **Persiste el drift de `TIPO_PLANTA`.** El código y el schema usan
+   `planta.tipo_planta_id` + `tipo_planta`, pero las migraciones no reconstruyen
+   completamente esa estructura. ⏳ pendiente migración de alineamiento.
+4. **Seguridad de identidad pendiente.** WebAuthn emite JWT, pero la mayoría de
+   endpoints confía en `x-auth-id` sin guard global; además existen endpoints
+   de mint, Pinata y diagnóstico sin autenticación. ⏳ tratar como P0 antes de
+   ampliar exposición a clientes no confiables.
+
+Durante esta auditoría se sincronizó la copia documental de la migración `050`
+con la versión del Backend. Antes difería en una condición funcional:
+las subcampañas ya soft-deleted no deben bloquear el soft-delete de Campaña.
 
 ## Integración Módulo 2 (Vivero) ↔ Módulo 3 (Plantación)
 
