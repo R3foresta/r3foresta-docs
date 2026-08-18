@@ -1,19 +1,25 @@
 # Glosario de términos comprometidos — Proyecto de Grado R3Foresta
 
-> **Versión 2 — 17 de agosto de 2026**
+> **Versión 3 — 18 de agosto de 2026**
 > Este glosario no define todo el vocabulario del dominio. Define únicamente los términos que **comprometen una afirmación** ante el tribunal: los que, mal usados, prometen más de lo que el trabajo puede demostrar.
 > Para cada término: qué significa aquí, qué obliga a sostener y qué **no** obliga a sostener.
 > Fuente estratégica: [`../01_lineamientos/base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md) · Diseño de evaluación: [`../02_planificacion/estructura_perfil.md`](../02_planificacion/estructura_perfil.md)
 
 ---
 
+## Criterio terminológico general
+
+La primera explicación del dominio utiliza **semillas y plantas** para que el lector comprenda qué elementos atraviesan los procesos de Recolección, Vivero y Plantación. Una vez presentado ese recorrido, se adopta **material vegetal** como denominación general y delimitada para las semillas, plantas y demás unidades de propagación comprendidas en el proyecto.
+
+**Material biológico** no debe utilizarse como término general fuera de los objetivos vigentes, que se conservan sin cambios hasta su revisión formal. **Árbol** se reserva para el contexto de una plantación o para la comunicación con patrocinadores; no sustituye a semilla, planta o material vegetal durante las etapas anteriores.
+
 ## 1. Trazabilidad reconstruible
 
 **Definición adoptada**
 
-> Capacidad de recomponer, a partir de registros relacionados, la procedencia, los movimientos, las cantidades, los responsables, las fechas, las ubicaciones y el destino del material biológico.
+> Capacidad de recomponer, a partir de registros relacionados, la procedencia, los movimientos, las cantidades, los responsables, las fechas, las ubicaciones y el destino del material vegetal.
 
-La reconstrucción puede comenzar en una recolección propia o en una recepción externa. Describe lo que el sistema permite recuperar; no equivale a una certificación independiente de la verdad física declarada.
+La reconstrucción puede comenzar en el origen o en el punto donde el material vegetal ingresa al proceso. Describe lo que el sistema permite recuperar; no equivale a una certificación independiente de la verdad física declarada.
 
 **Qué compromete**
 
@@ -26,7 +32,7 @@ La reconstrucción puede comenzar en una recolección propia o en una recepción
 **Qué NO compromete**
 
 - verificación por un tercero independiente;
-- validez probatoria de la verdad física del material;
+- validez probatoria de la verdad física del material vegetal;
 - calidad de dato conforme a una metodología de carbono o MRV;
 - trazabilidad entre organizaciones distintas (interoperabilidad de cadena);
 - que la totalidad del sistema esté desplegada y en uso.
@@ -44,7 +50,7 @@ Expresiones que **no deben aparecer** aplicadas al sistema o a su trazabilidad, 
 | **Trazabilidad verificable** | Puede interpretarse como una comprobación independiente por un tercero, que no forma parte del alcance. | Trazabilidad reconstruible con evidencia contrastable |
 | **Trazabilidad auditable** | Sugiere aptitud para una auditoría formal conforme a un estándar. El trabajo evalúa recuperabilidad mediante un ejercicio propio, no una auditoría acreditada. | Trazabilidad reconstruible · recuperabilidad de trazas |
 | **Trazabilidad certificada / certificable** | Certificación es un acto de un organismo acreditado. No aplica. | Trazabilidad reconstruible |
-| **Demostrar que la semilla se convirtió en árbol vivo** | Afirma verdad física y supervivencia. El sistema registra lo declarado y evidenciado; no prueba la realidad ni el monitoreo posterior. | Reconstruir el recorrido registrado del material |
+| **Demostrar que la semilla se convirtió en árbol vivo** | Afirma verdad física y supervivencia. El sistema registra lo declarado y evidenciado; no prueba la realidad ni el monitoreo posterior. | Reconstruir el recorrido registrado del material vegetal |
 | **Garantiza** (aplicado a saldos o integridad) | Promesa absoluta, sin condiciones acotadas. | Preserva · asegura bajo las condiciones verificadas |
 | **Genera / habilita bonos de carbono** | Requiere metodología, línea base, adicionalidad, medición y verificación independiente. Fuera de alcance. | Produce datos de actividad potencialmente reutilizables por un futuro MRV |
 | **Event sourcing** (a secas) | El modelo mantiene simultáneamente eventos y saldos materializados; no es *event sourcing* estricto. | Modelo transaccional híbrido basado en eventos y saldos materializados |
@@ -63,11 +69,11 @@ Lo que se proscribe es *verificable* aplicado a **la trazabilidad o al sistema c
 
 ## 3. Cadena de custodia
 
-**Definición adoptada:** secuencia de responsables, ubicaciones y transformaciones por las que atraviesa el material biológico desde su recolección propia o recepción externa hasta su plantación, junto con el registro que permite reconstruir esa secuencia.
+**Definición adoptada:** secuencia de responsables, ubicaciones y transformaciones por las que atraviesa el material vegetal desde su origen o ingreso al proceso hasta el registro de su plantación, junto con las relaciones que permiten reconstruir esa secuencia.
 
 **Qué compromete:** que cada cambio de etapa, responsable o ubicación quede registrado con origen, destino, cantidad, responsable y evidencia asociada.
 
-**Qué NO compromete:** control físico continuo del material, ni imposibilidad de pérdida o sustitución fuera de los flujos registrados.
+**Qué NO compromete:** control físico continuo del material vegetal, ni imposibilidad de pérdida o sustitución fuera de los flujos registrados.
 
 ---
 
@@ -75,11 +81,11 @@ Lo que se proscribe es *verificable* aplicado a **la trazabilidad o al sistema c
 
 **Definición adoptada:** propiedad por la cual, en cada transferencia entre etapas, la cantidad que sale de un origen y la que ingresa a un destino guardan correspondencia registrada, sin desapariciones ni duplicaciones no explicadas por un evento con causa y responsable.
 
-**Precisión obligatoria:** no existe una igualdad homogénea única desde gramos de semilla hasta árboles plantados. La conservación se verifica **dentro de cada unidad y etapa**, y el paso de material de propagación a plantas vivas es una **transformación biológica observada**, no una conversión aritmética de unidades. Esta salvedad debe aparecer cada vez que se enuncie la propiedad.
+**Precisión obligatoria:** no existe una igualdad homogénea única desde gramos de semilla hasta plantas registradas en una plantación. La conservación se verifica **dentro de cada unidad y etapa**, y el paso de unidades de propagación a plantas vivas es una **transformación biológica observada**, no una conversión aritmética de unidades. Esta salvedad debe aparecer cada vez que se enuncie la propiedad.
 
 **Qué compromete:** ausencia de saldos negativos, de doble consumo y de estados parciales tras fallo, verificada experimentalmente.
 
-**Qué NO compromete:** que el material físico no se pierda en el mundo real, ni que las cantidades declaradas por un operador sean ciertas.
+**Qué NO compromete:** que el material vegetal no se pierda en el mundo real, ni que las cantidades declaradas por un operador sean ciertas.
 
 ---
 
@@ -113,13 +119,13 @@ Es la métrica comparable AS-IS / TO-BE del plano operativo. La distinción entr
 
 ---
 
-## 8. Recepción externa
+## 8. Variantes de ingreso
 
-**Definición adoptada:** flujo de ingreso de plantines adquiridos a un proveedor y registrados desde el momento en que R3Foresta asume su custodia. No constituye un cuarto módulo.
+**Definición adoptada:** posibilidad de que el material vegetal ingrese al proceso en una etapa posterior a Recolección y quede vinculado con el módulo correspondiente sin perder su procedencia.
 
-**Datos mínimos preliminares:** proveedor u origen declarado, especie, cantidad, fecha y fotografía. Un recibo o factura se adjunta cuando exista, pero es opcional.
+Esta posibilidad es una consecuencia del modelo de trazabilidad y no un flujo principal, un cuarto módulo ni un entregable independiente. Cuando ocurra, el registro debe conservar como mínimo el origen declarado, la especie, la cantidad, la fecha y la evidencia disponible.
 
-**Recorridos previstos:** ingreso a Vivero para adaptación o ingreso directo a Plantación.
+No debe presentarse mediante recorridos de proveedores en el resumen, la introducción, el problema, la evaluación o el cronograma. Los detalles concretos se definirán como reglas del módulo donde se produzca el ingreso.
 
 ---
 
@@ -132,8 +138,10 @@ Antes de cerrar cualquier documento del proyecto de grado, verificar que:
 3. *verificable* solo aparezca aplicado a proposiciones o invariantes; para registros se use *evidencia contrastable* (§2.1);
 4. cada enunciado de conservación de saldos incluya la salvedad de unidad y etapa (§4);
 5. blockchain, IPFS y NFT aparezcan únicamente para declarar que están fuera del alcance;
-6. la recepción externa se trate como flujo de ingreso hacia Vivero o Plantación y no como cuarto módulo.
+6. las variantes de ingreso se mantengan implícitas y subordinadas al recorrido principal Recolección–Vivero–Plantación;
+7. “semillas y plantas” se use para introducir el dominio y “material vegetal” como denominación general posterior;
+8. los objetivos vigentes permanezcan sin cambios hasta su revisión formal.
 
 ---
 
-*Documento de trabajo actualizado el 17 de agosto de 2026.*
+*Documento de trabajo actualizado el 18 de agosto de 2026.*

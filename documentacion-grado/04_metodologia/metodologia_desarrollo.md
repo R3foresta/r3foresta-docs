@@ -1,6 +1,6 @@
 # Metodología de investigación y desarrollo
 
-> **Versión 5 — 18 de agosto de 2026.**
+> **Versión 6 — 18 de agosto de 2026.**
 > Documento de apoyo para la sección metodológica del perfil y el futuro Capítulo III. La formulación entregable está en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) §8.
 
 ## 1. Decisión metodológica
@@ -50,7 +50,7 @@ La población accesible es pequeña y el piloto tendrá hasta cinco usuarios. No
 
 El desarrollo iterativo e incremental construye una base funcional y la amplía en ciclos sucesivos (Basili & Turner, 1975; Larman & Basili, 2003). ISO/IEC/IEEE 12207:2026 permite aplicar los procesos del ciclo de vida de forma iterativa e incremental sin prescribir una metodología concreta, y SWEBOK v4.0a organiza las prácticas reconocidas de Ingeniería de Software.
 
-El criterio de incremento sigue el recorrido del material y las necesidades del dominio. Un incremento produce o estabiliza las capacidades que consumirá el siguiente.
+El criterio de incremento sigue el recorrido del material vegetal y las necesidades del dominio. Un incremento produce o estabiliza las capacidades que consumirá el siguiente.
 
 ### 3.2. Especificaciones y decisiones versionadas
 
@@ -92,7 +92,7 @@ Para cada incremento se exigirá:
 | 1 | 24 ago–6 sep | Recolección | M1 integrado, probado y documentado |
 | 2 | 7–20 sep | Vivero y M1→M2 | Eventos, saldos y primera transferencia cerrados |
 | 3 | 21 sep–4 oct | Plantación y M2→M3 | Asignación, plantación y segunda transferencia cerradas |
-| 4 | 5–18 oct | Recepción externa y genealogía | Dos recorridos externos integrados sin cuarto módulo |
+| 4 | 5–18 oct | Genealogía y trazabilidad transversal | Recorrido completo reconstruible entre los tres módulos |
 | 5 | 19 oct–1 nov | Integración, UI/UX, calidad y despliegue | Versión candidata para piloto |
 | 6 | 2–8 nov | Piloto y evaluación | Evidencia TO-BE y contraste AS-IS disponibles |
 | 7 | 9–15 nov | Resultados y cierre académico | Documento final revisado y entregado |
@@ -157,13 +157,13 @@ El mismo instrumento se aplicará a trazas del piloto, con hasta cinco usuarios.
 - accesibilidad;
 - consentimiento;
 - posibilidad de observar el proceso;
-- presencia de material propio o externo.
+- posibilidad de observar el recorrido del material vegetal entre las etapas disponibles.
 
 Una persona externa o evaluador académico podrá participar si se formaliza su disponibilidad. No se compromete de antemano una institución específica.
 
 ### 7.3. Contingencias
 
-- si no ocurre adquisición externa, su recorrido se prueba de forma controlada;
+- si una etapa del recorrido principal no ocurre, se prueba de forma controlada y se declara esa condición;
 - si no ocurre una plantación, se diferencia claramente la verificación técnica de la validación de campo;
 - si existen menos de ocho casos históricos, se reporta la muestra disponible y se refuerza el análisis cualitativo;
 - si un participante no consiente el uso de su identidad, se omite o anonimiza.

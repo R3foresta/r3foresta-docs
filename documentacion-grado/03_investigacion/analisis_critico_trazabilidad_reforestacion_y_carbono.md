@@ -7,6 +7,8 @@
 **Propósito:** establecer lineamientos críticos para estructurar un proyecto de grado en Ingeniería de Sistemas.
 **Alcance de la auditoría:** documentación canónica, esquema de datos, migraciones SQL y estado de implementación consignado en este repositorio. No constituye una auditoría del despliegue productivo ni una validación independiente de datos de campo.
 
+> **Nota de vigencia:** este documento conserva el análisis técnico y de carbono realizado en julio. Para el perfil actual, “semillas y plantas” introduce el dominio y “material vegetal” es la denominación general posterior. El alcance concluye con el registro de la plantación y no incluye monitoreo de supervivencia. Los objetivos oficiales se mantienen sin cambios hasta su revisión formal.
+
 ---
 
 ## 1. Dictamen ejecutivo
@@ -19,7 +21,7 @@ Sin embargo, con la evidencia disponible todavía no puede afirmarse que ese pro
 
 Respecto de los bonos de carbono, el dictamen es más restrictivo:
 
-> R3Foresta no genera, certifica ni demuestra créditos de carbono. En su estado actual es, como máximo, una infraestructura digital potencialmente útil para una parte del MRV: procedencia, actividad de plantación, cantidades operativas, ubicación y seguimiento básico de supervivencia.
+> R3Foresta no genera, certifica ni demuestra créditos de carbono. En su estado actual es, como máximo, una infraestructura digital potencialmente útil para una parte limitada del MRV: procedencia, actividad de plantación, cantidades operativas y ubicación. El monitoreo de supervivencia no forma parte del alcance vigente.
 
 La cadena lógica que debe preservarse en toda la redacción es:
 
@@ -69,7 +71,7 @@ Sin responder estas preguntas, existe el riesgo de haber construido una solució
 
 La formulación no debería partir de “se necesita blockchain” ni de “se necesitan bonos de carbono”. Debería partir de una incapacidad observable:
 
-> La gestión fragmentada de los registros de recolección, vivero y plantación dificulta reconstruir la cadena de custodia del material biológico y verificar la coherencia de las cantidades transferidas, reduciendo la calidad y auditabilidad de la información operativa de reforestación.
+> La gestión fragmentada de los registros de recolección, vivero y plantación dificulta reconstruir la cadena de custodia del material vegetal y verificar la coherencia de las cantidades transferidas, reduciendo la calidad y auditabilidad de la información operativa de reforestación.
 
 Esta formulación es válida solo si el diagnóstico de campo confirma la fragmentación y permite medirla.
 
@@ -342,7 +344,7 @@ Bolivia presentó su NDC 3.0 en septiembre de 2025 ([CMNUCC, Bolivia NDC 3.0](ht
 
 El proyecto debe centrarse en:
 
-> trazabilidad operativa y conservación de saldos por etapa en la cadena recolección–vivero–plantación inicial.
+> trazabilidad operativa y conservación de saldos por etapa en la cadena recolección–vivero–registro de plantación.
 
 Carbono debe aparecer como **contexto y posible uso futuro de los datos**, no como resultado del proyecto.
 
@@ -357,13 +359,13 @@ Se recomienda excluir del objetivo principal:
 
 ### 7.2. Título recomendado
 
-> **Sistema de trazabilidad operativa para la cadena de custodia de material biológico en reforestación, mediante registro de eventos y conservación transaccional de saldos — Caso R3Foresta**
+> **Sistema de trazabilidad operativa para la cadena de custodia de material vegetal en reforestación, mediante registro de eventos y conservación transaccional de saldos — Caso R3Foresta**
 
 Este título evita prometer *event sourcing* estricto, carbono o certificación, y mantiene el aporte técnico.
 
 ### 7.3. Pregunta de investigación/problema
 
-> ¿En qué medida un sistema basado en registros de eventos y transferencias atómicas mejora la integridad de saldos y la capacidad de reconstruir la cadena de custodia del material biológico entre recolección, vivero y plantación en el caso R3Foresta?
+> ¿En qué medida un sistema basado en registros de eventos y transferencias atómicas mejora la integridad de saldos y la capacidad de reconstruir la cadena de custodia del material vegetal entre recolección, vivero y plantación en el caso R3Foresta?
 
 ### 7.4. Objetivo general recomendado
 
@@ -516,6 +518,6 @@ Lo que sobra no es necesariamente código, sino **promesa**. Sobran las afirmaci
 
 La conclusión más defendible es:
 
-> R3Foresta no debe presentarse como sistema de bonos de carbono. Debe presentarse y evaluarse como sistema de trazabilidad operativa de material biológico. Si demuestra en campo que mejora la integridad, completitud y recuperación de información, podrá convertirse en una capa de datos útil para un futuro MRV; pero la contribución climática y la emisión de créditos requerirán procesos científicos, normativos y de verificación que hoy no están implementados.
+> R3Foresta no debe presentarse como sistema de bonos de carbono. Debe presentarse y evaluarse como sistema de trazabilidad operativa de material vegetal. Si demuestra en campo que mejora la integridad, completitud y recuperación de información, podrá convertirse en una capa de datos útil para un futuro MRV; pero la contribución climática y la emisión de créditos requerirán procesos científicos, normativos y de verificación que hoy no están implementados.
 
 Este encuadre no reduce el proyecto. Lo vuelve comprobable, técnicamente preciso y defendible ante un tribunal de Ingeniería de Sistemas.

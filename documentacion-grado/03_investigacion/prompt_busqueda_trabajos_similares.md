@@ -1,5 +1,7 @@
 # Prompt para buscar trabajos/sistemas similares (Antecedentes)
 
+> **Documento histórico — no reutilizar como descripción del alcance vigente.** Este prompt corresponde a una formulación anterior con blockchain, bonos de carbono, cuatro módulos y monitoreo posterior. El perfil actual se concentra en la trazabilidad del material vegetal entre Recolección, Vivero y Plantación, y concluye con el registro de la plantación. La fuente vigente es [`../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
+
 > Pegar este prompt en una IA con acceso a búsqueda web / repositorios académicos.
 > Objetivo: alimentar la sección **Introducción / Antecedentes** del perfil de proyecto de grado (UMSA — Informática, Ing. de Sistemas).
 

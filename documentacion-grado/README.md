@@ -46,7 +46,7 @@ Modalidad elegida: **Defensa de Proyecto de Grado**.
 3. **Planteamiento del problema** — situación problemática, análisis causa-efecto (árbol de problemas) y **formulación del problema** (pregunta de investigación).
 4. **Objetivos** — un objetivo general + varios específicos (verbos medibles, alineados a cada capítulo).
 5. **Justificación** — técnica, económica y social/operativa.
-6. **Alcances y límites** — tres módulos operativos y recepción externa como flujo de ingreso; exclusiones y limitaciones de evaluación.
+6. **Alcances y límites** — tres módulos operativos, variantes implícitas de ingreso del material vegetal, exclusiones y limitaciones de evaluación.
 7. **Marco teórico/referencial preliminar** — trazabilidad, cadena de custodia, transacciones, registros de eventos, integridad de datos, geoinformación y evaluación de software. Blockchain/IPFS solo como antecedentes históricos o trabajo futuro, si corresponde.
 8. **Metodología** — tipo de investigación + metodología de desarrollo de software y herramientas.
    > La enumeración "SCRUM, XP, RUP…" que aparece en las guías de perfil es orientativa, no un requisito reglamentario: el Reglamento General no exige ninguna metodología nominada. **Metodología declarada para R3Foresta:** desarrollo iterativo e incremental guiado por especificación anclada — ver [`04_metodologia/metodologia_desarrollo.md`](04_metodologia/metodologia_desarrollo.md).

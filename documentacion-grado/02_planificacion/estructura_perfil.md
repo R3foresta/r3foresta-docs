@@ -1,15 +1,15 @@
 # Estructura vigente del Perfil de Proyecto de Grado
 
-> **Versión 6 — 18 de agosto de 2026.**
+> **Versión 7 — 18 de agosto de 2026.**
 > Este documento explica la arquitectura del perfil; el texto entregable y fuente de verdad académica es [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 
 ## 1. Decisión central
 
-El perfil presenta un proyecto de Ingeniería de Sistemas sobre trazabilidad de material biológico para reforestación en el caso R3Foresta. El problema se formula en lenguaje organizacional y académico; los mecanismos de eventos, transacciones e invariantes se desarrollan como aporte de ingeniería, pero no condicionan el título.
+El perfil presenta un proyecto de Ingeniería de Sistemas sobre trazabilidad de material vegetal para reforestación en el caso R3Foresta. La introducción explica primero el recorrido mediante la expresión “semillas y plantas”; las secciones posteriores emplean “material vegetal” como denominación general. El problema se formula en lenguaje organizacional y académico; los mecanismos de eventos, transacciones e invariantes se desarrollan como aporte de ingeniería, pero no condicionan el título.
 
 **Título propuesto:**
 
-> Sistema de trazabilidad de material biológico para reforestación: caso R3Foresta
+> Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta
 
 El título, el problema y los objetivos están pendientes de aprobación de la tutora. No están pendientes de redacción.
 
@@ -21,18 +21,13 @@ Se mantienen tres módulos:
 2. Vivero;
 3. Plantación.
 
-La adquisición externa es un flujo de ingreso y no un cuarto módulo. El perfil contempla:
-
-- proveedor → recepción externa → vivero para adaptación → asignación → plantación;
-- proveedor → recepción externa → plantación directa.
-
-Los datos mínimos preliminares son proveedor u origen declarado, especie, cantidad, fecha y fotografía. El comprobante de compra es opcional. Los estados, validaciones y puntos exactos de integración se definirán durante el análisis del objetivo específico 1.
+El recorrido principal se organiza alrededor de estos tres módulos. Si el material vegetal ingresa en una etapa intermedia, su procedencia debe conservarse dentro del módulo correspondiente. Esta posibilidad es una variante implícita del proceso y no un cuarto módulo, un flujo principal ni un resultado independiente.
 
 ## 3. Cadena de alineación académica
 
 ### Problema central
 
-La información sobre material propio o externo se conserva en registros dispersos sin una estructura común, lo que limita la reconstrucción de procedencia, cantidades, responsables, transferencias y plantación con evidencia contrastable.
+La información sobre el recorrido del material vegetal se conserva en registros dispersos sin una estructura común, lo que limita la reconstrucción de procedencia, cantidades, responsables, transferencias y plantación con evidencia contrastable.
 
 ### Pregunta general
 
@@ -40,15 +35,17 @@ La información sobre material propio o externo se conserva en registros dispers
 
 ### Objetivo general
 
+Se reproduce sin cambios porque los objetivos quedan fuera de la presente revisión terminológica y de alcance narrativo.
+
 Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del material biológico utilizado por R3Foresta, desde su recolección o recepción externa hasta su manejo en vivero y plantación, que permita reconstruir con evidencia contrastable su procedencia, movimientos, cantidades, responsables y destino.
 
 ### Objetivos específicos y resultados
 
 | Obj. | Verbo | Resultado esperado | Sección del documento final |
 |---|---|---|---|
-| 1 | Analizar | Procesos, datos, reglas y recepción externa definidos | 4.1 |
+| 1 | Analizar | Procesos, datos y reglas definidos | 4.1 |
 | 2 | Diseñar | Modelo, invariantes y contratos de integración | 4.2 |
-| 3 | Implementar | Tres módulos y flujo externo integrados | 4.3 |
+| 3 | Implementar | Tres módulos integrados | 4.3 |
 | 4 | Verificar | Matriz de pruebas y resultados técnicos | 4.4 |
 | 5 | Evaluar | Línea base, piloto, contraste y carga operativa | 4.5 |
 
@@ -71,7 +68,7 @@ La evaluación separa dos planos:
 
 **TO-BE:** piloto real coordinado con R3Foresta y hasta cinco usuarios. El mismo instrumento medirá completitud, evidencia, tiempo de reconstrucción y carga de registro.
 
-El lugar y los participantes concretos se seleccionarán según disponibilidad de una actividad real, accesibilidad logística, consentimiento y posibilidad de observar el proceso. Si una de las rutas —propia o externa— no ocurre en la ventana, se evaluará mediante un caso controlado y se declarará como tal.
+El lugar y los participantes concretos se seleccionarán según disponibilidad de una actividad real, accesibilidad logística, consentimiento y posibilidad de observar el proceso. Si una etapa del recorrido principal no ocurre en la ventana, se evaluará mediante un caso controlado y se declarará como tal.
 
 La independencia de quien reconstruye la traza es deseable. Puede intervenir una persona externa o un evaluador vinculado a una institución académica si su participación se formaliza; no se promete una afiliación específica.
 
@@ -110,7 +107,7 @@ La meta organizacional futura de carbono se menciona únicamente como contexto.
 - agentes de IA aprobados como apoyo bajo revisión humana;
 - declaración transparente de prototipos previos, autoría y colaboración puntual.
 
-La ejecución académica formal se planifica del 17 de agosto al 15 de noviembre de 2026. Los artefactos y prototipos anteriores son insumos de factibilidad; no se contarán como objetivos cumplidos. Recolección, Vivero, Plantación, las dos integraciones, recepción externa, calidad, piloto y documentación deberán atravesar sus sprints y criterios de cierre dentro de la ventana formal.
+La ejecución académica formal se planifica del 17 de agosto al 15 de noviembre de 2026. Los artefactos y prototipos anteriores son insumos de factibilidad; no se contarán como objetivos cumplidos. Recolección, Vivero, Plantación, las dos integraciones, la genealogía transversal, la calidad, el piloto y la documentación deberán atravesar sus sprints y criterios de cierre dentro de la ventana formal.
 
 ## 8. Estructura y extensión
 
@@ -139,7 +136,7 @@ El cuerpo esperado se mantiene aproximadamente entre 20 y 24 páginas una vez ma
 - Sprint 1, 24 de agosto–6 de septiembre: Recolección;
 - Sprint 2, 7–20 de septiembre: Vivero e integración M1→M2;
 - Sprint 3, 21 de septiembre–4 de octubre: Plantación e integración M2→M3;
-- Sprint 4, 5–18 de octubre: recepción externa y genealogía;
+- Sprint 4, 5–18 de octubre: genealogía y trazabilidad transversal;
 - Sprint 5, 19 de octubre–1 de noviembre: integración, pruebas y despliegue;
 - Sprint 6, 2–8 de noviembre: piloto y evaluación;
 - Sprint 7, 9–15 de noviembre: cierre académico.
