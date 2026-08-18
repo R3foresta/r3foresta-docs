@@ -6,6 +6,9 @@ La cadena del dominio: `general (maestros) → recolección (origen) → vivero 
 
 ## Índice
 
+* [PLANTEAMIENTO-PROBLEMA.md](PLANTEAMIENTO-PROBLEMA.md)
+  Contexto, problema central, árbol del problema, alcance y aporte de R3Foresta.
+
 * [00-general-module/README.md](00-general-module/README.md)
   Catálogos y maestros transversales: usuarios, territorios, viveros, plantas, evidencias, `ORGANIZACION`.
 * [01-recoleccion-module/README.md](01-recoleccion-module/README.md)
