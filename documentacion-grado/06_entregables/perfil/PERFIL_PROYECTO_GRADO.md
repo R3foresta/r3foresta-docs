@@ -77,7 +77,7 @@ Entre las fuentes revisadas no se identificó una solución que integrara, dentr
 
 R3Foresta realiza actividades de reforestación con comunidades, voluntarios y organizaciones patrocinadoras. La evidencia disponible de esas actividades se conserva actualmente en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y la memoria de las personas involucradas. Estas fuentes permiten comunicar que una actividad ocurrió, pero no constituyen por sí mismas una estructura común para reconstruir de extremo a extremo la procedencia y el recorrido del material vegetal destinado a ellas.
 
-El proceso comienza con la recolección de semillas, continúa con su manejo en vivero y concluye con la plantación de las plantas obtenidas. A lo largo de este recorrido es necesario conservar la procedencia y relacionar los eventos registrados hasta la plantación.
+El proceso comienza con la recolección de semillas, continúa con su manejo en vivero y concluye con la plantación de las plantas obtenidas; además, puede existir material que ingrese al proceso alguna etapa. A lo largo de este recorrido es necesario conservar la procedencia y relacionar los eventos registrados hasta la plantación.
 
 Durante el recorrido cambian la ubicación, el responsable, el estado, la agrupación y, en ciertos procesos, la unidad de medida del material vegetal. Las semillas recolectadas pueden expresarse en gramos o unidades de propagación, mientras que el saldo vivo del vivero y la plantación se expresan en unidades de plantas. Este cambio no es una conversión aritmética automática, sino el resultado observado de un proceso biológico. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales.
 
@@ -132,7 +132,7 @@ flowchart BT
 1. ¿Qué procesos, actores, datos, estados, eventos, unidades de medida y reglas de negocio intervienen en la recolección, el vivero y la plantación del material vegetal?
 2. ¿Qué modelo de información y reglas de integridad permite relacionar los orígenes, movimientos, transformaciones, saldos, responsables y evidencias de la cadena de custodia?
 3. ¿Cómo implementar e integrar los módulos de Recolección, Vivero y Plantación sin perder la historia de procedencia del material vegetal?
-4. ¿En qué medida la solución cumple los requerimientos y preserva las invariantes definidas bajo pruebas funcionales, de integración, concurrencia, fallo inducido y extremo a extremo?
+4. ¿En qué medida la solución cumple los requerimientos y preserva las invariantes definidas mediante pruebas funcionales?
 5. ¿Qué capacidad presenta la solución para reconstruir trazas con evidencia contrastable y qué carga operativa genera respecto de la práctica actual de R3Foresta?
 
 ## 4. Objetivos
@@ -143,11 +143,11 @@ Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del 
 
 ### 4.2. Objetivos específicos
 
-1. **Analizar** los procesos, actores, datos, estados, eventos, unidades de medida, requerimientos y reglas de negocio que intervienen en la recolección, recepción externa, vivero y plantación del material vegetal.
-2. **Diseñar** un modelo de trazabilidad e integridad que relacione orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y que formalice las reglas aplicables a las transferencias entre etapas.
+1. **Analizar** los procesos, actores, datos, estados, eventos, unidades de medida, requerimientos y reglas de negocio que intervienen en la recolección, incluyendo los ingresos de material externo, vivero y plantación del material vegetal.
+2. **Diseñar** un modelo de trazabilidad e integridad que relacione orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y que formalice las reglas aplicables a las transferencias y transformaciones entre etapas.
 3. **Implementar** los módulos de Recolección, Vivero y Plantación, incorporando la recepción de material externo como flujo de ingreso hacia vivero o plantación y conservando su procedencia.
-4. **Verificar** el cumplimiento de los requerimientos y de las invariantes de consistencia mediante pruebas unitarias, de integración, concurrencia, fallo inducido y extremo a extremo.
-5. **Evaluar**, sobre una muestra delimitada, la capacidad de reconstrucción con evidencia contrastable y la carga operativa de la solución, comparándolas con una línea base obtenida de la práctica actual de R3Foresta.
+4. **Verificar** el cumplimiento de los requerimientos y de las invariantes de consistencia mediante pruebas funcionales.
+5. **Evaluar**, en el contexto del estudio de caso, la capacidad de reconstrucción con evidencia contrastable y la carga operativa de la solución, comparándolas con una línea base obtenida de la práctica actual de R3Foresta.
 
 ## 5. Justificación
 
@@ -189,7 +189,7 @@ La evaluación se orientará primero a demostrar propiedades observables del sis
 | Integridad de cantidades y saldos | Que las reglas implementadas prevengan o detecten cantidades negativas, consumo o asignación superior al disponible, doble consumo, doble asignación, saldos incoherentes y pérdida de relación entre material de origen y resultante | Resultados de pruebas funcionales y técnicas, registros de eventos y conciliación de cantidades |
 | Utilización durante una operación real | Que el sistema pueda utilizarse durante una actividad operativa de R3Foresta, procurando incluir una actividad real de plantación cuando el calendario institucional lo permita | Registros generados por el sistema, observación directa, registros de campo y evidencia disponible |
 | Comparación con la situación actual | Qué diferencias existen en la información recuperable, los vacíos, las fuentes necesarias, el tiempo de reconstrucción, la claridad del historial y la explicación de cantidades y saldos | Censo de trazas elegibles del periodo documental, fuentes existentes y trazas paralelas o comparables generadas con la propuesta |
-| Carga operativa y experiencia de los participantes | Cuánto esfuerzo requiere producir la información de trazabilidad y qué dificultades aparecen durante el registro | Tiempo de registro, cantidad de pasos, observación y retroalimentación de los participantes |
+| Carga operativa y experiencia de los participantes | Qué esfuerzo requiere registrar y recuperar la información de trazabilidad con la solución propuesta, considerando las diferencias observables respecto de la práctica actual | Tiempo de registro y reconstrucción, cantidad de pasos, observación y retroalimentación de los participantes |
 
 La evaluación se realizará con actividades y participantes coordinados con R3Foresta, priorizando la observación de actividades reales.
 
@@ -213,7 +213,7 @@ Los prototipos o componentes técnicos anteriores relacionados con blockchain, N
 ### 6.4. Limitaciones
 
 - **Disponibilidad de información histórica:** los registros anteriores pueden estar incompletos, distribuidos entre diferentes fuentes o presentar niveles de detalle desiguales. Se delimitará un periodo documental, se inventariarán las actividades identificables y se incluirán todas las trazas que cumplan los criterios definidos; las exclusiones y sus motivos quedarán registradas.
-- **Disponibilidad de operaciones reales:** la posibilidad de observar recolección, vivero o plantación depende del calendario operativo y de los ciclos propios de R3Foresta durante el periodo del Proyecto de Grado. Las etapas que no puedan observarse se verificarán mediante casos controlados y se informarán como tales.
+- **Disponibilidad de operaciones reales:** la posibilidad de observar recolección, vivero o plantación depende del calendario operativo y de los ciclos propios de R3Foresta durante el periodo del Proyecto de Grado. Las etapas que no puedan observarse se evaluarán mediante casos controlados mediante casos controlados y se informarán como tales.
 - **Disponibilidad de participantes:** la cantidad definitiva de participantes dependerá de las personas disponibles y autorizadas por R3Foresta durante la evaluación.
 - **Alcance del estudio de caso:** la evaluación se realizará dentro del contexto de R3Foresta. No busca inferencia estadística ni permite afirmar que los resultados sean automáticamente generalizables a todas las organizaciones forestales.
 - **Limitación de las evidencias digitales:** fotografías, coordenadas, fechas y otros datos respaldan el registro con el cual están asociados, pero no certifican por sí solos que la situación física o la cantidad declarada sea absolutamente correcta.
