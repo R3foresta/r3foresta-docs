@@ -1,7 +1,8 @@
 # Lineamientos estratégicos y principios de trazabilidad del Proyecto de Grado
 
-> **Versión 8 — 19 de agosto de 2026.**
+> **Versión 9 — 19 de agosto de 2026.**
 > Este documento fija las decisiones que deben mantenerse coherentes desde el Perfil hasta los requerimientos, el diseño, la implementación, las pruebas, la evaluación y el documento final. El texto entregable vive en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
+> La redacción de los artefactos posteriores al Perfil se rige además por [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md).
 
 ## 1. Enfoque del proyecto
 
@@ -129,6 +130,7 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 | Plan de pruebas | Conjunto mínimo de calidad sobre reglas críticas de integridad y escenarios completos de reconstrucción |
 | Marco teórico | Trazabilidad, procedencia, cadena de custodia, eventos, transformaciones, consistencia de cantidades, historial de auditoría, reconstrucción e integridad de registros |
 | Discusión y conclusiones | Diferencia entre respaldo digital y verdad física; límites del estudio de caso y carga operativa observada |
+| Todos los artefactos posteriores al Perfil | Lenguaje académico claro, separación entre propiedad, mecanismo y prueba, nivel de detalle adecuado y afirmaciones que puedan respaldarse con evidencia |
 
 ## 9. Metodología
 
@@ -214,17 +216,18 @@ Antes de cerrar cualquier versión:
 10. la construcción formal debe partir de una línea base académica limpia y conservar evidencia de cada incremento; los desarrollos previos solo pueden describirse como referencia técnica y factibilidad;
 11. los ocho sprints deben contener los tres módulos, ambas integraciones, reconstrucción transversal, calidad, piloto y cierre;
 12. los agentes de IA deben aparecer como apoyo bajo validación humana;
-13. cualquier cambio académico acordado con la docente o la tutora debe propagarse al perfil, estructura y TODO.
-14. “semillas y plantas” debe introducir el dominio y “material vegetal” debe utilizarse después como denominación general.
+13. cualquier cambio académico acordado con la docente o la tutora debe propagarse al perfil, estructura y TODO;
+14. “semillas y plantas” debe introducir el dominio y “material vegetal” debe utilizarse después como denominación general;
 15. transferencia y transformación deben mantenerse diferenciadas en requerimientos, datos, eventos, reglas y pruebas;
 16. toda evidencia debe describirse como respaldo del registro, no como certificación de la realidad física;
 17. el Perfil debe expresar propiedades deseadas sin comprometer prematuramente mecanismos de implementación;
-18. cualquier nueva documentación del Proyecto de Grado debe revisar los principios de las secciones 7 y 8 antes de cerrarse.
+18. cualquier nueva documentación del Proyecto de Grado debe revisar los principios de las secciones 7 y 8 antes de cerrarse;
 19. el flujo de recepción externa prometido en los objetivos debe contar con requerimientos, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
 20. la comparación del piloto debe usar registro paralelo de una misma actividad cuando sea viable; si no, debe declararse que las trazas comparadas no son equivalentes;
 21. las métricas deben contar con definiciones operativas breves y reproducibles antes de recolectar datos;
 22. los roles y permisos del sistema no sustituyen el protocolo de custodia de datos de investigación;
 23. las deudas técnicas críticas para identidad, seguridad, migraciones y pruebas deberán cerrarse internamente antes del piloto sin convertirlas en el foco narrativo del Perfil.
+24. toda sección posterior al Perfil deberá aplicar la lista de revisión de [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md) antes de cerrarse.
 
 ---
 

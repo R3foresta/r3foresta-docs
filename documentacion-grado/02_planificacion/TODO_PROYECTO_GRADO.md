@@ -177,6 +177,7 @@
 - [ ] Excluir blockchain, NFT, contratos inteligentes e IPFS de objetivos, incrementos académicos, pruebas, resultados y conclusiones.
 - [ ] Mantener exactamente tres módulos.
 - [ ] Propagar cada decisión metodológica a Perfil, lineamientos, metodología, plan, instrumentos y documento final.
+- [ ] Aplicar la lista de revisión de [`criterios_editoriales_proyecto_grado.md`](../01_lineamientos/criterios_editoriales_proyecto_grado.md) antes de cerrar cada sección o documento posterior al Perfil.
 
 ## 11. Documento final y defensa
 

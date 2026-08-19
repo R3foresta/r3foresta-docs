@@ -13,6 +13,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 - [`02_planificacion/TODO_PROYECTO_GRADO.md`](02_planificacion/TODO_PROYECTO_GRADO.md) — tablero de ejecución: construcción académica, protocolo empírico, cierre prepiloto y documento final.
 - [`06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) — documento oficial del perfil.
 - [`01_lineamientos/base_perfil_proyecto_grado.md`](01_lineamientos/base_perfil_proyecto_grado.md) — alcance rector, principios de trazabilidad y reglas de propagación hacia el Proyecto de Grado final.
+- [`01_lineamientos/criterios_editoriales_proyecto_grado.md`](01_lineamientos/criterios_editoriales_proyecto_grado.md) — criterios de claridad, nivel de detalle y separación entre propiedades, mecanismos y pruebas para la documentación posterior al Perfil.
 - [`05_recursos/indice_fuentes_bibliograficas.md`](05_recursos/indice_fuentes_bibliograficas.md) — acceso temático a las fuentes del perfil y del futuro marco teórico.
 - [`06_entregables/proyecto_grado/README.md`](06_entregables/proyecto_grado/README.md) — espacio reservado y guía inicial para el documento final.
 
@@ -20,7 +21,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 
 | Carpeta | Función | Contenido principal |
 |---|---|---|
-| [`01_lineamientos/`](01_lineamientos/) | Reglas y decisiones rectoras | Normativa UMSA, principios de trazabilidad y lineamiento estratégico vigente. |
+| [`01_lineamientos/`](01_lineamientos/) | Reglas y decisiones rectoras | Normativa UMSA, principios de trazabilidad, criterios editoriales y lineamiento estratégico vigente. |
 | [`02_planificacion/`](02_planificacion/) | Control y diseño documental | TODO, estructura del perfil y plan histórico. |
 | [`03_investigacion/`](03_investigacion/) | Sustento académico y estado del arte | Antecedentes, análisis crítico, biblioteca razonada y guía de búsqueda. |
 | [`04_metodologia/`](04_metodologia/) | Método de investigación y desarrollo | Metodología adoptada y antecedentes metodológicos superados. |
