@@ -1,6 +1,6 @@
 # Documentación universitaria de grado — R3Foresta
 
-> **Estado al 18 de agosto de 2026:** el alcance de trabajo vigente es únicamente el **Perfil de Proyecto de Grado**. La ejecución académica se planifica prospectivamente del 17 de agosto al 15 de noviembre mediante ocho sprints; el contenido oficial del perfil está completo en Markdown.
+> **Estado al 19 de agosto de 2026:** el alcance de trabajo vigente es únicamente el **Perfil de Proyecto de Grado**. La ejecución académica se planifica prospectivamente del 17 de agosto al 15 de noviembre mediante ocho sprints; el contenido oficial del perfil está completo en Markdown y sus principios de trazabilidad y evaluación quedaron registrados para la documentación posterior.
 
 Espacio de trabajo para producir los dos resultados académicos del proyecto de grado de la UMSA, Carrera de Informática — mención Ingeniería de Sistemas:
 
@@ -10,7 +10,9 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 ## Punto de entrada
 
 - [`02_planificacion/TODO.md`](02_planificacion/TODO.md) — tablero vivo del perfil: bloqueantes, estado por sección, figuras y actividades pendientes.
+- [`02_planificacion/TODO_PROYECTO_GRADO.md`](02_planificacion/TODO_PROYECTO_GRADO.md) — tablero de ejecución: construcción académica, protocolo empírico, cierre prepiloto y documento final.
 - [`06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) — documento oficial del perfil.
+- [`01_lineamientos/base_perfil_proyecto_grado.md`](01_lineamientos/base_perfil_proyecto_grado.md) — alcance rector, principios de trazabilidad y reglas de propagación hacia el Proyecto de Grado final.
 - [`05_recursos/indice_fuentes_bibliograficas.md`](05_recursos/indice_fuentes_bibliograficas.md) — acceso temático a las fuentes del perfil y del futuro marco teórico.
 - [`06_entregables/proyecto_grado/README.md`](06_entregables/proyecto_grado/README.md) — espacio reservado y guía inicial para el documento final.
 
@@ -18,7 +20,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 
 | Carpeta | Función | Contenido principal |
 |---|---|---|
-| [`01_lineamientos/`](01_lineamientos/) | Reglas y decisiones rectoras | Normativa UMSA y lineamiento estratégico vigente. |
+| [`01_lineamientos/`](01_lineamientos/) | Reglas y decisiones rectoras | Normativa UMSA, principios de trazabilidad y lineamiento estratégico vigente. |
 | [`02_planificacion/`](02_planificacion/) | Control y diseño documental | TODO, estructura del perfil y plan histórico. |
 | [`03_investigacion/`](03_investigacion/) | Sustento académico y estado del arte | Antecedentes, análisis crítico, biblioteca razonada y guía de búsqueda. |
 | [`04_metodologia/`](04_metodologia/) | Método de investigación y desarrollo | Metodología adoptada y antecedentes metodológicos superados. |
@@ -47,10 +49,10 @@ Modalidad elegida: **Defensa de Proyecto de Grado**.
 3. **Planteamiento del problema** — situación problemática, análisis causa-efecto (árbol de problemas) y **formulación del problema** (pregunta de investigación).
 4. **Objetivos** — un objetivo general + varios específicos (verbos medibles, alineados a cada capítulo).
 5. **Justificación** — técnica, económica y social/operativa.
-6. **Alcances y límites** — tres módulos operativos, variantes implícitas de ingreso del material vegetal, exclusiones y limitaciones de evaluación.
+6. **Alcances y límites** — tres módulos operativos, reconstrucción del recorrido, integridad de cantidades, transferencias y transformaciones, variantes de ingreso, evaluación por propiedades, exclusiones y limitaciones reales.
 7. **Marco teórico/referencial preliminar** — trazabilidad, cadena de custodia, transacciones, registros de eventos, integridad de datos, geoinformación y evaluación de software. Blockchain/IPFS solo como antecedentes históricos o trabajo futuro, si corresponde.
 8. **Metodología** — tipo de investigación + metodología de desarrollo de software y herramientas.
-   > La enumeración "SCRUM, XP, RUP…" que aparece en las guías de perfil es orientativa, no un requisito reglamentario: el Reglamento General no exige ninguna metodología nominada. **Metodología declarada para R3Foresta:** desarrollo iterativo e incremental guiado por especificación anclada — ver [`04_metodologia/metodologia_desarrollo.md`](04_metodologia/metodologia_desarrollo.md).
+   > La enumeración "SCRUM, XP, RUP…" que aparece en las guías de perfil es orientativa, no un requisito reglamentario: el Reglamento General no exige ninguna metodología nominada. **Metodología declarada para R3Foresta:** desarrollo iterativo e incremental con especificaciones y decisiones versionadas — ver [`04_metodologia/metodologia_desarrollo.md`](04_metodologia/metodologia_desarrollo.md).
 9. **Índice tentativo (temario)** del proyecto final.
 10. **Cronograma de actividades** (diagrama de Gantt).
 11. **Presupuesto/recursos** — herramientas, infraestructura, trabajo de campo, aportes en especie y financiamiento.

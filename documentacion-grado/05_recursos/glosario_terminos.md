@@ -1,6 +1,6 @@
 # Glosario de términos comprometidos — Proyecto de Grado R3Foresta
 
-> **Versión 3 — 18 de agosto de 2026**
+> **Versión 4 — 19 de agosto de 2026**
 > Este glosario no define todo el vocabulario del dominio. Define únicamente los términos que **comprometen una afirmación** ante el tribunal: los que, mal usados, prometen más de lo que el trabajo puede demostrar.
 > Para cada término: qué significa aquí, qué obliga a sostener y qué **no** obliga a sostener.
 > Fuente estratégica: [`../01_lineamientos/base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md) · Diseño de evaluación: [`../02_planificacion/estructura_perfil.md`](../02_planificacion/estructura_perfil.md)
@@ -25,9 +25,9 @@ La reconstrucción puede comenzar en el origen o en el punto donde el material v
 
 | Compromiso | Cómo se sostiene |
 |---|---|
-| El dato se captura en el hecho, no se reconstruye después | Evidencia fotográfica, GPS, marca temporal y responsable registrados en el momento de la operación (M1) |
-| El registro sirve a las decisiones de la propia operación | `saldo_vivo_actual`, `saldo_asignado_disponible` y estados de lote existen para operar, no solo para reportar |
-| Existe un responsable identificable por cada hecho | Historial *append-only* con usuario en `recoleccion_historial` y `evento_lote_vivero` |
+| Cada cambio conserva el hecho que lo explica | Evento relacionado con el material, la cantidad, el momento y el responsable |
+| El registro sirve a las decisiones de la propia operación | Los saldos y estados permiten operar y deben poder explicarse mediante eventos anteriores |
+| Existe un responsable identificable por cada hecho | Historial con el actor asociado al evento correspondiente |
 
 **Qué NO compromete**
 
@@ -53,7 +53,7 @@ Expresiones que **no deben aparecer** aplicadas al sistema o a su trazabilidad, 
 | **Demostrar que la semilla se convirtió en árbol vivo** | Afirma verdad física y supervivencia. El sistema registra lo declarado y evidenciado; no prueba la realidad ni el monitoreo posterior. | Reconstruir el recorrido registrado del material vegetal |
 | **Garantiza** (aplicado a saldos o integridad) | Promesa absoluta, sin condiciones acotadas. | Preserva · asegura bajo las condiciones verificadas |
 | **Genera / habilita bonos de carbono** | Requiere metodología, línea base, adicionalidad, medición y verificación independiente. Fuera de alcance. | Produce datos de actividad potencialmente reutilizables por un futuro MRV |
-| **Event sourcing** (a secas) | El modelo mantiene simultáneamente eventos y saldos materializados; no es *event sourcing* estricto. | Modelo transaccional híbrido basado en eventos y saldos materializados |
+| **Event sourcing** (como compromiso del Perfil) | Anticipa un patrón arquitectónico que todavía debe evaluarse y justificarse durante el diseño. | Historial de eventos y saldos explicables; arquitectura por definir |
 | **Blockchain / NFT / IPFS** como característica del proyecto | No participa de los objetivos ni de la evaluación vigente. | Fuera del alcance |
 
 ### 2.1. Uso legítimo de *verificable*
@@ -89,25 +89,33 @@ Lo que se proscribe es *verificable* aplicado a **la trazabilidad o al sistema c
 
 ---
 
-## 5. Contrato de integración atómico
+## 5. Transferencia y transformación
 
-**Definición adoptada:** especificación de una transferencia entre módulos cuyos efectos —creación de la entidad destino, descuento en el origen, registro del evento y actualización de saldos— se agrupan en una sola transacción, de modo que si una parte falla se revierte la operación completa.
+### Transferencia
 
-**Qué compromete:** ausencia de estados parciales tras fallo inducido, demostrada con pruebas y con el contrafactual de atomicidad.
+**Definición adoptada:** movimiento de material vegetal entre ubicaciones, responsables o etapas que conserva una relación directa entre la cantidad de origen y la cantidad de destino dentro de una misma unidad de medida.
 
-**Qué NO compromete:** disponibilidad del servicio, ni corrección del dato ingresado por el usuario.
+### Transformación
+
+**Definición adoptada:** hecho mediante el cual el material puede cambiar de estado, naturaleza, cantidad o unidad de medida y producir una nueva cantidad observable relacionada con el material de origen.
+
+**Precisión obligatoria:** una transformación no se representa como una conversión aritmética automática. Por ejemplo, una masa de semillas sembradas y la cantidad de plantas germinadas son observaciones relacionadas por un evento biológico, no magnitudes matemáticamente equivalentes.
+
+**Qué compromete:** que requerimientos, datos, eventos, reglas y pruebas puedan distinguir movimientos directos de cambios que generan material resultante.
+
+**Qué NO compromete:** una fórmula universal de conversión ni una técnica particular para almacenar o ejecutar estas operaciones.
 
 ---
 
-## 6. Modelo transaccional híbrido basado en eventos
+## 6. Historial de eventos y saldo explicable
 
-**Definición adoptada:** modelo que conserva un historial *append-only* de eventos de negocio y, simultáneamente, mantiene saldos y acumulados materializados para operación y consulta.
+**Definición adoptada:** capacidad transversal por la cual los hechos registrados en Recolección, Vivero y Plantación permiten explicar los cambios de estado, ubicación, cantidad y saldo del material vegetal.
 
-**Por qué esta denominación:** evita la confusión con *event sourcing* estricto, donde el estado se deriva íntegramente de la reproducción de eventos y no se persiste. Aquí sí se persiste, por razones operativas y de rendimiento de consulta.
+El historial no es un cuarto módulo. Los módulos generan los eventos y la consulta del historial permite reconstruir posteriormente lo ocurrido.
 
-**Qué compromete:** que los eventos no se editen ni se borren, y que los saldos materializados sean consistentes con el historial.
+**Qué compromete:** que los saldos actuales puedan relacionarse con los eventos anteriores que los produjeron y que una corrección no elimine la explicación del recorrido.
 
-**Qué NO compromete:** capacidad de reconstruir cualquier estado histórico arbitrario por reproducción pura de eventos.
+**Qué NO compromete:** *event sourcing*, almacenamiento *append-only*, transacciones ACID u otro mecanismo específico. Estas decisiones se justificarán durante el diseño y la implementación.
 
 ---
 
@@ -115,7 +123,7 @@ Lo que se proscribe es *verificable* aplicado a **la trazabilidad o al sistema c
 
 **Definición adoptada:** proporción de ítems de una guía de reconstrucción que pueden responderse **con evidencia contrastable** —no solo de memoria— para un caso de la muestra, junto con el tiempo requerido para obtenerlos.
 
-Es la métrica comparable AS-IS / TO-BE del plano operativo. La distinción entre *respondido con evidencia* y *respondido de memoria* es constitutiva de la definición: la memoria ayuda a contextualizar, pero no es transferible entre personas ni puede contrastarse de la misma forma que una fuente conservada.
+Es una métrica para comparar la situación actual con la propuesta. La distinción entre *respondido con evidencia* y *respondido de memoria* es constitutiva de la definición: la memoria ayuda a contextualizar, pero no es transferible entre personas ni puede contrastarse de la misma forma que una fuente conservada.
 
 ---
 
@@ -140,8 +148,12 @@ Antes de cerrar cualquier documento del proyecto de grado, verificar que:
 5. blockchain, IPFS y NFT aparezcan únicamente para declarar que están fuera del alcance;
 6. las variantes de ingreso se mantengan implícitas y subordinadas al recorrido principal Recolección–Vivero–Plantación;
 7. “semillas y plantas” se use para introducir el dominio y “material vegetal” como denominación general posterior;
-8. los objetivos vigentes permanezcan sin cambios hasta su revisión formal.
+8. los objetivos mantengan correspondencia con el problema, el alcance y la evaluación, y cualquier ajuste sustantivo se revise formalmente con la tutora;
+9. transferencia y transformación se mantengan diferenciadas y no se use una equivalencia automática entre unidades distintas;
+10. el historial de eventos se trate como capacidad transversal de los tres módulos;
+11. la evidencia se describa como respaldo del registro y no como certificación del mundo físico;
+12. el Perfil no comprometa mecanismos técnicos que deben definirse en análisis, diseño e implementación.
 
 ---
 
-*Documento de trabajo actualizado el 18 de agosto de 2026.*
+*Documento de trabajo actualizado el 19 de agosto de 2026.*

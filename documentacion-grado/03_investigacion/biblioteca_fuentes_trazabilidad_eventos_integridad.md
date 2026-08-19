@@ -2,7 +2,7 @@
 
 **Proyecto:** R3Foresta
 
-**Fecha de incorporación:** 18 de agosto de 2026
+**Fecha de incorporación:** 18 de agosto de 2026; alineación terminológica actualizada el 19 de agosto de 2026
 
 **Estado:** recurso de investigación vivo; no constituye por sí mismo bibliografía del perfil ni del documento final.
 
@@ -27,7 +27,7 @@ El índice temático para recuperar estas fuentes está en [`../05_recursos/indi
 La búsqueda aporta más fuentes valiosas de las que necesita un perfil breve. Se seleccionaron únicamente dos incorporaciones:
 
 - **[EVT-02] Solanki y Brewster (2014):** incorporada a los antecedentes porque extiende directamente a Thakur et al. (2011) y sustenta las relaciones entrada–evento–salida necesarias para reconstruir procedencia.
-- **[EVA-01] Donnelly et al. (2012):** incorporada a la progresión argumentativa de los antecedentes y al procedimiento AS-IS/TO-BE porque respalda que la capacidad de trazabilidad debe comprobarse intentando reconstruir una traza.
+- **[EVA-01] Donnelly et al. (2012):** incorporada a la progresión argumentativa de los antecedentes y al procedimiento de comparación entre la situación actual y la propuesta porque respalda que la capacidad de trazabilidad debe comprobarse intentando reconstruir una traza.
 
 Las demás fuentes quedan reservadas. En particular:
 
@@ -194,7 +194,7 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 **Fuente:** Donnelly, K. A.-M., Karlsen, K. M., & Dreyer, B. (2012). *A simulated recall study in five major food sectors*. *British Food Journal, 114*(7), 1016–1031. [DOI](https://doi.org/10.1108/00070701211241590).
 
 - **Aporte transferible:** evalúa la trazabilidad intentando recuperar origen, lote e información relacionada, en vez de asumir la efectividad por la mera existencia de registros.
-- **Uso previsto:** fundamentar la guía de reconstrucción, las fuentes recuperadas, los vacíos y el tiempo AS-IS/TO-BE.
+- **Uso previsto:** fundamentar la guía de reconstrucción, las fuentes recuperadas, los vacíos y la comparación de tiempos entre la situación actual y la propuesta.
 - **Límite:** R3Foresta no ejecutará un retiro sanitario ni evaluará inocuidad alimentaria.
 - **Decisión:** incorporada a los antecedentes y al procedimiento metodológico del perfil.
 

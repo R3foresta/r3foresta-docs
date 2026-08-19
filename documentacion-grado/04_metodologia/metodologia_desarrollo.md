@@ -1,7 +1,8 @@
 # Metodología de investigación y desarrollo
 
-> **Versión 6 — 18 de agosto de 2026.**
+> **Versión 8 — 19 de agosto de 2026.**
 > Documento de apoyo para la sección metodológica del perfil y el futuro Capítulo III. La formulación entregable está en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) §8.
+> La evaluación y los artefactos posteriores deben conservar los [principios de trazabilidad y evaluación](../01_lineamientos/base_perfil_proyecto_grado.md#7-principios-de-trazabilidad-y-evaluación-del-proyecto).
 
 ## 1. Decisión metodológica
 
@@ -9,7 +10,7 @@ El proyecto combina dos ejes diferentes:
 
 | Eje | Pregunta | Decisión |
 |---|---|---|
-| Investigación | ¿Cómo se construye y evalúa conocimiento sobre la solución? | Investigación aplicada y tecnológica, ciencia del diseño y estudio de caso único |
+| Investigación | ¿Cómo se construye y evalúa conocimiento sobre la solución? | Investigación aplicada y tecnológica, ciencia del diseño y estudio de caso único embebido |
 | Desarrollo | ¿Cómo se construirá y evolucionará el software durante el proyecto? | Desarrollo iterativo e incremental organizado en sprints, con especificaciones y decisiones versionadas |
 
 No se declara Scrum completo, RUP, XP, Shape Up ni AI-DLC como metodología integral. Se adopta la unidad temporal de **sprint**, con planificación, ejecución, revisión del incremento con R3Foresta o seguimiento académico cuando corresponda y retrospectiva, sin atribuir al proyecto roles o artefactos de un marco que no hayan sido formalmente definidos.
@@ -19,6 +20,8 @@ No se declara Scrum completo, RUP, XP, Shape Up ni AI-DLC como metodología inte
 ### 2.1. Investigación aplicada y ciencia del diseño
 
 El trabajo desarrolla un artefacto para resolver un problema real de R3Foresta. La ciencia del diseño vincula relevancia organizacional, construcción y evaluación del artefacto y comunicación del conocimiento producido (Hevner et al., 2004).
+
+Para convertir ese enfoque en un proceso ejecutable se utilizará DSRM (Peffers et al., 2007): identificación del problema, definición de objetivos de la solución, diseño y desarrollo, demostración, evaluación y comunicación. Estas actividades no reemplazan los sprints; permiten explicar en el Perfil y, con mayor detalle, en los capítulos metodológico y de resultados del Proyecto de Grado cómo cada incremento contribuye a construir y evaluar el artefacto.
 
 La evaluación no se limita a mostrar pantallas. Debe producir evidencia sobre:
 
@@ -31,9 +34,9 @@ La evaluación no se limita a mostrar pantallas. Debe producir evidencia sobre:
 
 ### 2.2. Estudio de caso
 
-R3Foresta constituye un caso único. El diseño sigue las recomendaciones de Runeson y Höst (2009): declarar preguntas, contexto, unidad de análisis, procedimientos de recolección, análisis y amenazas a la validez.
+R3Foresta constituye un **caso único embebido**. El caso es la organización y su proceso de trazabilidad; las unidades embebidas son las trazas de cadena de custodia estudiadas. El diseño sigue las recomendaciones de Runeson y Höst (2009): declarar preguntas, contexto, unidad de análisis, procedimientos de recolección, análisis y amenazas a la validez.
 
-La unidad principal es una **traza de cadena de custodia**. En la línea base, los 8 a 12 casos son actividades o recorridos históricos identificables; no son eventos generados por el software.
+La unidad principal es una **traza de cadena de custodia**. Para caracterizar la situación actual se definirá un periodo documental, se inventariarán las actividades o recorridos identificables dentro de ese periodo y se analizará el conjunto de trazas que cumpla los criterios de inclusión. Los casos excluidos y su motivo también quedarán registrados. Este procedimiento corresponde a un censo documental delimitado de la información accesible, no a una muestra estadística ni a eventos generados por el software.
 
 ### 2.3. Enfoque y análisis
 
@@ -42,7 +45,9 @@ El enfoque es mixto con análisis descriptivo:
 - cuantitativo: conteos, porcentajes, medianas, rangos, tiempos y resultados de pruebas;
 - cualitativo: entrevistas, observación y dificultades percibidas.
 
-La población accesible es pequeña y el piloto tendrá hasta cinco usuarios. No se utilizará inferencia estadística ni se generalizarán los resultados a otras organizaciones.
+La población accesible es pequeña y la cantidad de participantes del piloto dependerá de las personas disponibles y autorizadas por R3Foresta. No se utilizará inferencia estadística ni se generalizarán los resultados a otras organizaciones.
+
+Los datos cuantitativos y cualitativos se integrarán por traza. Cada resultado de completitud, tiempo o carga se interpretará junto con las fuentes utilizadas, las interrupciones y las dificultades observadas. El componente cualitativo empleará análisis temático por plantilla: partirá de categorías ligadas a las preguntas del estudio —claridad, carga, dificultades, interrupciones y confianza en la reconstrucción—, las revisará durante la codificación y permitirá agregar categorías emergentes (Brooks et al., 2015). Se conservará la relación entre observación o respuesta, código, hallazgo y conclusión.
 
 ## 3. Metodología de desarrollo
 
@@ -68,33 +73,35 @@ Esta práctica se sustenta en diseño por contrato (Meyer, 1992) y trazabilidad 
 
 ### 4.1. Delimitación temporal
 
-La ejecución académica formal se desarrollará del **17 de agosto al 15 de noviembre de 2026**. Todo módulo, integración, prueba, piloto y resultado que se presente como cumplimiento de los objetivos deberá atravesar actividades verificables dentro de esta ventana.
+La ejecución académica formal se desarrollará del **17 de agosto al 15 de noviembre de 2026**. Todo módulo, integración, prueba, piloto y resultado que se presente como cumplimiento de los objetivos deberá atravesar actividades verificables dentro de esta ventana. El periodo posterior hasta la defensa, prevista para fines de noviembre o inicios de diciembre, podrá utilizarse como margen interno para correcciones, maquetación y preparación de la defensa; cualquier ampliación de la ejecución sustantiva deberá reflejarse en el cronograma vigente.
 
-Existen repositorios, código, decisiones y prototipos producidos con anterioridad. Se conservan como insumos técnicos y evidencia de factibilidad, pero no se presentan como objetivos académicos ya cumplidos. Durante los sprints deberán ser revisados contra los requerimientos, corregidos cuando corresponda, integrados, documentados y sometidos a pruebas. Un componente solo contará como terminado cuando satisfaga el criterio de cierre del sprint.
+De acuerdo con el criterio académico acordado con la docente de la UMSA y comunicado por el postulante, la construcción que se defenderá deberá demostrarse dentro del semestre desde una **línea base académica limpia**. Los repositorios, decisiones y sistemas producidos con anterioridad podrán consultarse como referencia técnica y evidencia de factibilidad, pero no serán presentados como la construcción formal del Proyecto de Grado.
+
+La línea base académica deberá mostrar de forma verificable que todavía no existen los flujos funcionales que serán construidos. Cada sprint conservará evidencia de inicio y cierre: etiqueta o commit de referencia, requerimientos abordados, cambios de implementación, migraciones aplicadas desde una base controlada, pruebas críticas ejecutadas y demostración del incremento. No se afirmará que nunca existió un prototipo previo; se demostrará que el sistema académico presentado fue reconstruido incrementalmente dentro de la ventana autorizada.
 
 ### 4.2. Criterio general de terminado
 
 Para cada incremento se exigirá:
 
-1. requerimientos y reglas actualizados;
+1. requerimientos y reglas críticas del incremento actualizados;
 2. implementación funcional revisada;
 3. integración con los módulos dependientes;
-4. pruebas correspondientes ejecutadas;
+4. conjunto mínimo de pruebas correspondiente a sus riesgos ejecutado;
 5. documentación técnica y académica actualizada;
-6. demostración o revisión del incremento;
+6. evidencia versionada de la construcción y demostración del incremento;
 7. incidencias críticas resueltas o declaradas.
 
 ### 4.3. Plan de sprints
 
 | Sprint | Periodo | Objetivo | Criterio principal de salida |
 |---|---|---|---|
-| 0 | 17–23 ago | Perfil, backlog, arquitectura, criterios de terminado y levantamiento AS-IS | Plan formal y línea base medida |
-| 1 | 24 ago–6 sep | Recolección | M1 integrado, probado y documentado |
+| 0 | 17–23 ago | Perfil, backlog, línea base académica limpia, arquitectura, instrumentos iniciales y caracterización de la situación actual | Plan formal, línea base y caracterización inicial disponibles |
+| 1 | 24 ago–6 sep | Inicio de la construcción formal: Recolección | M1 construido desde la línea base, probado y documentado |
 | 2 | 7–20 sep | Vivero y M1→M2 | Eventos, saldos y primera transferencia cerrados |
 | 3 | 21 sep–4 oct | Plantación y M2→M3 | Asignación, plantación y segunda transferencia cerradas |
-| 4 | 5–18 oct | Genealogía y trazabilidad transversal | Recorrido completo reconstruible entre los tres módulos |
+| 4 | 5–18 oct | Reconstrucción y trazabilidad transversal | Recorrido completo reconstruible entre los tres módulos |
 | 5 | 19 oct–1 nov | Integración, UI/UX, calidad y despliegue | Versión candidata para piloto |
-| 6 | 2–8 nov | Piloto y evaluación | Evidencia TO-BE y contraste AS-IS disponibles |
+| 6 | 2–8 nov | Piloto y evaluación | Evidencia de la propuesta y contraste con la situación actual disponibles |
 | 7 | 9–15 nov | Resultados y cierre académico | Documento final revisado y entregado |
 
 ## 5. Autoría, colaboración y asistencia
@@ -121,16 +128,18 @@ El uso de agentes deberá dejar evidencia proporcionada al riesgo de la tarea: c
 
 ## 6. Diseño de verificación técnica
 
-La verificación del objetivo específico 4 se organizará por propiedades y no por una cifra global de archivos de prueba.
+La verificación del objetivo específico 4 se organizará por propiedades críticas y no por una cifra global de archivos o casos de prueba. No todas las reglas recibirán todas las clases de prueba: se elegirá la técnica mínima que permita producir evidencia convincente según el riesgo.
+
+La evaluación avanzará desde verificaciones formativas y controladas durante los sprints hacia una evaluación más naturalista y sumativa en el piloto. Esta combinación sigue la lógica de FEDS para evaluar artefactos de ciencia del diseño sin exigir que todas las técnicas se apliquen en todas las etapas (Venable et al., 2016).
 
 | Categoría | Propósito |
 |---|---|
 | Unitarias | Reglas, validaciones y cálculos de saldo |
-| Integración | Efectos completos de transferencias entre etapas |
+| Integración | Efectos completos de transferencias y transformaciones entre etapas |
 | Concurrencia | Consumo simultáneo del último saldo |
 | Fallo inducido | Ausencia de estados parciales |
 | Extremo a extremo | Flujo completo sobre una base migrada |
-| Contrafactual controlado | Mostrar el estado que la atomicidad evita |
+| Contrafactual controlado | Mostrar un estado parcial o incoherente que las reglas críticas deben prevenir |
 
 El entregable central será la matriz:
 
@@ -138,20 +147,32 @@ El entregable central será la matriz:
 
 No se mantendrá en la documentación académica una cantidad fija de pruebas o migraciones sin volver a verificarla en la fecha de corte.
 
-## 7. Línea base y piloto
+El núcleo obligatorio se concentrará en cinco familias de propiedades:
 
-### 7.1. AS-IS
+1. no aceptar cantidades o saldos negativos ni consumos superiores al disponible;
+2. conservar atómicamente la relación y los saldos en Recolección→Vivero y Vivero→Plantación;
+3. impedir doble asignación o doble consumo ante solicitudes concurrentes;
+4. no dejar estados parciales cuando una operación crítica falla;
+5. reconstruir de extremo a extremo una traza con cantidades, responsables, ubicaciones y evidencias relacionadas.
 
-Se seleccionarán 8 a 12 actividades o recorridos históricos con fecha aproximada y al menos una persona que haya participado. La reconstrucción se realizará en dos pasadas:
+Se podrán agregar pruebas cuando aparezca un riesgo real, pero no se perseguirá volumen de pruebas como resultado académico independiente.
+
+## 7. Situación actual y piloto
+
+### 7.1. Caracterización de la situación actual
+
+Se fijará un periodo documental y se levantará un inventario de todas las actividades identificables dentro de él. Se definirán criterios simples de inclusión —traza identificable, periodo conocido y al menos una fuente recuperable— y se documentará la razón de cada exclusión. Todas las trazas elegibles formarán la caracterización de la situación actual. La reconstrucción podrá realizarse en dos pasadas:
 
 1. solo con documentos disponibles;
 2. con complemento de memoria del responsable.
 
 Para cada respuesta se registrarán fuente, completitud y tiempo. La separación evidencia/memoria permite caracterizar la práctica sin desvalorizar los registros existentes.
 
-### 7.2. TO-BE
+### 7.2. Evaluación de la propuesta
 
-El mismo instrumento se aplicará a trazas del piloto, con hasta cinco usuarios. Cuando sea posible, reconstruirá una persona distinta de quien capturó. El sitio se elegirá según:
+El mismo instrumento se aplicará a trazas del piloto. Siempre que sea operativamente posible, una misma actividad real se registrará en paralelo mediante la práctica habitual y mediante R3Foresta, sin obligar a abandonar los registros existentes. Esto permitirá comparar el mismo recorrido bajo ambas formas de registro. Si no fuese posible, se utilizarán trazas de complejidad semejante y el resultado se denominará contraste descriptivo entre trazas no equivalentes.
+
+La cantidad de participantes dependerá de las personas disponibles y autorizadas. Cuando sea posible, reconstruirá una persona distinta de quien capturó. El sitio se elegirá según:
 
 - actividad real disponible;
 - accesibilidad;
@@ -159,13 +180,11 @@ El mismo instrumento se aplicará a trazas del piloto, con hasta cinco usuarios.
 - posibilidad de observar el proceso;
 - posibilidad de observar el recorrido del material vegetal entre las etapas disponibles.
 
-Una persona externa o evaluador académico podrá participar si se formaliza su disponibilidad. No se compromete de antemano una institución específica.
-
 ### 7.3. Contingencias
 
 - si una etapa del recorrido principal no ocurre, se prueba de forma controlada y se declara esa condición;
 - si no ocurre una plantación, se diferencia claramente la verificación técnica de la validación de campo;
-- si existen menos de ocho casos históricos, se reporta la muestra disponible y se refuerza el análisis cualitativo;
+- si el censo del periodo produce pocas trazas elegibles, se reportan el inventario completo, los criterios aplicados y el alcance limitado del contraste, y se refuerza el análisis cualitativo;
 - si un participante no consiente el uso de su identidad, se omite o anonimiza.
 
 ## 8. Instrumentos previstos
@@ -174,15 +193,36 @@ Los instrumentos pertenecen al Proyecto de Grado final y no se crean durante la 
 
 - guía de entrevista semiestructurada;
 - lista de cotejo de fuentes históricas;
-- cuestionario común AS-IS/TO-BE;
+- cuestionario común para la situación actual y la propuesta;
 - hoja de cronometraje y carga operativa;
 - consentimiento informado;
 - matriz de pruebas;
 - protocolo de observación del piloto.
 
+Antes de la recolección definitiva se probarán con una traza controlada y se ajustarán únicamente si existen ambigüedades. Se conservarán la versión utilizada y el motivo de cualquier cambio.
+
+### 8.1. Definiciones mínimas para métricas reproducibles
+
+El protocolo definitivo mantendrá un conjunto pequeño de métricas:
+
+| Dimensión | Definición operativa mínima |
+|---|---|
+| Información reconstruible | Cada ítem requerido se clasifica como completo, parcial, ausente o contradictorio; no se fuerza una puntuación global |
+| Evidencia recuperable | Cantidad de ítems requeridos con al menos una evidencia vinculada y recuperable / cantidad de ítems que requerían evidencia |
+| Tiempo de reconstrucción | Desde la entrega de la pregunta y las fuentes hasta la declaración de respuesta; pausas e interrupciones se registran por separado |
+| Carga de registro | Duración de captura, reintentos, errores y solicitudes de ayuda observadas |
+| Integridad técnica | Resultado aprobado/fallido por propiedad crítica y evidencia de la prueba correspondiente |
+| Percepción | Respuestas breves sobre claridad, dificultad y carga, interpretadas junto con la observación |
+
+Los ítems concretos de reconstrucción se derivarán de las preguntas de procedencia, especie o material, cantidades y unidades, eventos o transformaciones, responsables, tiempo, ubicación, destino y evidencia.
+
+### 8.2. Custodia de datos de investigación
+
+Los roles y permisos del sistema controlan quién puede operar R3Foresta, pero no sustituyen el protocolo de investigación. Antes de entrevistas o piloto se definirá por separado: ubicación de almacenamiento, personas autorizadas, seudonimización, tratamiento de fotografías y coordenadas sensibles, periodo de conservación, retiro del consentimiento y eliminación. Datos personales o sensibles no se entregarán a agentes de IA sin autorización y anonimización previa.
+
 ## 9. Amenazas a la validez
 
-- selección intencional y muestra pequeña;
+- corpus documental y cantidad de participantes potencialmente reducidos;
 - calidad desigual de registros históricos;
 - posible aprendizaje entre mediciones;
 - disponibilidad del calendario de campo;
@@ -191,11 +231,13 @@ Los instrumentos pertenecen al Proyecto de Grado final y no se crean durante la 
 - evidencia digital incapaz de probar por sí sola una realidad física;
 - cambios del sistema durante la ventana de evaluación.
 
-Las mitigaciones son instrumento idéntico, registro de fuentes, reconstrucción independiente cuando sea posible, separación entre casos reales y controlados y declaración explícita de limitaciones.
+Las mitigaciones son instrumento común, registro de fuentes, comparación paralela sobre la misma actividad cuando sea posible, reconstrucción independiente, separación entre casos reales y controlados, versión congelada del sistema durante el piloto y declaración explícita de limitaciones.
 
 ## 10. Referencias metodológicas
 
 Basili, V. R., & Turner, A. J. (1975). Iterative enhancement: A practical technique for software development. *IEEE Transactions on Software Engineering, SE-1*(4), 390–396. https://doi.org/10.1109/TSE.1975.6312870
+
+Brooks, J., McCluskey, S., Turley, E., & King, N. (2015). The utility of template analysis in qualitative psychology research. *Qualitative Research in Psychology, 12*(2), 202–222. https://doi.org/10.1080/14780887.2014.955224
 
 Gotel, O. C. Z., & Finkelstein, A. C. W. (1994). An analysis of the requirements traceability problem. *Proceedings of the 1st International Conference on Requirements Engineering*, 94–101. https://doi.org/10.1109/ICRE.1994.292398
 
@@ -209,8 +251,12 @@ Larman, C., & Basili, V. R. (2003). Iterative and incremental development: A bri
 
 Meyer, B. (1992). Applying design by contract. *Computer, 25*(10), 40–51. https://doi.org/10.1109/2.161279
 
+Peffers, K., Tuunanen, T., Rothenberger, M. A., & Chatterjee, S. (2007). A design science research methodology for information systems research. *Journal of Management Information Systems, 24*(3), 45–77. https://doi.org/10.2753/MIS0742-1222240302
+
 Runeson, P., & Höst, M. (2009). Guidelines for conducting and reporting case study research in software engineering. *Empirical Software Engineering, 14*, 131–164. https://doi.org/10.1007/s10664-008-9102-8
+
+Venable, J., Pries-Heje, J., & Baskerville, R. (2016). FEDS: A framework for evaluation in design science research. *European Journal of Information Systems, 25*(1), 77–89. https://doi.org/10.1057/ejis.2014.36
 
 ---
 
-*Documento metodológico actualizado el 18 de agosto de 2026.*
+*Documento metodológico actualizado el 19 de agosto de 2026.*

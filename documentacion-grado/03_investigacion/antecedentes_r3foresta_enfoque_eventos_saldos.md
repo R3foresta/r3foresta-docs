@@ -1,14 +1,16 @@
 # Estado del arte y antecedentes de R3Foresta
 
-## Trazabilidad de material vegetal para reforestación mediante eventos, conservación de saldos e integración atómica
+## Trazabilidad de material vegetal para reforestación mediante eventos, conservación de saldos e integración entre etapas
 
-**Fecha de corte de la búsqueda:** 20 de julio de 2026; alineación con el perfil actualizada el 18 de agosto de 2026.
+**Fecha de corte de la búsqueda:** 20 de julio de 2026; alineación con el perfil actualizada el 19 de agosto de 2026.
 
 **Título propuesto del perfil:** *Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta*.
 
 > La búsqueda incluyó antecedentes sobre distintas procedencias y puntos de ingreso del material vegetal. Esos hallazgos siguen siendo aplicables, pero el perfil actual no presenta la adquisición a terceros como un flujo o entregable central; cualquier ingreso intermedio se considera una variante implícita dentro de los tres módulos.
 
 > **Investigación complementaria:** las fuentes posteriores sobre eventos, genealogía, integridad y pruebas de reconstrucción se conservan en la [`biblioteca razonada`](biblioteca_fuentes_trazabilidad_eventos_integridad.md) y se recuperan mediante el [`índice temático`](../05_recursos/indice_fuentes_bibliograficas.md).
+
+> **Criterio de vigencia:** este estado del arte estudia mecanismos como *append-only*, coordinación transaccional y *event sourcing* para comparar antecedentes. Su presencia en las fichas o matrices no compromete su adopción. El Perfil define propiedades de reconstrucción e integridad; la arquitectura se seleccionará y justificará posteriormente conforme a los [lineamientos vigentes](../01_lineamientos/base_perfil_proyecto_grado.md).
 
 ---
 
@@ -18,9 +20,9 @@ La formulación vigente excluye blockchain, NFT, IPFS y bonos de carbono. La com
 
 1. Identificación del origen y procedencia del material forestal de reproducción.
 2. Trazabilidad entre recolección, vivero y plantación.
-3. Registro histórico de eventos sin sobrescritura (*append-only*).
+3. Historial de eventos que permita explicar los cambios sin perder su relación con el material.
 4. Conservación de cantidades y saldo vivo del lote.
-5. Transferencias atómicas entre módulos.
+5. Coherencia de cantidades y saldos durante transferencias y transformaciones entre módulos.
 6. Evidencia fotográfica y geoespacial de origen y destino.
 
 El informe anterior se conserva aparte como `antecedentes_r3foresta_enfoque_anterior_blockchain_carbono.md`.
@@ -476,11 +478,11 @@ Estas fuentes son antecedentes tecnológicos o institucionales; **no se presenta
 
 La literatura y los sistemas verificados aparecen fragmentados en cuatro grupos. Los trabajos de procedencia forestal comprueban el origen genético o regulatorio, pero no administran el ciclo operativo del lote. Los sistemas de vivero controlan producción e inventario, pero normalmente terminan en la venta o despacho y no conservan la relación con el sitio de plantación. Los modelos EPCIS, *event sourcing*, ACID e invariantes explican cómo representar eventos y mantener consistencia, pero no incorporan reglas de germinación, embolsado, merma, saldo vivo y cierre. Finalmente, las herramientas GIS relacionan procedencia y territorio, pero no demuestran conservación de cantidades.
 
-**No se encontró un antecedente verificable que integre simultáneamente**: (a) lote de origen con fotografías y GPS; (b) historial no sobrescribible de maduración en vivero; (c) saldo vivo calculado y protegido contra valores negativos o doble asignación; (d) transferencia atómica recolección→vivero y vivero→subcampaña; (e) validación del polígono de plantación; y (f) pruebas automáticas de la invariante de conservación. La contribución defendible de R3Foresta no es inventar cada técnica por separado, sino **integrarlas y especializarlas en una cadena de custodia forestal boliviana con reglas cuantitativas verificables de extremo a extremo**.
+**No se encontró un antecedente verificable que integre simultáneamente**: (a) lote de origen con fotografías y GPS; (b) historial de maduración en vivero; (c) saldo vivo protegido contra valores negativos o doble asignación; (d) relaciones consistentes entre el origen, los movimientos, las transformaciones y el destino; (e) validación del polígono de plantación; y (f) pruebas de las reglas críticas de integridad y reconstrucción. La contribución defendible de R3Foresta no es inventar cada técnica por separado, sino **integrarlas y especializarlas en una cadena de custodia forestal boliviana con reglas cuantitativas verificables de extremo a extremo**. Los mecanismos concretos para preservar estas propiedades deberán justificarse durante el diseño y la implementación.
 
 ## 8. Síntesis redactable para la sección “Antecedentes”
 
-Los antecedentes revisados muestran avances parciales en la digitalización de viveros, la identificación de procedencia forestal, la trazabilidad por eventos y la georreferenciación. En Bolivia, Limachi Mamani (2020) desarrolló para la ABT un sistema de registro y geolocalización de viveros, mientras que Yujra Huanca (2022) documentó experimentalmente la transición de plantines desde vivero hasta campo; sin embargo, ninguno implementó una cadena de custodia digital completa. En Latinoamérica, Salamanca Contreras (2024) demostró que un sistema web mejora la exactitud del inventario y los despachos de un vivero, y Semiyá de AGROSAVIA incorpora linaje de lotes y etapas productivas, pero sus fuentes públicas no documentan eventos inmutables, transferencias atómicas ni validación geoespacial de la plantación. En el plano internacional, Thakur et al. (2011) mostraron que EPCIS permite representar eventos, estados y transformaciones de una cadena física; Overeem et al. (2021) analizaron empíricamente la auditabilidad y evolución de sistemas basados en eventos; y Bailis et al. (2014) formalizaron cuándo una invariante exige coordinación transaccional. Por otra parte, Degen et al. (2010) y Kavaliauskas et al. (2021) evidenciaron la importancia de comprobar la procedencia del material forestal, mientras que Oger et al. (2010) y Samarasinghe et al. (2024) sustentaron la geotrazabilidad. A pesar de estos aportes, no se identificó una solución que combine origen georreferenciado, maduración en vivero mediante eventos *append-only*, conservación del saldo, transferencia atómica a campañas y validación espacial de la plantación. R3Foresta aborda esta brecha mediante un modelo integrado para material vegetal, con reglas de consistencia sometidas a pruebas.
+Los antecedentes revisados muestran avances parciales en la digitalización de viveros, la identificación de procedencia forestal, la trazabilidad por eventos y la georreferenciación. En Bolivia, Limachi Mamani (2020) desarrolló para la ABT un sistema de registro y geolocalización de viveros, mientras que Yujra Huanca (2022) documentó experimentalmente la transición de plantines desde vivero hasta campo; sin embargo, ninguno implementó una cadena de custodia digital completa. En Latinoamérica, Salamanca Contreras (2024) demostró que un sistema web mejora la exactitud del inventario y los despachos de un vivero, y Semiyá de AGROSAVIA incorpora linaje de lotes y etapas productivas, pero sus fuentes públicas no documentan de manera conjunta un historial de eventos, reglas de consistencia entre etapas y validación geoespacial de la plantación. En el plano internacional, Thakur et al. (2011) mostraron que EPCIS permite representar eventos, estados y transformaciones de una cadena física; Overeem et al. (2021) analizaron empíricamente la auditabilidad y evolución de sistemas basados en eventos; y Bailis et al. (2014) formalizaron cuándo una invariante exige coordinación. Por otra parte, Degen et al. (2010) y Kavaliauskas et al. (2021) evidenciaron la importancia de comprobar la procedencia del material forestal, mientras que Oger et al. (2010) y Samarasinghe et al. (2024) sustentaron la geotrazabilidad. A pesar de estos aportes, no se identificó una solución que combine origen georreferenciado, eventos de vivero, explicación de cantidades y saldos, relaciones consistentes hasta la plantación y validación espacial. R3Foresta aborda esta brecha mediante un modelo integrado para material vegetal, con reglas de consistencia sometidas a pruebas.
 
 ## 9. Precauciones para citar este estado del arte
 

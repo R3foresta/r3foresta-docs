@@ -1,11 +1,12 @@
 # Estructura vigente del Perfil de Proyecto de Grado
 
-> **Versión 7 — 18 de agosto de 2026.**
+> **Versión 9 — 19 de agosto de 2026.**
 > Este documento explica la arquitectura del perfil; el texto entregable y fuente de verdad académica es [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
+> Los principios que deben conservarse en la documentación posterior se encuentran en [base_perfil_proyecto_grado.md](../01_lineamientos/base_perfil_proyecto_grado.md) §§7–8.
 
 ## 1. Decisión central
 
-El perfil presenta un proyecto de Ingeniería de Sistemas sobre trazabilidad de material vegetal para reforestación en el caso R3Foresta. La introducción explica primero el recorrido mediante la expresión “semillas y plantas”; las secciones posteriores emplean “material vegetal” como denominación general. El problema se formula en lenguaje organizacional y académico; los mecanismos de eventos, transacciones e invariantes se desarrollan como aporte de ingeniería, pero no condicionan el título.
+El perfil presenta un proyecto de Ingeniería de Sistemas sobre trazabilidad de material vegetal para reforestación en el caso R3Foresta. La introducción explica primero el recorrido mediante la expresión “semillas y plantas”; las secciones posteriores emplean “material vegetal” como denominación general. El problema se formula en lenguaje organizacional y académico. El perfil compromete capacidad de reconstrucción, integridad y evidencia vinculada, mientras que los mecanismos concretos para conseguir estas propiedades se definirán posteriormente en el diseño y la implementación.
 
 **Título propuesto:**
 
@@ -47,30 +48,33 @@ Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del 
 | 2 | Diseñar | Modelo, invariantes y contratos de integración | 4.2 |
 | 3 | Implementar | Tres módulos integrados | 4.3 |
 | 4 | Verificar | Matriz de pruebas y resultados técnicos | 4.4 |
-| 5 | Evaluar | Línea base, piloto, contraste y carga operativa | 4.5 |
+| 5 | Evaluar | Caracterización de la situación actual, piloto, reconstrucción, contraste y carga operativa | 4.5 |
 
 ## 4. Diseño de evaluación
 
-La evaluación separa dos planos:
+La evaluación separa dos planos y prioriza las propiedades que el proyecto debe demostrar:
 
 ### Plano técnico
 
-- pruebas unitarias de reglas y saldos;
-- pruebas de integración de transferencias;
-- pruebas de concurrencia;
-- pruebas de fallo inducido;
-- pruebas extremo a extremo;
+- pruebas funcionales y técnicas de las reglas críticas de trazabilidad e integridad;
+- casos que permitan reconstruir el recorrido y explicar cantidades y saldos;
 - matriz requerimiento–regla–invariante–prueba.
 
 ### Plano operativo
 
-**AS-IS:** reconstrucción retrospectiva de 8 a 12 actividades o recorridos históricos identificables. Estos casos son unidades de análisis del proceso anterior y no eventos creados por el software.
+1. reconstrucción del origen y recorrido del material vegetal;
+2. integridad de cantidades, saldos y asignaciones;
+3. uso durante una operación real cuando el calendario lo permita;
+4. comparación con la situación actual mediante el censo de trazas elegibles del periodo documental y las trazas paralelas o comparables del piloto;
+5. carga operativa y experiencia de los participantes disponibles.
 
-**TO-BE:** piloto real coordinado con R3Foresta y hasta cinco usuarios. El mismo instrumento medirá completitud, evidencia, tiempo de reconstrucción y carga de registro.
+La cantidad de casos no se fija arbitrariamente en el Perfil. Antes de la recolección se delimitará un periodo documental, se inventariarán las actividades y se incluirán todas las trazas que cumplan los criterios del protocolo. La cantidad de participantes dependerá de disponibilidad, calidad de la información y autorizaciones de R3Foresta.
+
+Durante el piloto se procurará registrar una misma actividad en paralelo mediante la práctica habitual y mediante R3Foresta. Si no fuera viable, la comparación se declarará descriptiva y entre trazas no equivalentes.
 
 El lugar y los participantes concretos se seleccionarán según disponibilidad de una actividad real, accesibilidad logística, consentimiento y posibilidad de observar el proceso. Si una etapa del recorrido principal no ocurre en la ventana, se evaluará mediante un caso controlado y se declarará como tal.
 
-La independencia de quien reconstruye la traza es deseable. Puede intervenir una persona externa o un evaluador vinculado a una institución académica si su participación se formaliza; no se promete una afiliación específica.
+Cuando resulte viable, una persona distinta de quien capturó los datos realizará la reconstrucción para reducir el efecto de la memoria del registrador.
 
 ## 5. Consideraciones éticas
 
@@ -95,19 +99,22 @@ El perfil excluye:
 
 La meta organizacional futura de carbono se menciona únicamente como contexto.
 
+Los componentes históricos relacionados con blockchain, NFT o IPFS pueden permanecer en repositorios técnicos, pero no forman parte de la construcción, evaluación ni contribución académica.
+
 ## 7. Metodología
 
 - investigación aplicada y tecnológica;
-- ciencia del diseño como enfoque de construcción y evaluación;
-- estudio de caso único en R3Foresta;
+- ciencia del diseño operacionalizada mediante DSRM;
+- estudio de caso único embebido en R3Foresta, con trazas como unidades de análisis;
 - datos cuantitativos y cualitativos con análisis descriptivo;
 - desarrollo iterativo e incremental;
 - organización del trabajo en ocho sprints entre agosto y noviembre;
 - especificaciones y decisiones versionadas;
 - agentes de IA aprobados como apoyo bajo revisión humana;
-- declaración transparente de prototipos previos, autoría y colaboración puntual.
+- construcción demostrable desde una línea base académica limpia;
+- declaración transparente de desarrollos previos como referencia técnica, autoría y colaboración puntual.
 
-La ejecución académica formal se planifica del 17 de agosto al 15 de noviembre de 2026. Los artefactos y prototipos anteriores son insumos de factibilidad; no se contarán como objetivos cumplidos. Recolección, Vivero, Plantación, las dos integraciones, la genealogía transversal, la calidad, el piloto y la documentación deberán atravesar sus sprints y criterios de cierre dentro de la ventana formal.
+La ejecución académica formal se planifica del 17 de agosto al 15 de noviembre de 2026. Conforme al criterio acordado con la docente de la UMSA, la solución que se defenderá se reconstruirá desde una línea base académica limpia y cada sprint conservará evidencia versionada de sus incrementos. Los desarrollos anteriores serán referencia técnica y factibilidad, no evidencia de construcción formal. Recolección, Vivero, Plantación, las dos integraciones, la reconstrucción transversal, la calidad, el piloto y la documentación deberán atravesar sus sprints y criterios de cierre dentro de la ventana formal.
 
 ## 8. Estructura y extensión
 
@@ -132,14 +139,16 @@ El cuerpo esperado se mantiene aproximadamente entre 20 y 24 páginas una vez ma
 
 ## 9. Cronograma consolidado
 
-- Sprint 0, 17–23 de agosto: inicio, perfil, backlog, arquitectura y levantamiento AS-IS;
-- Sprint 1, 24 de agosto–6 de septiembre: Recolección;
+- Sprint 0, 17–23 de agosto: inicio, perfil, backlog, línea base académica, arquitectura, instrumentos iniciales y caracterización de la situación actual;
+- Sprint 1, 24 de agosto–6 de septiembre: inicio de la construcción formal con Recolección;
 - Sprint 2, 7–20 de septiembre: Vivero e integración M1→M2;
 - Sprint 3, 21 de septiembre–4 de octubre: Plantación e integración M2→M3;
-- Sprint 4, 5–18 de octubre: genealogía y trazabilidad transversal;
+- Sprint 4, 5–18 de octubre: reconstrucción y trazabilidad transversal;
 - Sprint 5, 19 de octubre–1 de noviembre: integración, pruebas y despliegue;
 - Sprint 6, 2–8 de noviembre: piloto y evaluación;
 - Sprint 7, 9–15 de noviembre: cierre académico.
+
+El periodo posterior hasta fines de noviembre o inicios de diciembre se reserva para correcciones, maquetación y preparación de la defensa. Si se amplía la ejecución sustantiva, el cambio deberá reflejarse en el cronograma oficial.
 
 ## 10. Recursos consolidados
 
@@ -158,4 +167,4 @@ La versión actual entrega únicamente el perfil en Markdown. No incluye DOCX, P
 
 ---
 
-*Documento de planificación actualizado el 18 de agosto de 2026.*
+*Documento de planificación actualizado el 19 de agosto de 2026.*

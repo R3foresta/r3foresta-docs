@@ -2,12 +2,12 @@
 
 ## Trazabilidad operativa, problema real y relación efectiva con bonos de carbono
 
-**Fecha de corte:** 20 de julio de 2026
+**Fecha de corte:** 20 de julio de 2026; alineación con el perfil actualizada el 19 de agosto de 2026.
 **Documento base relacionado:** [`antecedentes_r3foresta_enfoque_eventos_saldos.md`](antecedentes_r3foresta_enfoque_eventos_saldos.md)
 **Propósito:** establecer lineamientos críticos para estructurar un proyecto de grado en Ingeniería de Sistemas.
 **Alcance de la auditoría:** documentación canónica, esquema de datos, migraciones SQL y estado de implementación consignado en este repositorio. No constituye una auditoría del despliegue productivo ni una validación independiente de datos de campo.
 
-> **Nota de vigencia:** este documento conserva el análisis técnico y de carbono realizado en julio. Para el perfil actual, “semillas y plantas” introduce el dominio y “material vegetal” es la denominación general posterior. El alcance concluye con el registro de la plantación y no incluye monitoreo de supervivencia. Los objetivos oficiales se mantienen sin cambios hasta su revisión formal.
+> **Nota de vigencia:** este documento conserva el análisis técnico y de carbono realizado en julio. Los lineamientos vigentes están en [`base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md). Para el perfil actual, “semillas y plantas” introduce el dominio y “material vegetal” es la denominación general posterior. El alcance concluye con el registro de la plantación y no incluye monitoreo de supervivencia. Las formulaciones de título y objetivos de §§7.2–7.5 son antecedentes exploratorios superados: los mecanismos técnicos allí descritos son candidatos de diseño y no compromisos del Perfil.
 
 ---
 
@@ -306,7 +306,7 @@ Bolivia presentó su NDC 3.0 en septiembre de 2025 ([CMNUCC, Bolivia NDC 3.0](ht
 |---|---|
 | Genealogía recolección→vivero→plantación | Núcleo del problema de trazabilidad. |
 | Snapshots de identidad | Evitan reescritura retrospectiva por cambios de maestros. |
-| Transferencias atómicas y bloqueo concurrente | Aporte claro de ingeniería para evitar doble consumo y estados parciales. |
+| Consistencia de transferencias y operaciones simultáneas | Propiedad de ingeniería para evitar doble consumo, saldos incoherentes y estados parciales; el mecanismo se definirá en el diseño. |
 | Saldos separados por ubicación física | Representan mejor vivero, subcampaña y campo. |
 | Evidencia vinculada al hecho | Mejora la recuperabilidad de soporte documental. |
 | PostGIS y límites espaciales | Control útil de coherencia geográfica. |
@@ -365,7 +365,7 @@ Este título evita prometer *event sourcing* estricto, carbono o certificación,
 
 ### 7.3. Pregunta de investigación/problema
 
-> ¿En qué medida un sistema basado en registros de eventos y transferencias atómicas mejora la integridad de saldos y la capacidad de reconstruir la cadena de custodia del material vegetal entre recolección, vivero y plantación en el caso R3Foresta?
+> ¿En qué medida un sistema que conserva eventos y relaciones entre etapas permite mantener la integridad de cantidades y reconstruir la cadena de custodia del material vegetal entre recolección, vivero y plantación en el caso R3Foresta?
 
 ### 7.4. Objetivo general recomendado
 
@@ -404,7 +404,7 @@ Aplicar un estudio de caso con:
 - entrevistas semiestructuradas a recolectores, responsables de vivero, coordinadores de plantación y responsables administrativos;
 - observación de uno o más flujos reales;
 - revisión de una muestra de registros históricos;
-- modelado AS-IS del proceso;
+- caracterización de la situación actual del proceso;
 - identificación de fallas y sus efectos mediante causa–efecto o FMEA.
 
 La cantidad de participantes y expedientes debe justificarse por disponibilidad y saturación, no elegirse solo por conveniencia.
@@ -461,7 +461,7 @@ El proyecto no necesita una hipótesis estadística formal si la modalidad acad�
 1. Los actores tienen actualmente dificultad para reconstruir la genealogía del material.
 2. Los errores de saldo y la información incompleta ocurren con frecuencia suficiente para justificar el sistema.
 3. El costo de capturar evidencia por evento no supera el beneficio operativo.
-4. La atomicidad reduce inconsistencias que realmente se producían en el proceso anterior.
+4. Los mecanismos de consistencia seleccionados reducen inconsistencias que realmente se producían en el proceso anterior.
 5. La granularidad por lote representa la operación sin forzar trabajo paralelo.
 6. La conectividad disponible permite usar el sistema o justifica incorporar soporte offline.
 7. Los datos de trazabilidad tienen un consumidor real: operación, financiador, auditor o responsable público.

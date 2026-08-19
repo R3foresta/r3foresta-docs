@@ -1,6 +1,6 @@
 # TODO — cierre del Perfil de Proyecto de Grado
 
-> **Fecha de corte:** 18 de agosto de 2026.
+> **Fecha de corte:** 19 de agosto de 2026.
 > **Alcance de este tablero:** únicamente el Perfil de Proyecto de Grado. El desarrollo restante, el piloto, las pruebas finales y el documento del Proyecto de Grado aparecen aquí solo como actividades prometidas en el perfil; no son entregables de esta actualización.
 
 ## 1. Entregable oficial
@@ -10,6 +10,8 @@ El contenido oficial se encuentra en:
 - [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md)
 
 La versión Markdown está completa en contenido. La maquetación Word/PDF, exportación de diagramas, logos y presentación no forman parte de la actualización actual.
+
+La ejecución posterior se controla en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_GRADO.md), que separa construcción académica, protocolo empírico, cierre técnico prepiloto y documento final.
 
 ## 2. Decisiones consolidadas
 
@@ -25,8 +27,18 @@ La versión Markdown está completa en contenido. La maquetación Word/PDF, expo
 - [x] Declarar apoyo puntual de colaboradores y uso aprobado de agentes de IA bajo control humano.
 - [x] Fijar el cierre del perfil hasta el 31 de agosto y del Proyecto de Grado hasta el 15 de noviembre de 2026.
 - [x] Reformular la ejecución académica como prospectiva entre agosto y noviembre.
-- [x] Tratar el código y los artefactos anteriores como prototipos e insumos técnicos, no como objetivos cumplidos.
-- [x] Planificar Recolección, Vivero, Plantación, ambas integraciones y genealogía transversal dentro de ocho sprints.
+- [x] Tratar el código y los artefactos anteriores como referencia técnica y evidencia de factibilidad, no como construcción formal ni como objetivos cumplidos.
+- [x] Registrar el acuerdo académico de demostrar la construcción dentro del semestre desde una línea base limpia y con evidencia por sprint.
+- [x] Formular el estudio como caso único embebido y DSRM como proceso de ciencia del diseño.
+- [x] Mantener el Perfil compacto y trasladar el protocolo reproducible al TODO del Proyecto de Grado.
+- [x] Diferenciar transferencia de transformación y evitar equivalencias aritméticas automáticas entre unidades distintas.
+- [x] Mantener el historial de eventos como capacidad transversal, no como cuarto módulo.
+- [x] Declarar que la evidencia respalda el registro, pero no certifica la realidad física.
+- [x] Priorizar la evaluación de reconstrucción e integridad antes de la comparación y la experiencia de uso.
+- [x] Eliminar cifras prematuras de casos históricos y participantes; se definirán según disponibilidad y metodología.
+- [x] Mantener abiertas las decisiones técnicas de implementación durante el Perfil.
+- [x] Registrar los principios de trazabilidad y su propagación a requerimientos, datos, eventos, pruebas y documento final.
+- [x] Planificar Recolección, Vivero, Plantación, ambas integraciones y reconstrucción transversal dentro de ocho sprints.
 - [x] Conservar e indexar las fuentes complementarias sobre eventos, genealogía, integridad y reconstrucción para el marco teórico y el documento final.
 
 ## 3. Estado por sección
@@ -41,9 +53,9 @@ La versión Markdown está completa en contenido. La maquetación Word/PDF, expo
 | 3. Problema | Completa | Un solo árbol de causas y efectos |
 | 4. Objetivos | Completa | Un general y cinco específicos |
 | 5. Justificación | Completa | Técnica, operativa, comercial, académica, económica y social |
-| 6. Alcances y límites | Completa | Tres módulos, variantes implícitas de ingreso y exclusiones explícitas |
+| 6. Alcances y límites | Completa | Tres módulos, reconstrucción, integridad, evaluación por propiedades, exclusiones y limitaciones reales |
 | 7. Marco teórico preliminar | Completa | Trazabilidad, eventos, invariantes, ACID, GIS y calidad |
-| 8. Metodología | Completa | Ciencia del diseño, ocho sprints, agentes de IA y AS-IS/TO-BE |
+| 8. Metodología | Completa | Ciencia del diseño, ocho sprints, situación actual, piloto y evaluación de la propuesta |
 | 9. Propuesta | Completa | Mantiene el foco en el recorrido Recolección–Vivero–Plantación |
 | 10. Temario | Completo | Alineado 1:1 con los cinco objetivos |
 | 11. Cronograma | Completo | Ocho sprints y Gantt hasta el 15 de noviembre |
@@ -64,9 +76,12 @@ La versión Markdown está completa en contenido. La maquetación Word/PDF, expo
 - [x] Cronograma compatible con cierre a mediados de noviembre.
 - [x] Los tres módulos y sus integraciones aparecen dentro del periodo formal.
 - [x] Los agentes de IA tienen funciones delimitadas y validación humana.
-- [x] No se presentan los prototipos previos como desarrollo académico concluido.
-- [x] Diferenciación entre casos históricos AS-IS y eventos del software.
-- [x] Limitaciones del piloto y muestra pequeña declaradas.
+- [x] Los prototipos previos se reconocen como referencia técnica y evidencia de factibilidad, no como desarrollo académico concluido.
+- [x] Diferenciación entre casos históricos de la situación actual y eventos del software.
+- [x] Disponibilidad de información, operaciones, participantes, evidencias y sitio declarada como limitación.
+- [x] Sin tamaños fijos de muestra ni cantidad anticipada de participantes.
+- [x] Transferencias y transformaciones diferenciadas en los lineamientos.
+- [x] Evidencia digital delimitada como respaldo, no certificación.
 - [ ] Revisión sustantiva de la tutora.
 - [ ] Ajustar título, problema u objetivos si la tutora lo solicita.
 - [ ] Confirmar el sitio y las personas del piloto antes de ejecutarlo.
@@ -85,15 +100,17 @@ La versión Markdown está completa en contenido. La maquetación Word/PDF, expo
 
 Estas actividades pertenecen a la ejecución del Proyecto de Grado:
 
-1. ejecutar Sprint 0 y levantar la línea base sobre 8 a 12 casos históricos;
-2. ejecutar Sprint 1 para Recolección;
+1. ejecutar Sprint 0, fijar la línea base académica limpia y caracterizar la situación actual mediante el censo del periodo documental definido;
+2. ejecutar Sprint 1 para construir formalmente Recolección desde la línea base;
 3. ejecutar Sprint 2 para Vivero y M1→M2;
 4. ejecutar Sprint 3 para Plantación y M2→M3;
-5. ejecutar Sprint 4 para genealogía y trazabilidad transversal;
+5. ejecutar Sprint 4 para reconstrucción y trazabilidad transversal;
 6. ejecutar Sprint 5 para integración, pruebas y despliegue;
 7. ejecutar Sprint 6 para piloto y evaluación;
 8. ejecutar Sprint 7 y entregar el documento final hasta el 15 de noviembre de 2026.
 
+El detalle ejecutable, incluido el inventario de la práctica actual, se encuentra en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_GRADO.md).
+
 ---
 
-*Tablero actualizado el 18 de agosto de 2026.*
+*Tablero actualizado el 19 de agosto de 2026.*
