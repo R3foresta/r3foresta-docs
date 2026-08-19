@@ -28,12 +28,11 @@ La investigación será aplicada y tecnológica: construirá el sistema y evalua
 
 ## Índice de tablas
 
-- Tabla 1. Síntesis comparativa de antecedentes.
-- Tabla 2. Cobertura prevista de la evaluación operativa.
-- Tabla 3. Métricas e instrumentos de evaluación.
-- Tabla 4. Correspondencia entre objetivos y resultados.
-- Tabla 5. Cronograma resumido.
-- Tabla 6. Presupuesto monetario previsto.
+- Tabla 1. Cobertura prevista de la evaluación operativa.
+- Tabla 2. Métricas e instrumentos de evaluación.
+- Tabla 3. Correspondencia entre objetivos y resultados.
+- Tabla 4. Cronograma resumido.
+- Tabla 5. Presupuesto monetario previsto.
 
 ## Índice de figuras
 
@@ -58,26 +57,19 @@ Ante esta situación, el proyecto propone desarrollar y evaluar un sistema de tr
 
 ## 2. Antecedentes
 
-Los antecedentes revisados muestran que la digitalización de viveros, la gestión de inventarios y la trazabilidad de cadenas físicas han sido abordadas de manera parcial, pero no resuelven de forma conjunta el recorrido que interesa a R3Foresta.
+La revisión de antecedentes avanza desde las experiencias más cercanas al ámbito forestal boliviano hacia los fundamentos y mecanismos de trazabilidad aplicables al problema de R3Foresta.
 
-En Bolivia, Limachi Mamani (2020) desarrolló un sistema de registro y geolocalización de viveros para la Autoridad de Fiscalización y Control Social de Bosques y Tierra. El trabajo administra viveros, especies y volúmenes de producción, y demuestra la pertinencia de sistemas georreferenciados en el ámbito forestal boliviano. Sin embargo, su unidad principal de registro es el vivero y no el recorrido del material vegetal desde su origen hasta la plantación. Este antecedente evidencia la aplicación de sistemas de información en el ámbito forestal del país, aunque aborda solo una parte del proceso considerado por R3Foresta.
+En Bolivia, Limachi Mamani (2020) desarrolló un sistema de registro y geolocalización de viveros para la Autoridad de Fiscalización y Control Social de Bosques y Tierra. El trabajo administra viveros, especies y volúmenes de producción, y demuestra la pertinencia de emplear sistemas georreferenciados en la gestión forestal del país. Su unidad principal de registro, sin embargo, es el vivero; por ello, el aporte se concentra en identificar y localizar unidades productivas y no en reconstruir el recorrido del material vegetal desde su procedencia hasta la plantación.
 
-En el contexto latinoamericano, Salamanca Contreras (2024) implementó un sistema web para control interno e inventario de un vivero comercial y reportó mejoras en exactitud de inventario y cumplimiento de despachos. Mayorga Vásquez et al. (2022) propusieron un sistema web para procesos administrativos y productivos de viveros. Ambos trabajos respaldan la utilidad de digitalizar existencias, producción y despachos, pero no integran la procedencia del material vegetal, las transferencias hacia campañas de reforestación ni la reconstrucción de evidencias geográficas de plantación.
+La digitalización de viveros ha avanzado también en el contexto latinoamericano. Salamanca Contreras (2024) implementó un sistema web para el control interno y el inventario de un vivero comercial y reportó mejoras en la exactitud del inventario y el cumplimiento de despachos. Mayorga Vásquez et al. (2022), por su parte, propusieron un sistema web para procesos administrativos y productivos de viveros. Estos trabajos muestran que existencias, producción y despachos pueden gestionarse digitalmente, pero permanecen centrados en la administración interna del vivero: no relacionan de extremo a extremo la procedencia del material vegetal, sus transferencias hacia actividades de reforestación y la evidencia geográfica de la plantación.
 
-En la literatura internacional, Moe (1998) distinguió entre la trazabilidad interna y la trazabilidad a través de una cadena, y resaltó la necesidad de definir unidades rastreables. Olsen y Borit (2013) precisaron que la trazabilidad consiste en la posibilidad de acceder a información sobre objetos considerados a lo largo de su ciclo de vida. Dabbene et al. (2014) revisaron problemas de identificación, granularidad, transformación y recuperación de genealogía en cadenas físicas. Aunque estas contribuciones provienen principalmente del ámbito agroalimentario, sus principios son transferibles a la reconstrucción del recorrido del material vegetal.
+Para superar una visión limitada al inventario, la literatura internacional aporta fundamentos sobre qué debe conservar un sistema de trazabilidad. Moe (1998) distinguió la trazabilidad interna de aquella que enlaza distintas etapas de una cadena y resaltó la necesidad de definir unidades rastreables. Olsen y Borit (2013) situaron la trazabilidad en la posibilidad de acceder a información sobre objetos considerados a lo largo de su ciclo de vida, mientras que Dabbene et al. (2014) examinaron los problemas de identificación, granularidad, transformación y recuperación de genealogía en cadenas físicas. Aunque estas contribuciones proceden principalmente del ámbito agroalimentario, permiten establecer que reconstruir una cadena requiere conservar tanto las unidades y sus atributos como las relaciones producidas cuando cambian, se agrupan o se transfieren.
 
-Thakur et al. (2011) mostraron que los eventos de negocio pueden representar estados, movimientos y transformaciones, separando datos maestros de hechos ocurridos. Este enfoque es cercano a la necesidad de R3Foresta de conservar un historial que explique los cambios de saldo. Sin embargo, la aplicación forestal incorpora particularidades: el cambio legítimo de unidades después de una transformación biológica observada, la mortalidad o merma, la asignación física a subcampañas y la relación entre el lote y una ubicación de plantación.
+Sobre esa base conceptual, Thakur et al. (2011) mostraron que los eventos de negocio pueden representar estados, movimientos y transformaciones, separando los datos maestros de los hechos ocurridos. Solanki y Brewster (2014) profundizaron esta representación al modelar transformaciones que vinculan unidades de entrada y salida, de modo que los eventos relacionados permitan recuperar su procedencia. El principio es transferible a R3Foresta porque un historial enlazado puede explicar los cambios de saldo y las relaciones entre unidades de material vegetal. Su aplicación requiere, no obstante, reglas propias para registrar la transformación biológica observada, la mortalidad o merma, las asignaciones parciales y la vinculación del lote con una ubicación de plantación. Esta transferencia conceptual no implica implementar literalmente EPCIS ni adoptar los procesos del dominio agroalimentario de las fuentes.
 
-La revisión no identificó, entre las fuentes consultadas, una solución que combine en un mismo caso la recolección, el manejo en vivero, la plantación, un historial de eventos, saldos protegidos por reglas transaccionales y evidencia geoespacial. Esta afirmación delimita el resultado de la búsqueda realizada y no pretende demostrar la inexistencia absoluta de otras soluciones.
+La representación histórica tampoco basta si los movimientos y las cantidades pueden quedar inconexos o si la capacidad de reconstrucción solo se presupone. ISO 22095:2020 proporciona terminología y modelos generales para la cadena de custodia, pero aclara que un sistema no demuestra por sí mismo la veracidad de las declaraciones registradas (ISO, 2020). Desde una perspectiva empírica, Donnelly et al. (2012) evaluaron sistemas de trazabilidad mediante un ejercicio de retiro simulado que exigía recuperar el origen y la información asociada a los lotes. Este enfoque respalda la necesidad de comprobar la reconstrucción mediante preguntas, fuentes recuperadas, vacíos y tiempo empleado, sin trasladar a R3Foresta el contexto de inocuidad alimentaria. En conjunto, estos antecedentes muestran que la trazabilidad requiere relacionar los eventos con reglas de consistencia y evidencia, y que su recuperabilidad debe evaluarse en la práctica.
 
-**Tabla 1. Síntesis comparativa de antecedentes.**
-
-| Antecedente | Aporte principal | Diferencia respecto de R3Foresta |
-|---|---|---|
-| Limachi Mamani (2020) | Registro y geolocalización de viveros en La Paz | No reconstruye el recorrido del material vegetal hasta la plantación |
-| Salamanca Contreras (2024) | Inventario y despachos de vivero | Se orienta a inventario comercial y no a procedencia forestal y plantación |
-| Mayorga Vásquez et al. (2022) | Gestión administrativa y productiva de viveros | No integra origen, eventos, transferencias atómicas ni evidencia de campo |
-| Thakur et al. (2011) | Representación de una cadena mediante eventos | No contempla las reglas biológicas y geográficas del caso de reforestación |
+Entre las fuentes revisadas no se identificó una solución que integrara, dentro de un mismo flujo, la procedencia del material vegetal, sus transformaciones, los movimientos entre etapas, la consistencia de cantidades y saldos y la evidencia asociada a la plantación, de forma que permitiera reconstruir posteriormente su cadena de custodia. Esta síntesis se limita al conjunto y alcance de la búsqueda bibliográfica realizada y no afirma la inexistencia absoluta de soluciones similares.
 
 ## 3. Planteamiento del problema
 
@@ -212,7 +204,7 @@ También se encuentran dentro del alcance:
 
 ### 6.2. Alcance de la evaluación
 
-**Tabla 2. Cobertura prevista de la evaluación operativa.**
+**Tabla 1. Cobertura prevista de la evaluación operativa.**
 
 | Elemento | Cobertura prevista hasta noviembre de 2026 | Evidencia |
 |---|---|---|
@@ -322,7 +314,7 @@ El postulante es el autor académico y responsable principal del análisis, arqu
 
 ### 8.5. Instrumentos y métricas
 
-**Tabla 3. Métricas e instrumentos de evaluación.**
+**Tabla 2. Métricas e instrumentos de evaluación.**
 
 | Dimensión | Métrica o criterio | Instrumento |
 |---|---|---|
@@ -341,6 +333,8 @@ La comparación será descriptiva. Se reportarán conteos, porcentajes, medianas
 En la fase **AS-IS**, una persona intentará responder preguntas de procedencia, especie, cantidad, fecha, responsable, destino, ubicación y evidencia utilizando solo los documentos disponibles. En una segunda pasada, el responsable podrá completar vacíos de memoria. Se registrarán fuente y tiempo, separando información documentada de información recordada.
 
 En la fase **TO-BE**, el mismo instrumento se aplicará a trazas del piloto. Cuando sea posible, la reconstrucción será realizada por una persona distinta de quien registró los datos. Se compararán completitud, evidencia, tiempo y rupturas de genealogía. Las rutas que no ocurran durante el piloto se informarán como casos controlados y no como validación de campo.
+
+El procedimiento adapta al caso R3Foresta el principio de los ejercicios de retiro simulado, en los que la efectividad de la trazabilidad se examina intentando recuperar el origen y la información de un lote (Donnelly et al., 2012). No se traslada el contexto de inocuidad alimentaria: se adopta únicamente la comprobación empírica de la reconstrucción mediante preguntas, fuentes recuperadas, vacíos y tiempo empleado.
 
 ### 8.7. Consideraciones éticas
 
@@ -448,7 +442,7 @@ Referencias bibliográficas
 Anexos
 ```
 
-**Tabla 4. Correspondencia entre objetivos y resultados.**
+**Tabla 3. Correspondencia entre objetivos y resultados.**
 
 | Objetivo | Resultado principal | Sección prevista |
 |---|---|---|
@@ -462,7 +456,7 @@ Anexos
 
 La ejecución formal comienza el 17 de agosto y concluye el 15 de noviembre de 2026. El cronograma incluye el ciclo completo de análisis, desarrollo, integración, pruebas, evaluación y documentación. Las fechas representan compromisos académicos prospectivos; los prototipos anteriores se utilizarán únicamente como insumos.
 
-**Tabla 5. Cronograma resumido.**
+**Tabla 4. Cronograma resumido.**
 
 | Sprint y periodo | Objetivo y actividades principales | Incremento verificable |
 |---|---|---|
@@ -532,7 +526,7 @@ No se contempla dominio personalizado: se utilizará el subdominio de Vercel. Ta
 
 ### 12.3. Presupuesto
 
-**Tabla 6. Presupuesto monetario previsto.**
+**Tabla 5. Presupuesto monetario previsto.**
 
 | Concepto | Cálculo | Moneda | Subtotal |
 |---|---:|---:|---:|
@@ -554,6 +548,8 @@ El postulante financiará el 100 % de los desembolsos monetarios. R3Foresta apor
 Basili, V. R., & Turner, A. J. (1975). Iterative enhancement: A practical technique for software development. *IEEE Transactions on Software Engineering, SE-1*(4), 390–396. https://doi.org/10.1109/TSE.1975.6312870
 
 Dabbene, F., Gay, P., & Tortia, C. (2014). Traceability issues in food supply chain management: A review. *Biosystems Engineering, 120*, 65–80. https://doi.org/10.1016/j.biosystemseng.2013.09.006
+
+Donnelly, K. A.-M., Karlsen, K. M., & Dreyer, B. (2012). A simulated recall study in five major food sectors. *British Food Journal, 114*(7), 1016–1031. https://doi.org/10.1108/00070701211241590
 
 Gotel, O. C. Z., & Finkelstein, A. C. W. (1994). An analysis of the requirements traceability problem. *Proceedings of the 1st International Conference on Requirements Engineering*, 94–101. https://doi.org/10.1109/ICRE.1994.292398
 
@@ -584,6 +580,8 @@ PostgreSQL Global Development Group. (2026). *Transaction isolation*. PostgreSQL
 Runeson, P., & Höst, M. (2009). Guidelines for conducting and reporting case study research in software engineering. *Empirical Software Engineering, 14*, 131–164. https://doi.org/10.1007/s10664-008-9102-8
 
 Salamanca Contreras, F. R. (2024). *Influencia del sistema web con notificaciones en el proceso de control interno y seguimiento del inventario en el vivero Tu Semilla E.I.R.L. sede Tacna, 2022* [Tesis, Universidad Privada de Tacna]. https://repositorio.upt.edu.pe/bitstream/handle/20.500.12969/3690/Salamanca-Contreras-Fiorella.pdf?isAllowed=y&sequence=6
+
+Solanki, M., & Brewster, C. (2014). Modelling and linking transformations in EPCIS governing supply chain business processes. In M. Hepp & Y. Hoffner (Eds.), *E-Commerce and Web Technologies* (Lecture Notes in Business Information Processing, Vol. 188, pp. 46–57). Springer. https://doi.org/10.1007/978-3-319-10491-1_5
 
 Thakur, M., Sørensen, C. F., Bjørnson, F. O., Forås, E., & Hurburgh, C. R. (2011). Managing food traceability information using EPCIS framework. *Journal of Food Engineering, 103*(4), 417–433. https://doi.org/10.1016/j.jfoodeng.2010.11.012
 

@@ -8,6 +8,8 @@
 
 > La búsqueda incluyó antecedentes sobre distintas procedencias y puntos de ingreso del material vegetal. Esos hallazgos siguen siendo aplicables, pero el perfil actual no presenta la adquisición a terceros como un flujo o entregable central; cualquier ingreso intermedio se considera una variante implícita dentro de los tres módulos.
 
+> **Investigación complementaria:** las fuentes posteriores sobre eventos, genealogía, integridad y pruebas de reconstrucción se conservan en la [`biblioteca razonada`](biblioteca_fuentes_trazabilidad_eventos_integridad.md) y se recuperan mediante el [`índice temático`](../05_recursos/indice_fuentes_bibliograficas.md).
+
 ---
 
 ## 1. Delimitación respecto de la formulación anterior

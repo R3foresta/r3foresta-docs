@@ -27,6 +27,7 @@ La versión Markdown está completa en contenido. La maquetación Word/PDF, expo
 - [x] Reformular la ejecución académica como prospectiva entre agosto y noviembre.
 - [x] Tratar el código y los artefactos anteriores como prototipos e insumos técnicos, no como objetivos cumplidos.
 - [x] Planificar Recolección, Vivero, Plantación, ambas integraciones y genealogía transversal dentro de ocho sprints.
+- [x] Conservar e indexar las fuentes complementarias sobre eventos, genealogía, integridad y reconstrucción para el marco teórico y el documento final.
 
 ## 3. Estado por sección
 
@@ -36,7 +37,7 @@ La versión Markdown está completa en contenido. La maquetación Word/PDF, expo
 | Resumen y palabras clave | Completa | 258 palabras |
 | Índices | Completos como inventario | En Word se generarán automáticamente |
 | 1. Introducción | Completa | Explica semillas y plantas y delimita el término material vegetal |
-| 2. Antecedentes | Completa | Incluye fuentes bolivianas, regionales e internacionales |
+| 2. Antecedentes | Completa | Selecciona fuentes bolivianas, regionales e internacionales; la biblioteca ampliada se conserva por separado |
 | 3. Problema | Completa | Un solo árbol de causas y efectos |
 | 4. Objetivos | Completa | Un general y cinco específicos |
 | 5. Justificación | Completa | Técnica, operativa, comercial, académica, económica y social |
