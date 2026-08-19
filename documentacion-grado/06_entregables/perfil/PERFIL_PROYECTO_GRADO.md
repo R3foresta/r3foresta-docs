@@ -151,33 +151,11 @@ Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del 
 
 ## 5. Justificación
 
-### 5.1. Justificación técnica
+R3Foresta necesita reconstruir el recorrido del material vegetal que recibe o produce para conocer su procedencia, las cantidades disponibles, las pérdidas ocurridas, las asignaciones y transferencias realizadas y su destino final. Cuando estos datos se conservan en formularios, inventarios o evidencias independientes, resulta difícil establecer posteriormente qué ocurrió con una cantidad o lote determinado a medida que atravesó las etapas de recolección, vivero y plantación. Por ello, la organización requiere una cadena de información que mantenga la continuidad entre el origen, los movimientos y el destino del material vegetal.
 
-La trazabilidad no se logra únicamente con formularios e inventarios. Para conservar la cadena de custodia, las operaciones deben registrar los movimientos y cambios entre etapas e impedir saldos negativos, doble consumo y transferencias incompletas, incluso cuando dos usuarios actúan de forma concurrente o una operación falla. Además, el dominio exige diferenciar la transformación biológica observada de una conversión matemática de unidades. Estas condiciones justifican el uso de modelado de dominio, eventos, transacciones, control de concurrencia, información geoespacial y pruebas de invariantes.
+Atender esta necesidad requiere una solución informática orientada específicamente a la trazabilidad, pues un sistema convencional de registro puede almacenar datos sin conservar las relaciones necesarias para explicar el recorrido del material. La información sobre origen, cantidades, movimientos, pérdidas, transferencias, responsables, fechas, ubicaciones y destino debe permanecer vinculada y ser coherente entre las diferentes etapas de la cadena. De este modo, los registros podrán ser consultados como partes de un mismo recorrido y no como constancias aisladas cuya correspondencia dependa de una reconstrucción manual.
 
-El aporte técnico reside en integrar esos mecanismos en una solución aplicable al flujo de R3Foresta y en relacionar cada regla crítica con evidencia de prueba. La solución conservará la historia necesaria para explicar el saldo operativo sin presentarse como una arquitectura de *event sourcing* estricta.
-
-### 5.2. Justificación operativa y organizacional
-
-La organización necesita conocer qué material vegetal recibió o produjo, cuánto permanece disponible, qué se perdió, qué fue asignado y dónde se plantó. Una cadena reconstruible reduce la dependencia de la memoria y facilita la conciliación entre fuentes. La utilidad no se supondrá de antemano: será evaluada mediante tiempos, completitud, evidencia recuperable y percepción de uso.
-
-### 5.3. Justificación comercial
-
-Las empresas patrocinadoras aportan recursos para financiar plantas y actividades de reforestación. R3Foresta necesita respaldar la información que les comunica mediante relaciones entre la cantidad comprometida, la procedencia de las plantas, la actividad ejecutada, el lugar de plantación y la evidencia disponible. El sistema no certifica una afirmación comercial, pero mejora la capacidad de la organización para presentar información consistente y contrastable.
-
-### 5.4. Justificación académica y metodológica
-
-El proyecto articula análisis del dominio, diseño de un modelo de trazabilidad, formalización de invariantes, implementación de mecanismos transaccionales y evaluación técnica y operativa. Esta articulación corresponde a un Proyecto de Grado orientado a resolver un problema real mediante método científico, de acuerdo con la modalidad definida por la UMSA (Universidad Mayor de San Andrés, s. f.).
-
-La comparación AS-IS/TO-BE empleará el mismo instrumento antes y después. Las pruebas técnicas complementarán esa comparación al comprobar propiedades que no pueden inferirse de una interfaz o de la opinión de los usuarios.
-
-### 5.5. Justificación económica
-
-El beneficio económico potencial se relaciona con menor tiempo de reconstrucción, conciliación y preparación de información, y con la reducción de errores de asignación. No se afirmará ahorro antes de medirlo. La infraestructura prevista utiliza planes gratuitos y equipos propios, por lo que el desembolso principal corresponde a herramientas de asistencia, conectividad y trabajo de campo.
-
-### 5.6. Justificación social y ambiental
-
-Una mejor relación entre procedencia, responsables, cantidades y ubicación favorece la rendición de cuentas entre R3Foresta, comunidades, voluntarios, patrocinadores y aliados. No obstante, la trazabilidad de actividad no demuestra por sí sola supervivencia, recuperación ecológica o captura de carbono. Esas conclusiones requieren monitoreo biológico y metodologías externas al presente proyecto.
+Disponer de información reconstruible y respaldada permitirá a R3Foresta relacionar las cantidades administradas con su procedencia y destino, identificar responsables y ubicaciones, y recuperar la evidencia asociada a las actividades registradas. Esta capacidad fortalecerá la presentación de información consistente y contrastable ante comunidades, voluntarios, empresas patrocinadoras y aliados, y facilitará la rendición de cuentas entre los actores involucrados. La trazabilidad propuesta respaldará lo registrado, sin constituir por sí misma una certificación de supervivencia de las plantas, recuperación ecológica, captura de carbono o cumplimiento ambiental.
 
 ## 6. Alcances y límites
 
