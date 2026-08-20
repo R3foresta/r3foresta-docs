@@ -153,7 +153,11 @@ Si está en `BORRADOR`, `PENDIENTE_VALIDACION`, `RECHAZADO` o `CERRADO`, **no pu
 Post-validación, el saldo solo cambia mediante **movimientos** (no edición directa):
 
 - `CONSUMO_A_VIVERO` (automático desde M2) → delta negativo + referencia al lote de vivero
-- `DESECHO` (manual) → delta negativo + **motivo obligatorio**
+- `DESECHO` (manual) → delta negativo sobre el saldo disponible. Solo se permite
+  cuando el registro esta `VALIDADO` y el saldo operativo esta `ABIERTO`.
+  Puede ser parcial o total y puede registrarse varias veces. El backend guarda
+  automaticamente el motivo tecnico `DESECHO_OTRO`; el usuario no captura motivo
+  ni evidencia fotografica para este movimiento.
 
 Fuera del MVP:
 
@@ -176,6 +180,16 @@ En Recolección deben separarse dos responsabilidades:
 - Regla dura: el sistema **no permite** que `saldo_actual` quede por debajo de 0.
 - Cuando `saldo_actual = 0` ⇒ `estado_operativo = CERRADO`.
 - En el MVP, todos los `delta_movimientos` persistidos son negativos porque `CORRECCION` queda fuera de alcance.
+
+### RN-REC-10E — Reglas del descarte post-validacion
+
+- Solo el creador de la recoleccion o un `ADMIN` puede registrar `DESECHO`.
+- La cantidad debe ser mayor que 0 y no puede superar `saldo_actual` en el momento de la operacion.
+- El movimiento conserva la unidad canonica de la recoleccion (`G` o `UNIDAD`).
+- No se permite `DESECHO` en `BORRADOR`, `PENDIENTE_VALIDACION`, `RECHAZADO` ni cuando el saldo esta `CERRADO`.
+- Si el saldo queda en 0, el sistema cambia automaticamente `estado_operativo` a `CERRADO`.
+- El descarte es append-only y no tiene reversa ni edicion en el MVP.
+- El Frontend no solicita fotos, motivo ni fecha: usuario y fecha se toman automaticamente y el motivo se fija como `DESECHO_OTRO`.
 
 ## 6. Reglas de cantidades y unidades
 
@@ -311,6 +325,7 @@ Este historial:
 - En `VALIDADO`: **no se permite editar la ficha**. Solo se permiten movimientos append-only:
   - `CONSUMO_A_VIVERO`
   - `DESECHO`
+- En `VALIDADO`, `DESECHO` solo puede registrarlo el creador de la recoleccion o un `ADMIN`.
 
 No hay correcciones operativas en el MVP una vez validado/subido el registro. El borrador sí se puede modificar antes de validar.
 
@@ -326,7 +341,7 @@ Por eso, `RECOLECCION_HISTORIAL` debe registrar como mínimo:
 - rechazo del validador,
 - eliminación de borrador.
 
-Los movimientos `CONSUMO_A_VIVERO` y `DESECHO` pertenecen a `RECOLECCION_MOVIMIENTO`, porque afectan saldo. No deben registrarse en `RECOLECCION_HISTORIAL` como historial general de ficha.
+Los movimientos `CONSUMO_A_VIVERO` y `DESECHO` pertenecen a `RECOLECCION_MOVIMIENTO`, porque afectan saldo. No deben registrarse en `RECOLECCION_HISTORIAL` como historial general de ficha. Aunque `DESECHO` no tenga foto, conserva usuario y fecha automaticos en el movimiento.
 
 La edición del borrador se resuelve con campos de control de la ficha (`updated_at`, `updated_by`) y no con eventos por cada cambio de campo.
 
@@ -402,9 +417,9 @@ Fuera del MVP:
 
 ### RN-REC-25 — Roles mínimos (MVP)
 
-* **GENERAL:** crea borradores, edita borradores y solicita validación. En operación puede actuar como recolector.
+* **GENERAL:** crea borradores, edita borradores y solicita validación. En operación puede actuar como recolector y registrar `DESECHO` sobre sus propias recolecciones ya validadas.
 * **VALIDADOR:** revisa registros en `PENDIENTE_VALIDACION` y los aprueba o rechaza.
-* **ADMIN:** administra catálogos y puede intervenir según permisos del sistema.
+* **ADMIN:** administra catálogos y puede intervenir según permisos del sistema, incluido registrar `DESECHO` sobre cualquier recolección validada.
 * **VOLUNTARIO:** no debe tener permisos operativos críticos salvo habilitación explícita.
 
 La consulta de historial debe tratarse como permiso de consulta asignable a roles existentes, no como un rol separado.

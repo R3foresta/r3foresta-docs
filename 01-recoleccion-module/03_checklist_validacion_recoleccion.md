@@ -65,11 +65,17 @@
 
 ## 6. Desecho
 
-- [ ] Permite registrar `DESECHO`.
-- [ ] Exige motivo obligatorio.
-- [ ] Usa delta negativo.
-- [ ] Rechaza saldo negativo.
-- [ ] Si saldo llega a 0, cambia estado operativo a `CERRADO`.
+- [x] Permite registrar `DESECHO` desde una recoleccion `VALIDADO` y `ABIERTO`.
+- [x] Permite registrar descartes parciales repetidos.
+- [x] Permite descartar hasta el saldo disponible, sin excederlo.
+- [x] Usa delta negativo.
+- [x] Conserva la unidad canonica de la recoleccion.
+- [x] Registra automaticamente el motivo tecnico `DESECHO_OTRO`.
+- [x] No exige fotos, evidencias ni motivo capturado por el usuario.
+- [x] Rechaza saldo negativo.
+- [x] Si saldo llega a 0, cambia estado operativo a `CERRADO`.
+- [x] Permite la accion al creador de la recoleccion o a `ADMIN`.
+- [x] Rechaza la accion para `BORRADOR`, `PENDIENTE_VALIDACION`, `RECHAZADO` y `CERRADO`.
 
 ## 7. Historial y movimientos
 

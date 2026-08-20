@@ -166,15 +166,23 @@ El lote de vivero selecciona su propio `vivero_id`; no lo hereda automaticamente
 
 ### 3.6 Desecho parcial o total
 
-`DESECHO` registra una perdida real del lote origen.
+`DESECHO` registra una perdida real del saldo disponible del lote origen.
+
+Solo esta disponible cuando la recoleccion esta `VALIDADO` y `ABIERTO`. El creador
+de la recoleccion puede registrar el movimiento sobre su propio lote y `ADMIN`
+puede hacerlo sobre cualquier lote validado.
 
 Debe incluir:
 
 - cantidad descartada,
 - delta negativo,
 - unidad igual a la unidad canonica de la recoleccion,
-- motivo obligatorio,
-- usuario y fecha/hora del movimiento.
+- usuario y fecha/hora del movimiento, tomados automaticamente,
+- motivo tecnico `DESECHO_OTRO`, asignado automaticamente por el backend.
+
+No requiere fotografia, evidencia, motivo capturado por el usuario ni fecha
+capturada por el usuario. Puede registrarse varias veces mientras quede saldo.
+La cantidad de cada movimiento no puede superar el saldo actual.
 
 Si el desecho deja el saldo en 0, el estado operativo pasa a `CERRADO`.
 
@@ -255,6 +263,8 @@ flowchart LR
 - `SEMILLA` puede persistirse en `G` o `UNIDAD`.
 - El saldo nunca puede quedar negativo.
 - `CONSUMO_A_VIVERO` y `DESECHO` usan delta negativo.
+- `DESECHO` solo puede ser registrado por el creador de la recoleccion o `ADMIN`.
+- `DESECHO` no solicita evidencia fotografica.
 - La creacion del lote de vivero y el consumo de recoleccion deben ser atomicos.
 
 ## 7. Acciones minimas del modulo

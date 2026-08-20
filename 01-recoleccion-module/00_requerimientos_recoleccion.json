@@ -130,7 +130,7 @@
         "Tipo de movimiento MVP: CONSUMO_A_VIVERO / DESECHO",
         "Delta negativo en unidad canonica respectiva",
         "Unidad del movimiento: UNIDAD o G",
-        "Motivo obligatorio para DESECHO",
+        "DESECHO usa el motivo tecnico DESECHO_OTRO asignado automaticamente por el backend; no se solicita motivo ni evidencia en el Frontend",
         "Fecha/hora del movimiento",
         "Usuario responsable",
         "Referencia opcional a lote de vivero en CONSUMO_A_VIVERO",
@@ -143,7 +143,11 @@
         "La unidad del movimiento debe coincidir con la unidad canonica de la recoleccion.",
         "No se puede consumir mas de lo disponible.",
         "CONSUMO_A_VIVERO usa delta negativo.",
-        "DESECHO usa delta negativo."
+        "DESECHO usa delta negativo.",
+        "DESECHO solo se permite para recolecciones VALIDADO y ABIERTO.",
+        "DESECHO puede registrarse varias veces de forma parcial o una vez de forma total.",
+        "DESECHO solo puede registrarlo el creador de la recoleccion o ADMIN.",
+        "La cantidad de DESECHO no puede superar el saldo actual y si llega a cero cierra la recoleccion."
       ],
       "reglas_adicionales": [
         "saldo_actual = cantidad_inicial + SUM(delta_movimientos).",
