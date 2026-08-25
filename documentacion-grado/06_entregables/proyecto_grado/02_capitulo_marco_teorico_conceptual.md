@@ -110,7 +110,17 @@ Definir el esfuerzo de registro y recuperación sin suponer anticipadamente que 
 
 Desarrollar únicamente las características de calidad que se utilizarán para evaluar la solución, como adecuación funcional, fiabilidad, capacidad de interacción, seguridad y mantenibilidad. Explicar cómo cada característica se convertirá en criterios observables sin presentar ISO/IEC 25010 como una certificación del sistema.
 
-## 2.7. Síntesis conceptual adoptada por R3Foresta
+## 2.7. Bonos de carbono y alcance de la proyección
+
+### 2.7.1. Bonos o créditos de carbono
+
+Definir el término incorporado al título mediante fuentes de programas o estándares reconocidos, diferenciándolo de la sola existencia de registros de plantación.
+
+### 2.7.2. Relación indirecta con la trazabilidad operativa
+
+Explicar qué datos de procedencia y actividad podría aportar el sistema a un proceso futuro y por qué no sustituyen una metodología de carbono, cuantificación de reducciones o remociones, monitoreo, validación, verificación ni emisión de créditos.
+
+## 2.8. Síntesis conceptual adoptada por R3Foresta
 
 Cerrar el capítulo con:
 
@@ -139,4 +149,5 @@ La selección y las advertencias de uso se encuentran en:
 
 - `03_investigacion/biblioteca_fuentes_trazabilidad_eventos_integridad.md`;
 - `05_recursos/indice_fuentes_bibliograficas.md`;
-- sección 7 del Perfil de Proyecto de Grado.
+- sección 7 del Perfil de Proyecto de Grado;
+- documentación oficial del programa de acreditación seleccionado para delimitar bonos de carbono y su relación con el alcance.

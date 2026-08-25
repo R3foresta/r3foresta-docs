@@ -1,6 +1,6 @@
 # Criterios editoriales para la documentación del Proyecto de Grado
 
-> **Versión 1 — 19 de agosto de 2026.**
+> **Versión 2 — 25 de agosto de 2026.**
 > Este lineamiento se aplica a las secciones y documentos que se redacten después del Perfil. Registra criterios editoriales y metodológicos; no modifica el contenido aprobado del Perfil de Proyecto de Grado.
 
 ## 1. Principio rector
@@ -116,10 +116,16 @@ Antes de aprobar una nueva sección o documento se comprobará:
 
 Si una respuesta es negativa, la sección deberá corregirse o justificar explícitamente la excepción antes de cerrarse.
 
-## 9. Regla resumida
+## 9. Fuente y paginación de los documentos
+
+- El Perfil se mantendrá únicamente en `PERFIL_PROYECTO_GRADO.md`; no se generará ni almacenará una copia DOCX en este repositorio.
+- En el Perfil no se insertarán saltos de página obligatorios después de cada encabezado principal.
+- En el documento final oficial del Proyecto de Grado, cada capítulo principal deberá comenzar en una página nueva. Esta regla se aplicará durante la maquetación de entrega sin introducir copias DOCX del Perfil en el repositorio.
+
+## 10. Regla resumida
 
 > La complejidad debe encontrarse en el problema y en la solución informática, no en una forma innecesariamente complicada de explicarlos.
 
 ---
 
-*Criterio editorial registrado el 19 de agosto de 2026 para la documentación posterior al Perfil.*
+*Criterio editorial actualizado el 25 de agosto de 2026 para la documentación posterior al Perfil.*

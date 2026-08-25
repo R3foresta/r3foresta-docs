@@ -2,9 +2,9 @@
 
 ## Trazabilidad de material vegetal para reforestación mediante eventos, conservación de saldos e integración entre etapas
 
-**Fecha de corte de la búsqueda:** 20 de julio de 2026; alineación con el perfil actualizada el 19 de agosto de 2026.
+**Fecha de corte de la búsqueda:** 20 de julio de 2026; alineación con el perfil actualizada el 25 de agosto de 2026.
 
-**Título propuesto del perfil:** *Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta*.
+**Título seleccionado del perfil:** *Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta*.
 
 > La búsqueda incluyó antecedentes sobre distintas procedencias y puntos de ingreso del material vegetal. Esos hallazgos siguen siendo aplicables. El perfil actual incorpora la adquisición o recepción de terceros en Vivero y Plantación como variantes integradas dentro de los tres módulos, sin convertirlas en un cuarto módulo o un entregable independiente.
 
@@ -16,7 +16,7 @@
 
 ## 1. Delimitación respecto de la formulación anterior
 
-La formulación vigente excluye blockchain, NFT, IPFS y bonos de carbono. La comparación se organiza alrededor de seis problemas centrales:
+La formulación vigente excluye blockchain, NFT, IPFS y bonos de carbono del alcance funcional. La mención de bonos de carbono en el título expresa únicamente una proyección institucional posterior. La comparación se organiza alrededor de seis problemas centrales:
 
 1. Identificación del origen y procedencia del material forestal de reproducción.
 2. Trazabilidad entre recolección, vivero y plantación.

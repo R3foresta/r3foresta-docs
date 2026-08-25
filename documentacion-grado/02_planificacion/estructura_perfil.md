@@ -1,6 +1,6 @@
 # Estructura vigente del Perfil de Proyecto de Grado
 
-> **Versión 10 — 19 de agosto de 2026.**
+> **Versión 11 — 25 de agosto de 2026.**
 > Este documento explica la arquitectura del perfil; el texto entregable y fuente de verdad académica es [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 > Los principios que deben conservarse en la documentación posterior se encuentran en [base_perfil_proyecto_grado.md](../01_lineamientos/base_perfil_proyecto_grado.md) §§7–8.
 
@@ -8,11 +8,11 @@
 
 El perfil presenta un proyecto de Ingeniería de Sistemas sobre trazabilidad de material vegetal para reforestación en el caso R3Foresta. La introducción explica primero el recorrido mediante la expresión “semillas y plantas”; las secciones posteriores emplean “material vegetal” como denominación general. El problema se formula en lenguaje organizacional y académico. El perfil compromete capacidad de reconstrucción, integridad y evidencia vinculada, mientras que los mecanismos concretos para conseguir estas propiedades se definirán posteriormente en el diseño y la implementación.
 
-**Título propuesto:**
+**Título seleccionado:**
 
-> Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta
+> Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta
 
-El título, el problema y los objetivos están pendientes de aprobación de la tutora. No están pendientes de redacción.
+El título fue seleccionado por el postulante el 25 de agosto de 2026 y permanece pendiente de ratificación por la tutora. El problema y los objetivos también están pendientes de aprobación, no de redacción. La proyección hacia bonos de carbono expresa únicamente un posible uso institucional posterior de la información trazable y no amplía el alcance funcional ni la evaluación del sistema.
 
 ## 2. Alcance funcional consolidado
 
@@ -28,11 +28,11 @@ El recorrido principal se organiza alrededor de estos tres módulos. El material
 
 ### Problema central
 
-La información sobre el recorrido del material vegetal se conserva en registros dispersos sin una estructura común, lo que limita la reconstrucción de procedencia, cantidades, responsables, transferencias y plantación con evidencia contrastable. Cuando el material es adquirido o recibido de terceros, el ingreso debe iniciar su historial en Vivero o Plantación con los datos de procedencia disponibles.
+En la práctica actual de R3Foresta, la información sobre la procedencia, los movimientos, las transformaciones, las cantidades, los responsables, las evidencias y el destino del material vegetal de origen propio o externo se conserva en registros dispersos que no comparten una estructura, identificadores ni relaciones comunes; esta fragmentación limita la reconstrucción de la cadena de custodia, la consistencia de cantidades y saldos y la presentación de evidencia contrastable a los actores interesados.
 
 ### Pregunta general
 
-¿Cómo desarrollar y evaluar un sistema de trazabilidad para reconstruir esa cadena y qué diferencias presenta frente a la práctica actual en capacidad de reconstrucción y carga operativa?
+¿Cómo desarrollar y evaluar, en el caso de R3Foresta, un sistema de trazabilidad para la cadena de custodia del material vegetal, desde su recolección o recepción externa hasta su manejo en vivero y plantación, que permita reconstruir con evidencia contrastable su procedencia, movimientos, cantidades, responsables y destino, y qué diferencias presenta respecto de la práctica actual en capacidad de reconstrucción y carga operativa?
 
 ### Objetivo general
 
@@ -132,7 +132,7 @@ La ejecución académica formal se planifica del 17 de agosto al 15 de noviembre
 | 9. Propuesta y aporte | 2–3 |
 | 10. Temario | 1 |
 | 11. Cronograma | 1 |
-| 12. Recursos y presupuesto | 1 |
+| 12. Recursos | 1 |
 | 13. Bibliografía | 1–2 |
 
 El cuerpo esperado se mantiene aproximadamente entre 20 y 24 páginas una vez maquetado.
@@ -152,19 +152,18 @@ El periodo posterior hasta fines de noviembre o inicios de diciembre se reserva 
 
 ## 10. Recursos consolidados
 
-- infraestructura: planes gratuitos de Supabase, Vercel, Render y GitHub;
+- infraestructura: Supabase, Vercel, Render y GitHub;
 - dominio: subdominio gratuito de Vercel;
-- equipos y horas: aporte en especie no monetizado;
-- agentes de IA: una suscripción alternada entre Claude Code y Codex de USD 20 mensuales, 4 meses, total USD 80;
-- campo y conectividad: Bs 1.060–1.360;
-- financiamiento monetario: 100 % del postulante;
-- aporte de R3Foresta: acceso y participación, sin efectivo comprometido;
-- gastos exploratorios anteriores a agosto: costos hundidos, no imputados al periodo formal.
+- computadora portátil y teléfonos móviles propios;
+- herramientas de programación, prueba, documentación y diagramación;
+- agentes de IA mediante una suscripción alternada entre Claude Code y Codex;
+- conexión a Internet, datos móviles, transporte y alimentación para las actividades de campo;
+- acceso al contexto operativo y participación de R3Foresta.
 
 ## 11. Entregable actual y trabajo posterior
 
-La versión actual entrega únicamente el perfil en Markdown. No incluye DOCX, PDF, presentación, guion, anexos de instrumentos ni resultados del piloto. Esos artefactos se elaborarán después y solo cuando correspondan a la etapa académica solicitada.
+La versión actual y fuente canónica del Perfil es únicamente `PERFIL_PROYECTO_GRADO.md`. No se creará ni se mantendrá una copia DOCX en este repositorio. El Perfil tampoco requiere insertar un salto de página después de cada encabezado de nivel 1. En el documento final oficial del Proyecto de Grado sí se aplicará el inicio de cada capítulo principal en una página nueva durante la maquetación de entrega.
 
 ---
 
-*Documento de planificación actualizado el 19 de agosto de 2026.*
+*Documento de planificación actualizado el 25 de agosto de 2026.*

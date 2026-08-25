@@ -49,7 +49,7 @@ La decisión confirmada conserva la introducción como sección independiente, r
 - Las tecnologías concretas de implementación, la arquitectura seleccionada y el detalle de los sprints corresponden al capítulo de desarrollo o marco aplicativo.
 - El diseño metodológico forma parte del capítulo I. Debe explicar el enfoque de investigación, el desarrollo, la verificación y la evaluación sin trasladar al marco introductorio todo el detalle operativo de los sprints o de la implementación.
 - Dentro del diseño metodológico se desarrollarán por separado: tipo de investigación y ciencia del diseño; DSRM; caso único embebido y unidades de análisis; enfoque mixto descriptivo; desarrollo iterativo e incremental; verificación y evaluación; seguimiento y cadena de evidencia; ética y amenazas a la validez. No bastará con enumerar estas etiquetas.
-- El capítulo II desarrollará los fundamentos conceptuales utilizados por esas decisiones —trazabilidad, cadena de custodia, eventos, procedencia, cantidades, invariantes, atomicidad, evidencia, reconstrucción y calidad pertinente—, pero no repetirá las fases DSRM ni el funcionamiento de los sprints.
+- El capítulo II desarrollará los fundamentos conceptuales utilizados por esas decisiones —trazabilidad, cadena de custodia, eventos, procedencia, cantidades, invariantes, atomicidad, evidencia, reconstrucción y calidad pertinente— y delimitará la proyección hacia bonos de carbono incorporada al título, pero no repetirá las fases DSRM ni el funcionamiento de los sprints.
 - Cada sección debe cerrar mostrando su relación con el problema, un objetivo o una decisión posterior del proyecto.
 
 ## 5. Archivos de trabajo

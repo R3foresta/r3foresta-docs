@@ -1,6 +1,6 @@
 # Lineamientos estratégicos y principios de trazabilidad del Proyecto de Grado
 
-> **Versión 10 — 19 de agosto de 2026.**
+> **Versión 11 — 25 de agosto de 2026.**
 > Este documento fija las decisiones que deben mantenerse coherentes desde el Perfil hasta los requerimientos, el diseño, la implementación, las pruebas, la evaluación y el documento final. El texto entregable vive en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 > La redacción de los artefactos posteriores al Perfil se rige además por [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md).
 
@@ -21,16 +21,17 @@ El resultado académico es un sistema de trazabilidad con evidencia contrastable
 - **Invariante:** condición de consistencia que debe preservarse antes y después de una operación.
 - **Transferencia:** movimiento de material entre ubicaciones, responsables o etapas que conserva una relación directa de cantidad.
 - **Transformación:** hecho que puede modificar el estado, la naturaleza, la cantidad o la unidad de medida del material y producir una nueva cantidad observable.
+- **Bonos de carbono:** expresión utilizada en el título para señalar una proyección institucional futura. No denomina una capacidad implementada ni evaluada por el Proyecto de Grado.
 
 No calificar los registros como “certificados”, “certificables”, “auditables” o “verificables”. El término “verificación” se reserva para requerimientos e invariantes sometidos a pruebas.
 
-## 2. Título propuesto
+## 2. Título seleccionado
 
-> **Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta**
+> **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**
 
-El título es deliberadamente simple y no anticipa la arquitectura. Está pendiente de aprobación de la tutora, Ph.D. Marisol Téllez Ramírez.
+El título fue seleccionado por el postulante el 25 de agosto de 2026 y permanece pendiente de ratificación por la tutora, Ph.D. Marisol Téllez Ramírez. La expresión *con proyección hacia bonos de carbono* comunica una finalidad institucional posterior y no incorpora al alcance medición de carbono, MRV, certificación, emisión ni comercialización de créditos.
 
-No incluir en el título eventos, contratos atómicos, blockchain, NFT, IPFS, bonos de carbono ni MRV.
+No incluir en el título eventos, contratos atómicos, blockchain, NFT, IPFS ni MRV. La única referencia admitida al carbono es la proyección acotada expresada en el título seleccionado.
 
 ## 3. Problema
 
@@ -193,12 +194,11 @@ No se fijará una cantidad arbitraria de casos históricos: se documentarán el 
 
 ## 13. Recursos
 
-- agentes de IA mediante una suscripción alternada entre Claude Code y Codex: USD 80 por 4 meses;
-- transporte, alimentación, datos e Internet: Bs 1.060–1.360;
-- Supabase, Vercel, Render, GitHub y subdominio: planes gratuitos;
-- equipos y horas: aporte en especie;
-- financiamiento monetario: 100 % del postulante;
-- gastos exploratorios previos a agosto: no imputados al presupuesto formal.
+- agentes de IA mediante una suscripción alternada entre Claude Code y Codex;
+- conexión a Internet, datos móviles, transporte y alimentación para las actividades de campo;
+- Supabase, Vercel, Render, GitHub y subdominio de Vercel;
+- computadora portátil, teléfonos móviles y herramientas de desarrollo y documentación;
+- acceso al contexto operativo y participación de R3Foresta.
 
 ## 14. Reglas de consistencia documental
 
@@ -212,7 +212,7 @@ Antes de cerrar cualquier versión:
 6. no se deben prometer mejoras, ahorros o certificaciones antes de medirlos;
 7. deben diferenciarse validación de software y validación de campo;
 8. debe mantenerse la declaración transparente de autoría y asistencia;
-9. presupuesto y cronograma deben coincidir con el perfil oficial;
+9. recursos y cronograma deben coincidir con el perfil oficial; el Perfil no incluirá presupuesto;
 10. la construcción formal debe partir de una referencia inicial académica del repositorio y conservar evidencia de cada incremento; los desarrollos previos solo pueden describirse como referencia técnica y factibilidad;
 11. los ocho sprints deben contener los tres módulos, ambas integraciones, reconstrucción transversal, calidad, piloto y cierre;
 12. los agentes de IA deben aparecer como apoyo bajo validación humana;
@@ -228,7 +228,10 @@ Antes de cerrar cualquier versión:
 22. los roles y permisos del sistema no sustituyen el protocolo de custodia de datos de investigación;
 23. las deudas técnicas críticas para identidad, seguridad, migraciones y pruebas deberán cerrarse internamente antes del piloto sin convertirlas en el foco narrativo del Perfil.
 24. toda sección posterior al Perfil deberá aplicar la lista de revisión de [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md) antes de cerrarse.
+25. la fuente canónica del Perfil será únicamente su archivo Markdown; no se creará ni conservará una copia DOCX en este repositorio;
+26. el Perfil no requiere saltos de página después de cada encabezado principal; el documento final oficial sí iniciará cada capítulo principal en una página nueva al maquetarse.
+27. los documentos institucionales se utilizarán de manera acotada para el contexto que respalden directamente; no podrán redefinir el problema, el título, los objetivos, el alcance, la metodología o la evaluación sin una validación explícita y una revisión completa de consistencia.
 
 ---
 
-*Lineamiento actualizado el 19 de agosto de 2026.*
+*Lineamiento actualizado el 25 de agosto de 2026.*

@@ -1,3 +1,5 @@
+# Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta
+
 ## Índice general
 
 <!-- toc -->
@@ -9,8 +11,8 @@
 - [5. Justificación](#5-justificación)
 - [6. Alcances y límites](#6-alcances-y-límites)
 - [7. Marco teórico preliminar](#7-marco-teórico-preliminar)
-- [8. Metodología de desarrollo](#8-metodología-de-desarrollo)
-- [9. Índice del documento final](#9-índice-del-documento-final)
+- [8. Marco Metodológico](#8-marco-metodológico)
+- [9. Índice tentativo](#9-índice-tentativo)
 - [10. Cronograma de actividades](#10-cronograma-de-actividades)
 - [11. Referencias bibliográficas](#11-referencias-bibliográficas)
 - [12. Anexos](#12-anexos)
@@ -29,7 +31,7 @@ El caso corresponde a la **Fundación R3Foresta para la Bioregeneración de Ecos
 
 Ante esta situación, el proyecto desarrollará un sistema de trazabilidad como componente operativo de **R3foresta App**, desde la recolección o recepción externa del material vegetal hasta el registro de su plantación. La solución comprenderá los módulos de **Recolección, Vivero y Plantación**. El material adquirido o recibido de terceros se tratará como una variante de ingreso en Vivero o Plantación y conservará sus datos de procedencia, sin constituir un módulo adicional.
 
-R3foresta App representa una pieza fundamental para la gestión de la Fundación porque organiza la cadena operativa que comienza con el origen del material vegetal y concluye con su plantación. La relación transparente entre procedencia, movimientos, cantidades, responsables, ubicaciones y evidencias permitirá reconstruir la cadena de custodia, respaldar la gestión interna y presentar información consistente ante patrocinadores, aliados y otros actores. Esta base informacional también podrá apoyar procesos institucionales posteriores que requieran demostrar la procedencia y el recorrido del material, aunque dichos procesos no forman parte del producto académico.
+R3foresta App representa una pieza fundamental para la gestión de la Fundación porque organiza la cadena operativa que comienza con el origen del material vegetal y concluye con su plantación. La relación transparente entre procedencia, movimientos, cantidades, responsables, ubicaciones y evidencias permitirá reconstruir la cadena de custodia, respaldar la gestión interna y presentar información consistente ante patrocinadores, aliados y otros actores. La proyección hacia bonos de carbono señalada en el título se limita al posible uso posterior de estos registros dentro de procesos institucionales que requerirían metodología, cuantificación, monitoreo y verificación independientes; dichos procesos no forman parte del producto académico.
 
 El alcance concluye con el registro de la plantación. El sistema no realiza monitoreo posterior de supervivencia, no mide captura de dióxido de carbono, no implementa una metodología de monitoreo, reporte y verificación de carbono, no certifica plantaciones y no genera, emite ni comercializa bonos o créditos de carbono.
 
@@ -60,8 +62,6 @@ En el ámbito internacional de la trazabilidad, Thakur et al. (2011) utilizaron 
 Quispe Tola y Condori Zapana (2020) desarrollaron para la Autoridad de Fiscalización y Control Social de Bosques y Tierra un sistema de inventario y registro de iniciativas de manejo integral sustentable de los bosques y la Madre Tierra. La solución centralizó el registro de iniciativas e incorporó consultas, mapas y reportes por niveles. Su unidad principal es la iniciativa o proyecto forestal, por lo que no registra la cadena operativa de semillas y plantas ni las relaciones entre recolección, vivero y plantación.
 
 ### 2.4. Antecedentes en La Paz
-
-La búsqueda no identificó un trabajo con alcance equivalente localizado específicamente en la ciudad de La Paz. Los antecedentes geográficamente más cercanos se encontraron en el departamento de La Paz y en la ciudad de El Alto; se incorporan por su relación directa con viveros, plantines y sistemas de información forestal, sin presentarlos como trabajos realizados en la ciudad de La Paz.
 
 Limachi Mamani (2020) desarrolló un sistema de registro y geolocalización de viveros para la Autoridad de Fiscalización y Control Social de Bosques y Tierra en el departamento de La Paz. El sistema administra viveros, especies y volúmenes de producción y ofrece una vista espacial para apoyar decisiones. Su unidad principal es el vivero, de modo que no reconstruye el recorrido de cada conjunto de material vegetal desde su procedencia hasta la plantación.
 
@@ -171,11 +171,15 @@ La Organización de las Naciones Unidas para la Alimentación y la Agricultura i
 
 La reforestación corresponde al restablecimiento de bosque mediante plantación o siembra deliberada en terrenos clasificados como bosque (Food and Agriculture Organization of the United Nations, 2023). Para este proyecto, el término delimita el propósito de las actividades en las que se utiliza el material vegetal, pero no implica que el sistema mida recuperación ecológica, supervivencia o captura de carbono. El producto registra la plantación como último hecho de la cadena operativa considerada.
 
-### 7.5. Cadena de custodia
+### 7.5. Bonos de carbono
+
+En el título, la expresión *bonos de carbono* se emplea como denominación usual de los créditos asociados con reducciones o remociones cuantificadas de gases de efecto invernadero. En el programa Verified Carbon Standard, por ejemplo, cada unidad verificada representa una tonelada métrica de dióxido de carbono equivalente reducida o removida y su emisión depende de procesos de validación, verificación y revisión (Verra, s. f.). La proyección indicada en el título es institucional y futura: la trazabilidad del material vegetal podría aportar registros de procedencia y de actividad de plantación, pero el sistema académico no cuantifica reducciones o remociones, no implementa una metodología de carbono ni produce unidades acreditadas.
+
+### 7.6. Cadena de custodia
 
 La cadena de custodia conserva la relación entre el material, los actores responsables y los movimientos o cambios registrados durante un recorrido. ISO 22095:2020 proporciona terminología y modelos generales para representar cadenas de custodia y advierte que un sistema de este tipo no demuestra por sí solo la veracidad de las declaraciones incorporadas (International Organization for Standardization, 2020). En R3Foresta, la cadena de custodia se utilizará para relacionar la procedencia, las cantidades, los responsables, las evidencias y el destino del material vegetal, sin atribuir al sistema funciones de certificación.
 
-## 8. Metodología de desarrollo
+## 8. Marco Metodológico
 
 ### 8.1. Proceso Unificado Ágil
 
@@ -202,7 +206,7 @@ El trabajo se organizará mediante una lista priorizada vinculada con los objeti
 
 La construcción partirá de una referencia inicial académica del repositorio. Los prototipos anteriores podrán utilizarse como referencia técnica y evidencia de factibilidad, pero no como construcción formal ni como objetivos cumplidos. El postulante será responsable del análisis, diseño, implementación y documentación; los colaboradores y agentes de inteligencia artificial brindarán apoyo delimitado bajo revisión y responsabilidad autoral humana.
 
-## 9. Índice del documento final
+## 9. Índice tentativo
 
 ```text
 Resumen
@@ -220,15 +224,14 @@ Capítulo I — Marco introductorio
   1.7 Organización del documento
 
 Capítulo II — Marco teórico y conceptual
-  2.1 Sistema y sistemas de información
-  2.2 Trazabilidad
-  2.3 Material vegetal
-  2.4 Reforestación
-  2.5 Cadena de custodia
-  2.6 Unidades trazables y procedencia
-  2.7 Eventos, transferencias y transformaciones
-  2.8 Integridad de cantidades y operaciones
-  2.9 Evidencia y reconstrucción
+  2.1 Material vegetal y procesos de reforestación
+  2.2 Trazabilidad y cadena de custodia
+  2.3 Eventos, transformaciones y procedencia
+  2.4 Integridad de cantidades y saldos
+  2.5 Evidencia e información geográfica
+  2.6 Reconstrucción y evaluación de la trazabilidad
+  2.7 Bonos de carbono y alcance de la proyección
+  2.8 Síntesis conceptual adoptada
 
 Capítulo III — Marco aplicativo
   3.1 Análisis de procesos, actores y requisitos
@@ -256,7 +259,7 @@ Anexos
 
 ## 10. Cronograma de actividades
 
-El cronograma se organiza por objetivos específicos. Se propone como inicio formal el **6 de julio de 2026**, dentro de la primera semana de julio, sujeto a ratificación del profesor Víctor. Mientras no exista una fecha distinta confirmada, los periodos siguientes se utilizarán como planificación de trabajo del Perfil.
+El cronograma se organiza por objetivos específicos. Se propone como inicio formal el **6 de julio de 2026**, dentro de la primera semana de julio, sujeto a ratificación dla Doctora Tellez. Mientras no exista una fecha distinta confirmada, los periodos siguientes se utilizarán como planificación de trabajo del Perfil.
 
 **Tabla 3. Cronograma por objetivos.**
 
@@ -326,6 +329,8 @@ Salamanca Contreras, F. R. (2024). *Influencia del sistema web con notificacione
 Thakur, M., Sørensen, C. F., Bjørnson, F. O., Forås, E., & Hurburgh, C. R. (2011). Managing food traceability information using EPCIS framework. *Journal of Food Engineering, 103*(4), 417–433. https://doi.org/10.1016/j.jfoodeng.2010.11.012
 
 Valdez Alvarado, G. R. (2023). *Desarrollo de un sistema de información web para la gestión y control de viveros en la ciudad de El Alto. Caso: Unidad de Forestación del Gobierno Autónomo Municipal de El Alto* [Proyecto de grado, Universidad Pública de El Alto]. https://repositorio.upea.bo/jspui/bitstream/123456789/1019/1/PROYECTO%20DE%20GRADO%20-%20%20GADIEL%20RANDALL.pdf
+
+Verra. (s. f.). *Verified carbon units (VCUs).* Recuperado el 25 de agosto de 2026, de https://verra.org/programs/verified-carbon-standard/verified-carbon-units-vcus/
 
 ## 12. Anexos
 

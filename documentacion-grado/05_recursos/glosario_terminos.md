@@ -1,6 +1,6 @@
 # Glosario de términos comprometidos — Proyecto de Grado R3Foresta
 
-> **Versión 5 — 24 de agosto de 2026**
+> **Versión 6 — 25 de agosto de 2026**
 > Este glosario no define todo el vocabulario del dominio. Define únicamente los términos que **comprometen una afirmación** ante el tribunal: los que, mal usados, prometen más de lo que el trabajo puede demostrar.
 > Para cada término: qué significa aquí, qué obliga a sostener y qué **no** obliga a sostener.
 > Fuente estratégica: [`../01_lineamientos/base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md) · Diseño de evaluación: [`../02_planificacion/estructura_perfil.md`](../02_planificacion/estructura_perfil.md)
@@ -15,6 +15,8 @@ En las denominaciones propias se utilizarán las siguientes grafías y funciones
 - **R3Carbon:** componente institucional dedicado a captura de carbono, medición y trazabilidad;
 - **R3foresta App:** nombre oficial de la aplicación tecnológica;
 - **sistema de trazabilidad de material vegetal:** denominación académica y funcional de la solución evaluada.
+
+El título seleccionado es **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**. La expresión **bonos de carbono** señala únicamente una proyección institucional futura. No permite denominar a R3foresta App como sistema de carbono ni atribuirle medición, MRV, validación, verificación, certificación o emisión de créditos.
 
 No se utilizarán `APP R3Foresta`, `APPR3Foresta` ni _R3Foresta_ como nombre abreviado de la aplicación.
 

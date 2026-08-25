@@ -43,7 +43,7 @@ La numeración expresa el flujo de trabajo académico: primero se fijan los line
 
 Modalidad elegida: **Defensa de Proyecto de Grado**.
 
-**Portada vigente:** título propuesto, postulante, tutora, modalidad, lugar y fecha. En esta versión no se incluye línea de VoBo; cualquier requisito adicional de firma se incorporará únicamente si la tutora o la Comisión de Grado lo solicita.
+**Portada vigente:** título seleccionado por el postulante y pendiente de ratificación por la tutora, postulante, tutora, modalidad, lugar y fecha. En esta versión no se incluye línea de VoBo; cualquier requisito adicional de firma se incorporará únicamente si la tutora o la Comisión de Grado lo solicita.
 
 ### Estructura del Perfil (documento corto, ~15–25 págs., a aprobar antes de desarrollar)
 
@@ -53,13 +53,15 @@ Modalidad elegida: **Defensa de Proyecto de Grado**.
 4. **Objetivos** — un objetivo general + varios específicos (verbos medibles, alineados a cada capítulo).
 5. **Justificación** — técnica, económica y social/operativa.
 6. **Alcances y límites** — tres módulos operativos, reconstrucción del recorrido, integridad de cantidades, transferencias y transformaciones, variantes de ingreso, evaluación por propiedades, exclusiones y limitaciones reales.
-7. **Marco teórico/referencial preliminar** — trazabilidad, cadena de custodia, transacciones, registros de eventos, integridad de datos, geoinformación y evaluación de software. Blockchain/IPFS solo como antecedentes históricos o trabajo futuro, si corresponde.
+7. **Marco teórico/referencial preliminar** — trazabilidad, cadena de custodia, bonos de carbono como proyección delimitada, transacciones, registros de eventos, integridad de datos, geoinformación y evaluación de software. Blockchain/IPFS solo como antecedentes históricos o trabajo futuro, si corresponde.
 8. **Metodología** — tipo de investigación + metodología de desarrollo de software y herramientas.
    > La enumeración "SCRUM, XP, RUP…" que aparece en las guías de perfil es orientativa, no un requisito reglamentario: el Reglamento General no exige ninguna metodología nominada. **Metodología declarada para R3Foresta:** desarrollo iterativo e incremental con especificaciones y decisiones versionadas — ver [`04_metodologia/metodologia_desarrollo.md`](04_metodologia/metodologia_desarrollo.md).
 9. **Índice tentativo (temario)** del proyecto final.
 10. **Cronograma de actividades** (diagrama de Gantt).
-11. **Presupuesto/recursos** — herramientas, infraestructura, trabajo de campo, aportes en especie y financiamiento.
+11. **Recursos** — personal, herramientas, infraestructura y elementos necesarios para el trabajo de campo, sin presupuesto.
 12. **Bibliografía** (norma APA).
+
+El Perfil se conserva únicamente como archivo Markdown en este repositorio; no se creará ni mantendrá una copia DOCX. Sus encabezados principales no requieren saltos de página. En el documento final oficial del Proyecto de Grado, cada capítulo principal sí comenzará en una página nueva durante la maquetación de entrega.
 
 ### Estructura del Proyecto final (a la que apunta el perfil)
 

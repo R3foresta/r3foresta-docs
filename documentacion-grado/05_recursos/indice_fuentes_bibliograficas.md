@@ -1,6 +1,6 @@
 # Índice temático de fuentes bibliográficas
 
-**Fecha de actualización:** 24 de agosto de 2026.
+**Fecha de actualización:** 25 de agosto de 2026.
 
 Este índice permite localizar fuentes por problema de investigación y por etapa de escritura. Las fichas críticas, enlaces y advertencias de transferencia al dominio se encuentran en la [`biblioteca razonada`](../03_investigacion/biblioteca_fuentes_trazabilidad_eventos_integridad.md).
 
@@ -8,7 +8,7 @@ Este índice permite localizar fuentes por problema de investigación y por etap
 
 | Tema o consulta | Fuentes prioritarias | Uso previsto |
 |---|---|---|
-| Identidad, misión, visión, modelo institucional y R3Carbon | R3Foresta (2026), *Resumen Ejecutivo Institucional* | Perfil y antecedentes institucionales del Capítulo I |
+| Identidad, misión, visión, modelo institucional y R3Carbon | R3Foresta (2026), *Resumen Ejecutivo Institucional* | Solo contexto institucional del Perfil y del Capítulo I; no define el problema ni las decisiones académicas |
 | Definición de trazabilidad | Olsen y Borit (2013); ISO 22095:2020 | Introducción y marco teórico |
 | Material reproductivo forestal y procedencia | FAO, *Forest reproductive material* | Marco teórico y alcance del ingreso externo |
 | Unidades trazables y sus atributos | GEN-01 Olsen y Borit (2018) | Marco teórico y modelo de información |
@@ -18,6 +18,7 @@ Este índice permite localizar fuentes por problema de investigación y por etap
 | Procedencia y derivación | GEN-02 W3C PROV-O; GEN-03 Jansen-Vullers et al. (2003) | Marco teórico |
 | Genealogía derivada de eventos | EVT-02; GEN-04; GEN-05 | Diseño de consultas y discusión |
 | Cadena de custodia | INT-01 ISO 22095:2020; INT-03 FSC | Marco conceptual e integridad |
+| Bonos o créditos de carbono y límites de la proyección | Verra, *Verified carbon units (VCUs)*; ICVCM, *Core Carbon Principles* | Definición del término del título y delimitación frente a MRV, validación, verificación y emisión |
 | Cantidades, inventario y doble contabilización | INT-02 ISO 22095-2:2026; INT-03 FSC; INT-04 Comba et al. (2013) | Invariantes y discusión |
 | Atomicidad y consistencia transaccional | Härder y Reuter (1983) | Marco teórico y diseño de operaciones críticas |
 | Transformación biológica semilla–planta | EVT-02 e INT-04, solo como contraste limitado | Modelo propio; no asumir conversión aritmética |
@@ -33,16 +34,19 @@ Este índice permite localizar fuentes por problema de investigación y por etap
 
 ## Acceso por etapa documental
 
-### Fuente institucional oficial
+### Fuente institucional contextual de alcance restringido
 
 - **Referencia:** R3Foresta. (2026, 23 de agosto). *Resumen Ejecutivo Institucional: Modelo Integral de Bioregeneración, Innovación Ambiental y Desarrollo Comunitario* [Documento institucional no publicado].
 - **Respalda:** presentación institucional, misión, visión, creación de R3Foresta en 2019, cuatro dimensiones del modelo, componentes R3Carbon, R3Water, R3Bio y R3F10, y propósito institucional de la aplicación en desarrollo dentro de R3Carbon.
 - **No respalda:** Estatuto Orgánico, organigrama, denominación legal completa, cifra de diecinueve categorías de residuos, diagnóstico de la práctica actual ni capacidades ya implementadas por R3foresta App.
+- **Restricción académica:** no se utilizará para formular o modificar el problema, el título, los objetivos, el alcance, la metodología o la evaluación. En esos aspectos prevalecen el Perfil, los lineamientos académicos y la documentación operativa consolidada.
+- **Organigrama:** la figura vigente procede de una imagen institucional entregada directamente por la Fundación R3Foresta el 25 de agosto de 2026 y no del resumen ejecutivo.
 - **Nombre de la aplicación:** `R3foresta App`, confirmado por el postulante el 24 de agosto de 2026.
 
 ### Perfil de Proyecto de Grado
 
 - **Dominio y evaluación ya utilizados:** FAO, Thakur et al. (2011), Solanki y Brewster (2014), Donnelly et al. (2012), Olsen y Borit (2013, 2018), W3C PROV-O e ISO 22095:2020.
+- **Bonos de carbono ya utilizados:** Verra, *Verified carbon units (VCUs)*, únicamente para definir el término incorporado al título y separar la acreditación de la trazabilidad operativa.
 - **Metodología ya utilizada:** Hevner et al. (2004), Runeson y Höst (2009), Peffers et al. (2007), Basili y Turner (1975), Larman y Basili (2003), SWEBOK e ISO/IEC/IEEE 12207.
 - **Integridad ya utilizada:** Härder y Reuter (1983), Meyer (1992) y Gotel y Finkelstein (1994).
 - **Criterio:** no incorporar fuentes adicionales salvo que una corrección sustantiva del argumento o la ejecución del protocolo lo exija.
@@ -85,7 +89,7 @@ Referencias metodológicas incorporadas:
 
 ## Etiquetas de búsqueda
 
-`trazabilidad` · `cadena-de-custodia` · `eventos` · `EPCIS` · `transformación` · `transferencia` · `entradas-salidas` · `genealogía` · `procedencia` · `PROV-O` · `lotes` · `división` · `agrupación` · `saldos` · `cantidades` · `doble-contabilización` · `integridad-de-datos` · `audit-trail` · `evidencia` · `reconstrucción` · `situación-actual` · `propuesta` · `retiro-simulado` · `limitaciones`
+`trazabilidad` · `cadena-de-custodia` · `bonos-de-carbono` · `créditos-de-carbono` · `MRV` · `eventos` · `EPCIS` · `transformación` · `transferencia` · `entradas-salidas` · `genealogía` · `procedencia` · `PROV-O` · `lotes` · `división` · `agrupación` · `saldos` · `cantidades` · `doble-contabilización` · `integridad-de-datos` · `audit-trail` · `evidencia` · `reconstrucción` · `situación-actual` · `propuesta` · `retiro-simulado` · `limitaciones`
 
 ## Convención de estado
 

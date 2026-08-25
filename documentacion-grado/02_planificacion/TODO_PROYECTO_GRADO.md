@@ -1,20 +1,22 @@
 # TODO — ejecución del Proyecto de Grado
 
 > **Fecha de apertura:** 19 de agosto de 2026.
+> **Revisión por observaciones de la tutora:** 25 de agosto de 2026.
 > **Propósito:** convertir el Perfil en construcción demostrable, protocolo de investigación, evaluación y documento final. Este tablero comienza a ejecutarse en paralelo con el cierre del Perfil y se vuelve el tablero principal después de su aprobación.
 
 > La revisión y cierre específicos de los capítulos I y II se controlan en [`TODO_CAPITULOS_1_Y_2.md`](TODO_CAPITULOS_1_Y_2.md).
 
-## 1. Decisiones cerradas
+## 1. Decisiones cerradas y pendientes
 
-- [x] Mantener investigación aplicada y tecnológica, ciencia del diseño y desarrollo iterativo e incremental.
-- [x] Operacionalizar ciencia del diseño mediante DSRM sin reemplazar los sprints.
-- [x] Formular el estudio como caso único embebido: el caso es el diseño, construcción y evaluación del proceso digital de trazabilidad en R3Foresta; la Fundación es el contexto organizacional y las trazas son las unidades de análisis.
+- [x] Adoptar como título seleccionado por el postulante **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**, sujeto únicamente a la ratificación académica pendiente de la tutora.
+- [x] Interpretar la proyección hacia bonos de carbono como un posible uso institucional futuro de la información trazable, sin ampliar el producto a monitoreo posterior, cuantificación de CO₂, MRV, validación, verificación, certificación, emisión o comercialización de créditos.
+- [ ] Adoptar la metodología de desarrollo seleccionada y aprobada en la sección 2.9 de [`TODO.md`](TODO.md), y ajustar a ella la planificación interna; la decisión metodológica se controla únicamente en ese tablero.
+- [ ] Después de adoptar la metodología, decidir si los sprints provisionales se conservan, se renombran como iteraciones o fases, o se eliminan; no utilizarlos como unidad del cronograma académico.
 - [x] Demostrar la construcción académica dentro del semestre desde una referencia inicial académica del repositorio, conforme al criterio acordado con la docente de la UMSA.
 - [x] Conservar los desarrollos anteriores solo como referencia técnica y factibilidad, no como evidencia de construcción formal.
 - [x] Priorizar calidad sobre volumen de pruebas.
 - [x] Excluir blockchain, NFT, contratos inteligentes e IPFS de la construcción, evaluación y contribución académica, sin exigir su eliminación de repositorios históricos.
-- [x] Implementar el ingreso de material vegetal adquirido o recibido de terceros tanto en Vivero como directamente en Plantación, como variantes internas y no como un cuarto módulo.
+- [x] Confirmar como decisión de alcance que el material vegetal adquirido o recibido de terceros ingresará por Vivero o directamente por Plantación, como variantes internas y no como un cuarto módulo; su implementación continúa pendiente en la sección 3.
 - [x] Procurar comparación paralela de una misma actividad mediante la práctica habitual y R3foresta App.
 - [x] Denominar **R3foresta App** a la aplicación, diferenciándola de R3Foresta como institución y de R3Carbon como componente institucional.
 
@@ -38,14 +40,20 @@
 - [ ] Registrar horas académicas por actividad y sprint.
 - [ ] Diferenciar siempre referencia técnica previa, construcción académica y estado desplegado.
 
-## 3. Construcción por sprints
+## 3. Planificación interna provisional por sprints
+
+> Los sprints de esta sección son una herramienta interna provisional. No constituyen la metodología de desarrollo ni el cronograma académico aprobado. Se revisarán o reemplazarán después de seleccionar la metodología concreta y de confirmar con la tutora las fechas oficiales.
+
+### Cronograma académico pendiente
+
+- [ ] Adoptar la fecha exacta de inicio y las fechas de cierre que se confirmen en la sección 2.10 de [`TODO.md`](TODO.md).
+- [ ] Formular el cronograma académico por objetivos, con un intervalo de fechas para cada objetivo, sin usar sprints como unidad de presentación.
+- [ ] Conciliar la planificación interna provisional con la metodología elegida y el cronograma académico confirmado.
 
 ### Sprint 0 — Línea base, Perfil y preparación
 
 - [ ] Cerrar Perfil y backlog académico.
 - [ ] Evidenciar la referencia inicial académica del repositorio.
-- [ ] Mapear objetivos y sprints con las seis actividades DSRM.
-- [ ] Revisar el mapa DSRM después de cada demostración o evaluación y registrar los ciclos de retorno a objetivos, diseño o desarrollo.
 - [ ] Iniciar inventario documental de la práctica actual.
 - [ ] Preparar versiones iniciales de los instrumentos.
 
@@ -102,18 +110,47 @@
 
 ## 4. Protocolo de la situación actual
 
+> Esta sección es el único control operativo del diagnóstico y de la reconstrucción histórica. [`TODO_CAPITULOS_1_Y_2.md`](TODO_CAPITULOS_1_Y_2.md) controla únicamente la incorporación de sus resultados en la redacción académica.
+
+### 4.1. Delimitación
+
 - [ ] Acordar con R3Foresta el inicio y fin del periodo documental.
-- [ ] Inventariar todas las actividades identificables dentro del periodo.
-- [ ] Registrar por actividad las fuentes existentes: fotografías, mensajería, publicaciones, cuadernos, formularios, archivos y responsables con memoria del proceso.
-- [ ] Definir y congelar criterios de inclusión y exclusión.
+- [ ] Identificar todas las actividades de reforestación realizadas durante ese periodo.
+- [ ] Definir y congelar criterios de inclusión y exclusión de actividades y trazas.
 - [ ] Incluir todas las trazas elegibles; no seleccionar únicamente las mejor documentadas.
 - [ ] Conservar una bitácora de exclusiones y sus motivos.
-- [ ] Reconstruir cada traza en dos pasadas:
-  1. solo con documentos;
-  2. documentos más memoria del responsable.
+- [ ] Distinguir actividades reales, reconstrucciones históricas y casos controlados.
+
+### 4.2. Actores y procesos
+
+- [ ] Identificar responsables reales de Recolección, Vivero y Plantación.
+- [ ] Identificar responsables administrativos o institucionales que solicitan información.
+- [ ] Identificar comunidades, voluntarios, patrocinadores y aliados que intervienen.
+- [ ] Describir cómo comienza y termina cada proceso en la práctica actual.
+- [ ] Confirmar si ocurren ingresos externos directamente en Vivero o Plantación.
+- [ ] Confirmar si en la práctica se dividen, agrupan o mezclan lotes.
+- [ ] Registrar actividades con o sin conectividad, dispositivos y condiciones reales de trabajo en campo.
+
+### 4.3. Fuentes de información
+
+- [ ] Inventariar por actividad fotografías, mensajería, publicaciones, cuadernos, notas, formularios, hojas de cálculo, archivos y sistemas anteriores.
+- [ ] Identificar qué información existe únicamente en la memoria de los responsables.
+- [ ] Registrar quién conserva cada fuente y dónde se encuentra.
+- [ ] Comprobar si las fuentes comparten identificadores de actividad, lote o especie.
+- [ ] Comprobar si las unidades de medida son consistentes.
+- [ ] Comprobar si las evidencias se relacionan con fechas, responsables y ubicaciones.
+
+### 4.4. Reconstrucción y entrega de resultados
+
+- [ ] Aplicar las definiciones, categorías y reglas de medición preparadas en la sección 5.
+- [ ] Reconstruir cada traza primero con documentos y después con documentos más la memoria del responsable.
 - [ ] Mantener separados los resultados de ambas pasadas.
+- [ ] Conservar ejemplos anonimizados de vacíos y contradicciones.
+- [ ] Entregar al tablero de capítulos el corpus delimitado, los resultados de caracterización y la evidencia necesaria para redactar, sin convertir la existencia del problema en una hipótesis pendiente.
 
 ## 5. Métricas e instrumentos mínimos
+
+> Esta sección es el destino operativo del alcance de evaluación y de los instrumentos diferidos desde el Perfil; sus resultados se consolidarán en el documento final.
 
 - [ ] Definir la lista común de ítems de reconstrucción: procedencia, material o especie, cantidades y unidades, eventos o transformaciones, responsables, fecha, ubicación, destino y evidencia.
 - [ ] Definir para cada ítem las categorías `COMPLETO`, `PARCIAL`, `AUSENTE` y `CONTRADICTORIO` con un ejemplo.
@@ -132,6 +169,8 @@
 - [ ] Probar todos los instrumentos con una traza controlada antes del piloto definitivo.
 
 ## 6. Análisis cualitativo e integración
+
+> Esta sección es el destino operativo del análisis diferido desde el Perfil; la formulación definitiva describirá lo efectivamente ejecutado en el documento final.
 
 - [ ] Crear una plantilla inicial con las categorías: claridad, carga, dificultades, interrupciones y confianza en la reconstrucción.
 - [ ] Permitir categorías emergentes sin borrar la plantilla ni cambiar silenciosamente preguntas ya aplicadas.
@@ -169,6 +208,8 @@
 
 ## 9. Ética y custodia de datos
 
+> Esta sección es el destino operativo de las consideraciones éticas diferidas desde el Perfil; su aplicación y evidencia se documentarán en la versión final.
+
 - [ ] Relacionar los perfiles y roles del sistema con las operaciones permitidas durante el piloto.
 - [ ] Definir separadamente quién puede acceder a datos de investigación.
 - [ ] Definir almacenamiento, respaldo, seudonimización, conservación y eliminación.
@@ -179,23 +220,23 @@
 
 ## 10. Alcance y coherencia documental
 
+- [ ] Mantener en el documento final y en la defensa la delimitación del título: la trazabilidad M1→M2→M3 constituye una base informacional potencial para procesos futuros de carbono, pero el sistema académico no registra ni calcula captura de CO₂, no implementa MRV y no genera, certifica, emite ni comercializa bonos o créditos de carbono.
 - [ ] Especificar los ingresos externos de Vivero y Plantación en requerimientos, reglas, historial de eventos, modelo de datos, interfaz, pruebas y documentación académica.
-- [x] Confirmar la implementación de ingreso externo tanto en Vivero como directamente en Plantación.
+- [ ] Verificar al cierre que el ingreso externo esté implementado tanto en Vivero como directamente en Plantación y que corresponda con la decisión de alcance de la sección 1.
 - [ ] Excluir blockchain, NFT, contratos inteligentes e IPFS de objetivos, incrementos académicos, pruebas, resultados y conclusiones.
 - [ ] Mantener exactamente tres módulos.
-- [ ] Propagar cada decisión metodológica a Perfil, lineamientos, metodología, plan, instrumentos y documento final.
+- [ ] Propagar al plan, los instrumentos y el documento final la metodología aprobada en [`TODO.md`](TODO.md), después de que el Perfil y los lineamientos queden sincronizados desde su tablero propio.
 - [ ] Aplicar la lista de revisión de [`criterios_editoriales_proyecto_grado.md`](../01_lineamientos/criterios_editoriales_proyecto_grado.md) antes de cerrar cada sección o documento posterior al Perfil.
 
 ## 11. Documento final y defensa
 
-- [ ] Completar dentro del Capítulo I el diseño metodológico con DSRM, caso embebido, protocolo, métricas, análisis y ética realmente ejecutados.
-- [ ] Verificar que cada componente metodológico nombrado en el Capítulo I esté explicado y que cada concepto utilizado para diseñar o evaluar el artefacto tenga fundamento en el Capítulo II.
-- [ ] Desarrollar el Capítulo III como Marco aplicativo; su estructura interna se definirá posteriormente.
-- [ ] Desarrollar en los capítulos posteriores la evidencia de construcción por sprint y los resultados de verificación/evaluación.
+- [ ] Integrar las versiones aprobadas de los capítulos I y II conforme a [`TODO_CAPITULOS_1_Y_2.md`](TODO_CAPITULOS_1_Y_2.md), que es el único tablero operativo de su diseño metodológico y su teoría avanzada.
+- [ ] Desarrollar el Capítulo III como Marco aplicativo e incorporar la propuesta de solución, el aporte de ingeniería, la integración entre etapas y los resultados de construcción, verificación y evaluación.
+- [ ] Ubicar después del Capítulo III las secciones de Conclusiones y Recomendaciones, seguidas por las referencias y los anexos.
 - [ ] Mantener una cadena de evidencia desde dato o commit hasta conclusión.
-- [ ] Usar el periodo posterior al 15 de noviembre para correcciones, maquetación y preparación de la defensa.
 - [ ] Si se amplía la recolección o construcción sustantiva, actualizar formalmente cronograma y fechas de corte.
-- [ ] Preparar defensa para fines de noviembre o inicios de diciembre.
+- [ ] Redactar el Resumen y las palabras clave al cierre del documento final, una vez estabilizados los resultados y las conclusiones.
+- [ ] Validar con la tutora las fechas de entrega, correcciones, maquetación y defensa antes de programar el cierre; no asumir todavía fines de noviembre o inicios de diciembre.
 
 ---
 

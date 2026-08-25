@@ -1,6 +1,6 @@
 # CAPÍTULO I — MARCO INTRODUCTORIO
 
-> **Estado:** primera versión redactada para revisión con la tutora. Conserva el problema, los objetivos y el alcance del Perfil. La misión, la visión, el inicio institucional en 2019 y el contexto tecnológico se actualizaron con el resumen ejecutivo oficial de R3Foresta del 23 de agosto de 2026; los datos de la práctica actual permanecen sujetos al diagnóstico documental y de campo. La introducción será una sección independiente y se redactará al finalizar el documento.
+> **Estado:** primera versión redactada para revisión con la tutora. Conserva el problema, los objetivos y el alcance del Perfil. El resumen ejecutivo de R3Foresta del 23 de agosto de 2026 se utiliza únicamente para el contexto institucional que respalda de forma directa y no redefine el problema ni las decisiones académicas. La introducción será una sección independiente y se redactará al finalizar el documento.
 
 ## 1.1. Antecedentes
 
@@ -12,24 +12,15 @@ Su misión oficial es desarrollar, implementar y expandir un modelo integral de 
 
 El modelo institucional reúne cuatro dimensiones: ecológica, comunitaria, científico-tecnológica y económica. Entre sus componentes se encuentran R3Carbon, R3Water, R3Bio y R3F10 — Reciclaje y Economía Circular. El vínculo directo con el Proyecto de Grado se encuentra en R3Carbon y en la dimensión científico-tecnológica, que contempla medición, monitoreo, trazabilidad, digitalización e innovación aplicada a los procesos ambientales. Las demás líneas aportan contexto institucional y no amplían el alcance funcional del sistema.
 
-Según la información institucional proporcionada, el Estatuto Orgánico establece una estructura compuesta por los siguientes niveles:
+La estructura institucional se presenta mediante el organigrama entregado directamente por la Fundación R3Foresta.
 
-**Figura 1. Estructura general declarada de R3Foresta.**
+**Figura 1. Estructura institucional de R3Foresta.**
 
-```mermaid
-flowchart TB
-    A["Asamblea General de Fundadores"]
-    B["Directorio"]
-    C["Dirección o Gerencia Ejecutiva"]
-    D["Direcciones específicas y unidades técnicas"]
-    E["Programas, proyectos, equipos especializados y personal técnico"]
+![Organigrama institucional de R3Foresta](../perfil/figuras/organigrama_r3foresta.png)
 
-    A --> B --> C --> D --> E
-```
+*Fuente: organigrama institucional proporcionado por la Fundación R3Foresta.*
 
-_Nota._ La denominación de los niveles deberá verificarse con el Estatuto Orgánico antes de cerrar la figura.
-
-R3Carbon es el componente institucional dedicado a la medición, el seguimiento y la valorización de la captura de carbono. El resumen oficial informa que, dentro de este componente, se desarrolla una aplicación para registrar la historia del material vegetal desde la recolección hasta la plantación, el seguimiento y la medición (R3Foresta, 2026). El nombre oficial de la aplicación es **R3foresta App**. En el presente Proyecto de Grado se delimita como un sistema de trazabilidad del material vegetal hasta el registro de la plantación. Los posibles usos posteriores en seguimiento y medición de carbono se reconocen únicamente como contexto institucional y no como capacidades implementadas o evaluadas.
+R3Carbon es el componente institucional dedicado a la medición, el seguimiento y la valorización de la captura de carbono. El resumen oficial informa que, dentro de este componente, se desarrolla una aplicación para registrar la historia del material vegetal desde la recolección hasta la plantación, el seguimiento y la medición (R3Foresta, 2026). El nombre oficial de la aplicación es **R3foresta App**. En el presente Proyecto de Grado se delimita como un sistema de trazabilidad del material vegetal hasta el registro de la plantación. La expresión *con proyección hacia bonos de carbono* del título reconoce posibles usos institucionales posteriores de los registros; no describe capacidades implementadas o evaluadas de seguimiento, medición, MRV, certificación ni emisión de créditos.
 
 ### 1.1.2. Antecedentes del proceso y de la práctica de registro
 
@@ -37,9 +28,9 @@ La experiencia institucional no comenzó con la aplicación. El resumen ejecutiv
 
 Una declaración institucional previa mencionó pruebas piloto de acopio y clasificación de aproximadamente diecinueve categorías. Como la fuente oficial revisada no confirma ese número, el lugar, el periodo ni los responsables, el detalle permanece en la ficha de investigación pendiente de respaldo y no se incorpora como hecho validado en este capítulo. La economía circular constituye un antecedente institucional indirecto: clasificar o transformar residuos no equivale a reconstruir la cadena de custodia del material vegetal.
 
-Con el crecimiento de los proyectos surgió la necesidad de pasar de registros operativos distribuidos a una estructura de información común. Según el diagnóstico preliminar proporcionado, el seguimiento anterior a R3foresta App dependía de registros individuales, documentación de campo y diferentes fuentes de información. La institución identifica como posibles dificultades la dispersión, el riesgo de pérdida o duplicación, la dependencia de registros manuales, la dificultad para relacionar una planta con su origen y las limitaciones para reconstruir historiales o consolidar información de distintos proyectos.
+Actualmente, la información y las evidencias de las actividades de reforestación se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes que permitan reconstruir de extremo a extremo la procedencia y el recorrido del material vegetal, conciliar cantidades y saldos, identificar responsables y recuperar la evidencia asociada.
 
-Estas dificultades todavía deben validarse. El diagnóstico del Proyecto de Grado inventariará las actividades y fuentes accesibles dentro de un periodo definido, aplicará criterios de inclusión y exclusión y reconstruirá las trazas elegibles. En una primera pasada se utilizarán solamente documentos; en una segunda podrán incorporarse explicaciones de los responsables. De esta manera será posible distinguir lo recuperable mediante evidencia de aquello que depende de la memoria o permanece ausente, parcial o contradictorio.
+Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común que relaciona los hechos operativos del material vegetal de origen propio o externo desde su ingreso hasta el registro de su plantación.
 
 El proceso operativo considerado comienza con la recolección de semillas o con el ingreso externo de material vegetal, continúa con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
 
@@ -72,38 +63,34 @@ Esta brecha no afirma que no exista ninguna solución similar. Delimita la combi
 
 ### 1.2.1. Situación problemática
 
-R3Foresta realiza actividades de reforestación con comunidades, voluntarios y organizaciones patrocinadoras. Según la caracterización institucional preliminar, la evidencia de esas actividades puede encontrarse en fotografías, publicaciones, conversaciones de mensajería, cuadernos, notas, documentación de campo y conocimiento de los responsables. Estas fuentes pueden respaldar hechos particulares, pero todavía debe determinarse si comparten identificadores, unidades y relaciones suficientes para reconstruir el recorrido completo del material vegetal.
+R3Foresta realiza actividades de reforestación con comunidades, voluntarios y organizaciones patrocinadoras. La información y las evidencias de estas actividades se conservan actualmente en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes que permitan reconstruir de extremo a extremo la procedencia y el recorrido del material vegetal, las cantidades administradas, los responsables de cada etapa, las ubicaciones y las evidencias asociadas.
 
-El recorrido principal comienza con la recolección, continúa con el manejo en vivero y concluye con la plantación. También puede ingresar material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación. En estos casos, su historial no puede atribuir una recolección inexistente: debe comenzar con el hecho de ingreso y conservar la información de procedencia disponible.
+El material vegetal utilizado por R3Foresta puede ser de origen propio o externo. En el primer caso, la organización recolecta semillas u otro material de propagación, lo traslada al vivero, registra los procesos biológicos y obtiene plantas destinadas a la plantación. En el segundo, adquiere o recibe plantas y otros materiales vegetales de proveedores o terceros, los cuales pueden ingresar al vivero o dirigirse directamente a una plantación. En ambos casos, la cadena requiere relacionar la procedencia, la especie, las cantidades, las fechas, los responsables y las evidencias con los eventos posteriores hasta el destino del material.
 
-Durante el recorrido cambian la ubicación, el responsable, el estado, la agrupación y, en algunos procesos, la unidad de medida. Una cantidad recolectada puede expresarse en gramos o unidades de propagación, mientras que las plantas vivas se registran en unidades. El paso de semillas a plantas no representa una conversión aritmética automática, sino un resultado biológico observado. En consecuencia, la consistencia debe preservarse dentro de cada etapa y unidad compatible y mediante relaciones explícitas entre el material de entrada y el resultado observado.
+Durante este recorrido cambian la ubicación, el responsable, el estado, la agrupación y, en determinados procesos, la unidad de medida del material vegetal. Las semillas recolectadas pueden registrarse en gramos o unidades de propagación, mientras que el saldo vivo del vivero y la plantación se expresa en unidades de plantas. El paso de semillas a plantas no constituye una conversión aritmética automática, sino un resultado biológico observado. El proceso también comprende mermas, descartes, devoluciones, cierres, transferencias y asignaciones parciales.
 
-Si las salidas y entradas se registran de forma separada, o si un saldo cambia sin conservar el hecho que lo explica, pueden producirse registros incompletos, doble asignación, doble consumo o cantidades difíciles de conciliar. De forma semejante, una fotografía o coordenada almacenada fuera del hecho operativo puede perder su relación con la especie, la cantidad, la fecha y el responsable que debía respaldar.
+Actualmente, las entradas, salidas, transformaciones, transferencias y modificaciones de saldo se documentan en fuentes separadas y no conforman un historial común que explique cada cambio. Esta fragmentación dificulta conciliar las cantidades entre etapas, determinar la disponibilidad real del material y evitar registros incompletos, dobles asignaciones o dobles consumos. De igual manera, las fotografías, fechas o coordenadas almacenadas fuera del hecho operativo quedan desvinculadas de la especie, la cantidad, el responsable y el evento que deben respaldar.
 
-La consecuencia planteada es una capacidad limitada para reconstruir la cadena de custodia con evidencia contrastable. Esto puede afectar las decisiones internas sobre disponibilidad y pérdidas y la información comunicada a patrocinadores y aliados. La frecuencia y gravedad de estas dificultades se determinarán durante el diagnóstico; no se asumirán como resultados ya demostrados.
-
-El problema es informacional. Un sistema puede relacionar registros, preservar reglas de consistencia y facilitar su recuperación, pero no puede garantizar por sí solo que una declaración coincida con la realidad física.
+Como consecuencia, R3Foresta tiene una capacidad limitada para reconstruir la cadena de custodia con evidencia contrastable. Esta situación dificulta las decisiones internas sobre disponibilidad, pérdidas, movimientos y destino del material vegetal, así como la presentación de información consistente a empresas patrocinadoras, aliados y otros actores que requieren conocer y contrastar el recorrido registrado.
 
 ### 1.2.2. Causas y efectos
 
-Las causas y efectos de la Figura 2 constituyen planteamientos preliminares por comprobar. Serán confirmados, modificados o descartados mediante entrevistas, inventario documental y reconstrucción de trazas históricas.
-
-**Figura 2. Árbol preliminar de causas y efectos.**
+**Figura 2. Árbol de causas y efectos.**
 
 ```mermaid
 flowchart BT
-    C1["Registros distribuidos en diferentes<br/>fuentes y responsables"]
-    C2["Ausencia preliminar de identificadores y<br/>relaciones comunes entre etapas"]
-    C3["Cambios de ubicación o responsable sin<br/>un registro uniforme de procedencia"]
-    C4["Transferencias y saldos administrados<br/>mediante operaciones separadas"]
-    C5["Evidencia temporal o geográfica<br/>desvinculada del hecho registrado"]
+    C1["Registros dispersos en fotografías,<br/>mensajería, cuadernos,<br/>redes sociales y conocimiento de responsables"]
+    C2["Ausencia de identificadores y<br/>relaciones comunes entre etapas"]
+    C3["Ingresos externos y cambios de custodia<br/>sin un historial uniforme de procedencia"]
+    C4["Entradas, salidas, transferencias y saldos<br/>registrados mediante operaciones separadas"]
+    C5["Evidencia fotográfica, temporal o geográfica<br/>desvinculada del hecho operativo"]
 
-    P(["PROBLEMA CENTRAL<br/><br/>La información sobre el recorrido del material vegetal<br/>no se encuentra integrada bajo una cadena de custodia<br/>reconstruible con evidencia contrastable"])
+    P(["PROBLEMA CENTRAL<br/><br/>La información sobre la procedencia y el recorrido<br/>del material vegetal de origen propio o externo<br/>no se encuentra integrada bajo una cadena de custodia<br/>reconstruible con evidencia contrastable"])
 
-    E1["Mayor tiempo y menor completitud<br/>al reconstruir el recorrido"]
-    E2["Riesgo de inconsistencias en<br/>cantidades, saldos y transferencias"]
+    E1["Mayor tiempo y menor completitud<br/>al reconstruir el recorrido del material vegetal"]
+    E2["Inconsistencias en cantidades,<br/>saldos, transferencias y asignaciones"]
     E3["Decisiones operativas basadas<br/>en información incompleta"]
-    E4["Menor capacidad para respaldar información<br/>comunicada a patrocinadores y aliados"]
+    E4["Menor capacidad para respaldar la información<br/>comunicada a patrocinadores y aliados"]
 
     C1 --> P
     C2 --> P
@@ -116,27 +103,25 @@ flowchart BT
     P --> E4
 ```
 
-La primera causa se refiere a la distribución de la información en fuentes que pueden tener diferentes responsables y formatos. La segunda señala la posible ausencia de identificadores que permitan relacionar una recolección, un lote de vivero, una asignación y una plantación. La tercera comprende los cambios de custodia, ubicación o responsabilidad que no conservan una referencia uniforme de procedencia. La cuarta se relaciona con operaciones cuantitativas que podrían quedar registradas en momentos o módulos distintos. La quinta alude a evidencia existente pero separada del evento al que debería dar contexto.
-
-Estas causas pueden producir vacíos o demoras de recuperación, inconsistencias cuantitativas y menor capacidad para presentar información relacionada. El diagnóstico deberá establecer cuáles ocurren efectivamente, bajo qué condiciones y con qué evidencia.
+La primera causa representa la dispersión de la información entre fuentes y responsables. La segunda señala la ausencia de identificadores que relacionen una recolección o ingreso externo, un lote de vivero, una asignación y una plantación. La tercera comprende los ingresos externos y los cambios de custodia que no conservan una referencia uniforme de procedencia. La cuarta se relaciona con operaciones cuantitativas registradas en fuentes o momentos distintos. La quinta alude a evidencia existente pero separada del evento al que debe dar contexto.
 
 ### 1.2.3. Problema central
 
-> En la práctica actual de R3Foresta, la información sobre el recorrido del material vegetal, desde su origen o ingreso al proceso hasta su plantación, se conserva en registros dispersos que no comparten una estructura ni relaciones comunes; esta fragmentación limita la reconstrucción de la cadena de custodia, la comprobación de la consistencia de cantidades y saldos y la presentación de evidencia contrastable a los actores interesados.
+> En la práctica actual de R3Foresta, la información sobre la procedencia, los movimientos, las transformaciones, las cantidades, los responsables, las evidencias y el destino del material vegetal de origen propio o externo se conserva en registros dispersos que no comparten una estructura, identificadores ni relaciones comunes; esta fragmentación limita la reconstrucción de la cadena de custodia, la consistencia de cantidades y saldos y la presentación de evidencia contrastable a los actores interesados.
 
 ### 1.2.4. Formulación del problema
 
 #### 1.2.4.1. Pregunta general
 
-> ¿Cómo desarrollar, en el caso R3Foresta, un sistema de trazabilidad que permita reconstruir con evidencia contrastable el recorrido del material vegetal desde su origen o ingreso al proceso hasta el registro de su plantación, y qué diferencias presenta frente a la práctica de registro actual en capacidad de reconstrucción y carga operativa?
+> ¿Cómo desarrollar y evaluar, en el caso de R3Foresta, un sistema de trazabilidad para la cadena de custodia del material vegetal, desde su recolección o recepción externa hasta su manejo en vivero y plantación, que permita reconstruir con evidencia contrastable su procedencia, movimientos, cantidades, responsables y destino, y qué diferencias presenta respecto de la práctica actual en capacidad de reconstrucción y carga operativa?
 
 #### 1.2.4.2. Preguntas específicas
 
-1. ¿Qué procesos, actores, datos, estados, eventos, unidades de medida y reglas de negocio intervienen en Recolección, Vivero y Plantación, incluidas las variantes de ingreso de material vegetal adquirido o recibido de terceros?
-2. ¿Qué modelo de información y reglas de integridad permite relacionar los orígenes, movimientos, transformaciones, saldos, responsables y evidencias de la cadena de custodia?
-3. ¿Cómo implementar e integrar los módulos de Recolección, Vivero y Plantación y sus variantes de ingreso externo sin perder la historia de procedencia del material vegetal?
+1. ¿Qué procesos, actores, datos, estados, eventos, unidades de medida, requerimientos y reglas de negocio caracterizan Recolección, Vivero y Plantación, incluidas las variantes de ingreso de material vegetal adquirido o recibido de terceros?
+2. ¿Qué modelo de trazabilidad e integridad permite relacionar orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y formalizar las reglas aplicables a las transferencias y transformaciones entre etapas?
+3. ¿Cómo implementar e integrar los módulos de Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial?
 4. ¿En qué medida la solución cumple los requerimientos y preserva las invariantes definidas mediante pruebas funcionales y técnicas?
-5. ¿Qué capacidad presenta la solución para reconstruir trazas con evidencia contrastable y qué carga operativa genera respecto de la práctica actual de R3Foresta?
+5. ¿Qué capacidad presenta la solución, en el contexto del estudio de caso, para reconstruir trazas con evidencia contrastable y qué carga operativa genera en comparación con la práctica actual caracterizada en R3Foresta?
 
 ## 1.3. Objetivos
 
@@ -204,11 +189,14 @@ La evaluación del caso utilizará una guía común para comparar la informació
 
 ### 1.5.3. Fuera del alcance
 
+La expresión *con proyección hacia bonos de carbono* del título se refiere exclusivamente al posible uso institucional futuro de la información trazable producida por los módulos de Recolección, Vivero y Plantación. Esta proyección no incorpora funciones de carbono al sistema académico ni permite afirmar que sus registros sean suficientes para generar o certificar créditos.
+
 El proyecto no comprende:
 
-- seguimiento ecológico o de supervivencia posterior al registro de plantación;
-- medición o certificación de captura de carbono;
-- cálculo, emisión o comercialización de créditos de carbono;
+- monitoreo posterior de supervivencia, crecimiento, mantenimiento o estado ecológico después del registro de plantación;
+- registro o cálculo de biomasa, captura de dióxido de carbono o toneladas de CO₂ equivalente;
+- implementación de una metodología de monitoreo, reporte y verificación de carbono;
+- validación, verificación, certificación, generación, emisión o comercialización de bonos o créditos de carbono;
 - certificación forestal o ambiental por un tercero acreditado;
 - autenticidad forense de fotografías, coordenadas o declaraciones;
 - adopción de blockchain, NFT, contratos inteligentes o IPFS;
@@ -294,4 +282,4 @@ Las entrevistas y observaciones requerirán consentimiento informado y autorizac
 
 ## 1.8. Organización del documento
 
-La introducción se presentará como una sección independiente y se redactará al finalizar todos los capítulos. El Capítulo I reúne los antecedentes, el problema, los objetivos, las justificaciones, los alcances y el diseño metodológico. El Capítulo II desarrolla los fundamentos teóricos y conceptuales necesarios para comprender la trazabilidad propuesta. El Capítulo III corresponde al Marco aplicativo y expondrá el análisis, diseño, construcción e integración de la solución; su estructura interna se definirá posteriormente. La denominación y numeración de los capítulos de verificación, evaluación, conclusiones y recomendaciones permanecen pendientes de definición.
+La introducción se presentará como una sección independiente y se redactará al finalizar todos los capítulos. El Capítulo I reúne los antecedentes, el problema, los objetivos, las justificaciones, los alcances y el diseño metodológico. El Capítulo II desarrolla los fundamentos teóricos y conceptuales necesarios para comprender la trazabilidad propuesta y delimita su proyección hacia bonos de carbono. El Capítulo III corresponde al Marco aplicativo y expondrá el análisis, diseño, construcción e integración de la solución; su estructura interna se definirá posteriormente. La denominación y numeración de los capítulos de verificación, evaluación, conclusiones y recomendaciones permanecen pendientes de definición.

@@ -15,19 +15,19 @@ La ejecución posterior se controla en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_
 
 La revisión progresiva del Capítulo I, la preparación del Capítulo II y la propagación de las correcciones aprobadas se registran en [`TODO_CAPITULOS_1_Y_2.md`](TODO_CAPITULOS_1_Y_2.md).
 
-## 2. Correcciones del profesor Víctor — 25 de agosto de 2026
+## 2. Correcciones dla Doctora Tellez — 25 de agosto de 2026
 
 > **Estado:** backlog abierto; estas correcciones prevalecen sobre los estados de cierre de la versión anterior del Perfil.
-> **Fuente:** observaciones del profesor Víctor, registradas por el postulante el 25 de agosto de 2026.
+> **Fuente:** observaciones dla Doctora Tellez, registradas por el postulante el 25 de agosto de 2026.
 > **Regla de ejecución:** primero cerrar las decisiones P0; después corregir estructura y contenido; finalmente ejecutar la revisión APA 7 y la maquetación.
 
 ### 2.1. Enrutamiento y prioridades
 
 | Prioridad | Bloque | Destino principal | Dependencia |
 |---|---|---|---|
-| P0 | Pregunta general, objetivo general y metodología de desarrollo | Perfil | Validación final del profesor Víctor |
+| P0 | Pregunta general, objetivo general y metodología de desarrollo | Perfil | Validación final dla Doctora Tellez |
 | P0 | Estructura y secciones que permanecen en el Perfil | Perfil | Ninguna |
-| P1 | Exploración opcional de un título alternativo | Perfil | El título base continúa vigente hasta nueva aprobación |
+| P1 | Ratificación y propagación del título seleccionado | Perfil | Conformidad de la tutora y delimitación explícita de la proyección hacia bonos de carbono |
 | P1 | Antecedentes, problema, alcances, marco teórico e índice | Perfil | Decisiones P0 |
 | P1 | Cronograma por objetivos | Perfil | Fecha inicial y objetivo general confirmados |
 | P1 | APA 7, citas, índice automático y bibliografía mínima | Perfil | Contenido sustantivo estabilizado |
@@ -35,19 +35,19 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 
 ### 2.2. P0 — título y alineación problema–objetivos
 
-- [x] Registrar el título actual como base aprobada: **Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta**.
-- [ ] Proponer entre tres y cinco títulos más llamativos que relacionen trazabilidad y bonos de carbono sin afirmar que el sistema certificará, generará, emitirá o comercializará bonos.
-- [ ] Evaluar cada alternativa mediante una matriz breve: claridad, correspondencia con el problema, términos que deberán definirse, riesgo de sobrepromesa y compatibilidad con los límites.
-- [ ] Decidir con el profesor Víctor si se conserva el título aprobado o se adopta una alternativa; esta exploración no bloquea las demás correcciones mientras se utilice el título base.
-- [ ] Si se adopta una alternativa, propagarla al marco teórico, los límites, el índice, la portada y los documentos rectores.
+- [x] Conservar como antecedente el título base **Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta**.
+- [x] Proponer y contrastar alternativas que relacionen trazabilidad y bonos de carbono sin afirmar que el sistema certificará, generará, emitirá o comercializará bonos.
+- [x] Seleccionar, por decisión del postulante del 25 de agosto de 2026, el título **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**.
+- [ ] Obtener la ratificación de la Doctora Tellez para el título seleccionado.
+- [x] Propagar el título seleccionado y su delimitación a los documentos rectores, el Perfil, el marco conceptual planificado y los tableros; la portada maquetada se actualizará cuando corresponda.
 - [x] Reformular la pregunta general sin incorporar la solución en su redacción; evitar expresiones como “un sistema de trazabilidad” dentro de la pregunta.
 - [x] Partir de una formulación neutral semejante a “¿Cómo asegurar la trazabilidad de la cadena de custodia del material vegetal…?”, precisando origen, recepción externa, vivero y plantación sin anticipar el artefacto.
 - [x] Reformular el objetivo general con un solo verbo principal: **Desarrollar**; retirar **evaluar** del objetivo general sin eliminar la evaluación que corresponda al objetivo específico vigente.
-- [x] Mantener los cinco objetivos específicos, que fueron considerados adecuados por el profesor Víctor.
+- [x] Mantener los cinco objetivos específicos, que fueron considerados adecuados por la Doctora Tellez.
 - [x] Revisar su correspondencia con las preguntas específicas sin reescribirlos, salvo una corrección formal imprescindible.
 - [ ] Sincronizar pregunta general, preguntas específicas, objetivo general y objetivos específicos en el Perfil, la estructura rectora y el Capítulo I.
 
-**Criterio de cierre:** la pregunta expresa el problema sin revelar la solución; el objetivo general responde con “Desarrollar”; cada pregunta específica conserva correspondencia uno a uno con un objetivo específico; el profesor Víctor aprueba el conjunto.
+**Criterio de cierre:** la pregunta expresa el problema sin revelar la solución; el objetivo general responde con “Desarrollar”; cada pregunta específica conserva correspondencia uno a uno con un objetivo específico; la Doctora Tellez aprueba el conjunto.
 
 ### 2.3. P0 — estructura que debe conservar el Perfil
 
@@ -60,7 +60,7 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 - [x] Eliminar del Perfil la sección **Propuesta de solución y aporte de ingeniería**, incluidas sus subsecciones de modelo, integración y resultados esperados; trasladarla al Marco aplicativo del documento final.
 - [x] Eliminar la sección **Recursos** del Perfil.
 
-**Criterio de cierre:** el índice del Perfil contiene únicamente las secciones solicitadas por el profesor Víctor y todo contenido retirado tiene una tarea de destino explícita en los otros TODO.
+**Criterio de cierre:** el índice del Perfil contiene únicamente las secciones solicitadas por la Doctora Tellez y todo contenido retirado tiene una tarea de destino explícita en los otros TODO.
 
 ### 2.4. P1 — presentación, índice y APA 7
 
@@ -70,9 +70,9 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 - [x] Aplicar APA 7 en citas y referencias de todo el Perfil.
 - [x] Eliminar siglas o nombres de autor corporativo presentados entre corchetes dentro de las citas, por ejemplo `[ISO]`.
 - [ ] Confirmar si la observación sobre corchetes se limita a las siglas de autores institucionales dentro de las citas o también afecta descriptores bibliográficos válidos, como `[Documento institucional no publicado]`.
-- [x] Definir y aplicar una forma uniforme aceptada por el profesor Víctor para las citas de autores corporativos, utilizando el nombre corporativo sin siglas entre corchetes.
+- [x] Definir y aplicar una forma uniforme aceptada por la Doctora Tellez para las citas de autores corporativos, utilizando el nombre corporativo sin siglas entre corchetes.
 - [x] Revisar que cada cita tenga referencia y que cada referencia sea citada.
-- [x] Alcanzar un mínimo de quince referencias bibliográficas efectivamente citadas; no existe un máximo fijado. La versión actual contiene diecisiete.
+- [x] Alcanzar un mínimo de quince referencias bibliográficas efectivamente citadas; no existe un máximo fijado. La versión actual contiene dieciocho.
 - [x] Ejecutar una revisión final de ortografía, numeración, tablas, figuras y referencias cruzadas después de los cambios estructurales.
 
 **Criterio de cierre:** índice regenerable sin edición manual, cero siglas de autores corporativos introducidas entre corchetes en las citas, conformidad APA 7 y al menos quince fuentes citadas y referenciadas.
@@ -116,7 +116,7 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 - [x] Aplicar la regla **un concepto por subsección**; eliminar títulos que agrupen tres o más conceptos.
 - [x] Definir primero los términos centrales del título definitivo.
 - [x] Incluir como mínimo subsecciones independientes para **sistema**, **trazabilidad**, **material vegetal** y **reforestación**.
-- [x] Mantener fuera del marco teórico la definición de bonos de carbono mientras se conserve el título base aprobado.
+- [x] Incorporar una definición acotada de bonos de carbono y explicar que su presencia en el título expresa una proyección institucional futura, no una capacidad del sistema.
 - [x] Trasladar al Capítulo II el desarrollo de unidades trazables, eventos, procedencia, integridad de operaciones y demás conceptos detallados de diseño.
 - [x] Conservar **cadena de custodia** como concepto preliminar independiente por su presencia en el problema y la pregunta.
 - [x] Auditar las subsecciones restantes y conservar en el Perfil solo los conceptos imprescindibles para comprender el título y la propuesta general.
@@ -128,7 +128,7 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 - [x] Investigar metodologías de desarrollo de software más específicas que “iterativa e incremental” y revisar su adecuación a una ejecución académica individual.
 - [x] Seleccionar el **Proceso Unificado Ágil** y justificar su adecuación a los tres módulos, los objetivos, los riesgos de integridad y el calendario.
 - [x] Documentar sus fases de Inicio, Elaboración, Construcción y Transición, con actividades, productos, hitos y evidencia.
-- [ ] Obtener la ratificación del profesor Víctor para el Proceso Unificado Ágil incorporado provisionalmente; si no es aceptado, sustituir la sección y reajustar el cronograma.
+- [ ] Obtener la ratificación de la Doctora Tellez para el Proceso Unificado Ágil incorporado provisionalmente; si no es aceptado, sustituir la sección y reajustar el cronograma.
 - [x] Reservar DSRM, estudio de caso y demás elementos del diseño de investigación únicamente para el documento final y fuera del Perfil.
 
 **Criterio de cierre:** metodología específica aprobada, procedimiento reproducible y correspondencia explícita con objetivos y cronograma.
@@ -141,8 +141,8 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 - [x] Revisar la tabla de correspondencia entre objetivos y capítulos después de aprobar el nuevo índice.
 - [x] Sustituir el cronograma anterior por un cronograma organizado por objetivos.
 - [x] Asignar a cada objetivo un periodo de inicio, ejecución y cierre, además de las actividades transversales indispensables.
-- [ ] Confirmar con el profesor Víctor si el inicio formal puede fijarse en la primera semana de julio de 2026.
-- [x] Preparar provisionalmente el calendario desde el 6 de julio y retirar del Perfil la estructura temporal anterior; recalcularlo si el profesor Víctor confirma otra fecha.
+- [ ] Confirmar con la Doctora Tellez si el inicio formal puede fijarse en la primera semana de julio de 2026.
+- [x] Preparar provisionalmente el calendario desde el 6 de julio y retirar del Perfil la estructura temporal anterior; recalcularlo si la Doctora Tellez confirma otra fecha.
 - [x] Verificar y completar la bibliografía hasta alcanzar el mínimo de quince referencias citado en la sección 2.4.
 
 **Criterio de cierre:** índice aprobado, cronograma expresado por objetivos con fechas confirmadas y bibliografía mínima cumplida.
@@ -162,7 +162,7 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 
 ### 3.1. Confirmadas
 
-- El título base aprobado es **Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta**.
+- El título seleccionado por el postulante es **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**; permanece pendiente de ratificación por la tutora.
 - El nombre oficial de la aplicación es **R3foresta App**; se distingue de R3Foresta, la institución, y R3Carbon, el componente institucional.
 - Los cinco objetivos específicos se conservan.
 - El alcance mantiene exactamente tres módulos: Recolección, Vivero y Plantación.
@@ -176,8 +176,8 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 
 ### 3.2. Pendientes de decisión o confirmación
 
-- Adopción o descarte de un título alternativo relacionado con bonos de carbono.
-- Conformidad del profesor Víctor con la nueva redacción del problema, las preguntas y el objetivo general.
+- Ratificación de la tutora para el título seleccionado.
+- Conformidad dla Doctora Tellez con la nueva redacción del problema, las preguntas y el objetivo general.
 - Ratificación del Proceso Unificado Ágil y decisión sobre el mecanismo técnico interno de iteración.
 - Confirmación de si se requieren índices automáticos adicionales para tablas o figuras y del alcance de la observación sobre corchetes en los descriptores bibliográficos.
 - Fecha oficial de inicio, fecha final e hitos del cronograma por objetivos.
@@ -201,17 +201,17 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 | 9. Índice del documento final | Aplicado | Capítulo III seguido de Conclusiones y Recomendaciones |
 | 10. Cronograma | Aplicado provisionalmente | Organizado por objetivos desde el 6 de julio; fechas pendientes de confirmación |
 | Sección Recursos | Retirada | No forma parte del Perfil |
-| 11. Bibliografía | Aplicado | Diecisiete referencias citadas y revisadas en APA 7 |
+| 11. Bibliografía | Aplicado | Dieciocho referencias citadas y revisadas en APA 7 |
 | 12. Anexos | Aplicado | Árbol de causas y efectos incorporado como Anexo A |
 
-## 5. Verificaciones antes de entregar al profesor Víctor
+## 5. Verificaciones antes de entregar la Doctora Tellez
 
-- [ ] Cerrar todas las casillas operativas de las secciones 2.2 a 2.10 o registrar explícitamente cualquier excepción aprobada por el profesor Víctor.
+- [ ] Cerrar todas las casillas operativas de las secciones 2.2 a 2.10 o registrar explícitamente cualquier excepción aprobada por la Doctora Tellez.
 - [x] Confirmar que los contenidos retirados del Perfil continúan en los tableros del Capítulo II o del Proyecto de Grado final, según su destino.
 - [ ] Sincronizar título, problema, preguntas y objetivos con la estructura rectora y el Capítulo I.
 - [x] Ejecutar la auditoría final de APA 7, mínimo de referencias, índice automático, numeración, figuras, tablas y referencias cruzadas.
 - [x] Comprobar que el Perfil final conserve únicamente tres módulos y no prometa medición, certificación ni generación de bonos de carbono.
-- [ ] Registrar la conformidad del profesor Víctor con la versión corregida.
+- [ ] Registrar la conformidad dla Doctora Tellez con la versión corregida.
 
 ## 6. Presentación posterior — fuera del alcance actual
 

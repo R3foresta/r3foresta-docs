@@ -1,16 +1,17 @@
 # Ficha institucional y antecedentes operativos de R3Foresta
 
 > **Fecha de registro:** 24 de agosto de 2026.
-> **Fuente institucional oficial revisada:** R3Foresta (2026, 23 de agosto), *Resumen Ejecutivo Institucional: Modelo Integral de Bioregeneración, Innovación Ambiental y Desarrollo Comunitario*, documento institucional no publicado proporcionado por el postulante el 24 de agosto de 2026.
-> **Alcance de la fuente:** respalda la presentación institucional, la misión, la visión, el inicio de R3Foresta en 2019, las dimensiones y componentes del modelo y la relación del desarrollo tecnológico con R3Carbon. No sustituye al Estatuto Orgánico ni confirma el organigrama, la denominación legal completa, el detalle de las diecinueve categorías de residuos o la práctica actual de registro.
-> **Regla de uso:** las declaraciones del documento oficial pueden utilizarse como contexto con cita a R3Foresta (2026). Las cifras descritas como aproximaciones, estimaciones, proyecciones o etapas futuras conservarán ese carácter. Los problemas de la práctica actual y los resultados del sistema se tratarán como planteamientos preliminares hasta obtener evidencia documental o testimonial.
+> **Última actualización:** 25 de agosto de 2026.
+> **Fuente institucional contextual revisada:** R3Foresta (2026, 23 de agosto), *Resumen Ejecutivo Institucional: Modelo Integral de Bioregeneración, Innovación Ambiental y Desarrollo Comunitario*, documento institucional no publicado recibido el 24 de agosto de 2026.
+> **Alcance restringido de la fuente:** puede respaldar únicamente el contexto institucional que declara de forma directa: misión, visión, inicio de R3Foresta en 2019, dimensiones y componentes del modelo y relación institucional con R3Carbon. El organigrama se respalda mediante la imagen entregada directamente por la Fundación el 25 de agosto de 2026.
+> **Regla de prevalencia:** esta fuente no define ni modifica el problema, el título, los objetivos, el alcance, la metodología, la evaluación ni la caracterización de la práctica actual. Para esas decisiones prevalecen el Perfil aprobado, los lineamientos académicos y la documentación operativa consolidada del proyecto. Sus proyecciones y aspiraciones se utilizarán únicamente como contexto institucional cuando resulten necesarias.
 
 ## 1. Identificación y denominaciones
 
 - **Denominación institucional:** Fundación R3Foresta para la Bioregeneración de Ecosistemas y la Economía Circular.
 - **Nombre oficial de la aplicación:** R3foresta App.
 - **Componente institucional relacionado:** R3Carbon, dedicado a la medición, el seguimiento y la valorización de la captura de carbono.
-- **Denominación académica de la solución:** sistema de trazabilidad de material vegetal para reforestación, caso R3Foresta.
+- **Título seleccionado del proyecto:** *Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta*.
 
 En el documento académico se distinguirá a **R3Foresta**, como organización y modelo institucional del caso de estudio; **R3Carbon**, como uno de los componentes del modelo institucional; y **R3foresta App**, como la aplicación tecnológica sobre la cual se desarrolla el Proyecto de Grado. No se utilizará _R3Foresta_ como nombre abreviado del sistema.
 
@@ -39,19 +40,13 @@ El modelo institucional reúne cuatro dimensiones:
 
 La fuente organiza sus principales líneas mediante los componentes **R3Carbon**, **R3Water**, **R3Bio** y **R3F10 — Reciclaje y Economía Circular**, junto con proyectos de seguridad alimentaria, tecnología ambiental, articulación institucional y expansión territorial. Para este Proyecto de Grado, el vínculo directo se encuentra en R3Carbon y en la dimensión científico-tecnológica; las demás líneas aportan contexto institucional, no amplían el alcance funcional del sistema.
 
-## 5. Estructura institucional declarada
+## 5. Estructura institucional
 
-Según la información proporcionada, el Estatuto Orgánico establece la siguiente estructura general:
+La Fundación R3Foresta proporcionó el 25 de agosto de 2026 el organigrama institucional vigente para su incorporación a la documentación académica.
 
-```text
-Asamblea General de Fundadores
-└── Directorio
-    └── Dirección o Gerencia Ejecutiva
-        └── Direcciones específicas y unidades técnicas
-            └── Programas, proyectos, equipos especializados y personal técnico
-```
+![Organigrama institucional de R3Foresta](../06_entregables/perfil/figuras/organigrama_r3foresta.png)
 
-Antes de convertir esta estructura en una figura definitiva se deberá revisar el Estatuto Orgánico y confirmar los nombres oficiales de cada nivel. No es necesario incorporar nombres de personas en el organigrama académico, salvo que exista una razón metodológica y autorización.
+*Fuente: organigrama institucional proporcionado por la Fundación R3Foresta.*
 
 ## 6. Antecedentes institucionales
 
@@ -73,26 +68,7 @@ Para el Proyecto de Grado, esa relación deberá formularse con el siguiente lí
 
 Por tanto, la captura de CO2 se conservará como motivación o aspiración institucional de largo plazo, no como problema resuelto, objetivo, resultado esperado o capacidad demostrada por el trabajo académico.
 
-## 8. Aspectos preliminares del diagnóstico institucional
-
-La información proporcionada plantea que, antes de R3foresta App, el seguimiento dependía de registros individuales, documentación de campo y diferentes fuentes de información. A partir de esa declaración se registran los siguientes **aspectos preliminares por comprobar**:
-
-| Aspecto preliminar | Evidencia necesaria para confirmarlo o modificarlo |
-|---|---|
-| La información se encuentra dispersa. | Inventario de fuentes por actividad y ubicación de cada registro. |
-| Resulta difícil conservar una trazabilidad completa. | Ejercicio de reconstrucción de trazas históricas con una guía común. |
-| Existe riesgo de pérdida o duplicación de datos. | Casos documentados, controles actuales y registros repetidos o ausentes. |
-| Es difícil relacionar una planta o lote con su origen. | Proporción de trazas en las que puede recuperarse la procedencia con evidencia. |
-| Existen limitaciones para reconstruir el historial. | Ítems completos, parciales, ausentes o contradictorios y tiempo de recuperación. |
-| Es difícil consolidar información de diferentes proyectos. | Fuentes, formatos, identificadores y procedimientos utilizados por proyecto. |
-| Los indicadores no se generan automáticamente. | Identificación de indicadores actuales, procedimiento de cálculo y tiempo requerido. |
-| Existe dependencia de registros manuales. | Observación del flujo y clasificación de registros manuales y digitales. |
-| El seguimiento sistemático es limitado. | Frecuencia, responsables y continuidad de los registros disponibles. |
-| Es difícil presentar ordenadamente los resultados ambientales. | Solicitudes reales de información y evidencia utilizada para responderlas. |
-
-Hasta ejecutar el diagnóstico, no se afirmará que estas dificultades tienen una frecuencia, gravedad o efecto determinados.
-
-## 9. Cadena funcional propuesta por la institución
+## 8. Cadena funcional propuesta por la institución
 
 La formulación institucional resume la función esperada de la aplicación mediante la secuencia:
 
@@ -108,7 +84,7 @@ registrar -> identificar -> relacionar -> consultar -> reconstruir -> contrastar
 
 Los verbos _monitorear_, _medir_ y _verificar_ solo podrán reincorporarse cuando se indique con precisión qué variable, periodo, instrumento y criterio se utilizan. No se aplicarán a captura de carbono ni a resultados ecológicos posteriores a la plantación.
 
-## 10. Destino documental
+## 9. Destino documental
 
 | Información | Perfil | Capítulo I | Capítulo II futuro | Condición |
 |---|---|---|---|---|
@@ -116,11 +92,11 @@ Los verbos _monitorear_, _medir_ y _verificar_ solo podrán reincorporarse cuand
 | Estructura organizacional | No necesaria en detalle | 1.1.1, como figura o descripción | No corresponde | Confirmar con Estatuto Orgánico. |
 | Inicio institucional en 2019 | Antecedente breve | 1.1.1 o 1.1.2 | No corresponde | Respaldado por R3Foresta (2026). |
 | Relación entre R3Carbon y R3foresta App | Introducción y antecedentes | 1.1.1 y 1.1.2 | Solo si sustenta una definición general | Distinguir organización, componente y aplicación. |
-| Problemas de registro actual | Planteamiento del problema | 1.3.1 y 1.3.2 | Solo conceptos generales, no datos del caso | Validar mediante diagnóstico. |
+| Problemas de registro actual | Planteamiento del problema | 1.3.1 y 1.3.2 | Solo conceptos generales, no datos del caso | Utilizar la formulación consolidada en el Perfil; no derivarla del resumen ejecutivo. |
 | Aspiración de medición de CO2 | Límite o contexto institucional | Antecedente y fuera de alcance | No desarrollar como capacidad del sistema | Mantener fuera de objetivos y evaluación. |
 | Secuencia funcional | Propuesta, en versión restringida | Problema o aporte práctico | Eventualmente como síntesis conceptual | Evitar promesas no medidas. |
 
-## 11. Evidencia institucional pendiente
+## 10. Evidencia institucional pendiente
 
 Antes de cerrar el Capítulo I se procurará obtener:
 
@@ -130,7 +106,7 @@ Antes de cerrar el Capítulo I se procurará obtener:
 4. inventario inicial de actividades, registros y fuentes de información anteriores a la aplicación;
 5. autorización para utilizar información institucional, fotografías, ubicaciones y documentos en el trabajo académico.
 
-## 12. Referencia institucional
+## 11. Referencia institucional
 
 R3Foresta. (2026, 23 de agosto). *Resumen Ejecutivo Institucional: Modelo Integral de Bioregeneración, Innovación Ambiental y Desarrollo Comunitario* [Documento institucional no publicado].
 
