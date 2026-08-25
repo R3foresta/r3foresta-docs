@@ -24,14 +24,15 @@ El índice temático para recuperar estas fuentes está en [`../05_recursos/indi
 
 ## 2. Decisión editorial para el Perfil
 
-La búsqueda aporta más fuentes valiosas de las que necesita un perfil breve. Se seleccionaron únicamente dos incorporaciones:
+La búsqueda aporta más fuentes valiosas de las que necesita un perfil breve. La primera versión incorporó dos fuentes al argumento de antecedentes:
 
 - **[EVT-02] Solanki y Brewster (2014):** incorporada a los antecedentes porque extiende directamente a Thakur et al. (2011) y sustenta las relaciones entrada–evento–salida necesarias para reconstruir procedencia.
 - **[EVA-01] Donnelly et al. (2012):** incorporada a la progresión argumentativa de los antecedentes y al procedimiento de comparación entre la situación actual y la propuesta porque respalda que la capacidad de trazabilidad debe comprobarse intentando reconstruir una traza.
 
+La revisión final del marco teórico preliminar incorporó además **Olsen y Borit (2018)** para unidades, atributos y relaciones; **W3C PROV-O** para procedencia; **FAO Forest Reproductive Material** para anclar el dominio forestal; y **Härder y Reuter (1983)** para las propiedades transaccionales. Estas fuentes cubren vacíos concretos sin comprometer una arquitectura.
+
 Las demás fuentes quedan reservadas. En particular:
 
-- **Olsen y Borit (2018)** es sólida para definir los componentes del sistema, pero encaja mejor en el marco teórico que en una sección de antecedentes ya suficiente.
 - **GS1 EPCIS 2.0** es un referente técnico útil, pero incluirlo ahora podría sugerir una decisión de implementación que todavía no se ha tomado.
 - **FSC Chain of Custody** aporta reglas de conciliación cuantitativa en el ámbito forestal, aunque su objeto es la certificación de productos forestales y no la genealogía de material vegetal vivo.
 - **UNTP Digital Traceability Events** resulta prometedor, pero al corte de esta revisión continúa como especificación en desarrollo y adecuada para pilotos preproductivos.
@@ -42,13 +43,14 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 
 | ID | Fuente | Tipo | Destino principal | Estado al 18-08-2026 |
 |---|---|---|---|---|
+| DOM-01 | FAO, *Forest Reproductive Material* | Guía técnica oficial | Dominio forestal y procedencia | Ya citada en el marco teórico preliminar |
 | EVT-01 | Thakur et al. (2011) | Artículo académico | Antecedentes y marco teórico | Ya citada en el perfil |
 | EVT-02 | Solanki y Brewster (2014), transformaciones | Capítulo académico | Antecedentes y modelo | Incorporada al perfil; texto revisado |
 | EVT-03 | GS1 EPCIS 2.0 | Guía técnica oficial | Marco teórico y diseño | Reservada; documento oficial revisado |
 | EVT-04 | UNTP Digital Traceability Events | Especificación en desarrollo | Estado del arte reciente | Reserva; estado y versión verificados |
 | EVT-05 | Byun, Woo y Kim (2017) | Artículo académico | Grafo temporal y privacidad | Reserva; lectura completa pendiente |
-| GEN-01 | Olsen y Borit (2018) | Artículo académico | Componentes y unidades trazables | Marco teórico; metadatos verificados |
-| GEN-02 | W3C PROV-O (2013) | Recomendación técnica | Procedencia y derivación | Marco teórico; fuente oficial revisada |
+| GEN-01 | Olsen y Borit (2018) | Artículo académico | Componentes y unidades trazables | Ya citada en el marco teórico preliminar |
+| GEN-02 | W3C PROV-O (2013) | Recomendación técnica | Procedencia y derivación | Ya citada en el marco teórico preliminar |
 | GEN-03 | Jansen-Vullers et al. (2003) | Artículo académico | Genealogía en manufactura | Reserva; lectura completa pendiente |
 | GEN-04 | Solanki y Brewster (2014), *linked pedigrees* | Capítulo académico | Genealogía derivada de eventos | Reserva; lectura completa pendiente |
 | GEN-05 | Solanki (2015) | Ponencia/taller | Trazabilidad basada en eventos | Reserva; lectura completa pendiente |
@@ -57,12 +59,21 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 | INT-03 | FSC-STD-40-004 V3-1 (2021) | Estándar de certificación | Conciliación cuantitativa | Diseño de invariantes; documento oficial revisado |
 | INT-04 | Comba et al. (2013) | Artículo académico | Cantidad y procedencia en mezclas | Reserva; lectura completa pendiente |
 | INT-05 | FDA (2018), integridad de datos | Guía regulatoria | Integridad y pistas de auditoría | Marco teórico; documento oficial revisado |
+| INT-06 | Härder y Reuter (1983) | Artículo académico | Atomicidad y consistencia transaccional | Ya citada en el marco teórico preliminar |
 | EVA-01 | Donnelly et al. (2012) | Artículo académico | Antecedentes y evaluación por reconstrucción | Incorporada al perfil; metadatos y resumen revisados |
 | EVA-02 | Randrup et al. (2008) | Artículo académico | Retiro simulado | Reserva; lectura completa pendiente |
 | EVA-03 | Mgonja et al. (2013) | Artículo académico | Desempeño de trazabilidad | Marco de evaluación; lectura completa pendiente |
 | LIM-01 | Terriault (2022) | Tesis | Límites de los enlaces inferidos | Discusión; lectura completa pendiente |
 
 ## 4. Fichas críticas
+
+### DOM-01 — Material reproductivo forestal y procedencia
+
+**Fuente:** Food and Agriculture Organization of the United Nations. (s. f.). *Forest reproductive material*. [Sustainable Forest Management Toolbox](https://www.fao.org/sustainable-forest-management-toolbox/modules/forest-reproductive-material/en).
+
+- **Aporte transferible:** incluye semillas, partes de plantas y plantas dentro del material reproductivo forestal y recomienda registrar fuente, cantidad, tratamientos, distribución y lugar de uso, también cuando el material proviene de un proveedor.
+- **Uso previsto:** delimitar el término material vegetal y sustentar los datos mínimos de procedencia para compras o recepciones externas.
+- **Límite:** la guía orienta la gestión forestal; no prescribe el modelo informático ni certifica la calidad del material registrado.
 
 ### EVT-01 — Eventos como representación de la cadena
 
@@ -112,16 +123,16 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 **Fuente:** Olsen, P., & Borit, M. (2018). *The components of a food traceability system*. *Trends in Food Science & Technology, 77*, 143–149. [DOI](https://doi.org/10.1016/j.tifs.2018.05.004) · [repositorio](http://hdl.handle.net/10037/13348).
 
 - **Aporte transferible:** identifica como componentes centrales las unidades trazables, sus atributos y las relaciones producidas cuando se unen o dividen.
-- **Uso previsto:** marco teórico y comprobación de que el modelo conserva identidad y relaciones suficientes.
+- **Uso previsto:** marco teórico y comprobación de que el modelo conserva identidad y relaciones suficientes; incorporada al perfil.
 - **Límite:** no prescribe las invariantes transaccionales ni las reglas biológicas de R3Foresta.
-- **Decisión:** reservar para desarrollar el marco teórico; no duplicar en el perfil la definición de Olsen y Borit (2013).
+- **Decisión:** incorporada al marco teórico preliminar como complemento de la definición de Olsen y Borit (2013).
 
 ### GEN-02 — Procedencia mediante entidades, actividades y agentes
 
 **Fuente:** World Wide Web Consortium. (2013). *PROV-O: The PROV Ontology*. [Recomendación](https://www.w3.org/TR/prov-o/).
 
 - **Aporte transferible:** ofrece relaciones para expresar entidades usadas o generadas por actividades, derivaciones y responsabilidad de agentes.
-- **Uso previsto:** vocabulario conceptual para procedencia, genealogía y autoría de eventos.
+- **Uso previsto:** vocabulario conceptual para procedencia, genealogía y autoría de eventos; incorporada al perfil sin comprometer RDF u OWL.
 - **Límite:** PROV-O no controla cantidades, saldos ni reglas transaccionales; tampoco es necesario adoptar RDF u OWL para aprovechar su modelo conceptual.
 
 ### GEN-03 — Genealogía de lotes en manufactura
@@ -188,6 +199,14 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 - **Aporte transferible:** define integridad de datos, metadatos y *audit trail*, y enfatiza acceso individual, conservación y revisión de cambios.
 - **Uso previsto:** marco teórico de autoría, temporalidad y modificación no destructiva de registros.
 - **Límite:** es una guía regulatoria farmacéutica no vinculante para R3Foresta; solo se transferirán principios generales.
+
+### INT-06 — Atomicidad y consistencia transaccional
+
+**Fuente:** Härder, T., & Reuter, A. (1983). *Principles of transaction-oriented database recovery*. *ACM Computing Surveys, 15*(4), 287–317. [DOI](https://doi.org/10.1145/289.291).
+
+- **Aporte transferible:** fundamenta atomicidad, consistencia, aislamiento y durabilidad como propiedades de las transacciones.
+- **Uso previsto:** explicar por qué una operación crítica no debe dejar efectos parciales ni aceptar interacciones simultáneas incoherentes.
+- **Límite:** sustenta propiedades generales; no decide por sí sola qué mecanismo de bloqueo, restricción o recuperación implementará R3Foresta.
 
 ### EVA-01 — Evaluación empírica mediante reconstrucción
 

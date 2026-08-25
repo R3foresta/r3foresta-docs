@@ -1,17 +1,20 @@
 # Metodología de investigación y desarrollo
 
-> **Versión 8 — 19 de agosto de 2026.**
-> Documento de apoyo para la sección metodológica del perfil y el futuro Capítulo III. La formulación entregable está en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) §8.
+> **Versión 11 — 24 de agosto de 2026.**
+> Documento de apoyo para la sección metodológica del perfil y el diseño metodológico integrado en el Capítulo I. La formulación entregable del Perfil está en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) §8.
 > La evaluación y los artefactos posteriores deben conservar los [principios de trazabilidad y evaluación](../01_lineamientos/base_perfil_proyecto_grado.md#7-principios-de-trazabilidad-y-evaluación-del-proyecto).
 
-## 1. Decisión metodológica
+## 1. Decisión metodológica integrada
 
-El proyecto combina dos ejes diferentes:
+El proyecto combina componentes diferentes pero relacionados. Ninguno reemplaza a los demás:
 
-| Eje | Pregunta | Decisión |
+| Componente | Pregunta | Decisión |
 |---|---|---|
-| Investigación | ¿Cómo se construye y evalúa conocimiento sobre la solución? | Investigación aplicada y tecnológica, ciencia del diseño y estudio de caso único embebido |
-| Desarrollo | ¿Cómo se construirá y evolucionará el software durante el proyecto? | Desarrollo iterativo e incremental organizado en sprints, con especificaciones y decisiones versionadas |
+| Investigación | ¿Cómo se construye y evalúa conocimiento sobre la solución? | Investigación aplicada y tecnológica, ciencia del diseño operacionalizada mediante DSRM |
+| Estrategia empírica | ¿En qué contexto y sobre qué unidades se estudia la solución? | Estudio de caso único embebido en R3Foresta, con trazas de cadena de custodia como unidades de análisis |
+| Desarrollo | ¿Cómo se construirá y evolucionará el software? | Desarrollo iterativo e incremental organizado en sprints, con especificaciones y decisiones versionadas |
+| Verificación y evaluación | ¿Cómo se comprobarán la construcción y su utilidad contextual? | Pruebas técnicas formativas, reconstrucción de trazas, observación y piloto descriptivo |
+| Seguimiento | ¿Cómo se controlará el avance y se conservará evidencia? | Línea base, backlog, criterio de terminado, versiones, pruebas, demostraciones, decisiones, incidencias y horas por sprint |
 
 No se declara Scrum completo, RUP, XP, Shape Up ni AI-DLC como metodología integral. Se adopta la unidad temporal de **sprint**, con planificación, ejecución, revisión del incremento con R3Foresta o seguimiento académico cuando corresponda y retrospectiva, sin atribuir al proyecto roles o artefactos de un marco que no hayan sido formalmente definidos.
 
@@ -21,7 +24,24 @@ No se declara Scrum completo, RUP, XP, Shape Up ni AI-DLC como metodología inte
 
 El trabajo desarrolla un artefacto para resolver un problema real de R3Foresta. La ciencia del diseño vincula relevancia organizacional, construcción y evaluación del artefacto y comunicación del conocimiento producido (Hevner et al., 2004).
 
-Para convertir ese enfoque en un proceso ejecutable se utilizará DSRM (Peffers et al., 2007): identificación del problema, definición de objetivos de la solución, diseño y desarrollo, demostración, evaluación y comunicación. Estas actividades no reemplazan los sprints; permiten explicar en el Perfil y, con mayor detalle, en los capítulos metodológico y de resultados del Proyecto de Grado cómo cada incremento contribuye a construir y evaluar el artefacto.
+Para convertir ese enfoque en un proceso ejecutable se utilizará DSRM (Peffers et al., 2007): identificación del problema, definición de objetivos de la solución, diseño y desarrollo, demostración, evaluación y comunicación. Estas actividades no reemplazan los sprints; permiten explicar en el Perfil, en el diseño metodológico del Capítulo I y en los capítulos posteriores cómo cada incremento contribuye a construir y evaluar el artefacto.
+
+El artefacto académico no se reduce a las pantallas de la aplicación. Comprende el modelo de trazabilidad y cadena de custodia, las reglas e invariantes de integridad, la implementación integrada de Recolección, Vivero y Plantación, el mecanismo de reconstrucción y la evidencia producida al verificar y evaluar la solución. La contribución deberá poder seguirse mediante la cadena:
+
+> problema → conocimiento previo → requisito de diseño → componente del artefacto → demostración → evaluación → hallazgo o conclusión
+
+### 2.1.1. Aplicación de DSRM al proyecto
+
+| Actividad DSRM | Aplicación en R3Foresta | Evidencia principal |
+|---|---|---|
+| Identificación del problema y motivación | Caracterizar la práctica actual y las dificultades de reconstrucción e integridad | Inventario documental, entrevistas, trazas históricas y árbol del problema revisado |
+| Definición de objetivos de la solución | Convertir el problema en preguntas, objetivos, requisitos, invariantes y criterios de evaluación | Perfil, matriz de alineación y especificaciones versionadas |
+| Diseño y desarrollo | Diseñar y construir el modelo y los tres módulos integrados en incrementos | Decisiones, modelos, commits, migraciones, pruebas y documentación de los sprints 1–5 |
+| Demostración | Ejecutar los incrementos y reconstruir un recorrido de extremo a extremo | Revisiones de sprint, demostraciones reproducibles y recorrido M1→M2→M3 |
+| Evaluación | Contrastar el artefacto con requisitos, invariantes y necesidades del caso | Matriz de pruebas, situación actual, piloto, métricas y hallazgos cualitativos |
+| Comunicación | Presentar proceso, artefacto, evidencia, límites y contribución | Repositorios, documento final, anexos y defensa |
+
+DSRM se aplicará de forma iterativa. Un defecto o hallazgo de demostración o evaluación podrá devolver el trabajo a objetivos, diseño o desarrollo, siempre que el cambio y su justificación queden registrados.
 
 La evaluación no se limita a mostrar pantallas. Debe producir evidencia sobre:
 
@@ -34,7 +54,11 @@ La evaluación no se limita a mostrar pantallas. Debe producir evidencia sobre:
 
 ### 2.2. Estudio de caso
 
-R3Foresta constituye un **caso único embebido**. El caso es la organización y su proceso de trazabilidad; las unidades embebidas son las trazas de cadena de custodia estudiadas. El diseño sigue las recomendaciones de Runeson y Höst (2009): declarar preguntas, contexto, unidad de análisis, procedimientos de recolección, análisis y amenazas a la validez.
+R3Foresta constituye un **caso único embebido**. El caso es el diseño, construcción y evaluación del proceso digital de trazabilidad del material vegetal en R3Foresta durante la ventana académica formal. La Fundación constituye el contexto organizacional y las trazas de cadena de custodia estudiadas constituyen las unidades embebidas de análisis. El diseño sigue las recomendaciones de Runeson y Höst (2009): declarar preguntas, contexto, unidad de análisis, procedimientos de recolección, análisis y amenazas a la validez.
+
+La selección de un solo caso se justifica por su relación directa con el problema que origina el proyecto, el acceso autorizado a procesos y registros y la necesidad de estudiar con profundidad la interacción entre organización, operación y artefacto dentro del alcance de una licenciatura. Esta selección permite inferencia analítica y aprendizaje contextual, no generalización estadística.
+
+Antes de recolectar datos se delimitarán el periodo, los procesos, los sitios, los actores y las fuentes incluidas. El carácter embebido exige analizar más de una traza y realizar después una síntesis del caso completo. Si solo resultara disponible una unidad de análisis, se revisará la denominación del diseño en vez de mantener la etiqueta de caso embebido sin sustento.
 
 La unidad principal es una **traza de cadena de custodia**. Para caracterizar la situación actual se definirá un periodo documental, se inventariarán las actividades o recorridos identificables dentro de ese periodo y se analizará el conjunto de trazas que cumpla los criterios de inclusión. Los casos excluidos y su motivo también quedarán registrados. Este procedimiento corresponde a un censo documental delimitado de la información accesible, no a una muestra estadística ni a eventos generados por el software.
 
@@ -69,15 +93,30 @@ Los requerimientos, reglas de negocio, decisiones de arquitectura, esquema de da
 
 Esta práctica se sustenta en diseño por contrato (Meyer, 1992) y trazabilidad de requerimientos (Gotel & Finkelstein, 1994). En el documento académico puede describirse como **especificación versionada y mantenida como referencia**, sin depender de una etiqueta metodológica emergente.
 
+### 3.3. Actividades de cada incremento
+
+Cada sprint adaptará al alcance del incremento las siguientes actividades de Ingeniería de Software:
+
+1. seleccionar requisitos, reglas, riesgos y criterio de salida;
+2. analizar el proceso y los datos afectados;
+3. diseñar o ajustar interfaz, modelo, contratos y arquitectura;
+4. construir código y migraciones;
+5. verificar reglas y riesgos mediante las pruebas pertinentes;
+6. integrar con los módulos dependientes;
+7. demostrar y revisar el incremento;
+8. actualizar documentación, decisiones, incidencias y retrospectiva.
+
+La unidad temporal de sprint organiza estas actividades, pero no convierte el proyecto en Scrum completo. El Marco aplicativo describirá lo realmente ejecutado y justificará cualquier adaptación o desviación.
+
 ## 4. Cronología formal y sprints
 
 ### 4.1. Delimitación temporal
 
 La ejecución académica formal se desarrollará del **17 de agosto al 15 de noviembre de 2026**. Todo módulo, integración, prueba, piloto y resultado que se presente como cumplimiento de los objetivos deberá atravesar actividades verificables dentro de esta ventana. El periodo posterior hasta la defensa, prevista para fines de noviembre o inicios de diciembre, podrá utilizarse como margen interno para correcciones, maquetación y preparación de la defensa; cualquier ampliación de la ejecución sustantiva deberá reflejarse en el cronograma vigente.
 
-De acuerdo con el criterio académico acordado con la docente de la UMSA y comunicado por el postulante, la construcción que se defenderá deberá demostrarse dentro del semestre desde una **línea base académica limpia**. Los repositorios, decisiones y sistemas producidos con anterioridad podrán consultarse como referencia técnica y evidencia de factibilidad, pero no serán presentados como la construcción formal del Proyecto de Grado.
+De acuerdo con el criterio académico acordado con la docente de la UMSA y comunicado por el postulante, la construcción que se defenderá deberá demostrarse dentro del semestre desde una **referencia inicial académica del repositorio**. Los repositorios, decisiones y sistemas producidos con anterioridad podrán consultarse como referencia técnica y evidencia de factibilidad, pero no serán presentados como la construcción formal del Proyecto de Grado.
 
-La línea base académica deberá mostrar de forma verificable que todavía no existen los flujos funcionales que serán construidos. Cada sprint conservará evidencia de inicio y cierre: etiqueta o commit de referencia, requerimientos abordados, cambios de implementación, migraciones aplicadas desde una base controlada, pruebas críticas ejecutadas y demostración del incremento. No se afirmará que nunca existió un prototipo previo; se demostrará que el sistema académico presentado fue reconstruido incrementalmente dentro de la ventana autorizada.
+La referencia inicial académica deberá mostrar de forma verificable qué flujos funcionales todavía no existen y serán construidos. Cada sprint conservará evidencia de inicio y cierre: etiqueta o commit de referencia, requerimientos abordados, cambios de implementación, migraciones aplicadas desde una base controlada, pruebas críticas ejecutadas y demostración del incremento. No se afirmará que nunca existió un prototipo previo; se demostrará que el sistema académico presentado fue reconstruido incrementalmente dentro de la ventana autorizada.
 
 ### 4.2. Criterio general de terminado
 
@@ -95,14 +134,32 @@ Para cada incremento se exigirá:
 
 | Sprint | Periodo | Objetivo | Criterio principal de salida |
 |---|---|---|---|
-| 0 | 17–23 ago | Perfil, backlog, línea base académica limpia, arquitectura, instrumentos iniciales y caracterización de la situación actual | Plan formal, línea base y caracterización inicial disponibles |
-| 1 | 24 ago–6 sep | Inicio de la construcción formal: Recolección | M1 construido desde la línea base, probado y documentado |
+| 0 | 17–23 ago | Perfil, backlog, referencia inicial académica del repositorio, arquitectura, instrumentos iniciales y caracterización de la práctica actual | Plan formal, referencia inicial y caracterización disponibles |
+| 1 | 24 ago–6 sep | Inicio de la construcción formal: Recolección | M1 construido desde la referencia inicial, probado y documentado |
 | 2 | 7–20 sep | Vivero y M1→M2 | Eventos, saldos y primera transferencia cerrados |
 | 3 | 21 sep–4 oct | Plantación y M2→M3 | Asignación, plantación y segunda transferencia cerradas |
 | 4 | 5–18 oct | Reconstrucción y trazabilidad transversal | Recorrido completo reconstruible entre los tres módulos |
-| 5 | 19 oct–1 nov | Integración, UI/UX, calidad y despliegue | Versión candidata para piloto |
+| 5 | 19 oct–1 nov | Integración, interfaz y experiencia de uso, calidad y despliegue | Versión candidata para piloto |
 | 6 | 2–8 nov | Piloto y evaluación | Evidencia de la propuesta y contraste con la situación actual disponibles |
 | 7 | 9–15 nov | Resultados y cierre académico | Documento final revisado y entregado |
+
+### 4.4. Seguimiento y cadena de evidencia
+
+El control de avance utilizará una fila por sprint con, al menos:
+
+| Sprint | Planificado | Realizado | Evidencia | Desviación | Decisión | Estado del gate |
+|---|---|---|---|---|---|---|
+| _n_ | Requisitos y resultado esperado | Alcance realmente cerrado | Commits, migraciones, pruebas y demostración | Diferencia y causa | Acción adoptada | Aprobado, condicionado o pendiente |
+
+Se mantendrán además:
+
+- un registro de riesgos e incidencias con impacto, mitigación, estado y efecto sobre el cronograma;
+- una bitácora de decisiones y cambios que indique los objetivos, reglas, pruebas e instrumentos afectados;
+- la matriz de trazabilidad de investigación `problema → fuente → requisito de diseño → artefacto → demostración → evaluación → conclusión`;
+- la matriz técnica `requerimiento → regla → invariante → mecanismo → prueba → resultado`;
+- el registro de horas académicas y de las desviaciones entre fechas planificadas y reales.
+
+Estos controles constituyen seguimiento del proyecto y evidencia de ejecución; no son una metodología de investigación adicional.
 
 ## 5. Autoría, colaboración y asistencia
 
@@ -218,7 +275,7 @@ Los ítems concretos de reconstrucción se derivarán de las preguntas de proced
 
 ### 8.2. Custodia de datos de investigación
 
-Los roles y permisos del sistema controlan quién puede operar R3Foresta, pero no sustituyen el protocolo de investigación. Antes de entrevistas o piloto se definirá por separado: ubicación de almacenamiento, personas autorizadas, seudonimización, tratamiento de fotografías y coordenadas sensibles, periodo de conservación, retiro del consentimiento y eliminación. Datos personales o sensibles no se entregarán a agentes de IA sin autorización y anonimización previa.
+Los roles y permisos del sistema controlan quién puede operar R3foresta App, pero no sustituyen el protocolo de investigación. Antes de entrevistas o piloto se definirá por separado: ubicación de almacenamiento, personas autorizadas, seudonimización, tratamiento de fotografías y coordenadas sensibles, periodo de conservación, retiro del consentimiento y eliminación. Datos personales o sensibles no se entregarán a agentes de IA sin autorización y anonimización previa.
 
 ## 9. Amenazas a la validez
 
@@ -259,4 +316,4 @@ Venable, J., Pries-Heje, J., & Baskerville, R. (2016). FEDS: A framework for eva
 
 ---
 
-*Documento metodológico actualizado el 19 de agosto de 2026.*
+*Documento metodológico actualizado el 24 de agosto de 2026.*

@@ -371,7 +371,7 @@ Este título evita prometer *event sourcing* estricto, carbono o certificación,
 
 > **Nota de vigencia (2026-08-05):** las recomendaciones de §§7.4–7.5 corresponden a una etapa exploratoria y fueron superadas por la versión consolidada de cinco objetivos del [`perfil oficial`](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) §4. Se conservan como antecedente del análisis y no deben copiarse al entregable.
 
-> Desarrollar y evaluar un sistema de trazabilidad operativa para la cadena de custodia de material biológico destinado a reforestación, que registre los hechos críticos de recolección, vivero y plantación y preserve la consistencia de los saldos mediante operaciones transaccionales, en el caso R3Foresta.
+> Desarrollar y evaluar un sistema de trazabilidad operativa para la cadena de custodia de material vegetal destinado a reforestación, que registre los hechos críticos de recolección, vivero y plantación y preserve la consistencia de los saldos mediante operaciones transaccionales, en el caso R3Foresta.
 
 El verbo **evaluar** es imprescindible: convierte la implementación existente en objeto de estudio y evita que el proyecto termine siendo solo una descripción de software ya construido.
 
@@ -518,6 +518,6 @@ Lo que sobra no es necesariamente código, sino **promesa**. Sobran las afirmaci
 
 La conclusión más defendible es:
 
-> R3Foresta no debe presentarse como sistema de bonos de carbono. Debe presentarse y evaluarse como sistema de trazabilidad operativa de material vegetal. Si demuestra en campo que mejora la integridad, completitud y recuperación de información, podrá convertirse en una capa de datos útil para un futuro MRV; pero la contribución climática y la emisión de créditos requerirán procesos científicos, normativos y de verificación que hoy no están implementados.
+> R3foresta App no debe presentarse como sistema de bonos de carbono. Debe presentarse y evaluarse como sistema de trazabilidad operativa de material vegetal. Si demuestra en campo que mejora la integridad, completitud y recuperación de información, podrá convertirse en una capa de datos útil para un futuro MRV; pero la contribución climática y la emisión de créditos requerirán procesos científicos, normativos y de verificación que hoy no están implementados.
 
 Este encuadre no reduce el proyecto. Lo vuelve comprobable, técnicamente preciso y defendible ante un tribunal de Ingeniería de Sistemas.

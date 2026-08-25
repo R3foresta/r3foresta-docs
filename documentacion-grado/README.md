@@ -1,6 +1,6 @@
 # Documentación universitaria de grado — R3Foresta
 
-> **Estado al 19 de agosto de 2026:** el alcance de trabajo vigente es únicamente el **Perfil de Proyecto de Grado**. La ejecución académica se planifica prospectivamente del 17 de agosto al 15 de noviembre mediante ocho sprints; el contenido oficial del perfil está completo en Markdown y sus principios de trazabilidad y evaluación quedaron registrados para la documentación posterior.
+> **Estado al 24 de agosto de 2026:** el Perfil se encuentra en revisión final; el Capítulo I cuenta con una primera versión y el Capítulo II conserva su estructura sin redacción. La ejecución académica se planifica prospectivamente del 17 de agosto al 15 de noviembre mediante ocho sprints.
 
 Espacio de trabajo para producir los dos resultados académicos del proyecto de grado de la UMSA, Carrera de Informática — mención Ingeniería de Sistemas:
 
@@ -10,10 +10,12 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 ## Punto de entrada
 
 - [`02_planificacion/TODO.md`](02_planificacion/TODO.md) — tablero vivo del perfil: bloqueantes, estado por sección, figuras y actividades pendientes.
+- [`02_planificacion/TODO_CAPITULOS_1_Y_2.md`](02_planificacion/TODO_CAPITULOS_1_Y_2.md) — checklist único para validar, corregir y cerrar los capítulos I y II.
 - [`02_planificacion/TODO_PROYECTO_GRADO.md`](02_planificacion/TODO_PROYECTO_GRADO.md) — tablero de ejecución: construcción académica, protocolo empírico, cierre prepiloto y documento final.
 - [`06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) — documento oficial del perfil.
 - [`01_lineamientos/base_perfil_proyecto_grado.md`](01_lineamientos/base_perfil_proyecto_grado.md) — alcance rector, principios de trazabilidad y reglas de propagación hacia el Proyecto de Grado final.
 - [`01_lineamientos/criterios_editoriales_proyecto_grado.md`](01_lineamientos/criterios_editoriales_proyecto_grado.md) — criterios de claridad, nivel de detalle y separación entre propiedades, mecanismos y pruebas para la documentación posterior al Perfil.
+- [`03_investigacion/ficha_institucional_r3foresta.md`](03_investigacion/ficha_institucional_r3foresta.md) — misión y visión oficiales, identidad del modelo, relación entre R3Carbon y R3foresta App, antecedentes, aspectos preliminares del diagnóstico y evidencia institucional pendiente.
 - [`05_recursos/indice_fuentes_bibliograficas.md`](05_recursos/indice_fuentes_bibliograficas.md) — acceso temático a las fuentes del perfil y del futuro marco teórico.
 - [`06_entregables/proyecto_grado/README.md`](06_entregables/proyecto_grado/README.md) — espacio reservado y guía inicial para el documento final.
 
@@ -61,11 +63,11 @@ Modalidad elegida: **Defensa de Proyecto de Grado**.
 
 ### Estructura del Proyecto final (a la que apunta el perfil)
 
-- **Cap. 1 — Marco Introductorio / Aspectos generales** (introducción, problema, objetivos, justificación, alcances).
-- **Cap. 2 — Marco Teórico.**
-- **Cap. 3 — Marco Aplicativo/Práctico** (ingeniería del sistema: análisis, diseño, implementación).
-- **Cap. 4 — Prueba de hipótesis / Evaluación** (costo-beneficio, calidad, seguridad).
-- **Cap. 5 — Conclusiones y recomendaciones.**
+- **Introducción independiente** — se redactará al finalizar todos los capítulos.
+- **Cap. 1 — Marco introductorio** (antecedentes, problema, objetivos, justificación, alcances y diseño metodológico).
+- **Cap. 2 — Marco teórico y conceptual.**
+- **Cap. 3 — Marco aplicativo** (ingeniería del sistema: análisis, diseño, implementación e integración; detalle pendiente).
+- **Capítulos posteriores** — verificación, evaluación, conclusiones y recomendaciones; denominación pendiente.
 - Bibliografía y anexos.
 
 ### Referencias

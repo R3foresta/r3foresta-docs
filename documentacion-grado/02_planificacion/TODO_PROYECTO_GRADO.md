@@ -3,24 +3,27 @@
 > **Fecha de apertura:** 19 de agosto de 2026.
 > **Propósito:** convertir el Perfil en construcción demostrable, protocolo de investigación, evaluación y documento final. Este tablero comienza a ejecutarse en paralelo con el cierre del Perfil y se vuelve el tablero principal después de su aprobación.
 
+> La revisión y cierre específicos de los capítulos I y II se controlan en [`TODO_CAPITULOS_1_Y_2.md`](TODO_CAPITULOS_1_Y_2.md).
+
 ## 1. Decisiones cerradas
 
 - [x] Mantener investigación aplicada y tecnológica, ciencia del diseño y desarrollo iterativo e incremental.
 - [x] Operacionalizar ciencia del diseño mediante DSRM sin reemplazar los sprints.
-- [x] Formular el estudio como caso único embebido: R3Foresta es el caso y las trazas son las unidades de análisis.
-- [x] Demostrar la construcción académica dentro del semestre desde una línea base limpia, conforme al criterio acordado con la docente de la UMSA.
+- [x] Formular el estudio como caso único embebido: el caso es el diseño, construcción y evaluación del proceso digital de trazabilidad en R3Foresta; la Fundación es el contexto organizacional y las trazas son las unidades de análisis.
+- [x] Demostrar la construcción académica dentro del semestre desde una referencia inicial académica del repositorio, conforme al criterio acordado con la docente de la UMSA.
 - [x] Conservar los desarrollos anteriores solo como referencia técnica y factibilidad, no como evidencia de construcción formal.
 - [x] Priorizar calidad sobre volumen de pruebas.
 - [x] Excluir blockchain, NFT, contratos inteligentes e IPFS de la construcción, evaluación y contribución académica, sin exigir su eliminación de repositorios históricos.
-- [x] Mantener recepción externa como variante dentro de Vivero o Plantación, no como cuarto módulo.
-- [x] Procurar comparación paralela de una misma actividad mediante la práctica habitual y R3Foresta.
+- [x] Implementar el ingreso de material vegetal adquirido o recibido de terceros tanto en Vivero como directamente en Plantación, como variantes internas y no como un cuarto módulo.
+- [x] Procurar comparación paralela de una misma actividad mediante la práctica habitual y R3foresta App.
+- [x] Denominar **R3foresta App** a la aplicación, diferenciándola de R3Foresta como institución y de R3Carbon como componente institucional.
 
 ## 2. Línea base y evidencia de construcción
 
-- [ ] Definir el repositorio, ramas y entorno que constituirán la línea base académica.
+- [ ] Definir el repositorio, ramas y entorno que constituirán la referencia inicial académica.
 - [ ] Crear una etiqueta o commit inicial que contenga solo la estructura autorizada y no los flujos funcionales que se construirán.
 - [ ] Preparar una base de datos controlada y reproducible desde migraciones académicas.
-- [ ] Registrar el inventario inicial: qué existe en la línea base y qué todavía no existe.
+- [ ] Registrar el inventario inicial: qué existe en la referencia inicial y qué todavía no existe.
 - [ ] Conservar por sprint un paquete compacto de evidencia:
   - etiqueta o commit de inicio y cierre;
   - requerimientos y reglas abordados;
@@ -29,6 +32,9 @@
   - pruebas críticas y resultado;
   - captura o acta breve de demostración;
   - decisiones y desviaciones.
+- [ ] Mantener por sprint la fila `planificado → realizado → evidencia → desviación → decisión → estado del gate`.
+- [ ] Mantener un registro de riesgos e incidencias con impacto, mitigación, estado y efecto sobre el cronograma.
+- [ ] Mantener la matriz DSR `problema → fuente → requisito de diseño → artefacto → demostración → evaluación → conclusión`.
 - [ ] Registrar horas académicas por actividad y sprint.
 - [ ] Diferenciar siempre referencia técnica previa, construcción académica y estado desplegado.
 
@@ -37,14 +43,15 @@
 ### Sprint 0 — Línea base, Perfil y preparación
 
 - [ ] Cerrar Perfil y backlog académico.
-- [ ] Evidenciar la línea base limpia.
+- [ ] Evidenciar la referencia inicial académica del repositorio.
 - [ ] Mapear objetivos y sprints con las seis actividades DSRM.
+- [ ] Revisar el mapa DSRM después de cada demostración o evaluación y registrar los ciclos de retorno a objetivos, diseño o desarrollo.
 - [ ] Iniciar inventario documental de la práctica actual.
 - [ ] Preparar versiones iniciales de los instrumentos.
 
 ### Sprint 1 — Recolección
 
-- [ ] Construir M1 desde la línea base.
+- [ ] Construir M1 desde la referencia inicial.
 - [ ] Documentar requerimientos, reglas, datos, interfaz y pruebas críticas de M1.
 - [ ] Definir la información mínima de procedencia para material recolectado y recibido externamente.
 - [ ] Generar paquete de evidencia del sprint.
@@ -52,14 +59,14 @@
 ### Sprint 2 — Vivero y Recolección→Vivero
 
 - [ ] Construir M2 y el contrato M1→M2.
-- [ ] Definir e implementar la variante de recepción externa que ingresa a Vivero, si esta es la variante seleccionada.
+- [ ] Implementar en Vivero el ingreso de material vegetal adquirido o recibido de terceros, registrando el hecho de ingreso, el proveedor u organización de procedencia, la especie, la cantidad y unidad, la fecha, el responsable y la evidencia documental disponible.
 - [ ] Probar saldo, transformación observada, merma y transferencia crítica.
 - [ ] Generar paquete de evidencia del sprint.
 
 ### Sprint 3 — Plantación y Vivero→Plantación
 
 - [ ] Construir M3 y el contrato M2→M3.
-- [ ] Resolver la procedencia de material externo que ingrese directamente a Plantación si esta variante permanece en alcance.
+- [ ] Implementar en Plantación el ingreso directo de material vegetal adquirido o recibido de terceros, con los datos de procedencia disponibles y un historial diferenciado de las plantas procedentes de Vivero.
 - [ ] Probar asignación, consumo, devolución y registro de plantación críticos.
 - [ ] Generar paquete de evidencia del sprint.
 
@@ -81,7 +88,7 @@
 ### Sprint 6 — Piloto y evaluación
 
 - [ ] Obtener autorizaciones y consentimientos.
-- [ ] Registrar en paralelo la práctica habitual y R3Foresta sobre la misma actividad cuando sea viable.
+- [ ] Registrar en paralelo la práctica habitual y R3foresta App sobre la misma actividad cuando sea viable.
 - [ ] Ejecutar reconstrucción independiente cuando exista una persona disponible.
 - [ ] Consolidar resultados cuantitativos y cualitativos por traza.
 - [ ] Diferenciar operaciones reales, reconstrucciones históricas y casos controlados.
@@ -172,8 +179,8 @@
 
 ## 10. Alcance y coherencia documental
 
-- [ ] Especificar la recepción externa en requerimientos, reglas, modelo de datos, interfaz, pruebas y documentación académica.
-- [ ] Confirmar si se implementará ingreso externo en Vivero, Plantación o ambas variantes.
+- [ ] Especificar los ingresos externos de Vivero y Plantación en requerimientos, reglas, historial de eventos, modelo de datos, interfaz, pruebas y documentación académica.
+- [x] Confirmar la implementación de ingreso externo tanto en Vivero como directamente en Plantación.
 - [ ] Excluir blockchain, NFT, contratos inteligentes e IPFS de objetivos, incrementos académicos, pruebas, resultados y conclusiones.
 - [ ] Mantener exactamente tres módulos.
 - [ ] Propagar cada decisión metodológica a Perfil, lineamientos, metodología, plan, instrumentos y documento final.
@@ -181,8 +188,10 @@
 
 ## 11. Documento final y defensa
 
-- [ ] Desarrollar el Capítulo III con DSRM, caso embebido, protocolo, métricas, análisis y ética realmente ejecutados.
-- [ ] Desarrollar el Capítulo IV con evidencia de construcción por sprint y resultados de verificación/evaluación.
+- [ ] Completar dentro del Capítulo I el diseño metodológico con DSRM, caso embebido, protocolo, métricas, análisis y ética realmente ejecutados.
+- [ ] Verificar que cada componente metodológico nombrado en el Capítulo I esté explicado y que cada concepto utilizado para diseñar o evaluar el artefacto tenga fundamento en el Capítulo II.
+- [ ] Desarrollar el Capítulo III como Marco aplicativo; su estructura interna se definirá posteriormente.
+- [ ] Desarrollar en los capítulos posteriores la evidencia de construcción por sprint y los resultados de verificación/evaluación.
 - [ ] Mantener una cadena de evidencia desde dato o commit hasta conclusión.
 - [ ] Usar el periodo posterior al 15 de noviembre para correcciones, maquetación y preparación de la defensa.
 - [ ] Si se amplía la recolección o construcción sustantiva, actualizar formalmente cronograma y fechas de corte.

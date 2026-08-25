@@ -1,6 +1,6 @@
 # Estructura vigente del Perfil de Proyecto de Grado
 
-> **Versión 9 — 19 de agosto de 2026.**
+> **Versión 10 — 19 de agosto de 2026.**
 > Este documento explica la arquitectura del perfil; el texto entregable y fuente de verdad académica es [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 > Los principios que deben conservarse en la documentación posterior se encuentran en [base_perfil_proyecto_grado.md](../01_lineamientos/base_perfil_proyecto_grado.md) §§7–8.
 
@@ -22,13 +22,13 @@ Se mantienen tres módulos:
 2. Vivero;
 3. Plantación.
 
-El recorrido principal se organiza alrededor de estos tres módulos. Si el material vegetal ingresa en una etapa intermedia, su procedencia debe conservarse dentro del módulo correspondiente. Esta posibilidad es una variante implícita del proceso y no un cuarto módulo, un flujo principal ni un resultado independiente.
+El recorrido principal se organiza alrededor de estos tres módulos. El material vegetal adquirido o recibido de terceros podrá ingresar directamente en Vivero o Plantación y su procedencia deberá conservarse dentro del módulo correspondiente. Estas entradas son variantes integradas del proceso, no un cuarto módulo, un flujo principal ni un resultado independiente.
 
 ## 3. Cadena de alineación académica
 
 ### Problema central
 
-La información sobre el recorrido del material vegetal se conserva en registros dispersos sin una estructura común, lo que limita la reconstrucción de procedencia, cantidades, responsables, transferencias y plantación con evidencia contrastable.
+La información sobre el recorrido del material vegetal se conserva en registros dispersos sin una estructura común, lo que limita la reconstrucción de procedencia, cantidades, responsables, transferencias y plantación con evidencia contrastable. Cuando el material es adquirido o recibido de terceros, el ingreso debe iniciar su historial en Vivero o Plantación con los datos de procedencia disponibles.
 
 ### Pregunta general
 
@@ -38,7 +38,7 @@ La información sobre el recorrido del material vegetal se conserva en registros
 
 Se reproduce sin cambios porque los objetivos quedan fuera de la presente revisión terminológica y de alcance narrativo.
 
-Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del material biológico utilizado por R3Foresta, desde su recolección o recepción externa hasta su manejo en vivero y plantación, que permita reconstruir con evidencia contrastable su procedencia, movimientos, cantidades, responsables y destino.
+Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del material vegetal utilizado por R3Foresta, desde su recolección o recepción externa hasta su manejo en vivero y plantación, que permita reconstruir con evidencia contrastable su procedencia, movimientos, cantidades, responsables y destino.
 
 ### Objetivos específicos y resultados
 
@@ -105,16 +105,16 @@ Los componentes históricos relacionados con blockchain, NFT o IPFS pueden perma
 
 - investigación aplicada y tecnológica;
 - ciencia del diseño operacionalizada mediante DSRM;
-- estudio de caso único embebido en R3Foresta, con trazas como unidades de análisis;
+- estudio de caso único embebido: el caso es el diseño, construcción y evaluación del proceso digital de trazabilidad en R3Foresta, la Fundación es el contexto organizacional y las trazas son las unidades de análisis;
 - datos cuantitativos y cualitativos con análisis descriptivo;
 - desarrollo iterativo e incremental;
 - organización del trabajo en ocho sprints entre agosto y noviembre;
 - especificaciones y decisiones versionadas;
 - agentes de IA aprobados como apoyo bajo revisión humana;
-- construcción demostrable desde una línea base académica limpia;
+- construcción demostrable desde una referencia inicial académica del repositorio;
 - declaración transparente de desarrollos previos como referencia técnica, autoría y colaboración puntual.
 
-La ejecución académica formal se planifica del 17 de agosto al 15 de noviembre de 2026. Conforme al criterio acordado con la docente de la UMSA, la solución que se defenderá se reconstruirá desde una línea base académica limpia y cada sprint conservará evidencia versionada de sus incrementos. Los desarrollos anteriores serán referencia técnica y factibilidad, no evidencia de construcción formal. Recolección, Vivero, Plantación, las dos integraciones, la reconstrucción transversal, la calidad, el piloto y la documentación deberán atravesar sus sprints y criterios de cierre dentro de la ventana formal.
+La ejecución académica formal se planifica del 17 de agosto al 15 de noviembre de 2026. Conforme al criterio acordado con la docente de la UMSA, la solución que se defenderá se reconstruirá desde una referencia inicial académica del repositorio y cada sprint conservará evidencia versionada de sus incrementos. Los desarrollos anteriores serán referencia técnica y factibilidad, no evidencia de construcción formal. Recolección, Vivero, Plantación, las dos integraciones, la reconstrucción transversal, la calidad, el piloto y la documentación deberán atravesar sus sprints y criterios de cierre dentro de la ventana formal.
 
 ## 8. Estructura y extensión
 
@@ -139,7 +139,7 @@ El cuerpo esperado se mantiene aproximadamente entre 20 y 24 páginas una vez ma
 
 ## 9. Cronograma consolidado
 
-- Sprint 0, 17–23 de agosto: inicio, perfil, backlog, línea base académica, arquitectura, instrumentos iniciales y caracterización de la situación actual;
+- Sprint 0, 17–23 de agosto: inicio, perfil, backlog, referencia inicial académica del repositorio, arquitectura, instrumentos iniciales y caracterización de la práctica actual;
 - Sprint 1, 24 de agosto–6 de septiembre: inicio de la construcción formal con Recolección;
 - Sprint 2, 7–20 de septiembre: Vivero e integración M1→M2;
 - Sprint 3, 21 de septiembre–4 de octubre: Plantación e integración M2→M3;

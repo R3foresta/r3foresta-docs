@@ -13,9 +13,9 @@ Actúa como investigador académico especializado en revisión de estado del art
 
 ### Contexto de mi proyecto (R3Foresta)
 
-R3Foresta es un sistema de **trazabilidad de la cadena de custodia de material biológico para reforestación**, con **certificación/transparencia mediante blockchain** y orientado a **bonos de carbono**. Modela el ciclo completo de una planta desde su origen hasta el campo, en cuatro módulos:
+R3foresta App es un sistema de **trazabilidad de la cadena de custodia de material vegetal para reforestación**, con **certificación/transparencia mediante blockchain** y orientado a **bonos de carbono**. Modela el ciclo completo de una planta desde su origen hasta el campo, en cuatro módulos:
 
-1. **Recolección (origen):** registro del lote origen de semillas/material biológico con evidencia fotográfica obligatoria, coordenadas GPS y flujo de validación.
+1. **Recolección (origen):** registro del lote origen de semillas/material vegetal con evidencia fotográfica obligatoria, coordenadas GPS y flujo de validación.
 2. **Vivero (maduración):** seguimiento del lote en vivero con eventos append-only (inicio, embolsado, merma, despacho), saldo vivo de plantas y cierre del lote.
 3. **Plantación (campo):** campañas y subcampañas de plantación en terreno, metas por especie, validación geoespacial del polígono (PostGIS/GPS), mantenimiento y monitoreo posterior.
 4. **Catálogos maestros transversales:** usuarios/roles, territorios, viveros, especies de plantas.

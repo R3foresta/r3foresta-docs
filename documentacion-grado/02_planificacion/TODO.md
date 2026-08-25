@@ -1,6 +1,6 @@
 # TODO — cierre del Perfil de Proyecto de Grado
 
-> **Fecha de corte:** 19 de agosto de 2026.
+> **Fecha de corte:** 24 de agosto de 2026.
 > **Alcance de este tablero:** únicamente el Perfil de Proyecto de Grado. El desarrollo restante, el piloto, las pruebas finales y el documento del Proyecto de Grado aparecen aquí solo como actividades prometidas en el perfil; no son entregables de esta actualización.
 
 ## 1. Entregable oficial
@@ -13,12 +13,15 @@ La versión Markdown está completa en contenido. La maquetación Word/PDF, expo
 
 La ejecución posterior se controla en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_GRADO.md), que separa construcción académica, protocolo empírico, cierre técnico prepiloto y documento final.
 
+La revisión progresiva del Capítulo I, la preparación del Capítulo II y las correcciones de la tutora se registran en [`TODO_CAPITULOS_1_Y_2.md`](TODO_CAPITULOS_1_Y_2.md).
+
 ## 2. Decisiones consolidadas
 
 - [x] Título propuesto simplificado: **Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta**.
+- [x] Utilizar **R3foresta App** como nombre oficial de la aplicación y distinguirla de R3Foresta, la institución, y R3Carbon, el componente institucional.
 - [ ] Obtener aprobación de la tutora para el título, problema y objetivos.
 - [x] Mantener tres módulos: Recolección, Vivero y Plantación.
-- [x] Tratar cualquier ingreso intermedio de material vegetal como una variante implícita dentro de los tres módulos, no como un flujo o entregable central.
+- [x] Implementar el ingreso de material vegetal adquirido o recibido de terceros tanto en Vivero como directamente en Plantación, conservando sus datos de procedencia y registrándolo como variante interna de los tres módulos.
 - [x] Utilizar “semillas y plantas” para introducir el dominio y “material vegetal” como denominación general en las secciones posteriores.
 - [x] Sustituir “auditable/verificable” por **trazabilidad reconstruible** y **evidencia contrastable** cuando se habla de registros.
 - [x] Excluir blockchain, NFT, IPFS, contratos inteligentes y créditos de carbono.
@@ -28,7 +31,7 @@ La ejecución posterior se controla en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_
 - [x] Fijar el cierre del perfil hasta el 31 de agosto y del Proyecto de Grado hasta el 15 de noviembre de 2026.
 - [x] Reformular la ejecución académica como prospectiva entre agosto y noviembre.
 - [x] Tratar el código y los artefactos anteriores como referencia técnica y evidencia de factibilidad, no como construcción formal ni como objetivos cumplidos.
-- [x] Registrar el acuerdo académico de demostrar la construcción dentro del semestre desde una línea base limpia y con evidencia por sprint.
+- [x] Registrar el acuerdo académico de demostrar la construcción dentro del semestre desde una referencia inicial académica del repositorio y con evidencia por sprint.
 - [x] Formular el estudio como caso único embebido y DSRM como proceso de ciencia del diseño.
 - [x] Mantener el Perfil compacto y trasladar el protocolo reproducible al TODO del Proyecto de Grado.
 - [x] Diferenciar transferencia de transformación y evitar equivalencias aritméticas automáticas entre unidades distintas.
@@ -67,12 +70,13 @@ La ejecución posterior se controla en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_
 
 - [x] Coherencia entre problema, pregunta general y objetivo general.
 - [x] Correspondencia entre cinco preguntas y cinco objetivos específicos.
-- [x] Ingresos intermedios tratados como variantes implícitas, sin convertirlos en un eje del perfil.
+- [x] Ingresos externos en Vivero y Plantación tratados como variantes integradas, sin convertirlos en un eje independiente del perfil.
 - [x] Objetivos restaurados y preservados sin cambios hasta su revisión formal.
 - [x] Un solo árbol del problema.
 - [x] Recursos humanos, tecnológicos y económicos identificados.
 - [x] Presupuesto calculado sin inventar horas de trabajo.
 - [x] Bibliografía preliminar en APA 7.
+- [x] Misión, visión, creación institucional en 2019 y relación con R3Carbon actualizadas con el resumen ejecutivo oficial de R3Foresta del 23 de agosto de 2026.
 - [x] Cronograma compatible con cierre a mediados de noviembre.
 - [x] Los tres módulos y sus integraciones aparecen dentro del periodo formal.
 - [x] Los agentes de IA tienen funciones delimitadas y validación humana.
@@ -100,8 +104,8 @@ La ejecución posterior se controla en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_
 
 Estas actividades pertenecen a la ejecución del Proyecto de Grado:
 
-1. ejecutar Sprint 0, fijar la línea base académica limpia y caracterizar la situación actual mediante el censo del periodo documental definido;
-2. ejecutar Sprint 1 para construir formalmente Recolección desde la línea base;
+1. ejecutar Sprint 0, fijar la referencia inicial académica del repositorio y caracterizar la práctica actual mediante el censo del periodo documental definido;
+2. ejecutar Sprint 1 para construir formalmente Recolección desde la referencia inicial;
 3. ejecutar Sprint 2 para Vivero y M1→M2;
 4. ejecutar Sprint 3 para Plantación y M2→M3;
 5. ejecutar Sprint 4 para reconstrucción y trazabilidad transversal;

@@ -1,6 +1,6 @@
 # Lineamientos estratégicos y principios de trazabilidad del Proyecto de Grado
 
-> **Versión 9 — 19 de agosto de 2026.**
+> **Versión 10 — 19 de agosto de 2026.**
 > Este documento fija las decisiones que deben mantenerse coherentes desde el Perfil hasta los requerimientos, el diseño, la implementación, las pruebas, la evaluación y el documento final. El texto entregable vive en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 > La redacción de los artefactos posteriores al Perfil se rige además por [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md).
 
@@ -36,7 +36,7 @@ No incluir en el título eventos, contratos atómicos, blockchain, NFT, IPFS, bo
 
 La práctica actual conserva fotografías, mensajes, redes sociales, cuadernos y memoria de los responsables, pero no una estructura común para vincular procedencia, manejo, cantidades, responsables, evidencia y plantación.
 
-El recorrido principal comprende Recolección, Vivero y Plantación. El sistema puede admitir material vegetal que ingrese en una etapa intermedia, pero esta posibilidad se trata como una variante implícita dentro de los módulos existentes y no como un flujo o entregable central.
+El recorrido principal comprende Recolección, Vivero y Plantación. El sistema admitirá material vegetal adquirido o recibido de terceros que ingrese directamente en Vivero o Plantación; estas entradas se tratarán como variantes integradas en los módulos existentes y no como un cuarto módulo o un entregable independiente.
 
 La falta de relaciones comunes limita la reconstrucción de la cadena, la consistencia de saldos y la información presentada a patrocinadores y aliados.
 
@@ -50,11 +50,11 @@ Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del 
 
 ### Objetivos específicos
 
-1. **Analizar** procesos, actores, datos, estados, eventos, unidades, requerimientos y reglas.
+1. **Analizar** procesos, actores, datos, estados, eventos, unidades, requerimientos y reglas de Recolección, Vivero y Plantación, incluidas las variantes de ingreso de material vegetal adquirido o recibido de terceros.
 2. **Diseñar** el modelo de trazabilidad, integridad, invariantes y transferencias.
-3. **Implementar** Recolección, Vivero y Plantación, incorporando la recepción externa como flujo.
-4. **Verificar** requerimientos e invariantes mediante pruebas.
-5. **Evaluar** capacidad de reconstrucción y carga operativa mediante línea base y piloto.
+3. **Implementar** Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial.
+4. **Verificar** requerimientos e invariantes mediante pruebas funcionales y técnicas.
+5. **Evaluar** capacidad de reconstrucción y carga operativa mediante la caracterización de la práctica actual y un piloto.
 
 Cada objetivo mantiene un verbo rector y produce una sección principal de resultados.
 
@@ -65,7 +65,7 @@ Cada objetivo mantiene un verbo rector y produce una sección principal de resul
 - M1 Recolección;
 - M2 Vivero;
 - M3 Plantación;
-- variantes de ingreso del material vegetal resueltas dentro de los módulos existentes;
+- ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, resuelto dentro de los módulos existentes y registrado como hecho del historial con sus datos de procedencia disponibles;
 - reconstrucción del origen y recorrido del material vegetal;
 - eventos e historial como capacidad transversal de los tres módulos;
 - conservación de las relaciones entre material de origen, eventos, material resultante y destino;
@@ -109,14 +109,14 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 2. **Evento antes que estado aislado.** Cuando una cantidad, estado o ubicación cambie, deberá poder identificarse el hecho que produjo ese cambio; no se debe sobrescribir el estado actual sin conservar su explicación.
 3. **Las cantidades deben poder explicarse.** Los saldos actuales deberán relacionarse con los eventos anteriores que los produjeron.
 4. **Transferencia y transformación son conceptos diferentes.** Una transferencia mueve material; una transformación puede modificar estado, naturaleza, cantidad o unidad de medida. No se asumirá una conversión aritmética automática entre gramos de semillas y cantidad de plantas.
-5. **La procedencia debe conservarse.** Cuando material externo ingrese directamente a Vivero o Plantación, se conservará toda la información disponible sobre su procedencia sin crear un cuarto módulo.
+5. **La procedencia debe conservarse.** Cuando material vegetal adquirido o recibido de terceros ingrese directamente a Vivero o Plantación, su historial comenzará con el hecho de ingreso externo y conservará la información disponible sobre proveedor u organización de procedencia, especie, cantidad, unidad, fecha, responsable y evidencia documental, sin crear un cuarto módulo ni atribuir una recolección inexistente.
 6. **La evidencia respalda, no certifica.** Fotografías, fechas, ubicaciones y otros datos fortalecen el respaldo documental del evento, pero no prueban de forma absoluta la correspondencia con el mundo físico.
 7. **La evaluación debe intentar reconstruir.** La prueba central no será solo guardar registros, sino comprobar si otra persona puede reconstruir de manera coherente qué ocurrió con un material determinado.
 8. **Integridad y reconstrucción son complementarias.** No basta con conservar un historial; cantidades, asignaciones y saldos también deben mantener coherencia.
 9. **La solución técnica permanece abierta durante el Perfil.** El Perfil define propiedades deseadas; los mecanismos concretos se decidirán y justificarán posteriormente.
 10. **La carga operativa también importa.** La calidad de la trazabilidad se evaluará considerando el esfuerzo requerido para producir los registros necesarios.
 11. **La verificación se concentra en riesgo y evidencia.** Se mantendrá un conjunto pequeño de pruebas de calidad sobre invariantes y recorridos críticos; el volumen de casos o archivos de prueba no es un resultado académico por sí mismo.
-12. **La construcción formal debe ser demostrable.** El sistema académico partirá de una línea base limpia y cada sprint conservará evidencia versionada de lo construido dentro del semestre.
+12. **La construcción formal debe ser demostrable.** El sistema académico partirá de una referencia inicial del repositorio y cada sprint conservará evidencia versionada de lo construido dentro del semestre.
 
 ## 8. Propagación a los artefactos posteriores
 
@@ -138,7 +138,7 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 
 - aplicada y tecnológica;
 - ciencia del diseño operacionalizada mediante DSRM;
-- estudio de caso único embebido en R3Foresta, con trazas como unidades de análisis;
+- estudio de caso único embebido: el caso es el diseño, construcción y evaluación del proceso digital de trazabilidad en R3Foresta, la Fundación es el contexto organizacional y las trazas son las unidades de análisis;
 - enfoque mixto descriptivo;
 - sin generalización estadística.
 
@@ -150,10 +150,10 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 - desarrollo y cierre formal de Recolección, Vivero y Plantación;
 - integración M1→M2 y M2→M3;
 - reconstrucción del recorrido, integración transversal, calidad, piloto y documentación final;
-- construcción demostrada desde una línea base académica limpia mediante evidencia versionada por sprint;
+- construcción demostrada desde una referencia inicial académica del repositorio mediante evidencia versionada por sprint;
 - desarrollos previos utilizados solo como referencia técnica y factibilidad, no como evidencia de construcción formal.
 
-Esta reconstrucción académica dentro del semestre corresponde al criterio acordado con la docente de la UMSA y comunicado por el postulante. No se afirmará que nunca existió un prototipo previo; se demostrará que la solución presentada en la defensa fue construida incrementalmente dentro de la ventana autorizada.
+Esta reconstrucción académica dentro del semestre corresponde al criterio acordado con la docente de la UMSA y comunicado por el postulante. No se afirmará que nunca existió un prototipo previo; la referencia inicial mostrará qué capacidades todavía no existen y la evidencia de los sprints demostrará su construcción incremental dentro de la ventana autorizada.
 
 ### Autoría y asistencia
 
@@ -182,8 +182,8 @@ No se fijará una cantidad arbitraria de casos históricos: se documentarán el 
 
 ## 12. Cronograma rector
 
-- Sprint 0, 17–23 de agosto: perfil, backlog, línea base académica limpia, arquitectura, instrumentos iniciales y caracterización de la situación actual;
-- Sprint 1, 24 de agosto–6 de septiembre: inicio de la construcción formal de Recolección desde la línea base;
+- Sprint 0, 17–23 de agosto: perfil, backlog, referencia inicial académica del repositorio, arquitectura, instrumentos iniciales y caracterización de la práctica actual;
+- Sprint 1, 24 de agosto–6 de septiembre: inicio de la construcción formal de Recolección desde la referencia inicial;
 - Sprint 2, 7–20 de septiembre: Vivero e integración M1→M2;
 - Sprint 3, 21 de septiembre–4 de octubre: Plantación e integración M2→M3;
 - Sprint 4, 5–18 de octubre: reconstrucción y trazabilidad transversal;
@@ -213,7 +213,7 @@ Antes de cerrar cualquier versión:
 7. deben diferenciarse validación de software y validación de campo;
 8. debe mantenerse la declaración transparente de autoría y asistencia;
 9. presupuesto y cronograma deben coincidir con el perfil oficial;
-10. la construcción formal debe partir de una línea base académica limpia y conservar evidencia de cada incremento; los desarrollos previos solo pueden describirse como referencia técnica y factibilidad;
+10. la construcción formal debe partir de una referencia inicial académica del repositorio y conservar evidencia de cada incremento; los desarrollos previos solo pueden describirse como referencia técnica y factibilidad;
 11. los ocho sprints deben contener los tres módulos, ambas integraciones, reconstrucción transversal, calidad, piloto y cierre;
 12. los agentes de IA deben aparecer como apoyo bajo validación humana;
 13. cualquier cambio académico acordado con la docente o la tutora debe propagarse al perfil, estructura y TODO;
@@ -222,7 +222,7 @@ Antes de cerrar cualquier versión:
 16. toda evidencia debe describirse como respaldo del registro, no como certificación de la realidad física;
 17. el Perfil debe expresar propiedades deseadas sin comprometer prematuramente mecanismos de implementación;
 18. cualquier nueva documentación del Proyecto de Grado debe revisar los principios de las secciones 7 y 8 antes de cerrarse;
-19. el flujo de recepción externa prometido en los objetivos debe contar con requerimientos, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
+19. los ingresos de material vegetal adquirido o recibido de terceros en Vivero y Plantación deben contar con requerimientos, historial, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
 20. la comparación del piloto debe usar registro paralelo de una misma actividad cuando sea viable; si no, debe declararse que las trazas comparadas no son equivalentes;
 21. las métricas deben contar con definiciones operativas breves y reproducibles antes de recolectar datos;
 22. los roles y permisos del sistema no sustituyen el protocolo de custodia de datos de investigación;

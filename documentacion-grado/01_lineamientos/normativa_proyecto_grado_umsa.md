@@ -72,12 +72,13 @@ Perfil de proyecto (15–30 pág.) aprobado por tutor y Consejo de Carrera → d
 
 ### Cuerpo
 
-- **Introducción** — contexto del problema, justificación, objetivos, alcance y estructura del documento
-- **Capítulo I — Marco teórico y conceptual** — revisión de literatura, teorías de base, definición de conceptos clave
-- **Capítulo II — Marco referencial o contextual** — contexto boliviano/institucional/sectorial de la investigación
-- **Capítulo III — Marco metodológico** — tipo y diseño de investigación, población/muestra, técnicas e instrumentos
-- **Capítulo IV — Análisis y presentación de resultados** — tablas, gráficos, discusión de hallazgos
-- **Capítulo V — Conclusiones y recomendaciones** — cierre de objetivos y trabajo futuro
+> **Estructura operativa confirmada para R3Foresta el 24 de agosto de 2026.** Los modelos generales revisados anteriormente proponían otras distribuciones, pero los precedentes de la Carrera y la decisión actual establecen la siguiente organización inicial:
+
+- **Introducción independiente** — se redactará al finalizar todos los capítulos
+- **Capítulo I — Marco introductorio** — antecedentes, problema, objetivos, justificación, alcances y diseño metodológico
+- **Capítulo II — Marco teórico y conceptual** — conceptos y relaciones necesarios para sustentar la solución
+- **Capítulo III — Marco aplicativo** — análisis, diseño, construcción e integración; detalle pendiente
+- **Capítulos posteriores** — verificación, evaluación, conclusiones y recomendaciones; denominación y numeración pendientes
 
 ### Sección final
 

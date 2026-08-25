@@ -1,6 +1,6 @@
 # Glosario de términos comprometidos — Proyecto de Grado R3Foresta
 
-> **Versión 4 — 19 de agosto de 2026**
+> **Versión 5 — 24 de agosto de 2026**
 > Este glosario no define todo el vocabulario del dominio. Define únicamente los términos que **comprometen una afirmación** ante el tribunal: los que, mal usados, prometen más de lo que el trabajo puede demostrar.
 > Para cada término: qué significa aquí, qué obliga a sostener y qué **no** obliga a sostener.
 > Fuente estratégica: [`../01_lineamientos/base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md) · Diseño de evaluación: [`../02_planificacion/estructura_perfil.md`](../02_planificacion/estructura_perfil.md)
@@ -8,6 +8,15 @@
 ---
 
 ## Criterio terminológico general
+
+En las denominaciones propias se utilizarán las siguientes grafías y funciones:
+
+- **R3Foresta:** institución y modelo socioambiental del caso de estudio;
+- **R3Carbon:** componente institucional dedicado a captura de carbono, medición y trazabilidad;
+- **R3foresta App:** nombre oficial de la aplicación tecnológica;
+- **sistema de trazabilidad de material vegetal:** denominación académica y funcional de la solución evaluada.
+
+No se utilizarán `APP R3Foresta`, `APPR3Foresta` ni _R3Foresta_ como nombre abreviado de la aplicación.
 
 La primera explicación del dominio utiliza **semillas y plantas** para que el lector comprenda qué elementos atraviesan los procesos de Recolección, Vivero y Plantación. Una vez presentado ese recorrido, se adopta **material vegetal** como denominación general y delimitada para las semillas, plantas y demás unidades de propagación comprendidas en el proyecto.
 
@@ -146,7 +155,7 @@ Antes de cerrar cualquier documento del proyecto de grado, verificar que:
 3. *verificable* solo aparezca aplicado a proposiciones o invariantes; para registros se use *evidencia contrastable* (§2.1);
 4. cada enunciado de conservación de saldos incluya la salvedad de unidad y etapa (§4);
 5. blockchain, IPFS y NFT aparezcan únicamente para declarar que están fuera del alcance;
-6. las variantes de ingreso se mantengan implícitas y subordinadas al recorrido principal Recolección–Vivero–Plantación;
+6. los ingresos de material vegetal adquirido o recibido de terceros se mantengan como variantes integradas y subordinadas al recorrido principal Recolección–Vivero–Plantación;
 7. “semillas y plantas” se use para introducir el dominio y “material vegetal” como denominación general posterior;
 8. los objetivos mantengan correspondencia con el problema, el alcance y la evaluación, y cualquier ajuste sustantivo se revise formalmente con la tutora;
 9. transferencia y transformación se mantengan diferenciadas y no se use una equivalencia automática entre unidades distintas;
