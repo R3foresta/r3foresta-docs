@@ -226,7 +226,7 @@ RUP se selecciona por su ajuste a los criterios del proyecto: orientación tempr
 | Construcción | CO-1 a CO-4 | Desarrollar M1 Recolección; agregar M2 Vivero e integrar M1→M2; agregar M3 Plantación e integrar M2→M3; completar la trazabilidad transversal y las pruebas | Cuatro incrementos ejecutables, migraciones, pruebas, evidencia de integración, versión candidata e hito IOC |
 | Transición | TR-1 | Ejecutar pruebas del sistema, escenarios de validación, correcciones, despliegue, manuales, aceptación y cierre | Versión final, informe de resultados, registro de aceptación e hito PR |
 
-En cada fase se aplicarán, según corresponda, las disciplinas de requisitos, análisis y diseño, implementación, pruebas, despliegue, gestión del proyecto y gestión de configuración y cambios. El postulante asumirá las responsabilidades técnicas y de gestión; un representante autorizado de R3Foresta participará en la clarificación del dominio, la conformidad de requisitos operativos y la aceptación del producto; y la tutora realizará el seguimiento académico dentro de sus competencias. Cada hito registrará la evidencia revisada, el resultado —avanzar, avanzar condicionado o reprocesar— y los riesgos o defectos residuales.
+En cada fase se aplicarán, según corresponda, las disciplinas de requisitos, análisis y diseño, implementación, pruebas, despliegue, gestión del proyecto y gestión de configuración y cambios.
 
 Los hitos de cierre serán **LCO** (*Lifecycle Objectives*, objetivos del ciclo de vida), **LCA** (*Lifecycle Architecture*, arquitectura del ciclo de vida), **IOC** (*Initial Operational Capability*, capacidad operativa inicial) y **PR** (*Product Release*, liberación del producto).
 
@@ -234,7 +234,9 @@ Los hitos de cierre serán **LCO** (*Lifecycle Objectives*, objetivos del ciclo 
 
 Dentro de cada iteración se seleccionarán los requisitos y riesgos priorizados; para cada capacidad se elaborará y revisará una especificación con escenarios, reglas, invariantes y criterios de aceptación; se preparará el plan técnico; se descompondrá el trabajo en tareas; se implementará con asistencia de IA cuando corresponda; y se integrará, probará y demostrará el resultado. Las especificaciones, planes y tareas materializarán el detalle de requisitos, diseño y planificación, mientras que la visión, la arquitectura, los riesgos, la evaluación de iteraciones, los hitos y el despliegue se conservarán como productos transversales de RUP.
 
-Los agentes de IA podrán apoyar la detección de ambigüedades, la comparación de alternativas, la implementación, la generación de pruebas, la revisión de cambios y la documentación. No aprobarán requisitos, no modificarán por sí solos las reglas del dominio, no declararán aceptado un resultado y no sustituirán la autoría ni la responsabilidad del postulante.
+Durante las iteraciones de Construcción, los requisitos, las reglas y las decisiones de diseño continuarán refinándose. Los hallazgos obtenidos al implementar, integrar, probar o demostrar un módulo podrán originar cambios controlados en los módulos e incrementos anteriores. En ese caso, se actualizarán las especificaciones y los productos afectados, se ejecutarán pruebas de regresión y se conservará la trazabilidad de la decisión.
+
+Los agentes de IA podrán apoyar la detección de ambigüedades, la comparación de alternativas, la implementación, la generación de pruebas, la revisión de cambios y la documentación. No aprobarán requisitos, no modificarán por sí solos las reglas del dominio, no declararán aceptado un resultado y no sustituirán la autoría ni la responsabilidad humana.
 
 ### 8.4. Seguimiento y evidencia
 
@@ -242,7 +244,7 @@ El trabajo se organizará mediante una lista priorizada vinculada con los objeti
 
 La formulación metodológica se consolidó documentalmente el 25 de agosto de 2026, dentro de la ventana académica autorizada. La construcción formal se documentará a partir de una referencia inicial identificable del repositorio y de un inventario del software preexistente. Los artefactos que describan actividades anteriores conservarán su fecha real y se marcarán como reconstrucción documental; no se retrofecharán commits, pruebas, resultados ni aprobaciones. Únicamente las actividades ejecutadas o reproducidas de forma controlada y las evidencias trazables dentro de la ventana definida sustentarán el cumplimiento de los objetivos.
 
-El postulante será responsable del análisis, diseño, implementación y documentación. Los agentes de inteligencia artificial brindarán apoyo delimitado y no constituirán roles RUP: cada contribución material registrará herramienta y versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio.
+La responsabilidad técnica y autoral permanecerá bajo control humano. Los agentes de inteligencia artificial brindarán apoyo delimitado y no constituirán roles RUP: cada contribución material registrará herramienta y versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio.
 
 ## 9. Índice propuesto del Proyecto de Grado
 
