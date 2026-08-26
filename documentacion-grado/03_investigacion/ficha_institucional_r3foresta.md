@@ -13,7 +13,7 @@
 - **Componente institucional relacionado:** R3Carbon, dedicado a la medición, el seguimiento y la valorización de la captura de carbono.
 - **Título seleccionado del proyecto:** *Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta*.
 
-En el documento académico se distinguirá a **R3Foresta**, como organización y modelo institucional del caso de estudio; **R3Carbon**, como uno de los componentes del modelo institucional; y **R3foresta App**, como la aplicación tecnológica sobre la cual se desarrolla el Proyecto de Grado. No se utilizará _R3Foresta_ como nombre abreviado del sistema.
+En el documento académico se distinguirá a **R3Foresta**, como organización y modelo institucional del contexto de aplicación; **R3Carbon**, como uno de los componentes del modelo institucional; y **R3foresta App**, como la aplicación tecnológica sobre la cual se desarrolla el Proyecto de Grado. No se utilizará _R3Foresta_ como nombre abreviado del sistema.
 
 ## 2. Misión institucional oficial
 

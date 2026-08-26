@@ -44,7 +44,7 @@ La literatura internacional aporta fundamentos transferibles al problema. Moe (1
 
 Thakur et al. (2011) representaron estados, movimientos y transformaciones mediante eventos, separando los datos maestros de los hechos ocurridos. Solanki y Brewster (2014) profundizaron este enfoque al relacionar unidades de entrada y salida de una transformación. Este principio resulta útil para R3Foresta porque un historial enlazado puede explicar el origen de los lotes y sus cambios de cantidad. Sin embargo, debe adaptarse a procesos biológicos, mermas, asignaciones parciales y ubicaciones de plantación, sin asumir equivalencias automáticas entre semillas y plantas ni comprometer la adopción literal de EPCIS.
 
-ISO 22095:2020 aporta terminología y modelos generales de cadena de custodia y establece límites sobre las declaraciones que un sistema puede respaldar (ISO, 2020). Donnelly et al. (2012), por su parte, evaluaron la trazabilidad mediante un ejercicio de reconstrucción que exigía recuperar el origen y la información asociada a los lotes. Este principio respalda que la capacidad de R3Foresta debe evaluarse intentando reconstruir trazas y registrando fuentes, vacíos y tiempo empleado, en lugar de presumirse por la existencia de la plataforma.
+ISO 22095:2020 aporta terminología y modelos generales de cadena de custodia y establece límites sobre las declaraciones que un sistema puede respaldar (International Organization for Standardization, 2020). Donnelly et al. (2012), por su parte, evaluaron la trazabilidad mediante un ejercicio de reconstrucción que exigía recuperar el origen y la información asociada a los lotes. Este principio respalda que la capacidad de R3Foresta debe evaluarse intentando reconstruir trazas y registrando fuentes, vacíos y tiempo empleado, en lugar de presumirse por la existencia de la plataforma.
 
 ### 1.1.4. Brecha identificada
 
@@ -57,7 +57,7 @@ Los antecedentes revisados cubren parcialmente el inventario de viveros, la geol
 - la evidencia vinculada con responsables, fechas y ubicaciones;
 - la reconstrucción posterior de la cadena de custodia.
 
-Esta brecha no afirma que no exista ninguna solución similar. Delimita la combinación de capacidades no encontrada en las fuentes revisadas y justifica estudiar su diseño, implementación y evaluación en el caso R3Foresta.
+Esta brecha no afirma que no exista ninguna solución similar. Delimita la combinación de capacidades no encontrada en las fuentes revisadas y justifica su análisis, diseño, implementación y comprobación en R3Foresta.
 
 ## 1.2. Planteamiento del problema
 
@@ -113,7 +113,7 @@ La primera causa representa la dispersión de la información entre fuentes y re
 
 #### 1.2.4.1. Pregunta general
 
-> ¿Cómo desarrollar y evaluar, en el caso de R3Foresta, un sistema de trazabilidad para la cadena de custodia del material vegetal, desde su recolección o recepción externa hasta su manejo en vivero y plantación, que permita reconstruir con evidencia contrastable su procedencia, movimientos, cantidades, responsables y destino, y qué diferencias presenta respecto de la práctica actual en capacidad de reconstrucción y carga operativa?
+> ¿Cómo asegurar, en el caso de R3Foresta, la trazabilidad de la cadena de custodia del material vegetal desde su recolección o recepción externa, pasando por el vivero, hasta el registro de su plantación, de manera que puedan reconstruirse su procedencia, movimientos, cantidades, responsables, evidencias y destino?
 
 #### 1.2.4.2. Preguntas específicas
 
@@ -121,13 +121,13 @@ La primera causa representa la dispersión de la información entre fuentes y re
 2. ¿Qué modelo de trazabilidad e integridad permite relacionar orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y formalizar las reglas aplicables a las transferencias y transformaciones entre etapas?
 3. ¿Cómo implementar e integrar los módulos de Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial?
 4. ¿En qué medida la solución cumple los requerimientos y preserva las invariantes definidas mediante pruebas funcionales y técnicas?
-5. ¿Qué capacidad presenta la solución, en el contexto del estudio de caso, para reconstruir trazas con evidencia contrastable y qué carga operativa genera en comparación con la práctica actual caracterizada en R3Foresta?
+5. ¿Cómo comprobar, mediante escenarios operativos y criterios de aceptación, la capacidad de la solución para reconstruir trazas con evidencia contrastable y la carga de los flujos implementados?
 
 ## 1.3. Objetivos
 
 ### 1.3.1. Objetivo general
 
-Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del material vegetal utilizado por R3Foresta, desde su recolección o recepción externa hasta su manejo en vivero y plantación, que permita reconstruir con evidencia contrastable su procedencia, movimientos, cantidades, responsables y destino.
+Desarrollar un sistema de trazabilidad para la cadena de custodia del material vegetal utilizado por R3Foresta, desde su recolección o recepción externa hasta el registro de la plantación, con información relacionada sobre procedencia, movimientos, cantidades, responsables, evidencias y destino.
 
 ### 1.3.2. Objetivos específicos
 
@@ -135,7 +135,7 @@ Desarrollar y evaluar un sistema de trazabilidad para la cadena de custodia del 
 2. **Diseñar** un modelo de trazabilidad e integridad que relacione orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y que formalice las reglas aplicables a las transferencias y transformaciones entre etapas.
 3. **Implementar** los módulos de Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial.
 4. **Verificar** el cumplimiento de los requerimientos y de las invariantes de consistencia mediante pruebas funcionales y técnicas.
-5. **Evaluar**, en el contexto del estudio de caso, la capacidad de reconstrucción con evidencia contrastable y la carga operativa de la solución, comparándolas con la práctica actual caracterizada en R3Foresta.
+5. **Evaluar**, mediante escenarios operativos y criterios de aceptación, la capacidad de la solución para reconstruir trazas con evidencia contrastable y la carga de los flujos implementados.
 
 ## 1.4. Justificación
 
@@ -153,13 +153,13 @@ El aporte tecnológico se concentra en integrar los datos y las reglas necesaria
 
 ### 1.4.3. Justificación académica
 
-El proyecto permite relacionar el estudio de un problema organizacional con el diseño, construcción y evaluación de un artefacto informático. Su contribución académica comprende la caracterización del dominio, la formalización de un modelo de trazabilidad e integridad, la implementación de tres módulos relacionados y la obtención de evidencia técnica y operativa.
+El proyecto permite aplicar de forma documentada análisis, diseño, construcción, integración, verificación y validación de un producto informático para resolver un problema organizacional. Su contribución académica comprende la caracterización del dominio, la formalización de un modelo de trazabilidad e integridad, la implementación de tres módulos relacionados y la conservación de evidencia técnica y operativa.
 
-La evaluación admitirá resultados positivos, negativos o mixtos. Por ejemplo, un registro más estructurado podría aumentar el esfuerzo inicial y, al mismo tiempo, mejorar la recuperación posterior. Informar ambos efectos fortalece la validez del estudio y evita presentar como demostrada una mejora que todavía debe observarse.
+La comprobación admitirá resultados conformes y no conformes. Un defecto, una invariante incumplida o un flujo que requiera más pasos deberá registrarse y corregirse o aceptarse explícitamente como limitación; no se presentará como demostrada una mejora que no haya sido observada.
 
 ### 1.4.4. Consideración económica
 
-La ejecución aprovecha infraestructura y herramientas disponibles y concentra los gastos monetarios en conectividad, trabajo de campo y recursos de apoyo. Los posibles beneficios de tiempo, costo o financiamiento no se asumirán de antemano. Solo se presentarán como resultados económicos cuando exista una forma definida de medirlos y evidencia obtenida durante el caso.
+La ejecución aprovecha infraestructura y herramientas disponibles y concentra los gastos monetarios en conectividad, actividades operativas y recursos de apoyo. Los posibles beneficios de tiempo, costo o financiamiento no se asumirán de antemano. Solo se presentarán como resultados económicos cuando exista una forma definida de medirlos y evidencia suficiente.
 
 ## 1.5. Alcances y límites
 
@@ -181,11 +181,11 @@ También forman parte del alcance:
 - la coherencia de cantidades durante transferencias y transformaciones;
 - evidencia fotográfica, temporal, documental y geográfica vinculada con eventos.
 
-### 1.5.2. Alcance de la verificación y evaluación
+### 1.5.2. Alcance de la verificación, validación y aceptación
 
 La verificación técnica comprobará requerimientos e invariantes mediante pruebas funcionales, de integración, concurrencia y fallo inducido. Incluirá, como mínimo, saldo no negativo, rechazo de consumo superior a lo disponible, prevención de doble consumo, operaciones críticas sin estados parciales y reconstrucción de una traza entre los tres módulos.
 
-La evaluación del caso utilizará una guía común para comparar la información recuperable en la práctica actual y en la propuesta. Considerará completitud, coherencia, evidencia vinculada, tiempo de reconstrucción y carga de registro. Los resultados serán descriptivos y se limitarán al caso y a las trazas efectivamente disponibles.
+La validación utilizará escenarios operativos y criterios de aceptación para comprobar la reconstrucción de trazas, la coherencia de los datos, la evidencia vinculada y la carga de los flujos implementados. Los resultados se limitarán a las funciones y condiciones realmente comprobadas; no se interpretarán como una comparación causal con la práctica anterior.
 
 ### 1.5.3. Fuera del alcance
 
@@ -205,9 +205,9 @@ El proyecto no comprende:
 
 ### 1.5.4. Limitaciones
 
-La caracterización de la práctica actual dependerá de la disponibilidad, integridad y autorización de los documentos institucionales. La cobertura del piloto dependerá de las actividades reales, los participantes, los sitios y la conectividad disponibles durante el periodo académico. Las rutas que no ocurran en campo se comprobarán mediante casos controlados y se identificarán como tales.
+La cobertura de la validación dependerá de las actividades, datos, responsables, sitios y conectividad disponibles durante el periodo académico. Las rutas que no ocurran en una operación real se comprobarán mediante escenarios controlados y se identificarán como tales.
 
-La información registrada representa declaraciones y observaciones conservadas por el sistema; no demuestra automáticamente su correspondencia con la realidad física. Las fotografías y coordenadas respaldan un registro, pero no prueban por sí solas cantidad, identidad, supervivencia o captura de carbono. Los resultados describirán un estudio de caso único y no se generalizarán sin considerar diferencias organizacionales y operativas.
+La información registrada representa declaraciones y observaciones conservadas por el sistema; no demuestra automáticamente su correspondencia con la realidad física. Las fotografías y coordenadas respaldan un registro, pero no prueban por sí solas cantidad, identidad, supervivencia o captura de carbono. La aceptación del software no equivale a certificación ambiental ni permite generalizar su desempeño a condiciones que no fueron validadas.
 
 ## 1.6. Aportes esperados del proyecto
 
@@ -221,65 +221,72 @@ Un modelo de entidades, eventos, relaciones, cantidades, saldos, responsables y 
 
 ### 1.6.3. Aporte académico
 
-Evidencia obtenida al construir y evaluar la solución mediante ciencia del diseño y un estudio de caso. El trabajo documentará el grado de cumplimiento de los objetivos, los resultados técnicos, la capacidad de reconstrucción, la carga operativa, las limitaciones y los hallazgos negativos o mixtos que se presenten.
+Un proceso de ingeniería documentado que vincule el problema con requisitos, especificaciones, decisiones de diseño, incrementos ejecutables, integraciones, pruebas y aceptación. El trabajo expondrá el grado de cumplimiento de los objetivos, las decisiones y riesgos gestionados, los resultados técnicos, la capacidad de reconstrucción, la carga observada en los flujos y las limitaciones identificadas.
 
-## 1.7. Diseño metodológico
+## 1.7. Metodología de desarrollo
 
-### 1.7.1. Tipo de investigación y ciencia del diseño
+El proyecto adopta un **proceso de desarrollo basado en Rational Unified Process (RUP), complementado con Spec-Driven Development (SDD) asistido por inteligencia artificial**. RUP aporta la estructura del ciclo de vida; el enfoque iterativo e incremental determina cómo crece el producto; SDD organiza el trabajo desde especificaciones versionadas; y la IA actúa como herramienta de apoyo bajo control humano. No se incorpora un marco investigativo independiente ni se organiza el trabajo mediante sprints. La expresión *caso R3Foresta* del título identifica el contexto de aplicación y no equivale a adoptar un diseño de estudio de caso.
 
-La investigación es aplicada porque aborda una necesidad concreta de R3Foresta y tecnológica porque produce y estudia un artefacto informático. Se adopta la ciencia del diseño, que vincula un problema relevante con la construcción y evaluación rigurosa de un artefacto (Hevner et al., 2004). El artefacto académico comprende el modelo de trazabilidad e integridad, sus reglas e invariantes, los tres módulos integrados, el mecanismo de reconstrucción y la evidencia producida al verificar y evaluar la solución; no se limita a la interfaz o al código ejecutable.
+### 1.7.1. RUP como proceso rector
 
-La contribución se analizará mediante la relación entre problema, conocimiento previo, requisitos de diseño, componentes del artefacto, demostraciones, evaluación y hallazgos. De esta manera, la construcción de software se convierte en investigación cuando produce evidencia y conocimiento comunicable sobre su adecuación, sus límites y las decisiones que permitieron obtenerla.
+RUP es un proceso de ingeniería de software dirigido por casos de uso, centrado en la arquitectura e iterativo e incremental. Ordena el proyecto completo en cuatro fases: Inicio, Elaboración, Construcción y Transición; los riesgos prioritarios orientan el contenido de sus iteraciones. Cada fase termina en un hito que permite decidir si existe evidencia suficiente para avanzar (Kruchten, 2004; IBM, s. f.).
 
-### 1.7.2. Proceso DSRM
+En **Inicio** se delimitarán el problema, los actores, el alcance, los requisitos iniciales, los riesgos y la viabilidad. En **Elaboración** se estabilizarán los requisitos significativos, el modelo de trazabilidad, la arquitectura base y los contratos entre módulos, y se comprobará una línea vertical arquitectónica mínima M1→M2→M3 para reducir los riesgos de integración. En **Construcción** se producirán los incrementos ejecutables. En **Transición** se completarán la validación, las correcciones, el despliegue, los manuales y la aceptación del producto.
 
-DSRM operacionaliza la ciencia del diseño mediante seis actividades: identificación del problema y motivación, definición de objetivos, diseño y desarrollo, demostración, evaluación y comunicación (Peffers et al., 2007). En R3Foresta, el diagnóstico y el inventario documental sustentan el problema; las preguntas, requisitos e invariantes expresan los objetivos; los sprints construyen el artefacto; las revisiones y recorridos integrados lo demuestran; las pruebas y el piloto lo evalúan; y los repositorios, capítulos, anexos y defensa comunican el trabajo.
+### 1.7.2. Adaptación de RUP al proyecto
 
-Estas actividades no forman una secuencia rígida ni reemplazan el proceso de desarrollo. Un hallazgo de demostración o evaluación podrá devolver el trabajo a objetivos, diseño o construcción, siempre que la iteración y su justificación queden registradas.
+La adaptación conserva los principios, fases, hitos, disciplinas y evidencia de RUP, pero reduce la carga administrativa de un proceso pensado para equipos mayores. El postulante asumirá los roles de analista, arquitecto, desarrollador, responsable de pruebas y responsable de configuración; la tutora y los responsables autorizados de R3Foresta intervendrán en revisiones y aceptación dentro de sus competencias. Solo se producirán artefactos que contribuyan al control y a la defensa del proyecto.
 
-### 1.7.3. Diseño de caso único embebido
+Los hitos adaptados serán: objetivos del ciclo de vida o **LCO**, arquitectura del ciclo de vida o **LCA**, capacidad operativa inicial o **IOC** y liberación del producto o **PR**. Para aprobarlos se revisarán artefactos y resultados, no solo el cumplimiento de una fecha.
 
-R3Foresta se estudia como un caso único embebido. El caso es el diseño, construcción y evaluación del proceso digital de trazabilidad del material vegetal en R3Foresta durante la ventana académica formal; la Fundación constituye el contexto organizacional y las trazas de cadena de custodia son las unidades embebidas. La elección de un solo caso responde a su relación directa con el problema, el acceso autorizado a sus procesos y registros y la profundidad requerida para estudiar la interacción entre organización, operación y artefacto.
+### 1.7.3. Iteraciones, incrementos e integraciones
 
-Antes de recolectar datos se delimitarán el periodo, los procesos, los sitios, los actores y las fuentes incluidas. Se conservarán los criterios de inclusión y exclusión y se analizarán las trazas elegibles antes de sintetizar el caso completo. Si solo resultara disponible una unidad de análisis, se revisará la denominación de caso embebido en vez de mantener una clasificación que la evidencia no sostenga.
+RUP ya es iterativo e incremental; por ello no se agrega Scrum ni una capa de sprints. Una **iteración** es un intervalo planificado que recorre las disciplinas pertinentes y concluye con una revisión; el **incremento** es la versión ejecutable obtenida al cerrarla. Las fases RUP describen la evolución del proyecto completo. Se realizará una iteración de Inicio (IN-1), una de Elaboración (EL-1), cuatro de Construcción (CO-1 a CO-4) y una de Transición (TR-1). Las iteraciones de Construcción producirán estos incrementos:
 
-### 1.7.4. Enfoque, fuentes y análisis
+1. M1 Recolección funcional y probado;
+2. M2 Vivero e integración M1→M2;
+3. M3 Plantación e integración M2→M3;
+4. trazabilidad transversal, integración completa, regresión y versión candidata.
 
-El enfoque es mixto y descriptivo. El componente cuantitativo utilizará conteos, porcentajes, medianas, rangos, tiempos y resultados de pruebas; el componente cualitativo utilizará documentos, entrevistas, observación y dificultades reportadas. Ambos componentes se integrarán por traza para interpretar cada medida junto con sus fuentes, interrupciones y condiciones de obtención.
+Cada iteración incluirá objetivos, riesgos, productos y una revisión; cada incremento incluirá especificación, diseño detallado, implementación, pruebas, integración y demostración. Un incremento posterior podrá corregir decisiones anteriores cuando aparezca nueva evidencia técnica, pero deberá conservarse la razón del cambio y ejecutarse regresión sobre lo ya integrado. Consultas, reportes, historial y reconstrucción son capacidades transversales y no un cuarto módulo.
 
-No se realizarán pruebas de significación ni inferencias estadísticas hacia otras organizaciones. Los hallazgos cualitativos se organizarán mediante categorías iniciales relacionadas con claridad, carga, dificultades, interrupciones y confianza en la reconstrucción, con apertura a categorías emergentes y conservación de la cadena entre fuente, código, hallazgo y conclusión.
+### 1.7.4. Spec-Driven Development
 
-### 1.7.5. Metodología de desarrollo
+SDD se utilizará como un protocolo propio basado en el flujo central de GitHub Spec Kit para que la especificación preceda y gobierne el cambio de software; no se declarará adopción completa de la herramienta. Para cada capacidad se seguirá la cadena `necesidad → requisito → especificación → diseño → tareas → implementación → pruebas → resultado → aceptación`. Antes de programar se definirán comportamiento esperado, reglas, datos, interfaces, casos límite y criterios de aceptación. Después se elaborarán el plan técnico y las tareas; el código y las pruebas deberán corresponder a esa especificación.
 
-El desarrollo será iterativo e incremental mediante ocho sprints. Partirá de una referencia inicial académica del repositorio y conservará evidencia de los requerimientos abordados, cambios principales, migraciones, pruebas, demostraciones y decisiones de cada incremento. Cada sprint comprenderá, según su alcance, selección de requisitos y riesgos, análisis, diseño, construcción, integración, pruebas, demostración, actualización documental y retrospectiva.
+Si la implementación revela una ambigüedad, primero se actualizará y revisará la especificación y luego se modificará el producto. De esta forma, la especificación no será una descripción redactada después del código, sino una fuente versionada para coordinar análisis, diseño, construcción y comprobación. Los artefactos SDD materializarán requisitos, diseño detallado y tareas de cada capacidad; no sustituirán la visión, la arquitectura, los riesgos, la configuración, la revisión de iteraciones, los hitos ni el despliegue de RUP.
 
-Los prototipos anteriores se utilizarán como referencia técnica y evidencia de factibilidad, pero no sustituirán la construcción formal realizada durante el periodo académico. La utilización de sprints no implica la adopción de Scrum completo, porque no se atribuirán al proyecto roles o artefactos de ese marco que no hayan sido definidos y utilizados.
+### 1.7.5. Asistencia de inteligencia artificial
 
-### 1.7.6. Estrategia de verificación y evaluación
+La IA apoyará la identificación de ambigüedades, la descomposición de especificaciones, la exploración de alternativas de diseño, la generación y revisión de código, la propuesta de pruebas y la actualización documental. SDD no cuenta con una definición normativa única; el referente adoptado, GitHub Spec Kit, es explícitamente agentic. La expresión **asistido por IA** se mantiene para declarar esa variante y hacer visibles sus controles (GitHub, 2026).
 
-La estrategia integra tres componentes:
+Toda salida de IA será considerada una propuesta. El postulante deberá revisar su correspondencia con las reglas del dominio, ejecutar las pruebas, resolver discrepancias y aceptar o rechazar el resultado. No se delegarán a la IA la aprobación del alcance, las decisiones institucionales, la autoría, la validación final ni la responsabilidad por el producto. Para cada aporte material se registrarán fecha, herramienta y modelo o versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio; no será necesario publicar conversaciones privadas completas.
 
-1. **caracterización de la práctica actual**, mediante inventario documental, entrevistas y reconstrucción de trazas;
-2. **verificación técnica**, mediante pruebas de requerimientos, invariantes, concurrencia y fallos críticos;
-3. **evaluación de la propuesta**, mediante ejercicios de reconstrucción, contraste descriptivo y observación de la carga operativa.
+### 1.7.6. Verificación, validación y aceptación
 
-Antes de la recolección de datos se definirán los criterios para clasificar cada ítem como completo, parcial, ausente o contradictorio; la evidencia recuperable; el inicio y final del cronometraje; y los errores, reintentos o solicitudes de ayuda. Como no existirá un capítulo metodológico independiente, esta sección se ampliará progresivamente con los instrumentos, las consideraciones éticas y las amenazas a la validez realmente aplicadas.
+La **verificación** comprobará si el producto fue construido de acuerdo con sus requisitos, especificaciones e invariantes mediante pruebas unitarias, de integración, funcionales, de regresión, concurrencia y fallos críticos. La **validación operativa** ejecutará escenarios representativos para determinar si los flujos permiten registrar y reconstruir la cadena prevista. La **aceptación** confrontará los resultados con criterios previamente definidos para cada incremento y para el sistema integrado.
 
-La evaluación avanzará desde verificaciones formativas y controladas durante la construcción hacia una evaluación operativa más naturalista y sumativa en el piloto. Los resultados técnicos y operativos se mantendrán separados para no presentar una prueba de software como validación de campo ni una percepción favorable como demostración de integridad.
+La validación podrá utilizar operaciones reales autorizadas o escenarios controlados claramente identificados. Se registrarán precondiciones, datos, pasos, resultado esperado, resultado obtenido, evidencia, defectos y decisión. Estas actividades forman parte de la ingeniería del producto y no se presentarán como diseño experimental, estudio de caso o certificación externa.
 
 ### 1.7.7. Seguimiento y cadena de evidencia
 
-El seguimiento confrontará por sprint lo planificado con lo realizado y registrará evidencia, desviaciones, decisiones, incidencias, riesgos y horas académicas. Se conservarán dos cadenas complementarias:
+El seguimiento confrontará por fase e iteración lo planificado con lo realizado y registrará el incremento o resultado, los artefactos, riesgos, decisiones, incidencias, pruebas, riesgo residual y estado de aceptación. Se conservarán dos cadenas complementarias:
 
-1. `problema → fuente → requisito de diseño → artefacto → demostración → evaluación → conclusión`;
-2. `requerimiento → regla → invariante → mecanismo → prueba → resultado`.
+1. `necesidad → requisito → especificación → decisión de diseño → tarea → cambio → prueba → resultado → aceptación`;
+2. `requisito → regla → invariante → mecanismo → prueba → resultado`.
 
-Estos controles permiten reconstruir el proceso académico y técnico, pero no constituyen una metodología de investigación adicional.
+La metodología se consolidó documentalmente el 25 de agosto de 2026, dentro de la ventana autorizada del 6 de julio al 15 de noviembre. La construcción parte de una referencia identificable del repositorio y de un inventario del software preexistente. Los componentes anteriores podrán consultarse como referencia técnica, pero no se fabricarán retrospectivamente artefactos, commits, pruebas, resultados, participantes ni aprobaciones. Las actividades reconstruidas de forma controlada conservarán su fecha real, citarán sus fuentes y se identificarán como tales.
 
-### 1.7.8. Ética y amenazas a la validez
+### 1.7.8. Periodización
 
-Las entrevistas y observaciones requerirán consentimiento informado y autorización para utilizar datos operativos. El protocolo distinguirá datos operativos, personales, sensibles y controlados; definirá acceso, seudonimización, conservación, retiro y eliminación. Las principales amenazas previstas incluyen un corpus pequeño, registros históricos desiguales, aprendizaje entre mediciones, disponibilidad de campo, sesgo del registrador y rutas no ejercitadas en producción. Se mitigarán mediante instrumentos comunes, reconstrucción independiente cuando sea viable, separación entre casos reales y controlados, versión congelada para el piloto y declaración explícita de limitaciones.
+- Inicio, iteración IN-1: 6–19 de julio;
+- Elaboración, iteración EL-1: 20 de julio–16 de agosto;
+- Construcción, iteración CO-1 e incremento 1: 17 de agosto–6 de septiembre;
+- Construcción, iteración CO-2 e incremento 2: 7–27 de septiembre;
+- Construcción, iteración CO-3 e incremento 3: 28 de septiembre–18 de octubre;
+- Construcción, iteración CO-4 e incremento 4: 19 de octubre–1 de noviembre;
+- Transición, iteración TR-1: 2–15 de noviembre.
 
 ## 1.8. Organización del documento
 
-La introducción se presentará como una sección independiente y se redactará al finalizar todos los capítulos. El Capítulo I reúne los antecedentes, el problema, los objetivos, las justificaciones, los alcances y el diseño metodológico. El Capítulo II desarrolla los fundamentos teóricos y conceptuales necesarios para comprender la trazabilidad propuesta y delimita su proyección hacia bonos de carbono. El Capítulo III corresponde al Marco aplicativo y expondrá el análisis, diseño, construcción e integración de la solución; su estructura interna se definirá posteriormente. La denominación y numeración de los capítulos de verificación, evaluación, conclusiones y recomendaciones permanecen pendientes de definición.
+La introducción se presentará como una sección independiente y se redactará al finalizar todos los capítulos. El Capítulo I reúne antecedentes, problema, objetivos, justificaciones, alcances y metodología de desarrollo. El Capítulo II desarrolla los fundamentos teóricos y conceptuales de trazabilidad, RUP, SDD y asistencia de IA, y delimita la proyección hacia bonos de carbono. El Capítulo III corresponde al Marco aplicativo y expondrá análisis, diseño, implementación, integración, verificación, validación y resultados. Después se presentarán las conclusiones y recomendaciones.

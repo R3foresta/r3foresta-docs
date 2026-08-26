@@ -1,6 +1,6 @@
 # Documentación universitaria de grado — R3Foresta
 
-> **Estado al 24 de agosto de 2026:** el Perfil se encuentra en revisión final; el Capítulo I cuenta con una primera versión y el Capítulo II conserva su estructura sin redacción. La ejecución académica se planifica prospectivamente del 17 de agosto al 15 de noviembre mediante ocho sprints.
+> **Estado al 25 de agosto de 2026:** el Perfil se encuentra en revisión final y adopta RUP adaptado, complementado con Spec-Driven Development asistido por IA. La ejecución académica abarca del 6 de julio al 15 de noviembre de 2026; el Perfil y las versiones activas de los capítulos I y II ya incorporan esta decisión.
 
 Espacio de trabajo para producir los dos resultados académicos del proyecto de grado de la UMSA, Carrera de Informática — mención Ingeniería de Sistemas:
 
@@ -11,7 +11,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 
 - [`02_planificacion/TODO.md`](02_planificacion/TODO.md) — tablero vivo del perfil: bloqueantes, estado por sección, figuras y actividades pendientes.
 - [`02_planificacion/TODO_CAPITULOS_1_Y_2.md`](02_planificacion/TODO_CAPITULOS_1_Y_2.md) — checklist único para validar, corregir y cerrar los capítulos I y II.
-- [`02_planificacion/TODO_PROYECTO_GRADO.md`](02_planificacion/TODO_PROYECTO_GRADO.md) — tablero de ejecución: construcción académica, protocolo empírico, cierre prepiloto y documento final.
+- [`02_planificacion/TODO_PROYECTO_GRADO.md`](02_planificacion/TODO_PROYECTO_GRADO.md) — tablero de ejecución por fases RUP, incrementos, integración, verificación, transición y cierre documental.
 - [`06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) — documento oficial del perfil.
 - [`01_lineamientos/base_perfil_proyecto_grado.md`](01_lineamientos/base_perfil_proyecto_grado.md) — alcance rector, principios de trazabilidad y reglas de propagación hacia el Proyecto de Grado final.
 - [`01_lineamientos/criterios_editoriales_proyecto_grado.md`](01_lineamientos/criterios_editoriales_proyecto_grado.md) — criterios de claridad, nivel de detalle y separación entre propiedades, mecanismos y pruebas para la documentación posterior al Perfil.
@@ -26,7 +26,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 | [`01_lineamientos/`](01_lineamientos/) | Reglas y decisiones rectoras | Normativa UMSA, principios de trazabilidad, criterios editoriales y lineamiento estratégico vigente. |
 | [`02_planificacion/`](02_planificacion/) | Control y diseño documental | TODO, estructura del perfil y plan histórico. |
 | [`03_investigacion/`](03_investigacion/) | Sustento académico y estado del arte | Antecedentes, análisis crítico, biblioteca razonada y guía de búsqueda. |
-| [`04_metodologia/`](04_metodologia/) | Método de investigación y desarrollo | Metodología adoptada y antecedentes metodológicos superados. |
+| [`04_metodologia/`](04_metodologia/) | Metodología de desarrollo | RUP adaptado, SDD asistido por IA y antecedentes metodológicos superados. |
 | [`05_recursos/`](05_recursos/) | Recursos transversales | Glosario, convenciones terminológicas e índice bibliográfico. |
 | [`06_entregables/`](06_entregables/) | Documentos que se presentan | Perfil oficial y futuro Proyecto de Grado. |
 
@@ -45,32 +45,35 @@ Modalidad elegida: **Defensa de Proyecto de Grado**.
 
 **Portada vigente:** título seleccionado por el postulante y pendiente de ratificación por la tutora, postulante, tutora, modalidad, lugar y fecha. En esta versión no se incluye línea de VoBo; cualquier requisito adicional de firma se incorporará únicamente si la tutora o la Comisión de Grado lo solicita.
 
-### Estructura del Perfil (documento corto, ~15–25 págs., a aprobar antes de desarrollar)
+### Estructura vigente del Perfil
 
-1. **Carátula** — universidad, facultad (FCPN), carrera, mención, título, autor, tutora, lugar y fecha.
-2. **Introducción / Antecedentes** — contexto del dominio y sistemas/trabajos previos similares.
-3. **Planteamiento del problema** — situación problemática, análisis causa-efecto (árbol de problemas) y **formulación del problema** (pregunta de investigación).
-4. **Objetivos** — un objetivo general + varios específicos (verbos medibles, alineados a cada capítulo).
-5. **Justificación** — técnica, económica y social/operativa.
-6. **Alcances y límites** — tres módulos operativos, reconstrucción del recorrido, integridad de cantidades, transferencias y transformaciones, variantes de ingreso, evaluación por propiedades, exclusiones y limitaciones reales.
-7. **Marco teórico/referencial preliminar** — trazabilidad, cadena de custodia, bonos de carbono como proyección delimitada, transacciones, registros de eventos, integridad de datos, geoinformación y evaluación de software. Blockchain/IPFS solo como antecedentes históricos o trabajo futuro, si corresponde.
-8. **Metodología** — tipo de investigación + metodología de desarrollo de software y herramientas.
-   > La enumeración "SCRUM, XP, RUP…" que aparece en las guías de perfil es orientativa, no un requisito reglamentario: el Reglamento General no exige ninguna metodología nominada. **Metodología declarada para R3Foresta:** desarrollo iterativo e incremental con especificaciones y decisiones versionadas — ver [`04_metodologia/metodologia_desarrollo.md`](04_metodologia/metodologia_desarrollo.md).
-9. **Índice tentativo (temario)** del proyecto final.
-10. **Cronograma de actividades** (diagrama de Gantt).
-11. **Recursos** — personal, herramientas, infraestructura y elementos necesarios para el trabajo de campo, sin presupuesto.
-12. **Bibliografía** (norma APA).
+- **Carátula** — universidad, facultad (FCPN), carrera, mención, título, autor, tutora, lugar y fecha.
+- **Índice general** — regenerable desde los encabezados de la fuente Markdown.
+- **1. Introducción** — dominio, organización, problema, solución propuesta y límites principales.
+- **2. Antecedentes** — institucionales y trabajos similares en orden internacional, Bolivia y La Paz.
+- **3. Planteamiento del problema** — situación problemática, problema central y formulación mediante preguntas; el árbol de causas y efectos se presenta en anexos.
+- **4. Objetivos** — objetivo general y cinco objetivos específicos alineados con el documento final.
+- **5. Justificación** — operativa, institucional, tecnológica, académica y factibilidad delimitada.
+- **6. Alcances y límites** — tres módulos, variantes de ingreso externo, controles transversales y exclusiones reales.
+- **7. Marco teórico preliminar** — conceptos esenciales del título y fundamentos de RUP, SDD e IA.
+- **8. Metodología de desarrollo** — RUP adaptado como proceso rector, iteraciones e incrementos, SDD asistido por IA, seguimiento y evidencia.
+- **9. Índice propuesto del Proyecto de Grado**.
+- **10. Cronograma de actividades** por objetivos, fases, iteraciones e incrementos.
+- **11. Referencias bibliográficas** en APA 7.
+- **12. Anexos**.
 
-El Perfil se conserva únicamente como archivo Markdown en este repositorio; no se creará ni mantendrá una copia DOCX. Sus encabezados principales no requieren saltos de página. En el documento final oficial del Proyecto de Grado, cada capítulo principal sí comenzará en una página nueva durante la maquetación de entrega.
+> La enumeración "SCRUM, XP, RUP…" de las guías de perfil es orientativa. **Metodología declarada para R3Foresta:** proceso basado en RUP, complementado con SDD asistido por IA — ver [`04_metodologia/metodologia_desarrollo.md`](04_metodologia/metodologia_desarrollo.md).
+
+El archivo Markdown es la fuente canónica y la única versión editable del Perfil. El DOCX existente es una instantánea no canónica y no sincronizada; no deberá emplearse como fuente de cambios ni como versión vigente sin regenerarlo. Los encabezados principales del Perfil no requieren saltos de página. En el documento final oficial del Proyecto de Grado, cada capítulo principal sí comenzará en una página nueva durante la maquetación de entrega.
 
 ### Estructura del Proyecto final (a la que apunta el perfil)
 
 - **Introducción independiente** — se redactará al finalizar todos los capítulos.
-- **Cap. 1 — Marco introductorio** (antecedentes, problema, objetivos, justificación, alcances y diseño metodológico).
-- **Cap. 2 — Marco teórico y conceptual.**
-- **Cap. 3 — Marco aplicativo** (ingeniería del sistema: análisis, diseño, implementación e integración; detalle pendiente).
-- **Capítulos posteriores** — verificación, evaluación, conclusiones y recomendaciones; denominación pendiente.
-- Bibliografía y anexos.
+- **Cap. 1 — Marco introductorio** (antecedentes, problema, objetivos, justificación, alcances y metodología de desarrollo).
+- **Cap. 2 — Marco teórico y conceptual** (dominio, RUP, SDD y asistencia de IA).
+- **Cap. 3 — Marco aplicativo** (análisis, diseño, implementación, integración, verificación, validación, aceptación y resultados).
+- **Conclusiones y Recomendaciones.**
+- Referencias bibliográficas y anexos.
 
 ### Referencias
 

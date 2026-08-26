@@ -18,8 +18,8 @@
 - [x] Confirmar que el ejemplo utiliza Capítulo I introductorio y Capítulo II teórico.
 - [x] Incorporar el ejemplo al lineamiento estructural como precedente, no como reglamento.
 - [x] Redactar una primera versión completa del Capítulo I.
-- [x] Conservar sin cambios el contenido inicial del Capítulo II.
-- [ ] Volver a verificar que el objetivo general del Capítulo I coincida exactamente con el Perfil después de adoptar el único verbo rector **desarrollar**.
+- [x] Desarrollar progresivamente el Capítulo II y conservar como borrador las subsecciones que todavía requieren fuentes o cierre conceptual.
+- [x] Verificar que el objetivo general del Capítulo I coincida exactamente con el Perfil después de adoptar el único verbo rector **desarrollar**.
 - [x] Verificar que los cinco objetivos específicos coincidan exactamente con el Perfil.
 - [x] Guardar la misión, visión, estructura y antecedentes declarados en una ficha institucional independiente.
 - [x] Incorporar al Perfil una síntesis del nuevo contexto institucional.
@@ -27,7 +27,7 @@
 - [x] Registrar las primeras decisiones estructurales proporcionadas por el postulante el 24 de agosto de 2026.
 - [x] Revisar e integrar el resumen ejecutivo institucional oficial de R3Foresta del 23 de agosto de 2026.
 - [x] Registrar las correcciones comunicadas por la tutora el 25 de agosto de 2026 y remitir su ejecución detallada al tablero único del Perfil.
-- [ ] Sincronizar los capítulos I y II después de cerrar las correcciones del Perfil en [`TODO.md`](TODO.md).
+- [x] Sincronizar los capítulos I y II con las decisiones vigentes del Perfil sobre título, problema, objetivos, alcance y metodología.
 
 ## 2. Validaciones prioritarias con la tutora
 
@@ -59,9 +59,9 @@
 
 - [ ] Confirmar si deben existir justificaciones tecnológica, económica y social como apartados separados.
 - [ ] Confirmar si corresponde conservar además una justificación académica.
-- [x] Confirmar que el Proyecto de Grado no utilizará hipótesis formal; conservará preguntas de investigación y evaluación descriptiva.
-- [ ] Confirmar si ciencia del diseño, DSRM y estudio de caso único embebido son aceptados para el documento final; estos componentes no se desarrollarán en el Perfil.
-- [ ] Incorporar en los capítulos la metodología de desarrollo que se seleccione y apruebe en la sección 2.9 de [`TODO.md`](TODO.md); la decisión se controla únicamente allí.
+- [x] Confirmar que el Proyecto de Grado no utilizará hipótesis ni un marco investigativo independiente; conservará preguntas del problema y comprobación del producto como parte de la ingeniería.
+- [x] Retirar ciencia del diseño, DSRM y estudio de caso único embebido como metodología vigente, según la decisión comunicada por el postulante después de la reunión con la tutora.
+- [x] Adoptar RUP adaptado, complementado con Spec-Driven Development asistido por IA, conforme a la decisión controlada en la sección 2.9 de [`TODO.md`](TODO.md).
 - [ ] Confirmar fuente, tamaño, interlineado, márgenes y sangría.
 - [x] Confirmar **APA 7** como norma de citación y referencias.
 - [ ] Aplicar en los capítulos la forma autor–año acordada y eliminar siglas de autores corporativos introducidas entre corchetes en las citas.
@@ -112,15 +112,14 @@ La fuente de trabajo se encuentra en [`../03_investigacion/ficha_institucional_r
 - [x] No afirmar que genera, habilita o certifica créditos de carbono.
 - [x] Mantener el alcance académico hasta el registro de plantación.
 
-## 4. Incorporación del diagnóstico en los capítulos
+## 4. Evidencia del problema y del producto en los capítulos
 
-La ejecución del diagnóstico, el inventario de fuentes, la reconstrucción histórica y las mediciones se controlan únicamente en las secciones 4 a 6 de [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_GRADO.md). Este tablero recibe sus productos para la redacción y no duplica sus tareas operativas.
+El proyecto no realizará un diagnóstico investigativo independiente. La información que respalde la situación problemática procederá de documentos institucionales, fuentes existentes y clarificaciones del dominio registradas durante Inicio y Elaboración; la verificación, la validación operativa y la aceptación se controlarán durante Construcción y Transición en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_GRADO.md).
 
-- [ ] Recibir el corpus delimitado, la caracterización de la práctica actual y la evidencia de reconstrucción producidos por el tablero de ejecución.
-- [ ] Incorporar en el Capítulo I únicamente los hallazgos respaldados y necesarios para caracterizar la magnitud del problema ya definido.
-- [ ] Mantener explícito que el diagnóstico mide y caracteriza el problema, pero no condiciona su existencia ni el cierre del Perfil.
-- [ ] Relacionar cada hallazgo incorporado con su fuente, instrumento, objetivo y ubicación en los anexos.
-- [ ] Reservar para el documento final los resultados de evaluación y comparación que no correspondan a los antecedentes o al planteamiento del Capítulo I.
+- [x] Retirar la exigencia de línea base, muestra, saturación, comparación antes–después e instrumentos de investigación.
+- [ ] Identificar la procedencia de las afirmaciones utilizadas para describir la práctica actual y conservar únicamente las que cuenten con respaldo.
+- [ ] Relacionar cada afirmación incorporada con su fuente o registro de clarificación del dominio.
+- [ ] Reservar para el Marco aplicativo los resultados de verificación, validación y aceptación que no correspondan a los antecedentes o al planteamiento del Capítulo I.
 
 ## 5. Revisión del Capítulo I
 
@@ -160,11 +159,11 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 ### 5.4. Preguntas y objetivos
 
 - [x] Registrar la revisión de la tutora del 25 de agosto de 2026.
-- [ ] Sincronizar la pregunta general sin una solución anticipada y el objetivo general con el único verbo rector **desarrollar**, una vez cerrados en el Perfil.
+- [x] Sincronizar la pregunta general sin una solución anticipada y el objetivo general con el único verbo rector **desarrollar**.
 - [x] Mantener sin cambios los cinco objetivos específicos confirmados por la tutora.
-- [ ] Revalidar la correspondencia uno a uno entre preguntas y objetivos específicos después de la corrección general.
+- [x] Revalidar la correspondencia uno a uno entre preguntas y objetivos específicos después de la corrección general.
 - [x] Mantener el orden: analizar, diseñar, implementar, verificar y evaluar.
-- [ ] Propagar al Capítulo I únicamente las decisiones cerradas en el tablero del Perfil.
+- [x] Propagar al Capítulo I únicamente las decisiones cerradas en el tablero del Perfil.
 
 ### 5.5. Justificación
 
@@ -179,31 +178,31 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 - [ ] Confirmar las variantes de ingreso externo.
 - [ ] Mantener el historial transversal sin convertirlo en un cuarto módulo.
 - [ ] Revisar las exclusiones con la tutora.
-- [ ] Confirmar disponibilidad de actividades, sitio y participantes del piloto.
+- [ ] Confirmar disponibilidad de una operación real o, en su defecto, definir escenarios controlados de validación.
 - [ ] Mantener la diferencia entre evidencia asociada y verdad física.
 - [ ] Revisar si “Aportes esperados” debe conservarse o trasladarse.
 
-### 5.7. Diseño metodológico y organización
+### 5.7. Metodología de desarrollo y organización
 
-- [x] Confirmar que el diseño metodológico permanecerá dentro del Capítulo I.
-- [x] Separar y desarrollar la función de investigación, estrategia empírica, desarrollo, evaluación y seguimiento.
-- [x] Registrar en la primera versión la relación propuesta entre las seis actividades DSRM y la ejecución de R3Foresta; este estado acredita redacción, no aprobación metodológica.
-- [x] Registrar en la primera versión la delimitación propuesta del caso, el contexto organizacional y las unidades embebidas; este estado acredita redacción, no aprobación metodológica.
-- [x] Registrar en la primera versión que el artefacto académico comprende modelo, reglas, implementación, reconstrucción y evidencia de evaluación.
-- [ ] Alinear el mecanismo de seguimiento y las cadenas de evidencia metodológica y técnica con la metodología de desarrollo específica que se seleccione.
-- [ ] Completar el diseño metodológico con los datos definitivos del periodo, sitios, actores, fuentes, instrumentos y amenazas realmente observadas.
-- [ ] Confirmar que existirán varias trazas elegibles; si solo existe una, revisar la denominación de caso embebido.
-- [ ] Obtener aprobación formal de la tutora para ciencia del diseño, DSRM, caso único embebido, la metodología de desarrollo específica seleccionada y la evaluación combinada del documento final.
+- [x] Confirmar que la metodología de desarrollo permanecerá dentro del Capítulo I.
+- [x] Registrar que RUP estructura el proyecto completo mediante Inicio, Elaboración, Construcción y Transición.
+- [x] Registrar la adaptación de roles, artefactos, disciplinas e hitos al tamaño individual del proyecto.
+- [x] Diferenciar las fases RUP de los cuatro incrementos ejecutables de Construcción.
+- [x] Establecer el orden M1 → M2 e integración M1→M2 → M3 e integración M2→M3 → trazabilidad transversal e integración total.
+- [x] Definir SDD asistido por IA como práctica de trabajo subordinada a RUP, no como metodología equivalente ni como sustituto del juicio humano.
+- [x] Sincronizar el Capítulo I con el flujo `necesidad → requisito → especificación → diseño → tareas → implementación → pruebas → resultado → aceptación`.
+- [x] Explicar verificación, validación operativa y aceptación como actividades de ingeniería, sin reintroducir un diseño de investigación.
+- [ ] Completar el seguimiento con artefactos, responsables, fechas, criterios de entrada y salida y evidencias realmente disponibles.
 - [ ] Evitar repetir en esta sección el detalle técnico propio del Marco aplicativo.
 - [x] Confirmar que no se prometerán capítulos posteriores al III antes de Conclusiones y Recomendaciones.
-- [ ] Actualizar la organización del documento para reflejar Capítulo III, Conclusiones y Recomendaciones.
+- [x] Actualizar la organización del documento para reflejar Capítulo III, Conclusiones y Recomendaciones.
 - [ ] Retirar la nota de “primera versión” cuando el capítulo quede aprobado para maquetación.
 
 ## 6. Ajustes pendientes en el Perfil
 
 Archivo: [`../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 
-El detalle de estas correcciones se controla exclusivamente en [`TODO.md`](TODO.md). Este tablero no mantiene una segunda lista del Perfil ni condiciona su problema al diagnóstico posterior. El Perfil no requiere resumen ni una copia DOCX en el repositorio.
+El detalle de estas correcciones se controla exclusivamente en [`TODO.md`](TODO.md). Este tablero no mantiene una segunda lista del Perfil ni condiciona su problema a un diagnóstico posterior. El Perfil no requiere resumen; su archivo Markdown es la fuente canónica y el DOCX existente se considera una instantánea no sincronizada.
 
 - [x] Establecer [`TODO.md`](TODO.md) como punto único de control para las correcciones del Perfil.
 - [ ] Esperar el cierre de las correcciones sustantivas y editoriales del Perfil en su tablero.
@@ -219,7 +218,7 @@ Archivo reservado: [`../06_entregables/proyecto_grado/02_capitulo_marco_teorico_
 - [x] Obtener autorización expresa del postulante antes de redactar — concedida el 24 de agosto de 2026.
 - [ ] Confirmar con la tutora el alcance y la denominación del Capítulo II.
 - [x] Confirmar como criterio de trabajo que no debe convertirse en un catálogo de tecnologías ni repetir la metodología.
-- [x] Incorporar un mapa entre cada componente metodológico y el fundamento conceptual que necesita.
+- [x] Incorporar un mapa entre RUP, SDD, asistencia de IA y el fundamento conceptual que necesita cada componente.
 - [ ] Decidir si EPCIS y UNTP serán comparaciones formales o solo referentes descriptivos.
 - [ ] Definir la cantidad razonable de páginas y profundidad por sección.
 
@@ -238,6 +237,10 @@ Archivo reservado: [`../06_entregables/proyecto_grado/02_capitulo_marco_teorico_
 - [ ] Cerrar límites de fotografías, coordenadas y documentos como evidencia.
 - [ ] Cerrar completitud, coherencia, tiempo de recuperación y carga operativa.
 - [ ] Desarrollar únicamente las características de calidad de software que efectivamente se evaluarán.
+- [x] Desarrollar RUP: origen, principios, fases, iteraciones, incrementos, hitos, disciplinas y adaptación al proyecto.
+- [x] Desarrollar Spec-Driven Development: precedencia de la especificación, flujo hacia plan, tareas, implementación y pruebas, y trazabilidad de cambios.
+- [x] Desarrollar asistencia de IA: usos permitidos, revisión humana, reproducibilidad, límites, autoría y responsabilidad.
+- [x] Explicar que SDD no tiene una definición normativa única y que el referente adoptado, GitHub Spec Kit, integra agentes de IA; conservar la mención explícita de IA por transparencia y control.
 - [ ] Definir bonos de carbono y diferenciar los datos operativos trazables de la cuantificación, el MRV, la validación, la verificación y la emisión de créditos.
 - [ ] Preparar una síntesis conceptual que conecte definiciones y propiedades del diseño.
 
@@ -293,7 +296,7 @@ Archivo reservado: [`../06_entregables/proyecto_grado/02_capitulo_marco_teorico_
 - [ ] Autorización institucional para utilizar información operativa.
 - [ ] Consentimiento informado para entrevistas u observaciones.
 - [ ] Definición de datos públicos, operativos, personales y sensibles.
-- [ ] Confirmación del sitio y participantes del piloto.
+- [ ] Confirmación del contexto y responsables autorizados para la validación y aceptación.
 
 ## 10. Registro de observaciones y decisiones
 
@@ -302,8 +305,9 @@ Completar una fila por cada corrección recibida. No registrar solamente “corr
 | Fecha | Persona o fuente | Observación | Decisión adoptada | Archivos afectados | Estado |
 |---|---|---|---|---|---|
 | 24-08-2026 | R3Foresta (2026) y confirmación del postulante | El resumen ejecutivo contiene la misión, visión, modelo y relación tecnológica con R3Carbon; el nombre oficial de la aplicación es R3foresta App. | Sustituir las formulaciones preliminares, citar a R3Foresta como autora corporativa, diferenciar institución/componente/aplicación y mantener CO2 fuera del alcance evaluado. | Ficha institucional, Perfil, Capítulo I, glosario, índice de fuentes y TODO | Aplicado |
-| 25-08-2026 | Tutora del Proyecto de Grado, comunicado por el postulante | El Perfil debe simplificar su estructura y metodología; ajustar antecedentes, problema, pregunta y objetivo general; conservar los objetivos específicos y tres módulos; aplicar APA 7; reorganizar cronograma e índice; y diferir evaluación, ética y propuesta de ingeniería al documento final. | Controlar el detalle únicamente en `TODO.md`; mantener el título actual como base aprobada; dejar abiertos problema, pregunta y objetivo general; confirmar objetivos específicos, módulos y APA 7; y sincronizar los capítulos cuando cierre el Perfil. | TODO del Perfil, Capítulo I, planificación del Capítulo II y documento final | Registrado; aplicación pendiente en el Perfil |
+| 25-08-2026 | Tutora del Proyecto de Grado, comunicado por el postulante | El Perfil debe simplificar su estructura y metodología; ajustar antecedentes, problema, pregunta y objetivo general; conservar los objetivos específicos y tres módulos; aplicar APA 7; reorganizar cronograma e índice; y diferir evaluación, ética y propuesta de ingeniería al documento final. | Controlar el detalle únicamente en `TODO.md`; mantener el título actual como base aprobada; dejar abiertos problema, pregunta y objetivo general; confirmar objetivos específicos, módulos y APA 7; y sincronizar los capítulos cuando cierre el Perfil. | TODO del Perfil, Capítulo I, planificación del Capítulo II y documento final | Aplicado; la decisión metodológica posterior se registra en la fila siguiente |
 | 25-08-2026 | Decisión del postulante | Seleccionar un título con mayor impacto que mencione bonos de carbono sin atribuir al sistema su generación, certificación, emisión o comercialización. | Adoptar **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**, delimitar la proyección como futura e indirecta y solicitar la ratificación de la tutora. | Lineamientos, Perfil, Capítulos I y II, glosario, fuentes y tableros | Propagado; ratificación pendiente |
+| 25-08-2026 | Reunión con la tutora, comunicada por el postulante, y decisión definitiva del postulante | El trabajo no utilizará un marco investigativo independiente y requiere una metodología de desarrollo clásica, estructurada, iterativa e incremental. | Retirar ciencia del diseño, DSRM, estudio de caso y sprints; adoptar **RUP adaptado, complementado con Spec-Driven Development asistido por IA**; organizar el periodo 6 de julio–15 de noviembre por fases e iteraciones RUP, con incrementos ejecutables en Construcción. | Lineamientos, Perfil, Capítulos I y II, metodología, cronograma y tableros | Aplicado |
 
 ## 11. Criterios de cierre
 
@@ -317,7 +321,7 @@ Completar una fila por cada corrección recibida. No registrar solamente “corr
 - [ ] Todas las citas y referencias verificadas en APA 7, sin siglas corporativas introducidas entre corchetes.
 - [ ] Nota de borrador retirada.
 
-### Capítulo II listo para comenzar a redactar
+### Capítulo II listo para revisión formal
 
 - [x] Autorización expresa del postulante.
 - [ ] Estructura confirmada por la tutora.
@@ -336,4 +340,4 @@ Completar una fila por cada corrección recibida. No registrar solamente “corr
 
 ---
 
-*Este checklist es el punto único de control para los capítulos I y II. El desarrollo del sistema, los instrumentos y el piloto continúan administrándose en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_GRADO.md).*
+*Este checklist es el punto único de control para los capítulos I y II. Las fases RUP, los incrementos, las integraciones, las pruebas, la transición y la aceptación se administran en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_GRADO.md).*

@@ -2,13 +2,13 @@
 
 **Proyecto:** R3Foresta
 
-**Fecha de incorporación:** 18 de agosto de 2026; alineación terminológica actualizada el 19 de agosto de 2026
+**Fecha de incorporación:** 18 de agosto de 2026; alineación con el Perfil vigente actualizada el 25 de agosto de 2026
 
 **Estado:** recurso de investigación vivo; no constituye por sí mismo bibliografía del perfil ni del documento final.
 
 ## 1. Propósito y reglas de uso
 
-Este documento conserva y evalúa críticamente las fuentes obtenidas en dos búsquedas adicionales: representación de la trazabilidad mediante eventos e integridad, evidencia y reconstrucción de trazas. Su función es evitar que los hallazgos se pierdan y permitir recuperarlos cuando se redacten el marco teórico, el diseño del modelo, la metodología de evaluación o la discusión del Proyecto de Grado.
+Este documento conserva y evalúa críticamente las fuentes obtenidas en dos búsquedas adicionales: representación de la trazabilidad mediante eventos e integridad, evidencia y reconstrucción de trazas. Su función es evitar que los hallazgos se pierdan y permitir recuperarlos cuando se redacten el marco teórico, el diseño del modelo, la verificación, la validación operativa o la discusión del Proyecto de Grado.
 
 Se aplican las siguientes reglas:
 
@@ -24,12 +24,12 @@ El índice temático para recuperar estas fuentes está en [`../05_recursos/indi
 
 ## 2. Decisión editorial para el Perfil
 
-La búsqueda aporta más fuentes valiosas de las que necesita un perfil breve. La primera versión incorporó dos fuentes al argumento de antecedentes:
+La búsqueda aporta más fuentes valiosas de las que necesita un perfil breve. Algunas fuentes aparecieron en versiones exploratorias y quedaron reservadas para el documento final:
 
-- **[EVT-02] Solanki y Brewster (2014):** incorporada a los antecedentes porque extiende directamente a Thakur et al. (2011) y sustenta las relaciones entrada–evento–salida necesarias para reconstruir procedencia.
-- **[EVA-01] Donnelly et al. (2012):** incorporada a la progresión argumentativa de los antecedentes y al procedimiento de comparación entre la situación actual y la propuesta porque respalda que la capacidad de trazabilidad debe comprobarse intentando reconstruir una traza.
+- **[EVT-02] Solanki y Brewster (2014):** reservada para el Capítulo II y el diseño de relaciones entrada–evento–salida; no se cita en el Perfil vigente.
+- **[EVA-01] Donnelly et al. (2012):** reservada como antecedente conceptual de escenarios de reconstrucción; no obliga a comparar una situación anterior con la propuesta ni se cita en el Perfil vigente.
 
-La revisión final del marco teórico preliminar incorporó además **Olsen y Borit (2018)** para unidades, atributos y relaciones; **W3C PROV-O** para procedencia; **FAO Forest Reproductive Material** para anclar el dominio forestal; y **Härder y Reuter (1983)** para las propiedades transaccionales. Estas fuentes cubren vacíos concretos sin comprometer una arquitectura.
+El Perfil vigente utiliza **FAO Forest Reproductive Material** para anclar el dominio forestal. **Olsen y Borit (2018)**, **W3C PROV-O** y **Härder y Reuter (1983)** permanecen reservados para el Capítulo II y el Marco aplicativo; no se declararán como incorporados hasta que exista una cita efectiva.
 
 Las demás fuentes quedan reservadas. En particular:
 
@@ -41,16 +41,16 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 
 ## 3. Estado resumido de las fuentes
 
-| ID | Fuente | Tipo | Destino principal | Estado al 18-08-2026 |
+| ID | Fuente | Tipo | Destino principal | Estado al 25-08-2026 |
 |---|---|---|---|---|
 | DOM-01 | FAO, *Forest Reproductive Material* | Guía técnica oficial | Dominio forestal y procedencia | Ya citada en el marco teórico preliminar |
 | EVT-01 | Thakur et al. (2011) | Artículo académico | Antecedentes y marco teórico | Ya citada en el perfil |
-| EVT-02 | Solanki y Brewster (2014), transformaciones | Capítulo académico | Antecedentes y modelo | Incorporada al perfil; texto revisado |
+| EVT-02 | Solanki y Brewster (2014), transformaciones | Capítulo académico | Marco teórico y modelo | Reservada para el documento final; texto revisado |
 | EVT-03 | GS1 EPCIS 2.0 | Guía técnica oficial | Marco teórico y diseño | Reservada; documento oficial revisado |
 | EVT-04 | UNTP Digital Traceability Events | Especificación en desarrollo | Estado del arte reciente | Reserva; estado y versión verificados |
 | EVT-05 | Byun, Woo y Kim (2017) | Artículo académico | Grafo temporal y privacidad | Reserva; lectura completa pendiente |
-| GEN-01 | Olsen y Borit (2018) | Artículo académico | Componentes y unidades trazables | Ya citada en el marco teórico preliminar |
-| GEN-02 | W3C PROV-O (2013) | Recomendación técnica | Procedencia y derivación | Ya citada en el marco teórico preliminar |
+| GEN-01 | Olsen y Borit (2018) | Artículo académico | Componentes y unidades trazables | Reservada para el Capítulo II |
+| GEN-02 | W3C PROV-O (2013) | Recomendación técnica | Procedencia y derivación | Reservada para el Capítulo II |
 | GEN-03 | Jansen-Vullers et al. (2003) | Artículo académico | Genealogía en manufactura | Reserva; lectura completa pendiente |
 | GEN-04 | Solanki y Brewster (2014), *linked pedigrees* | Capítulo académico | Genealogía derivada de eventos | Reserva; lectura completa pendiente |
 | GEN-05 | Solanki (2015) | Ponencia/taller | Trazabilidad basada en eventos | Reserva; lectura completa pendiente |
@@ -59,10 +59,10 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 | INT-03 | FSC-STD-40-004 V3-1 (2021) | Estándar de certificación | Conciliación cuantitativa | Diseño de invariantes; documento oficial revisado |
 | INT-04 | Comba et al. (2013) | Artículo académico | Cantidad y procedencia en mezclas | Reserva; lectura completa pendiente |
 | INT-05 | FDA (2018), integridad de datos | Guía regulatoria | Integridad y pistas de auditoría | Marco teórico; documento oficial revisado |
-| INT-06 | Härder y Reuter (1983) | Artículo académico | Atomicidad y consistencia transaccional | Ya citada en el marco teórico preliminar |
-| EVA-01 | Donnelly et al. (2012) | Artículo académico | Antecedentes y evaluación por reconstrucción | Incorporada al perfil; metadatos y resumen revisados |
+| INT-06 | Härder y Reuter (1983) | Artículo académico | Atomicidad y consistencia transaccional | Reservada para el Capítulo II y el diseño |
+| EVA-01 | Donnelly et al. (2012) | Artículo académico | Antecedente de reconstrucción | Reservada para el documento final; metadatos y resumen revisados |
 | EVA-02 | Randrup et al. (2008) | Artículo académico | Retiro simulado | Reserva; lectura completa pendiente |
-| EVA-03 | Mgonja et al. (2013) | Artículo académico | Desempeño de trazabilidad | Marco de evaluación; lectura completa pendiente |
+| EVA-03 | Mgonja et al. (2013) | Artículo académico | Desempeño de trazabilidad | Reserva para validación y discusión; lectura completa pendiente |
 | LIM-01 | Terriault (2022) | Tesis | Límites de los enlaces inferidos | Discusión; lectura completa pendiente |
 
 ## 4. Fichas críticas
@@ -88,9 +88,9 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 **Fuente:** Solanki, M., & Brewster, C. (2014). *Modelling and linking transformations in EPCIS governing supply chain business processes*. En M. Hepp & Y. Hoffner (Eds.), *E-Commerce and Web Technologies* (LNBIP 188, pp. 46–57). Springer. [DOI](https://doi.org/10.1007/978-3-319-10491-1_5) · [texto](https://cbrewster.com/papers/Solanki_ECWEB14.pdf).
 
 - **Aporte transferible:** representa entradas consumidas, evento de transformación y salidas producidas; el enlace entre eventos permite consultar procedencia y genealogía.
-- **Uso previsto:** antecedentes del perfil y posterior diseño de relaciones entre registros de origen y lotes resultantes.
+- **Uso previsto:** Capítulo II y posterior diseño de relaciones entre registros de origen y lotes resultantes.
 - **Límite:** no justifica convertir automáticamente semillas en plantas ni demuestra reglas de conservación para un proceso biológico.
-- **Decisión:** incorporada al perfil como complemento directo de Thakur et al. (2011).
+- **Decisión:** reservada para el documento final como complemento de Thakur et al. (2011).
 
 ### EVT-03 — EPCIS 2.0 como vocabulario técnico de eventos
 
@@ -123,16 +123,16 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 **Fuente:** Olsen, P., & Borit, M. (2018). *The components of a food traceability system*. *Trends in Food Science & Technology, 77*, 143–149. [DOI](https://doi.org/10.1016/j.tifs.2018.05.004) · [repositorio](http://hdl.handle.net/10037/13348).
 
 - **Aporte transferible:** identifica como componentes centrales las unidades trazables, sus atributos y las relaciones producidas cuando se unen o dividen.
-- **Uso previsto:** marco teórico y comprobación de que el modelo conserva identidad y relaciones suficientes; incorporada al perfil.
+- **Uso previsto:** Capítulo II y comprobación posterior de que el modelo conserva identidad y relaciones suficientes.
 - **Límite:** no prescribe las invariantes transaccionales ni las reglas biológicas de R3Foresta.
-- **Decisión:** incorporada al marco teórico preliminar como complemento de la definición de Olsen y Borit (2013).
+- **Decisión:** reservada para el Capítulo II como complemento de la definición de Olsen y Borit (2013).
 
 ### GEN-02 — Procedencia mediante entidades, actividades y agentes
 
 **Fuente:** World Wide Web Consortium. (2013). *PROV-O: The PROV Ontology*. [Recomendación](https://www.w3.org/TR/prov-o/).
 
 - **Aporte transferible:** ofrece relaciones para expresar entidades usadas o generadas por actividades, derivaciones y responsabilidad de agentes.
-- **Uso previsto:** vocabulario conceptual para procedencia, genealogía y autoría de eventos; incorporada al perfil sin comprometer RDF u OWL.
+- **Uso previsto:** vocabulario conceptual para procedencia, genealogía y autoría de eventos en el Capítulo II, sin comprometer RDF u OWL.
 - **Límite:** PROV-O no controla cantidades, saldos ni reglas transaccionales; tampoco es necesario adoptar RDF u OWL para aprovechar su modelo conceptual.
 
 ### GEN-03 — Genealogía de lotes en manufactura
@@ -208,21 +208,21 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 - **Uso previsto:** explicar por qué una operación crítica no debe dejar efectos parciales ni aceptar interacciones simultáneas incoherentes.
 - **Límite:** sustenta propiedades generales; no decide por sí sola qué mecanismo de bloqueo, restricción o recuperación implementará R3Foresta.
 
-### EVA-01 — Evaluación empírica mediante reconstrucción
+### EVA-01 — Reconstrucción simulada como antecedente de validación
 
 **Fuente:** Donnelly, K. A.-M., Karlsen, K. M., & Dreyer, B. (2012). *A simulated recall study in five major food sectors*. *British Food Journal, 114*(7), 1016–1031. [DOI](https://doi.org/10.1108/00070701211241590).
 
 - **Aporte transferible:** evalúa la trazabilidad intentando recuperar origen, lote e información relacionada, en vez de asumir la efectividad por la mera existencia de registros.
-- **Uso previsto:** fundamentar la guía de reconstrucción, las fuentes recuperadas, los vacíos y la comparación de tiempos entre la situación actual y la propuesta.
+- **Uso previsto:** fundamentar escenarios de aceptación que intenten recuperar origen, recorrido, cantidades y evidencia vinculada.
 - **Límite:** R3Foresta no ejecutará un retiro sanitario ni evaluará inocuidad alimentaria.
-- **Decisión:** incorporada a los antecedentes y al procedimiento metodológico del perfil.
+- **Decisión:** se conserva como antecedente conceptual para diseñar escenarios de reconstrucción; no define la metodología vigente.
 
-### EVA-02 — Retiros simulados como complemento metodológico
+### EVA-02 — Retiros simulados como referencia complementaria
 
 **Fuente:** Randrup et al. (2008). *Simulated recalls of fish products in five Nordic countries*. [DOI](https://doi.org/10.1016/j.foodcont.2007.11.005).
 
 - **Aporte potencial:** complementa la evidencia sobre pruebas de recuperación de trazas en distintos actores.
-- **Uso previsto:** marco metodológico del documento final si se necesita triangulación adicional.
+- **Uso previsto:** referencia opcional para ampliar escenarios controlados de recuperación de trazas.
 - **Límite:** no es necesaria en el perfil mientras Donnelly et al. (2012) cubra el principio; lectura completa pendiente.
 
 ### EVA-03 — Diagnóstico del desempeño de trazabilidad
@@ -230,8 +230,8 @@ Esta selección mantiene la progresión argumentativa del perfil sin convertir l
 **Fuente:** Mgonja, Luning y Van der Vorst (2013). *Diagnostic model for assessing traceability system performance in fish processing plants*. [DOI](https://doi.org/10.1016/j.jfoodeng.2013.04.009).
 
 - **Aporte potencial:** permite fundamentar que el desempeño de trazabilidad requiere dimensiones y mediciones explícitas.
-- **Uso previsto:** refinamiento de métricas, discusión de resultados y límites de evaluación.
-- **Límite:** el modelo y sus dimensiones deben revisarse antes de adaptarlos al piloto pequeño de R3Foresta.
+- **Uso previsto:** referencia opcional para definir medidas observables en escenarios de validación y discutir sus límites.
+- **Límite:** el modelo y sus dimensiones deben revisarse antes de transferirlos al contexto y alcance de R3Foresta; no define la metodología del proyecto.
 
 ### LIM-01 — Diferencia entre enlaces observados e inferidos
 

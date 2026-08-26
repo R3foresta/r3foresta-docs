@@ -2,7 +2,7 @@
 
 **Fecha de actualización:** 25 de agosto de 2026.
 
-Este índice permite localizar fuentes por problema de investigación y por etapa de escritura. Las fichas críticas, enlaces y advertencias de transferencia al dominio se encuentran en la [`biblioteca razonada`](../03_investigacion/biblioteca_fuentes_trazabilidad_eventos_integridad.md).
+Este índice permite localizar fuentes por problema del proyecto, fundamento conceptual y etapa de escritura. Las fichas críticas, enlaces y advertencias de transferencia al dominio se encuentran en la [`biblioteca razonada`](../03_investigacion/biblioteca_fuentes_trazabilidad_eventos_integridad.md).
 
 ## Acceso por tema
 
@@ -24,11 +24,13 @@ Este índice permite localizar fuentes por problema de investigación y por etap
 | Transformación biológica semilla–planta | EVT-02 e INT-04, solo como contraste limitado | Modelo propio; no asumir conversión aritmética |
 | Integridad, autoría y pista de auditoría | INT-05 FDA (2018); GEN-02 W3C PROV-O | Marco teórico y diseño de registros |
 | Evidencia vinculada con eventos | EVT-04 UNTP; INT-05 FDA | Marco teórico y estado del arte |
-| Evaluación mediante reconstrucción | EVA-01 Donnelly et al. (2012); EVA-02 Randrup et al. (2008) | Comparación de la situación actual con la propuesta |
-| Desempeño de un sistema de trazabilidad | EVA-03 Mgonja et al. (2013) | Métricas y discusión de resultados |
-| Ciencia del diseño y proceso DSRM | Hevner et al. (2004); Peffers et al. (2007) | Metodología de construcción y evaluación del artefacto |
-| Estrategia de evaluación del artefacto | Venable et al. (2016), FEDS | Verificación formativa en sprints y evaluación sumativa en el piloto |
-| Análisis cualitativo por plantilla | Brooks et al. (2015) | Categorías iniciales revisables y categorías emergentes |
+| Reconstrucción de trazas | EVA-01 Donnelly et al. (2012); EVA-02 Randrup et al. (2008) | Diseño de escenarios de validación y consultas |
+| Desempeño de un sistema de trazabilidad | EVA-03 Mgonja et al. (2013) | Selección prudente de medidas observables |
+| Rational Unified Process | Kruchten (2004); IBM, documentación de RUP | Fundamento de fases, hitos, disciplinas, artefactos e iteración |
+| Comparación de alternativas metodológicas | Schwaber y Sutherland (2020); ISO/IEC 29110-5-1-2:2025 | Delimitar por qué Scrum e ISO/IEC 29110 no se adoptan como proceso rector |
+| Spec-Driven Development | GitHub (2026), *GitHub Spec Kit* | Referente práctico para especificar, planificar, descomponer e implementar |
+| Desarrollo de software asistido por IA | GitHub (2026); Tabassi (2023), NIST AI RMF 1.0; documentación oficial de las herramientas utilizadas | Delimitar usos, revisión humana, responsabilidades, seguridad y evidencia |
+| Verificación, validación y aceptación | SWEBOK; ISO/IEC/IEEE 12207, solo si se incorporan y citan en el capítulo final | Diferenciar pruebas técnicas, escenarios operativos y aceptación |
 | Límites de información no registrada | LIM-01 Terriault (2022) | Limitaciones y discusión |
 | Estado del arte emergente | EVT-04 UNTP Digital Traceability Events | Discusión; no como estándar consolidado |
 
@@ -45,11 +47,11 @@ Este índice permite localizar fuentes por problema de investigación y por etap
 
 ### Perfil de Proyecto de Grado
 
-- **Dominio y evaluación ya utilizados:** FAO, Thakur et al. (2011), Solanki y Brewster (2014), Donnelly et al. (2012), Olsen y Borit (2013, 2018), W3C PROV-O e ISO 22095:2020.
+- **Dominio, trazabilidad y cadena de custodia ya utilizados:** FAO (2023 y s. f.), Dabbene et al. (2014), Moe (1998), Olsen y Borit (2013), Thakur et al. (2011) e ISO 22095:2020.
 - **Bonos de carbono ya utilizados:** Verra, *Verified carbon units (VCUs)*, únicamente para definir el término incorporado al título y separar la acreditación de la trazabilidad operativa.
-- **Metodología ya utilizada:** Hevner et al. (2004), Runeson y Höst (2009), Peffers et al. (2007), Basili y Turner (1975), Larman y Basili (2003), SWEBOK e ISO/IEC/IEEE 12207.
-- **Integridad ya utilizada:** Härder y Reuter (1983), Meyer (1992) y Gotel y Finkelstein (1994).
-- **Criterio:** no incorporar fuentes adicionales salvo que una corrección sustantiva del argumento o la ejecución del protocolo lo exija.
+- **Metodología de desarrollo utilizada:** Kruchten (2004) e IBM para RUP; Schwaber y Sutherland (2020) e ISO/IEC 29110-5-1-2:2025 para comparar alternativas; GitHub (2026) para el referente práctico de SDD; y Tabassi (2023) para responsabilidades humano–IA.
+- **Fuentes avanzadas reservadas para el Capítulo II y el Marco aplicativo:** Olsen y Borit (2018), W3C PROV-O, Solanki y Brewster (2014), Härder y Reuter (1983), Meyer (1992) y Gotel y Finkelstein (1994); no se declaran como fuentes ya utilizadas por el Perfil.
+- **Criterio:** no incorporar fuentes adicionales salvo que una corrección sustantiva del argumento o la ejecución de la metodología de desarrollo lo exija.
 
 ### Marco teórico del Proyecto de Grado
 
@@ -65,21 +67,25 @@ Este índice permite localizar fuentes por problema de investigación y por etap
 - EVT-05, GEN-03 y GEN-04 para estructuras ramificadas y genealogía.
 - INT-02, INT-03 e INT-04 para cantidades, conversiones y límites de balance.
 
-### Metodología y evaluación
+### Metodología de desarrollo y comprobación
 
-- Hevner et al. (2004) para justificar la ciencia del diseño como enfoque de investigación.
-- Peffers et al. (2007) para operacionalizar DSRM en seis actividades.
-- Venable et al. (2016) para articular verificaciones controladas durante el desarrollo y evaluación naturalista en el piloto.
-- Brooks et al. (2015) para analizar entrevistas y observaciones con categorías iniciales revisables y apertura a hallazgos emergentes.
-- EVA-01 como fundamento principal de la prueba de reconstrucción.
-- EVA-02 si se requiere respaldo adicional sobre retiros simulados.
-- EVA-03 para refinar dimensiones de desempeño.
+- Kruchten (2004) para principios, fases, hitos, disciplinas y adaptación de RUP.
+- IBM para confirmar la terminología y planificación de RUP desde documentación del proveedor.
+- Schwaber y Sutherland (2020) e ISO/IEC 29110-5-1-2:2025 para caracterizar con fuentes primarias las alternativas consideradas, sin declarar que el proyecto las adopta.
+- GitHub (2026) como referente práctico de un flujo SDD apoyado por agentes; no se presentará Spec Kit como estándar ni como definición única del término.
+- Tabassi (2023), NIST AI RMF 1.0, como fundamento para diferenciar responsabilidades humanas y apoyo de IA.
+- SWEBOK e ISO/IEC/IEEE 12207 únicamente si el documento final necesita ampliar verificación, validación o ciclo de vida y si se incorporan citas efectivas.
+- EVA-01 y EVA-02 como antecedentes de reconstrucción, no como obligación de adoptar un diseño investigativo.
+- EVA-03 para refinar medidas de desempeño que tengan definición y utilidad en los escenarios de aceptación.
 
 Referencias metodológicas incorporadas:
 
-- Brooks, J., McCluskey, S., Turley, E., & King, N. (2015). The utility of template analysis in qualitative psychology research. *Qualitative Research in Psychology, 12*(2), 202–222. https://doi.org/10.1080/14780887.2014.955224
-- Peffers, K., Tuunanen, T., Rothenberger, M. A., & Chatterjee, S. (2007). A design science research methodology for information systems research. *Journal of Management Information Systems, 24*(3), 45–77. https://doi.org/10.2753/MIS0742-1222240302
-- Venable, J., Pries-Heje, J., & Baskerville, R. (2016). FEDS: A framework for evaluation in design science research. *European Journal of Information Systems, 25*(1), 77–89. https://doi.org/10.1057/ejis.2014.36
+- GitHub. (2026, 21 de agosto). *GitHub Spec Kit*. https://github.github.com/spec-kit/
+- IBM. (s. f.). *Project planning in the Rational Unified Process*. https://www.ibm.com/docs/en/rational-clearquest/10.0.9?topic=settings-project-planning
+- International Organization for Standardization. (2025). *ISO/IEC 29110-5-1-2:2025 Systems and software engineering—Lifecycle profiles for very small entities (VSEs)—Part 5-1-2: Software engineering guidelines for the generic Basic profile*. https://www.iso.org/standard/82669.html
+- Kruchten, P. (2004). *The Rational Unified Process: An introduction* (3.ª ed.). Addison-Wesley Professional.
+- Schwaber, K., & Sutherland, J. (2020). *The Scrum Guide: The definitive guide to Scrum: The rules of the game*. https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf
+- Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0)* (NIST AI 100-1). National Institute of Standards and Technology. https://doi.org/10.6028/NIST.AI.100-1
 
 ### Discusión y limitaciones
 
@@ -89,7 +95,7 @@ Referencias metodológicas incorporadas:
 
 ## Etiquetas de búsqueda
 
-`trazabilidad` · `cadena-de-custodia` · `bonos-de-carbono` · `créditos-de-carbono` · `MRV` · `eventos` · `EPCIS` · `transformación` · `transferencia` · `entradas-salidas` · `genealogía` · `procedencia` · `PROV-O` · `lotes` · `división` · `agrupación` · `saldos` · `cantidades` · `doble-contabilización` · `integridad-de-datos` · `audit-trail` · `evidencia` · `reconstrucción` · `situación-actual` · `propuesta` · `retiro-simulado` · `limitaciones`
+`trazabilidad` · `cadena-de-custodia` · `bonos-de-carbono` · `créditos-de-carbono` · `MRV` · `eventos` · `EPCIS` · `transformación` · `transferencia` · `entradas-salidas` · `genealogía` · `procedencia` · `PROV-O` · `lotes` · `saldos` · `integridad-de-datos` · `evidencia` · `reconstrucción` · `RUP` · `iterativo-incremental` · `SDD` · `Spec-Driven-Development` · `IA` · `verificación` · `validación` · `aceptación`
 
 ## Convención de estado
 

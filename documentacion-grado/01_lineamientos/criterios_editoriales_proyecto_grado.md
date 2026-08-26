@@ -1,6 +1,6 @@
 # Criterios editoriales para la documentación del Proyecto de Grado
 
-> **Versión 2 — 25 de agosto de 2026.**
+> **Versión 3 — 25 de agosto de 2026.**
 > Este lineamiento se aplica a las secciones y documentos que se redacten después del Perfil. Registra criterios editoriales y metodológicos; no modifica el contenido aprobado del Perfil de Proyecto de Grado.
 
 ## 1. Principio rector
@@ -69,6 +69,16 @@ Las propiedades deberán declararse antes que los mecanismos. Una solución téc
 
 No se trasladará automáticamente el nivel de detalle de un documento técnico hacia una sección académica temprana.
 
+### Terminología del proceso adoptado
+
+- **Fase RUP** se utilizará únicamente para Inicio, Elaboración, Construcción y Transición.
+- **Incremento** denominará una ampliación ejecutable del producto durante Construcción.
+- **Iteración** denominará un ciclo de refinamiento cuando exista evidencia de repetición; no se utilizará como sinónimo automático de módulo.
+- **Sprint** no se utilizará para planificar este proyecto, porque no se adoptó Scrum.
+- **SDD** se presentará como una práctica subordinada a RUP, no como una segunda metodología rectora.
+- **IA** se presentará como asistencia bajo revisión humana, no como autora, responsable o mecanismo de aprobación.
+- **Verificación**, **validación** y **aceptación** conservarán funciones distintas y no se agruparán bajo la etiqueta genérica “evaluación” cuando esa diferencia sea pertinente.
+
 ## 5. Ubicación y repetición de las explicaciones
 
 Una idea importante deberá conservarse, pero ubicarse en la sección que cumpla la función adecuada. Por ejemplo, la diferencia detallada entre transferencia y transformación puede desarrollarse en el marco teórico, el análisis del dominio, los requerimientos o el modelo de eventos, sin sobrecargar el alcance.
@@ -110,17 +120,18 @@ Antes de aprobar una nueva sección o documento se comprobará:
 5. ¿Puede decirse lo mismo de forma más sencilla sin perder rigor?
 6. ¿La redacción evita prometer resultados todavía no demostrados?
 7. ¿Los términos coinciden con los lineamientos y documentos anteriores?
-8. ¿Cada afirmación relevante puede relacionarse con el problema, un objetivo o una forma de evaluación?
+8. ¿Cada afirmación relevante puede relacionarse con el problema, un objetivo o una forma de comprobación?
 9. ¿Se evitó repetir explicaciones completas ya establecidas?
 10. ¿Se mantiene la diferencia entre el registro informático y la realidad física?
+11. ¿La terminología distingue fase RUP, iteración, incremento, SDD, asistencia de IA, verificación, validación y aceptación?
 
 Si una respuesta es negativa, la sección deberá corregirse o justificar explícitamente la excepción antes de cerrarse.
 
 ## 9. Fuente y paginación de los documentos
 
-- El Perfil se mantendrá únicamente en `PERFIL_PROYECTO_GRADO.md`; no se generará ni almacenará una copia DOCX en este repositorio.
+- `PERFIL_PROYECTO_GRADO.md` será la fuente canónica y única versión editable del Perfil. El DOCX existente es una instantánea no canónica y no sincronizada; no se utilizará como fuente ni como versión vigente sin regenerarlo.
 - En el Perfil no se insertarán saltos de página obligatorios después de cada encabezado principal.
-- En el documento final oficial del Proyecto de Grado, cada capítulo principal deberá comenzar en una página nueva. Esta regla se aplicará durante la maquetación de entrega sin introducir copias DOCX del Perfil en el repositorio.
+- En el documento final oficial del Proyecto de Grado, cada capítulo principal deberá comenzar en una página nueva. Esta regla se aplicará durante la maquetación de entrega.
 
 ## 10. Regla resumida
 

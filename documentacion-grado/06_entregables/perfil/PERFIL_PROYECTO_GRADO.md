@@ -11,8 +11,8 @@
 - [5. Justificación](#5-justificación)
 - [6. Alcances y límites](#6-alcances-y-límites)
 - [7. Marco teórico preliminar](#7-marco-teórico-preliminar)
-- [8. Marco Metodológico](#8-marco-metodológico)
-- [9. Índice tentativo](#9-índice-tentativo)
+- [8. Metodología de desarrollo](#8-metodología-de-desarrollo)
+- [9. Índice propuesto del Proyecto de Grado](#9-índice-propuesto-del-proyecto-de-grado)
 - [10. Cronograma de actividades](#10-cronograma-de-actividades)
 - [11. Referencias bibliográficas](#11-referencias-bibliográficas)
 - [12. Anexos](#12-anexos)
@@ -27,11 +27,11 @@ La reforestación moviliza material vegetal entre lugares, responsables y etapas
 
 La trazabilidad no consiste únicamente en almacenar inventarios, formularios o fotografías de forma aislada. Requiere conservar la información y las relaciones necesarias para reconstruir el recorrido de un objeto a través de las etapas de una cadena (Olsen & Borit, 2013). En una cadena de custodia, además, los movimientos y cambios deben registrarse bajo reglas explícitas; sin embargo, la existencia de un sistema no demuestra por sí sola la veracidad de las declaraciones registradas (International Organization for Standardization, 2020). Por ello, el proyecto plantea registros reconstruibles con evidencia contrastable y no una certificación independiente de los hechos físicos.
 
-El caso corresponde a la **Fundación R3Foresta para la Bioregeneración de Ecosistemas y la Economía Circular**, que desarrolla actividades de reforestación con comunidades, voluntarios y organizaciones patrocinadoras. Actualmente, la información y las evidencias de estas actividades se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Aunque estas fuentes documentan las actividades realizadas, se encuentran dispersas y no comparten una estructura, identificadores ni relaciones comunes para reconstruir de extremo a extremo el recorrido del material vegetal, conciliar cantidades y saldos, identificar responsables y recuperar la evidencia asociada.
+La expresión *caso R3Foresta* del título delimita la organización y el contexto donde se aplicará el producto; no declara un diseño investigativo de estudio de caso. La **Fundación R3Foresta para la Bioregeneración de Ecosistemas y la Economía Circular** desarrolla actividades de reforestación con comunidades, voluntarios y organizaciones patrocinadoras. Actualmente, la información y las evidencias de estas actividades se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Aunque estas fuentes documentan las actividades realizadas, se encuentran dispersas y no comparten una estructura, identificadores ni relaciones comunes para reconstruir de extremo a extremo el recorrido del material vegetal, conciliar cantidades y saldos, identificar responsables y recuperar la evidencia asociada.
 
 Ante esta situación, el proyecto desarrollará un sistema de trazabilidad como componente operativo de **R3foresta App**, desde la recolección o recepción externa del material vegetal hasta el registro de su plantación. La solución comprenderá los módulos de **Recolección, Vivero y Plantación**. El material adquirido o recibido de terceros se tratará como una variante de ingreso en Vivero o Plantación y conservará sus datos de procedencia, sin constituir un módulo adicional.
 
-R3foresta App representa una pieza fundamental para la gestión de la Fundación porque organiza la cadena operativa que comienza con el origen del material vegetal y concluye con su plantación. La relación transparente entre procedencia, movimientos, cantidades, responsables, ubicaciones y evidencias permitirá reconstruir la cadena de custodia, respaldar la gestión interna y presentar información consistente ante patrocinadores, aliados y otros actores. La proyección hacia bonos de carbono señalada en el título se limita al posible uso posterior de estos registros dentro de procesos institucionales que requerirían metodología, cuantificación, monitoreo y verificación independientes; dichos procesos no forman parte del producto académico.
+R3foresta App se plantea como un componente operativo para organizar la cadena que comienza con el origen del material vegetal y concluye con el registro de su plantación. La relación entre procedencia, movimientos, cantidades, responsables, ubicaciones y evidencias busca facilitar la reconstrucción de la cadena de custodia, apoyar la gestión interna y presentar información consistente ante patrocinadores, aliados y otros actores. La proyección hacia bonos de carbono señalada en el título se limita al posible uso posterior de estos registros dentro de procesos institucionales que requerirían metodología, cuantificación, monitoreo y verificación independientes; dichos procesos no forman parte del producto académico.
 
 El alcance concluye con el registro de la plantación. El sistema no realiza monitoreo posterior de supervivencia, no mide captura de dióxido de carbono, no implementa una metodología de monitoreo, reporte y verificación de carbono, no certifica plantaciones y no genera, emite ni comercializa bonos o créditos de carbono.
 
@@ -41,17 +41,19 @@ El alcance concluye con el registro de la plantación. El sistema no realiza mon
 
 R3Foresta fue creada en 2019 como una iniciativa y plataforma de acción socioambiental orientada a la bioregeneración de ecosistemas estratégicos y al fortalecimiento de las comunidades vinculadas con ellos. Su modelo evolucionó desde la acción ambiental directa hacia la integración de reforestación, agua, biodiversidad, residuos, alimentación, tecnología y comunidades. Actualmente articula las dimensiones ecológica, comunitaria, científico-tecnológica y económica mediante los componentes R3Carbon, R3Water, R3Bio y R3F10 — Reciclaje y Economía Circular (R3Foresta, 2026).
 
-**Figura 1. Estructura organizacional de R3Foresta.**
+**Figura 1**
+
+*Estructura organizacional de R3Foresta*
 
 ![Organigrama institucional de R3Foresta](figuras/organigrama_r3foresta.png)
 
-*Fuente: organigrama institucional proporcionado por la Fundación R3Foresta.*
+*Nota.* Organigrama institucional proporcionado por la Fundación R3Foresta.
 
-En la dimensión científico-tecnológica, R3Foresta integra medición, monitoreo, trazabilidad, digitalización e innovación. Dentro de R3Carbon desarrolla **R3foresta App**, destinada a registrar y relacionar el recorrido del material vegetal desde la recolección de semillas o su recepción externa, pasando por el manejo en vivero, hasta el registro de su plantación. Esta función convierte a la aplicación en la base operativa de la cadena de custodia del material vegetal y organiza la información y las evidencias utilizadas por la Fundación para su gestión y rendición de cuentas.
+En la dimensión científico-tecnológica, R3Foresta integra medición, monitoreo, trazabilidad, digitalización e innovación. Dentro de R3Carbon desarrolla **R3foresta App**, destinada a registrar y relacionar el recorrido del material vegetal desde la recolección de semillas o su recepción externa, pasando por el manejo en vivero, hasta el registro de su plantación. Esta función plantea la aplicación como base operativa de la cadena de custodia del material vegetal y como medio para organizar la información y las evidencias utilizadas por la Fundación en su gestión y rendición de cuentas.
 
 ### 2.2. Antecedentes internacionales
 
-En Perú, Salamanca Contreras (2024) implementó un sistema web para el control interno y el seguimiento del inventario de un vivero comercial. El trabajo abordó la administración de existencias y despachos y reportó mejoras en la exactitud del inventario. Su aporte demuestra la utilidad de centralizar los movimientos de un vivero, pero su alcance permanece en la gestión comercial interna y no reconstruye la procedencia del material ni su transferencia hacia actividades de reforestación.
+En Perú, Salamanca Contreras (2024) implementó un sistema web para el control interno y el seguimiento del inventario de un vivero comercial. El trabajo abordó la administración de existencias y despachos y reportó mejoras en la exactitud del inventario. Su resultado aporta evidencia sobre la centralización de los movimientos de un vivero, pero su alcance permanece en la gestión comercial interna y no reconstruye la procedencia del material ni su transferencia hacia actividades de reforestación.
 
 En Ecuador, Mayorga Vásquez et al. (2022) propusieron un sistema web para los procesos administrativos y productivos de viveros. La solución integró información de producción y administración, mostrando que estos procesos pueden gestionarse mediante una plataforma común. Su diferencia respecto de R3foresta App radica en que no relaciona de extremo a extremo la recolección o recepción externa, el manejo en vivero y la evidencia geográfica de la plantación.
 
@@ -61,7 +63,9 @@ En el ámbito internacional de la trazabilidad, Thakur et al. (2011) utilizaron 
 
 Quispe Tola y Condori Zapana (2020) desarrollaron para la Autoridad de Fiscalización y Control Social de Bosques y Tierra un sistema de inventario y registro de iniciativas de manejo integral sustentable de los bosques y la Madre Tierra. La solución centralizó el registro de iniciativas e incorporó consultas, mapas y reportes por niveles. Su unidad principal es la iniciativa o proyecto forestal, por lo que no registra la cadena operativa de semillas y plantas ni las relaciones entre recolección, vivero y plantación.
 
-### 2.4. Antecedentes en La Paz
+### 2.4. Antecedentes cercanos a la ciudad de La Paz
+
+Dentro de las fuentes revisadas no se identificó un trabajo equivalente desarrollado específicamente en la ciudad de La Paz. Los antecedentes geográficamente más cercanos corresponden al departamento de La Paz y a la ciudad de El Alto.
 
 Limachi Mamani (2020) desarrolló un sistema de registro y geolocalización de viveros para la Autoridad de Fiscalización y Control Social de Bosques y Tierra en el departamento de La Paz. El sistema administra viveros, especies y volúmenes de producción y ofrece una vista espacial para apoyar decisiones. Su unidad principal es el vivero, de modo que no reconstruye el recorrido de cada conjunto de material vegetal desde su procedencia hasta la plantación.
 
@@ -81,7 +85,7 @@ Durante este recorrido cambian la ubicación, el responsable, el estado, la agru
 
 Actualmente, las entradas, salidas, transformaciones, transferencias y modificaciones de saldo se documentan en fuentes separadas y no conforman un historial común que explique cada cambio. Esta fragmentación dificulta conciliar las cantidades entre etapas, determinar la disponibilidad real del material y reconocer registros incompletos, asignaciones repetidas o consumos duplicados. De igual manera, las fotografías, fechas o coordenadas almacenadas fuera del hecho operativo quedan desvinculadas de la especie, la cantidad, el responsable y la actividad que deben respaldar.
 
-Como consecuencia, la reconstrucción de una cadena de custodia exige buscar y contrastar manualmente diferentes fuentes y recurrir a la memoria de las personas involucradas. Esto incrementa el tiempo necesario para responder consultas, favorece omisiones y contradicciones y dificulta determinar qué material se encontraba disponible, qué cantidades se perdieron o trasladaron, quién fue responsable de cada movimiento y cuál fue el destino registrado. La dispersión también limita la elaboración de reportes consistentes y la capacidad de explicar los saldos entre las etapas de Recolección, Vivero y Plantación.
+Como consecuencia, la reconstrucción de una cadena de custodia exige buscar y contrastar manualmente diferentes fuentes y recurrir a la memoria de las personas involucradas. Esto puede aumentar el tiempo necesario para responder consultas, favorece omisiones y contradicciones y dificulta determinar qué material se encontraba disponible, qué cantidades se perdieron o trasladaron, quién fue responsable de cada movimiento y cuál fue el destino registrado. La dispersión también limita la elaboración de reportes consistentes y la capacidad de explicar los saldos entre las etapas de Recolección, Vivero y Plantación.
 
 La misma situación afecta la rendición de cuentas. R3Foresta dispone de evidencias sobre sus actividades, pero no de una cadena informacional común que las vincule sistemáticamente con el origen, los responsables, las cantidades y el destino del material vegetal. En consecuencia, la Fundación tiene menor capacidad para presentar a patrocinadores, aliados y comunidades un recorrido transparente y contrastable, y carece de una base operativa consolidada para procesos institucionales posteriores que requieran demostrar la cadena de suministro. El proyecto no realizará esos procesos posteriores, pero atiende la información fundamental que los precede.
 
@@ -103,7 +107,7 @@ El árbol de causas y efectos que sintetiza esta situación se presenta en el **
 2. ¿Qué modelo de trazabilidad e integridad permite relacionar orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y formalizar las reglas aplicables a las transferencias y transformaciones entre etapas?
 3. ¿Cómo implementar e integrar los módulos de Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial?
 4. ¿En qué medida la solución cumple los requerimientos y preserva las invariantes definidas mediante pruebas funcionales y técnicas?
-5. ¿Qué capacidad presenta la solución, en el contexto del estudio de caso, para reconstruir trazas con evidencia contrastable y qué carga operativa genera en comparación con la práctica actual caracterizada en R3Foresta?
+5. ¿Cómo comprobar, mediante escenarios operativos y criterios de aceptación, la capacidad de la solución para reconstruir trazas con evidencia contrastable y la carga de los flujos implementados?
 
 ## 4. Objetivos
 
@@ -117,17 +121,19 @@ Desarrollar un sistema de trazabilidad para la cadena de custodia del material v
 2. **Diseñar** un modelo de trazabilidad e integridad que relacione orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y que formalice las reglas aplicables a las transferencias y transformaciones entre etapas.
 3. **Implementar** los módulos de Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial.
 4. **Verificar** el cumplimiento de los requerimientos y de las invariantes de consistencia mediante pruebas funcionales y técnicas.
-5. **Evaluar**, en el contexto del estudio de caso, la capacidad de reconstrucción con evidencia contrastable y la carga operativa de la solución, comparándolas con la práctica actual caracterizada en R3Foresta.
+5. **Evaluar**, mediante escenarios operativos y criterios de aceptación, la capacidad de la solución para reconstruir trazas con evidencia contrastable y la carga de los flujos implementados.
 
 ## 5. Justificación
 
 R3Foresta necesita reconstruir el recorrido del material vegetal que recibe o produce para conocer su procedencia, las cantidades disponibles, las pérdidas ocurridas, las asignaciones y transferencias realizadas y su destino final. Cuando esta información se conserva en registros y evidencias independientes, resulta difícil establecer posteriormente qué ocurrió con una cantidad o lote a medida que atravesó las etapas de Recolección, Vivero y Plantación. Por ello, la organización requiere una cadena informacional común que relacione el origen, los movimientos y el destino del material vegetal.
 
-La solución es necesaria desde el punto de vista operativo porque permitirá que los registros de cada módulo formen parte de un mismo recorrido. La procedencia, las cantidades, los responsables, las fechas, las ubicaciones y las evidencias podrán consultarse de forma relacionada, reduciendo la dependencia de búsquedas manuales y de la memoria de las personas. Esta capacidad fortalecerá la toma de decisiones sobre disponibilidad, movimientos, pérdidas y destino del material.
+La solución es necesaria desde el punto de vista operativo porque permitirá que los registros de cada módulo formen parte de un mismo recorrido. La procedencia, las cantidades, los responsables, las fechas, las ubicaciones y las evidencias podrán consultarse de forma relacionada, con el propósito de reducir la dependencia de búsquedas manuales y de la memoria de las personas y apoyar decisiones sobre disponibilidad, movimientos, pérdidas y destino del material.
 
-Desde la perspectiva institucional, R3foresta App constituye la base operativa para transparentar la cadena de suministro del material vegetal. La Fundación podrá respaldar con información consistente las actividades comunicadas a comunidades, voluntarios, patrocinadores y aliados. Una cadena de custodia organizada es además un insumo fundamental para eventuales procesos posteriores de verificación o certificación; sin embargo, el sistema académico no ejecutará esos procesos ni afirmará que la información registrada equivale a una certificación.
+Desde la perspectiva institucional, R3foresta App permitirá organizar información para respaldar las actividades comunicadas a comunidades, voluntarios, patrocinadores y aliados. Una cadena de custodia estructurada podría constituir un insumo inicial para eventuales procesos posteriores de verificación o certificación, siempre que estos incorporen sus propias metodologías, mediciones y controles; el sistema académico no ejecutará esos procesos ni afirmará que la información registrada equivale a una certificación.
 
-Desde la perspectiva tecnológica y académica, el proyecto relacionará el análisis del dominio con un modelo de trazabilidad, reglas de integridad, tres módulos integrados y evidencia de verificación. Su desarrollo permitirá aplicar principios de Ingeniería de Software a un caso real en el que las unidades cambian de estado, cantidad, agrupación y responsabilidad. Los beneficios de tiempo, carga o calidad de información no se asumirán de antemano, sino que corresponderán al objetivo específico de evaluación del documento final.
+Desde la perspectiva tecnológica y académica, el proyecto relacionará el análisis del dominio con un modelo de trazabilidad, reglas de integridad, tres módulos integrados y evidencia de verificación y validación. Su desarrollo permitirá aplicar principios de Ingeniería de Software a un contexto real en el que las unidades cambian de estado, cantidad, agrupación y responsabilidad. Los beneficios de tiempo, carga o calidad de información no se asumirán de antemano; cualquier resultado se limitará a los escenarios ejecutados y a la evidencia obtenida.
+
+La factibilidad técnica se apoya en la infraestructura de software, el repositorio y los equipos ya disponibles para R3foresta App, por lo que el alcance no exige adquirir hardware especializado. Desde una perspectiva social y ambiental indirecta, una mejor organización de la procedencia, las cantidades y las evidencias puede apoyar la rendición de cuentas de las actividades de reforestación; esta utilidad esperada no equivale a medir impacto ecológico ni a certificar resultados ambientales.
 
 ## 6. Alcances y límites
 
@@ -143,6 +149,8 @@ El alcance funcional comprende exclusivamente los siguientes tres módulos:
 
 Los tres módulos compartirán identificadores y relaciones suficientes para reconstruir el recorrido del material vegetal. El historial distinguirá los movimientos entre responsables o etapas de los cambios biológicos u operativos que modifican cantidades o unidades, y permitirá explicar los saldos a partir de los registros relacionados. La recepción externa permanecerá como variante de Vivero o Plantación y no constituirá un cuarto módulo.
 
+Como controles transversales, el producto aplicará autenticación y autorización según responsabilidades, registro de operaciones críticas, protección de credenciales, respaldo y recuperación de la información y tratamiento restringido de fotografías, coordenadas y datos personales. Las credenciales, los secretos, las coordenadas sensibles y los datos personales o institucionales no autorizados no se proporcionarán a agentes de inteligencia artificial.
+
 ### 6.2. Límites
 
 - El alcance temporal del material vegetal concluye con el registro de la plantación. No comprende monitoreo posterior, mantenimiento, crecimiento, reposición ni seguimiento de supervivencia.
@@ -155,9 +163,9 @@ Los tres módulos compartirán identificadores y relaciones suficientes para rec
 
 ## 7. Marco teórico preliminar
 
-### 7.1. Sistema
+### 7.1. Sistema de información
 
-Un sistema es un conjunto de elementos interrelacionados o que interactúan entre sí (International Organization for Standardization, 2026). En el proyecto, el término se refiere a una solución de software cuyos módulos, datos, reglas y usuarios actúan de forma coordinada para registrar el recorrido del material vegetal. La utilidad del sistema no depende únicamente de cada módulo por separado, sino de las relaciones que permiten explicar el paso de la información entre Recolección, Vivero y Plantación.
+Un sistema es un conjunto de elementos interrelacionados o que interactúan entre sí (International Organization for Standardization, 2026). En este proyecto se trata específicamente de un sistema de información: una solución cuyos usuarios, módulos, datos, reglas y controles actúan de forma coordinada para capturar, procesar, almacenar y consultar el recorrido del material vegetal. Su utilidad no depende únicamente de cada módulo por separado, sino de las relaciones que permiten explicar el paso de la información entre Recolección, Vivero y Plantación.
 
 ### 7.2. Trazabilidad
 
@@ -179,34 +187,64 @@ En el título, la expresión *bonos de carbono* se emplea como denominación usu
 
 La cadena de custodia conserva la relación entre el material, los actores responsables y los movimientos o cambios registrados durante un recorrido. ISO 22095:2020 proporciona terminología y modelos generales para representar cadenas de custodia y advierte que un sistema de este tipo no demuestra por sí solo la veracidad de las declaraciones incorporadas (International Organization for Standardization, 2020). En R3Foresta, la cadena de custodia se utilizará para relacionar la procedencia, las cantidades, los responsables, las evidencias y el destino del material vegetal, sin atribuir al sistema funciones de certificación.
 
-## 8. Marco Metodológico
+### 7.7. Rational Unified Process
 
-### 8.1. Proceso Unificado Ágil
+El Rational Unified Process es un proceso de desarrollo de software dirigido por casos de uso, centrado en la arquitectura e iterativo e incremental. Organiza el ciclo de vida en las fases de Inicio, Elaboración, Construcción y Transición; en ellas se ejecutan con diferente intensidad actividades de requisitos, análisis y diseño, implementación, pruebas, despliegue, gestión del proyecto y gestión de configuración y cambios. Los riesgos prioritarios orientan el contenido de las iteraciones y cada fase concluye con un hito que revisa el grado de madurez alcanzado (Kruchten, 2004; IBM, s. f.).
 
-El desarrollo utilizará el **Proceso Unificado Ágil**, adaptación ligera del Proceso Unificado que conserva un ciclo de vida por fases y un trabajo iterativo dentro de cada fase. Ambler (2005) caracteriza el Proceso Unificado mediante las fases de Inicio, Elaboración, Construcción y Transición, con actividades de requisitos, análisis, diseño, implementación, pruebas, despliegue, gestión de cambios y seguimiento que se ejecutan con distinta intensidad a lo largo del proyecto.
+Una iteración es un intervalo de trabajo que recorre las disciplinas pertinentes y termina en una revisión; un incremento es la versión ejecutable que resulta de la iteración. Por ello, las fases describen la evolución del proyecto completo, mientras que los módulos y sus integraciones se incorporan progresivamente como incrementos de Construcción.
 
-Esta metodología se selecciona porque permite organizar un proyecto académico individual sin reducirlo a una sucesión genérica de incrementos. Sus fases proporcionan hitos verificables; su carácter iterativo permite revisar requisitos y modelos a medida que se construyen los módulos; y su orientación a riesgos es pertinente para las relaciones entre cantidades, saldos, transferencias y transformaciones. La adaptación conservará únicamente las actividades y productos necesarios para el alcance de R3foresta App, de acuerdo con el principio de adecuar el proceso al proyecto (Ambler, 2005).
+### 7.8. Spec-Driven Development
+
+Spec-Driven Development, o desarrollo guiado por especificaciones, utiliza la especificación como fuente principal para definir el comportamiento que debe implementarse. No se adopta como estándar ni como una segunda metodología de ciclo de vida, sino como una práctica operativa dentro de RUP. El proyecto utilizará un protocolo propio basado en el flujo central de GitHub Spec Kit —especificar, planificar, descomponer en tareas e implementar— sin declarar adopción completa de la herramienta (GitHub, 2026).
+
+La especificación deberá expresar escenarios, reglas, datos, casos límite y criterios de aceptación antes de implementar una capacidad. Cuando cambie un comportamiento aprobado, se actualizarán la especificación y los productos afectados —plan, tareas y pruebas— y se conservará el historial de la decisión. Los artefactos SDD cubrirán el detalle de requisitos, diseño y planificación de capacidades, pero no sustituirán la visión, la arquitectura, los riesgos, los hitos ni el despliegue de RUP.
+
+### 7.9. Desarrollo de software asistido por inteligencia artificial
+
+La asistencia de inteligencia artificial permite apoyar tareas de análisis, diseño, generación y revisión de código, pruebas y documentación. No sustituye la aprobación de requisitos, las decisiones del dominio, la revisión del código, la validación de resultados ni la responsabilidad autoral. SDD no posee una definición normativa única; el referente adoptado, GitHub Spec Kit, sí utiliza agentes de IA de manera explícita. El proyecto conserva la expresión *asistido por inteligencia artificial* para declarar esa variante y exigir que sus cambios se sometan a control humano (GitHub, 2026).
+
+La supervisión requiere diferenciar las funciones humanas de las herramientas, revisar las salidas y documentar las decisiones que influyan materialmente en el producto, en consonancia con la recomendación de definir responsabilidades en las configuraciones humano–IA (Tabassi, 2023). El registro mínimo identificará fecha, herramienta y modelo o versión disponible, tarea apoyada, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba ejecutada y referencia al cambio o evidencia.
+
+## 8. Metodología de desarrollo
+
+### 8.1. RUP adaptado
+
+El desarrollo utilizará el **Rational Unified Process (RUP) adaptado**, complementado con **Spec-Driven Development asistido por inteligencia artificial**. RUP constituye el proceso rector y ya es iterativo e incremental por naturaleza; SDD define el flujo concreto para transformar especificaciones en planes, tareas, código y pruebas; y la IA funciona como herramienta de apoyo bajo revisión humana.
+
+RUP se selecciona por su ajuste a los criterios del proyecto: orientación temprana a riesgos, arquitectura compartida, requisitos trazables, integración progresiva, productos verificables e hitos de decisión dentro de un ciclo de vida completo. Estos criterios son pertinentes para controlar identidad, procedencia, cantidades, saldos, transferencias y transformaciones entre tres módulos dependientes. Scrum deja abiertas las prácticas técnicas y los artefactos; un ciclo secuencial de una sola pasada ofrece menos oportunidades de revisar tempranamente las integraciones; ISO/IEC 29110 aporta lineamientos de gestión e implementación para un solo equipo pequeño, pero adoptarla como proceso rector exigiría delimitar el perfil y el grado de conformidad pretendido; y OpenUP o AUP ofrecerían una estructura más ligera. RUP no se considera universalmente superior: se adopta porque permite conservar explícitamente arquitectura, riesgos, iteraciones, integración, pruebas y evidencia académica, simplificando los roles y documentos que no aporten a una ejecución individual (IBM, s. f.; International Organization for Standardization, 2025; Kruchten, 2004; Schwaber & Sutherland, 2020).
 
 ### 8.2. Aplicación al proyecto
 
-**Tabla 1. Aplicación del Proceso Unificado Ágil.**
+**Tabla 1**
 
-| Fase | Actividades principales | Productos e hito de cierre |
-|---|---|---|
-| Inicio | Delimitar el problema, los actores, los tres módulos, los ingresos externos, los requisitos iniciales y los riesgos | Visión, alcance, glosario, lista inicial de requisitos y aprobación del alcance |
-| Elaboración | Detallar procesos y reglas; diseñar el modelo de trazabilidad, la arquitectura, las relaciones entre etapas y las pruebas críticas | Modelo de dominio y trazabilidad, arquitectura base, requisitos priorizados y revisión de viabilidad técnica |
-| Construcción | Implementar e integrar Recolección, Vivero y Plantación; ejecutar pruebas funcionales y técnicas; corregir defectos y documentar decisiones | Incrementos operativos, integraciones, migraciones, matriz requisito–prueba y versión candidata |
-| Transición | Preparar el despliegue, ejecutar la verificación y evaluación previstas en los objetivos específicos, ajustar la solución y consolidar la documentación | Versión final, evidencia de resultados, manuales, conclusiones y entrega académica |
+*Aplicación de RUP adaptado*
 
-En cada fase se aplicarán, según corresponda, actividades de requisitos, análisis y diseño, implementación, pruebas, gestión de configuración y documentación. Los procesos de ciclo de vida de software y las prácticas de Ingeniería de Software servirán como referencias para seleccionar y controlar estas actividades (International Organization for Standardization et al., 2026; IEEE Computer Society, 2025).
+| Fase | Iteración | Actividades principales | Productos e hito de cierre |
+|---|---|---|---|
+| Inicio | IN-1 | Delimitar el problema, los actores, los tres módulos, los ingresos externos, los requisitos iniciales, los riesgos y la referencia académica | Visión, alcance, glosario, casos de uso iniciales, plan y revisión del hito LCO |
+| Elaboración | EL-1 | Detallar reglas críticas; diseñar el modelo de trazabilidad, la arquitectura, los datos y los contratos entre módulos; comprobar una línea vertical arquitectónica mínima M1→M2→M3 y los riesgos técnicos principales | Arquitectura base ejecutable, modelo de dominio y datos, especificaciones priorizadas y revisión del hito LCA |
+| Construcción | CO-1 a CO-4 | Desarrollar M1 Recolección; agregar M2 Vivero e integrar M1→M2; agregar M3 Plantación e integrar M2→M3; completar la trazabilidad transversal y las pruebas | Cuatro incrementos ejecutables, migraciones, pruebas, evidencia de integración, versión candidata e hito IOC |
+| Transición | TR-1 | Ejecutar pruebas del sistema, escenarios de validación, correcciones, despliegue, manuales, aceptación y cierre | Versión final, informe de resultados, registro de aceptación e hito PR |
 
-### 8.3. Seguimiento y evidencia
+En cada fase se aplicarán, según corresponda, las disciplinas de requisitos, análisis y diseño, implementación, pruebas, despliegue, gestión del proyecto y gestión de configuración y cambios. El postulante asumirá las responsabilidades técnicas y de gestión; un representante autorizado de R3Foresta participará en la clarificación del dominio, la conformidad de requisitos operativos y la aceptación del producto; y la tutora realizará el seguimiento académico dentro de sus competencias. Cada hito registrará la evidencia revisada, el resultado —avanzar, avanzar condicionado o reprocesar— y los riesgos o defectos residuales.
 
-El trabajo se organizará mediante una lista priorizada vinculada con los objetivos específicos. Cada elemento deberá identificar el requisito o regla atendida, el cambio realizado, la prueba o revisión aplicada y la evidencia disponible. Al cierre de cada fase se revisarán los productos previstos y se registrarán decisiones, riesgos, desviaciones y ajustes al plan.
+Los hitos de cierre serán **LCO** (*Lifecycle Objectives*, objetivos del ciclo de vida), **LCA** (*Lifecycle Architecture*, arquitectura del ciclo de vida), **IOC** (*Initial Operational Capability*, capacidad operativa inicial) y **PR** (*Product Release*, liberación del producto).
 
-La construcción partirá de una referencia inicial académica del repositorio. Los prototipos anteriores podrán utilizarse como referencia técnica y evidencia de factibilidad, pero no como construcción formal ni como objetivos cumplidos. El postulante será responsable del análisis, diseño, implementación y documentación; los colaboradores y agentes de inteligencia artificial brindarán apoyo delimitado bajo revisión y responsabilidad autoral humana.
+### 8.3. Flujo SDD asistido por IA
 
-## 9. Índice tentativo
+Dentro de cada iteración se seleccionarán los requisitos y riesgos priorizados; para cada capacidad se elaborará y revisará una especificación con escenarios, reglas, invariantes y criterios de aceptación; se preparará el plan técnico; se descompondrá el trabajo en tareas; se implementará con asistencia de IA cuando corresponda; y se integrará, probará y demostrará el resultado. Las especificaciones, planes y tareas materializarán el detalle de requisitos, diseño y planificación, mientras que la visión, la arquitectura, los riesgos, la evaluación de iteraciones, los hitos y el despliegue se conservarán como productos transversales de RUP.
+
+Los agentes de IA podrán apoyar la detección de ambigüedades, la comparación de alternativas, la implementación, la generación de pruebas, la revisión de cambios y la documentación. No aprobarán requisitos, no modificarán por sí solos las reglas del dominio, no declararán aceptado un resultado y no sustituirán la autoría ni la responsabilidad del postulante.
+
+### 8.4. Seguimiento y evidencia
+
+El trabajo se organizará mediante una lista priorizada vinculada con los objetivos específicos, las iteraciones y los incrementos de Construcción. Cada elemento deberá identificar la necesidad, el requisito o regla, la especificación, la decisión de diseño, la tarea, el cambio, la prueba, el resultado y la aceptación correspondiente. Al cierre de cada iteración se revisarán los productos previstos y se registrarán decisiones, riesgos, desviaciones, ajustes al plan y riesgos residuales.
+
+La formulación metodológica se consolidó documentalmente el 25 de agosto de 2026, dentro de la ventana académica autorizada. La construcción formal se documentará a partir de una referencia inicial identificable del repositorio y de un inventario del software preexistente. Los artefactos que describan actividades anteriores conservarán su fecha real y se marcarán como reconstrucción documental; no se retrofecharán commits, pruebas, resultados ni aprobaciones. Únicamente las actividades ejecutadas o reproducidas de forma controlada y las evidencias trazables dentro de la ventana definida sustentarán el cumplimiento de los objetivos.
+
+El postulante será responsable del análisis, diseño, implementación y documentación. Los agentes de inteligencia artificial brindarán apoyo delimitado y no constituirán roles RUP: cada contribución material registrará herramienta y versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio.
+
+## 9. Índice propuesto del Proyecto de Grado
 
 ```text
 Resumen
@@ -220,7 +258,7 @@ Capítulo I — Marco introductorio
   1.3 Objetivos
   1.4 Justificación
   1.5 Alcances y límites
-  1.6 Diseño metodológico
+  1.6 Metodología de desarrollo
   1.7 Organización del documento
 
 Capítulo II — Marco teórico y conceptual
@@ -229,16 +267,22 @@ Capítulo II — Marco teórico y conceptual
   2.3 Eventos, transformaciones y procedencia
   2.4 Integridad de cantidades y saldos
   2.5 Evidencia e información geográfica
-  2.6 Reconstrucción y evaluación de la trazabilidad
+  2.6 Reconstrucción y comprobación de la trazabilidad
   2.7 Bonos de carbono y alcance de la proyección
-  2.8 Síntesis conceptual adoptada
+  2.8 Rational Unified Process
+  2.9 Spec-Driven Development y asistencia de inteligencia artificial
+  2.10 Síntesis conceptual adoptada
 
 Capítulo III — Marco aplicativo
   3.1 Análisis de procesos, actores y requisitos
   3.2 Diseño del modelo de trazabilidad e integridad
   3.3 Implementación e integración de los tres módulos
+    3.3.1 Iteración CO-1: M1 Recolección
+    3.3.2 Iteración CO-2: M2 Vivero e integración M1→M2
+    3.3.3 Iteración CO-3: M3 Plantación e integración M2→M3
+    3.3.4 Iteración CO-4: trazabilidad transversal e integración total
   3.4 Verificación funcional y técnica
-  3.5 Evaluación de la solución
+  3.5 Validación operativa y aceptación
   3.6 Presentación y discusión de resultados
 
 Conclusiones
@@ -247,7 +291,9 @@ Referencias bibliográficas
 Anexos
 ```
 
-**Tabla 2. Correspondencia entre objetivos y secciones del documento final.**
+**Tabla 2**
+
+*Correspondencia entre objetivos y secciones del documento final*
 
 | Objetivo específico | Resultado principal | Ubicación prevista |
 |---|---|---|
@@ -255,48 +301,55 @@ Anexos
 | 2. Diseñar | Modelo de trazabilidad, relaciones e invariantes | Capítulo III, sección 3.2 |
 | 3. Implementar | Recolección, Vivero y Plantación integrados | Capítulo III, sección 3.3 |
 | 4. Verificar | Matriz de pruebas y resultados técnicos | Capítulo III, sección 3.4 |
-| 5. Evaluar | Reconstrucción, evidencia y carga operativa analizadas | Capítulo III, secciones 3.5 y 3.6 |
+| 5. Evaluar | Reconstrucción, evidencia y carga de los flujos comprobadas mediante escenarios de aceptación | Capítulo III, secciones 3.5 y 3.6 |
 
 ## 10. Cronograma de actividades
 
-El cronograma se organiza por objetivos específicos. Se propone como inicio formal el **6 de julio de 2026**, dentro de la primera semana de julio, sujeto a ratificación dla Doctora Tellez. Mientras no exista una fecha distinta confirmada, los periodos siguientes se utilizarán como planificación de trabajo del Perfil.
+El cronograma se desarrolla del **6 de julio al 15 de noviembre de 2026**, fechas confirmadas para la ejecución académica. Conserva la presentación por objetivos específicos y muestra su correspondencia con las fases, las iteraciones y los incrementos de RUP.
 
-**Tabla 3. Cronograma por objetivos.**
+**Tabla 3**
 
-| Periodo | Objetivo o actividad | Actividades principales | Producto verificable |
+*Cronograma por objetivos, fases e iteraciones RUP*
+| Periodo | Fase, iteración y objetivo | Actividades principales | Producto verificable |
 |---|---|---|---|
-| 6–24 jul | Objetivo 1 — Analizar | Procesos, actores, datos, estados, unidades, requisitos, reglas e ingresos externos | Especificación del dominio y requisitos priorizados |
-| 27 jul–14 ago | Objetivo 2 — Diseñar | Modelo de trazabilidad, arquitectura, relaciones entre etapas, cantidades, saldos e invariantes | Modelo de diseño y arquitectura base |
-| 17 ago–2 oct | Objetivo 3 — Implementar | Recolección, Vivero, Plantación, ingresos externos e integración entre módulos | Tres módulos integrados y versión candidata |
-| 5–23 oct | Objetivo 4 — Verificar | Pruebas funcionales, de integración, consistencia y reconstrucción | Matriz requisito–prueba y resultados técnicos |
-| 26 oct–8 nov | Objetivo 5 — Evaluar | Reconstrucción de trazas, valoración de la evidencia disponible y análisis de carga operativa | Resultados de evaluación y contraste descriptivo |
-| 9–15 nov | Cierre transversal | Consolidación del documento, conclusiones, recomendaciones, referencias y anexos | Documento final para revisión |
+| 6–19 jul | Inicio, IN-1 — Objetivo 1 | Alcance, actores, procesos, casos de uso, requisitos iniciales, riesgos y referencia académica | Visión, plan, requisitos iniciales e hito LCO |
+| 20 jul–16 ago | Elaboración, EL-1 — Objetivos 1 y 2 | Reglas, modelo de trazabilidad, arquitectura, línea vertical arquitectónica mínima M1→M2→M3, contratos y riesgos técnicos | Arquitectura base, especificaciones priorizadas e hito LCA |
+| 17 ago–6 sep | Construcción, CO-1 — Objetivo 3 | Especificar, diseñar, implementar y probar M1 Recolección | Incremento 1: M1 funcional y probado |
+| 7–27 sep | Construcción, CO-2 — Objetivo 3 | Construir M2 Vivero e integrar M1→M2 | Incremento 2: M1 y M2 integrados y probados |
+| 28 sep–18 oct | Construcción, CO-3 — Objetivo 3 | Construir M3 Plantación e integrar M2→M3 | Incremento 3: tres módulos integrados |
+| 19 oct–1 nov | Construcción, CO-4 — Objetivos 3 y 4 | Completar trazabilidad transversal, integración, regresión y versión candidata | Incremento 4: versión candidata e hito IOC |
+| 2–8 nov | Transición, TR-1 — Objetivos 4 y 5 | Pruebas del sistema, escenarios operativos y corrección de defectos | Informe de verificación y validación |
+| 9–15 nov | Transición, TR-1 — Objetivo 5 y cierre | Despliegue, manuales, aceptación y consolidación del documento | Producto liberado, hito PR y documento final para revisión |
 
-**Figura 2. Diagrama de Gantt por objetivos, julio–noviembre de 2026.**
+**Figura 2**
+
+*Diagrama de Gantt del proceso de desarrollo, julio–noviembre de 2026*
 
 ```mermaid
 gantt
-    title Perfil y Proyecto de Grado — cronograma por objetivos
+    title Perfil y Proyecto de Grado — RUP, julio a noviembre de 2026
     dateFormat YYYY-MM-DD
     axisFormat %d/%m
 
-    section Objetivos
-    Objetivo 1 · Analizar     :o1, 2026-07-06, 19d
-    Objetivo 2 · Diseñar      :o2, 2026-07-27, 19d
-    Objetivo 3 · Implementar  :o3, 2026-08-17, 47d
-    Objetivo 4 · Verificar    :o4, 2026-10-05, 19d
-    Objetivo 5 · Evaluar      :o5, 2026-10-26, 14d
+    section Fases RUP
+    Inicio                         :inicio, 2026-07-06, 14d
+    Elaboración                    :elab, 2026-07-20, 28d
+    Construcción                   :const, 2026-08-17, 77d
+    Transición                     :trans, 2026-11-02, 14d
 
-    section Cierre
-    Documento final          :crit, cierre, 2026-11-09, 7d
+    section Iteraciones e incrementos de Construcción
+    CO-1 / Inc. 1 · M1 Recolección :i1, 2026-08-17, 21d
+    CO-2 / Inc. 2 · M2 e integración M1-M2 :i2, 2026-09-07, 21d
+    CO-3 / Inc. 3 · M3 e integración M2-M3 :i3, 2026-09-28, 21d
+    CO-4 / Inc. 4 · Trazabilidad y versión candidata :i4, 2026-10-19, 14d
 
     section Transversal
-    Documentación y seguimiento :doc, 2026-07-06, 2026-11-16
+    Especificaciones, pruebas y documentación :doc, 2026-07-06, 133d
 ```
 
-## 11. Referencias bibliográficas
+*Nota.* Elaboración propia; cada barra utiliza días calendario y cubre los periodos indicados en la Tabla 3.
 
-Ambler, S. W. (2005). *A manager’s introduction to the Rational Unified Process (RUP).* Ambysoft. https://ambysoft.com/downloads/managersIntroToRUP.pdf
+## 11. Referencias bibliográficas
 
 Dabbene, F., Gay, P., & Tortia, C. (2014). Traceability issues in food supply chain management: A review. *Biosystems Engineering, 120*, 65–80. https://doi.org/10.1016/j.biosystemseng.2013.09.006
 
@@ -304,13 +357,17 @@ Food and Agriculture Organization of the United Nations. (2023). *Terms and defi
 
 Food and Agriculture Organization of the United Nations. (s. f.). *Forest reproductive material*. Sustainable Forest Management Toolbox. Recuperado el 19 de agosto de 2026, de https://www.fao.org/sustainable-forest-management-toolbox/modules/forest-reproductive-material/en
 
-IEEE Computer Society. (2025). *Guide to the Software Engineering Body of Knowledge (SWEBOK Guide), version 4.0a*. https://www.computer.org/education/bodies-of-knowledge/software-engineering/v4
+GitHub. (2026, 21 de agosto). *GitHub Spec Kit*. https://github.github.com/spec-kit/
+
+IBM. (s. f.). *Project planning in the Rational Unified Process*. https://www.ibm.com/docs/en/rational-clearquest/10.0.9?topic=settings-project-planning
 
 International Organization for Standardization. (2020). *Chain of custody—General terminology and models* (ISO Standard No. 22095:2020). https://www.iso.org/standard/72532.html
 
+International Organization for Standardization. (2025). *Systems and software engineering—Life cycle profiles for very small entities (VSEs)—Part 5-1-2: Software engineering guidelines for the generic Basic profile* (ISO/IEC Standard No. 29110-5-1-2:2025). https://www.iso.org/standard/82669.html
+
 International Organization for Standardization. (2026). *Quality management—Fundamentals and vocabulary* (ISO Standard No. 9000:2026). https://www.iso.org/standard/9000
 
-International Organization for Standardization, International Electrotechnical Commission, & Institute of Electrical and Electronics Engineers. (2026). *Systems and software engineering—Software life cycle processes* (ISO/IEC/IEEE Standard No. 12207:2026). https://www.iso.org/standard/90219.html
+Kruchten, P. (2004). *The Rational Unified Process: An introduction* (3.ª ed.). Addison-Wesley Professional.
 
 Limachi Mamani, F. Z. (2020). *Sistema de registro geolocalización de viveros en el departamento de La Paz. Caso ABT* [Proyecto de grado, Universidad Pública de El Alto]. https://repositorio.upea.bo/jspui/handle/123456789/172
 
@@ -326,6 +383,10 @@ R3Foresta. (2026, 23 de agosto). *Resumen ejecutivo institucional: Modelo integr
 
 Salamanca Contreras, F. R. (2024). *Influencia del sistema web con notificaciones en el proceso de control interno y seguimiento del inventario en el vivero Tu Semilla E.I.R.L. sede Tacna, 2022* [Tesis, Universidad Privada de Tacna]. https://repositorio.upt.edu.pe/handle/20.500.12969/3690
 
+Schwaber, K., & Sutherland, J. (2020). *The Scrum Guide*. https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf
+
+Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0)* (NIST AI 100-1). National Institute of Standards and Technology. https://doi.org/10.6028/NIST.AI.100-1
+
 Thakur, M., Sørensen, C. F., Bjørnson, F. O., Forås, E., & Hurburgh, C. R. (2011). Managing food traceability information using EPCIS framework. *Journal of Food Engineering, 103*(4), 417–433. https://doi.org/10.1016/j.jfoodeng.2010.11.012
 
 Valdez Alvarado, G. R. (2023). *Desarrollo de un sistema de información web para la gestión y control de viveros en la ciudad de El Alto. Caso: Unidad de Forestación del Gobierno Autónomo Municipal de El Alto* [Proyecto de grado, Universidad Pública de El Alto]. https://repositorio.upea.bo/jspui/bitstream/123456789/1019/1/PROYECTO%20DE%20GRADO%20-%20%20GADIEL%20RANDALL.pdf
@@ -336,7 +397,9 @@ Verra. (s. f.). *Verified carbon units (VCUs).* Recuperado el 25 de agosto de 20
 
 ### Anexo A — Árbol de causas y efectos
 
-**Figura A1. Árbol de causas y efectos de la situación problemática.**
+**Figura A1**
+
+*Árbol de causas y efectos de la situación problemática*
 
 ```mermaid
 flowchart BT
@@ -364,4 +427,4 @@ flowchart BT
     P --> E4
 ```
 
-*Versión de contenido del Perfil actualizada el 25 de agosto de 2026. La fuente oficial se conserva únicamente en Markdown; no requiere una copia DOCX ni saltos de página después de cada encabezado principal.*
+*Nota.* Elaboración propia a partir del planteamiento del problema.
