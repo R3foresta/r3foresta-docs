@@ -1,6 +1,6 @@
 # Lineamientos estratégicos y principios de trazabilidad del Proyecto de Grado
 
-> **Versión 12 — 25 de agosto de 2026.**
+> **Versión 13 — 27 de agosto de 2026.**
 > Este documento fija las decisiones que deben mantenerse coherentes desde el Perfil hasta los requerimientos, el diseño, la implementación, las pruebas, la evaluación y el documento final. El texto entregable vive en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 > La redacción de los artefactos posteriores al Perfil se rige además por [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md).
 
@@ -229,7 +229,8 @@ Antes de cerrar cualquier versión:
 25. la fuente canónica y única versión editable del Perfil será su archivo Markdown; el DOCX existente se tratará como una instantánea no canónica y no sincronizada, y no se presentará como vigente sin regenerarlo;
 26. el Perfil no requiere saltos de página después de cada encabezado principal; el documento final oficial sí iniciará cada capítulo principal en una página nueva al maquetarse.
 27. los documentos institucionales se utilizarán de manera acotada para el contexto que respalden directamente; no podrán redefinir el problema, el título, los objetivos, el alcance, la metodología o la evaluación sin una validación explícita y una revisión completa de consistencia.
+28. toda tabla del Perfil y del documento final deberá incluir inmediatamente debajo una nota que identifique su procedencia; si es de elaboración propia, también deberá indicar las fuentes, los datos, las secciones o las decisiones que sirvieron de base, conforme a [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md).
 
 ---
 
-*Lineamiento actualizado el 25 de agosto de 2026.*
+*Lineamiento actualizado el 27 de agosto de 2026.*

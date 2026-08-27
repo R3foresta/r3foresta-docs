@@ -2,7 +2,7 @@
 
 > **Estado:** estructura confirmada por el postulante; sujeta a correcciones posteriores de la tutora.
 > **Alcance:** documento final posterior al Perfil de Proyecto de Grado.
-> **Fecha de revisión:** 25 de agosto de 2026.
+> **Fecha de revisión:** 27 de agosto de 2026.
 
 ## 1. Dictamen
 
@@ -50,6 +50,7 @@ La decisión confirmada conserva la introducción como sección independiente, r
 - La metodología de desarrollo forma parte del Capítulo I. Debe explicar RUP como proceso rector, la adaptación realizada, la estrategia iterativa e incremental, SDD asistido por IA, la verificación, la validación y el seguimiento de evidencias, sin trasladar allí todo el detalle de implementación.
 - Dentro de la metodología se desarrollarán por separado: RUP y sus principios; fases, iteraciones e hitos; adaptación al proyecto; incrementos de Construcción; SDD y su flujo; asistencia y control humano de la IA; verificación, validación y aceptación; seguimiento y cadena de evidencia. No bastará con enumerar estas etiquetas.
 - El Capítulo II desarrollará los fundamentos conceptuales utilizados por esas decisiones —trazabilidad, cadena de custodia, eventos, procedencia, cantidades, invariantes, atomicidad, evidencia, reconstrucción, calidad pertinente, RUP, SDD y asistencia de IA— y delimitará la proyección hacia bonos de carbono incorporada al título. No repetirá el cronograma ni el detalle de los incrementos.
+- Toda tabla deberá incluir inmediatamente debajo una nota de procedencia. Cuando sea de elaboración propia, la nota identificará además las fuentes bibliográficas, los datos, las secciones o las decisiones utilizadas como base, conforme a los criterios editoriales del Proyecto de Grado.
 - Cada sección debe cerrar mostrando su relación con el problema, un objetivo o una decisión posterior del proyecto.
 
 ## 5. Archivos de trabajo

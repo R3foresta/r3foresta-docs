@@ -221,6 +221,8 @@ RUP se adopta porque permite tratar riesgos de forma temprana, mantener una arqu
 | Construcción | CO-1 a CO-4 | Desarrollar M1 Recolección; agregar M2 Vivero e integrar M1→M2; agregar M3 Plantación e integrar M2→M3; completar la trazabilidad transversal y las pruebas | Cuatro incrementos ejecutables, migraciones, pruebas, evidencia de integración, versión candidata e hito IOC |
 | Transición | TR-1 | Ejecutar pruebas del sistema, escenarios de validación, correcciones, despliegue, manuales, aceptación y cierre | Versión final, informe de resultados, registro de aceptación e hito PR |
 
+*Nota.* Elaboración propia con base en las fases, iteraciones e hitos de RUP descritos por Kruchten (2004) e IBM (s. f.), adaptados al alcance y a los tres módulos del proyecto.
+
 En cada fase se aplicarán, según corresponda, las disciplinas de requisitos, análisis y diseño, implementación, pruebas, despliegue, gestión del proyecto y gestión de configuración y cambios.
 
 Los hitos de cierre serán **LCO** (*Lifecycle Objectives*, objetivos del ciclo de vida), **LCA** (*Lifecycle Architecture*, arquitectura del ciclo de vida), **IOC** (*Initial Operational Capability*, capacidad operativa inicial) y **PR** (*Product Release*, liberación del producto).
@@ -296,9 +298,11 @@ Anexos
 | Verificar | Matriz de pruebas y resultados técnicos | Capítulo III, sección 3.4 |
 | Evaluar | Reconstrucción, evidencia y carga operativa de los flujos comprobadas mediante escenarios de aceptación | Capítulo III, secciones 3.5 y 3.6 |
 
+*Nota.* Elaboración propia a partir de los objetivos específicos de la sección 4.2 y del índice propuesto del Proyecto de Grado presentado en esta sección.
+
 ## 10. Cronograma de actividades
 
-El cronograma se desarrolla del **6 de julio al 15 de noviembre de 2026**, fechas confirmadas para la ejecución académica. Conserva la presentación por objetivos específicos y muestra su correspondencia con las fases, las iteraciones y los incrementos de RUP.
+El cronograma se desarrolla del **6 de julio al 15 de noviembre de 2026**, periodo definido para la ejecución académica. Conserva la presentación por objetivos específicos y muestra su correspondencia con las fases, las iteraciones y los incrementos de RUP.
 
 **Tabla 3**
 
@@ -314,6 +318,8 @@ El cronograma se desarrolla del **6 de julio al 15 de noviembre de 2026**, fecha
 | 19 oct–1 nov | Construcción, CO-4 — Implementar y verificar | Completar trazabilidad transversal, integración, regresión y versión candidata | Incremento 4: versión candidata e hito IOC |
 | 2–8 nov | Transición, TR-1 — Verificar y evaluar | Pruebas del sistema, escenarios operativos y corrección de defectos | Informe de verificación y validación |
 | 9–15 nov | Transición, TR-1 — Evaluar | Despliegue, manuales, aceptación y consolidación del documento | Producto liberado, hito PR y documento final para revisión |
+
+*Nota.* Elaboración propia a partir del periodo de ejecución definido en el registro de decisiones del proyecto del 25 de agosto de 2026 y de la aplicación de RUP presentada en la Tabla 1, sustentada en Kruchten (2004) e IBM (s. f.).
 
 **Figura 2**
 

@@ -1,7 +1,7 @@
 # Criterios editoriales para la documentación del Proyecto de Grado
 
-> **Versión 3 — 25 de agosto de 2026.**
-> Este lineamiento se aplica a las secciones y documentos que se redacten después del Perfil. Registra criterios editoriales y metodológicos; no modifica el contenido aprobado del Perfil de Proyecto de Grado.
+> **Versión 4 — 27 de agosto de 2026.**
+> Este lineamiento se aplica a las secciones y documentos que se redacten después del Perfil. Registra criterios editoriales y metodológicos; no modifica el contenido aprobado del Perfil de Proyecto de Grado, salvo que el criterio de fuentes de tablas de la sección 9 también se aplicará al Perfil vigente.
 
 ## 1. Principio rector
 
@@ -124,10 +124,27 @@ Antes de aprobar una nueva sección o documento se comprobará:
 9. ¿Se evitó repetir explicaciones completas ya establecidas?
 10. ¿Se mantiene la diferencia entre el registro informático y la realidad física?
 11. ¿La terminología distingue fase RUP, iteración, incremento, SDD, asistencia de IA, verificación, validación y aceptación?
+12. ¿Cada tabla incluye una nota inmediata que identifica su procedencia y, cuando es de elaboración propia, las fuentes, los datos o las decisiones que sirvieron de base?
 
 Si una respuesta es negativa, la sección deberá corregirse o justificar explícitamente la excepción antes de cerrarse.
 
-## 9. Fuente y paginación de los documentos
+## 9. Fuentes de tablas, documentos canónicos y paginación
+
+### 9.1. Fuentes de las tablas
+
+Todas las tablas del Perfil y del documento final del Proyecto de Grado deberán incluir inmediatamente debajo una nota general de APA 7 que identifique su procedencia. La etiqueta será *Nota.* y cumplirá la función de declarar la fuente. No se utilizará solamente “Elaboración propia” cuando la tabla contenga datos, conceptos, clasificaciones, fechas o adaptaciones procedentes de otra base.
+
+La nota se redactará según el origen del contenido:
+
+- **Síntesis propia de bibliografía:** `*Nota.* Elaboración propia con base en Autor (año), Autor (año) y Autor (año).`
+- **Organización propia de decisiones o contenido interno:** `*Nota.* Elaboración propia a partir de [secciones, objetivos, registro de decisión o plan y fecha].`
+- **Resultados o datos producidos por el proyecto:** `*Nota.* Elaboración propia a partir de [instrumento, base de datos, prueba o registro], [periodo, muestra o versión cuando corresponda].`
+- **Tabla modificada respecto de una fuente:** `*Nota.* Adaptado de Autor (año, p. xx).`
+- **Tabla reproducida sin cambios sustantivos:** `*Nota.* Tomado de Autor (año, p. xx).`
+
+Cuando una tabla combine elaboración propia y fuentes externas, la nota identificará ambas. Todas las fuentes externas citadas en la nota deberán aparecer en las referencias bibliográficas; si se emplean varias, se consignarán las que sustenten materialmente los datos, las categorías o la estructura. Una fuente institucional, una comunicación personal o un registro interno se describirá con suficiente precisión para reconocer su origen y fecha. No se atribuirá como elaboración propia una tabla copiada o adaptada.
+
+### 9.2. Documentos canónicos y paginación
 
 - `PERFIL_PROYECTO_GRADO.md` será la fuente canónica y única versión editable del Perfil. El DOCX existente es una instantánea no canónica y no sincronizada; no se utilizará como fuente ni como versión vigente sin regenerarlo.
 - En el Perfil no se insertarán saltos de página obligatorios después de cada encabezado principal.
@@ -139,4 +156,4 @@ Si una respuesta es negativa, la sección deberá corregirse o justificar explí
 
 ---
 
-*Criterio editorial actualizado el 25 de agosto de 2026 para la documentación posterior al Perfil.*
+*Criterio editorial actualizado el 27 de agosto de 2026 para la documentación posterior al Perfil y para las fuentes de sus tablas.*
