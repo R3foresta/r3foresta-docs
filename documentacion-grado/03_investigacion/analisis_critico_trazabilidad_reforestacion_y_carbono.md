@@ -2,12 +2,12 @@
 
 ## Trazabilidad operativa, problema real y relación efectiva con bonos de carbono
 
-**Fecha de corte:** 20 de julio de 2026; alineación con el perfil actualizada el 19 de agosto de 2026.
+**Fecha de corte:** 20 de julio de 2026; estado histórico aclarado el 25 de agosto de 2026.
 **Documento base relacionado:** [`antecedentes_r3foresta_enfoque_eventos_saldos.md`](antecedentes_r3foresta_enfoque_eventos_saldos.md)
 **Propósito:** establecer lineamientos críticos para estructurar un proyecto de grado en Ingeniería de Sistemas.
 **Alcance de la auditoría:** documentación canónica, esquema de datos, migraciones SQL y estado de implementación consignado en este repositorio. No constituye una auditoría del despliegue productivo ni una validación independiente de datos de campo.
 
-> **Nota de vigencia:** este documento conserva el análisis técnico y de carbono realizado en julio. Los lineamientos vigentes están en [`base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md). Para el perfil actual, “semillas y plantas” introduce el dominio y “material vegetal” es la denominación general posterior. El alcance concluye con el registro de la plantación y no incluye monitoreo de supervivencia. Las formulaciones de título y objetivos de §§7.2–7.5 son antecedentes exploratorios superados: los mecanismos técnicos allí descritos son candidatos de diseño y no compromisos del Perfil.
+> **Documento histórico — no utilizar como plan vigente.** Conserva el análisis técnico y de carbono realizado en julio. Los lineamientos vigentes están en [`base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md), la metodología en [`metodologia_desarrollo.md`](../04_metodologia/metodologia_desarrollo.md) y el entregable en el [`Perfil oficial`](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md). Las prescripciones de las secciones 1 y 7–10 —diagnóstico investigativo, comparación antes–después, estudio de caso, muestra, saturación, SUS, hipótesis y roadmap— quedaron superadas por la decisión de desarrollar el producto mediante RUP adaptado, SDD asistido por IA y comprobación de Ingeniería de Software. La sección 11 se conserva como conclusión crítica histórica, no como formulación del alcance actual. Los mecanismos técnicos analizados siguen siendo candidatos de diseño y no compromisos del Perfil.
 
 ---
 
@@ -371,7 +371,7 @@ Este título evita prometer *event sourcing* estricto, carbono o certificación,
 
 > **Nota de vigencia (2026-08-05):** las recomendaciones de §§7.4–7.5 corresponden a una etapa exploratoria y fueron superadas por la versión consolidada de cinco objetivos del [`perfil oficial`](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) §4. Se conservan como antecedente del análisis y no deben copiarse al entregable.
 
-> Desarrollar y evaluar un sistema de trazabilidad operativa para la cadena de custodia de material biológico destinado a reforestación, que registre los hechos críticos de recolección, vivero y plantación y preserve la consistencia de los saldos mediante operaciones transaccionales, en el caso R3Foresta.
+> Desarrollar y evaluar un sistema de trazabilidad operativa para la cadena de custodia de material vegetal destinado a reforestación, que registre los hechos críticos de recolección, vivero y plantación y preserve la consistencia de los saldos mediante operaciones transaccionales, en el caso R3Foresta.
 
 El verbo **evaluar** es imprescindible: convierte la implementación existente en objeto de estudio y evita que el proyecto termine siendo solo una descripción de software ya construido.
 
@@ -518,6 +518,6 @@ Lo que sobra no es necesariamente código, sino **promesa**. Sobran las afirmaci
 
 La conclusión más defendible es:
 
-> R3Foresta no debe presentarse como sistema de bonos de carbono. Debe presentarse y evaluarse como sistema de trazabilidad operativa de material vegetal. Si demuestra en campo que mejora la integridad, completitud y recuperación de información, podrá convertirse en una capa de datos útil para un futuro MRV; pero la contribución climática y la emisión de créditos requerirán procesos científicos, normativos y de verificación que hoy no están implementados.
+> R3foresta App no debe presentarse como sistema de bonos de carbono. Debe presentarse y evaluarse como sistema de trazabilidad operativa de material vegetal. Si demuestra en campo que mejora la integridad, completitud y recuperación de información, podrá convertirse en una capa de datos útil para un futuro MRV; pero la contribución climática y la emisión de créditos requerirán procesos científicos, normativos y de verificación que hoy no están implementados.
 
 Este encuadre no reduce el proyecto. Lo vuelve comprobable, técnicamente preciso y defendible ante un tribunal de Ingeniería de Sistemas.

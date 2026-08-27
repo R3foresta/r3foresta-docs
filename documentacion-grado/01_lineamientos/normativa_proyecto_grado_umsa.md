@@ -27,6 +27,8 @@ Rige una estructura de dos niveles:
 
 **Definición oficial (Art. 9, Reglamento General):** *"El Proyecto de Grado para Licenciatura es el trabajo de investigación, programación y diseño de objetos de uso social y que cumple con exigencias de metodología científica con profundidad similar al de una Tesis."* Mismo rigor metodológico que una tesis, orientado a construir un artefacto/sistema.
 
+> **Aplicación acordada al proyecto:** según la decisión comunicada por el postulante después de reunirse con la tutora, R3Foresta no incorporará un marco investigativo independiente. El rigor metodológico se demostrará mediante RUP adaptado, especificaciones versionadas, gestión de riesgos y arquitectura, incrementos integrados, pruebas, validación, aceptación y trazabilidad de evidencias. Esta decisión no modifica el texto del reglamento; si la Carrera exige además un apartado investigativo específico, deberá confirmarse antes de la entrega oficial.
+
 ### Reglas clave del reglamento general
 
 - Carga horaria: 400–600 horas académicas, programadas en los dos últimos semestres.
@@ -72,12 +74,13 @@ Perfil de proyecto (15–30 pág.) aprobado por tutor y Consejo de Carrera → d
 
 ### Cuerpo
 
-- **Introducción** — contexto del problema, justificación, objetivos, alcance y estructura del documento
-- **Capítulo I — Marco teórico y conceptual** — revisión de literatura, teorías de base, definición de conceptos clave
-- **Capítulo II — Marco referencial o contextual** — contexto boliviano/institucional/sectorial de la investigación
-- **Capítulo III — Marco metodológico** — tipo y diseño de investigación, población/muestra, técnicas e instrumentos
-- **Capítulo IV — Análisis y presentación de resultados** — tablas, gráficos, discusión de hallazgos
-- **Capítulo V — Conclusiones y recomendaciones** — cierre de objetivos y trabajo futuro
+> **Estructura operativa confirmada para R3Foresta el 24 de agosto de 2026.** Los modelos generales revisados anteriormente proponían otras distribuciones, pero los precedentes de la Carrera y la decisión actual establecen la siguiente organización inicial:
+
+- **Introducción independiente** — se redactará al finalizar todos los capítulos
+- **Capítulo I — Marco introductorio** — antecedentes, problema, objetivos, justificación, alcances y metodología de desarrollo
+- **Capítulo II — Marco teórico y conceptual** — conceptos del dominio, RUP, SDD y asistencia de IA
+- **Capítulo III — Marco aplicativo** — análisis, diseño, implementación, integración, verificación, validación y resultados
+- **Conclusiones y Recomendaciones** — después del Capítulo III
 
 ### Sección final
 

@@ -1,193 +1,225 @@
 # TODO — ejecución del Proyecto de Grado
 
 > **Fecha de apertura:** 19 de agosto de 2026.
-> **Propósito:** convertir el Perfil en construcción demostrable, protocolo de investigación, evaluación y documento final. Este tablero comienza a ejecutarse en paralelo con el cierre del Perfil y se vuelve el tablero principal después de su aprobación.
+> **Última decisión metodológica:** 25 de agosto de 2026.
+> **Ventana académica:** 6 de julio–15 de noviembre de 2026.
+> **Propósito:** controlar la ejecución de RUP adaptado, sus fases e iteraciones, los incrementos de los tres módulos, sus integraciones, la verificación, la validación, la entrega y el documento final.
+>
+> La metodología se consolidó documentalmente el 25 de agosto dentro de una ventana ya iniciada. Toda reconstrucción de actividades anteriores conservará su fecha real y sus fuentes; no se retrofecharán artefactos, commits, pruebas, resultados ni aprobaciones.
 
-## 1. Decisiones cerradas
+> La revisión y cierre específicos de los capítulos I y II se controlan en [`TODO_CAPITULOS_1_Y_2.md`](TODO_CAPITULOS_1_Y_2.md).
 
-- [x] Mantener investigación aplicada y tecnológica, ciencia del diseño y desarrollo iterativo e incremental.
-- [x] Operacionalizar ciencia del diseño mediante DSRM sin reemplazar los sprints.
-- [x] Formular el estudio como caso único embebido: R3Foresta es el caso y las trazas son las unidades de análisis.
-- [x] Demostrar la construcción académica dentro del semestre desde una línea base limpia, conforme al criterio acordado con la docente de la UMSA.
-- [x] Conservar los desarrollos anteriores solo como referencia técnica y factibilidad, no como evidencia de construcción formal.
-- [x] Priorizar calidad sobre volumen de pruebas.
-- [x] Excluir blockchain, NFT, contratos inteligentes e IPFS de la construcción, evaluación y contribución académica, sin exigir su eliminación de repositorios históricos.
-- [x] Mantener recepción externa como variante dentro de Vivero o Plantación, no como cuarto módulo.
-- [x] Procurar comparación paralela de una misma actividad mediante la práctica habitual y R3Foresta.
+## 1. Decisiones vigentes
 
-## 2. Línea base y evidencia de construcción
+- [x] Adoptar como título **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**.
+- [x] Mantener exactamente tres módulos: M1 Recolección, M2 Vivero y M3 Plantación.
+- [x] Incorporar el material vegetal adquirido o recibido de terceros como variante de ingreso en Vivero o Plantación, sin crear un cuarto módulo.
+- [x] Mantener fuera del alcance monitoreo posterior, CO₂, MRV, certificación, emisión o comercialización de bonos de carbono, blockchain, NFT, contratos inteligentes e IPFS.
+- [x] Adoptar **Rational Unified Process (RUP) adaptado** como metodología de desarrollo.
+- [x] Complementar RUP con **Spec-Driven Development asistido por inteligencia artificial**.
+- [x] Eliminar los sprints y organizar el trabajo mediante fases e iteraciones RUP, con incrementos ejecutables en Construcción.
+- [x] Retirar ciencia del diseño, DSRM, estudio de caso único embebido, FEDS y demás componentes de metodología de investigación.
+- [x] Tratar la verificación, la validación operativa y la aceptación como actividades de Ingeniería de Software.
+- [x] Demostrar la construcción académica desde una referencia inicial del repositorio dentro de la ventana autorizada.
+- [x] Conservar desarrollos anteriores únicamente como referencia técnica y factibilidad.
 
-- [ ] Definir el repositorio, ramas y entorno que constituirán la línea base académica.
-- [ ] Crear una etiqueta o commit inicial que contenga solo la estructura autorizada y no los flujos funcionales que se construirán.
-- [ ] Preparar una base de datos controlada y reproducible desde migraciones académicas.
-- [ ] Registrar el inventario inicial: qué existe en la línea base y qué todavía no existe.
-- [ ] Conservar por sprint un paquete compacto de evidencia:
-  - etiqueta o commit de inicio y cierre;
-  - requerimientos y reglas abordados;
-  - cambios principales de implementación;
-  - migraciones aplicadas;
-  - pruebas críticas y resultado;
-  - captura o acta breve de demostración;
-  - decisiones y desviaciones.
-- [ ] Registrar horas académicas por actividad y sprint.
+## 2. Productos y evidencia transversales
+
+- [ ] Definir el repositorio, las ramas y el entorno de la referencia inicial académica.
+- [ ] Crear y documentar la etiqueta o commit de referencia inicial.
+- [ ] Preparar una base de datos reproducible mediante migraciones académicas.
+- [ ] Registrar el inventario inicial de capacidades existentes y pendientes.
+- [ ] Mantener el registro de riesgos con impacto, respuesta, responsable, estado y efecto sobre el plan.
+- [ ] Mantener la lista priorizada de requisitos, defectos y tareas.
+- [ ] Mantener la matriz principal:
+  `necesidad → requisito → especificación → decisión de diseño → tarea → cambio → prueba → resultado → aceptación`.
+- [ ] Mantener para las reglas críticas:
+  `requisito → regla → invariante → mecanismo → prueba → resultado`.
+- [ ] Asignar identificadores estables a objetivos, casos de uso, requisitos, reglas, especificaciones, decisiones, tareas, pruebas y actas.
+- [ ] Definir para LCO, LCA, IOC y PR la evidencia mínima, las personas que revisan según su competencia, la decisión de salida y los riesgos o defectos residuales.
+- [ ] Conservar por iteración, además del incremento cuando corresponda:
+  - referencia de inicio y cierre;
+  - especificaciones y criterios de aceptación;
+  - plan técnico y tareas;
+  - decisiones relevantes;
+  - código y migraciones;
+  - pruebas y resultados;
+  - revisión de la iteración, demostración e integración;
+  - defectos, desviaciones y acciones correctivas.
+- [ ] Registrar por iteración `resultado o incremento → planificado → realizado → evidencia → desviación → decisión → riesgo residual → estado del hito`.
+- [ ] Registrar horas académicas por fase, iteración, incremento y actividad transversal.
 - [ ] Diferenciar siempre referencia técnica previa, construcción académica y estado desplegado.
 
-## 3. Construcción por sprints
+## 3. Fase de Inicio — iteración IN-1 — 6 al 19 de julio
 
-### Sprint 0 — Línea base, Perfil y preparación
+### 3.1. Alcance y actores
 
-- [ ] Cerrar Perfil y backlog académico.
-- [ ] Evidenciar la línea base limpia.
-- [ ] Mapear objetivos y sprints con las seis actividades DSRM.
-- [ ] Iniciar inventario documental de la práctica actual.
-- [ ] Preparar versiones iniciales de los instrumentos.
+- [ ] Cerrar alcance, límites y relación con los cinco objetivos específicos.
+- [ ] Confirmar responsables de Recolección, Vivero y Plantación.
+- [ ] Identificar actores institucionales que priorizan o aceptan requisitos.
+- [ ] Confirmar las variantes de ingreso externo en Vivero y Plantación.
+- [ ] Confirmar que la trazabilidad, las consultas y las evidencias son capacidades transversales y no un cuarto módulo.
 
-### Sprint 1 — Recolección
+### 3.2. Productos de Inicio
 
-- [ ] Construir M1 desde la línea base.
-- [ ] Documentar requerimientos, reglas, datos, interfaz y pruebas críticas de M1.
-- [ ] Definir la información mínima de procedencia para material recolectado y recibido externamente.
-- [ ] Generar paquete de evidencia del sprint.
+- [ ] Cerrar la visión y el alcance del producto.
+- [ ] Cerrar el glosario inicial.
+- [ ] Preparar el modelo inicial de casos de uso.
+- [ ] Preparar la lista priorizada de requisitos y riesgos.
+- [ ] Preparar el plan de fases, iteraciones, incrementos, productos y criterios de salida.
+- [ ] Establecer la referencia inicial académica.
+- [ ] Revisar y cerrar el hito **LCO — Objetivos del ciclo de vida**.
 
-### Sprint 2 — Vivero y Recolección→Vivero
+## 4. Fase de Elaboración — iteración EL-1 — 20 de julio al 16 de agosto
 
-- [ ] Construir M2 y el contrato M1→M2.
-- [ ] Definir e implementar la variante de recepción externa que ingresa a Vivero, si esta es la variante seleccionada.
-- [ ] Probar saldo, transformación observada, merma y transferencia crítica.
-- [ ] Generar paquete de evidencia del sprint.
+### 4.1. Dominio y arquitectura
 
-### Sprint 3 — Plantación y Vivero→Plantación
+- [ ] Especificar entidades, eventos, estados, cantidades, unidades, saldos, responsables y evidencias.
+- [ ] Diferenciar transferencia de transformación biológica u operativa.
+- [ ] Definir invariantes de cantidad, disponibilidad, asignación y consumo.
+- [ ] Diseñar la arquitectura base y el modelo de datos.
+- [ ] Definir los contratos M1→M2 y M2→M3.
+- [ ] Definir la procedencia y el historial de los ingresos externos.
+- [ ] Preparar una línea vertical arquitectónica mínima M1→M2→M3 para comprobar identidad, procedencia, contratos, integridad e historial.
 
-- [ ] Construir M3 y el contrato M2→M3.
-- [ ] Resolver la procedencia de material externo que ingrese directamente a Plantación si esta variante permanece en alcance.
-- [ ] Probar asignación, consumo, devolución y registro de plantación críticos.
-- [ ] Generar paquete de evidencia del sprint.
+### 4.2. Especificaciones y riesgos
 
-### Sprint 4 — Reconstrucción transversal
+- [ ] Priorizar escenarios por valor, dependencia y riesgo.
+- [ ] Especificar y probar anticipadamente saldo no negativo, transferencia consistente, asignación coherente y ausencia de estados parciales.
+- [ ] Establecer los criterios de aceptación para cada incremento.
+- [ ] Actualizar el plan y el registro de riesgos.
+- [ ] Revisar y cerrar el hito **LCA — Arquitectura del ciclo de vida**.
 
-- [ ] Construir la consulta o recorrido completo de una traza M1→M2→M3.
-- [ ] Ejecutar un ensayo controlado del instrumento de reconstrucción.
-- [ ] Corregir ambigüedades del instrumento y congelar su versión.
-- [ ] Generar paquete de evidencia del sprint.
+## 5. Fase de Construcción
 
-### Sprint 5 — Calidad y versión candidata
+Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 
-- [ ] Cerrar la deuda técnica crítica previa al piloto.
-- [ ] Ejecutar la matriz mínima de pruebas críticas.
-- [ ] Congelar commits, migraciones, configuración y datos de prueba de la versión candidata.
-- [ ] Realizar ensayo operativo del piloto.
-- [ ] Generar paquete de evidencia del sprint.
+`seleccionar → especificar → clarificar → planificar → descomponer → implementar → integrar → probar → demostrar → actualizar`.
 
-### Sprint 6 — Piloto y evaluación
+### 5.1. Iteración CO-1 e incremento 1 — M1 Recolección — 17 de agosto al 6 de septiembre
 
-- [ ] Obtener autorizaciones y consentimientos.
-- [ ] Registrar en paralelo la práctica habitual y R3Foresta sobre la misma actividad cuando sea viable.
-- [ ] Ejecutar reconstrucción independiente cuando exista una persona disponible.
-- [ ] Consolidar resultados cuantitativos y cualitativos por traza.
-- [ ] Diferenciar operaciones reales, reconstrucciones históricas y casos controlados.
+- [ ] Especificar casos de uso, reglas, excepciones y criterios de aceptación de M1.
+- [ ] Diseñar datos, interfaz, servicios, migraciones y pruebas de M1.
+- [ ] Implementar actividades, lotes, especies, cantidades, unidades, responsables, ubicación y evidencia.
+- [ ] Implementar cierre o entrega del lote hacia Vivero.
+- [ ] Verificar procedencia, cantidades, estados e historial de M1.
+- [ ] Demostrar M1 y registrar los resultados del incremento.
 
-### Sprint 7 — Resultados y cierre
+### 5.2. Iteración CO-2 e incremento 2 — M2 Vivero e integración M1→M2 — 7 al 27 de septiembre
 
-- [ ] Responder cada pregunta de investigación y objetivo con evidencia.
-- [ ] Redactar resultados, discusión, limitaciones, conclusiones y recomendaciones.
-- [ ] Cerrar anexos, matriz de pruebas e instrumentos.
-- [ ] Preparar versión para revisión y entrega.
+- [ ] Especificar recepción desde Recolección e ingreso de material externo.
+- [ ] Especificar transformaciones observadas, mermas, descartes, saldo vivo, asignaciones, despachos, devoluciones y cierre.
+- [ ] Diseñar e implementar M2 y el contrato M1→M2.
+- [ ] Registrar para ingresos externos procedencia, especie, cantidad, unidad, fecha, responsable y evidencia disponible.
+- [ ] Verificar transferencia consistente, transformación observada, merma y saldo.
+- [ ] Ejecutar regresión de M1 e integración M1→M2.
+- [ ] Demostrar el incremento integrado y registrar resultados.
 
-## 4. Protocolo de la situación actual
+### 5.3. Iteración CO-3 e incremento 3 — M3 Plantación e integración M2→M3 — 28 de septiembre al 18 de octubre
 
-- [ ] Acordar con R3Foresta el inicio y fin del periodo documental.
-- [ ] Inventariar todas las actividades identificables dentro del periodo.
-- [ ] Registrar por actividad las fuentes existentes: fotografías, mensajería, publicaciones, cuadernos, formularios, archivos y responsables con memoria del proceso.
-- [ ] Definir y congelar criterios de inclusión y exclusión.
-- [ ] Incluir todas las trazas elegibles; no seleccionar únicamente las mejor documentadas.
-- [ ] Conservar una bitácora de exclusiones y sus motivos.
-- [ ] Reconstruir cada traza en dos pasadas:
-  1. solo con documentos;
-  2. documentos más memoria del responsable.
-- [ ] Mantener separados los resultados de ambas pasadas.
+- [ ] Especificar asignación, recepción, plantación, devolución, descarte, ubicación y evidencia.
+- [ ] Especificar ingreso externo directo en Plantación y su procedencia.
+- [ ] Diseñar e implementar M3 y el contrato M2→M3.
+- [ ] Verificar cantidad recibida, plantada, devuelta o descartada.
+- [ ] Verificar rechazo de consumo o asignación superior al disponible y de duplicados concurrentes.
+- [ ] Ejecutar regresión de M1 y M2 e integración M2→M3.
+- [ ] Demostrar los tres módulos integrados y registrar resultados.
 
-## 5. Métricas e instrumentos mínimos
+### 5.4. Iteración CO-4 e incremento 4 — Trazabilidad transversal y versión candidata — 19 de octubre al 1 de noviembre
 
-- [ ] Definir la lista común de ítems de reconstrucción: procedencia, material o especie, cantidades y unidades, eventos o transformaciones, responsables, fecha, ubicación, destino y evidencia.
-- [ ] Definir para cada ítem las categorías `COMPLETO`, `PARCIAL`, `AUSENTE` y `CONTRADICTORIO` con un ejemplo.
-- [ ] Definir cuándo una evidencia se considera vinculada y recuperable.
-- [ ] Definir inicio y final del cronometraje y cómo registrar pausas.
-- [ ] Definir qué cuenta como reintento, error y solicitud de ayuda.
-- [ ] Medir carga de registro con duración, reintentos, errores, ayuda y dificultad reportada; no crear un índice compuesto innecesario.
-- [ ] Preparar y versionar:
-  - guía de reconstrucción;
-  - lista de cotejo documental;
-  - hoja de cronometraje y carga;
-  - guía breve de entrevista;
-  - protocolo de observación;
-  - consentimiento informado;
-  - matriz de pruebas.
-- [ ] Probar todos los instrumentos con una traza controlada antes del piloto definitivo.
+- [ ] Especificar la consulta y reconstrucción de una traza completa M1→M2→M3.
+- [ ] Implementar la recuperación de procedencia, eventos, cantidades, responsables, ubicaciones, evidencias y destino.
+- [ ] Completar consultas y reportes estrictamente necesarios para la reconstrucción.
+- [ ] Ejecutar pruebas de integración y regresión de los tres módulos.
+- [ ] Corregir deuda técnica crítica de seguridad, configuración y reproducibilidad.
+- [ ] Congelar código, migraciones, configuración y datos de la versión candidata.
+- [ ] Revisar y cerrar el hito **IOC — Capacidad operativa inicial**.
 
-## 6. Análisis cualitativo e integración
+## 6. Fase de Transición — iteración TR-1 — 2 al 15 de noviembre
 
-- [ ] Crear una plantilla inicial con las categorías: claridad, carga, dificultades, interrupciones y confianza en la reconstrucción.
-- [ ] Permitir categorías emergentes sin borrar la plantilla ni cambiar silenciosamente preguntas ya aplicadas.
-- [ ] Mantener una tabla `fuente → fragmento/observación → código → hallazgo → objetivo`.
-- [ ] Conservar citas anonimizadas que respalden los hallazgos principales.
-- [ ] Revisar con la tutora o una segunda persona una muestra de la codificación.
-- [ ] Integrar por traza métricas, fuentes, observaciones y explicación cualitativa.
-- [ ] No presentar frecuencia de comentarios como inferencia estadística.
+### 6.1. Verificación y validación — 2 al 8 de noviembre
 
-## 7. Verificación técnica mínima de calidad
+- [ ] Ejecutar la matriz de pruebas funcionales, integración, regresión, concurrencia y fallos críticos.
+- [ ] Ejecutar escenarios de aceptación para:
+  - recorrido propio M1→M2→M3;
+  - ingreso externo en Vivero;
+  - ingreso externo directo en Plantación;
+  - transferencia parcial;
+  - transformación observada;
+  - merma o descarte;
+  - devolución;
+  - intento de consumo superior al saldo;
+  - reconstrucción completa con evidencia.
+- [ ] Identificar claramente si cada escenario utiliza una operación real disponible o datos controlados.
+- [ ] Registrar resultado esperado, resultado observado, defectos y decisión de aceptación.
+- [ ] Corregir defectos de la versión candidata y repetir las pruebas afectadas.
 
-- [ ] Construir la matriz `requerimiento → regla → invariante → mecanismo → prueba → resultado` únicamente para el alcance académico vigente.
-- [ ] Cubrir como mínimo:
-  1. saldo no negativo y consumo no superior al disponible;
-  2. transferencia atómica M1→M2;
-  3. asignación y consumo coherentes M2→M3;
-  4. doble consumo o asignación concurrente rechazados;
-  5. fallo crítico sin estado parcial;
-  6. reconstrucción extremo a extremo con evidencia.
-- [ ] Agregar casos adicionales solo cuando exista riesgo o defecto que los justifique.
-- [ ] Registrar ambiente, datos, versión, resultado esperado y resultado observado.
+### 6.2. Despliegue, aceptación y cierre — 9 al 15 de noviembre
 
-## 8. Deuda técnica interna previa al piloto
+- [ ] Preparar y comprobar migraciones, secretos, configuración y datos iniciales.
+- [ ] Desplegar la versión final en el entorno autorizado.
+- [ ] Preparar manual técnico, manual de usuario y guía de operación.
+- [ ] Obtener el registro de aceptación o de observaciones pendientes.
+- [ ] Cerrar el registro de riesgos, cambios y defectos.
+- [ ] Etiquetar la liberación final.
+- [ ] Revisar y cerrar el hito **PR — Liberación del producto**.
 
-> Estas tareas son un gate interno de calidad y seguridad. No se convierten en el foco narrativo del Perfil.
+## 7. Controles técnicos mínimos
 
-- [ ] Derivar identidad desde JWT validado y eliminar confianza productiva en identificadores enviados sin validación.
-- [ ] Proteger o retirar endpoints privilegiados y de diagnóstico fuera del alcance académico.
-- [ ] Eliminar registro o sesión mock del flujo productivo del piloto.
+- [ ] Derivar identidad desde credenciales validadas y eliminar confianza productiva en identificadores no autenticados.
+- [ ] Proteger o retirar endpoints privilegiados y de diagnóstico fuera del alcance.
+- [ ] Eliminar sesiones o datos mock del flujo productivo entregado.
 - [ ] Exigir configuración segura de secretos.
-- [ ] Cerrar los desajustes de migraciones necesarios para reconstruir la base académica desde cero.
-- [ ] Alinear los contratos críticos que todavía difieren de la implementación.
-- [ ] Incorporar pruebas frontend mínimas para los recorridos utilizados en el piloto.
-- [ ] Confirmar que blockchain, Pinata o IPFS no bloqueen ni contaminen el flujo académico evaluado.
+- [ ] Reconstruir la base académica desde cero mediante migraciones.
+- [ ] Alinear contratos, especificaciones e implementación.
+- [ ] Incorporar pruebas frontend mínimas para los recorridos de aceptación.
+- [ ] Confirmar que componentes históricos excluidos no intervienen en el flujo académico.
 
-## 9. Ética y custodia de datos
+## 8. Spec-Driven Development y asistencia de IA
 
-- [ ] Relacionar los perfiles y roles del sistema con las operaciones permitidas durante el piloto.
-- [ ] Definir separadamente quién puede acceder a datos de investigación.
-- [ ] Definir almacenamiento, respaldo, seudonimización, conservación y eliminación.
-- [ ] Identificar fotografías, coordenadas y nombres que requieran protección especial.
-- [ ] Definir procedimiento para retiro de consentimiento.
-- [ ] Separar datos operativos, datos anonimizados para análisis y datos controlados de prueba.
-- [ ] No proporcionar datos personales o sensibles a agentes de IA sin autorización y anonimización.
+### 8.1. Productos SDD
 
-## 10. Alcance y coherencia documental
+- [ ] Mantener una especificación canónica por incremento o conjunto coherente de casos de uso.
+- [ ] Incluir actores, precondiciones, flujo principal, alternativas, reglas, invariantes y criterios de aceptación.
+- [ ] Mantener el plan técnico sincronizado con arquitectura, datos, interfaces, migraciones y pruebas.
+- [ ] Mantener tareas identificables y vinculadas con la especificación y el plan.
+- [ ] Actualizar especificaciones y decisiones cuando cambie el comportamiento implementado.
+- [ ] Utilizar los productos SDD para materializar requisitos, diseño detallado y planificación de capacidades, sin duplicarlos.
+- [ ] Conservar por separado los productos RUP transversales cuya finalidad no cubra SDD: visión, arquitectura, riesgos, configuración, revisión de iteraciones, hitos y despliegue.
 
-- [ ] Especificar la recepción externa en requerimientos, reglas, modelo de datos, interfaz, pruebas y documentación académica.
-- [ ] Confirmar si se implementará ingreso externo en Vivero, Plantación o ambas variantes.
-- [ ] Excluir blockchain, NFT, contratos inteligentes e IPFS de objetivos, incrementos académicos, pruebas, resultados y conclusiones.
-- [ ] Mantener exactamente tres módulos.
-- [ ] Propagar cada decisión metodológica a Perfil, lineamientos, metodología, plan, instrumentos y documento final.
-- [ ] Aplicar la lista de revisión de [`criterios_editoriales_proyecto_grado.md`](../01_lineamientos/criterios_editoriales_proyecto_grado.md) antes de cerrar cada sección o documento posterior al Perfil.
+### 8.2. Control de IA
 
-## 11. Documento final y defensa
+- [ ] Registrar para cada aporte material: fecha, herramienta y modelo o versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio o evidencia.
+- [ ] Revisar todo cambio generado o modificado por IA antes de aceptarlo.
+- [ ] No permitir que un agente apruebe requisitos, reglas, arquitectura crítica, pruebas, incrementos o despliegues.
+- [ ] No proporcionar datos personales, sensibles o institucionales no autorizados a los agentes.
+- [ ] No atribuir a la IA decisiones que requieran conocimiento del contexto organizacional.
+- [ ] Mantener al postulante como único responsable académico de los resultados.
 
-- [ ] Desarrollar el Capítulo III con DSRM, caso embebido, protocolo, métricas, análisis y ética realmente ejecutados.
-- [ ] Desarrollar el Capítulo IV con evidencia de construcción por sprint y resultados de verificación/evaluación.
-- [ ] Mantener una cadena de evidencia desde dato o commit hasta conclusión.
-- [ ] Usar el periodo posterior al 15 de noviembre para correcciones, maquetación y preparación de la defensa.
-- [ ] Si se amplía la recolección o construcción sustantiva, actualizar formalmente cronograma y fechas de corte.
-- [ ] Preparar defensa para fines de noviembre o inicios de diciembre.
+## 9. Coherencia documental
+
+- [x] Propagar RUP, SDD asistido por IA, fases, iteraciones, incrementos e hitos al Perfil, Capítulo I y Capítulo II.
+- [ ] Aplicar la misma estructura al Marco aplicativo cuando se redacte el Capítulo III.
+- [x] Mantener exactamente tres módulos y las integraciones M1→M2 y M2→M3.
+- [x] Mantener trazabilidad, consultas, historial y evidencias como capacidades transversales.
+- [x] Sustituir toda referencia activa a sprint por fase, iteración o incremento, según corresponda.
+- [x] Sustituir la matriz DSR por la matriz de trazabilidad de desarrollo.
+- [x] Retirar de documentos activos ciencia del diseño, DSRM, estudio de caso único embebido y FEDS.
+- [x] Diferenciar verificación, validación operativa y aceptación.
+- [x] Mantener el límite respecto de carbono y de los componentes tecnológicos excluidos.
+- [ ] Aplicar los [`criterios editoriales`](../01_lineamientos/criterios_editoriales_proyecto_grado.md) antes de cerrar cada sección.
+
+## 10. Documento final y defensa
+
+- [ ] Integrar las versiones aprobadas de los capítulos I y II.
+- [ ] Desarrollar el Capítulo III por fases e iteraciones RUP, mostrando especificaciones, diseño, incrementos, integraciones, pruebas y resultados.
+- [ ] Relacionar cada objetivo con productos y evidencia verificable.
+- [ ] Redactar conclusiones que respondan a cada objetivo sin generalizaciones no respaldadas.
+- [ ] Redactar recomendaciones separadas de los resultados.
+- [ ] Cerrar referencias y anexos.
+- [ ] Redactar resumen y palabras clave cuando el documento completo esté estabilizado.
+- [ ] Preparar la versión para revisión, maquetación y defensa.
 
 ---
 
-*Tablero abierto el 19 de agosto de 2026.*
+*Tablero reestructurado el 25 de agosto de 2026 conforme a la selección definitiva de RUP.*

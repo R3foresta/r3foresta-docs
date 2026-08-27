@@ -2,11 +2,11 @@
 
 ## Trazabilidad de material vegetal para reforestación mediante eventos, conservación de saldos e integración entre etapas
 
-**Fecha de corte de la búsqueda:** 20 de julio de 2026; alineación con el perfil actualizada el 19 de agosto de 2026.
+**Fecha de corte de la búsqueda:** 20 de julio de 2026; alineación con el perfil actualizada el 25 de agosto de 2026.
 
-**Título propuesto del perfil:** *Sistema de trazabilidad de material vegetal para reforestación: caso R3Foresta*.
+**Título seleccionado del perfil:** *Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta*.
 
-> La búsqueda incluyó antecedentes sobre distintas procedencias y puntos de ingreso del material vegetal. Esos hallazgos siguen siendo aplicables, pero el perfil actual no presenta la adquisición a terceros como un flujo o entregable central; cualquier ingreso intermedio se considera una variante implícita dentro de los tres módulos.
+> La búsqueda incluyó antecedentes sobre distintas procedencias y puntos de ingreso del material vegetal. Esos hallazgos siguen siendo aplicables. El perfil actual incorpora la adquisición o recepción de terceros en Vivero y Plantación como variantes integradas dentro de los tres módulos, sin convertirlas en un cuarto módulo o un entregable independiente.
 
 > **Investigación complementaria:** las fuentes posteriores sobre eventos, genealogía, integridad y pruebas de reconstrucción se conservan en la [`biblioteca razonada`](biblioteca_fuentes_trazabilidad_eventos_integridad.md) y se recuperan mediante el [`índice temático`](../05_recursos/indice_fuentes_bibliograficas.md).
 
@@ -16,7 +16,7 @@
 
 ## 1. Delimitación respecto de la formulación anterior
 
-La formulación vigente excluye blockchain, NFT, IPFS y bonos de carbono. La comparación se organiza alrededor de seis problemas centrales:
+La formulación vigente excluye blockchain, NFT, IPFS y bonos de carbono del alcance funcional. La mención de bonos de carbono en el título expresa únicamente una proyección institucional posterior. La comparación se organiza alrededor de seis problemas centrales:
 
 1. Identificación del origen y procedencia del material forestal de reproducción.
 2. Trazabilidad entre recolección, vivero y plantación.
@@ -41,7 +41,7 @@ No se clasificó una fuente como académica solo porque apareciera en Google Sch
 
 - **Repositorios y portales regionales:** UMSA/DIPGIS, UPEA, Universidad Privada de Tacna, Universidad César Vallejo, Instituto Tecnológico de Costa Rica, Universidad Estatal de Bolívar, Universidad Agraria del Ecuador, ALICIA–CONCYTEC y Redalyc.
 - **Literatura internacional:** portales de editoriales y revistas, DOI/Crossref, repositorios de DTU, Utrecht, Nofima, NIST, Universidad de Turín, Universidad de Lieja y organismos forestales.
-- **Consultas en español:** combinaciones de “sistema trazabilidad vivero”, “cadena de custodia semillas forestales”, “material biológico reforestación”, “inventario vivero”, “geolocalización viveros”, “eventos trazabilidad” y “saldo de lotes”.
+- **Consultas en español:** combinaciones de “sistema trazabilidad vivero”, “cadena de custodia semillas forestales”, “material vegetal reforestación”, “inventario vivero”, “geolocalización viveros”, “eventos trazabilidad” y “saldo de lotes”.
 - **Consultas en inglés:** combinaciones de “forest reproductive material traceability”, “seedlot provenance tracking”, “nursery inventory system”, “event sourcing traceability”, “EPCIS transformation event”, “geo-traceability” e “invariant conservation database”.
 - **Inclusión:** relación directa con al menos una etapa o un mecanismo central de R3Foresta y metadatos comprobables en una fuente primaria.
 - **Exclusión:** blogs sin autoría, agregadores sin enlace al original, documentos sin texto o metadatos verificables y páginas que repetían una misma publicación. Google Scholar/ALICIA se usaron para descubrimiento, no como sustitutos de la fuente original.
@@ -50,7 +50,7 @@ La búsqueda es una revisión de estado del arte orientada al proyecto, no una r
 
 ### Resultado específico para Bolivia y UMSA
 
-Se buscaron combinaciones de *trazabilidad*, *material biológico*, *semillas forestales*, *vivero*, *reforestación*, *eventos*, *inventario*, *geolocalización* y *sistemas de información*. Se halló un proyecto boliviano de Ingeniería de Sistemas directamente relacionado con viveros forestales en la UPEA y una tesis agronómica de la UMSA útil para comprender el tránsito vivero–campo. **No se localizó en los resultados públicamente indexados una tesis de Informática o Ingeniería de Sistemas de la UMSA que implemente la cadena completa recolección–vivero–plantación.** Esta afirmación describe el resultado de la búsqueda, no prueba su inexistencia; el repositorio institucional de la UMSA presentó disponibilidad e indexación irregular durante la consulta.
+Se buscaron combinaciones de *trazabilidad*, *material vegetal*, *semillas forestales*, *vivero*, *reforestación*, *eventos*, *inventario*, *geolocalización* y *sistemas de información*. Se halló un proyecto boliviano de Ingeniería de Sistemas directamente relacionado con viveros forestales en la UPEA y una tesis agronómica de la UMSA útil para comprender el tránsito vivero–campo. **No se localizó en los resultados públicamente indexados una tesis de Informática o Ingeniería de Sistemas de la UMSA que implemente la cadena completa recolección–vivero–plantación.** Esta afirmación describe el resultado de la búsqueda, no prueba su inexistencia; el repositorio institucional de la UMSA presentó disponibilidad e indexación irregular durante la consulta.
 
 ## 3. Trabajos académicos
 

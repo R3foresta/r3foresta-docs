@@ -1,13 +1,24 @@
 # Glosario de términos comprometidos — Proyecto de Grado R3Foresta
 
-> **Versión 4 — 19 de agosto de 2026**
+> **Versión 6 — 25 de agosto de 2026**
 > Este glosario no define todo el vocabulario del dominio. Define únicamente los términos que **comprometen una afirmación** ante el tribunal: los que, mal usados, prometen más de lo que el trabajo puede demostrar.
 > Para cada término: qué significa aquí, qué obliga a sostener y qué **no** obliga a sostener.
-> Fuente estratégica: [`../01_lineamientos/base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md) · Diseño de evaluación: [`../02_planificacion/estructura_perfil.md`](../02_planificacion/estructura_perfil.md)
+> Fuente estratégica: [`../01_lineamientos/base_perfil_proyecto_grado.md`](../01_lineamientos/base_perfil_proyecto_grado.md) · Estructura vigente: [`../02_planificacion/estructura_perfil.md`](../02_planificacion/estructura_perfil.md)
 
 ---
 
 ## Criterio terminológico general
+
+En las denominaciones propias se utilizarán las siguientes grafías y funciones:
+
+- **R3Foresta:** institución y modelo socioambiental del contexto de aplicación;
+- **R3Carbon:** componente institucional dedicado a captura de carbono, medición y trazabilidad;
+- **R3foresta App:** nombre oficial de la aplicación tecnológica;
+- **sistema de trazabilidad de material vegetal:** denominación académica y funcional de la solución evaluada.
+
+El título seleccionado es **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**. La expresión **bonos de carbono** señala únicamente una proyección institucional futura. No permite denominar a R3foresta App como sistema de carbono ni atribuirle medición, MRV, validación, verificación, certificación o emisión de créditos.
+
+No se utilizarán `APP R3Foresta`, `APPR3Foresta` ni _R3Foresta_ como nombre abreviado de la aplicación.
 
 La primera explicación del dominio utiliza **semillas y plantas** para que el lector comprenda qué elementos atraviesan los procesos de Recolección, Vivero y Plantación. Una vez presentado ese recorrido, se adopta **material vegetal** como denominación general y delimitada para las semillas, plantas y demás unidades de propagación comprendidas en el proyecto.
 
@@ -83,7 +94,7 @@ Lo que se proscribe es *verificable* aplicado a **la trazabilidad o al sistema c
 
 **Precisión obligatoria:** no existe una igualdad homogénea única desde gramos de semilla hasta plantas registradas en una plantación. La conservación se verifica **dentro de cada unidad y etapa**, y el paso de unidades de propagación a plantas vivas es una **transformación biológica observada**, no una conversión aritmética de unidades. Esta salvedad debe aparecer cada vez que se enuncie la propiedad.
 
-**Qué compromete:** ausencia de saldos negativos, de doble consumo y de estados parciales tras fallo, verificada experimentalmente.
+**Qué compromete:** ausencia de saldos negativos, de doble consumo y de estados parciales tras fallos dentro de las condiciones comprobadas mediante pruebas técnicas.
 
 **Qué NO compromete:** que el material vegetal no se pierda en el mundo real, ni que las cantidades declaradas por un operador sean ciertas.
 
@@ -121,9 +132,9 @@ El historial no es un cuarto módulo. Los módulos generan los eventos y la cons
 
 ## 7. Recuperabilidad de trazas
 
-**Definición adoptada:** proporción de ítems de una guía de reconstrucción que pueden responderse **con evidencia contrastable** —no solo de memoria— para un caso de la muestra, junto con el tiempo requerido para obtenerlos.
+**Definición adoptada:** grado en que un escenario de validación permite responder los elementos previstos de una guía de reconstrucción **con evidencia contrastable** —no solo de memoria—, junto con el tiempo o los pasos requeridos cuando estas medidas hayan sido definidas previamente.
 
-Es una métrica para comparar la situación actual con la propuesta. La distinción entre *respondido con evidencia* y *respondido de memoria* es constitutiva de la definición: la memoria ayuda a contextualizar, pero no es transferible entre personas ni puede contrastarse de la misma forma que una fuente conservada.
+Es una medida descriptiva del resultado de los escenarios ejecutados, no una comparación causal antes–después. La distinción entre *respondido con evidencia* y *respondido de memoria* sigue siendo relevante: la memoria ayuda a contextualizar, pero no es transferible entre personas ni puede contrastarse de la misma forma que una fuente conservada.
 
 ---
 
@@ -146,7 +157,7 @@ Antes de cerrar cualquier documento del proyecto de grado, verificar que:
 3. *verificable* solo aparezca aplicado a proposiciones o invariantes; para registros se use *evidencia contrastable* (§2.1);
 4. cada enunciado de conservación de saldos incluya la salvedad de unidad y etapa (§4);
 5. blockchain, IPFS y NFT aparezcan únicamente para declarar que están fuera del alcance;
-6. las variantes de ingreso se mantengan implícitas y subordinadas al recorrido principal Recolección–Vivero–Plantación;
+6. los ingresos de material vegetal adquirido o recibido de terceros se mantengan como variantes integradas y subordinadas al recorrido principal Recolección–Vivero–Plantación;
 7. “semillas y plantas” se use para introducir el dominio y “material vegetal” como denominación general posterior;
 8. los objetivos mantengan correspondencia con el problema, el alcance y la evaluación, y cualquier ajuste sustantivo se revise formalmente con la tutora;
 9. transferencia y transformación se mantengan diferenciadas y no se use una equivalencia automática entre unidades distintas;
@@ -156,4 +167,4 @@ Antes de cerrar cualquier documento del proyecto de grado, verificar que:
 
 ---
 
-*Documento de trabajo actualizado el 19 de agosto de 2026.*
+*Documento de trabajo actualizado el 25 de agosto de 2026.*
