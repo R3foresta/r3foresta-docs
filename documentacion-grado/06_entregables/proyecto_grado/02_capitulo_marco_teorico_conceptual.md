@@ -244,6 +244,8 @@ La síntesis sirve como puente al Marco aplicativo, donde deberán presentarse l
 | Verificación técnica | Cantidades, saldos, atomicidad, consistencia y trazabilidad de requerimientos | Diseñar la matriz de pruebas críticas |
 | Validación y aceptación | Completitud, coherencia, evidencia recuperable y carga de los flujos | Diseñar escenarios operativos y criterios de cierre |
 
+*Nota.* Elaboración propia a partir de la síntesis de las secciones 2.8 a 2.10, con base en Kruchten (2004), IBM (s. f.), GitHub (2026) y Tabassi (2023). Las filas sobre verificación, validación y aceptación sintetizan los criterios definidos para este proyecto en el Capítulo I.
+
 La metodología del Capítulo I explica **cómo se organizará el desarrollo**; este capítulo explica **qué significan y cómo se relacionan** los conceptos adoptados. El Marco aplicativo mostrará **cómo se materializaron** en artefactos, incrementos, integraciones y resultados.
 
 ## Fuentes prioritarias para la redacción

@@ -14,7 +14,7 @@
 
 - Redacto **una sección a la vez**, en el orden de abajo; te la paso, la revisás rápido y sigo con la siguiente.
 - Como ya tenés todo, el 90% es **transcribir tu documentación existente** a formato académico. Solo dos tramos piden algo de investigación: **antecedentes/trabajos similares** y **marco teórico + bibliografía** (preliminar, no profundo).
-- El perfil se redacta primero en **markdown** (rápido de iterar); al cierre lo convertimos a **Word (.docx)** con carátula y formato para presentar.
+- En este plan histórico se contemplaba redactar el perfil primero en **Markdown** y convertirlo al cierre a **Word (.docx)**; esa alternativa quedó superada. El flujo vigente transfiere directamente las versiones aprobadas al **Google Docs existente en Drive**.
 - Ritmo intensivo: ~4–5 secciones por día. Para no frenar, si falta un dato tuyo dejo *placeholder* marcado y seguimos.
 
 ## Qué necesito de vos (idealmente hoy)

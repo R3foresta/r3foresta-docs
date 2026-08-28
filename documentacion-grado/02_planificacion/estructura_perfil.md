@@ -28,11 +28,11 @@ El recorrido principal se organiza alrededor de estos tres módulos. El material
 
 ### Problema central
 
-En la práctica actual de R3Foresta, la información sobre la procedencia, los movimientos, las transformaciones, las cantidades, los responsables, las evidencias y el destino del material vegetal de origen propio o externo se conserva en registros dispersos que no comparten una estructura, identificadores ni relaciones comunes; esta fragmentación limita la reconstrucción de la cadena de custodia, la consistencia de cantidades y saldos y la presentación de evidencia contrastable a los actores interesados.
+En la práctica actual de R3Foresta, los registros generados durante las distintas etapas de reforestación permanecen dispersos y carecen de relaciones comunes; por ello, la organización no dispone de un historial integrado que le permita reconstruir el recorrido registrado del material vegetal desde su origen hasta la plantación ni presentar esa información de forma organizada a los actores interesados.
 
 ### Pregunta general
 
-¿Cómo asegurar, en el caso de R3Foresta, la trazabilidad de la cadena de custodia del material vegetal desde su recolección o recepción externa, pasando por el vivero, hasta el registro de su plantación, de manera que puedan reconstruirse su procedencia, movimientos, cantidades, responsables, evidencias y destino?
+¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta la plantación?
 
 ### Objetivo general
 
@@ -155,7 +155,7 @@ Estos recursos se conservan para la planificación posterior y no forman una sec
 
 ## 11. Entregable actual y trabajo posterior
 
-La fuente canónica y única versión editable del Perfil es `PERFIL_PROYECTO_GRADO.md`. El archivo DOCX existente se considera una instantánea no canónica y no sincronizada; no deberá utilizarse para introducir cambios ni presentarse como la versión vigente sin regenerarlo desde la fuente Markdown. El Perfil tampoco requiere insertar un salto de página después de cada encabezado de nivel 1. En el documento final oficial del Proyecto de Grado sí se aplicará el inicio de cada capítulo principal en una página nueva durante la maquetación de entrega.
+La fuente canónica y única versión editable del Perfil dentro del repositorio es `PERFIL_PROYECTO_GRADO.md`. Las versiones aprobadas se transferirán directamente al Google Docs existente en Drive, que será el documento de trabajo y presentación. El archivo DOCX local queda fuera del flujo y no deberá utilizarse para introducir cambios ni como intermediario. El Perfil tampoco requiere insertar un salto de página después de cada encabezado de nivel 1. En el documento final oficial del Proyecto de Grado sí se aplicará el inicio de cada capítulo principal en una página nueva durante la maquetación de entrega.
 
 ---
 

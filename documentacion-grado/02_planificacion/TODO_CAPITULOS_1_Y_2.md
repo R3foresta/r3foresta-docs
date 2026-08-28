@@ -129,6 +129,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 
 - [x] Confirmar que la introducción no forma parte del Capítulo I.
 - [x] Confirmar que se redactará cuando estén disponibles todos los capítulos.
+- [x] Adoptar como hilo narrativo: proyección institucional futura hacia iniciativas de carbono, necesidad inmediata de organizar la información de reforestación, dispersión actual de los registros y respuesta mediante trazabilidad hasta la plantación.
 - [ ] Presentar el dominio sin adelantar detalles innecesarios de implementación.
 - [x] Confirmar y aplicar la denominación R3foresta App para la aplicación.
 - [x] Mantener explícito el límite respecto de CO2, supervivencia y certificación.
@@ -150,7 +151,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 
 - [x] Formular la dispersión de los registros y la limitada capacidad de reconstrucción como la situación problemática vigente, no como una hipótesis pendiente.
 - [x] Reservar el diagnóstico para medir y caracterizar el problema, sin condicionar su existencia.
-- [ ] Ampliar en el Capítulo I las consecuencias operativas e institucionales del problema después de aprobar la nueva redacción del Perfil.
+- [x] Ampliar en el Capítulo I las consecuencias operativas e institucionales del problema conforme a la redacción aprobada del Perfil.
 - [ ] Sincronizar la correspondencia entre causas, problema central y efectos después de la ampliación.
 - [x] Evitar atribuir frecuencia o gravedad sin datos.
 - [x] Confirmar que el problema siga siendo informacional y no tecnológico.
@@ -202,7 +203,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 
 Archivo: [`../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 
-El detalle de estas correcciones se controla exclusivamente en [`TODO.md`](TODO.md). Este tablero no mantiene una segunda lista del Perfil ni condiciona su problema a un diagnóstico posterior. El Perfil no requiere resumen; su archivo Markdown es la fuente canónica y el DOCX existente se considera una instantánea no sincronizada.
+El detalle de estas correcciones se controla exclusivamente en [`TODO.md`](TODO.md). Este tablero no mantiene una segunda lista del Perfil ni condiciona su problema a un diagnóstico posterior. El Perfil no requiere resumen; su archivo Markdown es la fuente canónica y las versiones aprobadas se transferirán directamente al Google Docs existente en Drive. El DOCX local queda fuera del flujo de trabajo.
 
 - [x] Establecer [`TODO.md`](TODO.md) como punto único de control para las correcciones del Perfil.
 - [ ] Esperar el cierre de las correcciones sustantivas y editoriales del Perfil en su tablero.

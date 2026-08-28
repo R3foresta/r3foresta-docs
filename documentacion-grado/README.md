@@ -64,7 +64,7 @@ Modalidad elegida: **Defensa de Proyecto de Grado**.
 
 > La enumeración "SCRUM, XP, RUP…" de las guías de perfil es orientativa. **Metodología declarada para R3Foresta:** proceso basado en RUP, complementado con SDD asistido por IA — ver [`04_metodologia/metodologia_desarrollo.md`](04_metodologia/metodologia_desarrollo.md).
 
-El archivo Markdown es la fuente canónica y la única versión editable del Perfil. El DOCX existente es una instantánea no canónica y no sincronizada; no deberá emplearse como fuente de cambios ni como versión vigente sin regenerarlo. Los encabezados principales del Perfil no requieren saltos de página. En el documento final oficial del Proyecto de Grado, cada capítulo principal sí comenzará en una página nueva durante la maquetación de entrega.
+El archivo Markdown es la fuente canónica y la única versión editable del Perfil dentro del repositorio. El documento de trabajo y presentación será el **Google Docs ubicado en Drive**: las versiones aprobadas del Markdown se transferirán directamente a ese documento, que es el que deberá utilizarse para revisar y editar en Drive. El DOCX local es un artefacto legado, no sincronizado y fuera del flujo vigente; no deberá utilizarse como fuente, destino ni intermediario. Los encabezados principales del Perfil no requieren saltos de página. En el documento final oficial del Proyecto de Grado, cada capítulo principal sí comenzará en una página nueva durante la maquetación de entrega.
 
 ### Estructura del Proyecto final (a la que apunta el perfil)
 

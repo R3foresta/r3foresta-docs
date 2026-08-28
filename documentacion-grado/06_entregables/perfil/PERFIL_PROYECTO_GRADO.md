@@ -23,17 +23,15 @@
 
 ## 1. Introducción
 
-La reforestación moviliza semillas, plantas y otras unidades de propagación entre su origen, el vivero y la plantación. El *material vegetal* de recolección propia pasa por el vivero antes de destinarse a una plantación; el adquirido o recibido de terceros puede ingresar al vivero o directamente a Plantación. En cualquier recorrido es necesario relacionar la procedencia, las cantidades, los responsables, las fechas, las ubicaciones y las evidencias.
+La reforestación es un proceso que involucra distintas etapas, actores y decisiones, desde la obtención del material vegetal hasta su establecimiento en campo. Esta complejidad aumenta cuando una organización proyecta que sus actividades puedan formar parte, en el futuro, de iniciativas relacionadas con bonos de carbono, donde intervienen procesos adicionales de monitoreo, medición, validación y verificación.
 
-La trazabilidad exige conservar esas relaciones para reconstruir el recorrido del material; no basta con almacenar inventarios, formularios o fotografías aisladas (Olsen & Borit, 2013). En una cadena de custodia, los movimientos y cambios se registran bajo reglas explícitas, aunque el sistema no demuestra por sí solo la veracidad física de lo declarado (International Organization for Standardization, 2020). Por ello, el proyecto plantea un historial reconstruible con evidencia contrastable, no una certificación independiente.
+Para R3Foresta, la generación futura de bonos de carbono constituye un objetivo estratégico de largo plazo (R3Foresta, 2026). Alcanzarlo requerirá trabajos posteriores que exceden el alcance de este Proyecto de Grado. Sin embargo, antes de pensar en esos procesos, existe una necesidad más inmediata: organizar y relacionar la información que se genera durante las actividades de reforestación.
 
-La **Fundación R3Foresta para la Bioregeneración de Ecosistemas y la Economía Circular** desarrolla actividades de reforestación con comunidades, voluntarios y organizaciones patrocinadoras. Sus registros se conservan en fotografías, redes sociales, mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Al estar dispersos y carecer de identificadores y relaciones comunes, dificultan reconstruir el recorrido del material vegetal, conciliar cantidades y saldos e identificar responsables y evidencias. La expresión *caso R3Foresta* delimita este contexto de aplicación; no designa un estudio de caso como método de investigación.
+Actualmente, parte de esta información se encuentra distribuida entre fotografías, redes sociales, servicios de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Esto dificulta responder preguntas básicas sobre el material vegetal: de dónde provino, quién estuvo a cargo, qué ocurrió durante su paso por el vivero, cuántas unidades fueron movilizadas y dónde terminó siendo plantado.
 
-El proyecto desarrollará un sistema de trazabilidad como componente de **R3foresta App**, desde la recolección o recepción externa del material vegetal hasta el registro de su plantación. Comprenderá los módulos de **Recolección, Vivero y Plantación**. El material adquirido o recibido de terceros ingresará como una variante de Vivero o Plantación y conservará sus datos de procedencia, sin crear un cuarto módulo.
+Este Proyecto de Grado aborda precisamente ese primer nivel del problema. Se propone desarrollar un sistema de trazabilidad como componente de **R3foresta App**, que permita mantener el historial del material vegetal desde su recolección o recepción desde fuentes externas, pasando por el vivero para su desarrollo cuando corresponda, hasta el registro de su plantación. El sistema relacionará procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de **Recolección, Vivero y Plantación**; el material recibido de terceros conservará su procedencia sin constituir un cuarto módulo.
 
-La generación futura de bonos de carbono es un objetivo estratégico de R3Foresta (R3Foresta, 2026). En esa proyección, el sistema conservará un historial estructurado de procedencia, cantidades, movimientos, responsables, ubicaciones y plantaciones. Este historial podrá evaluarse para su posible reutilización como base documental parcial en futuras iniciativas de carbono.
-
-El aporte del sistema es informacional, no climático: no demuestra supervivencia, crecimiento ni remociones de dióxido de carbono equivalente. Su pertinencia futura dependerá de la metodología, las mediciones, el monitoreo, la validación y la verificación que se definan fuera del proyecto (International Organization for Standardization, 2019; Verra, s. f.). El alcance concluye con el registro de la plantación y no incluye certificación, emisión ni comercialización de bonos o créditos.
+De esta manera, R3Foresta podrá comenzar a construir un historial organizado de sus actividades de reforestación que responda a sus necesidades actuales y que, en el futuro, pueda evaluarse como parte de una base documental para iniciativas de carbono. El alcance del proyecto concluye con el registro de la plantación y no incluye el monitoreo posterior de los árboles, la cuantificación de carbono ni los procesos de certificación o emisión de créditos.
 
 ## 2. Antecedentes
 
@@ -77,27 +75,29 @@ Los trabajos revisados resuelven partes del problema, como el inventario de vive
 
 ### 3.1. Situación problemática
 
-R3Foresta conserva la información de sus actividades de reforestación en fotografías, redes sociales, mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros dispersos no comparten una estructura, identificadores ni relaciones que permitan reconstruir el recorrido del material vegetal y vincularlo con cantidades, responsables, ubicaciones y evidencias.
+Para construir un historial integrado del material vegetal, R3Foresta necesita relacionar la información que se genera durante cada etapa de sus actividades de reforestación. Sin embargo, actualmente estos registros se encuentran distribuidos entre fotografías, redes sociales, servicios de mensajería, cuadernos, notas y el conocimiento de las personas involucradas.
 
-El material puede ser de origen propio o externo. El material propio se recolecta, pasa por procesos biológicos en el vivero y se destina a una plantación. El material adquirido o recibido de terceros puede ingresar al vivero o ir directamente a la plantación. Ambos recorridos requieren relacionar procedencia, especie, cantidades, fechas, responsables y evidencias hasta el destino registrado.
+Esta dispersión dificulta relacionar información que pertenece a un mismo recorrido. Una fotografía, por ejemplo, puede mostrar el resultado de una plantación, pero, de forma aislada, no permite determinar con claridad cuántas plantas fueron utilizadas, qué especies participaron, cuándo ocurrió la actividad, dónde se realizó o quiénes estuvieron involucrados.
 
-Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. Por ejemplo, las semillas pueden registrarse en gramos o unidades de propagación, mientras que el vivero y la plantación manejan unidades de plantas. El paso de semillas a plantas es un resultado biológico observado, no una conversión aritmética. También se producen mermas, descartes, devoluciones, transferencias y asignaciones parciales que modifican los saldos.
+En el vivero, es necesario conocer qué material de propagación se encuentra disponible, qué cantidad está en proceso de germinación, qué plantas continúan en desarrollo y cuáles pueden destinarse a una futura plantación. Sin esta información relacionada, resulta difícil conocer la disponibilidad real del material vegetal y tomar decisiones sobre su utilización.
 
-Actualmente, estos hechos se documentan en fuentes separadas y no forman un historial que explique cada cambio. Esto dificulta conciliar cantidades entre etapas, conocer la disponibilidad real y detectar registros incompletos, asignaciones repetidas o consumos duplicados. Reconstruir la cadena exige búsquedas manuales y recurrir a la memoria de los responsables, lo que favorece demoras, omisiones y contradicciones y limita la elaboración de reportes consistentes.
+La plantación presenta una necesidad similar. Al planificar una plantación, se debe definir cuántas plantas se utilizarán y qué especies la compondrán, incluso estableciendo su distribución porcentual cuando corresponda. Para ello es necesario conocer previamente qué material está disponible y si será necesario complementarlo con plantas adquiridas o recibidas externamente.
 
-La dispersión también reduce la capacidad de R3Foresta para presentar a comunidades, patrocinadores y aliados un recorrido contrastable. Además, impide disponer de una base documental consolidada que pueda evaluarse y complementarse en una futura iniciativa de carbono. El proyecto atenderá esta necesidad informacional, sin ejecutar medición, monitoreo ni certificación de carbono.
+A medida que se realizan nuevas recolecciones, procesos de vivero y plantaciones, aumenta también la cantidad de información que debe administrarse y relacionarse. Cuando estos registros permanecen separados, reconstruir posteriormente el recorrido del material requiere revisar distintas fuentes y recurrir al conocimiento de las personas que participaron en los procesos.
+
+Esta situación dificulta tanto la administración interna de las actividades de reforestación como la presentación de historiales organizados a comunidades, patrocinadores y otras partes interesadas. También limita la posibilidad de conservar desde ahora antecedentes que, complementados posteriormente con procesos de monitoreo, medición y verificación, puedan evaluarse como parte de futuras iniciativas relacionadas con carbono.
 
 El árbol de causas y efectos que sintetiza esta situación se presenta en el **Anexo A**.
 
 ### 3.2. Problema central
 
-> En la práctica actual de R3Foresta, la información sobre la procedencia, los movimientos, las transformaciones, las cantidades, los responsables, las evidencias y el destino del material vegetal de origen propio o externo se conserva en registros dispersos que no comparten una estructura, identificadores ni relaciones comunes; esta fragmentación limita la reconstrucción de la cadena de custodia, la consistencia de cantidades y saldos y la presentación de evidencia contrastable a los actores interesados.
+En la práctica actual de R3Foresta, los registros generados durante las distintas etapas de reforestación permanecen dispersos y carecen de relaciones comunes; por ello, la organización no dispone de un historial integrado que le permita reconstruir el recorrido registrado del material vegetal desde su origen hasta la plantación ni presentar esa información de forma organizada a los actores interesados.
 
 ### 3.3. Formulación del problema
 
 #### 3.3.1. Pregunta general
 
-> ¿Cómo lograr, en el caso de R3Foresta, que la cadena de custodia del material vegetal pueda reconstruirse desde su recolección o recepción externa hasta el registro de la plantación, relacionando su procedencia, movimientos, cantidades, responsables, evidencias y destino?
+¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta la plantación?
 
 #### 3.3.2. Preguntas específicas
 
@@ -125,7 +125,7 @@ Desarrollar un sistema de trazabilidad para la cadena de custodia del material v
 
 ## 5. Justificación
 
-R3Foresta necesita una cadena informacional común para reconstruir el recorrido del material vegetal y conocer su procedencia, disponibilidad, pérdidas, transferencias y destino. El sistema relacionará los registros de Recolección, Vivero y Plantación con el propósito de reducir la dependencia de búsquedas manuales y de la memoria de las personas.
+R3Foresta necesita una cadena informacional común para reconstruir el recorrido del material vegetal y conocer su procedencia, disponibilidad, pérdidas, transferencias y destino (Olsen & Borit, 2013; International Organization for Standardization, 2020). El sistema relacionará los registros de Recolección, Vivero y Plantación con el propósito de reducir la dependencia de búsquedas manuales y de la memoria de las personas.
 
 La generación futura de bonos de carbono forma parte de la orientación institucional de R3Foresta (R3Foresta, 2026). R3foresta App conservará desde el origen un historial de cantidades, saldos, responsables, ubicaciones y evidencias. Esta base podrá respaldar la información presentada a comunidades, patrocinadores y aliados y evaluarse para una posible reutilización en futuras iniciativas de carbono. Registrar esos antecedentes desde ahora reduce la necesidad de reconstruirlos después a partir de fuentes dispersas.
 
@@ -221,6 +221,8 @@ RUP se adopta porque permite tratar riesgos de forma temprana, mantener una arqu
 | Construcción | CO-1 a CO-4 | Desarrollar M1 Recolección; agregar M2 Vivero e integrar M1→M2; agregar M3 Plantación e integrar M2→M3; completar la trazabilidad transversal y las pruebas | Cuatro incrementos ejecutables, migraciones, pruebas, evidencia de integración, versión candidata e hito IOC |
 | Transición | TR-1 | Ejecutar pruebas del sistema, escenarios de validación, correcciones, despliegue, manuales, aceptación y cierre | Versión final, informe de resultados, registro de aceptación e hito PR |
 
+*Nota.* Elaboración propia con base en las fases, iteraciones e hitos de RUP descritos por Kruchten (2004) e IBM (s. f.), adaptados al alcance y a los tres módulos del proyecto.
+
 En cada fase se aplicarán, según corresponda, las disciplinas de requisitos, análisis y diseño, implementación, pruebas, despliegue, gestión del proyecto y gestión de configuración y cambios.
 
 Los hitos de cierre serán **LCO** (*Lifecycle Objectives*, objetivos del ciclo de vida), **LCA** (*Lifecycle Architecture*, arquitectura del ciclo de vida), **IOC** (*Initial Operational Capability*, capacidad operativa inicial) y **PR** (*Product Release*, liberación del producto).
@@ -296,9 +298,11 @@ Anexos
 | Verificar | Matriz de pruebas y resultados técnicos | Capítulo III, sección 3.4 |
 | Evaluar | Reconstrucción, evidencia y carga operativa de los flujos comprobadas mediante escenarios de aceptación | Capítulo III, secciones 3.5 y 3.6 |
 
+*Nota.* Elaboración propia a partir de los objetivos específicos de la sección 4.2 y del índice propuesto del Proyecto de Grado presentado en esta sección.
+
 ## 10. Cronograma de actividades
 
-El cronograma se desarrolla del **6 de julio al 15 de noviembre de 2026**, fechas confirmadas para la ejecución académica. Conserva la presentación por objetivos específicos y muestra su correspondencia con las fases, las iteraciones y los incrementos de RUP.
+El cronograma se desarrolla del **6 de julio al 15 de noviembre de 2026**, periodo definido para la ejecución académica. Conserva la presentación por objetivos específicos y muestra su correspondencia con las fases, las iteraciones y los incrementos de RUP.
 
 **Tabla 3**
 
@@ -314,6 +318,8 @@ El cronograma se desarrolla del **6 de julio al 15 de noviembre de 2026**, fecha
 | 19 oct–1 nov | Construcción, CO-4 — Implementar y verificar | Completar trazabilidad transversal, integración, regresión y versión candidata | Incremento 4: versión candidata e hito IOC |
 | 2–8 nov | Transición, TR-1 — Verificar y evaluar | Pruebas del sistema, escenarios operativos y corrección de defectos | Informe de verificación y validación |
 | 9–15 nov | Transición, TR-1 — Evaluar | Despliegue, manuales, aceptación y consolidación del documento | Producto liberado, hito PR y documento final para revisión |
+
+*Nota.* Elaboración propia a partir del periodo de ejecución definido en el registro de decisiones del proyecto del 25 de agosto de 2026 y de la aplicación de RUP presentada en la Tabla 1, sustentada en Kruchten (2004) e IBM (s. f.).
 
 **Figura 2**
 

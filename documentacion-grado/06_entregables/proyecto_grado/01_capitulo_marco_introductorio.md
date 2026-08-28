@@ -20,7 +20,9 @@ La estructura institucional se presenta mediante el organigrama entregado direct
 
 *Fuente: organigrama institucional proporcionado por la Fundación R3Foresta.*
 
-R3Carbon es el componente institucional dedicado a la medición, el seguimiento y la valorización de la captura de carbono. El resumen oficial informa que, dentro de este componente, se desarrolla una aplicación para registrar la historia del material vegetal desde la recolección hasta la plantación, el seguimiento y la medición (R3Foresta, 2026). El nombre oficial de la aplicación es **R3foresta App**. En el presente Proyecto de Grado se delimita como un sistema de trazabilidad del material vegetal hasta el registro de la plantación. La expresión *con proyección hacia bonos de carbono* del título reconoce posibles usos institucionales posteriores de los registros; no describe capacidades implementadas o evaluadas de seguimiento, medición, MRV, certificación ni emisión de créditos.
+R3Carbon es el componente institucional dedicado a la medición, el seguimiento y la valorización de la captura de carbono. Para R3Foresta, la generación futura de bonos de carbono constituye un objetivo estratégico de largo plazo. Alcanzarlo requerirá trabajos posteriores de monitoreo, medición, validación y verificación que exceden el alcance de este Proyecto de Grado (R3Foresta, 2026). Sin embargo, antes de esos procesos, existe una necesidad inmediata: organizar y relacionar la información que se genera durante las actividades de reforestación.
+
+El resumen oficial informa que, dentro de R3Carbon, se desarrolla una aplicación para registrar la historia del material vegetal desde la recolección hasta la plantación, el seguimiento y la medición (R3Foresta, 2026). El nombre oficial de la aplicación es **R3foresta App**. En el presente Proyecto de Grado se delimita como un sistema de trazabilidad del material vegetal hasta el registro de la plantación. La expresión *con proyección hacia bonos de carbono* del título reconoce posibles usos institucionales posteriores de los registros; no describe capacidades implementadas o evaluadas de seguimiento, medición, MRV, certificación ni emisión de créditos.
 
 ### 1.1.2. Antecedentes del proceso y de la práctica de registro
 
@@ -28,7 +30,7 @@ La experiencia institucional no comenzó con la aplicación. El resumen ejecutiv
 
 Una declaración institucional previa mencionó pruebas piloto de acopio y clasificación de aproximadamente diecinueve categorías. Como la fuente oficial revisada no confirma ese número, el lugar, el periodo ni los responsables, el detalle permanece en la ficha de investigación pendiente de respaldo y no se incorpora como hecho validado en este capítulo. La economía circular constituye un antecedente institucional indirecto: clasificar o transformar residuos no equivale a reconstruir la cadena de custodia del material vegetal.
 
-Actualmente, la información y las evidencias de las actividades de reforestación se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes que permitan reconstruir de extremo a extremo la procedencia y el recorrido del material vegetal, conciliar cantidades y saldos, identificar responsables y recuperar la evidencia asociada.
+Actualmente, parte de la información y las evidencias de las actividades de reforestación se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes. Por ello, resulta difícil responder preguntas básicas sobre el material vegetal: de dónde provino, quién estuvo a cargo, qué ocurrió durante su paso por el vivero, cuántas unidades fueron movilizadas y dónde terminó siendo plantado.
 
 Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común que relaciona los hechos operativos del material vegetal de origen propio o externo desde su ingreso hasta el registro de su plantación.
 
@@ -63,15 +65,17 @@ Esta brecha no afirma que no exista ninguna solución similar. Delimita la combi
 
 ### 1.2.1. Situación problemática
 
-R3Foresta realiza actividades de reforestación con comunidades, voluntarios y organizaciones patrocinadoras. La información y las evidencias de estas actividades se conservan actualmente en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes que permitan reconstruir de extremo a extremo la procedencia y el recorrido del material vegetal, las cantidades administradas, los responsables de cada etapa, las ubicaciones y las evidencias asociadas.
+Para construir un historial integrado del material vegetal, R3Foresta necesita relacionar la información que se genera durante cada etapa de sus actividades de reforestación. Sin embargo, actualmente estos registros se encuentran distribuidos entre fotografías, redes sociales, servicios de mensajería, cuadernos, notas y el conocimiento de las personas involucradas.
 
-El material vegetal utilizado por R3Foresta puede ser de origen propio o externo. En el primer caso, la organización recolecta semillas u otro material de propagación, lo traslada al vivero, registra los procesos biológicos y obtiene plantas destinadas a la plantación. En el segundo, adquiere o recibe plantas y otros materiales vegetales de proveedores o terceros, los cuales pueden ingresar al vivero o dirigirse directamente a una plantación. En ambos casos, la cadena requiere relacionar la procedencia, la especie, las cantidades, las fechas, los responsables y las evidencias con los eventos posteriores hasta el destino del material.
+Esta dispersión dificulta relacionar información que pertenece a un mismo recorrido. Una fotografía, por ejemplo, puede mostrar el resultado de una plantación, pero, de forma aislada, no permite determinar con claridad cuántas plantas fueron utilizadas, qué especies participaron, cuándo ocurrió la actividad, dónde se realizó o quiénes estuvieron involucrados.
 
-Durante este recorrido cambian la ubicación, el responsable, el estado, la agrupación y, en determinados procesos, la unidad de medida del material vegetal. Las semillas recolectadas pueden registrarse en gramos o unidades de propagación, mientras que el saldo vivo del vivero y la plantación se expresa en unidades de plantas. El paso de semillas a plantas no constituye una conversión aritmética automática, sino un resultado biológico observado. El proceso también comprende mermas, descartes, devoluciones, cierres, transferencias y asignaciones parciales.
+En el vivero, es necesario conocer qué material de propagación se encuentra disponible, qué cantidad está en proceso de germinación, qué plantas continúan en desarrollo y cuáles pueden destinarse a una futura plantación. Sin esta información relacionada, resulta difícil conocer la disponibilidad real del material vegetal y tomar decisiones sobre su utilización.
 
-Actualmente, las entradas, salidas, transformaciones, transferencias y modificaciones de saldo se documentan en fuentes separadas y no conforman un historial común que explique cada cambio. Esta fragmentación dificulta conciliar las cantidades entre etapas, determinar la disponibilidad real del material y evitar registros incompletos, dobles asignaciones o dobles consumos. De igual manera, las fotografías, fechas o coordenadas almacenadas fuera del hecho operativo quedan desvinculadas de la especie, la cantidad, el responsable y el evento que deben respaldar.
+La plantación presenta una necesidad similar. Al planificar una plantación, se debe definir cuántas plantas se utilizarán y qué especies la compondrán, incluso estableciendo su distribución porcentual cuando corresponda. Para ello es necesario conocer previamente qué material está disponible y si será necesario complementarlo con plantas adquiridas o recibidas externamente.
 
-Como consecuencia, R3Foresta tiene una capacidad limitada para reconstruir la cadena de custodia con evidencia contrastable. Esta situación dificulta las decisiones internas sobre disponibilidad, pérdidas, movimientos y destino del material vegetal, así como la presentación de información consistente a empresas patrocinadoras, aliados y otros actores que requieren conocer y contrastar el recorrido registrado.
+A medida que se realizan nuevas recolecciones, procesos de vivero y plantaciones, aumenta también la cantidad de información que debe administrarse y relacionarse. Cuando estos registros permanecen separados, reconstruir posteriormente el recorrido del material requiere revisar distintas fuentes y recurrir al conocimiento de las personas que participaron en los procesos.
+
+Esta situación dificulta tanto la administración interna de las actividades de reforestación como la presentación de historiales organizados a comunidades, patrocinadores y otras partes interesadas. También limita la posibilidad de conservar desde ahora antecedentes que, complementados posteriormente con procesos de monitoreo, medición y verificación, puedan evaluarse como parte de futuras iniciativas relacionadas con carbono.
 
 ### 1.2.2. Causas y efectos
 
@@ -107,13 +111,13 @@ La primera causa representa la dispersión de la información entre fuentes y re
 
 ### 1.2.3. Problema central
 
-> En la práctica actual de R3Foresta, la información sobre la procedencia, los movimientos, las transformaciones, las cantidades, los responsables, las evidencias y el destino del material vegetal de origen propio o externo se conserva en registros dispersos que no comparten una estructura, identificadores ni relaciones comunes; esta fragmentación limita la reconstrucción de la cadena de custodia, la consistencia de cantidades y saldos y la presentación de evidencia contrastable a los actores interesados.
+> En la práctica actual de R3Foresta, los registros generados durante las distintas etapas de reforestación permanecen dispersos y carecen de relaciones comunes; por ello, la organización no dispone de un historial integrado que le permita reconstruir el recorrido registrado del material vegetal desde su origen hasta la plantación ni presentar esa información de forma organizada a los actores interesados.
 
 ### 1.2.4. Formulación del problema
 
 #### 1.2.4.1. Pregunta general
 
-> ¿Cómo asegurar, en el caso de R3Foresta, la trazabilidad de la cadena de custodia del material vegetal desde su recolección o recepción externa, pasando por el vivero, hasta el registro de su plantación, de manera que puedan reconstruirse su procedencia, movimientos, cantidades, responsables, evidencias y destino?
+> ¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta la plantación?
 
 #### 1.2.4.2. Preguntas específicas
 
@@ -141,7 +145,7 @@ Desarrollar un sistema de trazabilidad para la cadena de custodia del material v
 
 ### 1.4.1. Justificación práctica y social
 
-R3Foresta necesita reconstruir el recorrido del material vegetal que recibe o produce para conocer su procedencia, las cantidades disponibles, las pérdidas ocurridas, las asignaciones y transferencias realizadas y su destino final. Cuando la información se conserva en registros independientes, resulta difícil establecer posteriormente qué ocurrió con un lote a medida que atravesó Recolección, Vivero y Plantación.
+R3Foresta necesita reconstruir el recorrido del material vegetal que recibe o produce para conocer su procedencia, las cantidades disponibles, las pérdidas ocurridas, las asignaciones y transferencias realizadas y su destino final (Olsen & Borit, 2013; International Organization for Standardization, 2020). Cuando la información se conserva en registros independientes, resulta difícil establecer posteriormente qué ocurrió con un lote a medida que atravesó Recolección, Vivero y Plantación.
 
 Una estructura común permitirá relacionar cantidades, responsables, fechas, ubicaciones y evidencia y recuperar esa información como partes de un mismo recorrido. La utilidad prevista comprende el apoyo a la gestión interna y la presentación de información consistente ante comunidades, voluntarios, empresas patrocinadoras y aliados. Estos beneficios deberán evaluarse en la práctica; no se presupone que el sistema reduzca siempre el tiempo o la carga de trabajo.
 
