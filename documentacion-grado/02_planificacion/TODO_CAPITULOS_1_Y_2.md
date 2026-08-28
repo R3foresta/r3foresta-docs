@@ -151,7 +151,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 
 - [x] Formular la dispersión de los registros y la limitada capacidad de reconstrucción como la situación problemática vigente, no como una hipótesis pendiente.
 - [x] Reservar el diagnóstico para medir y caracterizar el problema, sin condicionar su existencia.
-- [ ] Ampliar en el Capítulo I las consecuencias operativas e institucionales del problema después de aprobar la nueva redacción del Perfil.
+- [x] Ampliar en el Capítulo I las consecuencias operativas e institucionales del problema conforme a la redacción aprobada del Perfil.
 - [ ] Sincronizar la correspondencia entre causas, problema central y efectos después de la ampliación.
 - [x] Evitar atribuir frecuencia o gravedad sin datos.
 - [x] Confirmar que el problema siga siendo informacional y no tecnológico.
