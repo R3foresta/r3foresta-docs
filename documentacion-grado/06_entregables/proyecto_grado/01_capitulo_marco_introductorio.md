@@ -145,7 +145,7 @@ Desarrollar un sistema de trazabilidad para la cadena de custodia del material v
 
 ### 1.4.1. Justificación práctica y social
 
-R3Foresta necesita reconstruir el recorrido del material vegetal que recibe o produce para conocer su procedencia, las cantidades disponibles, las pérdidas ocurridas, las asignaciones y transferencias realizadas y su destino final. Cuando la información se conserva en registros independientes, resulta difícil establecer posteriormente qué ocurrió con un lote a medida que atravesó Recolección, Vivero y Plantación.
+R3Foresta necesita reconstruir el recorrido del material vegetal que recibe o produce para conocer su procedencia, las cantidades disponibles, las pérdidas ocurridas, las asignaciones y transferencias realizadas y su destino final (Olsen & Borit, 2013; International Organization for Standardization, 2020). Cuando la información se conserva en registros independientes, resulta difícil establecer posteriormente qué ocurrió con un lote a medida que atravesó Recolección, Vivero y Plantación.
 
 Una estructura común permitirá relacionar cantidades, responsables, fechas, ubicaciones y evidencia y recuperar esa información como partes de un mismo recorrido. La utilidad prevista comprende el apoyo a la gestión interna y la presentación de información consistente ante comunidades, voluntarios, empresas patrocinadoras y aliados. Estos beneficios deberán evaluarse en la práctica; no se presupone que el sistema reduzca siempre el tiempo o la carga de trabajo.
 
