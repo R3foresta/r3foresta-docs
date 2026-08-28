@@ -129,6 +129,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 
 - [x] Confirmar que la introducción no forma parte del Capítulo I.
 - [x] Confirmar que se redactará cuando estén disponibles todos los capítulos.
+- [x] Adoptar como hilo narrativo: proyección institucional futura hacia iniciativas de carbono, necesidad inmediata de organizar la información de reforestación, dispersión actual de los registros y respuesta mediante trazabilidad hasta la plantación.
 - [ ] Presentar el dominio sin adelantar detalles innecesarios de implementación.
 - [x] Confirmar y aplicar la denominación R3foresta App para la aplicación.
 - [x] Mantener explícito el límite respecto de CO2, supervivencia y certificación.
