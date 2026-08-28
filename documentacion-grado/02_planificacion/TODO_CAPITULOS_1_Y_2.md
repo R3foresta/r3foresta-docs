@@ -203,7 +203,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 
 Archivo: [`../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 
-El detalle de estas correcciones se controla exclusivamente en [`TODO.md`](TODO.md). Este tablero no mantiene una segunda lista del Perfil ni condiciona su problema a un diagnóstico posterior. El Perfil no requiere resumen; su archivo Markdown es la fuente canónica y el DOCX existente se considera una instantánea no sincronizada.
+El detalle de estas correcciones se controla exclusivamente en [`TODO.md`](TODO.md). Este tablero no mantiene una segunda lista del Perfil ni condiciona su problema a un diagnóstico posterior. El Perfil no requiere resumen; su archivo Markdown es la fuente canónica y las versiones aprobadas se transferirán directamente al Google Docs existente en Drive. El DOCX local queda fuera del flujo de trabajo.
 
 - [x] Establecer [`TODO.md`](TODO.md) como punto único de control para las correcciones del Perfil.
 - [ ] Esperar el cierre de las correcciones sustantivas y editoriales del Perfil en su tablero.

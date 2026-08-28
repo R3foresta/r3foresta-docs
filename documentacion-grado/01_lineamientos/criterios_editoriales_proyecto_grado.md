@@ -146,7 +146,7 @@ Cuando una tabla combine elaboración propia y fuentes externas, la nota identif
 
 ### 9.2. Documentos canónicos y paginación
 
-- `PERFIL_PROYECTO_GRADO.md` será la fuente canónica y única versión editable del Perfil. El DOCX existente es una instantánea no canónica y no sincronizada; no se utilizará como fuente ni como versión vigente sin regenerarlo.
+- `PERFIL_PROYECTO_GRADO.md` será la fuente canónica y única versión editable del Perfil dentro del repositorio. Las versiones aprobadas se transferirán directamente al Google Docs existente en Drive, que será el documento de trabajo y presentación. El DOCX local queda fuera del flujo y no se utilizará como fuente, destino ni intermediario.
 - En el Perfil no se insertarán saltos de página obligatorios después de cada encabezado principal.
 - En el documento final oficial del Proyecto de Grado, cada capítulo principal deberá comenzar en una página nueva. Esta regla se aplicará durante la maquetación de entrega.
 

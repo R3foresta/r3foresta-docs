@@ -9,7 +9,7 @@ El contenido oficial se encuentra en:
 
 - [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md)
 
-La fuente oficial y única versión editable del Perfil es la versión Markdown. El DOCX existente es una instantánea no canónica y no sincronizada; no debe utilizarse como fuente de cambios ni como versión vigente sin regenerarlo. El Perfil no requiere saltos de página después de cada encabezado principal; esa regla se reservará para los capítulos del documento final oficial al preparar su presentación.
+La fuente oficial y única versión editable del Perfil dentro del repositorio es la versión Markdown. El destino de trabajo y presentación será el **Google Docs existente en Drive**; las versiones aprobadas se transferirán directamente allí. El DOCX local es un artefacto legado no sincronizado y no debe utilizarse como fuente, destino ni intermediario. El Perfil no requiere saltos de página después de cada encabezado principal; esa regla se reservará para los capítulos del documento final oficial al preparar su presentación.
 
 La ejecución posterior se controla en [`TODO_PROYECTO_GRADO.md`](TODO_PROYECTO_GRADO.md), que organiza las fases RUP, los incrementos, las integraciones, la verificación, la transición y el cierre documental.
 
@@ -174,7 +174,7 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 - El producto no mide ni certifica carbono y no genera, emite ni comercializa bonos de carbono; estos solo pueden presentarse como contexto institucional o uso posterior.
 - La metodología vigente es **RUP adaptado, complementado con SDD asistido por IA**.
 - No se adoptarán ciencia del diseño, DSRM, estudio de caso único embebido ni FEDS; la verificación, validación y aceptación se documentarán como actividades de Ingeniería de Software.
-- El Perfil conserva el Markdown como fuente canónica y única versión editable; el DOCX existente es una instantánea no canónica y no sincronizada. No existen saltos de página obligatorios después de cada encabezado principal.
+- El Perfil conserva el Markdown como fuente canónica y única versión editable; el Google Docs existente en Drive es el destino de trabajo y presentación. El DOCX local queda fuera del flujo y no existen saltos de página obligatorios después de cada encabezado principal.
 - El Resumen, las palabras clave, el alcance de evaluación, el diseño de investigación, la propuesta de ingeniería y la sección Recursos deben retirarse del Perfil mediante las tareas de la sección 2.
 - El presupuesto permanece fuera del Perfil.
 - El resumen ejecutivo institucional respalda únicamente el contexto institucional y no redefine problema, objetivos, alcance, metodología o evaluación.

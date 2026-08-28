@@ -155,7 +155,7 @@ Estos recursos se conservan para la planificación posterior y no forman una sec
 
 ## 11. Entregable actual y trabajo posterior
 
-La fuente canónica y única versión editable del Perfil es `PERFIL_PROYECTO_GRADO.md`. El archivo DOCX existente se considera una instantánea no canónica y no sincronizada; no deberá utilizarse para introducir cambios ni presentarse como la versión vigente sin regenerarlo desde la fuente Markdown. El Perfil tampoco requiere insertar un salto de página después de cada encabezado de nivel 1. En el documento final oficial del Proyecto de Grado sí se aplicará el inicio de cada capítulo principal en una página nueva durante la maquetación de entrega.
+La fuente canónica y única versión editable del Perfil dentro del repositorio es `PERFIL_PROYECTO_GRADO.md`. Las versiones aprobadas se transferirán directamente al Google Docs existente en Drive, que será el documento de trabajo y presentación. El archivo DOCX local queda fuera del flujo y no deberá utilizarse para introducir cambios ni como intermediario. El Perfil tampoco requiere insertar un salto de página después de cada encabezado de nivel 1. En el documento final oficial del Proyecto de Grado sí se aplicará el inicio de cada capítulo principal en una página nueva durante la maquetación de entrega.
 
 ---
 
