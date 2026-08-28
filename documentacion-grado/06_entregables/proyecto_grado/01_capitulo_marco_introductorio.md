@@ -117,7 +117,7 @@ La primera causa representa la dispersión de la información entre fuentes y re
 
 #### 1.2.4.1. Pregunta general
 
-> ¿Cómo asegurar, en el caso de R3Foresta, la trazabilidad de la cadena de custodia del material vegetal desde su recolección o recepción externa, pasando por el vivero, hasta el registro de su plantación, de manera que puedan reconstruirse su procedencia, movimientos, cantidades, responsables, evidencias y destino?
+> ¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta la plantación?
 
 #### 1.2.4.2. Preguntas específicas
 

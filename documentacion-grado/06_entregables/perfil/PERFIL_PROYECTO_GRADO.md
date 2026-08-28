@@ -97,7 +97,7 @@ En la práctica actual de R3Foresta, los registros generados durante las distint
 
 #### 3.3.1. Pregunta general
 
-¿Cómo lograr, en el caso de R3Foresta, que la cadena de custodia del material vegetal pueda reconstruirse desde su recolección o recepción externa hasta el registro de la plantación, relacionando su procedencia, movimientos, cantidades, responsables, evidencias y destino?
+¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta la plantación?
 
 #### 3.3.2. Preguntas específicas
 
