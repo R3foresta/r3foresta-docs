@@ -39,7 +39,7 @@ No incluir en el título eventos, contratos atómicos, blockchain, NFT, IPFS ni 
 
 La práctica actual conserva fotografías, mensajes, redes sociales, cuadernos y memoria de los responsables, pero no una estructura común para vincular procedencia, manejo, cantidades, responsables, evidencia y plantación.
 
-El recorrido principal comprende Recolección, Vivero y Plantación. El sistema admitirá material vegetal adquirido o recibido de terceros que ingrese directamente en Vivero o Plantación; estas entradas se tratarán como variantes integradas en los módulos existentes y no como un cuarto módulo o un entregable independiente.
+El recorrido principal comprende Recolección, Vivero y Plantación. Para el alcance académico, puede iniciarse con una recolección registrada o con el ingreso directo, en Vivero o Plantación, de material vegetal adquirido o recibido de terceros; concluye con el registro de su plantación.
 
 La falta de relaciones comunes limita la reconstrucción de la cadena, la consistencia de saldos y la información presentada a patrocinadores y aliados.
 
@@ -49,15 +49,15 @@ Los objetivos deben mantener correspondencia con el problema, el alcance y la ev
 
 ### Objetivo general
 
-Desarrollar un sistema de trazabilidad para la cadena de custodia del material vegetal utilizado por R3Foresta, desde su recolección o recepción externa hasta el registro de la plantación, con información relacionada sobre procedencia, movimientos, cantidades, responsables, evidencias y destino.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
 
 ### Objetivos específicos
 
-1. **Analizar** los procesos, actores, datos, estados, eventos, unidades de medida, requerimientos y reglas de negocio de Recolección, Vivero y Plantación, incluidas las variantes de ingreso de material vegetal adquirido o recibido de terceros.
-2. **Diseñar** un modelo de trazabilidad e integridad que relacione orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y que formalice las reglas aplicables a las transferencias y transformaciones entre etapas.
-3. **Implementar** los módulos de Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial.
-4. **Verificar** el cumplimiento de los requerimientos y de las invariantes de consistencia mediante pruebas funcionales y técnicas.
-5. **Evaluar**, mediante escenarios operativos y criterios de aceptación, la capacidad de la solución para reconstruir trazas con evidencia contrastable y la carga de los flujos implementados.
+1. **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
+2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
+3. **Implementar** las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
+4. **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
+5. **Evaluar**, mediante escenarios operativos representativos, en qué medida la aplicación permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
 
 Cada objetivo mantiene un verbo rector y produce una sección principal de resultados.
 
@@ -68,7 +68,7 @@ Cada objetivo mantiene un verbo rector y produce una sección principal de resul
 - M1 Recolección;
 - M2 Vivero;
 - M3 Plantación;
-- ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, resuelto dentro de los módulos existentes y registrado como hecho del historial con sus datos de procedencia disponibles;
+- ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros, con la procedencia disponible del material;
 - reconstrucción del origen y recorrido del material vegetal;
 - eventos e historial como capacidad transversal de los tres módulos;
 - conservación de las relaciones entre material de origen, eventos, material resultante y destino;
@@ -76,7 +76,7 @@ Cada objetivo mantiene un verbo rector y produce una sección principal de resul
 - coherencia de cantidades y saldos durante transferencias y transformaciones;
 - evidencia fotográfica, temporal y geográfica;
 - pruebas funcionales y técnicas de las reglas críticas;
-- validación mediante escenarios operativos, criterios de aceptación, reconstrucción de trazas y observación de la carga de los flujos implementados.
+- validación mediante escenarios operativos, criterios de aceptación y reconstrucción de recorridos registrados.
 
 ### Excluido
 
@@ -112,12 +112,12 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 2. **Evento antes que estado aislado.** Cuando una cantidad, estado o ubicación cambie, deberá poder identificarse el hecho que produjo ese cambio; no se debe sobrescribir el estado actual sin conservar su explicación.
 3. **Las cantidades deben poder explicarse.** Los saldos actuales deberán relacionarse con los eventos anteriores que los produjeron.
 4. **Transferencia y transformación son conceptos diferentes.** Una transferencia mueve material; una transformación puede modificar estado, naturaleza, cantidad o unidad de medida. No se asumirá una conversión aritmética automática entre gramos de semillas y cantidad de plantas.
-5. **La procedencia debe conservarse.** Cuando material vegetal adquirido o recibido de terceros ingrese directamente a Vivero o Plantación, su historial comenzará con el hecho de ingreso externo y conservará la información disponible sobre proveedor u organización de procedencia, especie, cantidad, unidad, fecha, responsable y evidencia documental, sin crear un cuarto módulo ni atribuir una recolección inexistente.
+5. **La procedencia debe conservarse.** El recorrido del material vegetal se iniciará en una recolección registrada o en su ingreso directo a Vivero o Plantación cuando sea adquirido o recibido de terceros. Durante las tres etapas conservará la información disponible sobre especie, cantidad, unidad, fecha, responsable, ubicación, procedencia y evidencia.
 6. **La evidencia respalda, no certifica.** Fotografías, fechas, ubicaciones y otros datos fortalecen el respaldo documental del evento, pero no prueban de forma absoluta la correspondencia con el mundo físico.
 7. **La validación debe intentar reconstruir.** La comprobación central no será solo guardar registros, sino determinar si puede reconstruirse de manera coherente qué ocurrió con un material determinado.
 8. **Integridad y reconstrucción son complementarias.** No basta con conservar un historial; cantidades, asignaciones y saldos también deben mantener coherencia.
 9. **La solución técnica permanece abierta durante el Perfil.** El Perfil define propiedades deseadas; los mecanismos concretos se decidirán y justificarán posteriormente.
-10. **La carga de los flujos también importa.** La validación observará pasos, dificultades y esfuerzo requerido para producir los registros necesarios, sin convertir esta observación en un estudio comparativo.
+10. **La validación se basa en escenarios representativos.** Cada escenario registrará pasos, resultados, evidencias y observaciones, sin convertir la validación en un estudio comparativo.
 11. **La verificación se concentra en riesgo y evidencia.** Se mantendrá un conjunto pequeño de pruebas de calidad sobre invariantes y recorridos críticos; el volumen de casos o archivos de prueba no es un resultado académico por sí mismo.
 12. **La construcción formal debe ser demostrable.** El sistema académico partirá de una referencia inicial identificable del repositorio y cada iteración e incremento conservará evidencia versionada de lo construido dentro de la ventana autorizada.
 
@@ -166,7 +166,7 @@ Pablo Andrés Fernández Cari es el autor académico y responsable principal del
 La comprobación del producto se incorpora al ciclo de ingeniería y no se presenta como una metodología investigativa:
 
 1. **Verificación:** pruebas unitarias, de integración, funcionales, de regresión y de reglas críticas para comprobar requisitos, contratos e invariantes.
-2. **Validación operativa:** escenarios representativos para reconstruir origen, eventos, cantidades, responsables, evidencias y destino, y para observar la carga de los flujos implementados.
+2. **Validación operativa:** escenarios representativos para reconstruir origen, eventos, cantidades, responsables, evidencias y destino a partir de los registros de la aplicación.
 3. **Aceptación:** criterios verificables acordados para cada incremento y para el producto integrado, con registro de resultado, defecto, corrección y decisión.
 
 Cuando no exista una operación real disponible, el escenario se identificará como controlado. Los resultados no se generalizarán fuera del producto y contexto validados ni se convertirán en afirmaciones causales sobre mejoras no medidas.
@@ -220,7 +220,7 @@ Antes de cerrar cualquier versión:
 16. toda evidencia debe describirse como respaldo del registro, no como certificación de la realidad física;
 17. el Perfil debe expresar propiedades deseadas sin comprometer prematuramente mecanismos de implementación;
 18. cualquier nueva documentación del Proyecto de Grado debe revisar los principios de las secciones 7 y 8 antes de cerrarse;
-19. los ingresos de material vegetal adquirido o recibido de terceros en Vivero y Plantación deben contar con requerimientos, historial, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
+19. los ingresos de material vegetal adquirido o recibido de terceros en Vivero y Plantación deben contar con requisitos, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
 20. cada iteración debe contar con objetivos, riesgos, productos y revisión; cada incremento debe contar con especificación, criterios de aceptación, implementación, pruebas, resultado y evidencia de integración;
 21. el uso de IA debe registrarse como asistencia bajo revisión humana; ninguna salida se acepta sin verificación del postulante;
 22. no se fabricarán retrospectivamente commits, pruebas, participantes, resultados ni aprobaciones; toda reconstrucción académica se identificará como controlada y autorizada;

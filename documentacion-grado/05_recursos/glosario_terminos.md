@@ -132,19 +132,19 @@ El historial no es un cuarto módulo. Los módulos generan los eventos y la cons
 
 ## 7. Recuperabilidad de trazas
 
-**Definición adoptada:** grado en que un escenario de validación permite responder los elementos previstos de una guía de reconstrucción **con evidencia contrastable** —no solo de memoria—, junto con el tiempo o los pasos requeridos cuando estas medidas hayan sido definidas previamente.
+**Definición adoptada:** grado en que un escenario de validación permite responder los elementos previstos de una guía de reconstrucción **con evidencia contrastable** —no solo de memoria— a partir de los registros de la aplicación.
 
 Es una medida descriptiva del resultado de los escenarios ejecutados, no una comparación causal antes–después. La distinción entre *respondido con evidencia* y *respondido de memoria* sigue siendo relevante: la memoria ayuda a contextualizar, pero no es transferible entre personas ni puede contrastarse de la misma forma que una fuente conservada.
 
 ---
 
-## 8. Variantes de ingreso
+## 8. Alcance del recorrido
 
-**Definición adoptada:** posibilidad de que el material vegetal ingrese al proceso en una etapa posterior a Recolección y quede vinculado con el módulo correspondiente sin perder su procedencia.
+**Definición adoptada:** el recorrido académico del material vegetal puede iniciarse con una recolección registrada o con su ingreso directo a Vivero o Plantación cuando es adquirido o recibido de terceros. Continúa, cuando corresponda, con su manejo en Vivero y concluye con el registro de la plantación.
 
-Esta posibilidad es una consecuencia del modelo de trazabilidad y no un flujo principal, un cuarto módulo ni un entregable independiente. Cuando ocurra, el registro debe conservar como mínimo el origen declarado, la especie, la cantidad, la fecha y la evidencia disponible.
+El ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros forma parte del alcance académico. Esta variante no crea un cuarto módulo y debe conservar la procedencia disponible dentro del recorrido considerado.
 
-No debe presentarse mediante recorridos de proveedores en el resumen, la introducción, el problema, la evaluación o el cronograma. Los detalles concretos se definirán como reglas del módulo donde se produzca el ingreso.
+La documentación debe presentar el recorrido Recolección–Vivero–Plantación de manera consistente en el problema, los objetivos, el alcance, la evaluación y el cronograma.
 
 ---
 
@@ -157,7 +157,7 @@ Antes de cerrar cualquier documento del proyecto de grado, verificar que:
 3. *verificable* solo aparezca aplicado a proposiciones o invariantes; para registros se use *evidencia contrastable* (§2.1);
 4. cada enunciado de conservación de saldos incluya la salvedad de unidad y etapa (§4);
 5. blockchain, IPFS y NFT aparezcan únicamente para declarar que están fuera del alcance;
-6. los ingresos de material vegetal adquirido o recibido de terceros se mantengan como variantes integradas y subordinadas al recorrido principal Recolección–Vivero–Plantación;
+6. el recorrido académico pueda iniciarse en una recolección registrada o en el ingreso directo de material adquirido o recibido de terceros en Vivero o Plantación, sin crear un cuarto módulo;
 7. “semillas y plantas” se use para introducir el dominio y “material vegetal” como denominación general posterior;
 8. los objetivos mantengan correspondencia con el problema, el alcance y la evaluación, y cualquier ajuste sustantivo se revise formalmente con la tutora;
 9. transferencia y transformación se mantengan diferenciadas y no se use una equivalencia automática entre unidades distintas;
