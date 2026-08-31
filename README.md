@@ -1,6 +1,6 @@
 # r3foresta-docs
 
-Base documental de R3Foresta: trazabilidad de material biológico para reforestación, con bonos de carbono y transparencia mediante blockchain.
+Base documental de R3Foresta: trazabilidad de material vegetal para reforestación. En el Proyecto de Grado, la proyección hacia bonos de carbono es solo contexto: no incluye medición, certificación, emisión, comercialización ni blockchain.
 
 La cadena del dominio: `general (maestros) → recolección (origen) → vivero (maduración) → plantación (campo)`.
 

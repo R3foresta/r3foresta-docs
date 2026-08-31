@@ -9,7 +9,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 
 ## Punto de entrada
 
-- [`02_planificacion/TODO.md`](02_planificacion/TODO.md) — tablero vivo del perfil: bloqueantes, estado por sección, figuras y actividades pendientes.
+- [`02_planificacion/TODO.md`](02_planificacion/TODO.md) — tablero mínimo de cierre del Perfil: bloqueantes y siguientes acciones.
 - [`02_planificacion/TODO_CAPITULOS_1_Y_2.md`](02_planificacion/TODO_CAPITULOS_1_Y_2.md) — checklist único para validar, corregir y cerrar los capítulos I y II.
 - [`02_planificacion/TODO_PROYECTO_GRADO.md`](02_planificacion/TODO_PROYECTO_GRADO.md) — tablero de ejecución por fases RUP, incrementos, integración, verificación, transición y cierre documental.
 - [`06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) — documento oficial del perfil.
@@ -54,7 +54,7 @@ Modalidad elegida: **Defensa de Proyecto de Grado**.
 - **3. Planteamiento del problema** — situación problemática, problema central y formulación mediante preguntas; el árbol de causas y efectos se presenta en anexos.
 - **4. Objetivos** — objetivo general y cinco objetivos específicos alineados con el documento final.
 - **5. Justificación** — operativa, institucional, tecnológica, académica y factibilidad delimitada.
-- **6. Alcances y límites** — tres módulos, variantes de ingreso externo, controles transversales y exclusiones reales.
+- **6. Alcances y límites** — tres módulos, recorrido desde la recolección registrada o el ingreso externo en Vivero o Plantación, controles transversales y exclusiones reales.
 - **7. Marco teórico preliminar** — conceptos esenciales del título y fundamentos de RUP, SDD e IA.
 - **8. Metodología de desarrollo** — RUP adaptado como proceso rector, iteraciones e incrementos, SDD asistido por IA, seguimiento y evidencia.
 - **9. Índice propuesto del Proyecto de Grado**.

@@ -1,6 +1,6 @@
 # Estructura vigente del Perfil de Proyecto de Grado
 
-> **Versión 12 — 25 de agosto de 2026.**
+> **Versión 13 — 31 de agosto de 2026.**
 > Este documento explica la arquitectura del perfil; el texto entregable y fuente de verdad académica es [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 > Los principios que deben conservarse en la documentación posterior se encuentran en [base_perfil_proyecto_grado.md](../01_lineamientos/base_perfil_proyecto_grado.md) §§7–8.
 
@@ -22,31 +22,31 @@ Se mantienen tres módulos:
 2. Vivero;
 3. Plantación.
 
-El recorrido principal se organiza alrededor de estos tres módulos. El material vegetal adquirido o recibido de terceros podrá ingresar directamente en Vivero o Plantación y su procedencia deberá conservarse dentro del módulo correspondiente. Estas entradas son variantes integradas del proceso, no un cuarto módulo, un flujo principal ni un resultado independiente.
+El recorrido principal puede iniciarse con una recolección registrada o con el ingreso directo en Vivero o Plantación de material adquirido o recibido de terceros; concluye con el registro de la plantación. Esta variante se resuelve dentro de los tres módulos existentes y conserva la procedencia disponible.
 
 ## 3. Cadena de alineación académica
 
 ### Problema central
 
-En la práctica actual de R3Foresta, los registros generados durante las distintas etapas de reforestación permanecen dispersos y carecen de relaciones comunes; por ello, la organización no dispone de un historial integrado que le permita reconstruir el recorrido registrado del material vegetal desde su origen hasta la plantación ni presentar esa información de forma organizada a los actores interesados.
+En la práctica actual de R3Foresta, los registros relacionados con el material vegetal en las actividades de Recolección, Vivero y Plantación permanecen dispersos y no están vinculados entre sí; por ello, la organización no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### Pregunta general
 
-¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta la plantación?
+¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde la recolección hasta el registro de su plantación?
 
 ### Objetivo general
 
-Desarrollar un sistema de trazabilidad para la cadena de custodia del material vegetal utilizado por R3Foresta, desde su recolección o recepción externa hasta el registro de la plantación, con información relacionada sobre procedencia, movimientos, cantidades, responsables, evidencias y destino.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
 
 ### Objetivos específicos y resultados
 
 | Obj. | Verbo | Resultado esperado | Sección del documento final |
 |---|---|---|---|
-| 1 | Analizar | Procesos, datos y reglas definidos | 3.1 |
-| 2 | Diseñar | Modelo, invariantes y contratos de integración | 3.2 |
-| 3 | Implementar | Tres módulos integrados | 3.3 |
-| 4 | Verificar | Matriz de pruebas y resultados técnicos | 3.4 |
-| 5 | Evaluar | Escenarios operativos, reconstrucción, carga de los flujos y aceptación | 3.5–3.6 |
+| 1 | Analizar | Información actual y forma de gestión caracterizadas | 3.1 |
+| 2 | Diseñar | Información y relaciones del recorrido definidas | 3.2 |
+| 3 | Implementar | Funciones de los tres módulos integradas | 3.3 |
+| 4 | Verificar | Matriz de pruebas y coherencia de registros comprobada | 3.4 |
+| 5 | Evaluar | Escenarios operativos, reconstrucción y aceptación | 3.5–3.6 |
 
 ## 4. Verificación, validación y aceptación
 
@@ -63,8 +63,7 @@ La comprobación del producto separa dos planos y prioriza las propiedades que e
 1. reconstrucción del origen y recorrido del material vegetal;
 2. integridad de cantidades, saldos y asignaciones;
 3. ejecución de escenarios representativos sobre los tres módulos y sus integraciones;
-4. observación de pasos, dificultades y carga de los flujos implementados;
-5. aceptación del incremento y del sistema integrado frente a criterios previamente especificados.
+4. aceptación del incremento y del sistema integrado frente a criterios previamente especificados.
 
 Se priorizará una operación real cuando esté disponible y autorizada. Si una ruta no ocurre dentro de la ventana, se empleará un escenario controlado claramente identificado. Estos ejercicios validan el producto en su contexto de uso, pero no constituyen un estudio de caso, un experimento ni una demostración causal de mejora respecto de la práctica anterior.
 
@@ -159,4 +158,4 @@ La fuente canónica y única versión editable del Perfil dentro del repositorio
 
 ---
 
-*Documento de planificación actualizado el 25 de agosto de 2026.*
+*Documento de planificación actualizado el 31 de agosto de 2026.*
