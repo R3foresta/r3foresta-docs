@@ -177,6 +177,8 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 
 - [ ] Confirmar el detalle funcional de Recolección, Vivero y Plantación.
 - [ ] Confirmar que el alcance académico incluye el ingreso directo de material adquirido o recibido de terceros en Vivero o Plantación, sin crear un cuarto módulo.
+- [ ] Definir conceptualmente el “recorrido del material vegetal” y los elementos observables que lo componen.
+- [ ] Definir criterios para seleccionar escenarios operativos representativos a partir de variantes reales del proceso de R3Foresta.
 - [ ] Mantener el historial transversal sin convertirlo en un cuarto módulo.
 - [ ] Revisar las exclusiones con la tutora.
 - [ ] Confirmar disponibilidad de una operación real o, en su defecto, definir escenarios controlados de validación.

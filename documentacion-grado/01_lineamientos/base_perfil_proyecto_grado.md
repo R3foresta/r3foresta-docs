@@ -55,9 +55,9 @@ Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relaci
 
 1. **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
 2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
-3. **Implementar** las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
+3. **Implementar** en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
 4. **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
-5. **Evaluar**, mediante escenarios operativos representativos, en qué medida la aplicación permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
+5. **Evaluar**, mediante escenarios operativos representativos, en qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
 
 Cada objetivo mantiene un verbo rector y produce una sección principal de resultados.
 
@@ -228,6 +228,8 @@ Antes de cerrar cualquier versión:
 24. toda sección posterior al Perfil deberá aplicar la lista de revisión de [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md) antes de cerrarse.
 25. la fuente canónica y única versión editable del Perfil dentro del repositorio será su archivo Markdown; las versiones aprobadas se transferirán directamente al Google Docs existente en Drive, que será el documento de trabajo y presentación; el DOCX local quedará fuera del flujo;
 26. el Perfil no requiere saltos de página después de cada encabezado principal; el documento final oficial sí iniciará cada capítulo principal en una página nueva al maquetarse.
+27. antes de cerrar el diseño y la validación, debe definirse conceptualmente el “recorrido del material vegetal” como una secuencia observable de origen, ingresos, procesos o cambios, movimientos y destino, acompañada por las cantidades, responsables, fechas, ubicaciones y evidencias que correspondan;
+28. los escenarios operativos representativos deben seleccionarse y justificarse a partir de variantes reales del proceso de R3Foresta; los ingresos externos, si permanecen en alcance, deben contar con diseño, implementación, verificación y al menos un escenario de evaluación pertinente.
 27. los documentos institucionales se utilizarán de manera acotada para el contexto que respalden directamente; no podrán redefinir el problema, el título, los objetivos, el alcance, la metodología o la evaluación sin una validación explícita y una revisión completa de consistencia.
 28. toda tabla del Perfil y del documento final deberá incluir inmediatamente debajo una nota que identifique su procedencia; si es de elaboración propia, también deberá indicar las fuentes, los datos, las secciones o las decisiones que sirvieron de base, conforme a [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md).
 

@@ -123,9 +123,9 @@ La primera causa representa la dispersión de la información entre fuentes y re
 
 1. ¿Qué información se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta?
 2. ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación?
-3. ¿Qué debe permitir la aplicación en Recolección, Vivero y Plantación para mantener vinculada la información del material vegetal durante su recorrido?
+3. ¿Qué debe permitir el sistema en Recolección, Vivero y Plantación para mantener vinculada la información del material vegetal durante su recorrido?
 4. ¿Cómo verificar que lo implementado cumple los requerimientos definidos y que los registros conservan coherencia entre las cantidades y los movimientos del material vegetal?
-5. ¿En qué medida la aplicación permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal en escenarios operativos representativos de R3Foresta?
+5. ¿En qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal en escenarios operativos representativos de R3Foresta?
 
 ## 1.3. Objetivos
 
@@ -137,9 +137,9 @@ Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relaci
 
 1. **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
 2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
-3. **Implementar** las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
+3. **Implementar** en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
 4. **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
-5. **Evaluar**, mediante escenarios operativos representativos, en qué medida la aplicación permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
+5. **Evaluar**, mediante escenarios operativos representativos, en qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
 
 ## 1.4. Justificación
 

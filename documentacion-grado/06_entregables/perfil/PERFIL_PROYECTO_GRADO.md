@@ -103,9 +103,9 @@ En la práctica actual de R3Foresta, los registros generados durante las distint
 
 - ¿Qué información se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta?
 - ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación?
-- ¿Qué debe permitir la aplicación en Recolección, Vivero y Plantación para mantener vinculada la información del material vegetal durante su recorrido?
+- ¿Qué debe permitir el sistema en Recolección, Vivero y Plantación para mantener vinculada la información del material vegetal durante su recorrido?
 - ¿Cómo verificar que lo implementado cumple los requerimientos definidos y que los registros conservan coherencia entre las cantidades y los movimientos del material vegetal?
-- ¿En qué medida la aplicación permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal en escenarios operativos representativos de R3Foresta?
+- ¿En qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal en escenarios operativos representativos de R3Foresta?
 
 ## 4. Objetivos
 
@@ -117,9 +117,9 @@ Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relaci
 
 - **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
 - **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
-- **Implementar** las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
+- **Implementar** en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
 - **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
-- **Evaluar**, mediante escenarios operativos representativos, en qué medida la aplicación permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
+- **Evaluar**, mediante escenarios operativos representativos, en qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
 
 ## 5. Justificación
 

@@ -80,11 +80,13 @@
 - [ ] Diseñar la arquitectura base y el modelo de datos.
 - [ ] Definir los contratos M1→M2 y M2→M3.
 - [ ] Definir la procedencia y el historial del recorrido Recolección→Vivero→Plantación y de los ingresos externos en Vivero o Plantación.
+- [ ] Definir conceptualmente el “recorrido del material vegetal” como secuencia observable de origen, ingresos, procesos o cambios, movimientos y destino, junto con las cantidades, responsables, fechas, ubicaciones y evidencias que correspondan.
 - [ ] Preparar una línea vertical arquitectónica mínima M1→M2→M3 para comprobar identidad, procedencia, contratos, integridad e historial.
 
 ### 4.2. Especificaciones y riesgos
 
 - [ ] Priorizar escenarios por valor, dependencia y riesgo.
+- [ ] Definir criterios para seleccionar y justificar escenarios operativos representativos a partir de variantes reales del proceso de R3Foresta.
 - [ ] Especificar y probar anticipadamente saldo no negativo, transferencia consistente, asignación coherente y ausencia de estados parciales.
 - [ ] Establecer los criterios de aceptación para cada incremento.
 - [ ] Actualizar el plan y el registro de riesgos.
@@ -140,7 +142,7 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 ### 6.1. Verificación y validación — 2 al 8 de noviembre
 
 - [ ] Ejecutar la matriz de pruebas funcionales, integración, regresión, concurrencia y fallos críticos.
-- [ ] Ejecutar escenarios de aceptación para:
+- [ ] Seleccionar y ejecutar escenarios de aceptación representativos, derivados de variantes reales de R3Foresta y con justificación registrada. Como candidatos iniciales:
   - recorrido propio M1→M2→M3;
   - ingreso externo en Vivero;
   - ingreso externo directo en Plantación;
