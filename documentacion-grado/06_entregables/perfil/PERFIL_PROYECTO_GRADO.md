@@ -75,7 +75,7 @@ Los trabajos revisados resuelven partes del problema, como el inventario de vive
 
 ### 3.1. Situación problemática
 
-Para construir un historial integrado del material vegetal, R3Foresta necesita relacionar la información que se genera durante cada etapa de sus actividades de reforestación. Sin embargo, actualmente estos registros se encuentran distribuidos entre fotografías, redes sociales, servicios de mensajería, cuadernos, notas y el conocimiento de las personas involucradas.
+Para construir un historial integrado del material vegetal, R3Foresta necesita relacionar la información que se genera durante cada etapa de las actividades de Recolección, Vivero y Plantación. Sin embargo, actualmente estos registros se encuentran distribuidos entre fotografías, redes sociales, servicios de mensajería, cuadernos, notas y el conocimiento de las personas involucradas, sin una forma común de relacionarlos entre sí.
 
 Esta dispersión dificulta relacionar información que pertenece a un mismo recorrido. Una fotografía, por ejemplo, puede mostrar el resultado de una plantación, pero, de forma aislada, no permite determinar con claridad cuántas plantas fueron utilizadas, qué especies participaron, cuándo ocurrió la actividad, dónde se realizó o quiénes estuvieron involucrados.
 
@@ -91,13 +91,13 @@ El árbol de causas y efectos que sintetiza esta situación se presenta en el **
 
 ### 3.2. Problema central
 
-En la práctica actual de R3Foresta, los registros generados durante las distintas etapas de reforestación permanecen dispersos y carecen de relaciones comunes; por ello, la organización no dispone de un historial integrado que le permita reconstruir el recorrido registrado del material vegetal desde la recolección hasta el registro de su plantación ni presentar esa información de forma organizada a los actores interesados.
+En la práctica actual de R3Foresta, los registros relacionados con el material vegetal en las actividades de Recolección, Vivero y Plantación permanecen dispersos y no están vinculados entre sí; por ello, la organización no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### 3.3. Formulación del problema
 
 #### 3.3.1. Pregunta general
 
-¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde la recolección hasta el registro de su plantación?
+¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde la recolección u origne hasta el registro de su plantación?
 
 #### 3.3.2. Preguntas específicas
 

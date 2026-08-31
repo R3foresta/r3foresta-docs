@@ -9,7 +9,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 
 ## Punto de entrada
 
-- [`02_planificacion/TODO.md`](02_planificacion/TODO.md) — tablero vivo del perfil: bloqueantes, estado por sección, figuras y actividades pendientes.
+- [`02_planificacion/TODO.md`](02_planificacion/TODO.md) — tablero mínimo de cierre del Perfil: bloqueantes y siguientes acciones.
 - [`02_planificacion/TODO_CAPITULOS_1_Y_2.md`](02_planificacion/TODO_CAPITULOS_1_Y_2.md) — checklist único para validar, corregir y cerrar los capítulos I y II.
 - [`02_planificacion/TODO_PROYECTO_GRADO.md`](02_planificacion/TODO_PROYECTO_GRADO.md) — tablero de ejecución por fases RUP, incrementos, integración, verificación, transición y cierre documental.
 - [`06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](06_entregables/perfil/PERFIL_PROYECTO_GRADO.md) — documento oficial del perfil.

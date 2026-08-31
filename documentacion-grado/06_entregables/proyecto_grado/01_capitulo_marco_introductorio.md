@@ -111,7 +111,7 @@ La primera causa representa la dispersión de la información entre fuentes y re
 
 ### 1.2.3. Problema central
 
-> En la práctica actual de R3Foresta, los registros generados durante las distintas etapas de reforestación permanecen dispersos y carecen de relaciones comunes; por ello, la organización no dispone de un historial integrado que le permita reconstruir el recorrido registrado del material vegetal desde la recolección hasta el registro de su plantación ni presentar esa información de forma organizada a los actores interesados.
+> En la práctica actual de R3Foresta, los registros relacionados con el material vegetal en las actividades de Recolección, Vivero y Plantación permanecen dispersos y no están vinculados entre sí; por ello, la organización no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### 1.2.4. Formulación del problema
 
