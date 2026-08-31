@@ -160,7 +160,7 @@ Un **artefacto** es un producto de trabajo controlado: visión, modelo de casos 
 
 R3Foresta es un proyecto individual y de duración limitada. Por ello una sola persona puede desempeñar varios roles y los artefactos se consolidan para evitar burocracia. Se conservan, sin embargo, los elementos que dan rigor al proceso: fases, iteraciones, hitos, riesgos, arquitectura, requisitos, configuración, incrementos ejecutables, pruebas, integración y aceptación.
 
-La adaptación tampoco añade ceremonias o roles de Scrum que no se utilizarán. El orden de los incrementos responde a dependencias de la cadena: M1 establece el origen propio; M2 recibe material de M1 o de procedencia externa; M3 recibe material desde M2 o por ingreso externo. La trazabilidad transversal se completa sobre los tres módulos integrados.
+La adaptación tampoco añade ceremonias o roles de Scrum que no se utilizarán. El orden de los incrementos responde a dependencias de la cadena: M1 establece el origen registrado; M2 recibe material de M1 y M3 recibe material desde M2. La trazabilidad transversal se completa sobre los tres módulos integrados.
 
 ## 2.9. Spec-Driven Development y asistencia de inteligencia artificial
 
@@ -242,7 +242,7 @@ La síntesis sirve como puente al Marco aplicativo, donde deberán presentarse l
 | Spec-Driven Development | Especificación precedente, criterios de aceptación y trazabilidad del cambio | Definir y ejecutar cada capacidad del incremento |
 | Asistencia de IA | Apoyo generativo, revisión humana, autoría, riesgos y controles | Acelerar tareas sin delegar responsabilidad ni aceptación |
 | Verificación técnica | Cantidades, saldos, atomicidad, consistencia y trazabilidad de requerimientos | Diseñar la matriz de pruebas críticas |
-| Validación y aceptación | Completitud, coherencia, evidencia recuperable y carga de los flujos | Diseñar escenarios operativos y criterios de cierre |
+| Validación y aceptación | Completitud, coherencia y evidencia recuperable | Diseñar escenarios operativos y criterios de cierre |
 
 *Nota.* Elaboración propia a partir de la síntesis de las secciones 2.8 a 2.10, con base en Kruchten (2004), IBM (s. f.), GitHub (2026) y Tabassi (2023). Las filas sobre verificación, validación y aceptación sintetizan los criterios definidos para este proyecto en el Capítulo I.
 

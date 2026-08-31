@@ -41,10 +41,10 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 - [ ] Obtener la ratificación de la Doctora Téllez para el título seleccionado.
 - [x] Propagar el título seleccionado y su delimitación a los documentos rectores, el Perfil, el marco conceptual planificado y los tableros; la portada maquetada se actualizará cuando corresponda.
 - [x] Reformular la pregunta general sin incorporar la solución en su redacción; evitar expresiones como “un sistema de trazabilidad” dentro de la pregunta.
-- [x] Partir de una formulación neutral semejante a “¿Cómo asegurar la trazabilidad de la cadena de custodia del material vegetal…?”, precisando origen, recepción externa, vivero y plantación sin anticipar el artefacto.
+- [x] Partir de una formulación neutral semejante a “¿Cómo puede R3Foresta organizar y relacionar la información…?”, precisando Recolección, Vivero y Plantación sin anticipar el artefacto.
 - [x] Reformular el objetivo general con un solo verbo principal: **Desarrollar**; retirar **evaluar** del objetivo general sin eliminar la evaluación que corresponda al objetivo específico vigente.
-- [x] Mantener los cinco objetivos específicos, que fueron considerados adecuados por la Doctora Téllez.
-- [x] Revisar su correspondencia con las preguntas específicas sin reescribirlos, salvo una corrección formal imprescindible.
+- [x] Actualizar los cinco objetivos específicos para que correspondan con las nuevas preguntas específicas y mantengan el orden analizar, diseñar, implementar, verificar y evaluar.
+- [x] Revisar la correspondencia uno a uno entre cada pregunta específica y su objetivo correspondiente.
 - [x] Sincronizar pregunta general, preguntas específicas, objetivo general y objetivos específicos en el Perfil, la estructura rectora y el Capítulo I.
 
 **Criterio de cierre:** la pregunta expresa el problema sin revelar la solución; el objetivo general responde con “Desarrollar”; cada pregunta específica conserva correspondencia uno a uno con un objetivo específico; la Doctora Téllez aprueba el conjunto.
@@ -102,7 +102,7 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 
 - [x] Reescribir el alcance funcional alrededor de únicamente tres módulos: **Recolección, Vivero y Plantación**.
 - [x] Ampliar para cada módulo sus funciones, datos principales, inicio, final y relación con el módulo siguiente.
-- [x] Integrar el material vegetal adquirido o recibido de terceros dentro de Vivero o Plantación, sin crear un cuarto módulo ni un apartado de alcance independiente.
+- [x] Incluir el ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros, conservando la procedencia disponible dentro de los tres módulos.
 - [x] Renombrar la sección **Limitaciones** como **Límites**.
 - [x] Integrar dentro de **Límites** el contenido pertinente de **Fuera del alcance** y eliminar esa sección independiente.
 - [x] Revisar y retirar formulaciones que parezcan justificar una falta de datos, participantes u operaciones; conservar solo límites reales del proyecto y del producto.
@@ -170,7 +170,7 @@ La revisión progresiva del Capítulo I, la preparación del Capítulo II y la p
 - El nombre oficial de la aplicación es **R3foresta App**; se distingue de R3Foresta, la institución, y R3Carbon, el componente institucional.
 - Los cinco objetivos específicos se conservan.
 - El alcance mantiene exactamente tres módulos: Recolección, Vivero y Plantación.
-- El material vegetal adquirido o recibido de terceros ingresa como variante de Vivero o Plantación, con procedencia e historial; no constituye un cuarto módulo.
+- El recorrido académico puede iniciarse en una recolección registrada o con el ingreso directo de material adquirido o recibido de terceros en Vivero o Plantación, y concluye con el registro de la plantación.
 - El producto no mide ni certifica carbono y no genera, emite ni comercializa bonos de carbono; estos solo pueden presentarse como contexto institucional o uso posterior.
 - La metodología vigente es **RUP adaptado, complementado con SDD asistido por IA**.
 - No se adoptarán ciencia del diseño, DSRM, estudio de caso único embebido ni FEDS; la verificación, validación y aceptación se documentarán como actividades de Ingeniería de Software.

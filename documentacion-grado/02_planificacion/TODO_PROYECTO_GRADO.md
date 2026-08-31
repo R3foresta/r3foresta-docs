@@ -1,7 +1,7 @@
 # TODO — ejecución del Proyecto de Grado
 
 > **Fecha de apertura:** 19 de agosto de 2026.
-> **Última decisión metodológica:** 25 de agosto de 2026.
+> **Última decisión metodológica:** 31 de agosto de 2026.
 > **Ventana académica:** 6 de julio–15 de noviembre de 2026.
 > **Propósito:** controlar la ejecución de RUP adaptado, sus fases e iteraciones, los incrementos de los tres módulos, sus integraciones, la verificación, la validación, la entrega y el documento final.
 >
@@ -13,7 +13,7 @@
 
 - [x] Adoptar como título **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**.
 - [x] Mantener exactamente tres módulos: M1 Recolección, M2 Vivero y M3 Plantación.
-- [x] Incorporar el material vegetal adquirido o recibido de terceros como variante de ingreso en Vivero o Plantación, sin crear un cuarto módulo.
+- [x] Permitir que el recorrido académico se inicie en una recolección registrada o en el ingreso directo, en Vivero o Plantación, de material vegetal adquirido o recibido de terceros; esta variante permanece dentro de los tres módulos.
 - [x] Mantener fuera del alcance monitoreo posterior, CO₂, MRV, certificación, emisión o comercialización de bonos de carbono, blockchain, NFT, contratos inteligentes e IPFS.
 - [x] Adoptar **Rational Unified Process (RUP) adaptado** como metodología de desarrollo.
 - [x] Complementar RUP con **Spec-Driven Development asistido por inteligencia artificial**.
@@ -57,7 +57,7 @@
 - [ ] Cerrar alcance, límites y relación con los cinco objetivos específicos.
 - [ ] Confirmar responsables de Recolección, Vivero y Plantación.
 - [ ] Identificar actores institucionales que priorizan o aceptan requisitos.
-- [ ] Confirmar las variantes de ingreso externo en Vivero y Plantación.
+- [ ] Confirmar que el alcance operativo se inicia en una recolección registrada o en el ingreso directo de material adquirido o recibido de terceros en Vivero o Plantación, y concluye con el registro de la plantación.
 - [ ] Confirmar que la trazabilidad, las consultas y las evidencias son capacidades transversales y no un cuarto módulo.
 
 ### 3.2. Productos de Inicio
@@ -79,7 +79,7 @@
 - [ ] Definir invariantes de cantidad, disponibilidad, asignación y consumo.
 - [ ] Diseñar la arquitectura base y el modelo de datos.
 - [ ] Definir los contratos M1→M2 y M2→M3.
-- [ ] Definir la procedencia y el historial de los ingresos externos.
+- [ ] Definir la procedencia y el historial del recorrido Recolección→Vivero→Plantación y de los ingresos externos en Vivero o Plantación.
 - [ ] Preparar una línea vertical arquitectónica mínima M1→M2→M3 para comprobar identidad, procedencia, contratos, integridad e historial.
 
 ### 4.2. Especificaciones y riesgos
@@ -107,7 +107,7 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 
 ### 5.2. Iteración CO-2 e incremento 2 — M2 Vivero e integración M1→M2 — 7 al 27 de septiembre
 
-- [ ] Especificar recepción desde Recolección e ingreso de material externo.
+- [ ] Especificar la recepción desde Recolección y el ingreso de material externo.
 - [ ] Especificar transformaciones observadas, mermas, descartes, saldo vivo, asignaciones, despachos, devoluciones y cierre.
 - [ ] Diseñar e implementar M2 y el contrato M1→M2.
 - [ ] Registrar para ingresos externos procedencia, especie, cantidad, unidad, fecha, responsable y evidencia disponible.
@@ -118,7 +118,7 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 ### 5.3. Iteración CO-3 e incremento 3 — M3 Plantación e integración M2→M3 — 28 de septiembre al 18 de octubre
 
 - [ ] Especificar asignación, recepción, plantación, devolución, descarte, ubicación y evidencia.
-- [ ] Especificar ingreso externo directo en Plantación y su procedencia.
+- [ ] Especificar el ingreso externo directo en Plantación y su procedencia.
 - [ ] Diseñar e implementar M3 y el contrato M2→M3.
 - [ ] Verificar cantidad recibida, plantada, devuelta o descartada.
 - [ ] Verificar rechazo de consumo o asignación superior al disponible y de duplicados concurrentes.

@@ -10,7 +10,7 @@ Este índice permite localizar fuentes por problema del proyecto, fundamento con
 |---|---|---|
 | Identidad, misión, visión, modelo institucional y R3Carbon | R3Foresta (2026), *Resumen Ejecutivo Institucional* | Solo contexto institucional del Perfil y del Capítulo I; no define el problema ni las decisiones académicas |
 | Definición de trazabilidad | Olsen y Borit (2013); ISO 22095:2020 | Introducción y marco teórico |
-| Material reproductivo forestal y procedencia | FAO, *Forest reproductive material* | Marco teórico y alcance del ingreso externo |
+| Material reproductivo forestal y procedencia | FAO, *Forest reproductive material* | Marco teórico y tratamiento de la procedencia |
 | Unidades trazables y sus atributos | GEN-01 Olsen y Borit (2018) | Marco teórico y modelo de información |
 | Eventos de trazabilidad | EVT-01 Thakur et al. (2011); EVT-03 GS1 EPCIS 2.0 | Antecedentes, marco teórico y diseño |
 | Transformaciones con entradas y salidas | EVT-02 Solanki y Brewster (2014); EVT-03 GS1 EPCIS 2.0 | Antecedentes y modelo de relaciones |

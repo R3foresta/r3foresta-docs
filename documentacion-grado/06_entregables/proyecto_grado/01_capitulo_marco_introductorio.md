@@ -32,9 +32,9 @@ Una declaración institucional previa mencionó pruebas piloto de acopio y clasi
 
 Actualmente, parte de la información y las evidencias de las actividades de reforestación se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes. Por ello, resulta difícil responder preguntas básicas sobre el material vegetal: de dónde provino, quién estuvo a cargo, qué ocurrió durante su paso por el vivero, cuántas unidades fueron movilizadas y dónde terminó siendo plantado.
 
-Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común que relaciona los hechos operativos del material vegetal de origen propio o externo desde su ingreso hasta el registro de su plantación.
+Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común que relaciona los hechos operativos del material vegetal desde su recolección o su ingreso externo hasta el registro de su plantación.
 
-El proceso operativo considerado comienza con la recolección de semillas o con el ingreso externo de material vegetal, continúa con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
+El proceso operativo considerado comienza con la recolección de semillas o con el ingreso de material vegetal adquirido o recibido de terceros en Vivero o Plantación. Continúa, cuando corresponda, con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
 
 ### 1.1.3. Trabajos académicos y sistemas similares
 
@@ -85,11 +85,11 @@ Esta situación dificulta tanto la administración interna de las actividades de
 flowchart BT
     C1["Registros dispersos en fotografías,<br/>mensajería, cuadernos,<br/>redes sociales y conocimiento de responsables"]
     C2["Ausencia de identificadores y<br/>relaciones comunes entre etapas"]
-    C3["Ingresos externos y cambios de custodia<br/>sin un historial uniforme de procedencia"]
+    C3["Cambios de custodia entre etapas<br/>sin un historial uniforme de procedencia"]
     C4["Entradas, salidas, transferencias y saldos<br/>registrados mediante operaciones separadas"]
     C5["Evidencia fotográfica, temporal o geográfica<br/>desvinculada del hecho operativo"]
 
-    P(["PROBLEMA CENTRAL<br/><br/>La información sobre la procedencia y el recorrido<br/>del material vegetal de origen propio o externo<br/>no se encuentra integrada bajo una cadena de custodia<br/>reconstruible con evidencia contrastable"])
+    P(["PROBLEMA CENTRAL<br/><br/>La información sobre la procedencia y el recorrido<br/>del material vegetal a través de Recolección,<br/>Vivero y Plantación no se encuentra integrada<br/>en un historial reconstruible con evidencia vinculada"])
 
     E1["Mayor tiempo y menor completitud<br/>al reconstruir el recorrido del material vegetal"]
     E2["Inconsistencias en cantidades,<br/>saldos, transferencias y asignaciones"]
@@ -107,39 +107,39 @@ flowchart BT
     P --> E4
 ```
 
-La primera causa representa la dispersión de la información entre fuentes y responsables. La segunda señala la ausencia de identificadores que relacionen una recolección o ingreso externo, un lote de vivero, una asignación y una plantación. La tercera comprende los ingresos externos y los cambios de custodia que no conservan una referencia uniforme de procedencia. La cuarta se relaciona con operaciones cuantitativas registradas en fuentes o momentos distintos. La quinta alude a evidencia existente pero separada del evento al que debe dar contexto.
+La primera causa representa la dispersión de la información entre fuentes y responsables. La segunda señala la ausencia de identificadores que relacionen una recolección, un lote de vivero, una asignación y una plantación. La tercera comprende los cambios de custodia que no conservan una referencia uniforme de procedencia. La cuarta se relaciona con operaciones cuantitativas registradas en fuentes o momentos distintos. La quinta alude a evidencia existente pero separada del evento al que debe dar contexto.
 
 ### 1.2.3. Problema central
 
-> En la práctica actual de R3Foresta, los registros generados durante las distintas etapas de reforestación permanecen dispersos y carecen de relaciones comunes; por ello, la organización no dispone de un historial integrado que le permita reconstruir el recorrido registrado del material vegetal desde su origen hasta la plantación ni presentar esa información de forma organizada a los actores interesados.
+> En la práctica actual de R3Foresta, los registros generados durante las distintas etapas de reforestación permanecen dispersos y carecen de relaciones comunes; por ello, la organización no dispone de un historial integrado que le permita reconstruir el recorrido registrado del material vegetal desde la recolección hasta el registro de su plantación ni presentar esa información de forma organizada a los actores interesados.
 
 ### 1.2.4. Formulación del problema
 
 #### 1.2.4.1. Pregunta general
 
-> ¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta la plantación?
+> ¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde la recolección hasta el registro de su plantación?
 
 #### 1.2.4.2. Preguntas específicas
 
-1. ¿Qué procesos, actores, datos, estados, eventos, unidades de medida, requerimientos y reglas de negocio caracterizan Recolección, Vivero y Plantación, incluidas las variantes de ingreso de material vegetal adquirido o recibido de terceros?
-2. ¿Qué modelo de trazabilidad e integridad permite relacionar orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y formalizar las reglas aplicables a las transferencias y transformaciones entre etapas?
-3. ¿Cómo implementar e integrar los módulos de Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial?
-4. ¿En qué medida la solución cumple los requerimientos y preserva las invariantes definidas mediante pruebas funcionales y técnicas?
-5. ¿Cómo comprobar, mediante escenarios operativos y criterios de aceptación, la capacidad de la solución para reconstruir trazas con evidencia contrastable y la carga de los flujos implementados?
+1. ¿Qué información se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta?
+2. ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación?
+3. ¿Qué debe permitir la aplicación en Recolección, Vivero y Plantación para mantener vinculada la información del material vegetal durante su recorrido?
+4. ¿Cómo verificar que lo implementado cumple los requerimientos definidos y que los registros conservan coherencia entre las cantidades y los movimientos del material vegetal?
+5. ¿En qué medida la aplicación permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal en escenarios operativos representativos de R3Foresta?
 
 ## 1.3. Objetivos
 
 ### 1.3.1. Objetivo general
 
-Desarrollar un sistema de trazabilidad para la cadena de custodia del material vegetal utilizado por R3Foresta, desde su recolección o recepción externa hasta el registro de la plantación, con información relacionada sobre procedencia, movimientos, cantidades, responsables, evidencias y destino.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
 
 ### 1.3.2. Objetivos específicos
 
-1. **Analizar** los procesos, actores, datos, estados, eventos, unidades de medida, requerimientos y reglas de negocio de Recolección, Vivero y Plantación, incluidas las variantes de ingreso de material vegetal adquirido o recibido de terceros.
-2. **Diseñar** un modelo de trazabilidad e integridad que relacione orígenes, entidades, eventos, transformaciones, cantidades, saldos, responsables y evidencias, y que formalice las reglas aplicables a las transferencias y transformaciones entre etapas.
-3. **Implementar** los módulos de Recolección, Vivero y Plantación, incorporando el ingreso de material vegetal adquirido o recibido de terceros directamente en Vivero o Plantación, con sus datos de procedencia y su registro en el historial.
-4. **Verificar** el cumplimiento de los requerimientos y de las invariantes de consistencia mediante pruebas funcionales y técnicas.
-5. **Evaluar**, mediante escenarios operativos y criterios de aceptación, la capacidad de la solución para reconstruir trazas con evidencia contrastable y la carga de los flujos implementados.
+1. **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
+2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
+3. **Implementar** las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
+4. **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
+5. **Evaluar**, mediante escenarios operativos representativos, en qué medida la aplicación permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
 
 ## 1.4. Justificación
 
@@ -175,10 +175,9 @@ El proyecto comprende tres módulos operativos:
 2. **Vivero:** recepción y manejo del material, transformación biológica observada, mermas, descartes, saldo vivo, asignaciones, despachos, devoluciones y cierre.
 3. **Plantación:** organización de campañas y subcampañas, asignación de plantas y registro de cantidad plantada, responsables, fecha, ubicación y evidencia.
 
-El sistema podrá registrar material adquirido o recibido de terceros directamente en Vivero o Plantación. El historial distinguirá ese ingreso de una recolección efectuada por R3Foresta y conservará la información de procedencia disponible. Estas variantes permanecerán dentro de los tres módulos y no constituirán un cuarto módulo.
-
 También forman parte del alcance:
 
+- el ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros, con el registro de la procedencia disponible;
 - la reconstrucción del origen y recorrido registrado del material vegetal;
 - el historial de eventos que explique cambios de estado, cantidad y ubicación;
 - reglas para prevenir saldos negativos y consumos o asignaciones superiores a lo disponible;
@@ -189,7 +188,7 @@ También forman parte del alcance:
 
 La verificación técnica comprobará requerimientos e invariantes mediante pruebas funcionales, de integración, concurrencia y fallo inducido. Incluirá, como mínimo, saldo no negativo, rechazo de consumo superior a lo disponible, prevención de doble consumo, operaciones críticas sin estados parciales y reconstrucción de una traza entre los tres módulos.
 
-La validación utilizará escenarios operativos y criterios de aceptación para comprobar la reconstrucción de trazas, la coherencia de los datos, la evidencia vinculada y la carga de los flujos implementados. Los resultados se limitarán a las funciones y condiciones realmente comprobadas; no se interpretarán como una comparación causal con la práctica anterior.
+La validación utilizará escenarios operativos y criterios de aceptación para comprobar la reconstrucción de trazas, la coherencia de los datos y la evidencia vinculada. Los resultados se limitarán a las funciones y condiciones realmente comprobadas; no se interpretarán como una comparación causal con la práctica anterior.
 
 ### 1.5.3. Fuera del alcance
 
@@ -225,7 +224,7 @@ Un modelo de entidades, eventos, relaciones, cantidades, saldos, responsables y 
 
 ### 1.6.3. Aporte académico
 
-Un proceso de ingeniería documentado que vincule el problema con requisitos, especificaciones, decisiones de diseño, incrementos ejecutables, integraciones, pruebas y aceptación. El trabajo expondrá el grado de cumplimiento de los objetivos, las decisiones y riesgos gestionados, los resultados técnicos, la capacidad de reconstrucción, la carga observada en los flujos y las limitaciones identificadas.
+Un proceso de ingeniería documentado que vincule el problema con requisitos, especificaciones, decisiones de diseño, incrementos ejecutables, integraciones, pruebas y aceptación. El trabajo expondrá el grado de cumplimiento de los objetivos, las decisiones y riesgos gestionados, los resultados técnicos, la capacidad de reconstrucción y las limitaciones identificadas.
 
 ## 1.7. Metodología de desarrollo
 

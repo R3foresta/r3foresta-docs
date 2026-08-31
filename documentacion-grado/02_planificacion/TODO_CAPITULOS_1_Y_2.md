@@ -50,9 +50,9 @@
 - [ ] Reformular y obtener conformidad sobre la pregunta general, sin anticipar en ella la solución tecnológica.
 - [ ] Obtener aprobación o correcciones para las cinco preguntas específicas.
 - [ ] Ajustar y obtener conformidad sobre el objetivo general con un único verbo rector: **desarrollar**.
-- [x] Confirmar los cinco objetivos específicos sin cambios.
+- [ ] Obtener conformidad sobre las cinco preguntas específicas y los objetivos correspondientes actualizados.
 - [x] Confirmar que se mantienen exactamente tres módulos: Recolección, Vivero y Plantación.
-- [x] Confirmar el tratamiento de los ingresos externos en Vivero y Plantación como variantes internas.
+- [ ] Obtener conformidad sobre la incorporación del ingreso directo en Vivero o Plantación de material adquirido o recibido de terceros y los datos de procedencia que deberán registrarse.
 - [x] Confirmar que la medición de captura de carbono, la generación o certificación de créditos de carbono y el monitoreo posterior permanecen fuera del alcance, aunque la relación institucional con procesos posteriores pueda explicarse como contexto.
 
 ### 2.3. Justificaciones, metodología y formato
@@ -161,8 +161,8 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 
 - [x] Registrar la revisión de la tutora del 25 de agosto de 2026.
 - [x] Sincronizar la pregunta general sin una solución anticipada y el objetivo general con el único verbo rector **desarrollar**.
-- [x] Mantener sin cambios los cinco objetivos específicos confirmados por la tutora.
-- [x] Revalidar la correspondencia uno a uno entre preguntas y objetivos específicos después de la corrección general.
+- [x] Actualizar las cinco preguntas específicas y los objetivos correspondientes, manteniendo su correspondencia uno a uno.
+- [ ] Obtener conformidad de la tutora sobre las preguntas y objetivos actualizados.
 - [x] Mantener el orden: analizar, diseñar, implementar, verificar y evaluar.
 - [x] Propagar al Capítulo I únicamente las decisiones cerradas en el tablero del Perfil.
 
@@ -176,7 +176,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 ### 5.6. Alcances, límites y aportes
 
 - [ ] Confirmar el detalle funcional de Recolección, Vivero y Plantación.
-- [ ] Confirmar las variantes de ingreso externo.
+- [ ] Confirmar que el alcance académico incluye el ingreso directo de material adquirido o recibido de terceros en Vivero o Plantación, sin crear un cuarto módulo.
 - [ ] Mantener el historial transversal sin convertirlo en un cuarto módulo.
 - [ ] Revisar las exclusiones con la tutora.
 - [ ] Confirmar disponibilidad de una operación real o, en su defecto, definir escenarios controlados de validación.
