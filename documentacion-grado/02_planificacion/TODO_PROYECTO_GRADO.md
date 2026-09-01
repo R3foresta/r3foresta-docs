@@ -13,7 +13,7 @@
 
 - [x] Adoptar como título **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**.
 - [x] Mantener exactamente tres módulos: M1 Recolección, M2 Vivero y M3 Plantación.
-- [x] Permitir que el recorrido académico se inicie con el registro de origen, ya sea mediante una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente.
+- [x] Permitir que el recorrido académico se inicie con el origen registrado: una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente.
 - [x] Mantener fuera del alcance monitoreo posterior, CO₂, MRV, certificación, emisión o comercialización de bonos de carbono, blockchain, NFT, contratos inteligentes e IPFS.
 - [x] Adoptar **Rational Unified Process (RUP) adaptado** como metodología de desarrollo.
 - [x] Complementar RUP con **Spec-Driven Development asistido por inteligencia artificial**.
@@ -57,7 +57,7 @@
 - [ ] Cerrar alcance, límites y relación con los cinco objetivos específicos.
 - [ ] Confirmar responsables de Recolección, Vivero y Plantación.
 - [ ] Identificar actores institucionales que priorizan o aceptan requisitos.
-- [ ] Confirmar que el alcance operativo se inicia con el registro de origen, ya sea mediante una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación, y concluye con el registro de la plantación.
+- [ ] Confirmar que el alcance operativo se inicia con el origen registrado: una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación, y concluye con el registro de la plantación.
 - [ ] Confirmar que la trazabilidad, las consultas y las evidencias son capacidades transversales y no un cuarto módulo.
 
 ### 3.2. Productos de Inicio

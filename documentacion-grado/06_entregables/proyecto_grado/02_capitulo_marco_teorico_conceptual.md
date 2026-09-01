@@ -160,7 +160,7 @@ Un **artefacto** es un producto de trabajo controlado: visión, modelo de casos 
 
 R3Foresta es un proyecto individual y de duración limitada. Por ello una sola persona puede desempeñar varios roles y los artefactos se consolidan para evitar burocracia. Se conservan, sin embargo, los elementos que dan rigor al proceso: fases, iteraciones, hitos, riesgos, arquitectura, requisitos, configuración, incrementos ejecutables, pruebas, integración y aceptación.
 
-La adaptación tampoco añade ceremonias o roles de Scrum que no se utilizarán. El orden de los incrementos responde a dependencias de la cadena: M1 establece el origen registrado; M2 recibe material de M1 y M3 recibe material desde M2. La trazabilidad transversal se completa sobre los tres módulos integrados.
+La adaptación tampoco añade ceremonias o roles de Scrum que no se utilizarán. El orden de los incrementos responde a la ruta principal M1→M2→M3: M1 registra una variante de origen registrado; M2 recibe material de M1 y M3 recibe material de M2. Las incorporaciones externas en Vivero o Plantación se mantienen como variantes de ingreso dentro de esos módulos. La trazabilidad transversal se completa sobre los tres módulos integrados.
 
 ## 2.9. Spec-Driven Development y asistencia de inteligencia artificial
 

@@ -140,7 +140,7 @@ Es una medida descriptiva del resultado de los escenarios ejecutados, no una com
 
 ## 8. Alcance del recorrido
 
-**Definición adoptada:** el recorrido académico del material vegetal se inicia con el registro de origen, ya sea mediante una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. Continúa, cuando corresponda, con su manejo en Vivero y concluye con el registro de la plantación.
+**Definición adoptada:** el recorrido académico del material vegetal se inicia con el origen registrado: una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. Continúa, cuando corresponda, con su manejo en Vivero y concluye con el registro de la plantación.
 
 La incorporación en Vivero o Plantación de material vegetal adquirido externamente forma parte del alcance académico y debe conservar la procedencia disponible dentro del recorrido considerado.
 
@@ -157,7 +157,7 @@ Antes de cerrar cualquier documento del proyecto de grado, verificar que:
 3. *verificable* solo aparezca aplicado a proposiciones o invariantes; para registros se use *evidencia contrastable* (§2.1);
 4. cada enunciado de conservación de saldos incluya la salvedad de unidad y etapa (§4);
 5. blockchain, IPFS y NFT aparezcan únicamente para declarar que están fuera del alcance;
-6. el recorrido académico pueda iniciarse con el registro de origen, ya sea mediante una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación;
+6. el recorrido académico pueda iniciarse con el origen registrado: una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación;
 7. “semillas y plantas” se use para introducir el dominio y “material vegetal” como denominación general posterior;
 8. los objetivos mantengan correspondencia con el problema, el alcance y la evaluación, y cualquier ajuste sustantivo se revise formalmente con la tutora;
 9. transferencia y transformación se mantengan diferenciadas y no se use una equivalencia automática entre unidades distintas;

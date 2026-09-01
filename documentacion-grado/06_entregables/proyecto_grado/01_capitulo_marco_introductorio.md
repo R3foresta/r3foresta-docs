@@ -32,9 +32,9 @@ Una declaración institucional previa mencionó pruebas piloto de acopio y clasi
 
 Actualmente, parte de la información y las evidencias de las actividades de reforestación se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes. Por ello, resulta difícil responder preguntas básicas sobre el material vegetal: de dónde provino, quién estuvo a cargo, qué ocurrió durante su paso por el vivero, cuántas unidades fueron movilizadas y dónde terminó siendo plantado.
 
-Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común orientada a preservar el historial del material vegetal desde el registro de su origen, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, pasando por su desarrollo en vivero cuando corresponda, hasta el registro de su plantación. El sistema integrará información sobre procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de Recolección, Vivero y Plantación, contemplando tanto el material obtenido por R3foresta como el adquirido de fuentes externas.
+Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común orientada a preservar el historial del material vegetal desde su origen registrado, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, pasando por su desarrollo en vivero cuando corresponda, hasta el registro de su plantación. El sistema integrará información sobre procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de Recolección, Vivero y Plantación, contemplando tanto el material obtenido por R3foresta como el adquirido de fuentes externas.
 
-En términos operativos, el registro de origen puede realizarse mediante la recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. El proceso continúa, cuando corresponda, con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
+En términos operativos, el origen registrado se establece mediante el registro de una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. El proceso continúa, cuando corresponda, con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
 
 ### 1.1.3. Trabajos académicos y sistemas similares
 
@@ -77,52 +77,50 @@ A medida que se realizan nuevas recolecciones, procesos de vivero y plantaciones
 
 Esta situación dificulta tanto la administración interna de las actividades de reforestación como la presentación de historiales organizados a comunidades, patrocinadores y otras partes interesadas. También limita la posibilidad de conservar desde ahora antecedentes que, complementados posteriormente con procesos de monitoreo, medición y verificación, puedan evaluarse como parte de futuras iniciativas relacionadas con carbono.
 
-### 1.2.2. Causas y efectos
+### 1.2.2. Árbol de problemas
 
-**Figura 2. Árbol de causas y efectos.**
+**Figura 2. Árbol de problemas.**
 
 ```mermaid
 flowchart BT
-    C1["Registros dispersos en fotografías,<br/>mensajería, cuadernos,<br/>redes sociales y conocimiento de responsables"]
-    C2["Ausencia de identificadores y<br/>relaciones comunes entre etapas"]
-    C3["Cambios de custodia entre etapas<br/>sin un historial uniforme de procedencia"]
-    C4["Entradas, salidas, transferencias y saldos<br/>registrados mediante operaciones separadas"]
-    C5["Evidencia fotográfica, temporal o geográfica<br/>desvinculada del hecho operativo"]
+    C1["Registros de las actividades distribuidos<br/>entre diferentes medios y fuentes, incluido<br/>el conocimiento de las personas involucradas"]
+    C2["Ausencia de una forma común para relacionar<br/>los registros generados en Recolección,<br/>Vivero y Plantación"]
+    C3["Información y evidencias de cada actividad<br/>(cantidades, especies, responsables, fechas y ubicaciones)<br/>conservadas en registros separados"]
 
-    P(["PROBLEMA CENTRAL<br/><br/>La información sobre la procedencia y el recorrido<br/>del material vegetal a través de Recolección,<br/>Vivero y Plantación no se encuentra integrada<br/>en un historial reconstruible con evidencia vinculada"])
+    P(["PROBLEMA CENTRAL<br/><br/>Actualmente, R3Foresta no dispone de un historial integrado<br/>que le permita reconstruir, a partir de sus registros,<br/>el recorrido del material vegetal desde su origen<br/>registrado hasta el registro de su plantación"])
 
-    E1["Mayor tiempo y menor completitud<br/>al reconstruir el recorrido del material vegetal"]
-    E2["Inconsistencias en cantidades,<br/>saldos, transferencias y asignaciones"]
-    E3["Decisiones operativas basadas<br/>en información incompleta"]
-    E4["Menor capacidad para respaldar la información<br/>comunicada a patrocinadores y aliados"]
+    E1["Dependencia de la revisión de múltiples fuentes<br/>y del conocimiento de las personas<br/>para reconstruir antecedentes"]
+    E2["Dificultad para conocer la disponibilidad real<br/>del material vegetal"]
+    E3["Dificultad para decidir la utilización del material vegetal<br/>y planificar las plantaciones"]
+    E4["Dificultad para presentar historiales organizados<br/>a comunidades, patrocinadores<br/>y otras partes interesadas"]
+    E5["Limitaciones para disponer de antecedentes organizados<br/>que puedan evaluarse en futuras iniciativas<br/>relacionadas con carbono"]
 
     C1 --> P
     C2 --> P
     C3 --> P
-    C4 --> P
-    C5 --> P
     P --> E1
     P --> E2
-    P --> E3
+    E2 --> E3
     P --> E4
+    P --> E5
 ```
 
-La primera causa representa la dispersión de la información entre fuentes y responsables. La segunda señala la ausencia de identificadores que relacionen una recolección, un lote de vivero, una asignación y una plantación. La tercera comprende los cambios de custodia que no conservan una referencia uniforme de procedencia. La cuarta se relaciona con operaciones cuantitativas registradas en fuentes o momentos distintos. La quinta alude a evidencia existente pero separada del evento al que debe dar contexto.
+Las causas describen condiciones actuales de registro; los efectos expresan consecuencias operativas e institucionales. La última consecuencia es una proyección condicionada y no implica cuantificación, certificación ni emisión de créditos de carbono.
 
 ### 1.2.3. Problema central
 
-> En la práctica actual de R3Foresta, los registros relacionados con el material vegetal en las actividades de Recolección, Vivero y Plantación permanecen dispersos y no están vinculados entre sí; por ello, la organización no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
+> Actualmente, R3Foresta no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### 1.2.4. Formulación del problema
 
 #### 1.2.4.1. Pregunta general
 
-> ¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde la recolección hasta el registro de su plantación?
+> ¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación?
 
 #### 1.2.4.2. Preguntas específicas
 
 1. ¿Qué información se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta?
-2. ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación?
+2. ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen registrado hasta el registro de su plantación?
 3. ¿Qué debe permitir el sistema en Recolección, Vivero y Plantación para mantener vinculada la información del material vegetal durante su recorrido?
 4. ¿Cómo verificar que lo implementado cumple los requerimientos definidos y que los registros conservan coherencia entre las cantidades y los movimientos del material vegetal?
 5. ¿En qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal en escenarios operativos representativos de R3Foresta?
@@ -131,12 +129,12 @@ La primera causa representa la dispersión de la información entre fuentes y re
 
 ### 1.3.1. Objetivo general
 
-Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### 1.3.2. Objetivos específicos
 
 1. **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
-2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
+2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen registrado hasta el registro de su plantación.
 3. **Implementar** en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
 4. **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
 5. **Evaluar**, mediante escenarios operativos representativos, en qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.

@@ -29,7 +29,7 @@ Para R3Foresta, la generación futura de bonos de carbono constituye un objetivo
 
 Actualmente, parte de esta información se encuentra distribuida entre fotografías, redes sociales, servicios de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Esto dificulta responder preguntas básicas sobre el material vegetal: de dónde provino, quién estuvo a cargo, qué ocurrió durante su paso por el vivero, cuántas unidades fueron movilizadas y dónde terminó siendo plantado.
 
-Este Proyecto de Grado aborda precisamente ese primer nivel del problema. Se propone desarrollar un sistema de trazabilidad como componente de **R3foresta App**, orientado a preservar el historial del material vegetal desde el registro de su origen, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, pasando por su desarrollo en vivero cuando corresponda, hasta el registro de su plantación. El sistema integrará información sobre procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de **Recolección, Vivero y Plantación**, contemplando tanto el material obtenido por R3foresta como el adquirido de fuentes externas.
+Este Proyecto de Grado aborda precisamente ese primer nivel del problema. Se propone desarrollar un sistema de trazabilidad como componente de **R3foresta App**, orientado a preservar el historial del material vegetal desde su origen registrado, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, pasando por su desarrollo en vivero cuando corresponda, hasta el registro de su plantación. El sistema integrará información sobre procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de **Recolección, Vivero y Plantación**, contemplando tanto el material obtenido por R3foresta como el adquirido de fuentes externas.
 
 De esta manera, R3Foresta podrá comenzar a construir un historial organizado de sus actividades de reforestación que responda a sus necesidades actuales y que, en el futuro, pueda evaluarse como parte de una base documental para iniciativas de carbono. El alcance del proyecto concluye con el registro de la plantación y no incluye el monitoreo posterior de los árboles, la cuantificación de carbono ni los procesos de certificación o emisión de créditos.
 
@@ -47,7 +47,7 @@ R3Foresta fue creada en 2019 como una iniciativa socioambiental orientada a la b
 
 *Nota.* Organigrama institucional proporcionado por la Fundación R3Foresta.
 
-**R3foresta App** se vincula con la proyección institucional de R3Carbon mediante la trazabilidad del material vegetal (R3Foresta, 2026). La aplicación relacionará su recorrido desde el registro de su origen, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, hasta el registro de su plantación, incluido su desarrollo en vivero cuando corresponda. El seguimiento posterior, la medición de carbono y la certificación quedan fuera del proyecto.
+**R3foresta App** se vincula con la proyección institucional de R3Carbon mediante la trazabilidad del material vegetal (R3Foresta, 2026). La aplicación relacionará su recorrido desde su origen registrado, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, hasta el registro de su plantación, incluido su desarrollo en vivero cuando corresponda. El seguimiento posterior, la medición de carbono y la certificación quedan fuera del proyecto.
 
 ### 2.2. Antecedentes internacionales
 
@@ -87,22 +87,22 @@ A medida que se realizan nuevas recolecciones, procesos de vivero y plantaciones
 
 Esta situación dificulta tanto la administración interna de las actividades de reforestación como la presentación de historiales organizados a comunidades, patrocinadores y otras partes interesadas. También limita la posibilidad de conservar desde ahora antecedentes que, complementados posteriormente con procesos de monitoreo, medición y verificación, puedan evaluarse como parte de futuras iniciativas relacionadas con carbono.
 
-El árbol de causas y efectos que sintetiza esta situación se presenta en el **Anexo A**.
+El árbol de problemas que sintetiza esta situación se presenta en el **Anexo A**.
 
 ### 3.2. Problema central
 
-En la práctica actual de R3Foresta, los registros relacionados con el material vegetal en las actividades de Recolección, Vivero y Plantación permanecen dispersos y no están vinculados entre sí; por ello, la organización no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
+Actualmente, R3Foresta no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### 3.3. Formulación del problema
 
 #### 3.3.1. Pregunta general
 
-¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde la recolección u origne hasta el registro de su plantación?
+¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación?
 
 #### 3.3.2. Preguntas específicas
 
 - ¿Qué información se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta?
-- ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación?
+- ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen registrado hasta el registro de su plantación?
 - ¿Qué debe permitir el sistema en Recolección, Vivero y Plantación para mantener vinculada la información del material vegetal durante su recorrido?
 - ¿Cómo verificar que lo implementado cumple los requerimientos definidos y que los registros conservan coherencia entre las cantidades y los movimientos del material vegetal?
 - ¿En qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal en escenarios operativos representativos de R3Foresta?
@@ -111,12 +111,12 @@ En la práctica actual de R3Foresta, los registros relacionados con el material 
 
 ### 4.1. Objetivo general
 
-Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### 4.2. Objetivos específicos
 
 - **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
-- **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
+- **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen registrado hasta el registro de su plantación.
 - **Implementar** en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
 - **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
 - **Evaluar**, mediante escenarios operativos representativos, en qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
@@ -125,7 +125,7 @@ Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relaci
 
 R3Foresta necesita una cadena informacional común para reconstruir el recorrido del material vegetal y conocer su procedencia, disponibilidad, pérdidas, transferencias y destino (Olsen & Borit, 2013; International Organization for Standardization, 2020). El sistema relacionará los registros de Recolección, Vivero y Plantación con el propósito de reducir la dependencia de búsquedas manuales y de la memoria de las personas.
 
-La generación futura de bonos de carbono forma parte de la orientación institucional de R3Foresta (R3Foresta, 2026). R3foresta App conservará desde el origen un historial de cantidades, saldos, responsables, ubicaciones y evidencias. Esta base podrá respaldar la información presentada a comunidades, patrocinadores y aliados y evaluarse para una posible reutilización en futuras iniciativas de carbono. Registrar esos antecedentes desde ahora reduce la necesidad de reconstruirlos después a partir de fuentes dispersas.
+La generación futura de bonos de carbono forma parte de la orientación institucional de R3Foresta (R3Foresta, 2026). R3foresta App conservará, desde su origen registrado, un historial de cantidades, saldos, responsables, ubicaciones y evidencias. Esta base podrá respaldar la información presentada a comunidades, patrocinadores y aliados y evaluarse para una posible reutilización en futuras iniciativas de carbono. Registrar esos antecedentes desde ahora reduce la necesidad de reconstruirlos después a partir de fuentes dispersas.
 
 El historial no demostrará por sí mismo la supervivencia o el crecimiento de las plantas, la biomasa, las remociones de dióxido de carbono equivalente, la línea base, la adicionalidad, la permanencia o las fugas. Tampoco sustituirá el seguimiento de campo, el monitoreo, la cuantificación, la validación, la verificación ni la emisión de créditos (International Organization for Standardization, 2019; Verra, s. f.). Estas actividades corresponden a proyectos posteriores y no amplían el alcance académico.
 
@@ -135,7 +135,7 @@ El aporte tecnológico y académico consistirá en integrar el análisis del dom
 
 ### 6.1. Alcance funcional
 
-El alcance funcional comprende tres módulos. El recorrido académico se inicia con el registro de origen, ya sea mediante una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente. En esta última variante se conservará la información disponible sobre su procedencia, proveedor o entidad de origen, cantidad, unidad, fecha de ingreso, responsable y evidencia asociada.
+El alcance funcional comprende tres módulos. El recorrido académico se inicia con el origen registrado: una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente. En esta última variante se conservará la información disponible sobre su procedencia, proveedor o entidad de origen, cantidad, unidad, fecha de ingreso, responsable y evidencia asociada.
 
 - **Recolección.** Registrará la especie, la cantidad y unidad de medida, la fecha, el responsable, la ubicación y la evidencia del material recolectado. Permitirá identificar el lote de origen y su transferencia al vivero hasta su cierre o vinculación con el material resultante.
 
@@ -166,7 +166,7 @@ Un sistema reúne elementos interrelacionados que actúan de forma conjunta (Int
 
 ### 7.2. Trazabilidad
 
-La trazabilidad es la capacidad de acceder a información relacionada con un objeto a lo largo de su ciclo de vida o de las etapas definidas para su seguimiento (Olsen & Borit, 2013). Moe (1998) diferencia la trazabilidad interna de aquella que enlaza diferentes etapas de una cadena, mientras que Dabbene et al. (2014) destacan la importancia de la identificación, la granularidad y la recuperación de las relaciones históricas. En R3Foresta, la trazabilidad abarcará desde la recolección hasta el registro de la plantación.
+La trazabilidad es la capacidad de acceder a información relacionada con un objeto a lo largo de su ciclo de vida o de las etapas definidas para su seguimiento (Olsen & Borit, 2013). Moe (1998) diferencia la trazabilidad interna de aquella que enlaza diferentes etapas de una cadena, mientras que Dabbene et al. (2014) destacan la importancia de la identificación, la granularidad y la recuperación de las relaciones históricas. En R3Foresta, la trazabilidad abarcará desde el origen registrado hasta el registro de la plantación.
 
 ### 7.3. Material vegetal
 
@@ -391,38 +391,34 @@ Verra. (s. f.). *Develop a Verified Carbon Standard (VCS) project.* Recuperado e
 
 ## 12. Anexos
 
-### Anexo A — Árbol de causas y efectos
+### Anexo A — Árbol de problemas
 
 **Figura A1**
 
-*Árbol de causas y efectos de la situación problemática*
+*Árbol de problemas de la situación problemática*
 
 ```mermaid
 flowchart BT
-    C1["Registros dispersos en fotografías,<br/>mensajería, cuadernos,<br/>redes sociales y conocimiento de responsables"]
-    C2["Ausencia de identificadores y<br/>relaciones comunes entre etapas"]
-    C3["Cambios de custodia entre etapas<br/>sin un historial uniforme de procedencia"]
-    C4["Entradas, salidas, transferencias y saldos<br/>registrados mediante operaciones separadas"]
-    C5["Evidencia fotográfica, temporal o geográfica<br/>desvinculada del hecho operativo"]
+    C1["Registros de las actividades distribuidos<br/>entre diferentes medios y fuentes, incluido<br/>el conocimiento de las personas involucradas"]
+    C2["Ausencia de una forma común para relacionar<br/>los registros generados en Recolección,<br/>Vivero y Plantación"]
+    C3["Información y evidencias de cada actividad<br/>(cantidades, especies, responsables, fechas y ubicaciones)<br/>conservadas en registros separados"]
 
-    P(["PROBLEMA CENTRAL<br/><br/>La información sobre la procedencia y el recorrido<br/>del material vegetal a través de Recolección,<br/>Vivero y Plantación no se encuentra integrada<br/>en un historial reconstruible con evidencia vinculada"])
+    P(["PROBLEMA CENTRAL<br/><br/>Actualmente, R3Foresta no dispone de un historial integrado<br/>que le permita reconstruir, a partir de sus registros,<br/>el recorrido del material vegetal desde su origen<br/>registrado hasta el registro de su plantación"])
 
-    E1["Mayor tiempo y menor completitud<br/>al reconstruir el recorrido del material vegetal"]
-    E2["Dificultad para conciliar cantidades,<br/>saldos, transferencias y asignaciones"]
-    E3["Decisiones operativas basadas<br/>en información incompleta"]
-    E4["Menor capacidad para respaldar la información<br/>comunicada a patrocinadores y aliados"]
-    E5["Falta de una base documental consolidada<br/>para evaluar su posible uso<br/>en futuras iniciativas de carbono"]
+    E1["Dependencia de la revisión de múltiples fuentes<br/>y del conocimiento de las personas<br/>para reconstruir antecedentes"]
+    E2["Dificultad para conocer la disponibilidad real<br/>del material vegetal"]
+    E3["Dificultad para decidir la utilización del material vegetal<br/>y planificar las plantaciones"]
+    E4["Dificultad para presentar historiales organizados<br/>a comunidades, patrocinadores<br/>y otras partes interesadas"]
+    E5["Limitaciones para disponer de antecedentes organizados<br/>que puedan evaluarse en futuras iniciativas<br/>relacionadas con carbono"]
 
     C1 --> P
     C2 --> P
     C3 --> P
-    C4 --> P
-    C5 --> P
     P --> E1
     P --> E2
-    P --> E3
+    E2 --> E3
     P --> E4
     P --> E5
 ```
 
-*Nota.* Elaboración propia a partir del planteamiento del problema.
+*Nota.* Las causas describen condiciones actuales de registro; los efectos expresan consecuencias operativas e institucionales. La última consecuencia es una proyección condicionada y no implica cuantificación, certificación ni emisión de créditos de carbono. Elaboración propia a partir del planteamiento del problema.

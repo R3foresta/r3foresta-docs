@@ -39,7 +39,7 @@ No incluir en el título eventos, contratos atómicos, blockchain, NFT, IPFS ni 
 
 La práctica actual conserva fotografías, mensajes, redes sociales, cuadernos y memoria de los responsables, pero no una estructura común para vincular procedencia, manejo, cantidades, responsables, evidencia y plantación.
 
-El recorrido principal comprende Recolección, Vivero y Plantación. Para el alcance académico, se inicia con el registro de origen, ya sea mediante una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente; concluye con el registro de su plantación.
+El recorrido principal comprende Recolección, Vivero y Plantación. Para el alcance académico, se inicia con el origen registrado: una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente; concluye con el registro de su plantación.
 
 La falta de relaciones comunes limita la reconstrucción de la cadena, la consistencia de saldos y la información presentada a patrocinadores y aliados.
 
@@ -49,12 +49,12 @@ Los objetivos deben mantener correspondencia con el problema, el alcance y la ev
 
 ### Objetivo general
 
-Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### Objetivos específicos
 
 1. **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
-2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
+2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen registrado hasta el registro de su plantación.
 3. **Implementar** en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
 4. **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
 5. **Evaluar**, mediante escenarios operativos representativos, en qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
@@ -112,7 +112,7 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 2. **Evento antes que estado aislado.** Cuando una cantidad, estado o ubicación cambie, deberá poder identificarse el hecho que produjo ese cambio; no se debe sobrescribir el estado actual sin conservar su explicación.
 3. **Las cantidades deben poder explicarse.** Los saldos actuales deberán relacionarse con los eventos anteriores que los produjeron.
 4. **Transferencia y transformación son conceptos diferentes.** Una transferencia mueve material; una transformación puede modificar estado, naturaleza, cantidad o unidad de medida. No se asumirá una conversión aritmética automática entre gramos de semillas y cantidad de plantas.
-5. **La procedencia debe conservarse.** El recorrido del material vegetal se iniciará con el registro de origen, ya sea mediante una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. Durante las tres etapas conservará la información disponible sobre especie, cantidad, unidad, fecha, responsable, ubicación, procedencia y evidencia.
+5. **La procedencia debe conservarse.** El recorrido del material vegetal se iniciará con el origen registrado: una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. Durante las tres etapas conservará la información disponible sobre especie, cantidad, unidad, fecha, responsable, ubicación, procedencia y evidencia.
 6. **La evidencia respalda, no certifica.** Fotografías, fechas, ubicaciones y otros datos fortalecen el respaldo documental del evento, pero no prueban de forma absoluta la correspondencia con el mundo físico.
 7. **La validación debe intentar reconstruir.** La comprobación central no será solo guardar registros, sino determinar si puede reconstruirse de manera coherente qué ocurrió con un material determinado.
 8. **Integridad y reconstrucción son complementarias.** No basta con conservar un historial; cantidades, asignaciones y saldos también deben mantener coherencia.
