@@ -1,0 +1,31 @@
+{
+  "bridgeVersion": "3.6",
+  "kind": "google-docs-trusted-read-receipt",
+  "status": "complete",
+  "target": {
+    "documentId": "1ws6of-5p0HUDKJTppYqRjcbgCJNN1VeRYpXfbWi_iEQ",
+    "title": "R3Foresta - Perfil de proyecto de Grado",
+    "revisionId": "AIroW36gYYMa7SQymwGpmACQE3-xpMsjcWF2C_PSIszGa67J61mHE9iMzUdtrbE0lI5DXx9ayPRGl1qAohHy_em5sX67D5SPgJeAjJz8Z28",
+    "documentUrl": "https://docs.google.com/document/d/1ws6of-5p0HUDKJTppYqRjcbgCJNN1VeRYpXfbWi_iEQ",
+    "selectedTabId": null
+  },
+  "dropdownMetadata": {
+    "status": "unavailable",
+    "resolvedTool": null,
+    "authoritative": false,
+    "count": 0
+  },
+  "controlAwareness": {
+    "hasProtectedControls": false,
+    "authoritativeDropdownCount": 0,
+    "opaqueControlCount": 0,
+    "affectedParagraphCount": 0,
+    "nativeElementCounts": {
+      "inlineObjectElement": 5
+    },
+    "preservationRequired": false,
+    "recommendedBehavior": "No protected controls were detected in the scanned scope."
+  },
+  "warnings": [],
+  "error": null
+}

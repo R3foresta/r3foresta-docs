@@ -29,7 +29,7 @@ No calificar los registros como “certificados”, “certificables”, “audi
 
 > **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**
 
-El título fue seleccionado por el postulante el 25 de agosto de 2026 y permanece pendiente de ratificación por la tutora, Ph.D. Marisol Téllez Ramírez. La expresión *con proyección hacia bonos de carbono* comunica una finalidad institucional posterior y no incorpora al alcance medición de carbono, MRV, certificación, emisión ni comercialización de créditos.
+El título seleccionado permanece pendiente de ratificación académica. La expresión *con proyección hacia bonos de carbono* comunica una finalidad institucional posterior y no incorpora al alcance medición de carbono, MRV, certificación, emisión ni comercialización de créditos.
 
 La expresión *caso R3Foresta* delimita la organización y el contexto de aplicación del producto. No declara la adopción de un diseño investigativo de estudio de caso.
 
@@ -119,7 +119,7 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 9. **La solución técnica permanece abierta durante el Perfil.** El Perfil define propiedades deseadas; los mecanismos concretos se decidirán y justificarán posteriormente.
 10. **La validación se basa en escenarios representativos.** Cada escenario registrará pasos, resultados, evidencias y observaciones, sin convertir la validación en un estudio comparativo.
 11. **La verificación se concentra en riesgo y evidencia.** Se mantendrá un conjunto pequeño de pruebas de calidad sobre invariantes y recorridos críticos; el volumen de casos o archivos de prueba no es un resultado académico por sí mismo.
-12. **La construcción formal debe ser demostrable.** El sistema académico partirá de una referencia inicial identificable del repositorio y cada iteración e incremento conservará evidencia versionada de lo construido dentro de la ventana autorizada.
+12. **La construcción formal debe ser demostrable.** Cada iteración e incremento conservará evidencia versionada de los productos construidos.
 
 ## 8. Propagación a los artefactos posteriores
 
@@ -146,7 +146,7 @@ El proyecto no incorpora un marco de investigación independiente. Su proceso re
 - hitos de ciclo de vida: objetivos (LCO), arquitectura (LCA), capacidad operativa inicial (IOC) y liberación del producto (PR);
 - proceso dirigido por casos de uso, centrado en la arquitectura e iterativo e incremental; los riesgos prioritarios orientan el contenido de las iteraciones;
 - siete iteraciones: IN-1, EL-1, CO-1 a CO-4 y TR-1;
-- adaptación al tamaño del proyecto: una persona desempeña varios roles, se conservan solo artefactos que aportan evidencia y no se instalan ceremonias ni roles de Scrum;
+- adaptación al tamaño del proyecto: se simplifican roles y documentos, se conservan solo artefactos que aportan evidencia y no se instalan ceremonias ni roles de Scrum;
 - construcción progresiva de M1 Recolección, M2 Vivero y M3 Plantación, con integración M1→M2, M2→M3 y trazabilidad transversal.
 
 RUP estructura el proyecto completo. Sus cuatro fases no se repiten como un miniproyecto por módulo. Una iteración es el intervalo de trabajo que recorre las disciplinas pertinentes y concluye con una revisión; un incremento es la versión ejecutable resultante. Los módulos se materializan mediante los cuatro incrementos de las iteraciones de Construcción.
@@ -155,11 +155,11 @@ RUP estructura el proyecto completo. Sus cuatro fases no se repiten como un mini
 
 Cada capacidad seguirá un protocolo propio basado en el flujo central de GitHub Spec Kit y en la cadena `necesidad → requisito → especificación → diseño → tareas → implementación → pruebas → resultado → aceptación`. La especificación versionada será el contrato de trabajo antes de modificar el código. La IA podrá apoyar el análisis, la redacción, la generación de alternativas, la implementación y las pruebas, pero no reemplazará la decisión, revisión, ejecución de pruebas ni aceptación humanas.
 
-La construcción parte de una referencia identificable del repositorio y de un inventario del software preexistente, y conserva evidencia por iteración e incremento. Los desarrollos previos pueden utilizarse como referencia técnica y de factibilidad, sin falsificar fechas, autores, pruebas o resultados. La reconstrucción controlada del proceso dentro de la ventana autorizada debe conservar su fecha real, citar sus fuentes y describirse de forma transparente.
+La construcción conserva evidencia por iteración e incremento.
 
-### Autoría y asistencia
+### Asistencia de IA
 
-Pablo Andrés Fernández Cari es el autor académico y responsable principal del trabajo. La colaboración externa fue puntual y se delimitará en el documento final. Los agentes de IA Claude Code y Codex apoyarán la descomposición de tareas, implementación, revisión, pruebas y redacción. Toda salida será revisada y comprobada por el postulante; las decisiones del dominio y la responsabilidad son humanas. Cada aporte material registrará herramienta y versión disponible, tarea, artefacto afectado, decisión humana, prueba y referencia al cambio.
+Los agentes de IA Claude Code y Codex apoyarán la descomposición de tareas, implementación, revisión, pruebas y redacción. Toda salida será revisada y comprobada antes de su aceptación; las decisiones del dominio y la responsabilidad son humanas. Cada aporte material registrará herramienta y versión disponible, tarea, artefacto afectado, decisión humana, prueba y referencia al cambio.
 
 ## 10. Verificación, validación y aceptación
 
@@ -211,7 +211,7 @@ Antes de cerrar cualquier versión:
 7. deben diferenciarse verificación técnica, validación operativa y aceptación;
 8. debe mantenerse la declaración transparente de autoría y asistencia;
 9. recursos y cronograma deben coincidir con el perfil oficial; el Perfil no incluirá presupuesto;
-10. la construcción formal debe partir de una referencia inicial identificable del repositorio y un inventario del software preexistente, y conservar evidencia de cada iteración e incremento; los desarrollos previos solo pueden describirse como referencia técnica y factibilidad;
+10. la construcción formal debe conservar evidencia de cada iteración e incremento;
 11. el cronograma debe conservar las cuatro fases RUP, las siete iteraciones y los cuatro incrementos de Construcción, incluidos los tres módulos, ambas integraciones y la trazabilidad transversal;
 12. los agentes de IA deben aparecer como apoyo bajo revisión y aprobación humanas;
 13. cualquier cambio académico acordado con la docente o la tutora debe propagarse al perfil, estructura y TODO;
@@ -222,8 +222,7 @@ Antes de cerrar cualquier versión:
 18. cualquier nueva documentación del Proyecto de Grado debe revisar los principios de las secciones 7 y 8 antes de cerrarse;
 19. las incorporaciones de material vegetal adquirido externamente en Vivero y Plantación deben contar con requisitos, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
 20. cada iteración debe contar con objetivos, riesgos, productos y revisión; cada incremento debe contar con especificación, criterios de aceptación, implementación, pruebas, resultado y evidencia de integración;
-21. el uso de IA debe registrarse como asistencia bajo revisión humana; ninguna salida se acepta sin verificación del postulante;
-22. no se fabricarán retrospectivamente commits, pruebas, participantes, resultados ni aprobaciones; toda reconstrucción académica se identificará como controlada y autorizada;
+21. el uso de IA debe registrarse como asistencia bajo revisión humana; ninguna salida se acepta sin revisión humana;
 23. las deudas técnicas críticas para identidad, seguridad, migraciones y pruebas deberán cerrarse antes de la liberación sin convertirlas en el foco narrativo del Perfil.
 24. toda sección posterior al Perfil deberá aplicar la lista de revisión de [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md) antes de cerrarse.
 25. la fuente canónica y única versión editable del Perfil dentro del repositorio será su archivo Markdown; las versiones aprobadas se transferirán directamente al Google Docs existente en Drive, que será el documento de trabajo y presentación; el DOCX local quedará fuera del flujo;

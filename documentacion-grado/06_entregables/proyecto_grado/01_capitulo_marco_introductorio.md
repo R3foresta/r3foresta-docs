@@ -236,7 +236,7 @@ En **Inicio** se delimitarán el problema, los actores, el alcance, los requisit
 
 ### 1.7.2. Adaptación de RUP al proyecto
 
-La adaptación conserva los principios, fases, hitos, disciplinas y evidencia de RUP, pero reduce la carga administrativa de un proceso pensado para equipos mayores. El postulante asumirá los roles de analista, arquitecto, desarrollador, responsable de pruebas y responsable de configuración; la tutora y los responsables autorizados de R3Foresta intervendrán en revisiones y aceptación dentro de sus competencias. Solo se producirán artefactos que contribuyan al control y a la defensa del proyecto.
+La adaptación conserva los principios, fases, hitos, disciplinas y evidencia de RUP, pero reduce la carga administrativa de un proceso pensado para equipos mayores. Solo se producirán artefactos que contribuyan al control y a la defensa del proyecto; las revisiones, decisiones y aceptaciones de los hitos se registrarán junto con la evidencia correspondiente.
 
 Los hitos adaptados serán: objetivos del ciclo de vida o **LCO**, arquitectura del ciclo de vida o **LCA**, capacidad operativa inicial o **IOC** y liberación del producto o **PR**. Para aprobarlos se revisarán artefactos y resultados, no solo el cumplimiento de una fecha.
 
@@ -261,7 +261,7 @@ Si la implementación revela una ambigüedad, primero se actualizará y revisar�
 
 La IA apoyará la identificación de ambigüedades, la descomposición de especificaciones, la exploración de alternativas de diseño, la generación y revisión de código, la propuesta de pruebas y la actualización documental. SDD no cuenta con una definición normativa única; el referente adoptado, GitHub Spec Kit, es explícitamente agentic. La expresión **asistido por IA** se mantiene para declarar esa variante y hacer visibles sus controles (GitHub, 2026).
 
-Toda salida de IA será considerada una propuesta. El postulante deberá revisar su correspondencia con las reglas del dominio, ejecutar las pruebas, resolver discrepancias y aceptar o rechazar el resultado. No se delegarán a la IA la aprobación del alcance, las decisiones institucionales, la autoría, la validación final ni la responsabilidad por el producto. Para cada aporte material se registrarán fecha, herramienta y modelo o versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio; no será necesario publicar conversaciones privadas completas.
+Toda salida de IA será considerada una propuesta. Deberá revisarse su correspondencia con las reglas del dominio, ejecutar las pruebas, resolver discrepancias y aceptar o rechazar el resultado. No se delegarán a la IA la aprobación del alcance, las decisiones institucionales, la autoría, la validación final ni la responsabilidad por el producto. Para cada aporte material se registrarán herramienta y modelo o versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio; no será necesario publicar conversaciones privadas completas.
 
 ### 1.7.6. Verificación, validación y aceptación
 
@@ -275,8 +275,6 @@ El seguimiento confrontará por fase e iteración lo planificado con lo realizad
 
 1. `necesidad → requisito → especificación → decisión de diseño → tarea → cambio → prueba → resultado → aceptación`;
 2. `requisito → regla → invariante → mecanismo → prueba → resultado`.
-
-La metodología se consolidó documentalmente el 25 de agosto de 2026, dentro de la ventana autorizada del 6 de julio al 15 de noviembre. La construcción parte de una referencia identificable del repositorio y de un inventario del software preexistente. Los componentes anteriores podrán consultarse como referencia técnica, pero no se fabricarán retrospectivamente artefactos, commits, pruebas, resultados, participantes ni aprobaciones. Las actividades reconstruidas de forma controlada conservarán su fecha real, citarán sus fuentes y se identificarán como tales.
 
 ### 1.7.8. Periodización
 

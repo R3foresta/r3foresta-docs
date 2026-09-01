@@ -1,11 +1,6 @@
 # TODO — ejecución del Proyecto de Grado
 
-> **Fecha de apertura:** 19 de agosto de 2026.
-> **Última decisión metodológica:** 31 de agosto de 2026.
-> **Ventana académica:** 6 de julio–15 de noviembre de 2026.
 > **Propósito:** controlar la ejecución de RUP adaptado, sus fases e iteraciones, los incrementos de los tres módulos, sus integraciones, la verificación, la validación, la entrega y el documento final.
->
-> La metodología se consolidó documentalmente el 25 de agosto dentro de una ventana ya iniciada. Toda reconstrucción de actividades anteriores conservará su fecha real y sus fuentes; no se retrofecharán artefactos, commits, pruebas, resultados ni aprobaciones.
 
 > La revisión y cierre específicos de los capítulos I y II se controlan en [`TODO_CAPITULOS_1_Y_2.md`](TODO_CAPITULOS_1_Y_2.md).
 
@@ -20,15 +15,10 @@
 - [x] Eliminar los sprints y organizar el trabajo mediante fases e iteraciones RUP, con incrementos ejecutables en Construcción.
 - [x] Retirar ciencia del diseño, DSRM, estudio de caso único embebido, FEDS y demás componentes de metodología de investigación.
 - [x] Tratar la verificación, la validación operativa y la aceptación como actividades de Ingeniería de Software.
-- [x] Demostrar la construcción académica desde una referencia inicial del repositorio dentro de la ventana autorizada.
-- [x] Conservar desarrollos anteriores únicamente como referencia técnica y factibilidad.
 
 ## 2. Productos y evidencia transversales
 
-- [ ] Definir el repositorio, las ramas y el entorno de la referencia inicial académica.
-- [ ] Crear y documentar la etiqueta o commit de referencia inicial.
 - [ ] Preparar una base de datos reproducible mediante migraciones académicas.
-- [ ] Registrar el inventario inicial de capacidades existentes y pendientes.
 - [ ] Mantener el registro de riesgos con impacto, respuesta, responsable, estado y efecto sobre el plan.
 - [ ] Mantener la lista priorizada de requisitos, defectos y tareas.
 - [ ] Mantener la matriz principal:
@@ -48,7 +38,6 @@
   - defectos, desviaciones y acciones correctivas.
 - [ ] Registrar por iteración `resultado o incremento → planificado → realizado → evidencia → desviación → decisión → riesgo residual → estado del hito`.
 - [ ] Registrar horas académicas por fase, iteración, incremento y actividad transversal.
-- [ ] Diferenciar siempre referencia técnica previa, construcción académica y estado desplegado.
 
 ## 3. Fase de Inicio — iteración IN-1 — 6 al 19 de julio
 
@@ -67,7 +56,6 @@
 - [ ] Preparar el modelo inicial de casos de uso.
 - [ ] Preparar la lista priorizada de requisitos y riesgos.
 - [ ] Preparar el plan de fases, iteraciones, incrementos, productos y criterios de salida.
-- [ ] Establecer la referencia inicial académica.
 - [ ] Revisar y cerrar el hito **LCO — Objetivos del ciclo de vida**.
 
 ## 4. Fase de Elaboración — iteración EL-1 — 20 de julio al 16 de agosto

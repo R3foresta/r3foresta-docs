@@ -188,7 +188,7 @@ La cadena de custodia conserva la relación entre el material, los actores respo
 
 ### 7.7. Rational Unified Process
 
-El Rational Unified Process es un proceso dirigido por casos de uso, centrado en la arquitectura e iterativo e incremental. Organiza el ciclo de vida en Inicio, Elaboración, Construcción y Transición; los riesgos orientan las iteraciones y cada fase concluye con un hito de revisión (Kruchten, 2004; IBM, s. f.). En este proyecto, cada iteración producirá o ampliará un incremento ejecutable, y los módulos se integrarán progresivamente durante Construcción.
+El Rational Unified Process es un proceso dirigido por casos de uso, centrado en la arquitectura e iterativo e incremental. Organiza el ciclo de vida en Inicio, Elaboración, Construcción y Transición; los riesgos orientan las iteraciones y cada fase concluye con un hito de revisión (Kruchten, 2004; IBM, s. f.). En este proyecto, las iteraciones de Construcción producirán o ampliarán un incremento ejecutable; las de Inicio y Elaboración generarán productos de decisión y, cuando corresponda, una arquitectura base ejecutable. Los módulos se integrarán progresivamente durante Construcción.
 
 ### 7.8. Spec-Driven Development
 
@@ -215,7 +215,7 @@ RUP se adopta porque permite tratar riesgos de forma temprana, mantener una arqu
 | Fase | Iteración | Actividades principales | Productos e hito de cierre |
 |---|---|---|---|
 | Inicio | IN-1 | Delimitar el problema, los actores, los tres módulos, los requisitos iniciales, los riesgos y la referencia académica | Visión, alcance, glosario, casos de uso iniciales, plan y revisión del hito LCO |
-| Elaboración | EL-1 | Detallar reglas críticas; diseñar el modelo de trazabilidad, la arquitectura, los datos y los contratos entre módulos; comprobar una línea vertical arquitectónica mínima M1→M2→M3 y los riesgos técnicos principales | Arquitectura base ejecutable, modelo de dominio y datos, especificaciones priorizadas y revisión del hito LCA |
+| Elaboración | EL-1 | Detallar reglas críticas; diseñar el modelo de trazabilidad, la arquitectura, los datos y los contratos entre módulos; comprobar mediante un prototipo arquitectónico mínimo M1→M2→M3 la identidad, procedencia, integridad e historial, junto con los riesgos técnicos principales | Arquitectura base ejecutable, modelo de dominio y datos, especificaciones priorizadas y revisión del hito LCA |
 | Construcción | CO-1 a CO-4 | Desarrollar M1 Recolección; agregar M2 Vivero e integrar M1→M2; agregar M3 Plantación e integrar M2→M3; completar la trazabilidad transversal y las pruebas | Cuatro incrementos ejecutables, migraciones, pruebas, evidencia de integración, versión candidata e hito IOC |
 | Transición | TR-1 | Ejecutar pruebas del sistema, escenarios de validación, correcciones, despliegue, manuales, aceptación y cierre | Versión final, informe de resultados, registro de aceptación e hito PR |
 
@@ -229,11 +229,15 @@ Los hitos de cierre serán **LCO** (*Lifecycle Objectives*, objetivos del ciclo 
 
 En cada iteración se priorizarán requisitos y riesgos; se elaborará una especificación con escenarios, reglas, invariantes y criterios de aceptación; se prepararán el plan y las tareas; y se implementará, integrará, probará y demostrará el resultado. Los hallazgos actualizarán de forma controlada las especificaciones y los productos afectados, con pruebas de regresión e historial de la decisión.
 
-### 8.4. Seguimiento y evidencia
+### 8.4. Verificación, validación y aceptación
 
-El trabajo se organizará mediante una lista priorizada vinculada con los objetivos, las iteraciones y los incrementos. Cada elemento relacionará la necesidad, la especificación, la tarea, el cambio, la prueba y la aceptación. Al cerrar una iteración se revisarán sus productos y se registrarán decisiones, riesgos y ajustes.
+La **verificación técnica** contrastará requisitos, reglas e invariantes mediante pruebas unitarias, funcionales, de integración y regresión. Como mínimo se comprobarán el saldo no negativo, el rechazo de consumos o asignaciones superiores al disponible, la prevención de duplicados, la consistencia de las transferencias M1→M2 y M2→M3 y la reconstrucción de un historial completo con evidencia asociada.
 
-La formulación metodológica se consolidó el 25 de agosto de 2026, dentro de la ventana académica autorizada. La construcción formal partirá de una referencia identificable del repositorio y de un inventario del software preexistente. Los antecedentes conservarán su fecha real y se marcarán como reconstrucción documental; no se retrofecharán cambios, pruebas, resultados ni aprobaciones. Solo las actividades ejecutadas o reproducidas de forma controlada sustentarán el cumplimiento de los objetivos.
+La **validación operativa** utilizará escenarios representativos seleccionados a partir de variantes reales de R3Foresta, incluida la ruta principal y los ingresos externos que permanezcan en el alcance. Cada escenario indicará si emplea una operación real autorizada o datos controlados y registrará precondiciones, datos, pasos, resultado esperado, resultado observado, evidencia, defectos y decisión. La **aceptación** confrontará los resultados con criterios definidos previamente para cada incremento y para el producto integrado; los resultados conformes y no conformes se documentarán sin anticipar mejoras no comprobadas.
+
+### 8.5. Seguimiento y evidencia
+
+El trabajo se organizará mediante una lista priorizada vinculada con los objetivos, las iteraciones y los incrementos. Cada elemento relacionará la necesidad, el requisito, la especificación, la decisión de diseño, la tarea, el cambio, la prueba, el resultado y la aceptación. Al cerrar una iteración se revisarán sus productos y se registrarán decisiones, riesgos y ajustes.
 
 La responsabilidad técnica y autoral permanecerá bajo control humano. Los agentes de inteligencia artificial no constituirán roles RUP y sus contribuciones materiales se registrarán y revisarán según lo definido en la sección 7.9.
 
@@ -294,7 +298,7 @@ Anexos
 | Diseñar | Modelo de trazabilidad, relaciones e invariantes | Capítulo III, sección 3.2 |
 | Implementar | Recolección, Vivero y Plantación integrados | Capítulo III, sección 3.3 |
 | Verificar | Matriz de pruebas y resultados técnicos | Capítulo III, sección 3.4 |
-| Evaluar | Reconstrucción, evidencia y carga operativa de los flujos comprobadas mediante escenarios de aceptación | Capítulo III, secciones 3.5 y 3.6 |
+| Evaluar | Reconstrucción y evidencia comprobadas mediante escenarios operativos de validación y criterios de aceptación | Capítulo III, secciones 3.5 y 3.6 |
 
 *Nota.* Elaboración propia a partir de los objetivos específicos de la sección 4.2 y del índice propuesto del Proyecto de Grado presentado en esta sección.
 
@@ -367,7 +371,7 @@ International Organization for Standardization. (2026). *Quality management—Fu
 
 Kruchten, P. (2004). *The Rational Unified Process: An introduction* (3.ª ed.). Addison-Wesley Professional.
 
-Limachi Mamani, F. Z. (2020). *Sistema de registro geolocalización de viveros en el departamento de La Paz. Caso ABT* [Proyecto de grado, Universidad Pública de El Alto]. https://repositorio.upea.bo/jspui/handle/123456789/172
+Limachi Mamani, F. Z. (2020). *Sistema de registro geolocalización de viveros en el departamento de La Paz. Caso ABT*. https://repositorio.upea.bo/jspui/handle/123456789/172
 
 Mayorga Vásquez, L. C., Riccardi Martillo, G. A., Bermeo Almeida, O. X., & Guevara Arias, V. I. (2022). Sistema web para los procesos administrativos y de producción en viveros del cantón Milagro. *Revista Ingeniería, 6*(16), 200–213. https://doi.org/10.33996/revistaingenieria.v6i16.100
 
@@ -375,17 +379,17 @@ Moe, T. (1998). Perspectives on traceability in food manufacture. *Trends in Foo
 
 Olsen, P., & Borit, M. (2013). How to define traceability. *Trends in Food Science & Technology, 29*(2), 142–150. https://doi.org/10.1016/j.tifs.2012.10.003
 
-Quispe Tola, M. R., & Condori Zapana, J. C. (2020). *Sistema inventario registro de iniciativas de manejo integral sustentables de los bosques y la Madre Tierra* [Proyecto de grado, Universidad Pública de El Alto]. https://repositorio.upea.bo/jspui/bitstream/123456789/64/1/PDG-MARLIEN%20RUTH%20QUISPE%20TOLA-JUAN%20CARLOS%20CONDORI%20ZAPANA.pdf
+Quispe Tola, M. R., & Condori Zapana, J. C. (2020). *Sistema inventario registro de iniciativas de manejo integral sustentables de los bosques y la Madre Tierra*. https://repositorio.upea.bo/jspui/bitstream/123456789/64/1/PDG-MARLIEN%20RUTH%20QUISPE%20TOLA-JUAN%20CARLOS%20CONDORI%20ZAPANA.pdf
 
-R3Foresta. (2026, 23 de agosto). *Resumen ejecutivo institucional: Modelo integral de bioregeneración, innovación ambiental y desarrollo comunitario* [Documento institucional no publicado].
+R3Foresta. (2026, 23 de agosto). *Resumen ejecutivo institucional: Modelo integral de bioregeneración, innovación ambiental y desarrollo comunitario*.
 
-Salamanca Contreras, F. R. (2024). *Influencia del sistema web con notificaciones en el proceso de control interno y seguimiento del inventario en el vivero Tu Semilla E.I.R.L. sede Tacna, 2022* [Tesis, Universidad Privada de Tacna]. https://repositorio.upt.edu.pe/handle/20.500.12969/3690
+Salamanca Contreras, F. R. (2024). *Influencia del sistema web con notificaciones en el proceso de control interno y seguimiento del inventario en el vivero Tu Semilla E.I.R.L. sede Tacna, 2022*. https://repositorio.upt.edu.pe/handle/20.500.12969/3690
 
 Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0)* (NIST AI 100-1). National Institute of Standards and Technology. https://doi.org/10.6028/NIST.AI.100-1
 
 Thakur, M., Sørensen, C. F., Bjørnson, F. O., Forås, E., & Hurburgh, C. R. (2011). Managing food traceability information using EPCIS framework. *Journal of Food Engineering, 103*(4), 417–433. https://doi.org/10.1016/j.jfoodeng.2010.11.012
 
-Valdez Alvarado, G. R. (2023). *Desarrollo de un sistema de información web para la gestión y control de viveros en la ciudad de El Alto. Caso: Unidad de Forestación del Gobierno Autónomo Municipal de El Alto* [Proyecto de grado, Universidad Pública de El Alto]. https://repositorio.upea.bo/jspui/bitstream/123456789/1019/1/PROYECTO%20DE%20GRADO%20-%20%20GADIEL%20RANDALL.pdf
+Valdez Alvarado, G. R. (2023). *Desarrollo de un sistema de información web para la gestión y control de viveros en la ciudad de El Alto. Caso: Unidad de Forestación del Gobierno Autónomo Municipal de El Alto*. https://repositorio.upea.bo/jspui/bitstream/123456789/1019/1/PROYECTO%20DE%20GRADO%20-%20%20GADIEL%20RANDALL.pdf
 
 Verra. (s. f.). *Develop a Verified Carbon Standard (VCS) project.* Recuperado el 27 de agosto de 2026, de https://verra.org/programs/verified-carbon-standard/develop-a-vcs-project/
 
@@ -397,28 +401,6 @@ Verra. (s. f.). *Develop a Verified Carbon Standard (VCS) project.* Recuperado e
 
 *Árbol de problemas de la situación problemática*
 
-```mermaid
-flowchart BT
-    C1["Registros de las actividades distribuidos<br/>entre diferentes medios y fuentes, incluido<br/>el conocimiento de las personas involucradas"]
-    C2["Ausencia de una forma común para relacionar<br/>los registros generados en Recolección,<br/>Vivero y Plantación"]
-    C3["Información y evidencias de cada actividad<br/>(cantidades, especies, responsables, fechas y ubicaciones)<br/>conservadas en registros separados"]
+![Árbol de problemas de la situación problemática](figuras/arbol_problemas_r3foresta.png)
 
-    P(["PROBLEMA CENTRAL<br/><br/>Actualmente, R3Foresta no dispone de un historial integrado<br/>que le permita reconstruir, a partir de sus registros,<br/>el recorrido del material vegetal desde su origen<br/>registrado hasta el registro de su plantación"])
-
-    E1["Dependencia de la revisión de múltiples fuentes<br/>y del conocimiento de las personas<br/>para reconstruir antecedentes"]
-    E2["Dificultad para conocer la disponibilidad real<br/>del material vegetal"]
-    E3["Dificultad para decidir la utilización del material vegetal<br/>y planificar las plantaciones"]
-    E4["Dificultad para presentar historiales organizados<br/>a comunidades, patrocinadores<br/>y otras partes interesadas"]
-    E5["Limitaciones para disponer de antecedentes organizados<br/>que puedan evaluarse en futuras iniciativas<br/>relacionadas con carbono"]
-
-    C1 --> P
-    C2 --> P
-    C3 --> P
-    P --> E1
-    P --> E2
-    E2 --> E3
-    P --> E4
-    P --> E5
-```
-
-*Nota.* Las causas describen condiciones actuales de registro; los efectos expresan consecuencias operativas e institucionales. La última consecuencia es una proyección condicionada y no implica cuantificación, certificación ni emisión de créditos de carbono. Elaboración propia a partir del planteamiento del problema.
+*Nota.* Elaboración propia a partir de la problemática.

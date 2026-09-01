@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "kind": "google-docs-trusted-read-context",
+  "target": {
+    "documentId": "1ws6of-5p0HUDKJTppYqRjcbgCJNN1VeRYpXfbWi_iEQ",
+    "title": "R3Foresta - Perfil de proyecto de Grado",
+    "revisionId": "AIroW37jEKsLgPfa_QfDo7YRio_4f0ajPLeMpKJYHVuchMzKUP3jASTgS6y4u5eB34LD5WNRxwPrMWo224dEEjwfDJDiy5ilsw11Zx4mjmw",
+    "documentUrl": "https://docs.google.com/document/d/1ws6of-5p0HUDKJTppYqRjcbgCJNN1VeRYpXfbWi_iEQ",
+    "selectedTabId": "t.0"
+  },
+  "dropdownMetadata": {
+    "status": "unavailable",
+    "resolvedTool": null,
+    "authoritative": false,
+    "count": 0
+  },
+  "derivedControlInventory": {
+    "hasProtectedControls": false,
+    "authoritativeDropdownCount": 0,
+    "opaqueControlCount": 0,
+    "nativeElementCounts": {
+      "inlineObjectElement": 3
+    },
+    "tabsScanned": [
+      "t.0"
+    ],
+    "controls": [],
+    "nativeElements": [
+      {
+        "type": "inlineObjectElement",
+        "startIndex": 95,
+        "endIndex": 96,
+        "tabId": "t.0",
+        "segmentId": null,
+        "container": {
+          "kind": "paragraph",
+          "path": "root.tabs[0].body.content[4]",
+          "tabId": "t.0",
+          "segmentId": null,
+          "startIndex": 95,
+          "endIndex": 97,
+          "namedStyleType": "NORMAL_TEXT",
+          "listId": null,
+          "nestingLevel": null,
+          "table": null
+        },
+        "properties": {
+          "inlineObjectId": "kix.yh2ib4esmz4l",
+          "textStyle": {
+            "fontSize": {
+              "magnitude": 12,
+              "unit": "PT"
+            },
+            "weightedFontFamily": {
+              "fontFamily": "Times New Roman",
+              "weight": 400
+            }
+          }
+        }
+      },
+      {
+        "type": "inlineObjectElement",
+        "startIndex": 4487,
+        "endIndex": 4488,
+        "tabId": "t.0",
+        "segmentId": null,
+        "container": {
+          "kind": "paragraph",
+          "path": "root.tabs[0].body.content[30]",
+          "tabId": "t.0",
+          "segmentId": null,
+          "startIndex": 4487,
+          "endIndex": 4489,
+          "namedStyleType": "NORMAL_TEXT",
+          "listId": null,
+          "nestingLevel": null,
+          "table": null
+        },
+        "properties": {
+          "inlineObjectId": "kix.76i6hkxomcyg",
+          "textStyle": {
+            "fontSize": {
+              "magnitude": 12,
+              "unit": "PT"
+            },
+            "weightedFontFamily": {
+              "fontFamily": "Times New Roman",
+              "weight": 400
+            }
+          }
+        }
+      },
+      {
+        "type": "inlineObjectElement",
+        "startIndex": 32749,
+        "endIndex": 32750,
+        "tabId": "t.0",
+        "segmentId": null,
+        "container": {
+          "kind": "paragraph",
+          "path": "root.tabs[0].body.content[188]",
+          "tabId": "t.0",
+          "segmentId": null,
+          "startIndex": 32749,
+          "endIndex": 32751,
+          "namedStyleType": "NORMAL_TEXT",
+          "listId": null,
+          "nestingLevel": null,
+          "table": null
+        },
+        "properties": {
+          "inlineObjectId": "kix.q5m94qr9j9t1",
+          "textStyle": {
+            "fontSize": {
+              "magnitude": 12,
+              "unit": "PT"
+            },
+            "weightedFontFamily": {
+              "fontFamily": "Times New Roman",
+              "weight": 400
+            }
+          }
+        }
+      }
+    ]
+  },
+  "editGuidance": {
+    "advisoryOnly": true,
+    "requiresTargetedPreservation": false,
+    "recommendedBehavior": "No protected controls were detected in the scanned scope.",
+    "warnings": []
+  }
+}

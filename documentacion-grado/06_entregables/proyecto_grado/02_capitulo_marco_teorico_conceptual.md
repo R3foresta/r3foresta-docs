@@ -204,9 +204,9 @@ La IA puede proponer preguntas para descubrir ambigüedades, alternativas de dis
 
 ### 2.9.5. Control humano, autoría y evidencia
 
-La responsabilidad permanece en el postulante. Cada salida relevante de IA debe someterse a revisión del dominio, revisión técnica y pruebas ejecutadas. Las decisiones institucionales, la aprobación de requisitos, la aceptación, la interpretación de resultados y la autoría académica no se delegan. Esta separación hace explícitos los roles y responsabilidades humanos dentro de la configuración humano–IA (Tabassi, 2023).
+Cada salida relevante de IA debe someterse a revisión del dominio, revisión técnica y pruebas ejecutadas. Las decisiones institucionales, la aprobación de requisitos, la aceptación, la interpretación de resultados y la autoría académica no se delegan. Esta separación hace explícitos los roles y responsabilidades humanos dentro de la configuración humano–IA (Tabassi, 2023).
 
-La trazabilidad del trabajo no exige publicar conversaciones completas ni atribuir autoría a la herramienta. Requiere conservar especificaciones, decisiones, cambios, pruebas y resultados suficientes para explicar qué se hizo y por qué. Cuando la IA influya materialmente en una alternativa, se registrarán la fecha, la herramienta y el modelo o versión disponible, la tarea, el artefacto afectado, la salida adoptada, modificada o rechazada, la revisión humana, la prueba y la referencia al cambio. No se utilizará para fabricar retrospectivamente evidencia del proceso.
+La trazabilidad del trabajo no exige publicar conversaciones completas ni atribuir autoría a la herramienta. Requiere conservar especificaciones, decisiones, cambios, pruebas y resultados suficientes para explicar qué se hizo y por qué. Cuando la IA influya materialmente en una alternativa, se registrarán la herramienta y el modelo o versión disponible, la tarea, el artefacto afectado, la salida adoptada, modificada o rechazada, la revisión humana, la prueba y la referencia al cambio.
 
 ### 2.9.6. Riesgos y controles del uso de IA
 
@@ -217,7 +217,7 @@ Los riesgos principales son la generación de información falsa, la aceptación
 - revisar diferencias y ejecutar pruebas en el entorno del proyecto;
 - mantener decisiones y artefactos importantes bajo control de versiones;
 - separar sugerencia de IA, decisión humana y resultado verificado;
-- rechazar afirmaciones, fechas o resultados que no cuenten con evidencia real.
+- rechazar afirmaciones o resultados que no cuenten con evidencia suficiente.
 
 ## 2.10. Síntesis conceptual adoptada por R3Foresta
 
