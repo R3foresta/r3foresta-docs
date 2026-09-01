@@ -22,21 +22,21 @@ Se mantienen tres módulos:
 2. Vivero;
 3. Plantación.
 
-El recorrido principal puede iniciarse con una recolección registrada o con el ingreso directo en Vivero o Plantación de material adquirido o recibido de terceros; concluye con el registro de la plantación. Esta variante se resuelve dentro de los tres módulos existentes y conserva la procedencia disponible.
+El recorrido principal se inicia con el origen registrado: una recolección de semillas o la incorporación, en Vivero o Plantación, de material adquirido externamente; concluye con el registro de la plantación. Esta variante conserva la procedencia disponible dentro de los tres módulos existentes.
 
 ## 3. Cadena de alineación académica
 
 ### Problema central
 
-En la práctica actual de R3Foresta, los registros relacionados con el material vegetal en las actividades de Recolección, Vivero y Plantación permanecen dispersos y no están vinculados entre sí; por ello, la organización no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
+Actualmente, R3Foresta no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### Pregunta general
 
-¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde la recolección hasta el registro de su plantación?
+¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación?
 
 ### Objetivo general
 
-Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### Objetivos específicos y resultados
 
@@ -103,7 +103,7 @@ Los componentes históricos relacionados con blockchain, NFT o IPFS pueden perma
 - cuatro incrementos durante Construcción: M1, M2 con integración M1→M2, M3 con integración M2→M3 y trazabilidad transversal con integración total;
 - Spec-Driven Development como práctica para convertir necesidades en especificaciones, planes, tareas, cambios y pruebas trazables;
 - asistencia de IA durante especificación, diseño, implementación, pruebas y documentación, siempre bajo revisión y responsabilidad humana;
-- evidencia versionada por iteración e incremento desde una referencia identificable del repositorio;
+- evidencia versionada por iteración e incremento;
 - verificación técnica, validación operativa y aceptación incorporadas al proceso de ingeniería.
 
 La ejecución formal se planifica del 6 de julio al 15 de noviembre de 2026. El proyecto no se organiza por sprints ni declara ciencia del diseño, DSRM o estudio de caso como metodología. Una iteración es el ciclo de trabajo y un incremento es su resultado ejecutable. Los cuatro incrementos pertenecen a las cuatro iteraciones de Construcción; no son cuatro repeticiones completas de las fases RUP.
@@ -138,7 +138,7 @@ El Perfil no contiene Resumen, palabras clave, Propuesta de solución ni Recurso
 - Construcción, iteración CO-4 e incremento 4, 19 de octubre–1 de noviembre: trazabilidad transversal, integración total, regresión, versión candidata e IOC;
 - Transición, iteración TR-1, 2–15 de noviembre: validación, correcciones, despliegue, manuales, aceptación, PR y cierre académico.
 
-El periodo posterior puede reservarse para observaciones de la tutora, maquetación y preparación de la defensa, sin presentarlo como ampliación de la construcción si no fue parte de la ventana aprobada.
+El periodo posterior puede reservarse para observaciones académicas, maquetación y preparación de la defensa.
 
 ## 10. Recursos de ejecución — fuera de la estructura del Perfil
 

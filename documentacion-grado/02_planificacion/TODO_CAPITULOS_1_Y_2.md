@@ -52,7 +52,7 @@
 - [ ] Ajustar y obtener conformidad sobre el objetivo general con un único verbo rector: **desarrollar**.
 - [ ] Obtener conformidad sobre las cinco preguntas específicas y los objetivos correspondientes actualizados.
 - [x] Confirmar que se mantienen exactamente tres módulos: Recolección, Vivero y Plantación.
-- [ ] Obtener conformidad sobre la incorporación del ingreso directo en Vivero o Plantación de material adquirido o recibido de terceros y los datos de procedencia que deberán registrarse.
+- [ ] Obtener conformidad sobre la incorporación, en Vivero o Plantación, de material adquirido externamente y los datos de procedencia que deberán registrarse.
 - [x] Confirmar que la medición de captura de carbono, la generación o certificación de créditos de carbono y el monitoreo posterior permanecen fuera del alcance, aunque la relación institucional con procesos posteriores pueda explicarse como contexto.
 
 ### 2.3. Justificaciones, metodología y formato
@@ -152,7 +152,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 - [x] Formular la dispersión de los registros y la limitada capacidad de reconstrucción como la situación problemática vigente, no como una hipótesis pendiente.
 - [x] Reservar el diagnóstico para medir y caracterizar el problema, sin condicionar su existencia.
 - [x] Ampliar en el Capítulo I las consecuencias operativas e institucionales del problema conforme a la redacción aprobada del Perfil.
-- [ ] Sincronizar la correspondencia entre causas, problema central y efectos después de la ampliación.
+- [x] Sincronizar la correspondencia entre causas, problema central y efectos conforme al árbol de problemas aprobado.
 - [x] Evitar atribuir frecuencia o gravedad sin datos.
 - [x] Confirmar que el problema siga siendo informacional y no tecnológico.
 - [ ] Incorporar en los anexos del documento final el árbol sincronizado con el Perfil y referenciarlo desde el Capítulo I.
@@ -176,7 +176,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 ### 5.6. Alcances, límites y aportes
 
 - [ ] Confirmar el detalle funcional de Recolección, Vivero y Plantación.
-- [ ] Confirmar que el alcance académico incluye el ingreso directo de material adquirido o recibido de terceros en Vivero o Plantación, sin crear un cuarto módulo.
+- [ ] Confirmar que el alcance académico incluye la incorporación de material adquirido externamente en Vivero o Plantación.
 - [ ] Definir conceptualmente el “recorrido del material vegetal” y los elementos observables que lo componen.
 - [ ] Definir criterios para seleccionar escenarios operativos representativos a partir de variantes reales del proceso de R3Foresta.
 - [ ] Mantener el historial transversal sin convertirlo en un cuarto módulo.

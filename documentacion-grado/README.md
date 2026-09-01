@@ -51,10 +51,10 @@ Modalidad elegida: **Defensa de Proyecto de Grado**.
 - **Índice general** — regenerable desde los encabezados de la fuente Markdown.
 - **1. Introducción** — dominio, organización, problema, solución propuesta y límites principales.
 - **2. Antecedentes** — institucionales y trabajos similares en orden internacional, Bolivia y La Paz.
-- **3. Planteamiento del problema** — situación problemática, problema central y formulación mediante preguntas; el árbol de causas y efectos se presenta en anexos.
+- **3. Planteamiento del problema** — situación problemática, problema central y formulación mediante preguntas; el árbol de problemas se presenta en anexos.
 - **4. Objetivos** — objetivo general y cinco objetivos específicos alineados con el documento final.
 - **5. Justificación** — operativa, institucional, tecnológica, académica y factibilidad delimitada.
-- **6. Alcances y límites** — tres módulos, recorrido desde la recolección registrada o el ingreso externo en Vivero o Plantación, controles transversales y exclusiones reales.
+- **6. Alcances y límites** — tres módulos, recorrido desde el origen registrado —por recolección de semillas o incorporación de material adquirido externamente—, controles transversales y exclusiones reales.
 - **7. Marco teórico preliminar** — conceptos esenciales del título y fundamentos de RUP, SDD e IA.
 - **8. Metodología de desarrollo** — RUP adaptado como proceso rector, iteraciones e incrementos, SDD asistido por IA, seguimiento y evidencia.
 - **9. Índice propuesto del Proyecto de Grado**.

@@ -32,9 +32,9 @@ Una declaración institucional previa mencionó pruebas piloto de acopio y clasi
 
 Actualmente, parte de la información y las evidencias de las actividades de reforestación se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes. Por ello, resulta difícil responder preguntas básicas sobre el material vegetal: de dónde provino, quién estuvo a cargo, qué ocurrió durante su paso por el vivero, cuántas unidades fueron movilizadas y dónde terminó siendo plantado.
 
-Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común que relaciona los hechos operativos del material vegetal desde su recolección o su ingreso externo hasta el registro de su plantación.
+Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común orientada a preservar el historial del material vegetal desde su origen registrado, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, pasando por su desarrollo en vivero cuando corresponda, hasta el registro de su plantación. El sistema integrará información sobre procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de Recolección, Vivero y Plantación, contemplando tanto el material obtenido por R3foresta como el adquirido de fuentes externas.
 
-El proceso operativo considerado comienza con la recolección de semillas o con el ingreso de material vegetal adquirido o recibido de terceros en Vivero o Plantación. Continúa, cuando corresponda, con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
+En términos operativos, el origen registrado se establece mediante el registro de una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. El proceso continúa, cuando corresponda, con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
 
 ### 1.1.3. Trabajos académicos y sistemas similares
 
@@ -71,58 +71,56 @@ Esta dispersión dificulta relacionar información que pertenece a un mismo reco
 
 En el vivero, es necesario conocer qué material de propagación se encuentra disponible, qué cantidad está en proceso de germinación, qué plantas continúan en desarrollo y cuáles pueden destinarse a una futura plantación. Sin esta información relacionada, resulta difícil conocer la disponibilidad real del material vegetal y tomar decisiones sobre su utilización.
 
-La plantación presenta una necesidad similar. Al planificar una plantación, se debe definir cuántas plantas se utilizarán y qué especies la compondrán, incluso estableciendo su distribución porcentual cuando corresponda. Para ello es necesario conocer previamente qué material está disponible y si será necesario complementarlo con plantas adquiridas o recibidas externamente.
+La plantación presenta una necesidad similar. Al planificar una plantación, se debe definir cuántas plantas se utilizarán y qué especies la compondrán, incluso estableciendo su distribución porcentual cuando corresponda. Para ello es necesario conocer previamente qué material está disponible y si será necesario complementarlo con plantas adquiridas externamente.
 
 A medida que se realizan nuevas recolecciones, procesos de vivero y plantaciones, aumenta también la cantidad de información que debe administrarse y relacionarse. Cuando estos registros permanecen separados, reconstruir posteriormente el recorrido del material requiere revisar distintas fuentes y recurrir al conocimiento de las personas que participaron en los procesos.
 
 Esta situación dificulta tanto la administración interna de las actividades de reforestación como la presentación de historiales organizados a comunidades, patrocinadores y otras partes interesadas. También limita la posibilidad de conservar desde ahora antecedentes que, complementados posteriormente con procesos de monitoreo, medición y verificación, puedan evaluarse como parte de futuras iniciativas relacionadas con carbono.
 
-### 1.2.2. Causas y efectos
+### 1.2.2. Árbol de problemas
 
-**Figura 2. Árbol de causas y efectos.**
+**Figura 2. Árbol de problemas.**
 
 ```mermaid
 flowchart BT
-    C1["Registros dispersos en fotografías,<br/>mensajería, cuadernos,<br/>redes sociales y conocimiento de responsables"]
-    C2["Ausencia de identificadores y<br/>relaciones comunes entre etapas"]
-    C3["Cambios de custodia entre etapas<br/>sin un historial uniforme de procedencia"]
-    C4["Entradas, salidas, transferencias y saldos<br/>registrados mediante operaciones separadas"]
-    C5["Evidencia fotográfica, temporal o geográfica<br/>desvinculada del hecho operativo"]
+    C1["Registros de las actividades distribuidos<br/>entre diferentes medios y fuentes, incluido<br/>el conocimiento de las personas involucradas"]
+    C2["Ausencia de una forma común para relacionar<br/>los registros generados en Recolección,<br/>Vivero y Plantación"]
+    C3["Información y evidencias de cada actividad<br/>(cantidades, especies, responsables, fechas y ubicaciones)<br/>conservadas en registros separados"]
 
-    P(["PROBLEMA CENTRAL<br/><br/>La información sobre la procedencia y el recorrido<br/>del material vegetal a través de Recolección,<br/>Vivero y Plantación no se encuentra integrada<br/>en un historial reconstruible con evidencia vinculada"])
+    P(["PROBLEMA CENTRAL<br/><br/>Actualmente, R3Foresta no dispone de un historial integrado<br/>que le permita reconstruir, a partir de sus registros,<br/>el recorrido del material vegetal desde su origen<br/>registrado hasta el registro de su plantación"])
 
-    E1["Mayor tiempo y menor completitud<br/>al reconstruir el recorrido del material vegetal"]
-    E2["Inconsistencias en cantidades,<br/>saldos, transferencias y asignaciones"]
-    E3["Decisiones operativas basadas<br/>en información incompleta"]
-    E4["Menor capacidad para respaldar la información<br/>comunicada a patrocinadores y aliados"]
+    E1["Dependencia de la revisión de múltiples fuentes<br/>y del conocimiento de las personas<br/>para reconstruir antecedentes"]
+    E2["Dificultad para conocer la disponibilidad real<br/>del material vegetal"]
+    E3["Dificultad para decidir la utilización del material vegetal<br/>y planificar las plantaciones"]
+    E4["Dificultad para presentar historiales organizados<br/>a comunidades, patrocinadores<br/>y otras partes interesadas"]
+    E5["Limitaciones para disponer de antecedentes organizados<br/>que puedan evaluarse en futuras iniciativas<br/>relacionadas con carbono"]
 
     C1 --> P
     C2 --> P
     C3 --> P
-    C4 --> P
-    C5 --> P
     P --> E1
     P --> E2
-    P --> E3
+    E2 --> E3
     P --> E4
+    P --> E5
 ```
 
-La primera causa representa la dispersión de la información entre fuentes y responsables. La segunda señala la ausencia de identificadores que relacionen una recolección, un lote de vivero, una asignación y una plantación. La tercera comprende los cambios de custodia que no conservan una referencia uniforme de procedencia. La cuarta se relaciona con operaciones cuantitativas registradas en fuentes o momentos distintos. La quinta alude a evidencia existente pero separada del evento al que debe dar contexto.
+Las causas describen condiciones actuales de registro; los efectos expresan consecuencias operativas e institucionales. La última consecuencia es una proyección condicionada y no implica cuantificación, certificación ni emisión de créditos de carbono.
 
 ### 1.2.3. Problema central
 
-> En la práctica actual de R3Foresta, los registros relacionados con el material vegetal en las actividades de Recolección, Vivero y Plantación permanecen dispersos y no están vinculados entre sí; por ello, la organización no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
+> Actualmente, R3Foresta no dispone de un historial integrado que le permita reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### 1.2.4. Formulación del problema
 
 #### 1.2.4.1. Pregunta general
 
-> ¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde la recolección hasta el registro de su plantación?
+> ¿Cómo puede R3Foresta organizar y relacionar la información generada durante sus actividades de reforestación para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación?
 
 #### 1.2.4.2. Preguntas específicas
 
 1. ¿Qué información se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta?
-2. ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación?
+2. ¿Qué información y relaciones deben registrarse para reconstruir el recorrido registrado del material vegetal desde su origen registrado hasta el registro de su plantación?
 3. ¿Qué debe permitir el sistema en Recolección, Vivero y Plantación para mantener vinculada la información del material vegetal durante su recorrido?
 4. ¿Cómo verificar que lo implementado cumple los requerimientos definidos y que los registros conservan coherencia entre las cantidades y los movimientos del material vegetal?
 5. ¿En qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal en escenarios operativos representativos de R3Foresta?
@@ -131,12 +129,12 @@ La primera causa representa la dispersión de la información entre fuentes y re
 
 ### 1.3.1. Objetivo general
 
-Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### 1.3.2. Objetivos específicos
 
 1. **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
-2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
+2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen registrado hasta el registro de su plantación.
 3. **Implementar** en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
 4. **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
 5. **Evaluar**, mediante escenarios operativos representativos, en qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
@@ -177,7 +175,7 @@ El proyecto comprende tres módulos operativos:
 
 También forman parte del alcance:
 
-- el ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros, con el registro de la procedencia disponible;
+- la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente, con el registro de la procedencia disponible;
 - la reconstrucción del origen y recorrido registrado del material vegetal;
 - el historial de eventos que explique cambios de estado, cantidad y ubicación;
 - reglas para prevenir saldos negativos y consumos o asignaciones superiores a lo disponible;
@@ -238,7 +236,7 @@ En **Inicio** se delimitarán el problema, los actores, el alcance, los requisit
 
 ### 1.7.2. Adaptación de RUP al proyecto
 
-La adaptación conserva los principios, fases, hitos, disciplinas y evidencia de RUP, pero reduce la carga administrativa de un proceso pensado para equipos mayores. El postulante asumirá los roles de analista, arquitecto, desarrollador, responsable de pruebas y responsable de configuración; la tutora y los responsables autorizados de R3Foresta intervendrán en revisiones y aceptación dentro de sus competencias. Solo se producirán artefactos que contribuyan al control y a la defensa del proyecto.
+La adaptación conserva los principios, fases, hitos, disciplinas y evidencia de RUP, pero reduce la carga administrativa de un proceso pensado para equipos mayores. Solo se producirán artefactos que contribuyan al control y a la defensa del proyecto; las revisiones, decisiones y aceptaciones de los hitos se registrarán junto con la evidencia correspondiente.
 
 Los hitos adaptados serán: objetivos del ciclo de vida o **LCO**, arquitectura del ciclo de vida o **LCA**, capacidad operativa inicial o **IOC** y liberación del producto o **PR**. Para aprobarlos se revisarán artefactos y resultados, no solo el cumplimiento de una fecha.
 
@@ -263,7 +261,7 @@ Si la implementación revela una ambigüedad, primero se actualizará y revisar�
 
 La IA apoyará la identificación de ambigüedades, la descomposición de especificaciones, la exploración de alternativas de diseño, la generación y revisión de código, la propuesta de pruebas y la actualización documental. SDD no cuenta con una definición normativa única; el referente adoptado, GitHub Spec Kit, es explícitamente agentic. La expresión **asistido por IA** se mantiene para declarar esa variante y hacer visibles sus controles (GitHub, 2026).
 
-Toda salida de IA será considerada una propuesta. El postulante deberá revisar su correspondencia con las reglas del dominio, ejecutar las pruebas, resolver discrepancias y aceptar o rechazar el resultado. No se delegarán a la IA la aprobación del alcance, las decisiones institucionales, la autoría, la validación final ni la responsabilidad por el producto. Para cada aporte material se registrarán fecha, herramienta y modelo o versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio; no será necesario publicar conversaciones privadas completas.
+Toda salida de IA será considerada una propuesta. Deberá revisarse su correspondencia con las reglas del dominio, ejecutar las pruebas, resolver discrepancias y aceptar o rechazar el resultado. No se delegarán a la IA la aprobación del alcance, las decisiones institucionales, la autoría, la validación final ni la responsabilidad por el producto. Para cada aporte material se registrarán herramienta y modelo o versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio; no será necesario publicar conversaciones privadas completas.
 
 ### 1.7.6. Verificación, validación y aceptación
 
@@ -277,8 +275,6 @@ El seguimiento confrontará por fase e iteración lo planificado con lo realizad
 
 1. `necesidad → requisito → especificación → decisión de diseño → tarea → cambio → prueba → resultado → aceptación`;
 2. `requisito → regla → invariante → mecanismo → prueba → resultado`.
-
-La metodología se consolidó documentalmente el 25 de agosto de 2026, dentro de la ventana autorizada del 6 de julio al 15 de noviembre. La construcción parte de una referencia identificable del repositorio y de un inventario del software preexistente. Los componentes anteriores podrán consultarse como referencia técnica, pero no se fabricarán retrospectivamente artefactos, commits, pruebas, resultados, participantes ni aprobaciones. Las actividades reconstruidas de forma controlada conservarán su fecha real, citarán sus fuentes y se identificarán como tales.
 
 ### 1.7.8. Periodización
 

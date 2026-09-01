@@ -1,0 +1,59 @@
+{
+  "bridgeVersion": "3.6",
+  "kind": "google-docs-trusted-read",
+  "status": "complete",
+  "outputDir": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tmp/google-docs/trusted-read-figure-01",
+  "target": {
+    "documentId": "1ws6of-5p0HUDKJTppYqRjcbgCJNN1VeRYpXfbWi_iEQ",
+    "title": "R3Foresta - Perfil de proyecto de Grado",
+    "revisionId": "AIroW37jEKsLgPfa_QfDo7YRio_4f0ajPLeMpKJYHVuchMzKUP3jASTgS6y4u5eB34LD5WNRxwPrMWo224dEEjwfDJDiy5ilsw11Zx4mjmw",
+    "documentUrl": "https://docs.google.com/document/d/1ws6of-5p0HUDKJTppYqRjcbgCJNN1VeRYpXfbWi_iEQ",
+    "selectedTabId": "t.0"
+  },
+  "dropdownMetadata": {
+    "status": "unavailable",
+    "resolvedTool": null,
+    "authoritative": false,
+    "count": 0
+  },
+  "controlAwareness": {
+    "hasProtectedControls": false,
+    "authoritativeDropdownCount": 0,
+    "opaqueControlCount": 0,
+    "affectedParagraphCount": 0,
+    "nativeElementCounts": {
+      "inlineObjectElement": 3
+    },
+    "preservationRequired": false,
+    "recommendedBehavior": "No protected controls were detected in the scanned scope."
+  },
+  "warnings": [],
+  "files": {
+    "document_result": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tmp/google-docs/trusted-read-figure-01/document-result.json",
+      "bytes": 1358586,
+      "sha256": "d90a8096b078e0c6928654d8a59646a549ec914f921a4b4f613586d7c5e1702a"
+    },
+    "control_inventory": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tmp/google-docs/trusted-read-figure-01/control-inventory.json",
+      "bytes": 3655,
+      "sha256": "5ca1b78eff1492e60e3d3068a9efb7855e407959d4dbafd34f6e0e86f7809632"
+    },
+    "document_outline": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tmp/google-docs/trusted-read-figure-01/document-outline.json",
+      "bytes": 176722,
+      "sha256": "aaae9866487037ee64fe49d885be63297f50786e9883fb263d100f73344fe262"
+    },
+    "document_text": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tmp/google-docs/trusted-read-figure-01/document-text.md",
+      "bytes": 52424,
+      "sha256": "81a7d402c099e5d59701f5e30f5259b46772ff07f13a40ea62d7ef1e818390c4"
+    },
+    "receipt": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/tmp/google-docs/trusted-read-figure-01/receipt.json",
+      "bytes": 1012,
+      "sha256": "25d700637732f5152688aaa23106127084c4d26d5c57a761378f54ffb3b75379"
+    }
+  },
+  "error": null
+}

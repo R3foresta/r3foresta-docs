@@ -1,9 +1,6 @@
 # Metodología de desarrollo del Proyecto de Grado
 
-> **Versión metodológica consolidada — 25 de agosto de 2026.**
-> El proyecto utilizará el **Rational Unified Process (RUP) adaptado**, complementado con **Spec-Driven Development (SDD) asistido por inteligencia artificial**. La ejecución académica se desarrollará del **6 de julio al 15 de noviembre de 2026**.
->
-> La formulación metodológica fue consolidada documentalmente dentro de una ventana académica que ya se encontraba en curso. Cuando un producto elaborado desde el 25 de agosto describa actividades anteriores, se identificará como reconstrucción documental, conservará su fecha real y citará las fuentes utilizadas. No se retrofecharán artefactos, commits, pruebas, resultados ni aprobaciones. Solo las actividades efectivamente ejecutadas o reproducidas de forma controlada constituirán evidencia de cumplimiento.
+> El proyecto utilizará el **Rational Unified Process (RUP) adaptado**, complementado con **Spec-Driven Development (SDD) asistido por inteligencia artificial**.
 
 ## 1. Alcance de la decisión metodológica
 
@@ -50,7 +47,7 @@ Se simplifican los roles, reuniones y documentos propios de organizaciones grand
 | Gestión de configuración y cambios | Conservado y simplificado | Repositorio, referencias de versión, solicitudes y decisiones de cambio | Mantiene reproducibilidad y trazabilidad |
 | Pruebas | Conservado | Casos, datos, resultados, defectos y regresión | Comprueba especificaciones e invariantes |
 | Despliegue | Conservado | Configuración, migraciones, manuales y versión liberada | Sustenta Transición y PR |
-| Roles y reuniones de equipos grandes | Consolidados u omitidos | Responsabilidades acumuladas por el postulante y revisiones necesarias | Evita simular una estructura organizacional inexistente |
+| Roles y reuniones de equipos grandes | Consolidados u omitidos | Revisiones necesarias | Evita simular una estructura organizacional inexistente |
 
 ### 2.2. Justificación de la selección frente a otras opciones
 
@@ -66,15 +63,9 @@ RUP no se selecciona por ser la alternativa más reciente ni por afirmar que sea
 
 La selección no implica aplicar RUP completo. Un RUP sin adaptación generaría documentación y responsabilidades innecesarias; una adaptación excesiva perdería el control que justificó elegirlo. Se conservarán únicamente los elementos vinculados con riesgos, decisiones, construcción, integración, pruebas, liberación y evidencia académica. SDD y la asistencia de IA complementan la práctica cotidiana sin cambiar el proceso rector.
 
-### 2.3. Responsabilidades humanas adaptadas
+### 2.3. Revisión humana
 
-| Responsabilidad RUP | Responsable en el proyecto |
-|---|---|
-| Gestión del proyecto, análisis, arquitectura, desarrollo, integración, pruebas y documentación | Postulante |
-| Clarificación del dominio, conformidad de requisitos operativos y aceptación del producto | Representante autorizado de R3Foresta |
-| Seguimiento y revisión académica dentro de sus competencias | Tutora |
-
-Una misma persona puede asumir varias responsabilidades, pero cada producto conservará su criterio de revisión. La aprobación de requisitos del dominio, decisiones críticas, resultados de prueba y entregas será siempre humana.
+La aprobación de requisitos del dominio, decisiones críticas, resultados de prueba y entregas conservará revisión humana. Cada producto contará con criterios de revisión acordes con su finalidad.
 
 Los agentes de IA no constituyen roles RUP ni participantes con capacidad de decisión. Son herramientas de apoyo cuyo uso se controla en la sección 5.
 
@@ -90,10 +81,9 @@ Los agentes de IA no constituyen roles RUP ni participantes con capacidad de dec
 2. identificar actores, procesos y casos de uso principales;
 3. definir requisitos y restricciones de alto nivel;
 4. registrar riesgos iniciales;
-5. establecer la referencia inicial académica del repositorio;
-6. preparar el plan de fases, iteraciones, incrementos, productos y evidencias.
+5. preparar el plan de fases, iteraciones, incrementos, productos y evidencias.
 
-**Productos mínimos:** visión y alcance, glosario, modelo inicial de casos de uso, lista priorizada de trabajo, registro de riesgos, plan del proyecto y referencia inicial del repositorio.
+**Productos mínimos:** visión y alcance, glosario, modelo inicial de casos de uso, lista priorizada de trabajo, registro de riesgos y plan del proyecto.
 
 **Hito:** **Objetivos del ciclo de vida — LCO**. Se verifica que existe acuerdo sobre alcance, objetivos, riesgos y viabilidad.
 
@@ -143,14 +133,14 @@ El primer incremento funcional corresponde a **M1 Recolección**. Los incremento
 
 ### 3.5. Control de los hitos
 
-| Hito | Evidencia mínima | Revisión según competencia | Decisión de salida |
+| Hito | Evidencia mínima | Revisión requerida | Decisión de salida |
 |---|---|---|---|
-| LCO — Objetivos del ciclo de vida | Visión, alcance, casos de uso principales, riesgos y plan | Postulante; conformidad del dominio por R3Foresta; seguimiento académico de la tutora | Confirmar o ajustar el alcance y autorizar el paso a Elaboración |
-| LCA — Arquitectura del ciclo de vida | Arquitectura base ejecutable, contratos, modelo de datos, riesgos técnicos y especificaciones prioritarias | Revisión técnica del postulante; clarificación del dominio por R3Foresta; seguimiento académico de la tutora | Avanzar, avanzar condicionado o reprocesar riesgos de Elaboración |
-| IOC — Capacidad operativa inicial | Versión candidata integrada, pruebas, defectos conocidos, manual preliminar y demostración | Postulante y representante autorizado de R3Foresta; seguimiento académico de la tutora | Pasar a Transición o devolver capacidades a Construcción |
-| PR — Liberación del producto | Versión liberable, pruebas finales, configuración, manuales, incidencias residuales y registro de aceptación | Aceptación operativa de R3Foresta y revisión académica de la tutora dentro de sus competencias | Liberar, liberar con condiciones o reprocesar |
+| LCO — Objetivos del ciclo de vida | Visión, alcance, casos de uso principales, riesgos y plan | Coherencia de alcance, riesgos y viabilidad | Confirmar o ajustar el alcance y autorizar el paso a Elaboración |
+| LCA — Arquitectura del ciclo de vida | Arquitectura base ejecutable, contratos, modelo de datos, riesgos técnicos y especificaciones prioritarias | Coherencia técnica, de dominio y de riesgos | Avanzar, avanzar condicionado o reprocesar riesgos de Elaboración |
+| IOC — Capacidad operativa inicial | Versión candidata integrada, pruebas, defectos conocidos, manual preliminar y demostración | Cumplimiento de capacidades, integración y defectos conocidos | Pasar a Transición o devolver capacidades a Construcción |
+| PR — Liberación del producto | Versión liberable, pruebas finales, configuración, manuales, incidencias residuales y registro de aceptación | Cumplimiento de criterios de aceptación y condiciones de liberación | Liberar, liberar con condiciones o reprocesar |
 
-Cada decisión registrará fecha real, participantes, evidencia revisada, resultado, condiciones pendientes y riesgos o defectos residuales aceptados. La revisión de un hito no se dará por cumplida únicamente por alcanzar una fecha del cronograma.
+Cada decisión registrará evidencia revisada, resultado, condiciones pendientes y riesgos o defectos residuales aceptados. La revisión de un hito no se dará por cumplida únicamente por alcanzar una fecha del cronograma.
 
 ## 4. Spec-Driven Development asistido por IA
 
@@ -202,7 +192,7 @@ La IA no podrá:
 - declarar aprobada una prueba o un incremento;
 - fabricar o alterar evidencia académica;
 - autorizar el despliegue;
-- sustituir la autoría y responsabilidad del postulante.
+- sustituir la autoría y responsabilidad humanas.
 
 Toda contribución material deberá poder relacionarse con una especificación, un cambio revisable y pruebas. Se registrará como mínimo: fecha, herramienta y modelo o versión disponible, tarea apoyada, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba ejecutada y referencia al cambio o evidencia. No será necesario publicar conversaciones privadas completas. Los datos personales, coordenadas sensibles, credenciales, secretos y datos institucionales no autorizados no se proporcionarán a los agentes.
 
@@ -210,7 +200,7 @@ Toda contribución material deberá poder relacionarse con una especificación, 
 
 | Periodo | Fase | Iteración | Resultado principal |
 |---|---|---|---|
-| 6–19 jul | Inicio | IN-1 | Alcance, actores, requisitos iniciales, riesgos, plan y referencia inicial |
+| 6–19 jul | Inicio | IN-1 | Alcance, actores, requisitos iniciales, riesgos y plan |
 | 20 jul–16 ago | Elaboración | EL-1 | Arquitectura base, línea vertical arquitectónica mínima M1→M2→M3, modelo de datos, contratos y especificaciones prioritarias |
 | 17 ago–6 sep | Construcción | CO-1 | Incremento 1: M1 Recolección funcional y probado |
 | 7–27 sep | Construcción | CO-2 | Incremento 2: M2 Vivero e integración M1→M2 |

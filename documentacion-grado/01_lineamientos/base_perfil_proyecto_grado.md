@@ -29,7 +29,7 @@ No calificar los registros como “certificados”, “certificables”, “audi
 
 > **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**
 
-El título fue seleccionado por el postulante el 25 de agosto de 2026 y permanece pendiente de ratificación por la tutora, Ph.D. Marisol Téllez Ramírez. La expresión *con proyección hacia bonos de carbono* comunica una finalidad institucional posterior y no incorpora al alcance medición de carbono, MRV, certificación, emisión ni comercialización de créditos.
+El título seleccionado permanece pendiente de ratificación académica. La expresión *con proyección hacia bonos de carbono* comunica una finalidad institucional posterior y no incorpora al alcance medición de carbono, MRV, certificación, emisión ni comercialización de créditos.
 
 La expresión *caso R3Foresta* delimita la organización y el contexto de aplicación del producto. No declara la adopción de un diseño investigativo de estudio de caso.
 
@@ -39,7 +39,7 @@ No incluir en el título eventos, contratos atómicos, blockchain, NFT, IPFS ni 
 
 La práctica actual conserva fotografías, mensajes, redes sociales, cuadernos y memoria de los responsables, pero no una estructura común para vincular procedencia, manejo, cantidades, responsables, evidencia y plantación.
 
-El recorrido principal comprende Recolección, Vivero y Plantación. Para el alcance académico, puede iniciarse con una recolección registrada o con el ingreso directo, en Vivero o Plantación, de material vegetal adquirido o recibido de terceros; concluye con el registro de su plantación.
+El recorrido principal comprende Recolección, Vivero y Plantación. Para el alcance académico, se inicia con el origen registrado: una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente; concluye con el registro de su plantación.
 
 La falta de relaciones comunes limita la reconstrucción de la cadena, la consistencia de saldos y la información presentada a patrocinadores y aliados.
 
@@ -49,12 +49,12 @@ Los objetivos deben mantener correspondencia con el problema, el alcance y la ev
 
 ### Objetivo general
 
-Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen hasta el registro de su plantación.
+Desarrollar un sistema web que permita a R3Foresta registrar, organizar y relacionar la información generada en las actividades de Recolección, Vivero y Plantación, para reconstruir, a partir de sus registros, el recorrido del material vegetal desde su origen registrado hasta el registro de su plantación.
 
 ### Objetivos específicos
 
 1. **Analizar** la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta.
-2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen hasta el registro de su plantación.
+2. **Diseñar** la organización de la información y las relaciones necesarias para reconstruir el recorrido registrado del material vegetal desde su origen registrado hasta el registro de su plantación.
 3. **Implementar** en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido.
 4. **Verificar** que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal.
 5. **Evaluar**, mediante escenarios operativos representativos, en qué medida el sistema permite reconstruir, a partir de sus registros y evidencias, el recorrido del material vegetal.
@@ -68,7 +68,7 @@ Cada objetivo mantiene un verbo rector y produce una sección principal de resul
 - M1 Recolección;
 - M2 Vivero;
 - M3 Plantación;
-- ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros, con la procedencia disponible del material;
+- incorporación, en Vivero o Plantación, de material vegetal adquirido externamente, con la procedencia disponible del material;
 - reconstrucción del origen y recorrido del material vegetal;
 - eventos e historial como capacidad transversal de los tres módulos;
 - conservación de las relaciones entre material de origen, eventos, material resultante y destino;
@@ -112,14 +112,14 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 2. **Evento antes que estado aislado.** Cuando una cantidad, estado o ubicación cambie, deberá poder identificarse el hecho que produjo ese cambio; no se debe sobrescribir el estado actual sin conservar su explicación.
 3. **Las cantidades deben poder explicarse.** Los saldos actuales deberán relacionarse con los eventos anteriores que los produjeron.
 4. **Transferencia y transformación son conceptos diferentes.** Una transferencia mueve material; una transformación puede modificar estado, naturaleza, cantidad o unidad de medida. No se asumirá una conversión aritmética automática entre gramos de semillas y cantidad de plantas.
-5. **La procedencia debe conservarse.** El recorrido del material vegetal se iniciará en una recolección registrada o en su ingreso directo a Vivero o Plantación cuando sea adquirido o recibido de terceros. Durante las tres etapas conservará la información disponible sobre especie, cantidad, unidad, fecha, responsable, ubicación, procedencia y evidencia.
+5. **La procedencia debe conservarse.** El recorrido del material vegetal se iniciará con el origen registrado: una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. Durante las tres etapas conservará la información disponible sobre especie, cantidad, unidad, fecha, responsable, ubicación, procedencia y evidencia.
 6. **La evidencia respalda, no certifica.** Fotografías, fechas, ubicaciones y otros datos fortalecen el respaldo documental del evento, pero no prueban de forma absoluta la correspondencia con el mundo físico.
 7. **La validación debe intentar reconstruir.** La comprobación central no será solo guardar registros, sino determinar si puede reconstruirse de manera coherente qué ocurrió con un material determinado.
 8. **Integridad y reconstrucción son complementarias.** No basta con conservar un historial; cantidades, asignaciones y saldos también deben mantener coherencia.
 9. **La solución técnica permanece abierta durante el Perfil.** El Perfil define propiedades deseadas; los mecanismos concretos se decidirán y justificarán posteriormente.
 10. **La validación se basa en escenarios representativos.** Cada escenario registrará pasos, resultados, evidencias y observaciones, sin convertir la validación en un estudio comparativo.
 11. **La verificación se concentra en riesgo y evidencia.** Se mantendrá un conjunto pequeño de pruebas de calidad sobre invariantes y recorridos críticos; el volumen de casos o archivos de prueba no es un resultado académico por sí mismo.
-12. **La construcción formal debe ser demostrable.** El sistema académico partirá de una referencia inicial identificable del repositorio y cada iteración e incremento conservará evidencia versionada de lo construido dentro de la ventana autorizada.
+12. **La construcción formal debe ser demostrable.** Cada iteración e incremento conservará evidencia versionada de los productos construidos.
 
 ## 8. Propagación a los artefactos posteriores
 
@@ -146,7 +146,7 @@ El proyecto no incorpora un marco de investigación independiente. Su proceso re
 - hitos de ciclo de vida: objetivos (LCO), arquitectura (LCA), capacidad operativa inicial (IOC) y liberación del producto (PR);
 - proceso dirigido por casos de uso, centrado en la arquitectura e iterativo e incremental; los riesgos prioritarios orientan el contenido de las iteraciones;
 - siete iteraciones: IN-1, EL-1, CO-1 a CO-4 y TR-1;
-- adaptación al tamaño del proyecto: una persona desempeña varios roles, se conservan solo artefactos que aportan evidencia y no se instalan ceremonias ni roles de Scrum;
+- adaptación al tamaño del proyecto: se simplifican roles y documentos, se conservan solo artefactos que aportan evidencia y no se instalan ceremonias ni roles de Scrum;
 - construcción progresiva de M1 Recolección, M2 Vivero y M3 Plantación, con integración M1→M2, M2→M3 y trazabilidad transversal.
 
 RUP estructura el proyecto completo. Sus cuatro fases no se repiten como un miniproyecto por módulo. Una iteración es el intervalo de trabajo que recorre las disciplinas pertinentes y concluye con una revisión; un incremento es la versión ejecutable resultante. Los módulos se materializan mediante los cuatro incrementos de las iteraciones de Construcción.
@@ -155,11 +155,11 @@ RUP estructura el proyecto completo. Sus cuatro fases no se repiten como un mini
 
 Cada capacidad seguirá un protocolo propio basado en el flujo central de GitHub Spec Kit y en la cadena `necesidad → requisito → especificación → diseño → tareas → implementación → pruebas → resultado → aceptación`. La especificación versionada será el contrato de trabajo antes de modificar el código. La IA podrá apoyar el análisis, la redacción, la generación de alternativas, la implementación y las pruebas, pero no reemplazará la decisión, revisión, ejecución de pruebas ni aceptación humanas.
 
-La construcción parte de una referencia identificable del repositorio y de un inventario del software preexistente, y conserva evidencia por iteración e incremento. Los desarrollos previos pueden utilizarse como referencia técnica y de factibilidad, sin falsificar fechas, autores, pruebas o resultados. La reconstrucción controlada del proceso dentro de la ventana autorizada debe conservar su fecha real, citar sus fuentes y describirse de forma transparente.
+La construcción conserva evidencia por iteración e incremento.
 
-### Autoría y asistencia
+### Asistencia de IA
 
-Pablo Andrés Fernández Cari es el autor académico y responsable principal del trabajo. La colaboración externa fue puntual y se delimitará en el documento final. Los agentes de IA Claude Code y Codex apoyarán la descomposición de tareas, implementación, revisión, pruebas y redacción. Toda salida será revisada y comprobada por el postulante; las decisiones del dominio y la responsabilidad son humanas. Cada aporte material registrará herramienta y versión disponible, tarea, artefacto afectado, decisión humana, prueba y referencia al cambio.
+Los agentes de IA Claude Code y Codex apoyarán la descomposición de tareas, implementación, revisión, pruebas y redacción. Toda salida será revisada y comprobada antes de su aceptación; las decisiones del dominio y la responsabilidad son humanas. Cada aporte material registrará herramienta y versión disponible, tarea, artefacto afectado, decisión humana, prueba y referencia al cambio.
 
 ## 10. Verificación, validación y aceptación
 
@@ -202,7 +202,7 @@ Cuando no exista una operación real disponible, el escenario se identificará c
 
 Antes de cerrar cualquier versión:
 
-1. problema y pregunta deben referirse al origen o ingreso del material vegetal sin convertir una procedencia alternativa en el foco;
+1. problema y pregunta deben referirse al origen registrado del material vegetal sin convertir una procedencia alternativa en el foco;
 2. deben conservarse exactamente tres módulos;
 3. las variantes de ingreso deben resolverse dentro de los módulos existentes y no como una línea de trabajo independiente;
 4. no deben reaparecer blockchain o créditos de carbono dentro del alcance;
@@ -211,7 +211,7 @@ Antes de cerrar cualquier versión:
 7. deben diferenciarse verificación técnica, validación operativa y aceptación;
 8. debe mantenerse la declaración transparente de autoría y asistencia;
 9. recursos y cronograma deben coincidir con el perfil oficial; el Perfil no incluirá presupuesto;
-10. la construcción formal debe partir de una referencia inicial identificable del repositorio y un inventario del software preexistente, y conservar evidencia de cada iteración e incremento; los desarrollos previos solo pueden describirse como referencia técnica y factibilidad;
+10. la construcción formal debe conservar evidencia de cada iteración e incremento;
 11. el cronograma debe conservar las cuatro fases RUP, las siete iteraciones y los cuatro incrementos de Construcción, incluidos los tres módulos, ambas integraciones y la trazabilidad transversal;
 12. los agentes de IA deben aparecer como apoyo bajo revisión y aprobación humanas;
 13. cualquier cambio académico acordado con la docente o la tutora debe propagarse al perfil, estructura y TODO;
@@ -220,10 +220,9 @@ Antes de cerrar cualquier versión:
 16. toda evidencia debe describirse como respaldo del registro, no como certificación de la realidad física;
 17. el Perfil debe expresar propiedades deseadas sin comprometer prematuramente mecanismos de implementación;
 18. cualquier nueva documentación del Proyecto de Grado debe revisar los principios de las secciones 7 y 8 antes de cerrarse;
-19. los ingresos de material vegetal adquirido o recibido de terceros en Vivero y Plantación deben contar con requisitos, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
+19. las incorporaciones de material vegetal adquirido externamente en Vivero y Plantación deben contar con requisitos, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
 20. cada iteración debe contar con objetivos, riesgos, productos y revisión; cada incremento debe contar con especificación, criterios de aceptación, implementación, pruebas, resultado y evidencia de integración;
-21. el uso de IA debe registrarse como asistencia bajo revisión humana; ninguna salida se acepta sin verificación del postulante;
-22. no se fabricarán retrospectivamente commits, pruebas, participantes, resultados ni aprobaciones; toda reconstrucción académica se identificará como controlada y autorizada;
+21. el uso de IA debe registrarse como asistencia bajo revisión humana; ninguna salida se acepta sin revisión humana;
 23. las deudas técnicas críticas para identidad, seguridad, migraciones y pruebas deberán cerrarse antes de la liberación sin convertirlas en el foco narrativo del Perfil.
 24. toda sección posterior al Perfil deberá aplicar la lista de revisión de [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md) antes de cerrarse.
 25. la fuente canónica y única versión editable del Perfil dentro del repositorio será su archivo Markdown; las versiones aprobadas se transferirán directamente al Google Docs existente en Drive, que será el documento de trabajo y presentación; el DOCX local quedará fuera del flujo;
