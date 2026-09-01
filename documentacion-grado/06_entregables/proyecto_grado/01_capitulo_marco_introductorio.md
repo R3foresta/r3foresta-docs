@@ -32,9 +32,9 @@ Una declaración institucional previa mencionó pruebas piloto de acopio y clasi
 
 Actualmente, parte de la información y las evidencias de las actividades de reforestación se conservan en fotografías, publicaciones en redes sociales, conversaciones de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Estos registros se encuentran dispersos y no comparten una estructura, identificadores ni relaciones comunes. Por ello, resulta difícil responder preguntas básicas sobre el material vegetal: de dónde provino, quién estuvo a cargo, qué ocurrió durante su paso por el vivero, cuántas unidades fueron movilizadas y dónde terminó siendo plantado.
 
-Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común que relaciona los hechos operativos del material vegetal desde su recolección o su ingreso externo hasta el registro de su plantación.
+Esta fragmentación limita la gestión interna y la presentación de información consistente a empresas patrocinadoras y aliados. R3foresta App responde a esta necesidad mediante una estructura común orientada a preservar el historial del material vegetal desde el registro de su origen, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, pasando por su desarrollo en vivero cuando corresponda, hasta el registro de su plantación. El sistema integrará información sobre procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de Recolección, Vivero y Plantación, contemplando tanto el material obtenido por R3foresta como el adquirido de fuentes externas.
 
-El proceso operativo considerado comienza con la recolección de semillas o con el ingreso de material vegetal adquirido o recibido de terceros en Vivero o Plantación. Continúa, cuando corresponda, con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
+En términos operativos, el registro de origen puede realizarse mediante la recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. El proceso continúa, cuando corresponda, con el manejo y la transformación biológica observada en vivero y concluye con la asignación y el registro de la plantación. Durante el recorrido pueden cambiar la ubicación, el responsable, el estado, la agrupación y la unidad de medida. También pueden ocurrir mermas, descartes, devoluciones, cierres y asignaciones parciales. Por ello, el sistema necesita conservar no solo los estados actuales, sino también los hechos y relaciones que expliquen cómo se obtuvieron.
 
 ### 1.1.3. Trabajos académicos y sistemas similares
 
@@ -71,7 +71,7 @@ Esta dispersión dificulta relacionar información que pertenece a un mismo reco
 
 En el vivero, es necesario conocer qué material de propagación se encuentra disponible, qué cantidad está en proceso de germinación, qué plantas continúan en desarrollo y cuáles pueden destinarse a una futura plantación. Sin esta información relacionada, resulta difícil conocer la disponibilidad real del material vegetal y tomar decisiones sobre su utilización.
 
-La plantación presenta una necesidad similar. Al planificar una plantación, se debe definir cuántas plantas se utilizarán y qué especies la compondrán, incluso estableciendo su distribución porcentual cuando corresponda. Para ello es necesario conocer previamente qué material está disponible y si será necesario complementarlo con plantas adquiridas o recibidas externamente.
+La plantación presenta una necesidad similar. Al planificar una plantación, se debe definir cuántas plantas se utilizarán y qué especies la compondrán, incluso estableciendo su distribución porcentual cuando corresponda. Para ello es necesario conocer previamente qué material está disponible y si será necesario complementarlo con plantas adquiridas externamente.
 
 A medida que se realizan nuevas recolecciones, procesos de vivero y plantaciones, aumenta también la cantidad de información que debe administrarse y relacionarse. Cuando estos registros permanecen separados, reconstruir posteriormente el recorrido del material requiere revisar distintas fuentes y recurrir al conocimiento de las personas que participaron en los procesos.
 
@@ -177,7 +177,7 @@ El proyecto comprende tres módulos operativos:
 
 También forman parte del alcance:
 
-- el ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros, con el registro de la procedencia disponible;
+- la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente, con el registro de la procedencia disponible;
 - la reconstrucción del origen y recorrido registrado del material vegetal;
 - el historial de eventos que explique cambios de estado, cantidad y ubicación;
 - reglas para prevenir saldos negativos y consumos o asignaciones superiores a lo disponible;

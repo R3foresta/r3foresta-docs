@@ -29,7 +29,7 @@ Para R3Foresta, la generación futura de bonos de carbono constituye un objetivo
 
 Actualmente, parte de esta información se encuentra distribuida entre fotografías, redes sociales, servicios de mensajería, cuadernos, notas y el conocimiento de las personas involucradas. Esto dificulta responder preguntas básicas sobre el material vegetal: de dónde provino, quién estuvo a cargo, qué ocurrió durante su paso por el vivero, cuántas unidades fueron movilizadas y dónde terminó siendo plantado.
 
-Este Proyecto de Grado aborda precisamente ese primer nivel del problema. Se propone desarrollar un sistema de trazabilidad como componente de **R3foresta App**, que permita mantener el historial del material vegetal desde su recolección o desde su ingreso externo en Vivero o Plantación, pasando por el vivero para su desarrollo cuando corresponda, hasta el registro de su plantación. El sistema relacionará procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de **Recolección, Vivero y Plantación**, sin crear un cuarto módulo para el material recibido de terceros.
+Este Proyecto de Grado aborda precisamente ese primer nivel del problema. Se propone desarrollar un sistema de trazabilidad como componente de **R3foresta App**, orientado a preservar el historial del material vegetal desde el registro de su origen, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, pasando por su desarrollo en vivero cuando corresponda, hasta el registro de su plantación. El sistema integrará información sobre procedencia, cantidades, responsables, ubicaciones y evidencias mediante los módulos de **Recolección, Vivero y Plantación**, contemplando tanto el material obtenido por R3foresta como el adquirido de fuentes externas.
 
 De esta manera, R3Foresta podrá comenzar a construir un historial organizado de sus actividades de reforestación que responda a sus necesidades actuales y que, en el futuro, pueda evaluarse como parte de una base documental para iniciativas de carbono. El alcance del proyecto concluye con el registro de la plantación y no incluye el monitoreo posterior de los árboles, la cuantificación de carbono ni los procesos de certificación o emisión de créditos.
 
@@ -47,7 +47,7 @@ R3Foresta fue creada en 2019 como una iniciativa socioambiental orientada a la b
 
 *Nota.* Organigrama institucional proporcionado por la Fundación R3Foresta.
 
-**R3foresta App** se vincula con la proyección institucional de R3Carbon mediante la trazabilidad del material vegetal (R3Foresta, 2026). La aplicación relacionará su recorrido desde la recolección o el ingreso externo hasta la plantación, incluido el manejo en vivero cuando corresponda. El seguimiento posterior, la medición de carbono y la certificación quedan fuera del proyecto.
+**R3foresta App** se vincula con la proyección institucional de R3Carbon mediante la trazabilidad del material vegetal (R3Foresta, 2026). La aplicación relacionará su recorrido desde el registro de su origen, ya sea mediante la recolección de semillas o la incorporación de material adquirido externamente al proceso de trazabilidad, hasta el registro de su plantación, incluido su desarrollo en vivero cuando corresponda. El seguimiento posterior, la medición de carbono y la certificación quedan fuera del proyecto.
 
 ### 2.2. Antecedentes internacionales
 
@@ -81,7 +81,7 @@ Esta dispersión dificulta relacionar información que pertenece a un mismo reco
 
 En el vivero, es necesario conocer qué material de propagación se encuentra disponible, qué cantidad está en proceso de germinación, qué plantas continúan en desarrollo y cuáles pueden destinarse a una futura plantación. Sin esta información relacionada, resulta difícil conocer la disponibilidad real del material vegetal y tomar decisiones sobre su utilización.
 
-La plantación presenta una necesidad similar. Al planificar una plantación, se debe definir cuántas plantas se utilizarán y qué especies la compondrán, incluso estableciendo su distribución porcentual cuando corresponda. Para ello es necesario conocer previamente qué material está disponible y si será necesario complementarlo con plantas adquiridas o recibidas externamente.
+La plantación presenta una necesidad similar. Al planificar una plantación, se debe definir cuántas plantas se utilizarán y qué especies la compondrán, incluso estableciendo su distribución porcentual cuando corresponda. Para ello es necesario conocer previamente qué material está disponible y si será necesario complementarlo con plantas adquiridas externamente.
 
 A medida que se realizan nuevas recolecciones, procesos de vivero y plantaciones, aumenta también la cantidad de información que debe administrarse y relacionarse. Cuando estos registros permanecen separados, reconstruir posteriormente el recorrido del material requiere revisar distintas fuentes y recurrir al conocimiento de las personas que participaron en los procesos.
 
@@ -135,13 +135,13 @@ El aporte tecnológico y académico consistirá en integrar el análisis del dom
 
 ### 6.1. Alcance funcional
 
-El alcance funcional comprende tres módulos. El recorrido académico puede iniciarse con una recolección registrada o con el ingreso directo, en Vivero o Plantación, de material vegetal adquirido o recibido de terceros. En esta última variante se conservará la información disponible sobre su procedencia, proveedor o entidad de origen, cantidad, unidad, fecha de ingreso, responsable y evidencia asociada.
+El alcance funcional comprende tres módulos. El recorrido académico se inicia con el registro de origen, ya sea mediante una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente. En esta última variante se conservará la información disponible sobre su procedencia, proveedor o entidad de origen, cantidad, unidad, fecha de ingreso, responsable y evidencia asociada.
 
 - **Recolección.** Registrará la especie, la cantidad y unidad de medida, la fecha, el responsable, la ubicación y la evidencia del material recolectado. Permitirá identificar el lote de origen y su transferencia al vivero hasta su cierre o vinculación con el material resultante.
 
-- **Vivero.** Registrará la recepción y el manejo del material procedente de Recolección o adquirido o recibido de terceros. Para el material externo, conservará su ingreso y la procedencia disponible. También conservará los hechos que expliquen cambios de cantidad, mermas, descartes, saldo vivo y salidas hacia Plantación, hasta el despacho, cierre o agotamiento del material.
+- **Vivero.** Registrará la recepción y el manejo del material procedente de Recolección o adquirido externamente. Para el material externo, conservará su ingreso y la procedencia disponible. También conservará los hechos que expliquen cambios de cantidad, mermas, descartes, saldo vivo y salidas hacia Plantación, hasta el despacho, cierre o agotamiento del material.
 
-- **Plantación.** Registrará el material procedente de Vivero y, cuando corresponda, el adquirido o recibido de terceros para su ingreso directo a esta etapa. Relacionará el material con la campaña o subcampaña y conservará la procedencia, las cantidades recibidas, plantadas, devueltas o descartadas, los responsables, la fecha, la ubicación y la evidencia.
+- **Plantación.** Registrará el material procedente de Vivero y, cuando corresponda, el adquirido externamente para su incorporación directa a esta etapa. Relacionará el material con la campaña o subcampaña y conservará la procedencia, las cantidades recibidas, plantadas, devueltas o descartadas, los responsables, la fecha, la ubicación y la evidencia.
 
 Los módulos compartirán identificadores para reconstruir el recorrido del material vegetal y explicar los saldos. El historial distinguirá los movimientos entre responsables o etapas de los cambios biológicos u operativos que modifican cantidades o unidades.
 

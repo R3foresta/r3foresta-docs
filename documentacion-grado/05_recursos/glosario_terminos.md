@@ -80,7 +80,7 @@ Lo que se proscribe es *verificable* aplicado a **la trazabilidad o al sistema c
 
 ## 3. Cadena de custodia
 
-**Definición adoptada:** secuencia de responsables, ubicaciones y transformaciones por las que atraviesa el material vegetal desde su origen o ingreso al proceso hasta el registro de su plantación, junto con las relaciones que permiten reconstruir esa secuencia.
+**Definición adoptada:** secuencia de responsables, ubicaciones y transformaciones por las que atraviesa el material vegetal desde el registro de su origen —por recolección de semillas o incorporación de material adquirido externamente— hasta el registro de su plantación, junto con las relaciones que permiten reconstruir esa secuencia.
 
 **Qué compromete:** que cada cambio de etapa, responsable o ubicación quede registrado con origen, destino, cantidad, responsable y evidencia asociada.
 
@@ -140,9 +140,9 @@ Es una medida descriptiva del resultado de los escenarios ejecutados, no una com
 
 ## 8. Alcance del recorrido
 
-**Definición adoptada:** el recorrido académico del material vegetal puede iniciarse con una recolección registrada o con su ingreso directo a Vivero o Plantación cuando es adquirido o recibido de terceros. Continúa, cuando corresponda, con su manejo en Vivero y concluye con el registro de la plantación.
+**Definición adoptada:** el recorrido académico del material vegetal se inicia con el registro de origen, ya sea mediante una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. Continúa, cuando corresponda, con su manejo en Vivero y concluye con el registro de la plantación.
 
-El ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros forma parte del alcance académico. Esta variante no crea un cuarto módulo y debe conservar la procedencia disponible dentro del recorrido considerado.
+La incorporación en Vivero o Plantación de material vegetal adquirido externamente forma parte del alcance académico y debe conservar la procedencia disponible dentro del recorrido considerado.
 
 La documentación debe presentar el recorrido Recolección–Vivero–Plantación de manera consistente en el problema, los objetivos, el alcance, la evaluación y el cronograma.
 
@@ -157,7 +157,7 @@ Antes de cerrar cualquier documento del proyecto de grado, verificar que:
 3. *verificable* solo aparezca aplicado a proposiciones o invariantes; para registros se use *evidencia contrastable* (§2.1);
 4. cada enunciado de conservación de saldos incluya la salvedad de unidad y etapa (§4);
 5. blockchain, IPFS y NFT aparezcan únicamente para declarar que están fuera del alcance;
-6. el recorrido académico pueda iniciarse en una recolección registrada o en el ingreso directo de material adquirido o recibido de terceros en Vivero o Plantación, sin crear un cuarto módulo;
+6. el recorrido académico pueda iniciarse con el registro de origen, ya sea mediante una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación;
 7. “semillas y plantas” se use para introducir el dominio y “material vegetal” como denominación general posterior;
 8. los objetivos mantengan correspondencia con el problema, el alcance y la evaluación, y cualquier ajuste sustantivo se revise formalmente con la tutora;
 9. transferencia y transformación se mantengan diferenciadas y no se use una equivalencia automática entre unidades distintas;

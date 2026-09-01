@@ -6,7 +6,7 @@
 
 **Título seleccionado del perfil:** *Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta*.
 
-> La búsqueda incluyó antecedentes sobre distintas procedencias y puntos de ingreso del material vegetal. Esos hallazgos siguen siendo aplicables. El perfil actual incorpora la adquisición o recepción de terceros en Vivero y Plantación como variantes integradas dentro de los tres módulos, sin convertirlas en un cuarto módulo o un entregable independiente.
+> La búsqueda incluyó antecedentes sobre distintas procedencias y puntos de ingreso del material vegetal. Esos hallazgos siguen siendo aplicables. El perfil actual incorpora material adquirido externamente en Vivero y Plantación como variantes integradas en los tres módulos establecidos.
 
 > **Investigación complementaria:** las fuentes posteriores sobre eventos, genealogía, integridad y pruebas de reconstrucción se conservan en la [`biblioteca razonada`](biblioteca_fuentes_trazabilidad_eventos_integridad.md) y se recuperan mediante el [`índice temático`](../05_recursos/indice_fuentes_bibliograficas.md).
 

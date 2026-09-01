@@ -22,7 +22,7 @@ Se mantienen tres módulos:
 2. Vivero;
 3. Plantación.
 
-El recorrido principal puede iniciarse con una recolección registrada o con el ingreso directo en Vivero o Plantación de material adquirido o recibido de terceros; concluye con el registro de la plantación. Esta variante se resuelve dentro de los tres módulos existentes y conserva la procedencia disponible.
+El recorrido principal se inicia con el registro de origen, ya sea mediante una recolección de semillas o la incorporación, en Vivero o Plantación, de material adquirido externamente; concluye con el registro de la plantación. Esta variante conserva la procedencia disponible dentro de los tres módulos existentes.
 
 ## 3. Cadena de alineación académica
 

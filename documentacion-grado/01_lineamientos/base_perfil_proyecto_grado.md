@@ -39,7 +39,7 @@ No incluir en el título eventos, contratos atómicos, blockchain, NFT, IPFS ni 
 
 La práctica actual conserva fotografías, mensajes, redes sociales, cuadernos y memoria de los responsables, pero no una estructura común para vincular procedencia, manejo, cantidades, responsables, evidencia y plantación.
 
-El recorrido principal comprende Recolección, Vivero y Plantación. Para el alcance académico, puede iniciarse con una recolección registrada o con el ingreso directo, en Vivero o Plantación, de material vegetal adquirido o recibido de terceros; concluye con el registro de su plantación.
+El recorrido principal comprende Recolección, Vivero y Plantación. Para el alcance académico, se inicia con el registro de origen, ya sea mediante una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente; concluye con el registro de su plantación.
 
 La falta de relaciones comunes limita la reconstrucción de la cadena, la consistencia de saldos y la información presentada a patrocinadores y aliados.
 
@@ -68,7 +68,7 @@ Cada objetivo mantiene un verbo rector y produce una sección principal de resul
 - M1 Recolección;
 - M2 Vivero;
 - M3 Plantación;
-- ingreso directo en Vivero o Plantación de material vegetal adquirido o recibido de terceros, con la procedencia disponible del material;
+- incorporación, en Vivero o Plantación, de material vegetal adquirido externamente, con la procedencia disponible del material;
 - reconstrucción del origen y recorrido del material vegetal;
 - eventos e historial como capacidad transversal de los tres módulos;
 - conservación de las relaciones entre material de origen, eventos, material resultante y destino;
@@ -112,7 +112,7 @@ El Perfil compromete estas propiedades, no una arquitectura concreta. Las decisi
 2. **Evento antes que estado aislado.** Cuando una cantidad, estado o ubicación cambie, deberá poder identificarse el hecho que produjo ese cambio; no se debe sobrescribir el estado actual sin conservar su explicación.
 3. **Las cantidades deben poder explicarse.** Los saldos actuales deberán relacionarse con los eventos anteriores que los produjeron.
 4. **Transferencia y transformación son conceptos diferentes.** Una transferencia mueve material; una transformación puede modificar estado, naturaleza, cantidad o unidad de medida. No se asumirá una conversión aritmética automática entre gramos de semillas y cantidad de plantas.
-5. **La procedencia debe conservarse.** El recorrido del material vegetal se iniciará en una recolección registrada o en su ingreso directo a Vivero o Plantación cuando sea adquirido o recibido de terceros. Durante las tres etapas conservará la información disponible sobre especie, cantidad, unidad, fecha, responsable, ubicación, procedencia y evidencia.
+5. **La procedencia debe conservarse.** El recorrido del material vegetal se iniciará con el registro de origen, ya sea mediante una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación. Durante las tres etapas conservará la información disponible sobre especie, cantidad, unidad, fecha, responsable, ubicación, procedencia y evidencia.
 6. **La evidencia respalda, no certifica.** Fotografías, fechas, ubicaciones y otros datos fortalecen el respaldo documental del evento, pero no prueban de forma absoluta la correspondencia con el mundo físico.
 7. **La validación debe intentar reconstruir.** La comprobación central no será solo guardar registros, sino determinar si puede reconstruirse de manera coherente qué ocurrió con un material determinado.
 8. **Integridad y reconstrucción son complementarias.** No basta con conservar un historial; cantidades, asignaciones y saldos también deben mantener coherencia.
@@ -202,7 +202,7 @@ Cuando no exista una operación real disponible, el escenario se identificará c
 
 Antes de cerrar cualquier versión:
 
-1. problema y pregunta deben referirse al origen o ingreso del material vegetal sin convertir una procedencia alternativa en el foco;
+1. problema y pregunta deben referirse al origen registrado del material vegetal sin convertir una procedencia alternativa en el foco;
 2. deben conservarse exactamente tres módulos;
 3. las variantes de ingreso deben resolverse dentro de los módulos existentes y no como una línea de trabajo independiente;
 4. no deben reaparecer blockchain o créditos de carbono dentro del alcance;
@@ -220,7 +220,7 @@ Antes de cerrar cualquier versión:
 16. toda evidencia debe describirse como respaldo del registro, no como certificación de la realidad física;
 17. el Perfil debe expresar propiedades deseadas sin comprometer prematuramente mecanismos de implementación;
 18. cualquier nueva documentación del Proyecto de Grado debe revisar los principios de las secciones 7 y 8 antes de cerrarse;
-19. los ingresos de material vegetal adquirido o recibido de terceros en Vivero y Plantación deben contar con requisitos, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
+19. las incorporaciones de material vegetal adquirido externamente en Vivero y Plantación deben contar con requisitos, diseño, implementación y pruebas antes de cerrar el objetivo específico 3;
 20. cada iteración debe contar con objetivos, riesgos, productos y revisión; cada incremento debe contar con especificación, criterios de aceptación, implementación, pruebas, resultado y evidencia de integración;
 21. el uso de IA debe registrarse como asistencia bajo revisión humana; ninguna salida se acepta sin verificación del postulante;
 22. no se fabricarán retrospectivamente commits, pruebas, participantes, resultados ni aprobaciones; toda reconstrucción académica se identificará como controlada y autorizada;
