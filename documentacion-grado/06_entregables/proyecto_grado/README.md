@@ -13,7 +13,7 @@ La lista centralizada de validaciones, evidencias y correcciones de los dos prim
 5. Conclusiones y Recomendaciones.
 6. Referencias bibliográficas y anexos.
 
-Hasta la aprobación del perfil, la fuente oficial del alcance, los objetivos y la metodología de desarrollo es [`../perfil/PERFIL_PROYECTO_GRADO.md`](../perfil/PERFIL_PROYECTO_GRADO.md). La ejecución posterior se controla en [`../../02_planificacion/TODO_PROYECTO_GRADO.md`](../../02_planificacion/TODO_PROYECTO_GRADO.md), sin mezclarla con el TODO de cierre del perfil.
+Con el Perfil cerrado, la fuente oficial del alcance, los objetivos y la metodología de desarrollo es [`../perfil/PERFIL_PROYECTO_GRADO.md`](../perfil/PERFIL_PROYECTO_GRADO.md). La ejecución posterior se controla en [`../../02_planificacion/TODO_PROYECTO_GRADO.md`](../../02_planificacion/TODO_PROYECTO_GRADO.md), sin reabrir el tablero de cierre del Perfil.
 
 El documento final deberá presentar dos cadenas de evidencia relacionadas:
 

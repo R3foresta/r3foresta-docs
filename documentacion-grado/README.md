@@ -1,6 +1,6 @@
 # Documentación universitaria de grado — R3Foresta
 
-> **Estado al 25 de agosto de 2026:** el Perfil se encuentra en revisión final y adopta RUP adaptado, complementado con Spec-Driven Development asistido por IA. La ejecución académica abarca del 6 de julio al 15 de noviembre de 2026; el Perfil y las versiones activas de los capítulos I y II ya incorporan esta decisión.
+> **Estado al 2 de septiembre de 2026:** el Perfil quedó cerrado. Adopta RUP adaptado, complementado con Spec-Driven Development asistido por IA. La ejecución académica abarca del 6 de julio al 15 de noviembre de 2026; los capítulos I y II y el Proyecto de Grado continúan en sus tableros propios.
 
 Espacio de trabajo para producir los dos resultados académicos del proyecto de grado de la UMSA, Carrera de Informática — mención Ingeniería de Sistemas:
 
@@ -43,7 +43,7 @@ La numeración expresa el flujo de trabajo académico: primero se fijan los line
 
 Modalidad elegida: **Defensa de Proyecto de Grado**.
 
-**Portada vigente:** título seleccionado por el postulante y pendiente de ratificación por la tutora, postulante, tutora, modalidad, lugar y fecha. En esta versión no se incluye línea de VoBo; cualquier requisito adicional de firma se incorporará únicamente si la tutora o la Comisión de Grado lo solicita.
+**Portada vigente:** título cerrado, postulante, tutora, modalidad, lugar y fecha. En esta versión no se incluye línea de VoBo; cualquier requisito adicional de firma se incorporará únicamente si la tutora o la Comisión de Grado lo solicita.
 
 ### Estructura vigente del Perfil
 

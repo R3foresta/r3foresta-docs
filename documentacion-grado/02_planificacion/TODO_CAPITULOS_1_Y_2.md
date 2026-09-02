@@ -201,15 +201,15 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 - [x] Actualizar la organización del documento para reflejar Capítulo III, Conclusiones y Recomendaciones.
 - [ ] Retirar la nota de “primera versión” cuando el capítulo quede aprobado para maquetación.
 
-## 6. Ajustes pendientes en el Perfil
+## 6. Cierre del Perfil
 
 Archivo: [`../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md`](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 
-El detalle de estas correcciones se controla exclusivamente en [`TODO.md`](TODO.md). Este tablero no mantiene una segunda lista del Perfil ni condiciona su problema a un diagnóstico posterior. El Perfil no requiere resumen; su archivo Markdown es la fuente canónica y las versiones aprobadas se transferirán directamente al Google Docs existente en Drive. El DOCX local queda fuera del flujo de trabajo.
+El detalle de estas correcciones se controla exclusivamente en [`TODO.md`](TODO.md). Este tablero no mantiene una segunda lista del Perfil ni condiciona su problema a un diagnóstico posterior. El Perfil no requiere resumen; su archivo Markdown es la fuente canónica y el postulante lo transfiere al Google Docs existente en Drive. El DOCX local legado fue eliminado.
 
 - [x] Establecer [`TODO.md`](TODO.md) como punto único de control para las correcciones del Perfil.
-- [ ] Esperar el cierre de las correcciones sustantivas y editoriales del Perfil en su tablero.
-- [ ] Sincronizar con el Capítulo I el título, problema, preguntas, objetivos, alcances, estructura y citas que queden aprobados.
+- [x] Cerrar las correcciones sustantivas y editoriales del Perfil en su tablero.
+- [ ] Verificar, dentro de la revisión propia del Capítulo I, su sincronización con el título, problema, preguntas, objetivos, alcances, estructura y citas ya cerrados en el Perfil.
 - [x] Actualizar la planificación del Capítulo II para definir los bonos de carbono y delimitar la relación indirecta de la trazabilidad con eventuales procesos posteriores.
 
 ## 7. Preparación y desarrollo progresivo del Capítulo II
@@ -309,7 +309,7 @@ Completar una fila por cada corrección recibida. No registrar solamente “corr
 |---|---|---|---|---|---|
 | 24-08-2026 | R3Foresta (2026) y confirmación del postulante | El resumen ejecutivo contiene la misión, visión, modelo y relación tecnológica con R3Carbon; el nombre oficial de la aplicación es R3foresta App. | Sustituir las formulaciones preliminares, citar a R3Foresta como autora corporativa, diferenciar institución/componente/aplicación y mantener CO2 fuera del alcance evaluado. | Ficha institucional, Perfil, Capítulo I, glosario, índice de fuentes y TODO | Aplicado |
 | 25-08-2026 | Tutora del Proyecto de Grado, comunicado por el postulante | El Perfil debe simplificar su estructura y metodología; ajustar antecedentes, problema, pregunta y objetivo general; conservar los objetivos específicos y tres módulos; aplicar APA 7; reorganizar cronograma e índice; y diferir evaluación, ética y propuesta de ingeniería al documento final. | Controlar el detalle únicamente en `TODO.md`; mantener el título actual como base aprobada; dejar abiertos problema, pregunta y objetivo general; confirmar objetivos específicos, módulos y APA 7; y sincronizar los capítulos cuando cierre el Perfil. | TODO del Perfil, Capítulo I, planificación del Capítulo II y documento final | Aplicado; la decisión metodológica posterior se registra en la fila siguiente |
-| 25-08-2026 | Decisión del postulante | Seleccionar un título con mayor impacto que mencione bonos de carbono sin atribuir al sistema su generación, certificación, emisión o comercialización. | Adoptar **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**, delimitar la proyección como futura e indirecta y solicitar la ratificación de la tutora. | Lineamientos, Perfil, Capítulos I y II, glosario, fuentes y tableros | Propagado; ratificación pendiente |
+| 25-08-2026 | Decisión del postulante | Seleccionar un título con mayor impacto que mencione bonos de carbono sin atribuir al sistema su generación, certificación, emisión o comercialización. | Adoptar **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**, delimitar la proyección como futura e indirecta. | Lineamientos, Perfil, Capítulos I y II, glosario, fuentes y tableros | Cerrado con el Perfil el 2-09-2026 |
 | 25-08-2026 | Reunión con la tutora, comunicada por el postulante, y decisión definitiva del postulante | El trabajo no utilizará un marco investigativo independiente y requiere una metodología de desarrollo clásica, estructurada, iterativa e incremental. | Retirar ciencia del diseño, DSRM, estudio de caso y sprints; adoptar **RUP adaptado, complementado con Spec-Driven Development asistido por IA**; organizar el periodo 6 de julio–15 de noviembre por fases e iteraciones RUP, con incrementos ejecutables en Construcción. | Lineamientos, Perfil, Capítulos I y II, metodología, cronograma y tableros | Aplicado |
 
 ## 11. Criterios de cierre

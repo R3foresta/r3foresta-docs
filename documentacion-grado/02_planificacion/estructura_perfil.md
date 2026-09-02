@@ -1,6 +1,6 @@
 # Estructura vigente del Perfil de Proyecto de Grado
 
-> **Versión 13 — 31 de agosto de 2026.**
+> **Versión 14 — 2 de septiembre de 2026.**
 > Este documento explica la arquitectura del perfil; el texto entregable y fuente de verdad académica es [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 > Los principios que deben conservarse en la documentación posterior se encuentran en [base_perfil_proyecto_grado.md](../01_lineamientos/base_perfil_proyecto_grado.md) §§7–8.
 
@@ -12,7 +12,7 @@ El perfil presenta un proyecto de Ingeniería de Sistemas sobre trazabilidad de 
 
 > Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta
 
-El título fue seleccionado por el postulante el 25 de agosto de 2026 y permanece pendiente de ratificación por la tutora. El problema y los objetivos también están pendientes de aprobación, no de redacción. La proyección hacia bonos de carbono expresa únicamente un posible uso institucional posterior de la información trazable y no amplía el alcance funcional ni la evaluación del sistema.
+El título, el problema y los objetivos quedaron cerrados para el Perfil el 2 de septiembre de 2026. La proyección hacia bonos de carbono expresa únicamente un posible uso institucional posterior de la información trazable y no amplía el alcance funcional ni la evaluación del sistema.
 
 ## 2. Alcance funcional consolidado
 
@@ -158,4 +158,4 @@ La fuente canónica y única versión editable del Perfil dentro del repositorio
 
 ---
 
-*Documento de planificación actualizado el 31 de agosto de 2026.*
+*Documento de planificación actualizado el 2 de septiembre de 2026. Perfil cerrado.*
