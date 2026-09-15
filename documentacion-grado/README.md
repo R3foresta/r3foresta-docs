@@ -18,6 +18,8 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 - [`03_investigacion/ficha_institucional_r3foresta.md`](03_investigacion/ficha_institucional_r3foresta.md) — misión y visión oficiales, identidad del modelo, relación entre R3Carbon y R3foresta App, antecedentes, aspectos preliminares del diagnóstico y evidencia institucional pendiente.
 - [`05_recursos/indice_fuentes_bibliograficas.md`](05_recursos/indice_fuentes_bibliograficas.md) — acceso temático a las fuentes del perfil y del futuro marco teórico.
 - [`06_entregables/proyecto_grado/README.md`](06_entregables/proyecto_grado/README.md) — espacio reservado y guía inicial para el documento final.
+- [`06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md`](06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) — Marco aplicativo; la sección 3.1 desarrolla el análisis correspondiente al objetivo específico 1.
+- [`03_investigacion/inventario_evidencia_fotografica_2026-07-22.md`](03_investigacion/inventario_evidencia_fotografica_2026-07-22.md) — inventario y límites de uso de las fotografías de Chasquipampa.
 
 ## Organización
 
@@ -29,6 +31,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 | [`04_metodologia/`](04_metodologia/) | Metodología de desarrollo | RUP adaptado, SDD asistido por IA y antecedentes metodológicos superados. |
 | [`05_recursos/`](05_recursos/) | Recursos transversales | Glosario, convenciones terminológicas e índice bibliográfico. |
 | [`06_entregables/`](06_entregables/) | Documentos que se presentan | Perfil oficial y futuro Proyecto de Grado. |
+| [`07_imagenes/`](07_imagenes/) | Evidencia visual | Fotografías originales vinculadas con el análisis y con los resultados del Proyecto de Grado. |
 
 La numeración expresa el flujo de trabajo académico: primero se fijan los lineamientos; después se planifica, investiga y define la metodología; finalmente esos insumos alimentan los entregables.
 

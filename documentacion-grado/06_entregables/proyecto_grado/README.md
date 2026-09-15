@@ -21,3 +21,9 @@ El documento final deberá presentar dos cadenas de evidencia relacionadas:
 2. **proceso:** fase RUP → iteración → objetivo, riesgos y artefactos → resultado o incremento ejecutable → evidencia de revisión → estado del hito.
 
 La asistencia de IA debe poder distinguirse de las decisiones, revisiones y aprobaciones humanas. El documento no presentará ciencia del diseño, DSRM ni estudio de caso como metodología vigente y no organizará la ejecución en sprints.
+
+## Capítulos disponibles
+
+- [`01_capitulo_marco_introductorio.md`](01_capitulo_marco_introductorio.md)
+- [`02_capitulo_marco_teorico_conceptual.md`](02_capitulo_marco_teorico_conceptual.md)
+- [`03_capitulo_marco_aplicativo.md`](03_capitulo_marco_aplicativo.md), actualmente desarrollado en la sección 3.1 correspondiente al objetivo específico 1
