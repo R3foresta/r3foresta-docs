@@ -3,6 +3,7 @@
 > Alcance estricto para adaptar una interfaz de referencia al producto R3foresta.
 > Este documento describe únicamente el registro de **plantación inicial en campo**.
 > No autoriza copiar otros módulos, pantallas o reglas de la aplicación de referencia.
+> Nota 2026-10-10: el contrato Bearer JWT de ADR-PLA-05 aplica específicamente a GET/PUT `/subcampanias/:id/plan`; no sustituye automáticamente los headers de contexto/registro descritos aquí. Leer el plan no concede permisos operativos. La revisión de metas en ACTIVA está implementada en backend local; frontend implementado localmente; QA integrado/despliegue pendientes en [ESTADO.md](../ESTADO.md).
 
 ## 1. Resultado esperado
 
@@ -109,10 +110,10 @@ Reglas duras:
 - cantidades enteras;
 - cada detalle enviado debe ser `>= 1`;
 - el total del registro debe ser mayor a 0;
-- cantidad por especie `<= pendiente_meta`;
+- la meta y su pendiente son referencias visuales, no límites de entrada;
 - cantidad por especie `<= stock_asignado_disponible`;
 - no aceptar especies fuera del plan;
-- una plantación inicial nunca puede exceder la meta por especie, aunque exista stock sobrante.
+- se permite superar la meta por especie y total sin modificar automáticamente las metas y respetando el límite de stock; las revisiones explícitas de ADMIN siguen RN-PLA-17. El contexto vigente anuncia `permite_exceder_meta_especie=true`; comprobar que la RPC 061 esté aplicada en el entorno objetivo.
 
 El operario captura una cantidad agregada por especie. La UI la distribuye automáticamente entre las asignaciones de esa especie usando:
 
@@ -209,7 +210,7 @@ El guardado debe ocurrir atómicamente:
 - aumenta `cantidad_consumida` de cada asignación usada;
 - actualiza `total_plantado_inicial` de la subcampaña;
 - devuelve el desglose `consumos`;
-- si se alcanza la meta total, el backend puede cerrar automáticamente la subcampaña como `COMPLETADA`;
+- conserva `ACTIVA` incluso al alcanzar o superar la meta; el cierre posterior requiere ADMIN mediante `POST /subcampanias/:id/cerrar`;
 - conserva snapshots y código de trazabilidad;
 - el registro queda append-only: no se edita ni elimina en el MVP.
 
@@ -249,7 +250,7 @@ Después de un `201`:
 - `422` al cargar contexto: falta plan, polígono evaluable o stock inicial disponible.
 - `400` al guardar: mostrar el mensaje de negocio del backend y conservar el formulario para corregirlo.
 
-Ante conflicto de saldo o meta por concurrencia, el backend es la autoridad. Reconsultar contexto antes de permitir un nuevo intento.
+Ante conflicto de saldo por concurrencia, el backend es la autoridad. Reconsultar contexto antes de permitir un nuevo intento.
 
 ## 11. Fuentes para consultar dudas
 
@@ -257,13 +258,13 @@ Rutas absolutas y líneas relevantes en esta máquina:
 
 1. Reglas propias de plantación:
    - `/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/03-plantacion-module/01_reglas_de_negocio_plantacion.md`
-   - líneas 163–187: equipo, consumo, topes, append-only y ausencia de despacho M2.
+   - RN-PLA-18/23/24: especies del plan, metas orientativas, límites de stock y consumo; RN-PLA-25/26: append-only y ausencia de despacho M2.
    - líneas 217–223: regla conceptual de GPS; leer junto con la aclaración de vigencia de §12.
 
 2. Flujo funcional de campo:
    - `/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/03-plantacion-module/02_Procesos_Modulo_3_Plantacion.md`
    - líneas 356–403: flujo de plantación inicial y datos visibles.
-   - líneas 405–414: cierre automático al alcanzar la meta.
+   - §3.7–3.8: cierre manual por ADMIN; alcanzar la meta no cierra.
 
 3. Plan frontend ya implementado:
    - `/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/03-plantacion-module/04_plan_frontend_m3.md`

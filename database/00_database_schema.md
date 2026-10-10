@@ -322,7 +322,8 @@ SUBCAMPANIA {
     bigint zona_id FK "NOT NULL - DIVISION_ADMINISTRATIVA"
     geometry poligono_geom "nullable - Polygon WGS84; obligatorio para activar (CHECK)"
     numeric area_hectareas "nullable"
-    int meta_total_arboles "NOT NULL > 0"
+    int meta_total_arboles "NOT NULL > 0 - referencia orientativa, no tope de plantacion"
+    bigint plan_revision "NOT NULL default 0; CHECK >= 0 - version de meta total y especies (062)"
     date fecha_estimada_inicio "nullable"
     date fecha_estimada_fin "nullable"
     timestamptz fecha_cierre_operativo "nullable - obligatorio si estado en (COMPLETADA, FINALIZADA_PARCIAL)"
@@ -354,7 +355,7 @@ SUBCAMPANIA_META_ESPECIE {
     bigint subcampania_id FK "NOT NULL - ON DELETE CASCADE"
     bigint planta_id FK "NOT NULL"
     numeric porcentaje_objetivo "NOT NULL > 0 y <= 100"
-    int cantidad_objetivo "NOT NULL > 0 - calculada desde meta_total_arboles y ajustada por redondeo"
+    int cantidad_objetivo "NOT NULL > 0 - referencia orientativa calculada o ajustada manualmente; suma coherente con meta_total_arboles"
     timestamptz created_at
     timestamptz updated_at
     bigint created_by FK
@@ -362,6 +363,27 @@ SUBCAMPANIA_META_ESPECIE {
 }
 %% Unique (subcampania_id, planta_id). Al activar: SUM(porcentaje_objetivo)=100 y SUM(cantidad_objetivo)=SUBCAMPANIA.meta_total_arboles.
 %% No es una asignacion de vivero: define la meta de composicion planificada para PLANTACION_INICIAL.
+%% ADR-PLA-05/062: ADMIN revisa meta/especies en BORRADOR o ACTIVA mediante fn_subcampania_revisar_plan; valida coherencia en cada guardado.
+%% Comparte lock de SUBCAMPANIA con asignacion/plantacion, comprueba revision_esperada, incrementa plan_revision y escribe PLAN_REVISADO atomicamente. Un fallo de historial revierte todo.
+%% GET/PUT /plan requieren JWT: cualquier usuario autenticado lee; solo ADMIN escribe. Tras 063 ambas RPC son ejecutables solo por service_role; claves privadas solo en backend.
+%% La lectura del plan no concede permisos de equipo/stock/plantacion. Frontend implementado localmente; QA integrado y verificacion remota pendientes en ESTADO.md.
+%% Inicial exige especies del plan vigente pero puede superar objetivos con stock asignado; no cierra automaticamente.
+%% Migraciones 060-063 viven en Backend-r3foresta. Aplicacion hasta 062 y de 063 confirmada por el usuario; los scripts historicos no prueban despliegue ni verificacion remota.
+
+SUBCAMPANIA_HISTORIAL {
+    bigint id PK
+    bigint subcampania_id FK "NOT NULL - ON DELETE RESTRICT"
+    ENUM(tipo_historial_subcampania) tipo_historial "NOT NULL - incluye PLAN_REVISADO (062)"
+    ENUM(estado_subcampania) estado_origen "nullable"
+    ENUM(estado_subcampania) estado_destino "nullable"
+    text observaciones "nullable"
+    jsonb metadata "NOT NULL default {}; CHECK objeto JSON"
+    bigint actor_user_id FK "nullable - ON DELETE SET NULL"
+    timestamptz created_at "NOT NULL default now()"
+}
+%% Append-only (047): no UPDATE/DELETE/TRUNCATE. Enum: BORRADOR_CREADO, SUBCAMPANIA_ACTIVADA, SUBCAMPANIA_COMPLETADA, SUBCAMPANIA_FINALIZADA_PARCIAL, SUBCAMPANIA_CANCELADA, TRANSICION_A_MONITOREO_HISTORICO, EQUIPO_AMPLIADO, EQUIPO_REDUCIDO, COORDINADOR_CAMBIADO, PLAN_REVISADO.
+%% PLAN_REVISADO conserva estado y registra metadata.anterior/nuevo con meta_total_arboles, metas y plan_revision, actor y fecha. Su escritura es obligatoria junto con la revision.
+%% El enum disponible no acredita implementacion de todos los flujos de historial; ver ESTADO.md.
 
 SUBCAMPANIA_EQUIPO {
     bigint id PK
@@ -505,6 +527,9 @@ EVENTO_PLANTACION {
   CAMPANIA ||--o{ SUBCAMPANIA : contiene
   DIVISION_ADMINISTRATIVA ||--o{ SUBCAMPANIA : zona
   USUARIO ||--o{ SUBCAMPANIA : created_by
+
+  SUBCAMPANIA ||--o{ SUBCAMPANIA_HISTORIAL : "historial append-only"
+  USUARIO |o--o{ SUBCAMPANIA_HISTORIAL : actor
 
   SUBCAMPANIA ||--o{ SUBCAMPANIA_META_ESPECIE : "meta por especie"
   PLANTA ||--o{ SUBCAMPANIA_META_ESPECIE : "especie planificada"

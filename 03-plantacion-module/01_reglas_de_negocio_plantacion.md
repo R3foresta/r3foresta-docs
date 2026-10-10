@@ -1,5 +1,8 @@
 # Reglas de Negocio (RN) - Modulo Plantacion (M3)
 
+> Actualización documental 2026-10-10: [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin) ya está implementada en el backend local: revisión atómica de meta/especies por ADMIN en BORRADOR o ACTIVA, con versión, auditoría y JWT en GET/PUT /plan. El usuario confirmó aplicación hasta 062 y posteriormente de 063 en Supabase; el frontend también está implementado localmente; el QA integrado y el despliegue verificado siguen pendientes ([ESTADO.md](../ESTADO.md)). Metas orientativas y cierre manual de ADR-PLA-04 siguen vigentes. No acredita el nuevo modelo de permisos de participación aliada.
+
+
 ## 1. Proposito
 
 Estas reglas cubren el comportamiento propio del Modulo 3 (Plantacion): ciclo de vida de campaña y subcampaña, planificacion por especie, coordinacion como membresia, registro de plantacion, mortandad, reposicion, geolocalizacion y transparencia publica.
@@ -82,7 +85,7 @@ Campos tecnicos o de auditoria (`updated_at`, `updated_by`, `metadata_blockchain
 
 ### RN-PLA-06 - Estados operativos y transiciones permitidas en MVP
 
-Estados: `BORRADOR`, `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`, `CANCELADA`. Reservado sin flujo en MVP: `PAUSADA`. Transiciones permitidas: `BORRADOR → ACTIVA` (al activar), `ACTIVA → COMPLETADA` (automatico al alcanzar meta), `ACTIVA → FINALIZADA_PARCIAL` (manual por ADMIN, con motivo obligatorio), y `BORRADOR → CANCELADA` / `ACTIVA → CANCELADA` (cancelacion, solo si no hay ninguna `PLANTACION_INICIAL` registrada; ver `RN-PLA-37`).
+Estados: `BORRADOR`, `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`, `CANCELADA`. Reservado sin flujo en MVP: `PAUSADA`. Transiciones permitidas: `BORRADOR → ACTIVA` (al activar), `ACTIVA → COMPLETADA` (manual por ADMIN; alcanzar la meta no cierra), `ACTIVA → FINALIZADA_PARCIAL` (manual por ADMIN, con motivo obligatorio), y `BORRADOR → CANCELADA` / `ACTIVA → CANCELADA` (cancelacion, solo si no hay ninguna `PLANTACION_INICIAL` registrada; ver `RN-PLA-37`).
 
 ### RN-PLA-07 - No hay reapertura de subcampaña
 
@@ -96,13 +99,13 @@ Para pasar de `BORRADOR` a `ACTIVA` se exige: poligono presente, coordinador asi
 
 Una subcampaña puede activarse sin tener el 100% del stock asignado. El sistema debe mostrar advertencia visual con cobertura total y por especie, y permitir ampliar asignaciones en cualquier momento durante `ACTIVA`.
 
-### RN-PLA-10 - Cierre automatico a COMPLETADA
+### RN-PLA-10 - Cierre manual a COMPLETADA
 
-Cuando `SUM(PLANTACION_INICIAL.cantidad_total) >= meta_total`, la subcampaña pasa automaticamente a `COMPLETADA`: se congela `fecha_cierre_operativo = NOW()`, se calcula `fecha_fin_mantenimiento = fecha_cierre_operativo + 3 años`, y se registra `SUBCAMPANIA_COMPLETADA` en `SUBCAMPANIA_HISTORIAL`. Deja de aceptar `PLANTACION_INICIAL`; sigue aceptando mortandad, reposicion y asignaciones con proposito `REPOSICION`.
+Al alcanzar o superar `meta_total`, la subcampaña permanece `ACTIVA`: las metas son orientativas. Solo `ADMIN` puede cerrar mediante `POST /subcampanias/:id/cerrar`, enviando `estado_final`, `fecha_cierre_operativo` y `fecha_fin_mantenimiento` (fin >= cierre). La UI elige `COMPLETADA` al alcanzar o superar la meta y propone tres años de mantenimiento, editables. El endpoint no comprueba el total plantado contra el estado final solicitado. Tras cerrar, pasa a `MANTENIMIENTO_ACTIVO` y deja de aceptar `PLANTACION_INICIAL`; sigue aceptando mortandad, reposicion y asignaciones con proposito `REPOSICION`. El saldo sobrante sigue asignado hasta su devolucion fisica separada. La escritura del evento de cierre en `SUBCAMPANIA_HISTORIAL` sigue pendiente en el servicio actual.
 
 ### RN-PLA-11 - Cierre manual a FINALIZADA_PARCIAL
 
-Solo `ADMIN` puede cerrar manualmente una subcampaña `ACTIVA` a `FINALIZADA_PARCIAL`, con `motivo_cierre_parcial` obligatorio (catalogo cerrado + `OTRO`). Se congela `fecha_cierre_operativo` y se calcula `fecha_fin_mantenimiento` igual que en cierre automatico. Comportamiento posterior identico a `COMPLETADA`.
+Solo `ADMIN` puede cerrar manualmente una subcampaña `ACTIVA` a `FINALIZADA_PARCIAL`, con `motivo_cierre_parcial` obligatorio (catalogo cerrado + `OTRO`). Se envian fechas de cierre y fin de mantenimiento explicitas, con fin >= cierre, igual que para `COMPLETADA` (`RN-PLA-10`). Comportamiento posterior identico a `COMPLETADA`.
 
 ### RN-PLA-12 - Mantenimiento es transversal a los estados posteriores a BORRADOR
 
@@ -128,7 +131,7 @@ Efectos:
 
 ### RN-PLA-13 - Fase de mantenimiento independiente del estado operativo
 
-`fase_mantenimiento_subcampania` (`NO_APLICA | MANTENIMIENTO_ACTIVO | MONITOREO_HISTORICO`) se calcula automaticamente por tiempo, independiente del estado operativo. `NO_APLICA` mientras la subcampaña esta en `BORRADOR` o `ACTIVA`; `MANTENIMIENTO_ACTIVO` desde el cierre hasta 3 años despues; `MONITOREO_HISTORICO` desde 3 años despues del cierre. La ventana de 3 años es configurable a nivel sistema.
+`fase_mantenimiento_subcampania` (`NO_APLICA | MANTENIMIENTO_ACTIVO | MONITOREO_HISTORICO`) se calcula automaticamente por tiempo, independiente del estado operativo. `NO_APLICA` mientras la subcampaña esta en `BORRADOR` o `ACTIVA`; `MANTENIMIENTO_ACTIVO` desde el cierre hasta `fecha_fin_mantenimiento`; `MONITOREO_HISTORICO` desde esa fecha. El cierre recibe ambas fechas explicitamente; la UI propone una ventana de 3 años, editable.
 
 ### RN-PLA-14 - Transicion automatica a MONITOREO_HISTORICO
 
@@ -148,11 +151,21 @@ Cada `planta_id` aparece una sola vez por subcampaña. Al activar: `SUM(porcenta
 
 ### RN-PLA-17 - Edicion del plan segun estado
 
-En `BORRADOR` el plan se edita libremente. Con la subcampaña `ACTIVA`, ninguna `cantidad_objetivo` puede quedar por debajo de lo ya plantado inicialmente para esa especie. En `COMPLETADA` o `FINALIZADA_PARCIAL` el plan queda congelado.
+Solo `ADMIN` puede editar la meta total y el plan de especies en `BORRADOR` o `ACTIVA`. En ACTIVA puede reajustar objetivos y agregar especies del catalogo; ser `COORDINADOR` no concede este permiso. En `COMPLETADA`, `FINALIZADA_PARCIAL` o `CANCELADA` el plan queda congelado, sin reapertura.
 
-### RN-PLA-18 - Tope de plantacion inicial por especie
+Cada ajuste en ACTIVA mantiene al menos una especie, especies unicas, objetivos positivos, `SUM(porcentaje_objetivo) = 100` y `SUM(cantidad_objetivo) = meta_total_arboles`. Meta total y plan se guardan como una revision coherente, con auditoria de ADMIN, fecha y valores anteriores/nuevos. No se reescriben plantaciones ni se alteran asignaciones/saldos por editar el plan; no se elimina una especie con plantacion inicial registrada o stock inicial asignado disponible.
 
-Una `PLANTACION_INICIAL` solo puede registrar especies incluidas en el plan, y no puede hacer que el acumulado plantado de esa especie (`plantado_inicial_especie`) supere su `cantidad_objetivo`.
+El progreso utiliza el plan vigente. Plantar mas de lo previsto no cambia automaticamente la meta ni exige editarla (`RN-PLA-18`). Agregar una especie al plan habilita su futura asignacion inicial, pero no crea stock.
+
+Todo guardado de plan, también en BORRADOR, exige la misma coherencia. Se incrementa `SUBCAMPANIA.plan_revision` y se registra `PLAN_REVISADO` con actor, fecha y snapshots anteriores/nuevos en una sola transacción; un fallo de auditoría revierte el guardado. Una `revision_esperada` obsoleta se rechaza con `409`, sin sobrescribir el plan vigente. La meta total solo se modifica junto con especies mediante `PUT /subcampanias/:id/plan`, no por el PATCH general.
+
+La lectura de GET /plan exige JWT válido y usuario existente, para cualquier rol sin membresía de equipo; PUT /plan exige además ADMIN global. Leer el plan no concede permisos para plantar, gestionar equipo ni acceder a stock.
+
+**Estado de implementación:** backend local implementado con 062 y refuerzo JWT/063; frontend implementado localmente; QA integrado y despliegue verificado pendientes. Ver ADR-PLA-05 y [ESTADO.md](../ESTADO.md).
+
+### RN-PLA-18 - Metas orientativas y especies permitidas en plantacion inicial
+
+Una `PLANTACION_INICIAL` solo puede registrar especies incluidas en el plan. El acumulado inicial por especie puede superar `cantidad_objetivo` y el total puede superar `meta_total_arboles`, siempre dentro del stock fisicamente asignado disponible con proposito `PLANTACION_INICIAL`. Plantar no modifica automaticamente las metas; los ajustes explicitos de ADMIN conservan auditoria (`RN-PLA-17`). Las metas vigentes son referencias; el progreso real puede superar 100%. Ejemplo: meta 40 y stock asignado 50 permiten plantar 50 de una vez o 40 + 10 mientras siga `ACTIVA`; plantar 51 sin mas stock se bloquea.
 
 ### RN-PLA-19 - Reposicion no participa del plan por especie
 
@@ -186,7 +199,7 @@ Para el MVP se permite que el backend consuma automaticamente desde las asignaci
 
 ### RN-PLA-24 - Validaciones para registrar PLANTACION_INICIAL
 
-La subcampaña debe estar `ACTIVA`. Cada especie plantada debe existir en `SUBCAMPANIA_META_ESPECIE`. El acumulado por especie no puede superar su `cantidad_objetivo` (`RN-PLA-18`). Cada cantidad plantada debe consumir una asignacion activa con proposito `PLANTACION_INICIAL` de esa subcampaña, y la cantidad tomada no puede exceder `saldo_asignado_disponible`.
+La subcampaña debe estar `ACTIVA`. Cada especie plantada debe existir en `SUBCAMPANIA_META_ESPECIE`. Las cantidades pueden superar las metas orientativas sin cambiar el plan (`RN-PLA-18`). Cada cantidad plantada debe consumir una asignacion activa con proposito `PLANTACION_INICIAL` de esa subcampaña, y la cantidad tomada no puede exceder `saldo_asignado_disponible`.
 
 ### RN-PLA-25 - Registro append-only con snapshots
 

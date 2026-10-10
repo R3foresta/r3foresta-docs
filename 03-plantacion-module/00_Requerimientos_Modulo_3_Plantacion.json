@@ -60,8 +60,8 @@
         "Meta total de arboles > 0",
         "Plan de metas por especie: planta_id, porcentaje_objetivo y cantidad_objetivo por especie",
         "Fechas estimadas de inicio y fin (opcionales, solo futuras al crear)",
-        "fecha_cierre_operativo (timestamp del cierre, automatico o manual)",
-        "fecha_fin_mantenimiento (calculada como fecha_cierre_operativo + 3 anos)",
+        "fecha_cierre_operativo (fecha explicita enviada por ADMIN al cerrar manualmente)",
+        "fecha_fin_mantenimiento (fecha explicita de cierre; UI propone 3 anos, editables)",
         "Snapshots oficiales: nombre_zona_snapshot, nombre_coordinador_snapshot, nombres_organizaciones_snapshot"
       ],
       "validaciones": [
@@ -77,10 +77,10 @@
       ],
       "reglas_adicionales": [
         "En BORRADOR se permite edicion libre y cancelacion (pasa a CANCELADA; el registro se conserva, inactivacion no borrado fisico).",
-        "En BORRADOR el plan de especies se puede editar libremente.",
+        "Solo ADMIN puede editar el plan de especies y la meta total en BORRADOR o ACTIVA. La revisión atómica en ACTIVA está implementada en el backend local (ADR-PLA-05/062); frontend implementado localmente; QA integrado y despliegue verificado pendientes.",
         "En BORRADOR la subcampaña no acepta asignaciones ni plantaciones; las asignaciones se hacen despues de activar.",
         "Una campaña tiene al menos 1 subcampaña; sin limite superior.",
-        "La ventana de mantenimiento (3 anos) es configurable a nivel sistema.",
+        "El cierre recibe fecha_fin_mantenimiento explicita; la UI propone 3 anos de mantenimiento, editables.",
         "Cancelacion (RN-PLA-37): solo ADMIN, y solo si total_plantado_inicial = 0 (BORRADOR o ACTIVA sin plantar); si ya hay plantaciones, el cierre correcto es FINALIZADA_PARCIAL. Al cancelar se registra SUBCAMPANIA_CANCELADA, la meta sale del agregado de campaña y las asignaciones activas entregadas fisicamente deben resolverse con devolucion fisica al vivero.",
         "PAUSADA existe en el enum pero no se usa en MVP.",
         "Se registran automaticamente campos de auditoria."
@@ -151,7 +151,7 @@
         "No se usa origen_despacho = AUTOMATICO_PLANTACION en este flujo.",
         "registro_plantacion_id queda NULL en el despacho de asignacion porque todavia no existe una plantacion.",
         "Un lote puede asignar a varias subcampañas; una subcampaña puede recibir de varios lotes.",
-        "La asignacion inicial muestra cobertura por especie contra el plan; puede quedar sobrecubierta como stock asignado, pero la PLANTACION_INICIAL no puede exceder la cantidad objetivo de la especie.",
+        "La asignacion inicial muestra cobertura por especie contra el plan y puede superar su cantidad objetivo. La plantacion inicial tambien puede superarla, siempre dentro del stock asignado disponible y usando especies del plan.",
         "Una asignacion con proposito PLANTACION_INICIAL solo puede consumirse en plantaciones iniciales; no en reposiciones.",
         "Una asignacion con proposito REPOSICION solo puede consumirse en reposiciones; no en plantaciones iniciales.",
         "saldo_asignado_disponible = cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada.",
@@ -211,7 +211,7 @@
         "La subcampaña debe estar ACTIVA.",
         "Cada cantidad por especie-lote > 0.",
         "Cada especie plantada debe existir en SUBCAMPANIA_META_ESPECIE para la subcampaña.",
-        "El acumulado de PLANTACION_INICIAL por especie no puede superar la cantidad_objetivo de esa especie.",
+        "La cantidad_objetivo por especie y la meta total son referencias de planificacion; plantar puede superarlas sin modificarlas automaticamente. Una edicion explicita de ADMIN cambia el plan vigente con auditoria.",
         "Cada cantidad plantada debe cubrirse con asignaciones ACTIVAS con proposito PLANTACION_INICIAL de esa subcampaña.",
         "La cantidad consumida no puede exceder el saldo_asignado_disponible de las asignaciones afectadas.",
         "Latitud en [-90, 90] con 6 decimales.",
@@ -241,25 +241,29 @@
     {
       "codigo": "RF-PLA-07",
       "modulo": "Plantacion",
-      "nombre": "Cierre automatico a COMPLETADA por alcance de meta",
-      "descripcion": "Cerrar automaticamente la subcampaña cuando la suma de plantaciones iniciales alcanza la meta total.",
+      "nombre": "Cierre manual a COMPLETADA por ADMIN",
+      "descripcion": "Permitir al ADMIN cerrar explicitamente una subcampaña ACTIVA. El flujo UI propone COMPLETADA si el total inicial alcanza o supera la meta; alcanzar la meta no dispara cierre automatico.",
       "campos": [
-        "Cambio automatico de estado: ACTIVA -> COMPLETADA",
-        "Evento SUBCAMPANIA_COMPLETADA en SUBCAMPANIA_HISTORIAL",
-        "fecha_cierre_operativo = NOW() del evento que dispara el cierre",
-        "fecha_fin_mantenimiento = fecha_cierre_operativo + 3 anos",
-        "Referencia al REGISTRO_PLANTACION de plantacion inicial que disparo el cierre"
+        "Cambio manual de estado: ACTIVA -> COMPLETADA",
+        "Usuario que ejecuta (debe ser ADMIN)",
+        "fecha_cierre_operativo obligatoria enviada en la solicitud",
+        "fecha_fin_mantenimiento obligatoria enviada en la solicitud",
+        "observaciones_cierre opcionales"
       ],
       "validaciones": [
-        "Se evalua tras cada PLANTACION_INICIAL.",
-        "Se dispara cuando SUM(PLANTACION_INICIAL.cantidad_total) >= meta_total."
+        "Solo ADMIN puede ejecutar esta accion; ser coordinador no basta.",
+        "La subcampaña debe estar ACTIVA.",
+        "fecha_fin_mantenimiento no puede ser anterior a fecha_cierre_operativo.",
+        "El endpoint acepta estado_final = COMPLETADA o FINALIZADA_PARCIAL; no comprueba el total plantado contra la meta. La UI elige COMPLETADA al alcanzar o superar la meta."
       ],
       "reglas_adicionales": [
-        "El cierre es automatico, no requiere accion manual.",
+        "La subcampaña permanece ACTIVA al alcanzar o superar la meta y puede seguir recibiendo stock y registrando plantacion inicial de especies del plan.",
+        "El cierre se solicita mediante POST /subcampanias/:id/cerrar.",
         "Una vez COMPLETADA: no acepta PLANTACION_INICIAL ni asignaciones con proposito PLANTACION_INICIAL.",
         "Una vez COMPLETADA sigue aceptando: MORTANDAD_REPORTADA, REPOSICION, asignaciones con proposito REPOSICION, devoluciones.",
-        "fecha_cierre_operativo se congela; no cambia mas.",
-        "La fase de mantenimiento pasa a MANTENIMIENTO_ACTIVO."
+        "La fase de mantenimiento pasa a MANTENIMIENTO_ACTIVO; la UI propone tres anos de mantenimiento, editables.",
+        "El saldo asignado sobrante no se devuelve automaticamente al cerrar: su devolucion fisica es una operacion separada.",
+        "El servicio de cierre actualiza la subcampaña; la escritura del evento SUBCAMPANIA_COMPLETADA en historial sigue pendiente."
       ]
     },
     {
@@ -272,19 +276,22 @@
         "Usuario que ejecuta (debe ser ADMIN)",
         "motivo_cierre_parcial obligatorio (enum motivo_cierre_parcial, incluye OTRO)",
         "observaciones opcionales",
-        "Evento SUBCAMPANIA_FINALIZADA_PARCIAL en SUBCAMPANIA_HISTORIAL",
-        "fecha_cierre_operativo = NOW()",
-        "fecha_fin_mantenimiento = fecha_cierre_operativo + 3 anos"
+        "fecha_cierre_operativo obligatoria enviada en la solicitud",
+        "fecha_fin_mantenimiento obligatoria enviada en la solicitud; UI propone 3 anos, editables"
       ],
       "validaciones": [
         "Solo ADMIN puede ejecutar esta accion.",
         "La subcampaña debe estar en estado ACTIVA.",
-        "motivo_cierre_parcial obligatorio."
+        "motivo_cierre_parcial obligatorio.",
+        "fecha_fin_mantenimiento no puede ser anterior a fecha_cierre_operativo.",
+        "La UI elige FINALIZADA_PARCIAL por debajo de la meta; el endpoint no contrasta estado_final con el total plantado."
       ],
       "reglas_adicionales": [
         "Comportamiento posterior identico a COMPLETADA: sin plantaciones iniciales, con mantenimiento permitido.",
         "No hay reapertura: si aparece stock nuevo despues, se crea una nueva subcampaña dentro de la misma campaña.",
-        "La fase de mantenimiento pasa a MANTENIMIENTO_ACTIVO."
+        "La fase de mantenimiento pasa a MANTENIMIENTO_ACTIVO.",
+        "El saldo sobrante sigue asignado; se devuelve fisicamente mediante una operacion separada.",
+        "La escritura de SUBCAMPANIA_FINALIZADA_PARCIAL en historial sigue pendiente en el servicio de cierre."
       ]
     },
     {
@@ -364,7 +371,7 @@
       "codigo": "RF-PLA-11",
       "modulo": "Plantacion",
       "nombre": "Transicion automatica a MONITOREO_HISTORICO por fecha",
-      "descripcion": "Trasladar la subcampaña de MANTENIMIENTO_ACTIVO a MONITOREO_HISTORICO automaticamente cuando se cumplen 3 anos desde el cierre operativo.",
+      "descripcion": "Trasladar la subcampaña de MANTENIMIENTO_ACTIVO a MONITOREO_HISTORICO automaticamente cuando se alcanza fecha_fin_mantenimiento fijada al cerrar.",
       "campos": [
         "Cambio automatico de fase: MANTENIMIENTO_ACTIVO -> MONITOREO_HISTORICO",
         "Evento TRANSICION_A_MONITOREO_HISTORICO en SUBCAMPANIA_HISTORIAL",
@@ -378,7 +385,7 @@
         "La transicion no cambia el estado operativo; solo la fase de mantenimiento.",
         "El sistema deja de generar alertas activas de monitoreo.",
         "Se siguen aceptando mortandad y reposicion pero el sistema no las espera rutinariamente.",
-        "La ventana de 3 anos es configurable a nivel sistema.",
+        "La fecha_fin_mantenimiento se fija explicitamente al cerrar; la UI propone 3 anos, editables.",
         "Estado operativo (COMPLETADA o FINALIZADA_PARCIAL) se mantiene sin cambios."
       ]
     },
@@ -542,25 +549,37 @@
         "subcampania_id obligatorio",
         "planta_id obligatorio por especie planificada",
         "porcentaje_objetivo > 0 y <= 100",
-        "cantidad_objetivo > 0, calculada desde meta_total_arboles y ajustada por redondeo",
+        "cantidad_objetivo entera > 0, calculada desde meta_total_arboles o ajustada manualmente, manteniendo la suma coherente",
         "created_by / updated_by y timestamps de auditoria",
+        "plan_revision (versión del conjunto meta total y especies); revision_esperada al guardar",
+        "PLAN_REVISADO en SUBCAMPANIA_HISTORIAL: actor, fecha y snapshots metadata.anterior / metadata.nuevo",
         "Indicadores derivados: plantado_inicial_especie, progreso_especie, stock_asignado_inicial_especie y cobertura_especie"
       ],
       "validaciones": [
         "Una misma planta no puede repetirse dentro de la misma subcampaña.",
         "Al activar la subcampaña, SUM(porcentaje_objetivo) debe ser 100.",
         "Al activar la subcampaña, SUM(cantidad_objetivo) debe ser igual a SUBCAMPANIA.meta_total_arboles.",
-        "En BORRADOR el plan se puede editar libremente.",
-        "En ACTIVA se puede editar solo si ninguna cantidad_objetivo queda por debajo de lo ya plantado inicialmente para esa especie.",
+        "Solo ADMIN puede editar el plan en BORRADOR o ACTIVA; ser coordinador no concede este permiso.",
+        "En ACTIVA, ADMIN puede reajustar la meta total, metas por especie y agregar especies del catálogo mediante PUT /subcampanias/:id/plan; el backend local ya soporta BORRADOR y ACTIVA.",
         "En COMPLETADA o FINALIZADA_PARCIAL el plan queda congelado.",
         "PLANTACION_INICIAL solo acepta especies incluidas en el plan.",
-        "PLANTACION_INICIAL no puede hacer que plantado_inicial_especie supere cantidad_objetivo."
+        "PLANTACION_INICIAL puede superar cantidad_objetivo y meta_total_arboles; el limite de consumo es el stock asignado disponible, no la meta.",
+        "Al guardar el plan en BORRADOR o ACTIVA, debe conservar al menos una especie, especies unicas, objetivos positivos, SUM(porcentaje_objetivo) = 100 y SUM(cantidad_objetivo) = meta_total_arboles.",
+        "El ajuste no modifica plantaciones ya registradas, asignaciones ni saldos fisicos; no se elimina del plan una especie con plantacion inicial registrada o stock inicial asignado disponible.",
+        "GET/PUT /plan exigen Bearer JWT válido y usuario existente; x-auth-id es opcional y debe coincidir con sub si se envía. GET admite cualquier rol autenticado sin membresía; PUT exige ADMIN global.",
+        "En ACTIVA se envían meta_total_arboles, metas y revision_esperada. En BORRADOR una meta explícita exige versión; se conserva el payload histórico {metas} con meta vigente y versión fijada al inicio de la petición, pero los clientes nuevos envían siempre la versión leída.",
+        "Una revisión obsoleta devuelve 409: volver a leer y conciliar sin reintento automático. PATCH /subcampanias/:id rechaza meta_total_arboles, incluso en BORRADOR.",
+        "Meta/especies, incremento de plan_revision y PLAN_REVISADO se guardan juntos; un fallo de auditoría revierte toda la revisión. Leer el plan no concede acceso operativo a equipo/stock ni permiso para plantar o gestionar participantes."
       ],
       "reglas_adicionales": [
         "El plan de especies vive en SUBCAMPANIA_META_ESPECIE, no en ASIGNACION_VIVERO_SUBCAMPANIA.",
         "Las asignaciones con proposito PLANTACION_INICIAL muestran cobertura contra este plan usando la especie del lote de vivero.",
         "Las reposiciones no avanzan la meta y mantienen la politica de especie libre definida en RN-VIV-60.",
-        "La vista publica debe mostrar cumplimiento de meta inicial por especie y composicion viva actual como metricas separadas."
+        "La vista publica debe mostrar cumplimiento de meta inicial por especie y composicion viva actual como metricas separadas.",
+        "Guardar meta total y plan coherentes como una sola revision; auditar ADMIN, fecha y valores anteriores/nuevos sin reescribir registros historicos.",
+        "Una especie nueva debe incorporarse al plan antes de recibir asignaciones PLANTACION_INICIAL; agregarla no crea stock.",
+        "El progreso se recalcula contra el plan vigente y la meta agregada de campaña se deriva de las metas actualizadas; el estado sigue ACTIVA hasta cierre manual.",
+        "ADR-PLA-05 está implementada en el backend local con 062 y refuerzo JWT/063; frontend implementado localmente; QA integrado y despliegue verificado pendientes. Aplicación hasta 062 y posteriormente de 063 confirmada por el usuario; ver ESTADO.md."
       ]
     }
   ]
