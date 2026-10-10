@@ -25,13 +25,13 @@ Una campaña tiene N subcampañas (al menos 1).
 
 - `BORRADOR` — en planificación
 - `ACTIVA` — operativa, recibe plantaciones
-- `COMPLETADA` — meta alcanzada (cierre automático)
+- `COMPLETADA` — cerrada manualmente por ADMIN; UI elige este estado con meta alcanzada o superada
 - `FINALIZADA_PARCIAL` — cerrada antes de meta (cierre manual del admin)
 
 ### Fase de mantenimiento (paralela al estado)
 
-- `MANTENIMIENTO_ACTIVO` — primeros 3 años post-cierre, se esperan reposiciones
-- `MONITOREO_HISTORICO` — 3+ años post-cierre, solo seguimiento histórico
+- `MANTENIMIENTO_ACTIVO` — desde cierre hasta fecha_fin_mantenimiento, se esperan reposiciones
+- `MONITOREO_HISTORICO` — desde fecha_fin_mantenimiento, solo seguimiento histórico
 
 ---
 
@@ -235,7 +235,7 @@ Wizard de varios pasos.
 - El detalle por asignación/lote se resuelve automáticamente cuando haya una sola opción o con un orden estable definido por backend.
 - Si hay varias asignaciones/lotes y la operación necesita precisión manual, la UI puede abrir un desglose avanzado por lote.
 - Validación visual: stock disponible por especie y saldo total de la subcampaña.
-- Si la cantidad excede la meta de esa especie: bloqueo claro y sugerencia de pedir ajuste del plan al coordinador/admin.
+- La meta es orientativa: mostrar el total real y su avance aunque supere 100%, sin bloquear por excedente. Bloquear si excede el stock asignado disponible o si la especie no está en el plan.
 
 **Paso 4: Co-responsables (opcional)**
 - "¿Plantaste con alguien más?"
@@ -246,6 +246,8 @@ Wizard de varios pasos.
 **Paso 6: Confirmar**
 - Resumen: subcampaña, cantidad total, especies, lotes, ubicación en mini-mapa, fotos.
 - Botón "Registrar plantación".
+
+**Plan y cierre:** solo ADMIN puede editar meta total/especies en BORRADOR o ACTIVA; el coordinador no tiene ese permiso. La edición en ACTIVA ya tiene soporte en el backend local (ADR-PLA-05/062); integrar y verificar la UI contra la versión desplegada antes de mostrarla como disponible. El editor lee `plan_revision`, envía `revision_esperada` junto con meta/especies y, ante 409, conserva el formulario para conciliar con el plan vigente. GET/PUT /plan requieren Bearer JWT; bloquear la solicitud si falta token y tratar 401/403 sin otorgar permisos desde la UI. Mientras ACTIVA, ADMIN dispone de cierre manual con confirmación, fecha de cierre y fin de mantenimiento (propuesta de tres años, editable). La UI elige COMPLETADA con meta alcanzada/superada y FINALIZADA_PARCIAL por debajo, con motivo obligatorio. El stock sobrante se devuelve mediante una acción separada. Ver ADR-PLA-04 para los límites de validación del endpoint.
 
 #### 3.8.3. Reportar mortandad (mobile)
 - Selector de subcampaña.
@@ -344,7 +346,7 @@ Combinación:
 ### Estado operativo:
 - **BORRADOR:** gris, acciones limitadas.
 - **ACTIVA:** verde, todas las acciones operativas.
-- **COMPLETADA:** azul, badge "META ALCANZADA", solo mantenimiento.
+- **COMPLETADA:** azul, badge "META ALCANZADA", cierre manual y solo mantenimiento. Alcanzar la meta mientras sigue ACTIVA no cambia el estado.
 - **FINALIZADA_PARCIAL:** ámbar, badge "CERRADA PARCIALMENTE", solo mantenimiento.
 - **CANCELADA:** gris oscuro/rojo tenue, badge "CANCELADA", sin acciones; muestra el motivo. Solo para subcampañas sin plantaciones.
 

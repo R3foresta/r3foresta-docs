@@ -32,3 +32,7 @@ Detalladas en [CLAUDE.md](../CLAUDE.md); no se repiten aquí. Las de mayor impac
 * Coordinador es membresía en `SUBCAMPANIA_EQUIPO.rol_en_subcampania`, no rol global.
 * Asignación de lote a subcampaña es entrega física: genera salida en M2 y crea stock consumible en M3.
 * Plantar o reponer en M3 consume `saldo_asignado_disponible`; no genera `DESPACHO AUTOMATICO_PLANTACION`.
+* Metas total y por especie orientativas: se puede asignar y plantar por encima del objetivo, dentro del stock disponible y usando especies del plan para plantación inicial.
+* Solo ADMIN puede editar meta/especies en BORRADOR o ACTIVA; la edición en ACTIVA está implementada en el backend local, pendiente de integración frontend y despliegue verificado ([ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin)). Alcanzar la meta no cierra; ADMIN cierra explícitamente y la devolución de sobrantes es separada.
+
+Actualización documental del 2026-10-10: ADR-PLA-04 conserva metas orientativas/cierre manual; ADR-PLA-05 implementa revisión atómica con `plan_revision`, `PLAN_REVISADO` y Bearer JWT en GET/PUT /plan. Cualquier usuario autenticado existente lee el plan; solo ADMIN global lo modifica. La lectura no concede permisos operativos. Aplicación hasta 062 y posteriormente de 063 confirmada por el usuario; integración frontend, publicación de los últimos ajustes y verificación remota siguen pendientes en [ESTADO.md](../ESTADO.md). Los SQL anteriores se conservan como históricos.

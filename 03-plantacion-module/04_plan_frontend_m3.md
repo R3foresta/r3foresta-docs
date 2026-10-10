@@ -3,6 +3,7 @@
 > Documento operativo para planificar implementacion frontend. No reemplaza reglas de negocio ni contrato backend. La fuente canonica sigue en `01_reglas_de_negocio_plantacion.md`, `02_Procesos_Modulo_3_Plantacion.md` y `../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`.
 >
 > Actualizado contra el frontend real de `pwa-r3foresta` y contrastado contra backend `Backend-r3foresta` el 2026-07-23.
+> Actualización puntual 2026-10-10: contrato backend de planes 062/063 y JWT confirmado localmente; el cierre frontend de ese contrato sigue pendiente. Ver §4.2 y [ESTADO.md](../ESTADO.md).
 >
 > Documentacion backend revisada:
 > - `/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/documentacion/frontend/api-reference.md`
@@ -156,7 +157,10 @@ Ya existe:
 Pendiente para MVP:
 
 - asegurar que `GET /subcampanias/:id` devuelva siempre `poligono` para eliminar el fallback local;
-- revisar si el plan por especie debe poder editarse en `ACTIVA` o queda fuera del MVP;
+- integrar ajuste de plan y meta total solo por ADMIN en BORRADOR o ACTIVA contra el backend local ya implementado (ADR-PLA-05/062); no otorgar ampliación al coordinador ni al administrador contextual;
+- bloquear GET/PUT /plan cuando falte el token y verificar que no salga la solicitud; enviar Bearer JWT, recuperar sesión ante 401 y tratar 403; `x-auth-id` solo es opcional y debe coincidir con la sesión;
+- leer `plan_revision` y enviar `revision_esperada`, meta total y todas las especies juntas; usar PUT /plan, sin PATCH de meta; ante 409 conservar el formulario, volver a leer y conciliar sin reintento automático;
+- verificar estas interacciones y el guardado contra versiones frontend/backend coordinadas antes del cierre; no se acredita la integración frontend por las pruebas del backend;
 - conectar desde el detalle las acciones operativas, no solo configuracion.
 
 ### 4.3 Detalle de subcampania
@@ -499,7 +503,7 @@ Errores con UX clara:
 
 - stock insuficiente;
 - especie fuera del plan;
-- supera meta por especie;
+- superar meta por especie es permitido; mostrar avance real, sin tratarlo como error;
 - GPS no evaluable;
 - GPS fuera de poligono no aborta segun doc backend vigente: se guarda `gps_dentro_poligono=false` y debe mostrarse como advertencia;
 - falta evidencia;
@@ -562,7 +566,7 @@ Respuesta real resumida:
 }
 ```
 
-### 5.4 Cancelacion y finalizacion parcial
+### 5.4 Cancelacion y cierre manual
 
 Cancelacion:
 
@@ -572,12 +576,15 @@ Cancelacion:
 - aclaracion de alineacion: la doc backend antigua que diga "devolucion logica/no genera evento M2" esta desactualizada por la migracion `054_m3_devolucion_fisica.sql`; lo vigente es devolucion fisica con eventos M2/M3;
 - como la respuesta de cancelar no trae desglose de lotes/unidades devueltas, el frontend debe mostrar confirmacion previa y refetch posterior.
 
-Finalizada parcial:
+Cierre manual (alineación 2026-10-09):
 
-- pendiente;
+- flujo descrito en el backend local; despliegue y prueba contra entorno compartido no verificados en esta revisión;
 - solo ADMIN;
 - solo desde `ACTIVA`;
-- motivo obligatorio;
+- UI elige COMPLETADA si alcanza/supera la meta; por debajo elige FINALIZADA_PARCIAL con motivo obligatorio;
+- exige fecha de cierre y fin de mantenimiento (fin >= cierre); propone tres años, editables;
+- el endpoint no compara estado_final con total plantado;
+- alcanzar la meta no cierra y cerrar no devuelve stock automáticamente;
 - confirmacion fuerte;
 - no reabrir;
 - despues del cierre, no permitir plantacion inicial;
@@ -874,7 +881,7 @@ Estas validaciones son ayuda UX. El backend sigue siendo autoridad.
 - Plantacion inicial solo en `ACTIVA`.
 - Plantacion inicial requiere foto y GPS.
 - Plantacion inicial no supera stock asignado disponible.
-- Plantacion inicial no supera meta pendiente por especie.
+- Plantacion inicial puede superar metas por especie y total; conserva las metas como referencias y permanece ACTIVA hasta cierre manual.
 - Plantacion inicial debe enviar `detalles` por asignacion/lote/planta; `cantidades_por_especie` es solo shape interno de UI si se mapea antes de guardar.
 - GPS fuera del poligono no debe bloquear por frontend; backend responde `gps_dentro_poligono=false`.
 - Devolucion no supera `saldo_asignado_disponible`.

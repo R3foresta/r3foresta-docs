@@ -71,21 +71,13 @@ Para la primera version la devolucion se registra con cantidad, motivo y usuario
 - Registrar GPS/lugar de entrega si la operacion no ocurre dentro del vivero.
 - Definir si la devolucion debe pasar por validacion del responsable de vivero antes de aumentar saldo disponible.
 
-## PMVP-PLA-05 — Excedente operativo por especie en plantacion inicial
+## PMVP-PLA-05 — Excedente operativo por especie (incorporado)
 
-### Idea
+**Estado actualizado 2026-10-09:** superar cantidades objetivo ya forma parte del contrato local vigente; no queda pendiente autorizar el excedente. Ver [ADR-PLA-04](../decisiones/02_decisiones_plantacion.md#adr-pla-04--metas-orientativas-cierre-manual-y-edicion-del-plan).
 
-Permitir que una plantacion inicial exceda la meta por especie cuando exista una justificacion de campo.
+La plantación inicial puede superar metas total/por especie con stock asignado suficiente, mantiene especies del plan y no cierra automáticamente. No exige justificación adicional por superar la meta. Confirmar 060/061 y despliegue coordinado en el entorno objetivo; esta actualización no lo acredita.
 
-### Por que queda fuera del MVP
-
-El contrato actual de backend bloquea exceder `cantidad_objetivo` por especie. Para MVP, el frontend debe respetar ese bloqueo y evitar enviar registros que la RPC rechazaria.
-
-### Reglas a evaluar despues
-
-- Cambiar la validacion de meta por especie en backend.
-- Requerir una justificacion cuando la cantidad plantada supere la meta de la especie.
-- Mostrar advertencia en frontend en vez de bloqueo, si producto aprueba el excedente operativo.
+Una política futura de justificaciones o aprobaciones excepcionales requerirá otra decisión; no es un requisito del flujo vigente.
 
 ## PMVP-PLA-06 — Ventana retroactiva configurable para plantacion
 
@@ -102,3 +94,10 @@ La ventana vigente de backend para fecha de plantacion es de 10 dias y es sufici
 - Definir si la configuracion aplica por modulo, operacion o campania.
 - Exponer la regla al frontend desde el contexto operativo.
 - Auditar cambios de configuracion si afectan registros historicos o validaciones de campo.
+
+
+## PMVP-PLA-07 — Edicion del plan y meta en ACTIVA (reclasificada)
+
+**Estado 2026-10-10:** capacidad del alcance actual, exclusivamente por ADMIN, implementada en el backend local (062, auditoría y versión; JWT y permisos 063). Integración frontend y despliegue verificado pendientes. Aplicación hasta 062 y posteriormente de 063 confirmada por el usuario; ver ESTADO.md. Ya no queda como idea para evaluación futura. Ver [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin).
+
+El backend local permite BORRADOR o ACTIVA mediante PUT /plan, con revisión atómica y rechazo de versiones obsoletas. La planificación vigente permite reajustar meta total/objetivos y agregar especies mientras ACTIVA, conservando coherencia, historial y saldos reales. No otorga esta facultad al coordinador ni permite reabrir subcampañas cerradas.

@@ -181,7 +181,7 @@ Validaciones:
   - `PLANTACION_INICIAL` consume asignaciones `PLANTACION_INICIAL`.
   - `REPOSICION` consume asignaciones `REPOSICION`.
 - La cantidad a plantar no puede exceder `saldo_asignado_disponible`.
-- En plantacion inicial, la especie debe existir en `SUBCAMPANIA_META_ESPECIE` y no puede exceder la meta por especie.
+- En plantacion inicial, la especie debe existir en `SUBCAMPANIA_META_ESPECIE`. Las metas por especie y total son orientativas: se pueden superar dentro del stock asignado disponible, sin modificar automáticamente las metas; las revisiones explícitas de ADMIN siguen RN-PLA-17. Alcanzarlas no cierra la subcampaña; el cierre es manual por ADMIN (RN-PLA-10/18).
 
 Efectos atomicos:
 

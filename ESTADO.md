@@ -1,6 +1,9 @@
 # ESTADO.md — Estado vivo de implementación
 
 > Este documento registra el **avance de implementación** (qué está en el repo Backend, qué falta aplicar/verificar y qué queda pendiente), no el diseño. La documentación canónica del *diseño* del dominio vive en los módulos (`00-general-module/`, `01-recoleccion-module/`, `02-vivero-module/`, `03-plantacion-module/`), en los contratos de integración (`90-contratos-integracion/`) y en `database/00_database_schema.md`.
+
+> **Actualización documental 2026-10-10:** el backend local mantiene metas orientativas y cierre manual (ADR-PLA-04/060–061), e implementa revisión atómica de meta/especies por ADMIN en BORRADOR o ACTIVA (ADR-PLA-05/062), con JWT en GET/PUT /plan y RPC de lectura restringida al backend (063). El usuario confirmó aplicación en Supabase hasta 062 y posteriormente de 063. Integración frontend, publicación de los últimos ajustes y verificación del despliegue siguen pendientes; las pruebas locales y la confirmación humana de migraciones no acreditan funcionamiento remoto. El cierre conserva fechas explícitas y sus eventos de historial pendientes.
+
 >
 > **Actualización 2026-07-23 — separación UI Despacho/Asignación:** implementado en `pwa-r3foresta` por el commit `562a97e`. Despacho manual expone solo `DONACION`, `VENTA` y `OTRO`; Asignación tiene formulario y acción propios; el tab `Asignaciones` queda para consulta/devolución. No hubo cambios de Backend. `npm run lint` y `npm run build` pasan.
 >
@@ -72,7 +75,9 @@ repositorio `Backend-r3foresta`; no cambian las decisiones de dominio:
 4. **Seguridad de identidad pendiente.** WebAuthn emite JWT, pero la mayoría de
    endpoints confía en `x-auth-id` sin guard global; además existen endpoints
    de mint, Pinata y diagnóstico sin autenticación. ⏳ tratar como P0 antes de
-   ampliar exposición a clientes no confiables.
+   ampliar exposición a clientes no confiables. GET/PUT /plan son una excepción
+   actualizada el 2026-10-10: ya verifican JWT e identidad; esto no cierra la
+   deuda de autenticación de las demás rutas.
 
 Durante esta auditoría se sincronizó la copia documental de la migración `050`
 con la versión del Backend. Antes difería en una condición funcional:
@@ -127,10 +132,32 @@ las subcampañas ya soft-deleted no deben bloquear el soft-delete de Campaña.
 | Frontend: adaptación UI al flujo de asignación física, consumo de stock asignado y devoluciones | `03-plantacion-module/04_plan_frontend_m3.md`, `02-vivero-module/03_tarea_frontend_separar_despacho_asignacion.md` | ✅ implementado en `pwa-r3foresta`: Asignación tiene acción/formulario independiente, el tab por lote lista asignaciones activas y permite devoluciones, y Despacho queda reservado en UI para salidas no asociadas a campaña. La vista agregada por subcampaña y el mantenimiento avanzado siguen fuera de este cierre. |
 | Backend: `GET /subcampanias/:id/plantacion/context` (subcampaña, permisos, equipo, plan y stock asignado por especie con sus asignaciones, y reglas) | Backend `documentacion/postman/plantacion-context.md` | ✅ implementado en Backend. |
 | Frontend: **registro de plantación inicial en campo** — flujo mobile 3 pasos (evidencia+GPS, cantidades por especie, resolución automática de `detalles` por asignación `fecha_asignacion ASC, asignacion_id ASC`), guardado transaccional con limpieza de evidencias y comprobante con `consumos` | `03-plantacion-module/04_plan_frontend_m3.md` §5.2 / §9 Paso 3 | ✅ implementado en `pwa-r3foresta` (`src/modules/plantacion`, ruta `/app/planting/subcampanias/:id/plantaciones/new`). QA 2026-07-08 sin bloqueantes. |
-| BD: tabla `SUBCAMPANIA_HISTORIAL` (append-only, con enum `tipo_historial_subcampania`) para eventos de ciclo de vida (`BORRADOR_CREADO`, `SUBCAMPANIA_ACTIVADA`, `SUBCAMPANIA_CANCELADA`, y futuros) | `02_Procesos...` §4.1 | ✅ creada por migración `047` en repo Backend; creation/activation/cancelación escriben eventos. Los eventos `SUBCAMPANIA_COMPLETADA / FINALIZADA_PARCIAL / TRANSICION_A_MONITOREO_HISTORICO / EQUIPO_*` quedan pendientes de sus flujos respectivos. |
-| BD: tabla `SUBCAMPANIA_META_ESPECIE` + endpoints `GET /api/subcampanias/:id/plan` y `PUT /api/subcampanias/:id/plan`; validación al activar `SUM(%) = 100` y `SUM(cantidad) = meta_total_arboles` | `01_reglas...` RN-PLA-15/16/17, `database/00_database_schema.md` | ✅ implementado en Backend (migración `047` + servicios/policy). ⏳ pendiente aplicar/confirmar en Supabase si no está aplicado. |
+| BD: tabla `SUBCAMPANIA_HISTORIAL` (append-only, con enum `tipo_historial_subcampania`) para eventos de ciclo de vida (`BORRADOR_CREADO`, `SUBCAMPANIA_ACTIVADA`, `SUBCAMPANIA_CANCELADA`, y futuros) | `02_Procesos...` §4.1 | ✅ creada por migración `047` en repo Backend; creation/activation/cancelación escriben eventos; 062 añade `PLAN_REVISADO`, obligatorio en cada revisión atómica del plan. Los eventos `SUBCAMPANIA_COMPLETADA / FINALIZADA_PARCIAL / TRANSICION_A_MONITOREO_HISTORICO / EQUIPO_*` quedan pendientes de sus flujos respectivos. |
+| BD: tabla `SUBCAMPANIA_META_ESPECIE` + endpoints `GET /api/subcampanias/:id/plan` y `PUT /api/subcampanias/:id/plan`; validación al activar `SUM(%) = 100` y `SUM(cantidad) = meta_total_arboles` | `01_reglas...` RN-PLA-15/16/17, `database/00_database_schema.md` | ✅ base implementada con `047`, ampliada por `062` (revisión atómica BORRADOR/ACTIVA) y JWT/`063`. Aplicación hasta 062 y de 063 confirmada por el usuario; verificación remota e integración frontend pendientes. |
 
 ## Observaciones para el auditor
 
 - El contrato M2↔M3 vigente ya no debe describirse como reserva lógica en documentos vivos. Las menciones restantes en `_legacy/`, `_historico/` y migraciones antiguas son históricas.
 - La fuente de estado operativo es este archivo; la fuente de diseño sigue siendo el contrato y los módulos.
+
+
+## Ajuste de meta y especies en ACTIVA — actualización 2026-10-10
+
+**Backend local implementado; integración y despliegue verificado pendientes.** Conserva la decisión ADMIN/BORRADOR o ACTIVA de [ADR-PLA-05](decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin), las metas orientativas, el cierre manual y los saldos físicos.
+
+| Pieza | Evidencia | Estado |
+|---|---|---|
+| Meta/especies en una transacción, `plan_revision`, `PLAN_REVISADO`, protección de especies usadas y conflicto 409 | Backend, migración `062`, servicio de plan | Implementado en backend local. No cambia plantaciones, autorías, stock ni estado. |
+| Lectura para cualquier usuario autenticado; escritura ADMIN; JWT y coherencia opcional de `x-auth-id` | Guard de GET/PUT /plan, servicio de autenticación | Implementado localmente. Sin extensión a otras rutas ni permisos contextuales. |
+| RPC de lectura/escritura solo para backend `service_role`; claves privadas del servidor | Migración `063`, `getAdminClient()` | Implementado localmente; `SUPABASE_SERVICE_ROLE_KEY` explícita obligatoria. |
+| Aplicación de migraciones hasta 062 | Confirmación del usuario en el chat de revisión | Aplicadas en su Supabase según confirmación humana. No se inspeccionó la base remota en esta actualización. |
+| Aplicación de 063 | Confirmación posterior del usuario: «sixty three is already executed» | Aplicada en su Supabase según confirmación humana. El usuario confirma también que la clave administrativa no llega al frontend. |
+| Validación backend | Resultado reportado en el chat | 531 pruebas unitarias/HTTP y 46 pruebas PostgreSQL aisladas; compilación, tipos y estilo correctos. No se volvieron a ejecutar aquí. |
+| Integración frontend | Tarea entregada en el chat | Pendiente de cierre: bloquear solicitudes sin token, Bearer JWT, 401/403, meta/plan/versión juntos y conciliación de 409. El cliente ya envía token cuando hay sesión; eso no acredita todos los casos. |
+| Publicación y despliegue | Estado local y resumen final del chat | 060–062 y contrato inicial enviados al remoto en `69aacd6`, `2e7e7af`, `9b6bffd`; últimos ajustes JWT/063 y pruebas siguen locales en la revisión. Publicación, versiones coordinadas y comprobación remota pendientes. |
+
+La fuente de confirmaciones y resultados es el [chat de revisión e implementación](codex://threads/01a12288-904e-7061-8dd0-2b80f916a157), releído el 10 de octubre. La aplicación de 063 fue confirmada después del primer análisis documental; ya no se registra como migración pendiente de ejecutar.
+
+Para cerrar: completar la tarea frontend; confirmar `JWT_SECRET` y `SUPABASE_SERVICE_ROLE_KEY` en el backend objetivo sin compartir sus valores; publicar los ajustes y coordinar el despliegue. Ejecutar el [diagnóstico de solo lectura](../Backend-r3foresta/documentacion/sql/verificar_subcampania_plan_062_063.sql) y las comprobaciones HTTP de la [guía 062–063](../Backend-r3foresta/documentacion/tareas/verificacion-supabase-plan-062-063.md): lectura autenticada, rechazo sin token/token inválido e identidad incoherente, permisos RPC y snapshot consistente. La inspección de funciones debe contrastar las definiciones de 060/061, no solo su presencia.
+
+Esta actualización solo modifica documentación; no ejecuta migraciones ni publica o despliega código.
