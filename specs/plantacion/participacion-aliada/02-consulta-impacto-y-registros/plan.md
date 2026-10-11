@@ -6,8 +6,8 @@
 
 | Paso estable | Trabajo y motivo | Evidencia para avanzar |
 |---|---|---|
-| PA-T07 | Resolver matriz de visibilidad por tipo de persona. PA-DI05 concreta campos; PA-DI08 decide el conjunto consultable en la experiencia participante. Se necesita antes de implementar lecturas y cachés. | Ejemplos de respuesta común, propia y operativa; cada campo tiene audiencia y decisión explícita. Revisión de compatibilidad con RN-PLA-34 y ADR-PLA-05. |
-| PA-T08 | Definir mapa → resumen → detalle → registros, sin convertirlo en requisito para registrar. Compartir navegación/capacidades con PA-S00. | Boceto con cuenta nueva, persona asignada y responsable revocado; vacío, error y recuperación; personal interno conserva sus entradas autorizadas. |
+| PA-T07 | Concretar matriz/contratos según decisiones del 11 de octubre: PA-DI08 pública sin sesión y campos principales PA-DI05 confirmados. Resolver detalles pendientes antes de lecturas/cachés. | Ejemplos de respuesta pública sin token, propia y operativa; campos/fórmulas y afiliación histórica/actual explícitos. Compatibilidad con RN-PLA-34 y ADR-PLA-05. |
+| PA-T08 | Definir resumen global público → campaña → subcampaña → registro, con mapa, cambio de campaña y enlaces directos, sin convertirlo en requisito para registrar. Compartir Impacto reducido entre visitante y plantador según PA-S00. | Boceto progresivo con visitante, persona asignada y responsable revocado; vacío, error y recuperación. Profundizar no abre gestión interna; el personal interno conserva estructura, entradas y herramientas autorizadas. |
 | PA-T09 | Validar que los totales grupales no se multiplican por participantes. Separar cantidades iniciales, reposiciones, saldo vivo y metas orientativas. | Dataset sintético con múltiples personas/organizaciones y resultados esperados de mapa, lista y totalizadores. |
 
 Se puede avanzar en inventario, boceto y pruebas propuestas mientras se revisan decisiones. La implementación de un campo o lectura privada espera su política aprobada. La consulta mínima del resultado guardado es dependencia de PA-S01 y no se aplaza solo por la etiqueta P1 de esta capacidad.
@@ -24,16 +24,16 @@ Ver contratos transversales y alternativas de datos en [diseño técnico compart
 
 ## 3. Contratos mínimos a revisar
 
-- Lectura común: alcance consultado, filtros aplicados, agregados con fórmula explícita, geometría y resúmenes permitidos. El total y los puntos deben usar el mismo conjunto de datos.
+- Lectura común: alcance global público, campaña o subcampaña, filtros aplicados, agregados con fórmula explícita, geometría y resúmenes permitidos. El total y los puntos deben usar el mismo conjunto público elegible; el resumen global no revela ámbitos internos por agregación ni multiplica hechos al unir personas/organizaciones.
 - Detalle de registro: identificador persistido, autoría y campos según audiencia. El permiso para recuperar el recibo propio no depende de conservar permiso para plantar.
 - Contexto autenticado: capacidades operativas del actor por subcampaña, separado del contenido común cacheable. No descargar todos los equipos al navegador para filtrar allí.
 - «Mis contribuciones»: propuesta de consulta por responsable/corresponsable histórico, deduplicada por registro. Su lectura ampliada y presentación esperan PA-DI05; no convertirla en ranking o reparto de crédito.
-- Fotos/GPS: aprobación de campos, metadatos y mecanismo de entrega, con acceso compatible con la política. Una URL ya pública debe inventariarse; omitirla del nuevo DTO no la vuelve privada por sí solo.
+- Fotos/GPS: campos públicos confirmados; delimitar contrato, exclusión confirmada de metadatos fotográficos y entrega de evidencia vinculada. Una URL ya pública debe inventariarse; omitirla del nuevo DTO no la vuelve privada por sí solo. Probar enlaces sin sesión y separación de evidencia pendiente/privada.
 - GET /plan: preservar la lectura autenticada de ADR-PLA-05. Separar esa lectura de las operaciones internas y documentar cualquier revisión futura de alcance antes de cambiarla.
 
 ## 4. Verificación y salida de la unidad
 
-Preparar pruebas de contrato con respuestas de cada audiencia, pruebas de agregación y recorridos UX de PA-S02-CA01..11. Usar datos sintéticos: registro de 30 con tres personas y dos organizaciones, registro adicional de 20, usuario sin asignación y responsable con permiso retirado. El total físico de ambos registros es 50 sin multiplicaciones por uniones.
+Preparar pruebas de contrato con respuestas de cada audiencia, pruebas de agregación y recorridos UX de PA-S02-CA01..17. Usar datos sintéticos: registro público de 30 con tres personas y dos organizaciones, registro público adicional de 20 en otra campaña, ámbitos no publicables, visitante sin sesión, usuario sin asignación y responsable con permiso retirado. El total público global es 50 sin multiplicaciones por uniones; cambiar campaña obtiene 30 o 20 y profundizar no abre pantallas/datos internos. Verificar indicadores separados de meta, bajas y reposición conforme a la definición revisada.
 
 Probar llamadas directas e IDs ajenos, sesión vencida, contenido privado fuera de caché pública, cero resultados y fallo de red. Comprobar que ausencia de resultado en una vista filtrada no se interpreta como rechazo de un guardado de PA-S01.
 

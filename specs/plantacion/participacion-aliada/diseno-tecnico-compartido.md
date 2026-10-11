@@ -2,18 +2,24 @@
 
 **Fecha:** 10 de octubre de 2026. **Estado:** propuesta para revisión técnica. No se ha creado ninguna tabla, ejecutado migraciones ni modificado los repositorios de aplicación en esta tarea.
 
+**Actualización de producto, 11 de octubre:** [revisión humana](revision-humana-2026-10-11.md) confirma consulta pública sin sesión, perfil sin wallet/documento y afiliación opcional, y orienta VOLUNTARIO + permiso contextual. La arquitectura debe servir lectura pública separada de capacidades/datos privados; solo registro y áreas privadas requieren sesión. ADMIN global queda confirmado como autoridad central; de PA-DI03 siguen pendientes los mecanismos de identidad/autorización y la matriz de operación interna. La revisión de PA-S00 no aprueba automáticamente las tablas propuestas aquí.
+
 ## 1. Cómo se divide el trabajo
 
 La spec describe un resultado observable de principio a fin. Su plan distribuye responsabilidades: UX define el recorrido; frontend lo presenta y ayuda a completar datos; backend valida identidad, permisos y reglas; PostgreSQL garantiza integridad, concurrencia y persistencia. Una misma historia necesita varias capas.
 
 Ejemplo: «Carlos puede registrar en Palca Norte». Frontend ofrece esa opción; backend rechaza un intento en Palca Sur; la transacción comprueba que el permiso sigue vigente y que hay stock antes de guardar. Ninguna capa por sí sola demuestra la historia completa.
 
-**Propuesta de organización:** una experiencia frontend `participacion`, una experiencia interna conservada y un único modelo de negocio de Plantación. La primera compone Impacto, Mi participación, perfil y registro existente. No se crea un segundo backend de plantaciones, una base de datos por organización ni un árbol adicional de roles globales.
+**Separación de producto confirmada:** conservar la experiencia interna existente para administradores y operativos autorizados de R3Foresta y crear una sección distinta de Impacto y participación, reducida y progresiva. Visitante y plantador comparten esta última; solo sus acciones/contextos autorizados difieren. No se reemplaza el módulo interno ni se le recortan funciones para acomodar al participante.
+
+**Propuesta técnica para cumplirla:** una capa frontend `participacion` compone Impacto, Mi participación, perfil y componentes del registro existente, con navegación y estructura de páginas diferenciadas de la gestión interna. Nombres de carpetas/rutas aún por revisar. Reutilizar componentes no significa reutilizar la ficha interna completa ni descargar todos sus datos para ocultarlos visualmente. Se conservan las entradas internas; cualquier enlace entre experiencias respeta facultades verificadas.
+
+Backend entrega proyecciones públicas reducidas para resumen global, campañas, subcampañas y registros; identidad/capacidades y contexto operativo viajan por contratos privados separados. Profundizar no cambia la audiencia ni abre endpoints internos. Los agregados globales, filtros, mapas y detalles usan el mismo alcance público elegible y hechos deduplicados. Se reutilizan el backend y un único modelo de Plantación: no se crea otro conjunto de campañas/plantaciones/stock, una base por organización ni roles globales nuevos. Esta separación de interfaz no requiere por sí sola migraciones de dominio o aplicaciones desplegadas por separado.
 
 | Spec | Frontend / UX | Backend | Persistencia |
 |---|---|---|---|
 | [PA-S00 Entrada](00-experiencia-participante/spec.md) | Inicio enfocado, navegación y estados de sesión/contexto. | Alta de mínimo privilegio, perfil propio sin elevar autoridad, capacidades y protección de datos internos. | Usuario existente, permisos de PA-S03 y privilegios de acceso. |
-| [PA-S02 Consulta](02-consulta-impacto-y-registros/spec.md) | Resumen → mapa/detalle, campos progresivos y registros propios. | Proyección reducida por audiencia; reutilizar módulo `impact`. | Consultas sobre registros existentes, sin copiar plantaciones a tablas de un portal. |
+| [PA-S02 Consulta](02-consulta-impacto-y-registros/spec.md) | Resumen global → campaña → subcampaña → registro, mapa y campos progresivos; registros propios autorizados. | Proyección reducida por audiencia y alcance; reutilizar módulo `impact`. | Consultas sobre registros existentes, sin copiar plantaciones a tablas de un portal. |
 | [PA-S03 Acceso](03-gestion-acceso-subcampania/spec.md) | Gestión contextual y selección de subcampañas actuales. | Autoridad central/contextual; alta/retiro de facultades y búsqueda mínima de personas. | Permiso contextual, auditoría y operaciones serializadas por subcampaña. |
 | [PA-S01 Registro](01-registro-plantacion-inicial/spec.md) | Formulario de tres pasos, revisión, recuperación y comprobante. | Contexto autorizado, evidencias propias, errores identificables, consulta del intento. | Registro/detalles/consumo existentes + idempotencia y comprobante atómicos. |
 | [PA-S04 Corrección](04-correccion-excepcional/spec.md) | Orientación ante error y lectura del resultado autorizado. | Comando central acotado tras revisión del administrador. | Corrección vinculada al original, historial y efectos explícitos. |
@@ -28,7 +34,7 @@ Inventario detallado de archivos, revisiones y evidencia: [plan de reutilizació
 | Alta en `users.service.ts` asigna `GENERAL`; perfil actualiza `rol` desde DTO, con fallback `GENERAL`. | Separar datos de perfil de asignación de autoridad. El alta limitada debe resolverse en servidor; no aceptar que completar perfil promueva privilegios. |
 | Recolección permite crear a `GENERAL`; Vivero permite escribir a `GENERAL`/`VALIDADOR`/`ADMIN`. | No usar `GENERAL` como sinónimo inocuo de participante. Inventariar facultades internas existentes antes de cambiar la política. |
 | Parte de las rutas usa `x-auth-id` como identidad y hay lecturas de Vivero sin actor. | Establecer JWT verificado y clasificar/proteger endpoints internos, incluyendo caminos legados o directos. No basta con un JWT en una ruta nueva si la misma operación sigue expuesta por otra. |
-| GET/PUT del plan ya verifican JWT; GET permite a cualquier usuario autenticado existente, PUT solo ADMIN global. | Conservar ADR-PLA-05 como base. PA-DI08 no cambia silenciosamente esa decisión; restringir toda consulta a campañas asignadas exige revisar este contrato también. |
+| GET/PUT del plan ya verifican JWT; GET permite a cualquier usuario autenticado existente, PUT solo ADMIN global. | Conservar ADR-PLA-05; exponer campos de impacto públicos mediante su proyección de lectura. PA-DI08 no equivale a quitar JWT indiscriminadamente a endpoints existentes. |
 | `subcampania_equipo` distingue un COORDINADOR y OPERARIO; la coordinación participa en entrega/devolución/activación. | No convertir COORDINADOR automáticamente en administrador contextual ni conceder gestión física al nuevo administrador. |
 | Registro vigente local usa RPC 061; impacto ya tiene consultas y geometrías. | Adaptar lo existente; 053 es antecedente. Meta orientativa, especies del plan, consumo físico y cierre explícito deben mantenerse. |
 
@@ -41,7 +47,7 @@ Son necesidades lógicas, no nombres de endpoints ya implementados. Partir de ru
 | Contrato | Contenido mínimo y regla |
 |---|---|
 | Identidad y capacidades del actor | Identidad propia, capacidades internas permitidas y contextos operativos accesibles. Se calculan en servidor. El cliente las usa para presentar acciones; cada petición vuelve a autorizarse. Caché privada por cuenta, invalidación al cambiar sesión/acceso. |
-| Impacto reducido | Campañas/subcampañas y campos de PA-S02 según PA-DI08. Separar datos comunes de detalle propio e información operativa. No devolver equipos, stock o perfiles completos para filtrarlos luego en navegador. |
+| Impacto público reducido | Campañas/subcampañas y campos confirmados de PA-S02, sin token ni perfil. Separar lectura pública de detalle privado/capacidades. No devolver equipos, stock o perfiles completos para filtrarlos luego en navegador. |
 | Subcampañas donde puedo plantar | Lista filtrada por actor con campaña, subcampaña y disponibilidad operativa. Una subcampaña sin stock no equivale a una persona sin permiso. No traer equipos ajenos para decidir localmente. |
 | Contexto del registro | Especies planificadas, stock elegible, reglas y participantes seleccionables de ese ámbito. Leer no reserva stock/permiso. Revalidar al guardar. |
 | Otorgar/retirar acceso | Actor verificado, persona destino registrada, subcampañas explícitas y acción permitida. No aceptar `campania_id` como permiso comodín ni heredar a futuras hijas. Auditoría obligatoria. |
@@ -96,7 +102,7 @@ Corregir participantes no consume ni devuelve plantas. Cambiar cantidades exige 
 
 ### Qué no cambiar por este diseño
 
-- El catálogo global sigue `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`. PA-DI09 propone evaluar VOLUNTARIO para nuevas cuentas; no existe todavía una migración aprobada de roles.
+- El catálogo global sigue `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`. PA-DI09 orienta VOLUNTARIO para nuevas cuentas participantes con permiso contextual; producto conforme el 11 de octubre, compatibilidad técnica/migración aún pendientes. No crear rol «administrador de campaña» ni conceder permiso por alta.
 - El estado de campaña se deriva; no se añade columna persistida ni estado de publicación nuevo.
 - `cantidad_asignada` y los hechos físicos se preservan. Plantar consume asignación una vez, sin un segundo débito de Vivero.
 - La meta es orientativa y la especie inicial debe pertenecer al plan. El cierre permanece explícito por ADMIN global, no automático ni concedido al administrador contextual.
@@ -104,7 +110,7 @@ Corregir participantes no consume ni devuelve plantas. Cambiar cantidades exige 
 
 ## 5. Decisiones y responsabilidades
 
-PA-DI01–07 se mantienen en [plan de reutilización, §4](plan-reutilizacion-integracion.md#4-decisiones-que-deben-cerrarse-antes-del-código-afectado). Este documento desarrolla sus alternativas, sin cerrarlas. PA-DI08–10 se definen en [PA-S00, §5](00-experiencia-participante/spec.md#5-decisiones-pendientes-y-límites).
+PA-DI01–07 se mantienen en [plan de reutilización, §4](plan-reutilizacion-integracion.md#4-decisiones-que-deben-cerrarse-antes-del-código-afectado), con avances de producto en PA-DI04/05 y contratos aún pendientes. PA-DI08–10 y sus estados se definen en [PA-S00, §5](00-experiencia-participante/spec.md#5-decisiones-confirmadas-y-pendientes-técnicos). Este diseño no cierra por sí mismo mecanismos técnicos.
 
 | Revisión | Qué se acepta | Qué no implica |
 |---|---|---|

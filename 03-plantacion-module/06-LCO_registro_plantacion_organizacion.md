@@ -1,13 +1,15 @@
 # Registro de plantaciones con autorización por persona y subcampaña
 
 **Fecha de preparación:** 6 de octubre de 2026.<br>
-**Última actualización:** 8 de octubre de 2026.<br>
-**Estado:** Inicio revisado y LCO de este incremento cerrado por decisión humana del 8 de octubre de 2026; paso a Elaboración autorizado con las condiciones de §10. Implementación y aprobación de specs pendientes. No acredita cierre LCO del proyecto global, LCA ni preparación del piloto.<br>
+**Última actualización:** 11 de octubre de 2026.<br>
+**Estado:** Inicio revisado y LCO de este incremento cerrado por decisión humana del 8 de octubre de 2026; paso a Elaboración autorizado con las condiciones de §10. PA-S00 recibe revisión favorable de producto el 11 de octubre; contratos, demás revisiones e implementación pendientes. No acredita cierre LCO del proyecto global, LCA ni preparación del piloto.<br>
 **Capacidad de referencia:** registro y consulta de plantaciones por personas habilitadas en subcampañas, independientemente de su afiliación organizacional.
 
 ## Cómo utilizarla
 
 Este documento encuadra la capacidad dentro del ciclo RUP + SDD existente y alimentará specs pequeñas. Mantiene su ruta para conservar continuidad con el borrador inicial.
+
+**Revisión posterior en Elaboración, 11 de octubre:** consulta pública sin autenticación/perfil, registro autenticado y habilitado por subcampaña, perfil del piloto sin pedir wallet/documento y afiliación opcional; orientación VOLUNTARIO + permiso contextual; GPS exterior permitido y entrada manual válida. PA-DI08 queda cerrada en producto; PA-DI07 (casos de corrección) sigue abierta. La conformidad con PA-S00 no aprueba mecanismos técnicos ni otras specs. Los estados de revisión históricos de esta ficha se conservan como evidencia de cada momento; la actualización y propuesta de roles con fuentes están en [acta de revisión](../specs/plantacion/participacion-aliada/revision-humana-2026-10-11.md) y ADR-PLA-03.
 
 **Material de Elaboración, 9 de octubre de 2026:** [diagramas de contexto, casos de uso, actividades, modelo conceptual y dependencias](../specs/plantacion/participacion-aliada/diagramas/README.md). El [análisis de dependencias](../specs/plantacion/participacion-aliada/diagramas/DEPENDENCIAS.md) contrasta la base documental con código local y señala discrepancias de identidad, permisos, reintentos y reglas GPS/metas/cierre. Es material para revisión; no modifica por sí solo decisiones, aprobación de specs ni estado de despliegue.
 

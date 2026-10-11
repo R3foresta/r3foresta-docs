@@ -239,7 +239,11 @@ Antes de confirmar, el sistema muestra `cantidad_plantada_inicial`, `cantidad_mu
 
 ### RN-PLA-32 - PostGIS es la autoridad para validar GPS
 
-La funcion `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)` es la fuente de verdad para validar que un punto GPS de plantacion, reposicion o mortandad este dentro del poligono de la subcampaña, con tolerancia configurable (default sugerido 50 m). Fuera de tolerancia, se bloquea el registro. Turf.js u otro chequeo de frontend es opcional y solo sirve para feedback de UX, nunca como autoridad de validacion.
+La funcion `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)` es la fuente de verdad para evaluar un punto GPS con tolerancia configurable (default sugerido 50 m). Turf.js u otro chequeo de frontend es opcional y solo sirve para feedback de UX, nunca como autoridad de validacion.
+
+**Registro inicial, aclaración de producto del 11 de octubre de 2026 (ADR-PLA-03):** estar fuera del polígono/tolerancia no bloquea por sí solo el registro del piloto; conservar coordenadas, resultado/distancia y advertencia. Si falla la captura automática se permite indicar un punto manual válido. No se autoriza omitir coordenadas ni declarar una evaluación exitosa inexistente. La RPC local 061 ya permite punto exterior y bloquea evaluación no disponible; validar el contrato y manejo de fallos técnicos antes del piloto. No acredita despliegue ni extiende esta decisión a otros recorridos.
+
+La regla conceptual previa de bloqueo fuera de tolerancia para reposición/mortandad debe contrastarse en sus propios recorridos; esta revisión solo cierra la decisión del registro inicial. No modificar sus contratos por inferencia.
 
 ### RN-PLA-33 - Poligono obligatorio para activar; area es referencial
 
@@ -253,9 +257,13 @@ El poligono de la subcampaña es obligatorio para pasar a `ACTIVA`. El area en h
 
 Toda la informacion de subcampañas `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIAL` es publica sin autenticacion (mapa, totalizadores, detalle de campaña/subcampaña, drill-down a M2 y M1). Las subcampañas en `BORRADOR` no son publicas.
 
+**Incremento PA-F01, confirmación del 11 de octubre:** consulta pública sin cuenta ni perfil, independiente de permisos operativos y afiliación. Su proyección incluye nombres/participantes históricos, fotos de plantación, mapa/GPS/ubicación, fechas, plantación inicial, faltantes para meta, reposiciones, bajas reportadas y organización/comunidad de referencia. «Toda la información» no debe usarse para exponer indiscriminadamente credenciales, contactos, perfiles completos, metadatos de fotos, observaciones libres o contexto operativo interno; los campos de esta experiencia están delimitados en [PA-S02](../specs/plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md). La trazabilidad pública previa M2/M1 no concede operación ni exige incluir sus herramientas en la navegación del participante.
+
 ### RN-PLA-35 - Roles del MVP sin rol global nuevo
 
 El catalogo cerrado de roles globales (`ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`) no se altera. `ADMIN` crea campañas y subcampañas, asigna coordinador inicial, cierra manualmente y gestiona organizaciones. `GENERAL` registra plantaciones, reposiciones y mortandad en las subcampañas donde es miembro del equipo. `VALIDADOR` no tiene flujo especial propio en MVP. `VOLUNTARIO` no puede ser miembro de `SUBCAMPANIA_EQUIPO` ni registrar eventos en este modulo.
+
+El párrafo anterior describe la base legada. **Para PA-F01, ADR-PLA-03 y revisión del 11 de octubre aprueban la orientación VOLUNTARIO + permiso contextual**: sesión y habilitación de plantador/administrador por subcampaña permiten el registro inicial, sin ascender a GENERAL ni abrir Recolección/Vivero. La transición de tablas, restricciones y usuarios está pendiente; no se afirma que VOLUNTARIO ya pueda operar en el código desplegado. Administrador contextual no equivale a ADMIN global ni a COORDINADOR, y no se introduce rol de campaña con herencia.
 
 ---
 

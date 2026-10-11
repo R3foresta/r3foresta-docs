@@ -4,6 +4,8 @@
 
 El orden general fue aceptado en el cierre LCO. El refinamiento del 10 de octubre incorpora la experiencia del usuario nuevo y explicita trabajo frontend/backend/datos; sus specs siguen en borrador.
 
+**Avance de revisión del 11 de octubre:** PA-S00 queda aprobada en comportamiento, lista para preparar boceto y plan técnico; se confirma consulta pública sin sesión, perfil sin wallet/documento y afiliación opcional, orientación VOLUNTARIO + permiso contextual y GPS exterior/manual. ADMIN global queda confirmado como autoridad central; se mantienen contratos, matriz operativa, migración, pruebas y casos de corrección pendientes. Ver [acta](revision-humana-2026-10-11.md); las tablas históricas de orden no significan que las decisiones confirmadas sigan abiertas.
+
 ## Orden general aceptado el 8 de octubre
 
 | Prioridad | Resultado | Dependencias | Evidencia esperada |
@@ -18,7 +20,7 @@ El orden general fue aceptado en el cierre LCO. El refinamiento del 10 de octubr
 ## Bloqueos antes de implementar cada recorrido
 
 - Acordar entrada, alcance de consulta y alta de mínimo privilegio para nuevas cuentas (PA-S00). Inventariar usuarios internos y cerrar rutas/API que permitan eludir la restricción; no basta reducir el menú.
-- Resolver la discrepancia GPS: handoff/migración describen advertencia fuera de polígono y bloqueo no evaluable, mientras RN-PLA-32 mantiene bloqueo conceptual fuera de tolerancia.
+- Verificar contrato GPS conforme a la confirmación del 11 de octubre: exterior permitido con evaluación/advertencia y captura manual válida como alternativa; RN-PLA-32 alineada para registro inicial. Distinguir fallo de dispositivo de fallo técnico de evaluación y no inventar coordenadas/resultados.
 - Diseñar autorización/guardado frente a revocación y reintentos concurrentes, sin asumir que pulsar enviar reserva permiso.
 - Confirmar correspondencia entre permisos contextuales nuevos y catálogo global/equipo vigente; no equiparar ADMINISTRADOR contextual con ADMIN global o COORDINADOR.
 - Confirmar que el consumo usa asignación física elegible una sola vez, sin nuevo despacho ni doble débito de Vivero.

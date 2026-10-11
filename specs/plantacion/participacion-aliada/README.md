@@ -1,19 +1,21 @@
 # PA-F01 — Participación aliada en Plantación
 
-**Actualización:** 10 de octubre de 2026. **Estado:** cinco specs en borrador para revisión; LCO cerrado, Elaboración autorizada. No acredita implementación ni salida a campo.
+**Actualización:** 11 de octubre de 2026. **Estado:** PA-S00 aprobada en comportamiento, lista para preparar boceto y plan técnico; PA-S01–04 siguen en revisión, con decisiones parciales incorporadas. LCO cerrado, Elaboración autorizada. No acredita implementación ni salida a campo.
 
 ## Propósito
 
-Una persona se registra, encuentra una experiencia enfocada de impacto y, cuando está autorizada en una subcampaña, registra una plantación real y reconoce el resultado guardado. No necesita conocer Recolección, Vivero o administración interna. Afiliación y organización no conceden permiso.
+Una persona abre el enlace y consulta públicamente el impacto sin cuenta ni perfil. Para registrar una plantación necesita autenticarse y estar habilitada en una subcampaña. No necesita conocer Recolección, Vivero o administración interna. Afiliación y organización no conceden permiso.
 
-La propuesta conserva un único modelo de Plantación, una experiencia participante y las herramientas internas de quienes tienen facultades para usarlas. El usuario pidió desarrollar y organizar las specs; las decisiones técnicas y cada comportamiento detallado siguen su revisión propia.
+**Regla de alcance confirmada: dos experiencias, un único modelo de Plantación.** La sección interna existente conserva su estructura, datos y herramientas para administradores y operativos autorizados de R3Foresta. La nueva sección Impacto y participación es reducida y progresiva: resumen global público → campaña → subcampaña → registro. Visitante y plantador comparten esa experiencia; el plantador suma únicamente acciones/contexto autorizados. No se reemplaza ni se simplifica globalmente la gestión interna, no se abre al profundizar en Impacto y no se duplican campañas, registros o stock. Ver [decisión humana](revision-humana-2026-10-11.md#separación-confirmada-de-experiencias).
+
+El usuario pidió desarrollar y organizar las specs; las decisiones técnicas y cada comportamiento detallado siguen su revisión propia.
 
 ## Empieza aquí: orden de revisión
 
 | Orden | Spec | Pregunta que vas a resolver | Estado |
 |---|---|---|---|
-| 1 | [PA-S00 — Entrada y experiencia del participante](00-experiencia-participante/spec.md) | ¿Qué encuentra alguien recién registrado, sin permisos o involucrado en una sola campaña? | Borrador nuevo; prioridad P0. |
-| 2 | [PA-S02 — Consulta de impacto y registros](02-consulta-impacto-y-registros/spec.md) | ¿Qué información ve cada audiencia y hasta qué detalle? | Borrador; visibilidad por cerrar. |
+| 1 | [PA-S00 — Entrada y experiencia del participante](00-experiencia-participante/spec.md) | ¿Qué encuentra un visitante sin sesión o una persona que quiere plantar? | Aprobada en comportamiento; preparación técnica habilitada, integración pendiente. |
+| 2 | [PA-S02 — Consulta de impacto y registros](02-consulta-impacto-y-registros/spec.md) | ¿Cómo se presentan los campos públicos y qué datos adicionales quedan fuera? | Consulta pública y campos principales confirmados; detalle en revisión. |
 | 3 | [PA-S03 — Gestión de acceso por subcampaña](03-gestion-acceso-subcampania/spec.md) | ¿Quién habilita a quién, dónde y qué ocurre al retirar acceso? | Borrador; adaptación técnica pendiente. |
 | 4 | [PA-S01 — Registro inicial](01-registro-plantacion-inicial/spec.md) | ¿Cómo registra una vez, revisa y confirma que quedó guardado? | Borrador apoyado en formulario existente. |
 | 5 | [PA-S04 — Corrección excepcional](04-correccion-excepcional/spec.md) | ¿Cómo se resuelve un error real después de guardar? | Borrador; mecanismo y verificación antes de campo. |
@@ -30,14 +32,15 @@ Al revisar una spec, registrar nombre del revisor, fecha, criterios aceptados, c
 
 | Spec | Revisión humana de esta versión | Decisiones principales pendientes |
 |---|---|---|
-| PA-S00 | Pendiente | PA-DI08: consulta común o asignada; PA-DI09: alta/roles; PA-DI10: perfil mínimo. |
-| PA-S02 | Pendiente | PA-DI05/08: audiencias, campos y lectura propia. |
-| PA-S03 | Pendiente | PA-DI01/02/03: permisos, transición legada y autoridad central técnica. |
-| PA-S01 | Pendiente | PA-DI04/06: GPS/participantes y guardado recuperable. |
+| PA-S00 | Favorable, usuario, 11 de octubre; [acta](revision-humana-2026-10-11.md). | PA-DI08 cerrada; PA-DI10 confirmada en producto; PA-DI09 orientada, con contratos/migración pendientes. |
+| PA-S02 | Confirmación parcial de consulta pública y campos; revisión integral pendiente. | PA-DI05: fórmulas/etiquetas, afiliación histórica/actual, datos adicionales y lectura personalizada. |
+| PA-S03 | Revisión integral pendiente; ADMIN global confirmado como autoridad central. | PA-DI01/02: permisos y transición legada; PA-DI03: mecanismos de identidad y matriz operativa. |
+| PA-S01 | Revisión integral pendiente; GPS exterior/manual confirmado. | PA-DI04/06: manejo técnico de GPS, fechas/participantes y guardado recuperable. |
 | PA-S04 | Pendiente | PA-DI07: casos, mecanismo y efectos de corrección. |
 
 ## Documentos compartidos
 
+- [Revisión humana del 11 de octubre](revision-humana-2026-10-11.md): decisiones confirmadas, propuesta de roles con fuentes y pendientes de corrección.
 - [Plan inicial y siguiente entrega](plan-inicial.md): orden, razones, dependencias y condiciones de campo.
 - [Diseño compartido de frontend, backend y datos](diseno-tecnico-compartido.md): distribución de trabajo, contratos, tablas reutilizadas/candidatas y cómo preparar migraciones.
 - [Plan de reutilización e integración](plan-reutilizacion-integracion.md): evidencia del código existente, archivos concretos, PA-DI01–07 y tareas de integración.

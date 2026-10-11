@@ -50,6 +50,7 @@ Mapa de conceptos, no ER físico ni tablas nuevas. Permiso por persona/subcampa�
 
 ## Lectura y mantenimiento
 
+- Revisión humana del 11 de octubre: [consulta pública sin sesión y paso a registro autenticado](../revision-humana-2026-10-11.md) deben reflejarse en la próxima alineación de actores/entrada. GPS exterior/manual está confirmado y RN-PLA-32 alineada para registro inicial; las menciones anteriores de «alinear RN-PLA-32» describen el corte histórico del render. No se regeneraron dibujos ni se consideran aprobados por actualizar las specs.
 - Flecha continua: relación/acción descrita. En PA-D05: dependencia necesaria, no orden rígido de diseño; entradas convergentes se necesitan juntas.
 - Flecha punteada: contexto, alcance posterior o mecanismo/atribución por definir. Leer su etiqueta.
 - Azul: ámbito/base reutilizable, no «verificado en producción». Ámbar y `PENDIENTE`: adaptación/alineación/mecanismo sin cerrar. Verde: resultado esperado sujeto a verificación.

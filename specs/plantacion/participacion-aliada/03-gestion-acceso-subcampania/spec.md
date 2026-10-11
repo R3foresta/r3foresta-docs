@@ -8,7 +8,7 @@ Una persona registrada recibe capacidad para plantar en subcampañas concretas. 
 
 La unidad de autorización es **persona + subcampaña**. PLANTADOR y ADMINISTRADOR DE SUBCAMPAÑA son responsabilidades contextuales del incremento; no amplían el catálogo global `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`. Una persona puede administrar Palca Norte y plantar en Palca Sur, sin permiso en Palca Este. Administrar incluye plantar: no se presupone un permiso paralelo de plantador en el mismo ámbito.
 
-[PA-S00](../00-experiencia-participante/spec.md) define ingreso y experiencia del participante, incluidos PA-DI09 (alta/roles globales/transición interna) y PA-DI10 (perfil mínimo). [PA-S02](../02-consulta-impacto-y-registros/spec.md) define consulta y visibilidad. PA-DI08 sigue pendiente: consultar impacto común y estar autorizado para operar son decisiones distintas. Esta spec no restringe por membresía la lectura GET /plan ya acordada en ADR-PLA-05.
+[PA-S00](../00-experiencia-participante/spec.md) define ingreso y experiencia del participante. Revisión del 11 de octubre: PA-DI08 confirma consulta pública sin sesión; PA-DI10 excluye pedir wallet/documento y deja afiliación opcional; PA-DI09 orienta VOLUNTARIO + permiso contextual con transición técnica pendiente. [PA-S02](../02-consulta-impacto-y-registros/spec.md) define campos públicos/privados. Consultar no autoriza a operar. Esta spec tampoco elimina el JWT del contrato GET /plan de ADR-PLA-05.
 
 ## 2. Historias de usuario
 
@@ -34,7 +34,7 @@ La unidad de autorización es **persona + subcampaña**. PLANTADOR y ADMINISTRAD
 | Crear campañas, editar plan, cerrar o gestionar entregas | No por estos permisos. | No por ser administrador contextual. | Conforme a los permisos globales/específicos vigentes; no se redefine aquí su conjunto. |
 | Editar un registro ya guardado o aprobar cada envío | No. | No. Puede revisar un error para PA-S04, sin edición general ni cola de aprobación. | La corrección excepcional sigue PA-S04; no se convierte en editor general. |
 
-«Administración central» debe mapearse a identidad y política verificables en PA-DI03. ADMIN global es una propuesta de representación del plan técnico, no un nuevo rol ni una equivalencia técnica aprobada por este borrador. La interfaz nunca decide la autoridad final ni acepta un rol declarado libremente por el cliente.
+El usuario confirma ADMIN global como representación de la administración central de R3Foresta. No es un rol nuevo ni el administrador contextual. PA-DI03 aún debe concretar identidad/política verificables y acceso operativo interno; la confirmación no otorga automáticamente permiso para plantar en cualquier ámbito ni aprueba los casos de corrección de PA-DI07. La interfaz nunca decide la autoridad final ni acepta un rol declarado libremente por el cliente.
 
 ## 4. Recorridos y estados
 
@@ -106,7 +106,7 @@ El modelo vigente utiliza `SUBCAMPANIA_EQUIPO` con `COORDINADOR | OPERARIO`, exa
 
 PA-DI01/02 deben decidir adaptación o tabla contextual separada, transición de usuarios y una fuente única de autorización para el nuevo recorrido, sin un «permiso nuevo O permiso legado» permanente que permita eludir retiros. Conservar referencias históricas, snapshots y responsabilidades internas necesarias. La autorización por organización y un FK directo `coordinador_id` en SUBCAMPANIA no son alternativas válidas.
 
-Quedan pendientes: representación verificable de autoridad central y acceso operativo interno (PA-DI03); identidad/campos mínimos de búsqueda y visibilidad del equipo (PA-DI05); alta/roles/transición del personal (PA-DI09); perfil mínimo (PA-DI10); primera designación y tratamiento de ámbitos legados; atomicidad/repetición de acciones masivas; efectos de inactivaciones sobre administración. El [diseño técnico compartido](../diseno-tecnico-compartido.md) reúne la propuesta de frontend/backend/datos; este documento no crea tablas ni aplica migraciones.
+Quedan pendientes: representación verificable de autoridad central y acceso operativo interno (PA-DI03); campos mínimos de búsqueda/visibilidad del equipo (PA-DI05); contrato de alta y transición del personal (PA-DI09), aplicando los mínimos ya confirmados en PA-DI10; primera designación y ámbitos legados; atomicidad/repetición masiva; efectos de inactivaciones. La [propuesta de roles con fuentes](../revision-humana-2026-10-11.md#2-pa-di09-y-autoridad-propuesta-trazada-para-revisar) distingue ADMIN global, administrador de subcampaña, GENERAL, VALIDADOR, VOLUNTARIO y equipo legado. No crea un rol de campaña. El [diseño técnico compartido](../diseno-tecnico-compartido.md) desarrolla frontend/backend/datos; no crea tablas ni aplica migraciones.
 
 ## 8. Trazabilidad
 

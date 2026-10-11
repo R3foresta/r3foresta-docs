@@ -1,6 +1,6 @@
 # Especificaciones del incremento MVP
 
-Esta carpeta contiene especificaciones pequeñas, planes y tareas del repositorio documental. No acredita implementación ni aprobación humana: cada `spec.md` requiere revisión propia antes de convertirse en base de construcción.
+Esta carpeta contiene especificaciones pequeñas, planes y tareas del repositorio documental. Cada `spec.md` requiere revisión propia antes de convertirse en base de construcción. PA-S00 recibió revisión favorable de producto el 11 de octubre; ver [acta](plantacion/participacion-aliada/revision-humana-2026-10-11.md). Ningún documento acredita por sí solo implementación o despliegue.
 
 ## Convenciones
 
@@ -18,8 +18,8 @@ Esta carpeta contiene especificaciones pequeñas, planes y tareas del repositori
 
 | Artefacto | Revisión humana | Estado documental |
 |---|---|---|
-| [PA-S00](plantacion/participacion-aliada/00-experiencia-participante/spec.md) | Primero: cuenta nueva y experiencia enfocada | Borrador para revisión |
-| [PA-S02](plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md) | Después: consulta y visibilidad | Borrador para revisión |
+| [PA-S00](plantacion/participacion-aliada/00-experiencia-participante/spec.md) | Entrada pública y experiencia participante | Revisión favorable de producto; técnica pendiente |
+| [PA-S02](plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md) | Siguiente revisión: consulta y visibilidad | Consulta pública/campos principales confirmados; detalles pendientes |
 | [PA-S03](plantacion/participacion-aliada/03-gestion-acceso-subcampania/spec.md) | Acceso y revocación | Borrador para revisión |
 | [PA-S01](plantacion/participacion-aliada/01-registro-plantacion-inicial/spec.md) | Registro inicial | Borrador para revisión |
 | [PA-S04](plantacion/participacion-aliada/04-correccion-excepcional/spec.md) | Corrección excepcional | Borrador condicionado a diseño previo al campo |

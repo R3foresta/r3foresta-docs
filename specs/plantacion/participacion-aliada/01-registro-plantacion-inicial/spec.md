@@ -27,7 +27,9 @@ Sesión verificada, permiso contextual para plantar, subcampaña ACTIVA, especie
 3. **Revisar y confirmar:** mostrar campaña, subcampaña, especies/cantidades, responsable, otras personas, fecha, ubicación y fotos. Corregir vuelve al paso correspondiente conservando datos. Confirmar guarda directamente; no pasa por aprobación administrativa.
 4. **Resultado:** mostrar código/ID real devuelto por servidor, datos confirmados y acceso al detalle persistido. Tras guardar, no hay editor general para autor o administrador contextual.
 
-La ventana de fecha de la base revisada es de 10 días y no anterior a las asignaciones consumidas; PA-DI04 debe cerrar límites exactos, zona horaria y relación con reglas vigentes antes del contrato final. No hacer depender el registro de datos del perfil que PA-DI10 aún no haya revisado.
+La ventana de fecha de la base revisada es de 10 días y no anterior a las asignaciones consumidas; PA-DI04 debe cerrar límites exactos, zona horaria y relación con reglas vigentes antes del contrato final. PA-DI10 confirmó el 11 de octubre no pedir wallet/documento en el piloto y afiliación opcional; esas ausencias no bloquean por sí solas registrar.
+
+**GPS confirmado el 11 de octubre:** aceptar punto fuera del polígono con evaluación/advertencia; permitir indicar una ubicación manual válida cuando falla la captura automática. No autoriza omitir coordenadas ni inventar resultado del evaluador. RN-PLA-32 se alineó para este registro inicial. Contrato/mensajes ante fallo técnico del servidor siguen por precisar y verificar. Consulta de fotos, GPS y autoría será pública conforme a PA-S02; proponer aviso claro antes de confirmar.
 
 ## Criterios para revisión
 
@@ -72,7 +74,7 @@ Ramas explícitas: `validación rechazada`, `permiso retirado`, `stock cambiante
 
 ## Decisiones antes del código afectado
 
-- PA-DI04: conciliar GPS fuera de polígono (advertencia en 061 frente a RN-PLA-32), fecha y personas seleccionables, incluyendo revocación de un participante durante la captura.
+- PA-DI04: verificar GPS exterior/manual ya confirmado, manejo de fallos técnicos, fecha y personas seleccionables, incluida revocación de un participante durante la captura.
 - PA-DI06: contrato durable de intento/recibo, huella, concurrencia, retención y evidencias; no basta deshabilitar el botón.
 - PA-DI01/02/03/09: identidad y autorización contextual de PA-S00/03. La representación central no concede automáticamente permiso global para plantar.
 - Contrato de distribución FIFO: frontend ayuda hoy; definir resolución o comprobación en servidor para garantizarla frente a cualquier cliente.
