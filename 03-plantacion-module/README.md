@@ -14,6 +14,7 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 * `03_Mockups_Guia_Modulo_3_Plantacion.md`: guía UX.
 * `04_plan_frontend_m3.md`: plan operativo de implementación frontend por fases, pantallas, contratos de datos y criterios de cierre.
 * [Revisión de cierre de metas/especies](07_revision_meta_especies_cierre.md): evidencia local frontend/backend, límites y verificación restante del 2026-10-10.
+* [`PA-F01 — Participación aliada en Plantación`](../specs/plantacion/participacion-aliada/README.md): elaboración del incremento MVP, specs, plan, boceto y diagramas; requiere revisión humana propia por spec.
 
 **Nota estructural:** el contrato de integración M2↔M3 (asignaciones físicas, devoluciones físicas, consumo de stock asignado y saldos derivados) **no vive aquí**: su fuente canónica es [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md). `01_reglas_de_negocio_plantacion.md` referencia ese contrato, no lo duplica.
 

@@ -1,0 +1,26 @@
+# Plan — PA-S00
+
+**Estado:** propuesta técnica, no implementada por esta tarea. Leer primero [spec](spec.md).
+
+## Entrega mínima
+
+Cuenta nueva → Impacto → sin permiso / subcampaña habilitada → entrada al formulario existente, conservando una experiencia interna para personal autorizado. Se reutilizan autenticación, perfil, Plantación e impacto; se propone una capa frontend `participacion` que compone estas capacidades.
+
+| Capa | Trabajo | Contrato o dependencia | Evidencia de salida |
+|---|---|---|---|
+| UX | Bocetar cuenta sin permisos, una/múltiples subcampañas, permiso retirado y acceso interno. | PA-DI08/10 y campos PA-S02. | Revisión humana de nombres, estados y acceso rápido. |
+| Frontend | Adaptar landing, layout, menús, acciones rápidas, rutas y caché por usuario; no duplicar formulario. | Respuesta autenticada de capacidades/contextos. | Pruebas de navegación, enlaces directos, sesión vencida y cambio de cuenta. |
+| Backend | Derivar actor del JWT; alta de mínimo privilegio; perfil no cambia autoridad; respuesta limitada al actor; proteger lecturas/escrituras internas y rutas legadas alcanzables. | PA-DI03/09 y matriz de endpoints. | Una cuenta nueva no consigue información/acciones internas mediante API ni alterando headers/perfil. |
+| Base de datos | Reutilizar usuario; preparar permisos contextuales de PA-S03 y privilegios/RLS acordes al acceso real. | PA-DI01/02/09, inventario de usuarios y esquema destino. | Migración ensayada sin pérdida de historial ni degradación de personal autorizado. |
+
+El detalle de tablas candidatas, contratos y secuencia está en [diseño técnico compartido](../diseno-tecnico-compartido.md). El inventario de código existente está en [plan de reutilización](../plan-reutilizacion-integracion.md). El código local de alta usa `GENERAL` y el perfil acepta `rol`; ambos necesitan tratamiento explícito antes de habilitar participantes limitados.
+
+## Orden y puerta de implementación
+
+1. Cerrar PA-DI08/09/10 y la matriz de audiencias/acciones afectadas; inventariar usuarios existentes sin reclasificarlos automáticamente.
+2. Acordar contrato de capacidades y de consulta reducida; se puede revisar un boceto con datos simulados mientras tanto.
+3. Preparar migraciones y backend en un entorno aislado, con pruebas negativas además del caso permitido.
+4. Integrar navegación y selector con esos contratos. Frontend puede preparar componentes con mocks acordados en paralelo; eso no acredita seguridad ni integración real.
+5. Probar cuenta nueva sin permisos, plantador, administrador contextual y personal interno; verificar las mismas reglas por URL, HTTP y accesos DB expuestos.
+
+No se habilita el nuevo recorrido en campo mientras las restricciones solo existan en frontend. Eliminar del menú interno funcionalidades para todos los usuarios tampoco satisface esta spec.

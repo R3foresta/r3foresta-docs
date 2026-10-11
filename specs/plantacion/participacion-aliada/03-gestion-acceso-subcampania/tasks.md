@@ -1,0 +1,26 @@
+# Tareas — PA-S03
+
+**Estado:** backlog propuesto para revisión humana. No acredita implementación ni permisos modificados. Se conservan PA-T12..16; los sufijos desglosan trabajo nuevo por capa.
+
+## Preparación y revisión
+
+- [ ] **PA-T15 — Contrastar equipo y catálogo global.** Consolidar el inventario existente de COORDINADOR/OPERARIO, roles globales y consumidores: alta/perfil, contexto, registro, activación, entrega/devolución y gestión. Distinguir participantes nuevos de personal interno autorizado. Entrega: matriz actual → propuesta con excepciones y migración pendientes; fuentes en el plan de integración, sin nuevas inspecciones productivas implícitas.
+- [ ] **PA-T16 — Casos de retiro por momento.** Precisar resultados de formulario abierto, fotos cargadas, envío sin autorizar, operación autorizada y registro guardado. Añadir los dos retiros concurrentes y recuperación de recibo. Entrega: PA-S03-CA09..11 y pruebas con orden controlado por diseñar, no pruebas ya pasadas.
+- [ ] **PA-T12-REV — Decidir modelo y transición.** Revisar PA-DI01/02/03/09 con la autoridad humana: fuente única de permiso, persistencia contextual, responsabilidad legada, acceso central y alta sin privilegios. Coordinar PA-DI10 con PA-S00. Entrega: decisión y matriz de transición aprobadas antes de programar o migrar.
+- [ ] **PA-T13-UX — Revisar acciones y consecuencias.** Boceto de alta de plantador, retiro, cambio a plantador y retiro de administrador; búsqueda mínima y mensajes sin confundir contexto con ADMIN global. Entrega: usuario reconoce qué persona/ámbitos cambian y qué conserva; sin aprobación de cada plantación.
+- [ ] **PA-T14-REV — Acordar selección masiva.** Revisar propuesta todo-o-nada, IDs actuales, repetición idéntica, conflicto y recuperación de respuesta. Entrega: ejemplos de éxito y rechazo completo o parcial expresamente elegido, sin resultados ambiguos ni herencia futura.
+
+## Implementación posterior a aprobación
+
+| ID | Capa y entrega | Dependencias | Verificación de salida |
+|---|---|---|---|
+| PA-T12-BE | Identidad verificada y políticas por acción/ámbito; listado de capacidades propias, búsquedas mínimas y cierre de bypass desde rutas legadas. Integración con alta/perfil de PA-S00. | PA-T12-REV; matriz de campos PA-DI05. | CA01..04/12/13: no autoasignación ni facultades internas por alta; VOLUNTARIO contextual puede operar donde corresponde; autoridad ajena rechazada. |
+| PA-T12-DB | Migración nueva del modelo contextual y su historial, solo después de inspeccionar versión de esquema y aprobar correspondencia. Diseñar FKs/unicidad/privilegios y ensayo con datos controlados. | PA-T12-REV y contrato técnico compartido. | Ningún duplicado vigente por persona/ámbito, sin borrado de historia ni conversión automática del COORDINADOR; facultades internas preservadas según matriz. |
+| PA-T13-BE | Comandos separados para plantador y administrador, con autoridad central verificada; errores identificables y consulta de resultado/estado tras incertidumbre. | PA-T12-BE; PA-T13-UX; PA-T14-REV. | CA03/05/06/14: cambio a plantador difiere de retiro completo; acciones repetidas o inciertas no se presentan como éxito sin comprobar. |
+| PA-T13-DB | Transiciones y auditoría atómicas, protección del último administrador y orden de bloqueo compartido con registro. Resolver primera designación/transición legada. | PA-T12-DB; contrato de PA-T13-BE y PA-S01. | CA06/09/10: dos retiros no dejan cero administradores; ambos órdenes registro/retiro producen efectos correctos sin consumo indebido. |
+| PA-T13-FE | Gestión contextual con búsqueda de persona registrada, responsabilidades permitidas, confirmación y estados de carga/resultado. Acciones centrales visibles solo en la experiencia autorizada. | PA-T13-UX; contratos de PA-T12-BE/PA-T13-BE; PA-S00. | CA02/03/05/11/14: ámbito claro, sin invitaciones; UI coincide con servidor; retirada no elimina detalle propio. |
+| PA-T14-FE | Selector de una/varias/todas las subcampañas actuales dentro del ámbito administrable; resumen de IDs/nombres antes de confirmar. | PA-T14-REV; listado autorizado de PA-T12-BE. | CA07/08: no aparecen como seleccionables ámbitos ajenos; «todas» queda acotado al conjunto revisado. |
+| PA-T14-BE | Ejecución de selección con revalidación de todos los ámbitos y contrato de atomicidad/resultado acordado. | PA-T14-REV; PA-T13-BE/DB. | CA07/08/14: no asigna futuras subcampañas, no amplía selección en ejecución ni produce efectos parciales silenciosos. |
+| PA-T16-QA | Pruebas de políticas/HTTP y PostgreSQL concurrente aislado, más recorridos integrados y regresión interna. | Implementación de contratos y migración ensayada. | Evidencia por CA01..14, incluidas URLs/RPC directas, dos retiros, autorización/revocación, lectura propia y regresión de plan/entregas. |
+
+Coordinar con PA-T-INT02/06/08 del [plan de integración](../plan-reutilizacion-integracion.md). Los contratos de permiso deben estar disponibles para PA-S01 aunque la interfaz completa se entregue después. Las tareas de base de datos describen trabajo posterior; no se ejecuta SQL, no se reasignan usuarios ni se modifica el esquema desde este backlog. Referencia transversal: [diseño técnico compartido](../diseno-tecnico-compartido.md).

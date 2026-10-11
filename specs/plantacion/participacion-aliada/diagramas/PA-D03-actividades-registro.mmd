@@ -1,0 +1,44 @@
+flowchart TB
+  start(["Acceder al registro"])
+  context["Cargar contexto operativo"]
+  available{"¿Permiso y contexto disponibles?"}
+  blocked(["Bloquear apertura y explicar"])
+  evidence["1. Fotos, GPS y fecha"]
+  quantities["2. Cantidades por especie"]
+  summary["3. Revisar resumen y participantes"]
+  confirm["Confirmar un intento"]
+  upload["Subir evidencia pendiente"]
+  authorize{"¿Permiso vigente al autorizar?"}
+  revoked(["Rechazar sin registro ni consumo"])
+  validate{"¿Datos, estado y stock válidos?"}
+  rejected["Rechazo confirmado: corregir y actualizar contexto"]
+  transaction["Transacción: registro, detalles, evidencias y consumo"]
+  outcome{"¿Resultado verificable?"}
+  success(["Comprobante, detalle y saldo actualizado"])
+  uncertain["Resultado incierto: no asumir fracaso"]
+  recover["PENDIENTE: recuperar o repetir el mismo intento"]
+  abandon(["Abandonar antes del envío"])
+  align["PENDIENTE: alinear GPS, metas y cierre"]
+
+  start --> context --> available
+  available -->|"No"| blocked
+  available -->|"Sí"| evidence --> quantities --> summary --> confirm
+  summary -->|"Corregir"| evidence
+  summary -->|"Abandonar"| abandon
+  confirm --> upload --> authorize
+  authorize -->|"No"| revoked
+  authorize -->|"Sí"| validate
+  validate -->|"No"| rejected
+  validate -->|"Sí"| transaction --> outcome
+  rejected -->|"Revisar"| context
+  outcome -->|"Guardado confirmado"| success
+  outcome -->|"Rechazo confirmado"| rejected
+  outcome -->|"Sin confirmación"| uncertain
+  uncertain -.-> recover
+  align -.-> validate
+  style transaction fill:#EEF6FF,stroke:#3267A8
+  style success fill:#E6F4EA,stroke:#26733B
+  style revoked fill:#FCE8E6,stroke:#AD3F35
+  style uncertain fill:#FFF4D6,stroke:#A87700
+  style recover fill:#FFF4D6,stroke:#A87700
+  style align fill:#FFF4D6,stroke:#A87700

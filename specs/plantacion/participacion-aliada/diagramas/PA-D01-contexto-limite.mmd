@@ -1,0 +1,33 @@
+flowchart LR
+  r3["Administración central R3Foresta"]
+  admin["Administrador de subcampaña"]
+  plant["Plantador autorizado"]
+  reader["Persona que consulta"]
+  nursery["Vivero: entrega física previa"]
+  organizations["Organizaciones y financiación"]
+
+  subgraph scope ["Primer piloto: participación por persona y subcampaña"]
+    access["Permiso en subcampaña"]
+    stock["Stock compartido de subcampaña"]
+    registration["Registro inicial grupal"]
+    consultation["Mapa, resumen y registros"]
+    correction["Corrección excepcional vinculada"]
+  end
+
+  later["Después: mortandad, reposición y merma"]
+  r3 -->|"Designa administradores"| access
+  admin -->|"Gestiona plantadores"| access
+  access -->|"Habilita"| registration
+  plant -->|"Registra"| registration
+  admin -->|"También registra"| registration
+  nursery -->|"Entrega plantas"| stock
+  registration -->|"Consume una vez"| stock
+  registration -->|"Aporta resultados"| consultation
+  reader -->|"Consulta campos acordados"| consultation
+  admin -->|"Revisa error"| correction
+  r3 -->|"Realiza corrección"| correction
+  correction -->|"Conserva original"| registration
+  organizations -.->|"Contexto, sin permiso"| consultation
+  registration -.->|"Seguimiento posterior"| later
+  style scope fill:#EEF6FF,stroke:#3267A8
+  style correction fill:#FFF4D6,stroke:#A87700

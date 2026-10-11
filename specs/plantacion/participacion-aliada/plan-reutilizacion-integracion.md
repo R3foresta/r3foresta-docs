@@ -1,0 +1,223 @@
+# PA-F01 — Plan de reutilización e integración
+
+**Fecha:** 10 de octubre de 2026. **Estado:** propuesta técnica para revisión, sin implementación autorizada por este documento. **Alcance:** participación aliada sobre el registro inicial existente, consulta común, gestión de acceso y preparación de la corrección excepcional.
+
+**Ampliación de Elaboración del mismo día:** [PA-S00](00-experiencia-participante/spec.md) incorpora cuenta nueva y experiencia participante. El [diseño técnico compartido](diseno-tecnico-compartido.md) desarrolla frontend/backend/datos y tablas candidatas; [README](README.md) organiza la revisión de las cinco specs. Se conservan PA-DI01–07 y PA-T-INT01–08; PA-DI08–10 y PA-T-ENT* amplían la entrada y transición. Todos son borradores, no decisiones técnicas aprobadas.
+
+## 1. Conclusión y recorrido propuesto
+
+Reutilizar el formulario actual de tres pasos: **fotos y ubicación → cantidades, personas y fecha → revisión y confirmación**. Ya resuelve buena parte de la captura y del consumo físico. El trabajo principal está en conectar permisos contextuales, recuperación del guardado y consulta posterior. No hace falta construir otro formulario ni otro mecanismo de entrega de plantas.
+
+Para Carlos en Palca Norte, el recorrido objetivo sería:
+
+1. Encuentra «Registrar plantación» en la experiencia participante de PA-S00 y elige entre las subcampañas donde tiene permiso, aprovechando el selector actual; el mapa también puede ofrecerla desde el resumen de una subcampaña autorizada. El Inicio interno no es un paso obligatorio.
+2. Adjunta fotos y ubicación. Después registra 30 plantas de una especie disponible, fecha y personas participantes. Ve cuántas plantas están disponibles para registrar; la meta se presenta como referencia.
+3. Revisa responsable, participantes, cantidades, fecha, ubicación y fotos. Puede volver y corregir conservando lo escrito.
+4. Confirma una vez. Recibe un comprobante verificable y puede abrir el detalle. Si se pierde la respuesta, la aplicación verifica ese mismo intento antes de permitir otro registro.
+5. El mapa y los totales muestran una plantación grupal de 30 plantas. No aparecen 30 plantas adicionales por cada participante.
+
+Se conserva fecha y observaciones en el paso actual de datos para minimizar cambios; el boceto se alineó con esta propuesta de tres pasos el 10 de octubre y sigue pendiente de revisión del recorrido. No se añade un paso de aprobación del administrador.
+
+## 2. Base revisada y cambios recientes
+
+| Repositorio local | Rama y revisión | Estado observado |
+|---|---|---|
+| [Frontend](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta) | `main`, `6520b6beb3096b83d27e461dd155fa5631195386` | Árbol limpio al revisar. |
+| [Backend](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta) | `main`, `ae19480bac9ccb2015fe825cbbc8a720972074e9` | Árbol limpio al revisar. |
+| [Documentación](/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs) | `actualizacion-perfil-grado`, `d4a0d7b791d63a1476b896013e77d47b0fdd54c4` | Hay cambios previos, archivos preparados y specs sin seguimiento. Se leyó también ese contenido de trabajo. |
+
+Se revisaron código, migraciones, pruebas existentes, Git logs y cambios relevantes de los commits. Esta revisión no ejecutó pruebas, inspecciones remotas de la base de datos ni guardados en la aplicación. Los commits y las pruebas escritas acreditan contenido local, no su despliegue ni su ejecución satisfactoria en esta revisión.
+
+| Historial relevante | Qué cambia para este plan |
+|---|---|
+| Frontend `a52ad0a`, `6a6dd67`, `9aa1d06` — 9 de octubre | Ya existen editor de plan, cierre, formulario compartido y pruebas. No volver a planificarlos desde cero. |
+| Frontend `6520b6b` — 10 de octubre | El editor del plan ya distingue sesión, permisos, conflictos y recuperación del borrador. Es una referencia para el registro; no significa que el registro ya tenga esas garantías. |
+| Backend `69aacd6`, `2e7e7af`, `9b6bffd` — 9 de octubre | Migraciones 060–062, revisión atómica del plan y pruebas con PostgreSQL aislado. La meta ya es orientativa en la RPC de registro vigente. |
+| Backend `37f9d44`, `90b9f53` — 10 de octubre | JWT obligatorio para el plan, migración 063 y comprobación de especie planificada dentro de la transacción de asignación. Preservar estas protecciones. |
+| Backend `6887db7`, `0c37a79`, `90620f4` — 7–9 de septiembre | Ya existe un módulo de impacto con geometrías, registros, especies, evidencias y agregados por organización. Hay una base real para la consulta. |
+| Docs `d4a0d7b` — 10 de octubre | Metas y edición del plan tienen decisiones posteriores al boceto del 8 de octubre. |
+
+**Actualización respecto a la revisión visual anterior:** el límite por meta observado entonces no debe trasladarse como requisito nuevo. ADR-PLA-04 y la migración 061 permiten superar la meta si hay stock elegible; alcanzar la meta no cierra automáticamente la subcampaña. ADR-PLA-05 mantiene la edición del plan reservada a ADMIN global. La última definición local del registro está en 061; 053 sirve como antecedente, no como única referencia vigente.
+
+Fuentes de producto: [boceto](boceto-registro-resultado.md), [plan inicial](plan-inicial.md), [ADR-PLA-03/04/05](../../../decisiones/02_decisiones_plantacion.md), [ficha LCO](../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md), [estado documentado](../../../ESTADO.md) y el chat revisado [Revisar cierre LCO de participación…](thread://01a11bbe-3c86-7302-bdf1-8f3149ea09cd?hostId=local). El cierre LCO autoriza Elaboración; no aprueba automáticamente los mecanismos técnicos propuestos aquí.
+
+## 3. Qué reutilizar y qué falta
+
+| Parte | Base reutilizable | Adaptación o integración pendiente |
+|---|---|---|
+| Entrada | Acción rápida de plantación, selector de subcampañas y ruta directa al formulario. | Visibilidad desde Inicio; listado autorizado por backend. Actualmente el cliente descarga subcampañas ACTIVAS con equipo y filtra por usuario. |
+| Captura | Carga y previsualización de fotos, GPS automático/manual, fecha, observaciones y navegación de tres pasos. | Mensajes coherentes de GPS, reglas temporales completas y conservación del borrador al recuperar sesión o actualizar contexto. |
+| Cantidades | Contadores por especie, stock por asignación y distribución FIFO en frontend. | Lenguaje comprensible para disponibilidad/meta; evitar presentar un pendiente histórico como saldo después de este registro. Validación final siempre en backend. |
+| Personas | Responsable derivado por servidor, corresponsables y registro grupal único. | Identidad verificada mediante JWT; selección desde personas habilitadas por subcampaña, incluyendo equipos mixtos y voluntarios autorizados. Mostrar responsable por nombre en el resumen. |
+| Guardado físico | RPC transaccional con validación de stock, vínculo de evidencias, detalles y consumo de asignaciones. | Permisos contextuales, orden frente a revocación, idempotencia durable y comprobación explícita de propiedad/tipo de evidencias. |
+| Resultado | Respuesta con ID, código, total, GPS, consumos y evidencias; pantalla de éxito. | Detalle persistido, especies y personas confirmadas, recuperación del intento y distinción entre rechazo confirmado y resultado desconocido. |
+| Consulta | Backend de impacto con polígonos, puntos, especies y registros. Frontend tiene infraestructura Leaflet. | Entrada común sin organización obligatoria, política de campos visibles, responsables/participantes, detalle propio y conexión del mapa. El mapa actual consume Recolecciones. |
+| Gestión de acceso | Tabla/equipo, selector de usuarios y componente de administración existentes. | Administradores contextuales múltiples, plantadores, acciones centrales, selección masiva actual, revocación y protección atómica del último administrador. |
+| Corrección excepcional | Registros, snapshots e historial que deben conservarse. | No se encontró un flujo de corrección excepcional de plantación en el código revisado. Definir e implementar el mecanismo mínimo aprobado antes de campo. |
+| Edición del plan | Editor, versión, auditoría y recuperación implementados localmente. | Mantener como regresión y referencia de UX; no ampliar su acceso al administrador contextual. |
+
+## 4. Decisiones que deben cerrarse antes del código afectado
+
+Estas son decisiones de diseño pendientes, no preguntas que obliguen a detener toda la planificación. Las tareas independientes pueden avanzar cuando se autorice implementar.
+
+| ID | Decisión | Recomendación y motivo |
+|---|---|---|
+| PA-DI01 | Cómo representar y migrar permisos. | Exponer capacidades por persona/subcampaña. Evaluar una tabla contextual separada de las responsabilidades legadas como transición, frente a evolucionar `subcampania_equipo`. Elegir una única fuente de autorización para el nuevo registro; evitar dos tablas que autoricen mediante un «OR» permanente. Inventariar usuarios actuales y aprobar su correspondencia antes del traslado. |
+| PA-DI02 | Correspondencia entre COORDINADOR y administración contextual. | No renombrar ni convertir automáticamente. COORDINADOR también habilita asignación física en 060, devolución en 054 y es requisito de activación. Administrar plantadores no debe conceder esos poderes. Determinar qué responsabilidad legada se conserva y quién la recibe. |
+| PA-DI03 | Identidad y autoridad central. | Reutilizar la verificación JWT del plan en una pieza común. Para designar administradores, proponer ADMIN global como representación inicial de la autoridad central, sujeto a confirmación. El acceso operativo interno de R3Foresta a plantar debe quedar explícito; no inferirlo de esa autoridad. |
+| PA-DI04 | GPS, fechas y participantes. | Alinear regla, contrato y UI: 061 guarda fuera de polígono con advertencia y bloquea GPS no evaluable; cerrar la discrepancia con RN-PLA-32. Mantener ventana de 10 días y fecha no anterior a las asignaciones consumidas. Confirmar selección de participantes habilitados y tratamiento histórico tras retirar su permiso. |
+| PA-DI05 | Consulta común y detalle propio. | Matriz de campos por audiencia: totales, polígonos, puntos, nombres, fotos, observaciones, stock y equipo. Precisar lectura por responsable/corresponsable, nombres históricos y filtro inicial cuando haya varias o ninguna afiliación. El portal público existente no decide automáticamente la visibilidad del nuevo recorrido. |
+| PA-DI06 | Reintento y resultado desconocido. | Clave durable de intento, asociada al actor y operación, huella del contenido y resultado persistido atómicamente con el registro. Definir retención, consulta, concurrencia, corrección de un intento rechazado y ciclo de vida de evidencias. La versión del plan no sustituye esta clave. |
+| PA-DI07 | Corrección excepcional. | Acordar casos, campos, límites, revisión del administrador, ejecución central, motivo, vínculo al original y efectos sobre saldos/estados. Separar corrección documental de cambios de cantidades; ninguna implica por sí sola devolver stock. |
+
+La propuesta de permisos debe permitir que un usuario global VOLUNTARIO plante si tiene autorización contextual, sin ascenderlo a GENERAL ni otorgarle operaciones de Vivero/Recolección. Hoy `PlantacionAuthService` y el servicio de contexto todavía rechazan ese caso por rol global.
+
+PA-S00 añade PA-DI08 (consulta común o solo campañas asignadas), PA-DI09 (alta limitada y transición de roles internos) y PA-DI10 (perfil mínimo). El alta actual en `users.service.ts` asigna GENERAL y el formulario de perfil acepta `rol`: la navegación reducida exige resolver también esa autoridad en backend. La propuesta de usar VOLUNTARIO como base de cuentas nuevas está pendiente de revisar todos sus consumidores; no se transforma masivamente a usuarios existentes.
+
+## 5. Contratos e integraciones
+
+Se parte de las rutas existentes. Las capacidades nuevas de esta tabla son necesidades de contrato; sus rutas, DTO y nombres definitivos se acuerdan antes de programarlos.
+
+| Integración | Situación actual | Contrato objetivo |
+|---|---|---|
+| Sesión → API | GET/PUT del plan verifican JWT; registro, evidencias y equipo siguen recibiendo `x-auth-id`. | Actor derivado de JWT verificado para todas las operaciones del nuevo recorrido. Auditar también rutas legadas sobre los mismos recursos para que no permitan eludir las restricciones. Migrar consumidores de forma coordinada. |
+| Entrada → listado operativo | `GET /subcampanias?estado=ACTIVA` y filtro en cliente. | Respuesta filtrada por actor, con capacidades y motivos de bloqueo adecuados, sin descargar equipos ajenos para decidir en el navegador. |
+| Formulario → contexto | `GET /subcampanias/:id/plantacion/context`. | Conservar plan, stock elegible y reglas; sustituir autorización legada, delimitar personas seleccionables y devolver errores identificables. La lectura no reserva permiso ni stock. |
+| Fotos → registro | POST/DELETE de evidencias pendientes y POST `/registros-plantacion`. | Evidencias propias, del tipo previsto y asociadas al intento. Reutilizar IDs al verificar/reintentar; descartar solo cuando el estado del intento lo permita. Limpiar huérfanas según una política explícita. |
+| Registro → PostgreSQL | `fn_m3_registrar_plantacion` en 061; detalles ya distribuidos por asignación desde frontend. | Permiso vigente, stock, evidencia, identidad, idempotencia y recibo en una sola transacción. Conservar consumo físico sin segundo débito de Vivero. |
+| Gestión → autorización | POST/DELETE del equipo, solo ADMIN global; un COORDINADOR. | Otorgar/retirar plantador por administrador autorizado; designación/cambio/retiro de administradores por autoridad central. Auditar y proteger último administrador bajo concurrencia. |
+| Resultado → consulta | Existe comprobante POST; el controlador de registros revisado no ofrece detalle ni consulta de intento. | Lectura autorizada de intento y registro persistido. Tras revocación, conservar lectura propia y recuperación del resultado, sin entregar contexto operativo ni permitir registrar de nuevo. |
+| Mapa → impacto | GET públicos bajo `/v1/impact/organizations/...`, con caché pública. | Consulta común con filtros opcionales, deduplicación de registros y datos aprobados. Mantener separado el payload público cacheable de stock, equipo y capacidades del usuario. |
+| Usuarios → gestión/participantes | Componentes existentes usan servicios de usuarios. | Búsqueda autenticada y limitada a los datos necesarios de usuarios registrados. Definir alcance, paginación y autorización; no reutilizar indiscriminadamente un listado general de perfiles. |
+| ADMIN → plan/cierre | Plan JWT, revisión atómica y UI de cierre existentes. | Conservar permisos globales, meta orientativa y cierre explícito. Incorporar pruebas que nieguen estas acciones al administrador contextual. |
+
+### 5.1 Orden de autorización, revocación y stock
+
+La RPC 061 ya bloquea la fila de subcampaña y las asignaciones implicadas. La retirada actual de equipo no participa de ese mismo orden. La propuesta es que otorgamiento/retiro, protección del último administrador y registro se serialicen por subcampaña dentro de PostgreSQL, con orden de bloqueos consistente también con revisión del plan y asignación física.
+
+El punto de autorización se ubica en la transacción, después de adquirir el bloqueo compartido por esos comandos. Si el retiro quedó antes, el registro se rechaza sin consumir; si el registro fue autorizado antes, termina conforme a sus demás validaciones. Cargar fotos o pulsar el botón no adelanta ese punto. Una operación masiva debe validar autoridad en cada subcampaña seleccionada y fijar si se aplica toda o devuelve resultados parciales; se recomienda atomicidad con orden estable de IDs para el volumen del piloto.
+
+No basta con ocultar botones. Deben revisarse privilegios SQL/RLS y clientes Supabase de las RPC: un `GRANT` a `service_role` no prueba por sí solo que otros roles no puedan ejecutarlas. La ruta de registro actual usa `getClient()`; la del plan utiliza el cliente administrativo. Confirmar el modelo de ejecución y cerrar accesos directos que permitan elegir otro actor, manteniendo las claves privadas en el backend.
+
+### 5.2 Guardado recuperable
+
+Hoy cada intento del formulario vuelve a subir fotos y, si el POST falla, intenta descartar evidencias y presenta el registro como no guardado. Una respuesta perdida después del commit es diferente de un rechazo de negocio. La limpieza actual protege evidencias ya vinculadas, pero no resuelve esa incertidumbre ni evita otro registro con fotos recién subidas.
+
+Diseño propuesto: crear una identidad de intento estable, inmovilizar su contenido al enviarlo, persistir huella y recibo con el registro, y devolver el mismo resultado a peticiones equivalentes. Dos peticiones concurrentes deben producir un solo efecto. Reutilizar la clave con un contenido distinto debe dar conflicto. Un resultado ya guardado se recupera antes de volver a evaluar permisos para una nueva escritura; retirarle permiso al actor no impide que consulte su propio recibo.
+
+Distinguir «guardado», «rechazado sin efecto» y «no se pudo confirmar». Un estado «en curso» o «no encontrado» tampoco autoriza a crear ciegamente otro intento: definir cómo consultar/reintentar el mismo identificador mientras una petición anterior puede seguir ejecutándose. Precisar además el caso de perder la respuesta de la carga de fotos, para no acumular cargas sin vínculo recuperable.
+
+El servicio debe conservar status y código de error: sesión inválida, permiso retirado, conflicto, validación y fallo de red/servidor. Hoy la creación transforma errores de RPC en 400 y el hook de contexto conserva solo texto. Reutilizar los patrones del editor de plan para recuperación de sesión, conflicto y borrador; no copiar su versión de concurrencia como idempotencia de registro.
+
+### 5.3 Consumo, evidencia y consulta
+
+- Mantener la distribución automática por especie/asignación y la validación transaccional de disponibilidad. El FIFO se resuelve hoy en frontend; la RPC valida los detalles recibidos. Definir su comprobación o resolución en servidor antes de afirmar que FIFO está garantizado para cualquier cliente. No cambiar todo el DTO por especie sin necesidad y contrato acordado.
+- Preservar `cantidad_asignada` inmutable, consumo de asignaciones elegibles y ausencia de un nuevo despacho/débito de Vivero al plantar. Usar nuevas migraciones; no reescribir las históricas como estrategia de despliegue.
+- La comprobación de evidencias de 061 exige existencia, pendiente y no eliminada, pero no comprueba explícitamente creador/tipo en ese bloque. Completar revisión de restricciones y exigir esa propiedad en el contrato transaccional y sus pruebas.
+- El mapa común debe contar registros distintos una vez, incluso si tienen varios participantes u organizaciones asociadas. Un punto equivale a un grupo registrado; el polígono muestra zona de trabajo, no superficie plantada. Los datos actuales tampoco permiten prometer composición viva por especie.
+
+## 6. Archivos afectados
+
+Las rutas enlazadas existen en la base revisada. Son un inventario de intervención prevista, no una orden de modificar todos los archivos. «Nuevo propuesto» identifica piezas aún inexistentes cuyo nombre se fijará al cerrar el diseño.
+
+### Frontend
+
+| Archivos | Intervención |
+|---|---|
+| [RegistrarPlantacionScreen.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/screens/RegistrarPlantacionScreen.tsx) | Adaptar permisos, responsable/participantes, intento de guardado, recuperación y resumen. Mantener los tres pasos. |
+| [usePlantacionContext.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/hooks/usePlantacionContext.ts) | Conservar status/códigos, recargar contexto y conciliar sin perder el borrador ni reautorizar por estado local. |
+| [plantacion.api.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/api/plantacion.api.ts), [plantacion.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/services/plantacion.service.ts), [contracts.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/types/contracts.ts) | JWT coordinado con backend, capacidades, listado autorizado, errores, intento/recibo y detalle. |
+| [SuccessOverlay.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/components/registro/SuccessOverlay.tsx), [GpsStatusCard.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/components/registro/GpsStatusCard.tsx), [SpeciesCounterRow.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/components/registro/SpeciesCounterRow.tsx) | Comprobante y acceso a detalle, GPS manual coherente, disponibilidad y meta orientativa. Reutilizar estructura y estilo. |
+| [PhotoUploader.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/components/evidence/PhotoUploader.tsx), [resolverDetallesAsignacion.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/utils/resolverDetallesAsignacion.ts), [geo.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/utils/geo.ts) | Reutilizar; cambiar solo si el contrato de evidencia/FIFO/GPS lo exige. Evitar afectar otros módulos que usan fotos. |
+| [SubcampaniasOperativasSheet.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/components/SubcampaniasOperativasSheet.tsx), [BottomNav.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/components/BottomNav.tsx), [HomeScreen.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/home/HomeScreen.tsx) | Reutilizar selector/acción y añadir la entrada visible acordada, con estados sin permisos o sin disponibilidad. |
+| [DetalleSubcampanaScreen.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/screens/DetalleSubcampanaScreen.tsx), [SubcampaniaEquipoManager.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/components/SubcampaniaEquipoManager.tsx) | Separar lectura común, operación autorizada y gestión de plantadores. No equiparar capacidad contextual con botones ADMIN de plan/cierre/cancelación. |
+| [users.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/services/users.service.ts), [users.api.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/api/users.api.ts) | Integrar búsqueda de personas con el alcance que acuerde el backend. |
+| [App.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/App.tsx), [MapScreen.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/map/MapScreen.tsx) | Añadir rutas de consulta/detalle y revisar navegación. Reutilizar patrones Leaflet; conservar el comportamiento de Recolecciones que usa el mapa actual. |
+| [EditarPlanSubcampania.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/components/EditarPlanSubcampania.tsx), [planEditorDraft.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/utils/planEditorDraft.ts), [AuthContext.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/contexts/AuthContext.tsx) | Referencias para sesión y borradores; extraer únicamente lo compartible. No asumir que archivos de foto se serializan como los datos del plan. |
+| [RegistrarPlantacionScreen.test.tsx](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion/screens/RegistrarPlantacionScreen.test.tsx) y pruebas de servicios/plan existentes | Ampliar escenarios del usuario, recuperación e integración de contratos; mantener regresiones de meta, stock y plan ADMIN. |
+
+**Organización frontend refinada con PA-S00:** proponer `src/modules/participacion` para la entrada enfocada y la composición de Impacto/Mi participación. Reutilizar el formulario y piezas de [Plantación](/Users/pabloandresfernandezcari/Projects/R3foresta/pwa-r3foresta/src/modules/plantacion), servicios de perfil y mapas. Detalle, cliente de impacto y estado del intento se ubican según sus responsabilidades compartidas al cerrar contratos. Conservar el módulo interno para sus usuarios autorizados; no duplicar registro, dominio ni autenticación.
+
+### Backend y base de datos
+
+| Archivos | Intervención |
+|---|---|
+| [plantaciones.controller.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/api/plantaciones.controller.ts), [subcampanias.controller.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/api/subcampanias.controller.ts) | Identidad verificada y contratos de lectura/escritura con autorización delimitada. Revisar rutas legadas equivalentes. |
+| [subcampania-plan-auth.guard.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/api/guards/subcampania-plan-auth.guard.ts), [plantacion-auth.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/application/plantacion-auth.service.ts), [subcampanias-auth.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/application/subcampanias-auth.service.ts) | Extraer verificación común y políticas contextuales. Mantener verificaciones de ADMIN global para sus operaciones. |
+| [subcampanias-plantacion-context.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/application/subcampanias-plantacion-context.service.ts), [subcampanias-consultas.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/application/subcampanias-consultas.service.ts) | Contexto autorizado, listado por actor, participantes y separación de lecturas públicas/propias/operativas. |
+| [subcampanias-equipo.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/application/subcampanias-equipo.service.ts), [agregar-miembro-equipo.dto.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/api/dto/agregar-miembro-equipo.dto.ts), [rol-en-subcampania.enum.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/domain/enums/rol-en-subcampania.enum.ts) | Adaptación o puente hacia el nuevo modelo según PA-DI01, transiciones y gestión atómica. No renombrar el enum sin analizar consumidores. |
+| [subcampanias-activacion.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/application/subcampanias-activacion.service.ts), [activacion.policy.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/domain/policies/activacion.policy.ts) | Resolver el requisito de coordinador y snapshots de activación si cambia el modelo de equipo. No alterar condiciones ajenas por efecto del renombrado. |
+| [plantacion-creation.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/application/plantacion-creation.service.ts), [registrar-plantacion.dto.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/api/dto/registrar-plantacion.dto.ts), [plantacion-evidencias.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/application/plantacion-evidencias.service.ts) | Integrar intento, resultado durable, errores tipados y propiedad/ciclo de vida de evidencias. |
+| [impact.controller.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/impact/impact.controller.ts), [impact.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/impact/impact.service.ts), [impact.types.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/impact/impact.types.ts), [impact-query.dto.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/impact/impact-query.dto.ts) | Reutilizar consultas/agregados y añadir el contrato común aprobado, sin filtrar datos privados a respuestas públicas cacheadas. |
+| [users.controller.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/users/users.controller.ts), [supabase.service.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/supabase/supabase.service.ts) | Revisar identidad/búsqueda mínima y ejecución segura de RPC. La auditoría global de autenticación puede seguir aparte; los accesos que eluden este recorrido deben quedar cerrados. |
+| [plantaciones.module.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/plantaciones.module.ts), [subcampanias.module.ts](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/subcampanias.module.ts), [Swagger de Plantación](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/api/docs/plantaciones.swagger.ts), [Swagger de Subcampañas](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/api/docs/subcampanias.swagger.ts) | Registrar dependencias y documentar contratos reales, permisos, errores y compatibilidad. |
+| [Pruebas de Plantación](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/tests), [pruebas de Subcampañas](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/tests), [prueba DB aislada del plan](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/test/e2e/db/subcampania-plan-revision.e2e-spec.ts) | Ampliar reglas/HTTP y crear pruebas reales aisladas de autorización, idempotencia y concurrencia; conservar las del plan. |
+
+**Nuevos propuestos en [migrations](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/migrations):** permisos y auditoría/transición; registro con autorización e idempotencia atómicas; privilegios de acceso; corrección excepcional cuando se apruebe. Reservar numeración al implementar, después de revisar el último estado del repositorio. Base de compatibilidad: 027/029/030, 051/054 y 060–063. La sustitución de la RPC vigente debe conservar reglas de reposición ya existentes aunque la nueva UI se limite al registro inicial.
+
+**Nuevas piezas de aplicación propuestas:** consulta de registro/intento, políticas o servicio de permisos contextuales y comando central de corrección. Elegir nombres y ubicación según los módulos existentes después de aprobar los contratos; no extender el controlador de impacto público con escrituras.
+
+### Documentación a alinear en las entregas
+
+Actualizar el [boceto](boceto-registro-resultado.md), [plan inicial](plan-inicial.md) y las unidades [registro](01-registro-plantacion-inicial/spec.md), [consulta](02-consulta-impacto-y-registros/spec.md), [acceso](03-gestion-acceso-subcampania/spec.md) y [corrección](04-correccion-excepcional/spec.md), incluyendo sus planes/tareas. Conservar IDs existentes y enlazar las tareas de integración de este documento.
+
+Cuando se aprueben cambios de dominio, reflejarlos en [decisiones](../../../decisiones/02_decisiones_plantacion.md), [reglas](../../../03-plantacion-module/01_reglas_de_negocio_plantacion.md), [handoff](../../../03-plantacion-module/05_handoff_registro_plantacion_inicial.md) y, si corresponde, en el [contrato M2→M3](../../../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) y [esquema](../../../database/00_database_schema.md). Actualizar [ESTADO](../../../ESTADO.md) con evidencia separada de código local, pruebas y despliegue. Este documento no realiza esas actualizaciones ni cierra decisiones pendientes.
+
+## 7. Secuencia de trabajo verificable
+
+Cada entrega debe ser revisable por separado. Tamaños relativos: S = cambio acotado; M = varias capas conocidas; L = cambio transaccional o de autorización con decisiones pendientes. No son estimaciones de días.
+
+| Tarea | Entrega y orden | Dependencias | Criterio de salida | Tamaño |
+|---|---|---|---|---|
+| PA-T-INT01 | Alinear boceto/spec con 060–063, cerrar matriz de permisos/visibilidad, transición legada, GPS y contrato de intento. Definir desde aquí el alcance de corrección. | Revisión de este plan y PA-DI01–07 según recorrido. | Ejemplos de aceptación y contratos revisados; decisiones pendientes identificadas sin presentarlas como aprobadas. | M |
+| PA-T-INT02 | Identidad JWT y autorización contextual en backend/DB; incorporación y retirada atómicas, autoridad central y último administrador. Preparar migración de personas existentes. | INT01: permisos y transición. | Carlos autorizado opera sin cambiar rol global; personas ajenas no acceden a stock/equipo; concurrencia con retiro comprobada; poderes M2/plan no se amplían. | L |
+| PA-T-INT03 | Intento durable, evidencias, recibo y consulta propia; preservar consumo físico. | INT02 y contrato PA-DI06. | Respuesta perdida y doble petición devuelven un solo registro/consumo; errores recuperables; detalle propio tras revocación. | L |
+| PA-T-INT04 | Adaptar entrada, selector y formulario existente; integrar sesión, cantidades, personas, resumen y resultado. | Contratos de INT02/03. | Carlos completa 30, vuelve a corregir, confirma y abre su registro; los datos sobreviven a recuperaciones previstas. | M |
+| PA-T-INT05 | Integrar mapa, resumen y detalle; identidad de responsables/participantes según visibilidad aprobada. | PA-DI05 y lecturas de INT03. Puede desarrollarse junto a INT04 cuando esos contratos estén estables. | Un punto y un total por registro grupal; filtros no ocultan entradas autorizadas; sin exponer equipo/stock a consulta común. | M |
+| PA-T-INT06 | Adaptar gestión visual de plantadores y acciones centrales; selección masiva de subcampañas actuales. | INT02 y búsqueda de personas acordada. | Administrador gestiona solo su ámbito; no nombra administradores; selección actual sin herencia futura; último administrador protegido. | M |
+| PA-T-INT07 | Preparar e implementar corrección excepcional mínima acordada, con historial y comprobación de efectos. | PA-DI07, INT02/03. Diseñar en INT01, sin dejarlo para después del piloto. | Un caso de error representativo se resuelve por autoridad central, conserva original y demuestra efectos correctos en stock/estado. | L |
+| PA-T-INT08 | QA integrado, migración y publicación coordinadas sobre revisiones fijadas. | INT02–07 y verificación de plan/cierre existente. | Evidencia de navegador → API → DB, recuperación de red, regresiones y roles; piloto expresamente habilitado. | M |
+
+El backend de gestión de acceso es una dependencia temprana del registro aunque su pantalla se entregue después. La etiqueta P1 de consulta/acceso en el plan inicial representa un orden de elaboración; no demuestra que esas capacidades puedan darse por terminadas o excluirse del alcance acordado.
+
+Primera entrega recomendada después de aprobar los contratos: **INT02, con una persona habilitada en una subcampaña y pruebas de acceso/revocación**. Con esa base se construye un recorrido completo pequeño antes de ampliar selección masiva y consulta. El objetivo del 15 de octubre sigue condicionado a las verificaciones; esta revisión no permite prometerlo como fecha de entrega.
+
+El refinamiento PA-S00 suma un caso anterior: cuenta nueva **sin** permiso ni facultades internas. PA-T-ENT02/04 y PA-T-INT02 se coordinan como una misma base de identidad/autorización; no son implementaciones duplicadas. La entrada visual PA-T-ENT05 se integra con INT04. Ver [orden actualizado](plan-inicial.md).
+
+## 8. Verificación prevista
+
+| Escenario | Evidencia requerida |
+|---|---|
+| Token ausente, inválido, vencido o identidad de header distinta | Rechazo HTTP sin registro, cambios de equipo ni consumo. Probar también rutas legadas y privilegios de RPC. |
+| VOLUNTARIO autorizado, persona de otra organización o independiente | Puede registrar solo donde tenga permiso, sin cambiar afiliación/rol global. El administrador contextual no obtiene plan, cierre, entrega o devolución por ese permiso. |
+| Retiro antes de autorizar / registro autorizado antes del retiro | Dos pruebas concurrentes con orden controlado y resultado consistente. Abrir formulario/subir fotos no reserva permiso. |
+| Dos retiros simultáneos de administradores | No se deja la subcampaña sin administrador. Selección masiva rechaza ámbitos ajenos y no afecta subcampañas futuras. |
+| 100 disponibles, registros distintos de 30 y 20 | Quedan 50 disponibles y 50 plantados; Vivero no se debita otra vez. Registro de 30 con tres personas sigue sumando 30. |
+| Meta 40, stock elegible 50, registro de 50 | Se admite, conserva subcampaña ACTIVA y muestra avance superior a la meta. Sin stock suficiente o especie fuera del plan, se rechaza. |
+| Dos registros que compiten por stock | Solo se consumen cantidades disponibles, sin saldo negativo. Revisión de plan/asignación concurrente mantiene garantías de 060–063. |
+| Doble clic, dos peticiones y pérdida de respuesta después del commit | Misma clave/contenido recupera el mismo ID y recibo; contenido distinto produce conflicto; no se repite el consumo ni se duplican cargas sin control. |
+| Foto pendiente ajena, tipo incorrecto o foto ya vinculada | Rechazo sin vincularla; limpieza/reintento nunca elimina evidencia confirmada ni reutiliza evidencia ajena. |
+| GPS interior, exterior y no evaluable; GPS manual tras fallo del dispositivo | Comportamiento conforme a decisión aprobada, mensajes consistentes y comprobación PostGIS real. Fecha cumple ventana y entrega de asignaciones. |
+| Corregir datos en revisión; sesión vencida; stock/permiso cambiado | Campos preservados, resumen explícito, revalidación y nuevo consentimiento cuando cambia el contenido. Nunca presentar éxito sin recibo ni rechazo definitivo si el resultado es desconocido. |
+| Retiro de acceso tras guardar | Recupera detalle/resultado propio, conserva autoría e historial, no obtiene contexto operativo. Cambios posteriores de afiliación no reasignan crédito histórico. |
+| Mapa con grupos, varias personas y varias organizaciones | Totales sin duplicación; punto = registro; área = ámbito. Payload público no incluye información operativa o personal no aprobada. |
+| Corrección central | Original, autor, motivo e historial visibles según permisos; efectos de cantidades/estado probados; ninguna devolución automática por corregir datos. |
+
+**Pruebas existentes a aprovechar:** frontend ya cubre meta orientativa, límite de stock, contexto/permisos y conservación de datos ante rechazo; backend tiene pruebas de servicios/políticas y una suite PostgreSQL aislada para plan. Esta última usa una fixture con GPS fuera de alcance: no reemplaza pruebas PostGIS reales. Las pruebas con mocks tampoco verifican bloqueos o idempotencia de la base de datos.
+
+**Comandos previstos para las entregas, no ejecutados en esta revisión:**
+
+- En frontend: `npm run test -- <archivos afectados>`, `npm run lint`, `npm run build`. Ejecutar las regresiones de plan y cierre cuando cambien contratos compartidos.
+- En backend: `npm run test:unit -- --runInBand <pruebas afectadas>` y `npm run build`; `npm run test:db:plan` para la regresión aislada existente. Crear configuración/pruebas aisladas equivalentes para los nuevos comandos. No declarar que el script actual ya descubre pruebas nuevas de registro.
+- Para integración: usar base de pruebas con PostGIS y datos identificables. Las suites actuales `test:integration`/`test:e2e:db` pueden usar servicios y datos externos; fijar el entorno antes de ejecutarlas. El script backend `lint` incluye `--fix`, por lo que no es una verificación de solo lectura.
+- En navegador: repetir el recorrido completo con usuarios representativos, simular desconexión antes/después del POST y contrastar ID, evidencia, saldos e historial persistidos.
+
+## 9. Integración y salida a piloto
+
+1. Fijar revisiones de frontend/backend/docs y registrar el estado real del entorno destino, incluidas migraciones, permisos SQL y versiones desplegadas. Existe confirmación humana documentada de 062/063; esta tarea no las verificó remotamente.
+2. Ensayar migración de personas y roles en una copia controlada. Comprobar activación, asignación, devolución, plan y cierre con los nuevos permisos antes de tocar datos del piloto.
+3. Publicar de forma coordinada esquema/backend/frontend. Definir compatibilidad o bloqueo explícito de clientes anteriores: una PWA antigua puede seguir enviando el POST sin clave de intento. No mantener una ruta legada que evite las nuevas garantías. Definir recuperación de despliegue sin borrar registros ni revertir hechos físicos.
+4. Cerrar QA integrado pendiente del plan y ejecutar los escenarios de esta iniciativa sobre las versiones realmente publicadas. Un mensaje de éxito local o una suite de fixtures no sustituye esta comprobación.
+5. Habilitar campo cuando registro, acceso mínimo, consulta acordada y corrección excepcional estén disponibles y verificados. Si falta una condición crítica, revisar fecha o alcance con el usuario y registrarlo expresamente.
+
+Quedan fuera de este incremento el reparto de financiación, nuevas afiliaciones obligatorias, solicitudes/invitaciones de acceso, editor general de registros y desarrollo completo de mortandad/reposición. Se conserva la compatibilidad de esos datos y operaciones existentes. El trabajo realizado en esta revisión consiste únicamente en crear este plan; no se modificaron frontend, backend, SQL ni datos de la aplicación.
