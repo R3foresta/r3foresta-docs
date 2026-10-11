@@ -1,12 +1,12 @@
 # Plan — PA-S02
 
-**Estado:** propuesta técnica para revisar después del comportamiento de [PA-S02](spec.md). No autoriza cambios de código, SQL ni publicación de datos. **Fecha:** 10 de octubre de 2026.
+**Estado:** propuesta técnica para la primera versión de comportamiento de [PA-S02](spec.md) aprobada por el usuario; contratos y boceto definitivo pendientes. La aprobación habilita preparar boceto y pruebas de recorrido con datos simulados; no aprueba los mecanismos técnicos ni autoriza SQL o publicación de datos reales. **Actualización:** 11 de octubre de 2026.
 
 ## 1. Orden y decisiones previas
 
 | Paso estable | Trabajo y motivo | Evidencia para avanzar |
 |---|---|---|
-| PA-T07 | Concretar matriz/contratos según decisiones del 11 de octubre: PA-DI08 pública sin sesión y campos principales PA-DI05 confirmados. Resolver detalles pendientes antes de lecturas/cachés. | Ejemplos de respuesta pública sin token, propia y operativa; campos/fórmulas y afiliación histórica/actual explícitos. Compatibilidad con RN-PLA-34 y ADR-PLA-05. |
+| PA-T07 | Concretar matriz/contratos con consulta pública, distribución principal, faltantes por subcampaña, autoría/participación en «Mis registros» y afiliación al plantar confirmados. Resolver mecanismos pendientes antes de lecturas/cachés. | Ejemplos públicos sin token, propios y operativos; captura histórica y ausencia legada explícitas. Compatibilidad con RN-PLA-34 y ADR-PLA-05. |
 | PA-T08 | Definir resumen global público → campaña → subcampaña → registro, con mapa, cambio de campaña y enlaces directos, sin convertirlo en requisito para registrar. Compartir Impacto reducido entre visitante y plantador según PA-S00. | Boceto progresivo con visitante, persona asignada y responsable revocado; vacío, error y recuperación. Profundizar no abre gestión interna; el personal interno conserva estructura, entradas y herramientas autorizadas. |
 | PA-T09 | Validar que los totales grupales no se multiplican por participantes. Separar cantidades iniciales, reposiciones, saldo vivo y metas orientativas. | Dataset sintético con múltiples personas/organizaciones y resultados esperados de mapa, lista y totalizadores. |
 
@@ -27,13 +27,15 @@ Ver contratos transversales y alternativas de datos en [diseño técnico compart
 - Lectura común: alcance global público, campaña o subcampaña, filtros aplicados, agregados con fórmula explícita, geometría y resúmenes permitidos. El total y los puntos deben usar el mismo conjunto público elegible; el resumen global no revela ámbitos internos por agregación ni multiplica hechos al unir personas/organizaciones.
 - Detalle de registro: identificador persistido, autoría y campos según audiencia. El permiso para recuperar el recibo propio no depende de conservar permiso para plantar.
 - Contexto autenticado: capacidades operativas del actor por subcampaña, separado del contenido común cacheable. No descargar todos los equipos al navegador para filtrar allí.
-- «Mis contribuciones»: propuesta de consulta por responsable/corresponsable histórico, deduplicada por registro. Su lectura ampliada y presentación esperan PA-DI05; no convertirla en ranking o reparto de crédito.
+- «Mis registros»: inclusión por responsable o participante histórico confirmada, deduplicada por registro y con relación identificable. Conservar lectura histórica tras revocación; incluir participantes no amplía por sí solo sus campos privados ni reparte crédito individual.
+- Afiliación: mostrar la conservada al plantar. Diseñar captura con PA-S01 y DTO de lectura; distinguir ausencia declarada de dato histórico no disponible. No reconstruir desde el perfil actual.
+- Entrada por defecto: última campaña utilizada con habilitación vigente; sin anterior utilizable o sin historial, global. Diseñar recuerdo por cuenta, revalidación y navegación al global/otras campañas. El error de capacidades no prueba revocación; la preferencia nunca autoriza operaciones. Enlaces públicos directos conservan su destino.
 - Fotos/GPS: campos públicos confirmados; delimitar contrato, exclusión confirmada de metadatos fotográficos y entrega de evidencia vinculada. Una URL ya pública debe inventariarse; omitirla del nuevo DTO no la vuelve privada por sí solo. Probar enlaces sin sesión y separación de evidencia pendiente/privada.
 - GET /plan: preservar la lectura autenticada de ADR-PLA-05. Separar esa lectura de las operaciones internas y documentar cualquier revisión futura de alcance antes de cambiarla.
 
 ## 4. Verificación y salida de la unidad
 
-Preparar pruebas de contrato con respuestas de cada audiencia, pruebas de agregación y recorridos UX de PA-S02-CA01..17. Usar datos sintéticos: registro público de 30 con tres personas y dos organizaciones, registro público adicional de 20 en otra campaña, ámbitos no publicables, visitante sin sesión, usuario sin asignación y responsable con permiso retirado. El total público global es 50 sin multiplicaciones por uniones; cambiar campaña obtiene 30 o 20 y profundizar no abre pantallas/datos internos. Verificar indicadores separados de meta, bajas y reposición conforme a la definición revisada.
+Preparar pruebas de contrato con respuestas de cada audiencia, pruebas de agregación y recorridos UX de PA-S02-CA01..22. Usar datos sintéticos: registro público de 30 con tres personas y dos organizaciones, registro público adicional de 20 en otra campaña, ámbitos no publicables, visitante sin sesión, usuario sin asignación y responsable con permiso retirado. El total público global es 50 sin multiplicaciones por uniones; cambiar campaña obtiene 30 o 20 y profundizar no abre pantallas/datos internos. Verificar inicial/faltantes en resumen y bajas/reposición al ampliar, así como autoría/participación deduplicadas, afiliación conservada tras cambiar perfil y retorno al global sin campaña anterior utilizable.
 
 Probar llamadas directas e IDs ajenos, sesión vencida, contenido privado fuera de caché pública, cero resultados y fallo de red. Comprobar que ausencia de resultado en una vista filtrada no se interpreta como rechazo de un guardado de PA-S01.
 

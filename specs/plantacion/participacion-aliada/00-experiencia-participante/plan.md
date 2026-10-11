@@ -8,6 +8,8 @@ Enlace → Impacto público sin sesión → intención de registrar → autentic
 
 La [revisión del 11 de octubre](../revision-humana-2026-10-11.md) cierra consulta pública PA-DI08 y criterios de perfil PA-DI10, y acepta la orientación VOLUNTARIO + permiso contextual PA-DI09. El plan técnico sigue pendiente. No pedir wallet/documento en el piloto ni perfil para consultar; afiliación opcional.
 
+La revisión posterior de PA-S02 confirma última campaña utilizada con habilitación vigente como entrada del plantador; sin anterior utilizable o sin historial de uso, global. Bocetar cambio de campaña/global, «Registrar plantación» y «Mis registros» por autoría/participación. Diseñar recuerdo separado por cuenta y revalidación sin tratar un error de capacidades como revocación; respetar el destino de enlaces públicos directos. Verificar CA18/19 además de los escenarios anteriores. La afiliación visible del registro es la del momento de plantar; captura/persistencia con PA-S01 aún por diseñar.
+
 | Capa | Trabajo | Contrato o dependencia | Evidencia de salida |
 |---|---|---|---|
 | UX | Bocetar cuenta sin permisos, una/múltiples subcampañas, permiso retirado y acceso interno. | PA-DI08/10 y campos PA-S02. | Revisión humana de nombres, estados y acceso rápido. |

@@ -1,6 +1,6 @@
 # PA-F01 — Participación aliada en Plantación
 
-**Actualización:** 11 de octubre de 2026. **Estado:** PA-S00 aprobada en comportamiento, lista para preparar boceto y plan técnico; PA-S01–04 siguen en revisión, con decisiones parciales incorporadas. LCO cerrado, Elaboración autorizada. No acredita implementación ni salida a campo.
+**Actualización:** 11 de octubre de 2026. **Estado:** PA-S00 y primera versión de PA-S02 aprobadas en comportamiento, listas para preparar boceto y plan técnico; PA-S01/03/04 siguen en revisión, con decisiones parciales incorporadas. LCO cerrado, Elaboración autorizada. No acredita implementación ni salida a campo.
 
 ## Propósito
 
@@ -15,7 +15,7 @@ El usuario pidió desarrollar y organizar las specs; las decisiones técnicas y 
 | Orden | Spec | Pregunta que vas a resolver | Estado |
 |---|---|---|---|
 | 1 | [PA-S00 — Entrada y experiencia del participante](00-experiencia-participante/spec.md) | ¿Qué encuentra un visitante sin sesión o una persona que quiere plantar? | Aprobada en comportamiento; preparación técnica habilitada, integración pendiente. |
-| 2 | [PA-S02 — Consulta de impacto y registros](02-consulta-impacto-y-registros/spec.md) | ¿Cómo se presentan los campos públicos y qué datos adicionales quedan fuera? | Consulta pública y campos principales confirmados; detalle en revisión. |
+| 2 | [PA-S02 — Consulta de impacto y registros](02-consulta-impacto-y-registros/spec.md) | ¿Cómo se presentan los campos públicos y qué datos adicionales quedan fuera? | Primera versión de comportamiento aprobada; boceto, contratos e integración posteriores. |
 | 3 | [PA-S03 — Gestión de acceso por subcampaña](03-gestion-acceso-subcampania/spec.md) | ¿Quién habilita a quién, dónde y qué ocurre al retirar acceso? | Borrador; adaptación técnica pendiente. |
 | 4 | [PA-S01 — Registro inicial](01-registro-plantacion-inicial/spec.md) | ¿Cómo registra una vez, revisa y confirma que quedó guardado? | Borrador apoyado en formulario existente. |
 | 5 | [PA-S04 — Corrección excepcional](04-correccion-excepcional/spec.md) | ¿Cómo se resuelve un error real después de guardar? | Borrador; mecanismo y verificación antes de campo. |
@@ -33,7 +33,7 @@ Al revisar una spec, registrar nombre del revisor, fecha, criterios aceptados, c
 | Spec | Revisión humana de esta versión | Decisiones principales pendientes |
 |---|---|---|
 | PA-S00 | Favorable, usuario, 11 de octubre; [acta](revision-humana-2026-10-11.md). | PA-DI08 cerrada; PA-DI10 confirmada en producto; PA-DI09 orientada, con contratos/migración pendientes. |
-| PA-S02 | Confirmación parcial de consulta pública y campos; revisión integral pendiente. | PA-DI05: fórmulas/etiquetas, afiliación histórica/actual, datos adicionales y lectura personalizada. |
+| PA-S02 | Primera versión de producto aprobada por el usuario, 11 de octubre; incluye consulta pública, presentación principal, faltantes por subcampaña, «Mis registros», afiliación histórica y entrada última campaña/global. | PA-DI05: contratos, boceto final, captura histórica/legado, fuentes de seguimiento, evidencia y campos privados adicionales; correcciones según PA-S04. |
 | PA-S03 | Revisión integral pendiente; ADMIN global confirmado como autoridad central. | PA-DI01/02: permisos y transición legada; PA-DI03: mecanismos de identidad y matriz operativa. |
 | PA-S01 | Revisión integral pendiente; GPS exterior/manual confirmado. | PA-DI04/06: manejo técnico de GPS, fechas/participantes y guardado recuperable. |
 | PA-S04 | Pendiente | PA-DI07: casos, mecanismo y efectos de corrección. |

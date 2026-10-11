@@ -42,6 +42,8 @@ Referencias directas: [alta y perfil](/Users/pabloandresfernandezcari/Projects/R
 
 ## 3. Contratos que deben acordarse entre frontend y backend
 
+**Decisiones posteriores de producto de PA-S02:** el global muestra total inicial, mapa y campañas; el plantador abre la última campaña con habilitación vigente o el global si no hay anterior utilizable. «Mis registros» incluye autoría y participación históricas, deduplicadas; la afiliación visible es la conservada al plantar. Diseñar recuerdo por cuenta y captura histórica con PA-S01, distinguiendo no declarada de histórica no disponible. No reconstruir desde el perfil actual ni ampliar campos privados del participante por incluirlo en la lista. Ver [acta](revision-humana-2026-10-11.md#revisión-posterior-de-pa-s02-en-llamada); estas decisiones no aprueban mecanismos ni migraciones.
+
 Son necesidades lógicas, no nombres de endpoints ya implementados. Partir de rutas existentes y fijar DTO/Swagger/cliente/pruebas juntos antes de construir la parte afectada.
 
 | Contrato | Contenido mínimo y regla |
