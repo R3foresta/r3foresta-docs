@@ -1,6 +1,6 @@
 # Criterios editoriales para la documentación del Proyecto de Grado
 
-> **Versión 4 — 27 de agosto de 2026.**
+> **Versión 5 — 15 de septiembre de 2026.**
 > Este lineamiento se aplica a las secciones y documentos que se redacten después del Perfil. Registra criterios editoriales y metodológicos; no modifica el contenido aprobado del Perfil de Proyecto de Grado, salvo que el criterio de fuentes de tablas de la sección 9 también se aplicará al Perfil vigente.
 
 ## 1. Principio rector
@@ -69,6 +69,8 @@ Las propiedades deberán declararse antes que los mecanismos. Una solución téc
 
 No se trasladará automáticamente el nivel de detalle de un documento técnico hacia una sección académica temprana.
 
+La sección 2.10 del Capítulo II constituye una excepción delimitada: puede inventariar las tecnologías realmente empleadas y su función general, sin describir arquitectura, componentes, despliegue, alternativas, mecanismos ni decisiones de implementación. Ese análisis permanece en el Capítulo III.
+
 ### Terminología del proceso adoptado
 
 - **Fase RUP** se utilizará únicamente para Inicio, Elaboración, Construcción y Transición.
@@ -125,6 +127,7 @@ Antes de aprobar una nueva sección o documento se comprobará:
 10. ¿Se mantiene la diferencia entre el registro informático y la realidad física?
 11. ¿La terminología distingue fase RUP, iteración, incremento, SDD, asistencia de IA, verificación, validación y aceptación?
 12. ¿Cada tabla incluye una nota inmediata que identifica su procedencia y, cuando es de elaboración propia, las fuentes, los datos o las decisiones que sirvieron de base?
+13. ¿Las tablas cumplen su estructura APA 7 y las figuras o diagramas conservan legibilidad, título y nota en la exportación a PDF?
 
 Si una respuesta es negativa, la sección deberá corregirse o justificar explícitamente la excepción antes de cerrarse.
 
@@ -142,18 +145,45 @@ La nota se redactará según el origen del contenido:
 - **Tabla modificada respecto de una fuente:** `*Nota.* Adaptado de Autor (año, p. xx).`
 - **Tabla reproducida sin cambios sustantivos:** `*Nota.* Tomado de Autor (año, p. xx).`
 
-Cuando una tabla combine elaboración propia y fuentes externas, la nota identificará ambas. Todas las fuentes externas citadas en la nota deberán aparecer en las referencias bibliográficas; si se emplean varias, se consignarán las que sustenten materialmente los datos, las categorías o la estructura. Una fuente institucional, una comunicación personal o un registro interno se describirá con suficiente precisión para reconocer su origen y fecha. No se atribuirá como elaboración propia una tabla copiada o adaptada.
+Cuando una tabla combine elaboración propia y fuentes externas, la nota identificará ambas. Todas las fuentes externas citadas en la nota deberán aparecer en las referencias bibliográficas; si se emplean varias, se consignarán las que sustenten materialmente los datos, las categorías o la estructura. En el documento final, esas referencias se reunirán únicamente en `04_referencias_bibliograficas.md`, no al final de cada capítulo. Una fuente institucional, una comunicación personal o un registro interno se describirá con suficiente precisión para reconocer su origen y fecha. No se atribuirá como elaboración propia una tabla copiada o adaptada.
 
-### 9.2. Documentos canónicos y paginación
+### 9.2. Estructura visual de las tablas
+
+En la maquetación del documento final, cada tabla se presentará conforme a APA 7 con los siguientes elementos y límites:
+
+1. número de tabla destacado, ubicado antes del título;
+2. título de tabla en cursiva, en la línea siguiente al número;
+3. cuerpo sin líneas verticales ni cuadriculado completo; solo línea horizontal superior, línea debajo del encabezado y línea horizontal inferior;
+4. *Nota.* inmediata debajo de la tabla cuando corresponda, incluida la procedencia regulada en 9.1;
+5. repetición del encabezado si la tabla continúa en otra página; y
+6. orientación horizontal únicamente cuando la anchura impida una lectura clara en orientación vertical.
+
+La fuente Markdown conserva el número, el título, el contenido y la nota; las reglas de líneas, repetición de encabezado y orientación se comprobarán en la versión maquetada y exportada a PDF. No se reducirán fuentes ni columnas hasta perder legibilidad solo para evitar una continuación de página.
+
+### 9.3. Documentos canónicos y paginación
 
 - `PERFIL_PROYECTO_GRADO.md` será la fuente canónica y única versión editable del Perfil dentro del repositorio. Las versiones aprobadas se transferirán directamente al Google Docs existente en Drive, que será el documento de trabajo y presentación. El DOCX local queda fuera del flujo y no se utilizará como fuente, destino ni intermediario.
 - En el Perfil no se insertarán saltos de página obligatorios después de cada encabezado principal.
 - En el documento final oficial del Proyecto de Grado, cada capítulo principal deberá comenzar en una página nueva. Esta regla se aplicará durante la maquetación de entrega.
+- El cuerpo textual conservará alineación justificada e interlineado de 1,5. Las páginas de figuras, diagramas o tablas anchas podrán modificar su orientación sin alterar ese formato en el resto del texto.
 
-## 10. Regla resumida
+## 10. Figuras, diagramas y legibilidad de maquetación
+
+Las figuras y los diagramas se conservarán legibles antes que compactos. Para ello:
+
+1. podrán ocupar una página completa;
+2. usarán orientación horizontal cuando sean anchos;
+3. los diagramas verticales podrán dividirse en páginas consecutivas, manteniendo la continuidad explícita;
+4. no se cortarán nombres, relaciones, cardinalidades, conectores ni notas;
+5. cada figura mantendrá su número, título y nota de procedencia o alcance; y
+6. la versión exportada a PDF se revisará para detectar cortes, desplazamientos, texto ilegible o pérdida de relaciones.
+
+El uso de una figura grande no autoriza a sustituir el texto necesario para interpretarla; la figura debe recibir una llamada en el texto y explicar una relación que no se comprenda con igual claridad mediante prosa breve.
+
+## 11. Regla resumida
 
 > La complejidad debe encontrarse en el problema y en la solución informática, no en una forma innecesariamente complicada de explicarlos.
 
 ---
 
-*Criterio editorial actualizado el 27 de agosto de 2026 para la documentación posterior al Perfil y para las fuentes de sus tablas.*
+*Criterio editorial actualizado el 15 de septiembre de 2026 para la documentación posterior al Perfil, las fuentes de sus tablas y la legibilidad de su maquetación.*

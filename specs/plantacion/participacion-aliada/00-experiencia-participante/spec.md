@@ -12,6 +12,8 @@ El visitante y el plantador usan esta misma experiencia de Impacto. Tener permis
 
 Esta spec cubre enlace → consulta pública → intención de registrar → autenticación y comprobación del permiso → acceso al registro. La captura/guardado pertenece a [PA-S01](../01-registro-plantacion-inicial/spec.md); los datos visibles a [PA-S02](../02-consulta-impacto-y-registros/spec.md); otorgar/retirar permiso a [PA-S03](../03-gestion-acceso-subcampania/spec.md).
 
+**Autoridad central confirmada en PA-S03:** ADMIN global de R3Foresta puede registrar directamente en cualquier subcampaña ACTIVA, sin asignación contextual adicional y con las mismas validaciones del registro. Los requisitos de habilitación contextual de esta experiencia se refieren a participantes sin esa autoridad central. Su cuenta/rol deben verificarse; alta y perfil no permiten obtenerlos por autoasignación.
+
 ## 2. Historias de usuario
 
 | ID | Historia | Resultado que revisaremos |

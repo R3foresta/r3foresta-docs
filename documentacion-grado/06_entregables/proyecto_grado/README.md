@@ -6,14 +6,16 @@ La lista centralizada de validaciones, evidencias y correcciones de los dos prim
 
 ## Estructura prevista
 
-1. Introducción independiente, redactada al finalizar todos los capítulos.
-2. Capítulo I — Marco introductorio, incluida la metodología de desarrollo.
+1. Resumen independiente, que se redactará al finalizar todos los capítulos.
+2. Capítulo I — Marco introductorio, comenzando con la Introducción e incluida la metodología de desarrollo.
 3. Capítulo II — Marco teórico y conceptual, incluidos RUP, SDD y asistencia de IA.
 4. Capítulo III — Marco aplicativo: análisis, diseño, implementación, integración, verificación, validación, aceptación y resultados.
 5. Conclusiones y Recomendaciones.
-6. Referencias bibliográficas y anexos.
+6. Referencias bibliográficas consolidadas y anexos.
 
 Con el Perfil cerrado, la fuente oficial del alcance, los objetivos y la metodología de desarrollo es [`../perfil/PERFIL_PROYECTO_GRADO.md`](../perfil/PERFIL_PROYECTO_GRADO.md). La ejecución posterior se controla en [`../../02_planificacion/TODO_PROYECTO_GRADO.md`](../../02_planificacion/TODO_PROYECTO_GRADO.md), sin reabrir el tablero de cierre del Perfil.
+
+El estado metodológico por fase, iteración e hito se conserva en [`../../04_metodologia/registro_avance_rup_sdd.md`](../../04_metodologia/registro_avance_rup_sdd.md). Este registro separa lo planificado, la evidencia técnica disponible, la verificación y la aceptación.
 
 El documento final deberá presentar dos cadenas de evidencia relacionadas:
 
@@ -26,4 +28,7 @@ La asistencia de IA debe poder distinguirse de las decisiones, revisiones y apro
 
 - [`01_capitulo_marco_introductorio.md`](01_capitulo_marco_introductorio.md)
 - [`02_capitulo_marco_teorico_conceptual.md`](02_capitulo_marco_teorico_conceptual.md)
-- [`03_capitulo_marco_aplicativo.md`](03_capitulo_marco_aplicativo.md), actualmente desarrollado en la sección 3.1 correspondiente al objetivo específico 1
+- [`03_capitulo_marco_aplicativo.md`](03_capitulo_marco_aplicativo.md), con análisis, diseño, diagramas del sistema, evidencia técnica disponible y resultados abiertos según el estado metodológico
+- [`04_referencias_bibliograficas.md`](04_referencias_bibliograficas.md), única bibliografía consolidada de los Capítulos I, II y III
+
+Las referencias no se repiten al final de los capítulos. El control interno de correspondencia entre citas y referencias se conserva en [`../../03_investigacion/matriz_citas_referencias_documento_final.md`](../../03_investigacion/matriz_citas_referencias_documento_final.md).

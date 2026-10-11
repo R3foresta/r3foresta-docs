@@ -2,7 +2,7 @@
 
 **Estado:** borrador para revisión humana propia. **Prioridad:** P0. **No acredita implementación.**
 
-**Actualización:** 10 de octubre de 2026. Entrada/cuenta: [PA-S00](../00-experiencia-participante/spec.md); permisos: [PA-S03](../03-gestion-acceso-subcampania/spec.md). Se reutiliza el formulario actual, no se crea otro registro de negocio para participantes.
+**Actualización:** 11 de octubre de 2026. Entrada/cuenta: [PA-S00](../00-experiencia-participante/spec.md); permisos: [PA-S03](../03-gestion-acceso-subcampania/spec.md). Se reutiliza el formulario actual, no se crea otro registro de negocio para participantes.
 
 ## Resultado
 
@@ -20,7 +20,7 @@ Una persona con permiso vigente en una subcampaña registra una plantación real
 
 ## Precondiciones y recorrido
 
-Sesión verificada, permiso contextual para plantar, subcampaña ACTIVA, especies iniciales del plan y stock físicamente asignado elegible. Una persona global VOLUNTARIO autorizada debe poder usar el recorrido sin ascender a GENERAL. Ninguna precondición queda reservada al abrir la pantalla: se revalida al guardar.
+Sesión verificada y autorización vigente para plantar: permiso contextual en la subcampaña o autoridad ADMIN global verificada, que puede registrar directamente sin asignación contextual según PA-S03. En ambos casos se exige subcampaña ACTIVA, especies iniciales del plan y stock físicamente asignado elegible. Una persona global VOLUNTARIO autorizada debe poder usar el recorrido sin ascender a GENERAL. Ninguna precondición queda reservada al abrir la pantalla: se revalida al guardar.
 
 1. **Fotos y ubicación:** 1–10 fotos y GPS automático/manual con estado comprensible. Una coordenada manual válida no debe seguir rotulada como ausencia total de ubicación. Servidor/PostGIS decide la validación geográfica.
 2. **Cantidades, personas y fecha:** elegir cantidad por especie; distribución por asignaciones automática. Fecha dentro de la ventana vigente, observaciones opcionales hasta 2000 caracteres y otras personas participantes habilitadas según contrato pendiente PA-DI04. Responsable visible y derivado de sesión, no editable como autor ajeno. No pedir una organización para autorizar.
@@ -56,6 +56,8 @@ Ramas explícitas: `validación rechazada`, `permiso retirado`, `stock cambiante
 | Guardado confirmado | Abrir el mismo registro; no reenviarlo por recargar, volver atrás o repetir el clic. |
 | Abandono antes de enviar | No existe plantación ni consumo; evidencias pendientes siguen política de limpieza. Si hubo envío incierto, resolverlo antes de tratar sus fotos como abandonadas. |
 
+Los casos de retiro contextual que bloquean una nueva escritura presuponen pérdida de autorización efectiva; no revocan por sí mismos la facultad de ADMIN global mientras siga vigente, conforme a PA-S03.
+
 ## Escenarios de aceptación
 
 | ID | Dado / cuando | Entonces |
@@ -76,7 +78,7 @@ Ramas explícitas: `validación rechazada`, `permiso retirado`, `stock cambiante
 
 - PA-DI04: verificar GPS exterior/manual ya confirmado, manejo de fallos técnicos, fecha y personas seleccionables, incluida revocación de un participante durante la captura.
 - PA-DI06: contrato durable de intento/recibo, huella, concurrencia, retención y evidencias; no basta deshabilitar el botón.
-- PA-DI01/02/03/09: identidad y autorización contextual de PA-S00/03. La representación central no concede automáticamente permiso global para plantar.
+- PA-DI01/02/03/09: identidad y autorización contextual de PA-S00/03. El usuario confirmó registro directo por ADMIN global en cualquier subcampaña ACTIVA, sin asignación contextual y con las mismas validaciones. Los mecanismos de identidad/autorización y transición siguen pendientes.
 - Contrato de distribución FIFO: frontend ayuda hoy; definir resolución o comprobación en servidor para garantizarla frente a cualquier cliente.
 
 El [boceto](../boceto-registro-resultado.md), [plan](plan.md), [tareas](tasks.md) y [diseño compartido](../diseno-tecnico-compartido.md) desarrollan estas propuestas. Los escenarios son pruebas previstas, no resultados obtenidos.

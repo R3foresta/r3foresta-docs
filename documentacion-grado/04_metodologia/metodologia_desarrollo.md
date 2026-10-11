@@ -238,6 +238,8 @@ Para reglas críticas se mantendrá además:
 
 Los identificadores serán estables y permitirán recorridos como `OBJ-01 → CU-03 → RF-012/RN-004 → SPEC-02 → ADR-006 → TASK-031 → cambio → TC-018 → resultado → ACT-02`.
 
+El estado operativo de esta metodología se conserva en [`registro_avance_rup_sdd.md`](registro_avance_rup_sdd.md). Ese registro distingue lo planificado, la evidencia técnica disponible, la verificación y la aceptación, y no reemplaza las actas ni matrices detalladas que todavía deben completarse.
+
 ## 8. Verificación, validación y aceptación
 
 - **Verificación:** comprueba mediante pruebas que el software satisface sus especificaciones, reglas e invariantes.

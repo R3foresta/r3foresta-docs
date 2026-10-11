@@ -247,16 +247,21 @@ La responsabilidad técnica y autoral permanecerá bajo control humano. Los agen
 Resumen
 Palabras clave
 
-Introducción
-
 Capítulo I — Marco introductorio
-  1.1 Antecedentes institucionales y trabajos similares
-  1.2 Planteamiento del problema
-  1.3 Objetivos
-  1.4 Justificación
-  1.5 Alcances y límites
-  1.6 Metodología de desarrollo
-  1.7 Organización del documento
+  1.1 Introducción
+  1.2 Antecedentes
+    1.2.1 Antecedentes institucionales
+    1.2.2 Trabajos similares
+  1.3 Planteamiento del problema
+    1.3.1 Situación problemática
+    1.3.2 Problema central
+    1.3.3 Formulación del problema
+  1.4 Objetivos
+    1.4.1 Objetivo general
+    1.4.2 Objetivos específicos
+  1.5 Justificación
+  1.6 Alcances y límites
+  1.7 Metodología de desarrollo
 
 Capítulo II — Marco teórico y conceptual
   2.1 Material vegetal y procesos de reforestación
@@ -268,23 +273,31 @@ Capítulo II — Marco teórico y conceptual
   2.7 Bonos de carbono y alcance de la proyección
   2.8 Rational Unified Process
   2.9 Spec-Driven Development y asistencia de inteligencia artificial
-  2.10 Síntesis conceptual adoptada
+  2.10 Tecnologías utilizadas
+  2.11 Síntesis conceptual adoptada por R3Foresta
+  2.12 Correspondencia entre proceso y fundamento conceptual
+  2.13 Selección de fuentes aplicada
 
 Capítulo III — Marco aplicativo
   3.1 Análisis de la información y su gestión actual
-  3.2 Organización de la información y sus relaciones
-  3.3 Implementación e integración de los tres módulos
-    3.3.1 Iteración CO-1: M1 Recolección
-    3.3.2 Iteración CO-2: M2 Vivero e integración M1→M2
-    3.3.3 Iteración CO-3: M3 Plantación e integración M2→M3
-    3.3.4 Iteración CO-4: trazabilidad transversal e integración total
-  3.4 Verificación de funciones y coherencia de registros
-  3.5 Validación operativa y aceptación
-  3.6 Presentación y discusión de resultados
+  3.2 Diseño de la organización de la información
+    3.2.3 Requisitos y capacidades del sistema
+    3.2.4–3.2.5 Casos de uso generales y específicos
+    3.2.6 Procesos: estados, eventos y cambios de cantidad
+    3.2.7 Interacciones: contratos entre módulos
+    3.2.8 Modelo de datos: conceptual, lógico y físico
+    3.2.9–3.2.12 Invariantes, arquitectura, riesgos y resultado del diseño
+  3.3 Implementación e integración de los módulos
+    3.3.1 Propósito, corte y correspondencia con RUP
+    3.3.2–3.3.5 Arquitectura y módulos General, Recolección, Vivero y Plantación
+    3.3.6–3.3.8 SDD, control de alcance y resultado de implementación
+  3.4 Verificación de requerimientos e invariantes
+  3.5 Evaluación de la reconstrucción del recorrido
+  3.6 Síntesis del avance del Marco aplicativo
 
 Conclusiones
 Recomendaciones
-Referencias bibliográficas
+Referencias bibliográficas — bibliografía única consolidada (`04_referencias_bibliograficas.md`)
 Anexos
 ```
 

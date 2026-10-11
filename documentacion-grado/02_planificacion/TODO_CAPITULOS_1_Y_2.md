@@ -35,13 +35,17 @@
 
 - [x] Confirmar que el documento final utilizará **Capítulo I — Marco introductorio**.
 - [x] Confirmar que el documento final utilizará **Capítulo II — Marco teórico y conceptual**.
-- [x] Confirmar que la introducción será una sección previa independiente y se redactará al final.
+- [x] Confirmar que el Resumen será un elemento preliminar independiente y se redactará al final.
+- [x] Confirmar que la Introducción será la sección 1.1 del Capítulo I.
 - [x] Confirmar que los antecedentes institucionales y los trabajos similares permanecerán juntos en el Capítulo I.
 - [x] Confirmar que la metodología no tendrá un capítulo independiente y se incorporará en el Capítulo I.
 - [x] Confirmar que el Capítulo III se denominará **Marco aplicativo**; su estructura interna se definirá posteriormente.
 - [x] Confirmar que después del Capítulo III se incorporarán **Conclusiones** y **Recomendaciones**, sin prometer capítulos adicionales en el índice preliminar.
+- [x] Numerar las secciones de cada capítulo desde su primer apartado: la Introducción será 1.1 en el Capítulo I; el Capítulo II comenzará en 2.1 y el Capítulo III, en 3.1.
+- [x] Normalizar el Capítulo I con las secciones principales 1.1 a 1.7: Introducción, Antecedentes, Planteamiento del problema, Objetivos, Justificación, Alcances y límites y Metodología de desarrollo.
+- [x] Normalizar el cierre del Capítulo II: 2.10 Tecnologías utilizadas, 2.11 Síntesis conceptual adoptada por R3Foresta, 2.12 Correspondencia entre proceso y fundamento conceptual y 2.13 Selección de fuentes aplicada.
 - [ ] Confirmar si la sección “Aportes esperados” debe permanecer en el Capítulo I.
-- [ ] Confirmar si la sección “Organización del documento” es requerida.
+- [x] Excluir la sección numerada “1.8 Organización del documento”; la organización global se mantiene en el índice y los lineamientos, sin ampliar el Capítulo I.
 
 ### 2.2. Contenido sustantivo
 
@@ -62,10 +66,11 @@
 - [x] Confirmar que el Proyecto de Grado no utilizará hipótesis ni un marco investigativo independiente; conservará preguntas del problema y comprobación del producto como parte de la ingeniería.
 - [x] Retirar ciencia del diseño, DSRM y estudio de caso único embebido como metodología vigente, según la decisión comunicada por el postulante después de la reunión con la tutora.
 - [x] Adoptar RUP adaptado, complementado con Spec-Driven Development asistido por IA, conforme a la decisión controlada en la sección 2.9 de [`TODO.md`](TODO.md).
-- [ ] Confirmar fuente, tamaño, interlineado, márgenes y sangría.
+- [x] Mantener texto justificado e interlineado 1,5 en el cuerpo del documento; las páginas horizontales de tablas o figuras no modifican esta regla para el resto del texto.
+- [ ] Confirmar fuente, tamaño, márgenes y sangría.
 - [x] Confirmar **APA 7** como norma de citación y referencias.
 - [ ] Aplicar en los capítulos la forma autor–año acordada y eliminar siglas de autores corporativos introducidas entre corchetes en las citas.
-- [ ] Confirmar formato de títulos, tablas, figuras y notas.
+- [ ] Aplicar el formato acordado para títulos, tablas, figuras y notas: APA 7 para tablas, título y nota para cada figura, y comprobación visual en PDF.
 - [ ] Confirmar si existe una guía interna vigente no publicada.
 
 ## 3. Información institucional por confirmar
@@ -91,7 +96,7 @@ La fuente de trabajo se encuentra en [`../03_investigacion/ficha_institucional_r
 - [ ] Confirmar las direcciones específicas y unidades técnicas relacionadas con el caso.
 - [x] Confirmar que el organigrama institucional proporcionado por la Fundación puede incluirse en el documento académico.
 - [x] Registrar a la Fundación R3Foresta como fuente directa del organigrama proporcionado.
-- [x] Incorporar el organigrama oficial como Figura 1 del Perfil y del Capítulo I.
+- [x] Incorporar el organigrama oficial como Figura 1 del Perfil y Figura 1.1 del Capítulo I.
 
 ### 3.3. Antecedentes desde 2019
 
@@ -125,16 +130,16 @@ El proyecto no realizará un diagnóstico investigativo independiente. La inform
 
 Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`](../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md).
 
-### 5.1. Introducción independiente — se redactará al final
+### 5.1. Introducción dentro del Capítulo I
 
-- [x] Confirmar que la introducción no forma parte del Capítulo I.
-- [x] Confirmar que se redactará cuando estén disponibles todos los capítulos.
+- [x] Confirmar que la Introducción forma parte del Capítulo I como sección 1.1.
+- [x] Integrar el borrador de Introducción al inicio del Capítulo I.
 - [x] Adoptar como hilo narrativo: proyección institucional futura hacia iniciativas de carbono, necesidad inmediata de organizar la información de reforestación, dispersión actual de los registros y respuesta mediante trazabilidad hasta la plantación.
 - [ ] Presentar el dominio sin adelantar detalles innecesarios de implementación.
 - [x] Confirmar y aplicar la denominación R3foresta App para la aplicación.
 - [x] Mantener explícito el límite respecto de CO2, supervivencia y certificación.
 - [x] Revisar que las afirmaciones institucionales incorporadas tengan fuente o atribución y que las pendientes se identifiquen como tales.
-- [ ] Redactar y ajustar la introducción al finalizar el documento.
+- [ ] Ajustar y cerrar la Introducción junto con la revisión final del Capítulo I.
 
 ### 5.2. Antecedentes
 
@@ -185,7 +190,7 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 - [ ] Mantener la diferencia entre evidencia asociada y verdad física.
 - [ ] Revisar si “Aportes esperados” debe conservarse o trasladarse.
 
-### 5.7. Metodología de desarrollo y organización
+### 5.7. Metodología de desarrollo y estructura final
 
 - [x] Confirmar que la metodología de desarrollo permanecerá dentro del Capítulo I.
 - [x] Registrar que RUP estructura el proyecto completo mediante Inicio, Elaboración, Construcción y Transición.
@@ -195,10 +200,11 @@ Archivo: [`../06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md`]
 - [x] Definir SDD asistido por IA como práctica de trabajo subordinada a RUP, no como metodología equivalente ni como sustituto del juicio humano.
 - [x] Sincronizar el Capítulo I con el flujo `necesidad → requisito → especificación → diseño → tareas → implementación → pruebas → resultado → aceptación`.
 - [x] Explicar verificación, validación operativa y aceptación como actividades de ingeniería, sin reintroducir un diseño de investigación.
+- [x] Crear un registro de corte que separe lo planificado, la evidencia técnica disponible, la verificación y la aceptación por iteración e hito.
 - [ ] Completar el seguimiento con artefactos, responsables, fechas, criterios de entrada y salida y evidencias realmente disponibles.
-- [ ] Evitar repetir en esta sección el detalle técnico propio del Marco aplicativo.
+- [x] Evitar repetir en esta sección el detalle técnico propio del Marco aplicativo.
 - [x] Confirmar que no se prometerán capítulos posteriores al III antes de Conclusiones y Recomendaciones.
-- [x] Actualizar la organización del documento para reflejar Capítulo III, Conclusiones y Recomendaciones.
+- [x] Actualizar el índice para reflejar Capítulo III, Conclusiones y Recomendaciones, sin crear una sección 1.8 dentro del Capítulo I.
 - [ ] Retirar la nota de “primera versión” cuando el capítulo quede aprobado para maquetación.
 
 ## 6. Cierre del Perfil
@@ -220,13 +226,14 @@ Archivo reservado: [`../06_entregables/proyecto_grado/02_capitulo_marco_teorico_
 
 - [x] Obtener autorización expresa del postulante antes de redactar — concedida el 24 de agosto de 2026.
 - [ ] Confirmar con la tutora el alcance y la denominación del Capítulo II.
-- [x] Confirmar como criterio de trabajo que no debe convertirse en un catálogo de tecnologías ni repetir la metodología.
+- [x] Confirmar como criterio de trabajo que el Capítulo II no debe convertirse en un catálogo de tecnologías ni repetir la metodología; 2.10 se limitará a un inventario descriptivo de las tecnologías reales y su función general.
 - [x] Incorporar un mapa entre RUP, SDD, asistencia de IA y el fundamento conceptual que necesita cada componente.
-- [ ] Decidir si EPCIS y UNTP serán comparaciones formales o solo referentes descriptivos.
+- [x] Decidir si EPCIS y UNTP serán comparaciones formales o solo referentes descriptivos: EPCIS se conservará únicamente como referente descriptivo de eventos; UNTP queda fuera del primer borrador por ser una especificación en desarrollo.
 - [ ] Definir la cantidad razonable de páginas y profundidad por sección.
 
 ### 7.2. Definiciones y contenido
 
+- [x] Redactar un primer borrador integrado de las secciones 2.1 a 2.7, manteniendo explícito qué conceptos requieren revisión formal posterior.
 - [ ] Cerrar la definición de material vegetal o material reproductivo forestal.
 - [ ] Cerrar la definición operativa de trazabilidad reconstruible.
 - [ ] Cerrar la definición de cadena de custodia.
@@ -245,7 +252,10 @@ Archivo reservado: [`../06_entregables/proyecto_grado/02_capitulo_marco_teorico_
 - [x] Desarrollar asistencia de IA: usos permitidos, revisión humana, reproducibilidad, límites, autoría y responsabilidad.
 - [x] Explicar que SDD no tiene una definición normativa única y que el referente adoptado, GitHub Spec Kit, integra agentes de IA; conservar la mención explícita de IA por transparencia y control.
 - [ ] Definir bonos de carbono y diferenciar los datos operativos trazables de la cuantificación, el MRV, la validación, la verificación y la emisión de créditos.
-- [ ] Preparar una síntesis conceptual que conecte definiciones y propiedades del diseño.
+- [x] Incorporar 2.10 como inventario de TypeScript, React, Supabase, PostgreSQL, almacenamiento y demás tecnologías realmente verificadas, sin describir arquitectura ni decisiones técnicas del Capítulo III.
+- [x] Preparar 2.11 como síntesis conceptual que conecte definiciones y propiedades del diseño.
+- [x] Numerar 2.12 para la correspondencia entre proceso y fundamento conceptual y actualizar sus referencias internas.
+- [x] Numerar 2.13 para la selección de fuentes aplicada, vinculándola con el registro de investigación sin duplicar la bibliografía.
 
 ### 7.3. Lecturas pendientes
 
@@ -257,17 +267,16 @@ Archivo reservado: [`../06_entregables/proyecto_grado/02_capitulo_marco_teorico_
 - [ ] EVA-02 — Randrup et al. (2008): ejercicios de recuperación de trazas.
 - [ ] EVA-03 — Mgonja et al. (2013): desempeño de sistemas de trazabilidad.
 - [ ] LIM-01 — Terriault (2022): límites de relaciones inferidas.
-- [ ] Determinar cuáles de estas fuentes son realmente necesarias.
+- [x] Determinar cuáles de estas fuentes son realmente necesarias; la primera selección se registra en [seleccion_fuentes_capitulo_ii.md](../03_investigacion/seleccion_fuentes_capitulo_ii.md).
 - [ ] No citar afirmaciones específicas de una fuente cuya lectura completa siga pendiente.
 
 ### 7.4. Fuentes adicionales por cerrar
 
-- [ ] Seleccionar una fuente forestal suficiente para transformación biológica y vivero.
-- [ ] Revisar las fuentes geográficas OGC e ISO 19157 aplicables.
-- [ ] Revisar la fuente oficial de EPCIS 2.0 si se utiliza su taxonomía.
-- [ ] Revisar ISO 22095-2 y FSC únicamente para conciliación cuantitativa y sus límites.
-- [ ] Normalizar todas las referencias seleccionadas en APA 7.
-- [ ] Mantener en la bibliografía final solo las fuentes citadas.
+- [x] Seleccionar una fuente forestal suficiente para transformación biológica y vivero: FAO, *Forest reproductive material*.
+- [x] Revisar la fuente oficial de EPCIS 2.0 si se utiliza su taxonomía; se empleará solo como referente descriptivo.
+- [x] Revisar ISO 22095-2 únicamente para diferenciar el balance de masa de la transformación biológica observada; FSC queda reservado.
+- [x] Normalizar las referencias seleccionadas y citadas en APA 7 dentro de la bibliografía consolidada.
+- [x] Mantener en `04_referencias_bibliograficas.md` solo las fuentes citadas, como bibliografía única al final del documento completo.
 
 ## 8. Revisión editorial y de coherencia
 
@@ -282,10 +291,12 @@ Archivo reservado: [`../06_entregables/proyecto_grado/02_capitulo_marco_teorico_
 - [ ] Evitar afirmaciones de mejora no observada.
 - [ ] Evitar que fotografías o GPS se presenten como prueba absoluta del hecho físico.
 - [ ] Mantener blockchain, NFT, IPFS y contratos inteligentes fuera del aporte académico.
-- [ ] Aplicar APA 7 sin introducir siglas de autores corporativos entre corchetes en las citas.
-- [ ] Revisar que cada cita tenga referencia y cada referencia sea citada.
+- [x] Aplicar APA 7 sin introducir siglas de autores corporativos entre corchetes en las citas.
+- [x] Revisar que cada cita tenga referencia y cada referencia sea citada.
+- [x] Consolidar las referencias de todos los capítulos en `04_referencias_bibliograficas.md`, sin bibliografías locales en los capítulos.
 - [ ] Revisar ortografía, tildes, mayúsculas, numeración y consistencia de nombres.
-- [ ] Revisar tablas, figuras, notas y referencias cruzadas.
+- [ ] Revisar cada tabla conforme a APA 7: número destacado, título en cursiva, *Nota.* cuando corresponda, tres líneas horizontales principales, sin líneas verticales ni cuadriculado completo, encabezado repetido y orientación horizontal solo si resulta indispensable.
+- [ ] Revisar tablas, figuras, notas y referencias cruzadas; comprobar en PDF que los diagramas no estén cortados, desplazados ni ilegibles y que conserven título y nota.
 
 ## 9. Evidencias y documentos que se deben solicitar
 
@@ -311,6 +322,8 @@ Completar una fila por cada corrección recibida. No registrar solamente “corr
 | 25-08-2026 | Tutora del Proyecto de Grado, comunicado por el postulante | El Perfil debe simplificar su estructura y metodología; ajustar antecedentes, problema, pregunta y objetivo general; conservar los objetivos específicos y tres módulos; aplicar APA 7; reorganizar cronograma e índice; y diferir evaluación, ética y propuesta de ingeniería al documento final. | Controlar el detalle únicamente en `TODO.md`; mantener el título actual como base aprobada; dejar abiertos problema, pregunta y objetivo general; confirmar objetivos específicos, módulos y APA 7; y sincronizar los capítulos cuando cierre el Perfil. | TODO del Perfil, Capítulo I, planificación del Capítulo II y documento final | Aplicado; la decisión metodológica posterior se registra en la fila siguiente |
 | 25-08-2026 | Decisión del postulante | Seleccionar un título con mayor impacto que mencione bonos de carbono sin atribuir al sistema su generación, certificación, emisión o comercialización. | Adoptar **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**, delimitar la proyección como futura e indirecta. | Lineamientos, Perfil, Capítulos I y II, glosario, fuentes y tableros | Cerrado con el Perfil el 2-09-2026 |
 | 25-08-2026 | Reunión con la tutora, comunicada por el postulante, y decisión definitiva del postulante | El trabajo no utilizará un marco investigativo independiente y requiere una metodología de desarrollo clásica, estructurada, iterativa e incremental. | Retirar ciencia del diseño, DSRM, estudio de caso y sprints; adoptar **RUP adaptado, complementado con Spec-Driven Development asistido por IA**; organizar el periodo 6 de julio–15 de noviembre por fases e iteraciones RUP, con incrementos ejecutables en Construcción. | Lineamientos, Perfil, Capítulos I y II, metodología, cronograma y tableros | Aplicado |
+| 15-09-2026 | Decisión del postulante | Normalizar la estructura de los capítulos, concentrar la bibliografía al final, describir solo las tecnologías reales en 2.10 y asegurar formato APA 7 y legibilidad de tablas y diagramas. | Capítulo I concluye en 1.7; Capítulo II incorpora 2.10 a 2.13; la bibliografía única se prepara en `04_referencias_bibliograficas.md`; se aplican los criterios estructurales de tablas, figuras y PDF. | Lineamientos, planificación, Perfil, capítulos y bibliografía final | En ejecución |
+| 16-09-2026 | Control editorial local | Se aplicaron las correcciones estructurales, bibliográficas y de diagramas en los archivos Markdown, sin intervenir Google Drive. | Se verificaron numeración, enlaces locales, referencias centralizadas, títulos de tablas y continuidad de figuras. La revisión visual de tablas y diagramas queda para la maquetación y la exportación a PDF. | Lineamientos, planificación, Perfil, Capítulos I–III, matriz de citas y bibliografía final | Aplicado en Markdown; PDF y revisión formal pendientes |
 
 ## 11. Criterios de cierre
 
@@ -321,7 +334,8 @@ Completar una fila por cada corrección recibida. No registrar solamente “corr
 - [ ] Problema ampliado y aprobado, con el árbol incorporado en los anexos del documento final y correctamente referenciado, sin condicionar su existencia al diagnóstico posterior.
 - [ ] Pregunta general y objetivo general corregidos, preguntas específicas revalidadas y cinco objetivos específicos confirmados y sincronizados con el Perfil.
 - [ ] Alcances y exclusiones confirmados.
-- [ ] Todas las citas y referencias verificadas en APA 7, sin siglas corporativas introducidas entre corchetes.
+- [x] Numeración 1.1 a 1.7 verificada, sin sección 1.8.
+- [x] Todas las citas y referencias verificadas en APA 7, sin siglas corporativas introducidas entre corchetes.
 - [ ] Nota de borrador retirada.
 
 ### Capítulo II listo para revisión formal
@@ -330,14 +344,16 @@ Completar una fila por cada corrección recibida. No registrar solamente “corr
 - [ ] Estructura confirmada por la tutora.
 - [ ] Definiciones operativas y conceptos avanzados trasladados desde el Perfil cerrados en la estructura de la sección 7.2.
 - [ ] Fuentes necesarias seleccionadas y leídas.
-- [ ] Referencias normalizadas.
+- [x] Referencias normalizadas en la bibliografía única del documento.
+- [x] Estructura 2.10 a 2.13, inventario tecnológico descriptivo y referencias internas verificados.
 - [ ] Límite entre marco teórico, metodología y desarrollo claramente definido.
 
 ### Capítulos I y II listos para maquetación
 
 - [ ] Correcciones de la tutora incorporadas.
 - [ ] Coherencia terminológica y bibliográfica comprobada.
-- [ ] Figuras y tablas definitivas disponibles.
+- [x] Bibliografía única consolidada en `04_referencias_bibliograficas.md`, sin listas bibliográficas por capítulo.
+- [ ] Tablas definitivas con formato APA 7 y figuras/diagramas legibles en PDF.
 - [ ] Formato institucional confirmado.
 - [ ] Revisión final de ortografía, numeración y referencias cruzadas concluida.
 

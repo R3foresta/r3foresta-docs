@@ -19,6 +19,8 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 - [`05_recursos/indice_fuentes_bibliograficas.md`](05_recursos/indice_fuentes_bibliograficas.md) — acceso temático a las fuentes del perfil y del futuro marco teórico.
 - [`06_entregables/proyecto_grado/README.md`](06_entregables/proyecto_grado/README.md) — espacio reservado y guía inicial para el documento final.
 - [`06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md`](06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) — Marco aplicativo; la sección 3.1 desarrolla el análisis correspondiente al objetivo específico 1.
+- [`06_entregables/proyecto_grado/04_referencias_bibliograficas.md`](06_entregables/proyecto_grado/04_referencias_bibliograficas.md) — bibliografía única del documento final.
+- [`03_investigacion/matriz_citas_referencias_documento_final.md`](03_investigacion/matriz_citas_referencias_documento_final.md) — control interno de correspondencia entre las citas de los capítulos y la bibliografía final.
 - [`03_investigacion/inventario_evidencia_fotografica_2026-07-22.md`](03_investigacion/inventario_evidencia_fotografica_2026-07-22.md) — inventario y límites de uso de las fotografías de Chasquipampa.
 
 ## Organización
@@ -71,8 +73,8 @@ El archivo Markdown es la fuente canónica y la única versión editable del Per
 
 ### Estructura del Proyecto final (a la que apunta el perfil)
 
-- **Introducción independiente** — se redactará al finalizar todos los capítulos.
-- **Cap. 1 — Marco introductorio** (antecedentes, problema, objetivos, justificación, alcances y metodología de desarrollo).
+- **Resumen independiente** — se redactará al finalizar todos los capítulos.
+- **Cap. 1 — Marco introductorio** (Introducción, antecedentes, problema, objetivos, justificación, alcances y metodología de desarrollo).
 - **Cap. 2 — Marco teórico y conceptual** (dominio, RUP, SDD y asistencia de IA).
 - **Cap. 3 — Marco aplicativo** (análisis, diseño, implementación, integración, verificación, validación, aceptación y resultados).
 - **Conclusiones y Recomendaciones.**

@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "kind": "google-docs-trusted-read-context",
+  "target": {
+    "documentId": "1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0",
+    "title": "R3Foresta - Proyecto de Grado",
+    "revisionId": "ANLCKQkDThwuJjp5xYPvx1sJk4zy1MQ0XtWtthXwgGVmFQ5CddLZjw0H5UowKjgo6eZtihLHlU6FVHfLAWtQyi8DfF2FLGFysAIBoaSKG7c",
+    "documentUrl": "https://docs.google.com/document/d/1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0",
+    "selectedTabId": null
+  },
+  "dropdownMetadata": {
+    "status": "unavailable",
+    "resolvedTool": null,
+    "authoritative": false,
+    "count": 0
+  },
+  "derivedControlInventory": {
+    "hasProtectedControls": false,
+    "authoritativeDropdownCount": 0,
+    "opaqueControlCount": 0,
+    "nativeElementCounts": {
+      "inlineObjectElement": 1
+    },
+    "tabsScanned": [
+      "t.0"
+    ],
+    "controls": [],
+    "nativeElements": [
+      {
+        "type": "inlineObjectElement",
+        "startIndex": 95,
+        "endIndex": 96,
+        "tabId": "t.0",
+        "segmentId": null,
+        "container": {
+          "kind": "paragraph",
+          "path": "root.tabs[0].body.content[4]",
+          "tabId": "t.0",
+          "segmentId": null,
+          "startIndex": 95,
+          "endIndex": 98,
+          "namedStyleType": "NORMAL_TEXT",
+          "listId": null,
+          "nestingLevel": null,
+          "table": null
+        },
+        "properties": {
+          "inlineObjectId": "kix.yh2ib4esmz4l",
+          "textStyle": {
+            "fontSize": {
+              "magnitude": 12,
+              "unit": "PT"
+            },
+            "weightedFontFamily": {
+              "fontFamily": "Times New Roman",
+              "weight": 400
+            }
+          }
+        }
+      }
+    ]
+  },
+  "editGuidance": {
+    "advisoryOnly": true,
+    "requiresTargetedPreservation": false,
+    "recommendedBehavior": "No protected controls were detected in the scanned scope.",
+    "warnings": []
+  }
+}

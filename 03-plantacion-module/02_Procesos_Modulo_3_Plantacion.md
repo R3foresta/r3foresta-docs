@@ -94,7 +94,7 @@ Transiciones permitidas en MVP:
 - `ACTIVA → FINALIZADA_PARCIAL` (manual por admin, requiere motivo)
 - `BORRADOR → CANCELADA` y `ACTIVA → CANCELADA` (cancelación por admin, solo si no hay plantaciones iniciales; ver §3.12)
 
-No hay reapertura: si una subcampaña queda en FINALIZADA_PARCIAL y aparece stock nuevo después, se crea una **nueva subcampaña** dentro de la misma campaña, no se reabre la anterior.
+No hay reapertura, tampoco por ADMIN global para corregir un cierre hecho por error. Si una subcampaña queda en FINALIZADA_PARCIAL y aparece stock nuevo después, se crea una **nueva subcampaña** dentro de la misma campaña. La revisión del 11 de octubre descarta la excepción propuesta y mantiene los requerimientos vigentes (RN-PLA-07; antecedente sustituido en ADR-PLA-06).
 
 ### 2.5. Fase de mantenimiento (segunda dimensión, derivada por fecha)
 
@@ -832,7 +832,7 @@ El catálogo cerrado de roles globales se preserva: `ADMIN | GENERAL | VALIDADOR
 - Polígono obligatorio por subcampaña; GPS validado dentro del polígono (PostGIS como fuente de verdad).
 - Foto + GPS obligatorios en plantación, reposición y mortandad.
 - Activación con stock parcial permitida.
-- No reapertura: si se cerró parcialmente y aparece stock, se crea nueva subcampaña.
+- Sin reapertura: si se cerró parcialmente y aparece stock, se crea nueva subcampaña. ADMIN global tampoco puede volver una cerrada a ACTIVA por cierre erróneo; la excepción propuesta queda fuera del alcance actual.
 - Cancelación de subcampaña sin plantaciones (BORRADOR o ACTIVA sin plantar) → `CANCELADA`; si ya se plantó, el camino es `FINALIZADA_PARCIAL`.
 - Meta agregada de campaña derivada (suma de metas de subcampañas no canceladas, incluye borradores) para planeación; no persistida.
 - Vista pública sin autenticación con drill-down completo.

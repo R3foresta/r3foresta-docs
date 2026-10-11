@@ -1,0 +1,1949 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Action completed."
+    }
+  ],
+  "structuredContent": {
+    "documentId": "1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0",
+    "title": "R3Foresta - Proyecto de Grado",
+    "revisionId": "ANLCKQkDThwuJjp5xYPvx1sJk4zy1MQ0XtWtthXwgGVmFQ5CddLZjw0H5UowKjgo6eZtihLHlU6FVHfLAWtQyi8DfF2FLGFysAIBoaSKG7c",
+    "suggestionsViewMode": "SUGGESTIONS_INLINE",
+    "url": null,
+    "body": null,
+    "tabs": [
+      {
+        "tabId": "t.0",
+        "title": "Tab 1",
+        "parentTabId": null,
+        "index": 0,
+        "nestingLevel": null,
+        "iconEmoji": null,
+        "body": {
+          "content": [
+            {
+              "endIndex": 1,
+              "sectionBreak": {
+                "sectionStyle": {
+                  "columnSeparatorStyle": "NONE",
+                  "contentDirection": "LEFT_TO_RIGHT",
+                  "sectionType": "CONTINUOUS"
+                }
+              }
+            },
+            {
+              "startIndex": 1,
+              "endIndex": 33,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 1,
+                    "endIndex": 32,
+                    "textRun": {
+                      "content": "UNIVERSIDAD MAYOR DE SAN ANDRÉS",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 15,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 32,
+                    "endIndex": 33,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 33,
+              "endIndex": 72,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 33,
+                    "endIndex": 71,
+                    "textRun": {
+                      "content": "FACULTAD DE CIENCIAS PURAS Y NATURALES",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 13,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 71,
+                    "endIndex": 72,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 72,
+              "endIndex": 95,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 72,
+                    "endIndex": 94,
+                    "textRun": {
+                      "content": "CARRERA DE INFORMÁTICA",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 13,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 94,
+                    "endIndex": 95,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "spaceBelow": {
+                    "magnitude": 5,
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 95,
+              "endIndex": 98,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 95,
+                    "endIndex": 96,
+                    "inlineObjectElement": {
+                      "inlineObjectId": "kix.yh2ib4esmz4l",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 96,
+                    "endIndex": 97,
+                    "textRun": {
+                      "content": " ",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 97,
+                    "endIndex": 98,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 13,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "spaceBelow": {
+                    "magnitude": 4,
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 98,
+              "endIndex": 116,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 98,
+                    "endIndex": 116,
+                    "textRun": {
+                      "content": "PROYECTO DE GRADO\n",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 13,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "spaceBelow": {
+                    "magnitude": 8,
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 116,
+              "endIndex": 148,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 116,
+                    "endIndex": 147,
+                    "textRun": {
+                      "content": "INCORPORADO AL PLAN DE ESTUDIOS",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 13,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 147,
+                    "endIndex": 148,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 13,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "spaceBelow": {
+                    "magnitude": 8,
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 148,
+              "endIndex": 266,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 148,
+                    "endIndex": 265,
+                    "textRun": {
+                      "content": "SISTEMA DE TRAZABILIDAD DEL MATERIAL VEGETAL PARA REFORESTACIÓN CON PROYECCIÓN HACIA BONOS DE CARBONO: CASO R3FORESTA",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 14,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 265,
+                    "endIndex": 266,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "spaceBelow": {
+                    "magnitude": 3,
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 266,
+              "endIndex": 338,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 266,
+                    "endIndex": 337,
+                    "textRun": {
+                      "content": "Proyecto de Grado para obtener el Título de Licenciatura en Informática",
+                      "textStyle": {
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 337,
+                    "endIndex": 338,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 338,
+              "endIndex": 382,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 338,
+                    "endIndex": 382,
+                    "textRun": {
+                      "content": "Mención Ingeniería de Sistemas Informáticos\n",
+                      "textStyle": {
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "spaceBelow": {
+                    "magnitude": 14,
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 382,
+              "endIndex": 415,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 382,
+                    "endIndex": 387,
+                    "textRun": {
+                      "content": "POR: ",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 387,
+                    "endIndex": 414,
+                    "textRun": {
+                      "content": "PABLO ANDRES FERNANDEZ CARI",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 414,
+                    "endIndex": 415,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "spaceBelow": {
+                    "magnitude": 4,
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 415,
+              "endIndex": 453,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 415,
+                    "endIndex": 422,
+                    "textRun": {
+                      "content": "TUTORA:",
+                      "textStyle": {
+                        "bold": true,
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 422,
+                    "endIndex": 452,
+                    "textRun": {
+                      "content": " Ph. D. MARISOL TÉLLEZ RAMÍREZ",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 452,
+                    "endIndex": 453,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {}
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "spaceBelow": {
+                    "magnitude": 18,
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 453,
+              "endIndex": 470,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 453,
+                    "endIndex": 469,
+                    "textRun": {
+                      "content": "LA PAZ – BOLIVIA",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 469,
+                    "endIndex": 470,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 470,
+              "endIndex": 487,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 470,
+                    "endIndex": 480,
+                    "textRun": {
+                      "content": "Septiembre",
+                      "textStyle": {}
+                    }
+                  },
+                  {
+                    "startIndex": 480,
+                    "endIndex": 486,
+                    "textRun": {
+                      "content": ", 2026",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "startIndex": 486,
+                    "endIndex": 487,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {
+                        "fontSize": {
+                          "magnitude": 12,
+                          "unit": "PT"
+                        },
+                        "weightedFontFamily": {
+                          "fontFamily": "Times New Roman",
+                          "weight": 400
+                        }
+                      }
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "CENTER",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spacingMode": "NEVER_COLLAPSE",
+                  "indentFirstLine": {
+                    "unit": "PT"
+                  }
+                }
+              }
+            },
+            {
+              "startIndex": 487,
+              "endIndex": 488,
+              "paragraph": {
+                "elements": [
+                  {
+                    "startIndex": 487,
+                    "endIndex": 488,
+                    "textRun": {
+                      "content": "\n",
+                      "textStyle": {}
+                    }
+                  }
+                ],
+                "paragraphStyle": {
+                  "namedStyleType": "NORMAL_TEXT",
+                  "alignment": "JUSTIFIED",
+                  "lineSpacing": 150,
+                  "direction": "LEFT_TO_RIGHT",
+                  "spaceAbove": {
+                    "unit": "PT"
+                  },
+                  "spaceBelow": {
+                    "unit": "PT"
+                  },
+                  "indentFirstLine": {
+                    "magnitude": 36,
+                    "unit": "PT"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "headers": {
+          "kix.l23d5bz2f2v8": {
+            "headerId": "kix.l23d5bz2f2v8",
+            "content": [
+              {
+                "endIndex": 2,
+                "paragraph": {
+                  "elements": [
+                    {
+                      "endIndex": 1,
+                      "autoText": {
+                        "type": "PAGE_NUMBER",
+                        "textStyle": {}
+                      }
+                    },
+                    {
+                      "startIndex": 1,
+                      "endIndex": 2,
+                      "textRun": {
+                        "content": "\n",
+                        "textStyle": {}
+                      }
+                    }
+                  ],
+                  "paragraphStyle": {
+                    "namedStyleType": "NORMAL_TEXT",
+                    "alignment": "END",
+                    "direction": "LEFT_TO_RIGHT"
+                  }
+                }
+              }
+            ]
+          },
+          "kix.bsu8xga6rdiq": {
+            "headerId": "kix.bsu8xga6rdiq",
+            "content": [
+              {
+                "endIndex": 1,
+                "paragraph": {
+                  "elements": [
+                    {
+                      "endIndex": 1,
+                      "textRun": {
+                        "content": "\n",
+                        "textStyle": {}
+                      }
+                    }
+                  ],
+                  "paragraphStyle": {
+                    "namedStyleType": "NORMAL_TEXT",
+                    "direction": "LEFT_TO_RIGHT"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "footers": {
+          "kix.17vgdsexzxcf": {
+            "footerId": "kix.17vgdsexzxcf",
+            "content": [
+              {
+                "endIndex": 1,
+                "paragraph": {
+                  "elements": [
+                    {
+                      "endIndex": 1,
+                      "textRun": {
+                        "content": "\n",
+                        "textStyle": {
+                          "fontSize": {
+                            "magnitude": 12,
+                            "unit": "PT"
+                          },
+                          "weightedFontFamily": {
+                            "fontFamily": "Times New Roman",
+                            "weight": 400
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "paragraphStyle": {
+                    "namedStyleType": "NORMAL_TEXT",
+                    "alignment": "END",
+                    "lineSpacing": 100,
+                    "direction": "LEFT_TO_RIGHT",
+                    "spaceAbove": {
+                      "unit": "PT"
+                    },
+                    "spaceBelow": {
+                      "unit": "PT"
+                    },
+                    "indentFirstLine": {
+                      "unit": "PT"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "kix.ueignir95zny": {
+            "footerId": "kix.ueignir95zny",
+            "content": [
+              {
+                "endIndex": 1,
+                "paragraph": {
+                  "elements": [
+                    {
+                      "endIndex": 1,
+                      "textRun": {
+                        "content": "\n",
+                        "textStyle": {}
+                      }
+                    }
+                  ],
+                  "paragraphStyle": {
+                    "namedStyleType": "NORMAL_TEXT",
+                    "direction": "LEFT_TO_RIGHT"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "footnotes": null,
+        "documentStyle": {
+          "background": {
+            "color": {}
+          },
+          "defaultHeaderId": "kix.l23d5bz2f2v8",
+          "defaultFooterId": "kix.17vgdsexzxcf",
+          "firstPageHeaderId": "kix.bsu8xga6rdiq",
+          "firstPageFooterId": "kix.ueignir95zny",
+          "useFirstPageHeaderFooter": true,
+          "pageNumberStart": 1,
+          "marginTop": {
+            "magnitude": 85.04,
+            "unit": "PT"
+          },
+          "marginBottom": {
+            "magnitude": 85.04,
+            "unit": "PT"
+          },
+          "marginRight": {
+            "magnitude": 85.04,
+            "unit": "PT"
+          },
+          "marginLeft": {
+            "magnitude": 113.39,
+            "unit": "PT"
+          },
+          "pageSize": {
+            "height": {
+              "magnitude": 792,
+              "unit": "PT"
+            },
+            "width": {
+              "magnitude": 612,
+              "unit": "PT"
+            }
+          },
+          "marginHeader": {
+            "magnitude": 42.52,
+            "unit": "PT"
+          },
+          "marginFooter": {
+            "magnitude": 42.52,
+            "unit": "PT"
+          },
+          "useCustomHeaderFooterMargins": true,
+          "documentFormat": {
+            "documentMode": "PAGES"
+          }
+        },
+        "suggestedDocumentStyleChanges": null,
+        "namedStyles": {
+          "styles": [
+            {
+              "namedStyleType": "NORMAL_TEXT",
+              "textStyle": {
+                "bold": false,
+                "italic": false,
+                "underline": false,
+                "strikethrough": false,
+                "smallCaps": false,
+                "backgroundColor": {},
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {}
+                  }
+                },
+                "fontSize": {
+                  "magnitude": 12,
+                  "unit": "PT"
+                },
+                "weightedFontFamily": {
+                  "fontFamily": "Times New Roman",
+                  "weight": 400
+                },
+                "baselineOffset": "NONE"
+              },
+              "paragraphStyle": {
+                "namedStyleType": "NORMAL_TEXT",
+                "alignment": "START",
+                "lineSpacing": 200,
+                "direction": "LEFT_TO_RIGHT",
+                "spacingMode": "COLLAPSE_LISTS",
+                "spaceAbove": {
+                  "unit": "PT"
+                },
+                "spaceBelow": {
+                  "unit": "PT"
+                },
+                "borderBetween": {
+                  "color": {},
+                  "width": {
+                    "unit": "PT"
+                  },
+                  "padding": {
+                    "unit": "PT"
+                  },
+                  "dashStyle": "SOLID"
+                },
+                "borderTop": {
+                  "color": {},
+                  "width": {
+                    "unit": "PT"
+                  },
+                  "padding": {
+                    "unit": "PT"
+                  },
+                  "dashStyle": "SOLID"
+                },
+                "borderBottom": {
+                  "color": {},
+                  "width": {
+                    "unit": "PT"
+                  },
+                  "padding": {
+                    "unit": "PT"
+                  },
+                  "dashStyle": "SOLID"
+                },
+                "borderLeft": {
+                  "color": {},
+                  "width": {
+                    "unit": "PT"
+                  },
+                  "padding": {
+                    "unit": "PT"
+                  },
+                  "dashStyle": "SOLID"
+                },
+                "borderRight": {
+                  "color": {},
+                  "width": {
+                    "unit": "PT"
+                  },
+                  "padding": {
+                    "unit": "PT"
+                  },
+                  "dashStyle": "SOLID"
+                },
+                "indentFirstLine": {
+                  "magnitude": 36,
+                  "unit": "PT"
+                },
+                "indentStart": {
+                  "unit": "PT"
+                },
+                "indentEnd": {
+                  "unit": "PT"
+                },
+                "keepLinesTogether": false,
+                "keepWithNext": false,
+                "avoidWidowAndOrphan": true,
+                "shading": {
+                  "backgroundColor": {}
+                },
+                "pageBreakBefore": false
+              }
+            },
+            {
+              "namedStyleType": "HEADING_1",
+              "textStyle": {
+                "bold": true
+              },
+              "paragraphStyle": {
+                "headingId": "h.hrik4x4u9q1r",
+                "namedStyleType": "HEADING_1",
+                "direction": "LEFT_TO_RIGHT",
+                "spaceAbove": {
+                  "magnitude": 18,
+                  "unit": "PT"
+                },
+                "indentFirstLine": {
+                  "unit": "PT"
+                },
+                "keepLinesTogether": true,
+                "keepWithNext": true
+              }
+            },
+            {
+              "namedStyleType": "HEADING_2",
+              "textStyle": {
+                "bold": true
+              },
+              "paragraphStyle": {
+                "headingId": "h.kjdn1v81i492",
+                "namedStyleType": "HEADING_2",
+                "direction": "LEFT_TO_RIGHT",
+                "spaceAbove": {
+                  "magnitude": 12,
+                  "unit": "PT"
+                },
+                "indentFirstLine": {
+                  "unit": "PT"
+                },
+                "keepLinesTogether": true,
+                "keepWithNext": true
+              }
+            },
+            {
+              "namedStyleType": "HEADING_3",
+              "textStyle": {
+                "bold": true
+              },
+              "paragraphStyle": {
+                "headingId": "h.tt7ubehwqv6c",
+                "namedStyleType": "HEADING_3",
+                "direction": "LEFT_TO_RIGHT",
+                "spaceAbove": {
+                  "magnitude": 6,
+                  "unit": "PT"
+                },
+                "indentFirstLine": {
+                  "unit": "PT"
+                },
+                "keepLinesTogether": true,
+                "keepWithNext": true
+              }
+            },
+            {
+              "namedStyleType": "HEADING_4",
+              "textStyle": {
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.4,
+                      "green": 0.4,
+                      "blue": 0.4
+                    }
+                  }
+                },
+                "fontSize": {
+                  "magnitude": 12,
+                  "unit": "PT"
+                }
+              },
+              "paragraphStyle": {
+                "namedStyleType": "NORMAL_TEXT",
+                "direction": "LEFT_TO_RIGHT",
+                "spaceAbove": {
+                  "magnitude": 14,
+                  "unit": "PT"
+                },
+                "spaceBelow": {
+                  "magnitude": 4,
+                  "unit": "PT"
+                },
+                "keepLinesTogether": true,
+                "keepWithNext": true,
+                "pageBreakBefore": false
+              }
+            },
+            {
+              "namedStyleType": "HEADING_5",
+              "textStyle": {
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.4,
+                      "green": 0.4,
+                      "blue": 0.4
+                    }
+                  }
+                },
+                "fontSize": {
+                  "magnitude": 11,
+                  "unit": "PT"
+                }
+              },
+              "paragraphStyle": {
+                "namedStyleType": "NORMAL_TEXT",
+                "direction": "LEFT_TO_RIGHT",
+                "spaceAbove": {
+                  "magnitude": 12,
+                  "unit": "PT"
+                },
+                "spaceBelow": {
+                  "magnitude": 4,
+                  "unit": "PT"
+                },
+                "keepLinesTogether": true,
+                "keepWithNext": true,
+                "pageBreakBefore": false
+              }
+            },
+            {
+              "namedStyleType": "HEADING_6",
+              "textStyle": {
+                "italic": true,
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.4,
+                      "green": 0.4,
+                      "blue": 0.4
+                    }
+                  }
+                },
+                "fontSize": {
+                  "magnitude": 11,
+                  "unit": "PT"
+                }
+              },
+              "paragraphStyle": {
+                "namedStyleType": "NORMAL_TEXT",
+                "direction": "LEFT_TO_RIGHT",
+                "spaceAbove": {
+                  "magnitude": 12,
+                  "unit": "PT"
+                },
+                "spaceBelow": {
+                  "magnitude": 4,
+                  "unit": "PT"
+                },
+                "keepLinesTogether": true,
+                "keepWithNext": true,
+                "pageBreakBefore": false
+              }
+            },
+            {
+              "namedStyleType": "TITLE",
+              "textStyle": {
+                "fontSize": {
+                  "magnitude": 26,
+                  "unit": "PT"
+                }
+              },
+              "paragraphStyle": {
+                "namedStyleType": "NORMAL_TEXT",
+                "direction": "LEFT_TO_RIGHT",
+                "spaceAbove": {
+                  "unit": "PT"
+                },
+                "spaceBelow": {
+                  "magnitude": 3,
+                  "unit": "PT"
+                },
+                "keepLinesTogether": true,
+                "keepWithNext": true,
+                "pageBreakBefore": false
+              }
+            },
+            {
+              "namedStyleType": "SUBTITLE",
+              "textStyle": {
+                "italic": false,
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.4,
+                      "green": 0.4,
+                      "blue": 0.4
+                    }
+                  }
+                },
+                "fontSize": {
+                  "magnitude": 15,
+                  "unit": "PT"
+                },
+                "weightedFontFamily": {
+                  "fontFamily": "Arial",
+                  "weight": 400
+                }
+              },
+              "paragraphStyle": {
+                "namedStyleType": "NORMAL_TEXT",
+                "direction": "LEFT_TO_RIGHT",
+                "spaceAbove": {
+                  "unit": "PT"
+                },
+                "spaceBelow": {
+                  "magnitude": 16,
+                  "unit": "PT"
+                },
+                "keepLinesTogether": true,
+                "keepWithNext": true,
+                "pageBreakBefore": false
+              }
+            }
+          ]
+        },
+        "suggestedNamedStylesChanges": null,
+        "lists": {
+          "kix.6rabtfenf91x": {
+            "listProperties": {
+              "nestingLevels": [
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%0",
+                  "indentFirstLine": {
+                    "magnitude": 18,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 36,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%1",
+                  "indentFirstLine": {
+                    "magnitude": 54,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 72,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%2",
+                  "indentFirstLine": {
+                    "magnitude": 90,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 108,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%3",
+                  "indentFirstLine": {
+                    "magnitude": 126,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 144,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%4",
+                  "indentFirstLine": {
+                    "magnitude": 162,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 180,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%5",
+                  "indentFirstLine": {
+                    "magnitude": 198,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 216,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%6",
+                  "indentFirstLine": {
+                    "magnitude": 234,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 252,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%7",
+                  "indentFirstLine": {
+                    "magnitude": 270,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 288,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%8",
+                  "indentFirstLine": {
+                    "magnitude": 306,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 324,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                }
+              ]
+            }
+          },
+          "kix.hkf3rd7ws9ly": {
+            "listProperties": {
+              "nestingLevels": [
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%0",
+                  "indentFirstLine": {
+                    "magnitude": 18,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 36,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%1",
+                  "indentFirstLine": {
+                    "magnitude": 54,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 72,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%2",
+                  "indentFirstLine": {
+                    "magnitude": 90,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 108,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%3",
+                  "indentFirstLine": {
+                    "magnitude": 126,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 144,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%4",
+                  "indentFirstLine": {
+                    "magnitude": 162,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 180,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%5",
+                  "indentFirstLine": {
+                    "magnitude": 198,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 216,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%6",
+                  "indentFirstLine": {
+                    "magnitude": 234,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 252,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%7",
+                  "indentFirstLine": {
+                    "magnitude": 270,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 288,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%8",
+                  "indentFirstLine": {
+                    "magnitude": 306,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 324,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                }
+              ]
+            }
+          },
+          "kix.nys5qeyidz8r": {
+            "listProperties": {
+              "nestingLevels": [
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%0",
+                  "indentFirstLine": {
+                    "magnitude": 18,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 36,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%1",
+                  "indentFirstLine": {
+                    "magnitude": 54,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 72,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%2",
+                  "indentFirstLine": {
+                    "magnitude": 90,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 108,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%3",
+                  "indentFirstLine": {
+                    "magnitude": 126,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 144,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%4",
+                  "indentFirstLine": {
+                    "magnitude": 162,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 180,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%5",
+                  "indentFirstLine": {
+                    "magnitude": 198,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 216,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%6",
+                  "indentFirstLine": {
+                    "magnitude": 234,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 252,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%7",
+                  "indentFirstLine": {
+                    "magnitude": 270,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 288,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%8",
+                  "indentFirstLine": {
+                    "magnitude": 306,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 324,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                }
+              ]
+            }
+          },
+          "kix.p2sem7ifv6va": {
+            "listProperties": {
+              "nestingLevels": [
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%0",
+                  "indentFirstLine": {
+                    "magnitude": 18,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 36,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%1",
+                  "indentFirstLine": {
+                    "magnitude": 54,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 72,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%2",
+                  "indentFirstLine": {
+                    "magnitude": 90,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 108,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%3",
+                  "indentFirstLine": {
+                    "magnitude": 126,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 144,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%4",
+                  "indentFirstLine": {
+                    "magnitude": 162,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 180,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%5",
+                  "indentFirstLine": {
+                    "magnitude": 198,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 216,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%6",
+                  "indentFirstLine": {
+                    "magnitude": 234,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 252,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%7",
+                  "indentFirstLine": {
+                    "magnitude": 270,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 288,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                },
+                {
+                  "bulletAlignment": "START",
+                  "glyphSymbol": "-",
+                  "glyphFormat": "%8",
+                  "indentFirstLine": {
+                    "magnitude": 306,
+                    "unit": "PT"
+                  },
+                  "indentStart": {
+                    "magnitude": 324,
+                    "unit": "PT"
+                  },
+                  "textStyle": {
+                    "underline": false
+                  },
+                  "startNumber": 1
+                }
+              ]
+            }
+          }
+        },
+        "namedRanges": null,
+        "inlineObjects": {
+          "kix.yh2ib4esmz4l": {
+            "objectId": "kix.yh2ib4esmz4l",
+            "inlineObjectProperties": {
+              "embeddedObject": {
+                "imageProperties": {
+                  "contentUri": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXeGtLSY3tHZGRvx2Utj7Iz_i9pW6PJ1SYpBeMBH5k21LQ7lWYk0PniGZlBIRq4KlHTeOgsMhsnLo24FJ041H_VaTGhmzk5X8vVgJMKNMlK9gn0Q2WeoomhPnIr90ermPmGAW8khrcO925MQNxeVmHXlO1OtgzHuza_eoogAC-fxaDWe9yY=s2048?key=BBBR8FhPk9xE79VAXkRSRQ",
+                  "cropProperties": {}
+                },
+                "embeddedObjectBorder": {
+                  "color": {
+                    "color": {
+                      "rgbColor": {}
+                    }
+                  },
+                  "width": {
+                    "unit": "PT"
+                  },
+                  "dashStyle": "SOLID",
+                  "propertyState": "NOT_RENDERED"
+                },
+                "size": {
+                  "height": {
+                    "magnitude": 230.5373595505618,
+                    "unit": "PT"
+                  },
+                  "width": {
+                    "magnitude": 129.45000000000002,
+                    "unit": "PT"
+                  }
+                },
+                "marginTop": {
+                  "unit": "PT"
+                },
+                "marginBottom": {
+                  "unit": "PT"
+                },
+                "marginRight": {
+                  "magnitude": 9,
+                  "unit": "PT"
+                },
+                "marginLeft": {
+                  "magnitude": 9,
+                  "unit": "PT"
+                }
+              }
+            }
+          }
+        },
+        "positionedObjects": null,
+        "documentId": "1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0",
+        "document_url": "https://docs.google.com/document/d/1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0"
+      }
+    ],
+    "document_url": "https://docs.google.com/document/d/1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0"
+  },
+  "isError": false
+}

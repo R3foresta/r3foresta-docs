@@ -138,6 +138,22 @@ Para el registro inicial del piloto se permite un punto fuera del polígono cons
 
 PA-DI07 permanece abierta: el usuario no ha elegido casos/campos de corrección. La revisión de PA-S00 no aprueba íntegramente PA-S01–04 ni acredita implementación, pruebas o preparación de campo. Evidencia y propuestas de roles con fuentes: [revisión del 11 de octubre](../specs/plantacion/participacion-aliada/revision-humana-2026-10-11.md).
 
+### Revisión de PA-S03 en llamada — 11 de octubre de 2026
+
+El usuario elige preparar las asignaciones de acceso desde `BORRADOR` y confirma expresamente que en ese estado se puede designar un administrador. ADMIN global conserva la primera designación; el administrador contextual puede preparar plantadores dentro de su ámbito. Registrar una plantación inicial sigue requiriendo `ACTIVA`. El acuerdo permite preparar acceso antes de activar, sin añadir una nueva condición de activación ni equiparar al administrador contextual con el COORDINADOR legado. El mecanismo técnico y la transición siguen pendientes; los acuerdos posteriores cierran la matriz de producto en los demás estados.
+
+Tras revisar un ejemplo de habilitar a una persona en varias subcampañas, el usuario confirma **todo-o-nada** para los cambios masivos de acceso. Si una validación o ejecución falla, se rechaza el comando completo sin aplicar cambios en ningún ámbito seleccionado y se conservan los permisos previos. El acuerdo se refiere a permisos de la persona, no a editar datos de las subcampañas. El mecanismo transaccional, repetición y recuperación de resultados siguen pendientes de diseño y verificación.
+
+El usuario exige reemplazo previo antes de la baja administrativa de la cuenta del último administrador contextual, en cada subcampaña afectada. El reemplazo debe tener cuenta activa y permiso vigente; sin él se rechaza la baja. La autoridad global de R3Foresta no sustituye al administrador contextual designado.
+
+El usuario confirma registro inicial directo por ADMIN global en cualquier subcampaña ACTIVA, sin asignación contextual adicional y con las mismas validaciones de PA-S01. Retirar un permiso contextual no retira ese rol global. Mecanismos verificables y correspondencia interna siguen pendientes; esta facultad no aprueba reapertura ni correcciones adicionales.
+
+La búsqueda de cuentas registradas será por nombre y por correo exacto, ambas aceptadas por el usuario. Resultados con nombre y afiliación declarada opcional; correo usado para buscar sin devolver listados de contactos. No exige afiliación compartida. Contratos técnicos pendientes.
+
+El usuario confirma para el MVP nuevos plantadores solo en BORRADOR/ACTIVA. En COMPLETADA/FINALIZADA_PARCIAL/CANCELADA permite retiros según autoridad y reemplazo central de administradores, protegiendo al último. Cerrar conserva a las personas y sus asignaciones; mantiene las facultades internas de mantenimiento que correspondan y no concede una nueva operación por título contextual. RF-PLA-12 conserva la gestión del equipo interno para mantenimiento en cerradas. La reapertura queda descartada conforme a ADR-PLA-06.
+
+El usuario acepta conservar coordinación/logística existente y separar permisos de participación por persona/subcampaña, autoriza preparar contratos y cierra la primera versión funcional/orquestación de PA-S03 para posterior backend, frontend y diseño. La [propuesta de contratos](../specs/plantacion/participacion-aliada/03-gestion-acceso-subcampania/contratos.md) está preparada; persistencia, rutas, concurrencia, correspondencia y detalles de recuperación se revisan antes de construir la parte afectada. Este cierre no acredita implementación ni aprobación automática de migraciones.
+
 ### Consecuencias y limites de implementacion
 
 **Confirmaciones adicionales del 11 de octubre:** el usuario acepta ADMIN global como autoridad central de R3Foresta, sin confundirlo con administración contextual ni aprobar por ello todos los contratos de PA-DI03. Confirma que el stock disponible no es público; los indicadores públicos de plantación, faltantes para meta, reposición y bajas se distinguen del stock y entre sí. «Ver más» queda como propuesta de presentación progresiva, nunca como permiso para revelar stock. Confirma que las organizaciones de la campaña y las afiliaciones opcionales de los participantes son relaciones distintas: pueden coexistir varias organizaciones y personas de afiliaciones diversas, sin atribuir todo el grupo a una sola ni heredar afiliación desde la campaña. Confirma excluir contactos, perfiles completos y metadatos de fotos de la publicación; mostrar GPS del registro no autoriza publicar EXIF u otros metadatos del archivo. Los contratos de entrega de imágenes deben cumplir esa exclusión. Las fórmulas y la representación histórica/actual de afiliación siguen por precisar en PA-S02.
@@ -250,3 +266,36 @@ Las dos tareas de implementación quedan cerradas documentalmente según el cód
 - [Servicio local de plan](../../Backend-r3foresta/src/subcampanias/application/subcampanias-plan.service.ts) y [política local de edición](../../Backend-r3foresta/src/subcampanias/domain/policies/edicion-por-estado.policy.ts).
 - [062 — revisión atómica](../../Backend-r3foresta/migrations/062_subcampania_revision_plan_atomica.sql) y [063 — lectura mediante backend](../../Backend-r3foresta/migrations/063_subcampania_plan_lectura_backend.sql).
 - [Contrato API de planes](../../Backend-r3foresta/documentacion/frontend/modulos/subcampanias.md#get-subcampaniasidplan) y [guía de verificación 062–063](../../Backend-r3foresta/documentacion/tareas/verificacion-supabase-plan-062-063.md).
+
+## ADR-PLA-06 — Reapertura excepcional por cierre erroneo
+
+Fecha: 2026-10-11
+
+**Estado:** propuesta previa sustituida y retirada del alcance actual por el usuario, tras revisar requerimientos el 11 de octubre de 2026. No hay diseño ni implementación de reapertura autorizados dentro de PA-S03.
+
+### Contexto
+
+El usuario identifica el cierre hecho por error como motivo principal para reabrir una subcampaña. La regla vigente no admite reapertura y el servicio de cierre guarda fechas explícitas, cambia a mantenimiento y conserva stock sobrante. Que las fechas sean flexibles no habilita por sí mismo una transición de estado.
+
+### Decision vigente tras la revisión de requerimientos
+
+Se mantiene el cierre definitivo: `COMPLETADA`, `FINALIZADA_PARCIAL` y `CANCELADA` no vuelven a `ACTIVA`, incluido el cierre erróneo solicitado por ADMIN global. El usuario confirma conservar el comportamiento construido y avanzar con las mejoras de acceso ya acordadas. Se mantienen RF-PLA-07/08/11 y RN-PLA-06/07, las fechas del cierre, el mantenimiento permitido y las reglas físicas de stock. No se modifica el JSON de requerimientos ni el backend para añadir reapertura.
+
+La meta es orientativa y el cierre es manual: mientras siga `ACTIVA`, la subcampaña puede superar la meta y continuar con stock válido de especies del plan. Para continuar una subcampaña cerrada parcialmente, RF-PLA-08 prevé crear otra dentro de la misma campaña. Conviene comunicar la consecuencia definitiva antes de confirmar el cierre; no se cambia el ciclo de vida mediante permisos.
+
+### Propuesta previa sustituida — sin vigencia
+
+1. Solo ADMIN global de R3Foresta puede corregir un cierre erróneo reabriendo una subcampaña `COMPLETADA` o `FINALIZADA_PARCIAL` a `ACTIVA`.
+2. La operación requiere motivo e historial de quién la ejecutó, cuándo y cuál fue el estado anterior/nuevo. Conservar la información del cierre corregido; no borrar su trazabilidad.
+3. Se conservan plantaciones, reposiciones, mortandades, evidencia, asignaciones y movimientos físicos de stock. Reabrir no deshace trabajo físico ni crea devolución, entrega o consumo automático.
+4. Ajustar el tratamiento de fechas de cierre/fin de mantenimiento y fase vigente requiere un diseño previo. También deben resolverse registros posteriores, concurrencia y repetición del comando.
+5. El administrador contextual y el COORDINADOR no reciben esta facultad. Gestionar permisos o editar el plan no ejecuta la reapertura; una nueva plantación sigue sus validaciones normales en ACTIVA.
+6. `CANCELADA` queda fuera de esta excepción. La reapertura ordinaria por ampliación de plantaciones se revisará posteriormente; no queda aprobada aquí.
+
+### Consecuencias y limites
+
+RN-PLA-07 conserva la ausencia de reapertura sin excepción activa. Se retira PA-T13-CIERRE-REV del trabajo pendiente y los escenarios CA19/20 conservan restricciones de estado existentes. La propuesta previa queda aquí como antecedente, no como permiso o contrato futuro aprobado. No se ejecuta SQL ni se alteran hechos reales. Los casos de corrección de REGISTRO_PLANTACION en PA-S04/PA-DI07 siguen pendientes de revisión; no reciben una capacidad de reapertura.
+
+La revisión posterior confirma retiros y reemplazo central protegido en cerradas/canceladas, sin nuevas altas de plantadores contextuales. Cerrar mantiene las personas/asignaciones. RF-PLA-12 conserva gestión del equipo interno en COMPLETADA/FINALIZADA_PARCIAL para mantenimiento; el permiso contextual no sustituye esa capacidad ni habilita plantar fuera de ACTIVA. Desarrollo vigente en PA-S03 y ADR-PLA-03.
+
+**Evidencia:** el usuario aceptó inicialmente la excepción y luego pidió contrastarla con los requerimientos. Tras conocer el conflicto, la descartó del alcance actual y confirmó mantener el cierre definitivo y avanzar con acceso. Ver [decisión vigente en el acta](../specs/plantacion/participacion-aliada/revision-humana-2026-10-11.md#cierre-definitivo--decisión-vigente-tras-revisar-requerimientos).

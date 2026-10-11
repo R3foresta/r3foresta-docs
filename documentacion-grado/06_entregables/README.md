@@ -5,6 +5,8 @@ Esta carpeta separa los dos documentos que se presentan durante el proceso de ti
 - [`perfil/PERFIL_PROYECTO_GRADO.md`](perfil/PERFIL_PROYECTO_GRADO.md) — perfil oficial cerrado; el Markdown es su única fuente canónica en el repositorio.
 - [`proyecto_grado/01_capitulo_marco_introductorio.md`](proyecto_grado/01_capitulo_marco_introductorio.md) — primera versión del Capítulo I.
 - [`proyecto_grado/02_capitulo_marco_teorico_conceptual.md`](proyecto_grado/02_capitulo_marco_teorico_conceptual.md) — estructura y desarrollo inicial del Capítulo II, incluidas las bases de RUP, SDD y asistencia de IA.
+- [`proyecto_grado/03_capitulo_marco_aplicativo.md`](proyecto_grado/03_capitulo_marco_aplicativo.md) — análisis, diseño, implementación, verificación y evaluación del recorrido trazable.
+- [`proyecto_grado/04_referencias_bibliograficas.md`](proyecto_grado/04_referencias_bibliograficas.md) — bibliografía única consolidada del documento final; no se duplica en los capítulos.
 
 El Markdown es la fuente de contenido. El postulante transfiere la versión cerrada al **Google Docs existente en Drive** para su presentación. El DOCX local legado fue eliminado y no se utilizará un proceso basado en `.tmp` como intermediario.
 

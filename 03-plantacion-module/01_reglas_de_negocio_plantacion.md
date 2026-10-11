@@ -87,9 +87,11 @@ Campos tecnicos o de auditoria (`updated_at`, `updated_by`, `metadata_blockchain
 
 Estados: `BORRADOR`, `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`, `CANCELADA`. Reservado sin flujo en MVP: `PAUSADA`. Transiciones permitidas: `BORRADOR → ACTIVA` (al activar), `ACTIVA → COMPLETADA` (manual por ADMIN; alcanzar la meta no cierra), `ACTIVA → FINALIZADA_PARCIAL` (manual por ADMIN, con motivo obligatorio), y `BORRADOR → CANCELADA` / `ACTIVA → CANCELADA` (cancelacion, solo si no hay ninguna `PLANTACION_INICIAL` registrada; ver `RN-PLA-37`).
 
-### RN-PLA-07 - No hay reapertura de subcampaña
+### RN-PLA-07 - Sin reapertura
 
-Si una subcampaña queda `FINALIZADA_PARCIAL` y aparece stock nuevo despues, se crea una nueva subcampaña dentro de la misma campaña; la subcampaña cerrada no se reabre.
+No se admite volver de `COMPLETADA`, `FINALIZADA_PARCIAL` o `CANCELADA` a `ACTIVA`, tampoco por ADMIN global ni por cierre hecho por error. Si una subcampaña queda `FINALIZADA_PARCIAL` y aparece stock nuevo despues, se crea una nueva subcampaña dentro de la misma campaña. Las cerradas conservan las operaciones de mantenimiento permitidas; `CANCELADA` conserva RN-PLA-37.
+
+La revisión del 11 de octubre de 2026 descarta la propuesta de reapertura excepcional del alcance actual para seguir los requerimientos y las transiciones existentes. ADR-PLA-06 conserva el acuerdo previo como antecedente sustituido, sin tarea activa de implementación.
 
 ### RN-PLA-08 - Validaciones para activar
 
@@ -151,7 +153,7 @@ Cada `planta_id` aparece una sola vez por subcampaña. Al activar: `SUM(porcenta
 
 ### RN-PLA-17 - Edicion del plan segun estado
 
-Solo `ADMIN` puede editar la meta total y el plan de especies en `BORRADOR` o `ACTIVA`. En ACTIVA puede reajustar objetivos y agregar especies del catalogo; ser `COORDINADOR` no concede este permiso. En `COMPLETADA`, `FINALIZADA_PARCIAL` o `CANCELADA` el plan queda congelado, sin reapertura.
+Solo `ADMIN` puede editar la meta total y el plan de especies en `BORRADOR` o `ACTIVA`. En ACTIVA puede reajustar objetivos y agregar especies del catalogo; ser `COORDINADOR` no concede este permiso. En `COMPLETADA`, `FINALIZADA_PARCIAL` o `CANCELADA` el plan queda congelado; editarlo no reabre la subcampaña.
 
 Cada ajuste en ACTIVA mantiene al menos una especie, especies unicas, objetivos positivos, `SUM(porcentaje_objetivo) = 100` y `SUM(cantidad_objetivo) = meta_total_arboles`. Meta total y plan se guardan como una revision coherente, con auditoria de ADMIN, fecha y valores anteriores/nuevos. No se reescriben plantaciones ni se alteran asignaciones/saldos por editar el plan; no se elimina una especie con plantacion inicial registrada o stock inicial asignado disponible.
 

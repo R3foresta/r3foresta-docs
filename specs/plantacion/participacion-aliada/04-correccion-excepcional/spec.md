@@ -55,6 +55,10 @@ No basta resolver solo el caso descriptivo y declarar que todo error ya está cu
 | PA-S04-CA07 | Se consulta el mapa/detalle después de una corrección aplicada. | Se presenta el dato efectivo autorizado y la trazabilidad prevista, sin sumar original y corrección como dos plantaciones. |
 | PA-S04-CA08 | El caso no puede resolverse con el mecanismo del piloto. | Se informa que sigue sin resolver, se escala y no se presenta como dato corregido. Se revisa el impacto en la preparación/continuidad del piloto. |
 
+## Fuera del alcance actual: reapertura de subcampaña
+
+Tras revisar los requerimientos, el usuario descarta la reapertura por cierre erróneo y conserva las transiciones vigentes, también para ADMIN global. [ADR-PLA-06](../../../../decisiones/02_decisiones_plantacion.md#adr-pla-06--reapertura-excepcional-por-cierre-erroneo) registra el acuerdo previo como sustituido; RN-PLA-07 mantiene ausencia de reapertura. No hay comando de reapertura que diseñar en PA-S04. Los casos/campos de corrección de REGISTRO_PLANTACION de PA-DI07 siguen pendientes de revisión y no se amplían con esta discusión.
+
 ## Decisiones y revisión
 
 Cerrar PA-DI07: lista de casos/campos, evidencia requerida, revisión del administrador, mapeo de ejecutor central PA-DI03, efectos por caso, representación original/efectiva, concurrencia/repetición y visibilidad PA-DI05. No se aprueba un editor general, una reversión automática, ni anulación de bajas por administrador.

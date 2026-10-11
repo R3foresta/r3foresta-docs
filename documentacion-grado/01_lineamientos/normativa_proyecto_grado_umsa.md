@@ -56,8 +56,12 @@ Perfil de proyecto (15–30 pág.) aprobado por tutor y Consejo de Carrera → d
 | Margen izquierdo | 4 cm (para encuadernación) |
 | Numeración de páginas | Correlativa, foliada en el extremo inferior derecho |
 | Idioma | Español (obligatorio) |
-| Citación | APA 7ª edición (algunas técnicas admiten ISO 690) |
-| Bibliografía | Al final; solo fuentes efectivamente citadas |
+| Citación | APA 7ª edición (algunas técnicas admiten la norma 690 de la Organización Internacional de Normalización (ISO)) |
+| Bibliografía | Única y consolidada al final del documento completo; solo fuentes efectivamente citadas, en `04_referencias_bibliograficas.md` |
+| Alineación del cuerpo | Texto justificado |
+| Interlineado del cuerpo | 1,5 |
+| Tablas | APA 7: número destacado, título en cursiva, nota cuando corresponda, sin líneas verticales ni cuadriculado completo; solo líneas horizontales principales |
+| Figuras y diagramas | Legibles en PDF; página completa, orientación horizontal o división vertical cuando sea necesario, siempre con título y nota |
 | Extensión del perfil | 20–24 páginas de cuerpo, decisión de trabajo |
 | Extensión del documento final | Se definirá con la tutora en la etapa correspondiente |
 | Ejemplares | 3 impresos para el tribunal + PDF para repositorio |
@@ -74,17 +78,17 @@ Perfil de proyecto (15–30 pág.) aprobado por tutor y Consejo de Carrera → d
 
 ### Cuerpo
 
-> **Estructura operativa confirmada para R3Foresta el 24 de agosto de 2026.** Los modelos generales revisados anteriormente proponían otras distribuciones, pero los precedentes de la Carrera y la decisión actual establecen la siguiente organización inicial:
+> **Estructura operativa actualizada para R3Foresta el 15 de septiembre de 2026.** Los modelos generales revisados anteriormente proponían otras distribuciones, pero los precedentes de la Carrera y la decisión actual establecen la siguiente organización inicial:
 
-- **Introducción independiente** — se redactará al finalizar todos los capítulos
-- **Capítulo I — Marco introductorio** — antecedentes, problema, objetivos, justificación, alcances y metodología de desarrollo
-- **Capítulo II — Marco teórico y conceptual** — conceptos del dominio, RUP, SDD y asistencia de IA
+- **Resumen independiente** — se redactará al finalizar todos los capítulos
+- **Capítulo I — Marco introductorio** — comienza con la Introducción e incluye antecedentes, problema, objetivos, justificación, alcances y metodología de desarrollo; su estructura principal concluye en 1.7, sin una sección 1.8 de organización del documento
+- **Capítulo II — Marco teórico y conceptual** — conceptos del dominio, RUP, SDD, asistencia de IA y un inventario descriptivo de las tecnologías reales utilizadas; la arquitectura y las decisiones de implementación se desarrollan en el Capítulo III
 - **Capítulo III — Marco aplicativo** — análisis, diseño, implementación, integración, verificación, validación y resultados
 - **Conclusiones y Recomendaciones** — después del Capítulo III
 
 ### Sección final
 
-- **Referencias bibliográficas** (APA 7)
+- **Referencias bibliográficas** (APA 7) — una única bibliografía consolidada en `04_referencias_bibliograficas.md`, ubicada después de Conclusiones y Recomendaciones y antes de los anexos
 - **Anexos** — instrumentos, autorizaciones, tablas complementarias, scripts
 
 ## Plantilla de portada
@@ -113,7 +117,7 @@ Perfil de proyecto (15–30 pág.) aprobado por tutor y Consejo de Carrera → d
 
 ## Pendientes por confirmar en la etapa de maquetación o entrega final
 
-- números exactos de fuente e interlineado;
+- número exacto de fuente y otros detalles tipográficos que la tutora o la Carrera determinen; se mantienen texto justificado e interlineado 1,5;
 - requisito vigente de revisión antiplagio;
 - número exacto de ejemplares y tipo de empaste;
 - necesidad de página de calificación o línea de VoBo en la versión presentada.
