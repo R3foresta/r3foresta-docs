@@ -1,5 +1,7 @@
 # Handoff UI — Registrar plantación inicial
 
+> Actualización PA-F01 del 2026-10-13: este handoff conserva el recorrido interno y contrato anterior. Para la adaptación participante, [PA-S01](../specs/plantacion/participacion-aliada/01-registro-plantacion-inicial/spec.md) fija el comportamiento cerrado y el [contrato backend aceptado](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) fija JWT, IDs/DTO/errores, permisos, comando y cargas recuperables. Los headers legados descritos abajo no son el contrato nuevo. Observaciones después de fecha en paso 2, resumen condicional en el tercero; LIFO en servidor sobre stock de esa subcampaña, sin registrar recepción por organización/administradores. Afiliación opcional del catálogo o «Otra», con snapshots históricos. Adaptación y QA pendientes; las APIs nuevas no se acreditan como existentes por este handoff.
+
 > Alcance estricto para adaptar una interfaz de referencia al producto R3foresta.
 > Este documento describe únicamente el registro de **plantación inicial en campo**.
 > No autoriza copiar otros módulos, pantallas o reglas de la aplicación de referencia.

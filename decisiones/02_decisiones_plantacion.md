@@ -114,7 +114,7 @@ La lista de participantes se revisa antes de confirmar y no se edita después de
 
 ### Cierre del encuadre — revisión humana del 8 de octubre de 2026
 
-Tras revisar los acuerdos y aceptar el plan inicial, el usuario autoriza iniciar el trabajo y confirma el cierre de Lifecycle Objectives (LCO) de este incremento. Se autoriza Elaboración: boceto prioritario, contraste técnico de riesgos en paralelo, specs/planes pequeños y cuatro diagramas. Se conserva la evidencia y el balance de revisión en la [ficha LCO, §10](../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md#10-revision-del-encuadre).
+Tras revisar los acuerdos y aceptar el plan inicial, el usuario autoriza iniciar el trabajo y confirma el cierre de Lifecycle Objectives (LCO) de este incremento. Se autoriza Elaboración: boceto prioritario, contraste técnico de riesgos en paralelo, specs/planes pequeños y cuatro diagramas. Se conserva la evidencia y el balance de revisión en la [ficha LCO, §10](../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md#10-revisión-del-encuadre).
 
 Las condiciones aceptadas son resolver los P0 antes de construir el comportamiento afectado, precisar esfuerzo/iteración y verificar preparación antes de campo. La fecha objetivo del 15 de octubre se revisa si faltan condiciones críticas, incluida la corrección excepcional. Este cierre no convierte las propuestas de interfaz o mecanismos técnicos en decisiones aprobadas, no aprueba specs completas ni acredita implementación o cierre del proyecto global.
 
@@ -173,15 +173,43 @@ PA-S00 queda aprobada en comportamiento de producto y lista para preparar boceto
 
 **Estado de PA-S02 tras la revisión del 11 de octubre:** el usuario cerró y aprobó la primera versión del comportamiento descrito, como base para preparar boceto y probar recorridos. Contratos, mecanismos e implementación quedan como trabajo posterior; no se aprueban SQL, integración con datos reales, despliegue ni salida a campo por ese cierre. Evidencia en el [acta](../specs/plantacion/participacion-aliada/revision-humana-2026-10-11.md#revisión-posterior-de-pa-s02-en-llamada).
 
+### Elección del 12 de octubre — registro común de comandos
+
+Para recuperar el mismo intento, el usuario elige una tabla común de comandos reutilizable por plantación, permisos y correcciones. Empezar por plantación, conservando autorización específica y hechos en sus tablas de dominio. Unicidad actor/operación/clave, huella calculada por servidor y resultado durable atómico con los efectos; repetir recupera el resultado sin otro consumo/cambio. Nombre candidato `participacion_comando`. [Diseño explicado](../specs/plantacion/participacion-aliada/diseno-comandos-compartidos.md). PA-DI06 cierra elección del enfoque; esquema/contratos/retención/cargas/bloqueos/pruebas e implementación pendientes.
+
+### Aclaración posterior del 12 de octubre — alta y autoridad global/contextual
+
+El usuario confirma toda cuenta nueva como VOLUNTARIO, definida por backend. Solo ADMIN global asigna/cambia roles internos de R3Foresta (catálogo cerrado ADMIN/GENERAL/VALIDADOR/VOLUNTARIO) mediante operación administrativa separada del perfil. Actualizar el perfil conserva la autoridad legítima; ser plantador o administrador contextual no promueve a GENERAL/ADMIN. Permisos contextuales y su autorización se implementan en backend/DB, con presentación de capacidades en frontend.
+
+ADMIN global conserva acceso a todas las subcampañas actuales y futuras, sin asignación contextual, sujeto a reglas operativas. Aparece una vez en la lista administrativa de miembros como «Administrador · Acceso global», con presencia derivada de su rol: no se crean filas de permiso en cada ámbito, ni participación histórica o COORDINADOR automáticos. Se conserva la protección del último administrador contextual; la presencia global derivada no sustituye su designación. Nuevas cuentas no implican reclasificación masiva de usuarios existentes.
+
+Usuario pide documentar primero. [Acuerdo y casos de aceptación](../specs/plantacion/participacion-aliada/acuerdo-roles-y-permisos-2026-10-12.md); contratos definitivos, SQL, pruebas e implementación pendientes. Este acuerdo no amplía las facultades del administrador contextual ni habilita reapertura.
+
 ### Revisión humana del 12 de octubre de 2026 — correcciones acotadas
 
 Esta revisión sustituye la exclusividad central anterior únicamente para cantidades y participantes. ADMIN global y administrador vigente de la subcampaña pueden corregir esos datos solo en ACTIVA; el administrador contextual nunca actúa en un ámbito ajeno. Observaciones conserva autoridad central. No hay editor general, reapertura ni anulación seguida de otro registro.
 
-Cantidades: sin bajas ni reposiciones, sin cambiar especies, con motivo e historial. Aumentar consume solo la diferencia del saldo elegible de la subcampaña. Reducir exige confirmar error de registro y disponibilidad física de la diferencia; libera consumo hacia las asignaciones trazables, no devuelve plantas al vivero ni modifica la entrega. Cero, duplicados y anulación quedan fuera del ajuste simple. Revalidar estado, autoridad y dependencias al aplicar; cantidad efectiva, consumo e historial deben ser atómicos y no duplicarse por reintentos.
+Cantidades: sin bajas ni reposiciones, sin cambiar especies, con motivo e historial. Aumentar consume solo la diferencia del saldo elegible de la subcampaña. Reducir exige confirmar error de registro y disponibilidad física de la diferencia; libera consumo hacia las asignaciones trazables, no devuelve plantas al vivero ni modifica la entrega. Cero permanece fuera del ajuste simple. La continuación posterior del 12 autoriza reversión de duplicados y eliminación lógica de registros de plantación, baja o reposición hechos por error mediante comandos específicos por ADMIN global o administrador de esa subcampaña. Conservar originales/historial; duplicado deja un registro válido y compensa consumo efectivo hacia la subcampaña, no vivero. Baja errónea revierte mortalidad sin liberar stock; reposición errónea revierte aporte y consumo de REPOSICION. No cascada de hechos dependientes reales ni reapertura; límites de ACTIVA conservados en PA-S04. Revalidar estado, autoridad y dependencias al aplicar; cantidad efectiva, consumo e historial deben ser atómicos y no duplicarse por reintentos.
 
 Participantes: ambos administradores pueden añadir, retirar o restituir personas registradas que participaron realmente, incluso sin habilitación operativa actual, conservando responsable original, cantidades y stock. Guardar listas anterior/nueva, actor, fecha y motivo; mostrar el cambio según audiencia sin publicar contactos ni motivos libres internos. Esto no otorga permisos al participante. La restricción de bajas/reposiciones corresponde al ajuste de cantidades, no se extiende implícitamente a participantes.
 
-Evidencia y pendientes en el [acta de correcciones](../specs/plantacion/participacion-aliada/revision-correcciones-2026-10-12.md) y [PA-S04](../specs/plantacion/participacion-aliada/04-correccion-excepcional/spec.md). Son decisiones funcionales parciales, no aprobación integral de contratos, implementación o piloto.
+Evidencia y pendientes en el [acta de correcciones](../specs/plantacion/participacion-aliada/revision-correcciones-2026-10-12.md) y [PA-S04](../specs/plantacion/participacion-aliada/04-correccion-excepcional/spec.md). Son decisiones funcionales parciales de PA-S04, no aprobación integral de contratos, implementación o piloto. PA-S01 cerrada en comportamiento en la continuación del 12, incluidas observaciones al final del paso 2 y revisión en resumen. [Instrucciones implementables](../specs/plantacion/participacion-aliada/instrucciones-implementacion.md) preparadas para revisión técnica del usuario.
+
+### Reafirmación del 13 de octubre — Impacto público y compartible sin cuenta
+
+El usuario reafirma expresamente que cualquier persona puede consultar y compartir **Impacto sin cuenta, sin haberse registrado y sin login**. La regla comprende el global y enlaces directos a campañas, subcampañas, plantaciones, mapas y fotos públicas elegibles. Un VOLUNTARIO registrado sin asignación en ninguna subcampaña ve la misma proyección pública y el mismo alcance que el visitante anónimo. Afiliación, perfil, pertenencia o permisos no son precondiciones de consulta; iniciar sesión se ofrece para participar, no como barrera para abrir el enlace recibido.
+
+Cuenta y autoridad se exigen para registrar/gestionar y pedir datos privados. La API y las pantallas públicas de Impacto se exceptúan del guard JWT y de redirecciones a login; una sesión vencida o fallo de capacidades no debe bloquear el contenido público. Compartir una plantación usa su detalle público, conservando el destino del enlace, no el comprobante privado ni la gestión interna. Se mantienen campos y estados elegibles PA-S02/RN-PLA-34 y el contrato autenticado GET /plan de ADR-PLA-05.
+
+Es una reafirmación de PA-DI08, no una nueva decisión pendiente ni prueba de implementación. Mecanismos/contratos, QA integrado y despliegue siguen por verificar. Evidencia funcional incorporada a [PA-S00-CA23/24](../specs/plantacion/participacion-aliada/00-experiencia-participante/spec.md), [PA-S02-CA23/24](../specs/plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md) y [contrato backend §4.0](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md#40-impacto-es-público-consultar-y-compartir-no-requiere-cuenta).
+
+### Aceptación técnica del 13 de octubre — D01–D12, afiliación opcional y LIFO
+
+Pablo acepta las doce decisiones del [contrato backend](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md#12-decisiones-técnicas-aceptadas-por-pablo--13-de-octubre-de-2026). D02 permite escoger una organización registrada, «Otra» con nombre libre o ninguna: afiliación opcional, declarada y sin permisos implícitos. D08 congela el nombre y origen/ID de procedencia en el hecho; cambios de perfil/nombre/actividad del catálogo no reconstruyen historia.
+
+D07 establece LIFO en servidor para inicial (`fecha_asignacion DESC, id DESC`) del stock elegible ya disponible de la misma subcampaña. Sustituye la orientación FIFO anterior para ese recorrido; el código legado observado aún requiere adaptación. No incorpora recepción/acuse por la organización encargada o administradores; la entrega física Vivero → subcampaña sigue siendo la asignación existente y plantar solo aumenta consumo M3, sin segundo débito de Vivero ni cambio de cantidad entregada. Locks por ID ASC y fecha conciliada se verifican por separado del reparto LIFO.
+
+La revisión técnica está cerrada; catálogo, manifest concreto de transición, implementación, pruebas y despliegue siguen pendientes. Próximo punto PA-T-INT02-A. [Acta del 13](../specs/plantacion/participacion-aliada/revision-tecnica-2026-10-13.md).
 
 ### Caso ilustrativo
 

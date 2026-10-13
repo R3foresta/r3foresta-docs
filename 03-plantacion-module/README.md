@@ -14,9 +14,15 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 * `03_Mockups_Guia_Modulo_3_Plantacion.md`: guía UX.
 * `04_plan_frontend_m3.md`: plan operativo de implementación frontend por fases, pantallas, contratos de datos y criterios de cierre.
 * [Revisión de cierre de metas/especies](07_revision_meta_especies_cierre.md): evidencia local frontend/backend, límites y verificación restante del 2026-10-10.
-* [`PA-F01 — Participación aliada en Plantación`](../specs/plantacion/participacion-aliada/README.md): elaboración del incremento MVP, specs, plan, boceto y diagramas; requiere revisión humana propia por spec.
+* [`PA-F01 — Participación aliada en Plantación`](../specs/plantacion/participacion-aliada/README.md): specs, acuerdos vigentes y tareas del incremento; PA-S00/01/02/03 aprobadas en comportamiento y D01–D12 del contrato backend aceptadas el 13 de octubre. PA-S04 conserva contratos/cierre integral propios pendientes; implementación y QA separados.
 
 **Nota estructural:** el contrato de integración M2↔M3 (asignaciones físicas, devoluciones físicas, consumo de stock asignado y saldos derivados) **no vive aquí**: su fuente canónica es [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md). `01_reglas_de_negocio_plantacion.md` referencia ese contrato, no lo duplica.
+
+## Incremento PA-F01 — diseño aceptado el 13 de octubre
+
+El [contrato backend](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) y [acta técnica](../specs/plantacion/participacion-aliada/revision-tecnica-2026-10-13.md) concretan identidad, alta VOLUNTARIO, roles/permisos, comandos y evidencias. Afiliación opcional del catálogo o «Otra», con snapshots históricos. La plantación inicial consume LIFO en servidor del stock elegible que ya tiene la subcampaña; no añade recepción por organización/administrador ni otro débito de Vivero. Impacto global/detalles/mapas/fotos públicas elegibles sigue compartible sin cuenta/login.
+
+Las descripciones del registro interno existente conservan su evidencia y fechas; los nuevos permisos, LIFO y recuperación de comandos requieren adaptación/verificación. Siguiente entrega PA-T-INT02-A; el avance aplicado se registra en [ESTADO.md](../ESTADO.md), sin atribuir el incremento nuevo al cierre anterior del registro interno.
 
 ## Dependencias
 

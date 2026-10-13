@@ -1,5 +1,7 @@
 # Plan frontend - Modulo 3 Plantacion
 
+> Incremento PA-F01, diseño aceptado el 2026-10-13: [índice de acuerdos y tareas](../specs/plantacion/participacion-aliada/README.md) y [contrato backend aceptado](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md). Reutilizar el formulario interno, adaptar los tres pasos aprobados, observaciones/resumen, capacidades y comando recuperable; backend distribuye LIFO del stock disponible de subcampaña. Perfil con afiliación opcional del catálogo o «Otra»; Impacto público compartible sin login. Las fases internas siguientes conservan su evidencia histórica; no acreditan esas adaptaciones del incremento como implementadas.
+
 > Documento operativo para planificar implementacion frontend. No reemplaza reglas de negocio ni contrato backend. La fuente canonica sigue en `01_reglas_de_negocio_plantacion.md`, `02_Procesos_Modulo_3_Plantacion.md` y `../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`.
 >
 > Actualizado contra el frontend real de `pwa-r3foresta` y contrastado contra backend `Backend-r3foresta` el 2026-07-23.
