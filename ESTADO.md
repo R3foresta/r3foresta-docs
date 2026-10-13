@@ -161,3 +161,20 @@ las subcampañas ya soft-deleted no deben bloquear el soft-delete de Campaña.
 Fuentes: [revisión de cierre](03-plantacion-module/07_revision_meta_especies_cierre.md), [evidencia backend](../Backend-r3foresta/documentacion/tareas/subcampanias-revision-plan-atomica.md) y [auditoría frontend](../pwa-r3foresta/FRONTEND_AUDIT.md). Las confirmaciones de aplicación de migraciones provienen del [chat de implementación backend](codex://threads/01a12288-904e-7061-8dd0-2b80f916a157), ya conservadas en la revisión documental previa.
 
 La implementación local se distingue de publicar los últimos ajustes frontend y comprobar el flujo real en un entorno objetivo: acceso autenticado, ADMIN 50/40 → 50/60, conservación física, especie nueva antes de asignación/plantación, retirada protegida, revisiones concurrentes y cierre con la meta vigente. No se realizan escrituras de prueba en Supabase compartido por esta revisión.
+
+
+## Participación aliada PA-F01 — estado documental del 13 de octubre de 2026
+
+El cierre anterior del registro interno, contexto y logística M2↔M3 no acredita el incremento participante. [Índice y tareas vigentes](specs/plantacion/participacion-aliada/README.md).
+
+| Pieza | Estado acreditado | Pendiente de ejecución/verificación |
+|---|---|---|
+| PA-S00/01/02/03 | Comportamiento aprobado; PA-S01 cerrada integralmente el 12, incluidas observaciones/revisión/confirmación. | Adaptación e integración del incremento. |
+| PA-S04 | Alcance de correcciones, duplicados y eliminación lógica de registros erróneos confirmado; administrador contextual de esa subcampaña o ADMIN global según caso. | Cierre integral de casos especiales, contratos de efectos e implementación/verificación. |
+| Contraste de contratos actuales | Lectura de backend/DTO/SQL/consumidores frontend completada el 12. | Catálogo del entorno destino y garantías de ejecución reales. |
+| Inventario de endpoints y regresión | Segunda lectura estática del 13 completada; matriz de facultades, pruebas propuestas y plantilla de transición preparadas. | Ejecutar suites y completar/revisar manifest real; no convertir usuarios por la plantilla. |
+| Contrato backend, D01–D12 | Diseño aceptado por Pablo el 13, con afiliación opcional del catálogo o «Otra» y LIFO del stock de subcampaña sin recepción adicional. [Acta técnica](specs/plantacion/participacion-aliada/revision-tecnica-2026-10-13.md). | Cotejo catálogo, migraciones nuevas, código y pruebas; aceptación no equivale a aplicación. |
+| Comandos compartidos e identidad/permisos | Enfoque y diseño aceptados; guard, alta VOLUNTARIO/perfil seguro, roles separados, permiso/versiones, cargas/recuperación definidos. | PA-T-INT02-A como siguiente entrega, luego permisos/registro/gestión según contrato. |
+| Backend/frontend del incremento, SQL y piloto | Esta alineación documental no aporta evidencia nueva de implementación, migraciones aplicadas, pruebas ejecutadas o despliegue. | Registrar versión, entorno, resultados y habilitación humana de campo cuando se ejecuten. |
+
+Fuentes de diseño: [contrato backend aceptado](specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md), [specs y acuerdos](specs/plantacion/participacion-aliada/README.md), [revisión de contratos](specs/plantacion/participacion-aliada/revision-contratos-2026-10-12.md) e [inventario](specs/plantacion/participacion-aliada/inventario-endpoints-y-regresion-participacion.md). Los textos FIFO de verificaciones/implementaciones anteriores conservan su evidencia; el objetivo del incremento inicial es LIFO aceptado, pendiente de adaptación.

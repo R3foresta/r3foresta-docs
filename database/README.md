@@ -16,3 +16,9 @@ Las decisiones de arquitectura de BD cerradas para vivero se migraron al registr
 ## Aclaración importante
 
 `migrations/` es referencia documental para revisar el orden y contenido de cambios de BD. El estado real de cada migracion aplicada en producción debe confirmarse en los repos de implementación o en [`../ESTADO.md`](../ESTADO.md).
+
+## Diseño de datos de participación aliada
+
+D01–D12 del [contrato backend PA-F01](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) están aceptadas como diseño el 13 de octubre de 2026: permisos separados de coordinación/logística, revisiones e historial, comandos/cargas recuperables y snapshots de afiliación opcional del catálogo o «Otra». El esquema existente y las migraciones históricas siguen describiendo su base; nuevas tablas/columnas/índices/privilegios se cotejan con el catálogo destino y se incorporan por migraciones nuevas.
+
+No actualizar el ER como si esas estructuras ya estuvieran aplicadas. La autoridad de diseño futuro es el contrato aceptado y su [acta](../specs/plantacion/participacion-aliada/revision-tecnica-2026-10-13.md); evidencia de ensayo/aplicación y entorno corresponde a [ESTADO.md](../ESTADO.md). Contratos específicos de compensación de PA-S04 conservan su revisión propia.
