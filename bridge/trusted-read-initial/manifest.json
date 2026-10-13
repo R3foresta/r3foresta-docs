@@ -1,0 +1,59 @@
+{
+  "bridgeVersion": "3.6",
+  "kind": "google-docs-trusted-read",
+  "status": "complete",
+  "outputDir": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/bridge/trusted-read-initial",
+  "target": {
+    "documentId": "1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0",
+    "title": "R3Foresta - Proyecto de Grado",
+    "revisionId": "ANLCKQkDThwuJjp5xYPvx1sJk4zy1MQ0XtWtthXwgGVmFQ5CddLZjw0H5UowKjgo6eZtihLHlU6FVHfLAWtQyi8DfF2FLGFysAIBoaSKG7c",
+    "documentUrl": "https://docs.google.com/document/d/1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0",
+    "selectedTabId": null
+  },
+  "dropdownMetadata": {
+    "status": "unavailable",
+    "resolvedTool": null,
+    "authoritative": false,
+    "count": 0
+  },
+  "controlAwareness": {
+    "hasProtectedControls": false,
+    "authoritativeDropdownCount": 0,
+    "opaqueControlCount": 0,
+    "affectedParagraphCount": 0,
+    "nativeElementCounts": {
+      "inlineObjectElement": 1
+    },
+    "preservationRequired": false,
+    "recommendedBehavior": "No protected controls were detected in the scanned scope."
+  },
+  "warnings": [],
+  "files": {
+    "document_result": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/bridge/trusted-read-initial/document-result.json",
+      "bytes": 62131,
+      "sha256": "5991a340ac663b06eb9edf9a6ae550ce0502d067f687d3c3340700f112d55862"
+    },
+    "control_inventory": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/bridge/trusted-read-initial/control-inventory.json",
+      "bytes": 1923,
+      "sha256": "ffde9bcd7cc2a594e7506aa79a923de3e5655fe4123a71a5f5e750171afe0fd0"
+    },
+    "document_outline": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/bridge/trusted-read-initial/document-outline.json",
+      "bytes": 6605,
+      "sha256": "c0f64e8b9fb3f6430f1f93b49ffb6e08a44123518232955537648114d738ff40"
+    },
+    "document_text": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/bridge/trusted-read-initial/document-text.md",
+      "bytes": 1484,
+      "sha256": "d7b147d4157d03b01066882b1eab3db84dbd00ab23472af180b6d95016422268"
+    },
+    "receipt": {
+      "path": "/Users/pabloandresfernandezcari/Projects/R3foresta/r3foresta-docs/bridge/trusted-read-initial/receipt.json",
+      "bytes": 1001,
+      "sha256": "a257bc073327f7ad4213ce371df4098bc9edc87da0e11e7d1e675740dabec72d"
+    }
+  },
+  "error": null
+}

@@ -1,6 +1,6 @@
 # Documentación universitaria de grado — R3Foresta
 
-> **Estado al 25 de agosto de 2026:** el Perfil se encuentra en revisión final y adopta RUP adaptado, complementado con Spec-Driven Development asistido por IA. La ejecución académica abarca del 6 de julio al 15 de noviembre de 2026; el Perfil y las versiones activas de los capítulos I y II ya incorporan esta decisión.
+> **Estado al 2 de septiembre de 2026:** el Perfil quedó cerrado. Adopta RUP adaptado, complementado con Spec-Driven Development asistido por IA. La ejecución académica abarca del 6 de julio al 15 de noviembre de 2026; los capítulos I y II y el Proyecto de Grado continúan en sus tableros propios.
 
 Espacio de trabajo para producir los dos resultados académicos del proyecto de grado de la UMSA, Carrera de Informática — mención Ingeniería de Sistemas:
 
@@ -18,6 +18,10 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 - [`03_investigacion/ficha_institucional_r3foresta.md`](03_investigacion/ficha_institucional_r3foresta.md) — misión y visión oficiales, identidad del modelo, relación entre R3Carbon y R3foresta App, antecedentes, aspectos preliminares del diagnóstico y evidencia institucional pendiente.
 - [`05_recursos/indice_fuentes_bibliograficas.md`](05_recursos/indice_fuentes_bibliograficas.md) — acceso temático a las fuentes del perfil y del futuro marco teórico.
 - [`06_entregables/proyecto_grado/README.md`](06_entregables/proyecto_grado/README.md) — espacio reservado y guía inicial para el documento final.
+- [`06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md`](06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) — Marco aplicativo; la sección 3.1 desarrolla el análisis correspondiente al objetivo específico 1.
+- [`06_entregables/proyecto_grado/04_referencias_bibliograficas.md`](06_entregables/proyecto_grado/04_referencias_bibliograficas.md) — bibliografía única del documento final.
+- [`03_investigacion/matriz_citas_referencias_documento_final.md`](03_investigacion/matriz_citas_referencias_documento_final.md) — control interno de correspondencia entre las citas de los capítulos y la bibliografía final.
+- [`03_investigacion/inventario_evidencia_fotografica_2026-07-22.md`](03_investigacion/inventario_evidencia_fotografica_2026-07-22.md) — inventario y límites de uso de las fotografías de Chasquipampa.
 
 ## Organización
 
@@ -29,6 +33,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 | [`04_metodologia/`](04_metodologia/) | Metodología de desarrollo | RUP adaptado, SDD asistido por IA y antecedentes metodológicos superados. |
 | [`05_recursos/`](05_recursos/) | Recursos transversales | Glosario, convenciones terminológicas e índice bibliográfico. |
 | [`06_entregables/`](06_entregables/) | Documentos que se presentan | Perfil oficial y futuro Proyecto de Grado. |
+| [`07_imagenes/`](07_imagenes/) | Evidencia visual | Fotografías originales vinculadas con el análisis y con los resultados del Proyecto de Grado. |
 
 La numeración expresa el flujo de trabajo académico: primero se fijan los lineamientos; después se planifica, investiga y define la metodología; finalmente esos insumos alimentan los entregables.
 
@@ -43,7 +48,7 @@ La numeración expresa el flujo de trabajo académico: primero se fijan los line
 
 Modalidad elegida: **Defensa de Proyecto de Grado**.
 
-**Portada vigente:** título seleccionado por el postulante y pendiente de ratificación por la tutora, postulante, tutora, modalidad, lugar y fecha. En esta versión no se incluye línea de VoBo; cualquier requisito adicional de firma se incorporará únicamente si la tutora o la Comisión de Grado lo solicita.
+**Portada vigente:** título cerrado, postulante, tutora, modalidad, lugar y fecha. En esta versión no se incluye línea de VoBo; cualquier requisito adicional de firma se incorporará únicamente si la tutora o la Comisión de Grado lo solicita.
 
 ### Estructura vigente del Perfil
 
@@ -68,8 +73,8 @@ El archivo Markdown es la fuente canónica y la única versión editable del Per
 
 ### Estructura del Proyecto final (a la que apunta el perfil)
 
-- **Introducción independiente** — se redactará al finalizar todos los capítulos.
-- **Cap. 1 — Marco introductorio** (antecedentes, problema, objetivos, justificación, alcances y metodología de desarrollo).
+- **Resumen independiente** — se redactará al finalizar todos los capítulos.
+- **Cap. 1 — Marco introductorio** (Introducción, antecedentes, problema, objetivos, justificación, alcances y metodología de desarrollo).
 - **Cap. 2 — Marco teórico y conceptual** (dominio, RUP, SDD y asistencia de IA).
 - **Cap. 3 — Marco aplicativo** (análisis, diseño, implementación, integración, verificación, validación, aceptación y resultados).
 - **Conclusiones y Recomendaciones.**

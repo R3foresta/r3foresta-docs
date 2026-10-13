@@ -1,6 +1,6 @@
 # Módulo 3 — Plantación (Concreción del objetivo: reforestar, arborizar, forestar)
 
-> Actualización documental 2026-10-10: [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin) ya está implementada en el backend local: revisión atómica de meta/especies por ADMIN en BORRADOR o ACTIVA, con versión, auditoría y JWT en GET/PUT /plan. El usuario confirmó aplicación hasta 062 y posteriormente de 063 en Supabase; la integración frontend y el despliegue verificado siguen pendientes ([ESTADO.md](../ESTADO.md)). Metas orientativas y cierre manual de ADR-PLA-04 siguen vigentes. No acredita el nuevo modelo de permisos de participación aliada.
+> Actualización documental 2026-10-10: [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin) ya está implementada en el backend local: revisión atómica de meta/especies por ADMIN en BORRADOR o ACTIVA, con versión, auditoría y JWT en GET/PUT /plan. El usuario confirmó aplicación hasta 062 y posteriormente de 063 en Supabase; el frontend también está implementado localmente; el QA integrado y el despliegue verificado siguen pendientes ([ESTADO.md](../ESTADO.md)). Metas orientativas y cierre manual de ADR-PLA-04 siguen vigentes. No acredita el nuevo modelo de permisos de participación aliada.
 
 
 ## 1. Propósito
@@ -94,7 +94,7 @@ Transiciones permitidas en MVP:
 - `ACTIVA → FINALIZADA_PARCIAL` (manual por admin, requiere motivo)
 - `BORRADOR → CANCELADA` y `ACTIVA → CANCELADA` (cancelación por admin, solo si no hay plantaciones iniciales; ver §3.12)
 
-No hay reapertura: si una subcampaña queda en FINALIZADA_PARCIAL y aparece stock nuevo después, se crea una **nueva subcampaña** dentro de la misma campaña, no se reabre la anterior.
+No hay reapertura, tampoco por ADMIN global para corregir un cierre hecho por error. Si una subcampaña queda en FINALIZADA_PARCIAL y aparece stock nuevo después, se crea una **nueva subcampaña** dentro de la misma campaña. La revisión del 11 de octubre descarta la excepción propuesta y mantiene los requerimientos vigentes (RN-PLA-07; antecedente sustituido en ADR-PLA-06).
 
 ### 2.5. Fase de mantenimiento (segunda dimensión, derivada por fecha)
 
@@ -202,7 +202,7 @@ Reglas:
 - Para activar, la subcampaña debe tener al menos una especie planificada.
 - Al activar, `SUM(porcentaje_objetivo) = 100` y `SUM(cantidad_objetivo) = meta_total_arboles`.
 - Cada `planta_id` aparece una sola vez por subcampaña.
-- Solo ADMIN edita el plan y la meta total en `BORRADOR` o `ACTIVA`; puede reajustar objetivos y agregar especies. El coordinador no tiene ese permiso. La revisión atómica en ACTIVA está implementada en el backend local; integración frontend y despliegue verificado pendientes (ADR-PLA-05).
+- Solo ADMIN edita el plan y la meta total en `BORRADOR` o `ACTIVA`; puede reajustar objetivos y agregar especies. El coordinador no tiene ese permiso. La revisión atómica en ACTIVA está implementada en el backend local; frontend implementado localmente; QA integrado y despliegue verificado pendientes (ADR-PLA-05).
 - En `COMPLETADA` o `FINALIZADA_PARCIAL`, el plan queda congelado.
 - Una `PLANTACION_INICIAL` solo puede registrar especies del plan, pero puede superar `cantidad_objetivo` y la meta total, dentro del stock asignado disponible. Plantar no modifica automaticamente las metas. Los ajustes explicitos de ADMIN conservan auditoria; los indicadores utilizan el plan vigente.
 
@@ -216,7 +216,7 @@ ADMIN revisa y guarda meta total y plan por especie coherentes: al menos una esp
 
 El ajuste no cambia cantidades ya plantadas ni stock: no crea entregas, consumos o devoluciones. No se elimina del plan una especie con plantación inicial registrada o stock inicial disponible. Ajustar el objetivo no cierra ni reabre la subcampaña. Ejemplo: con meta 40, 50 plantados y estado ACTIVA, ADMIN puede revisar la meta a 60 y ajustar el plan; siguen 50 plantados y la disponibilidad física conserva su saldo real.
 
-**Backend implementado:** [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin), migración 062. Frontend y despliegue verificado pendientes; aplicación de 062/063 confirmada por el usuario, sin inspección remota en esta actualización.
+**Backend implementado:** [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin), migración 062. Frontend implementado localmente; QA integrado y despliegue verificado pendientes; aplicación de 062/063 confirmada por el usuario, sin inspección remota en esta actualización.
 
 Recorrido del editor:
 
@@ -710,7 +710,7 @@ Regla de control:
 
 `cantidad_a_consumir_de_asignacion <= saldo_asignado_disponible_antes_del_consumo`
 
-La meta por especie es orientativa y el progreso puede superar 100%. El sistema bloquea especies fuera del plan y consumo superior al stock asignado disponible. Solo ADMIN puede editar el plan o la meta total en BORRADOR o ACTIVA, incluyendo agregar especies (ADR-PLA-05; backend local implementado, integración frontend/despliegue pendientes). Ejemplo: objetivo 40 y stock 50 permiten plantar 50 o 40 + 10 mientras siga ACTIVA; 51 sin más stock se rechaza.
+La meta por especie es orientativa y el progreso puede superar 100%. El sistema bloquea especies fuera del plan y consumo superior al stock asignado disponible. Solo ADMIN puede editar el plan o la meta total en BORRADOR o ACTIVA, incluyendo agregar especies (ADR-PLA-05; backend local implementado, frontend implementado localmente; QA integrado/despliegue pendientes). Ejemplo: objetivo 40 y stock 50 permiten plantar 50 o 40 + 10 mientras siga ACTIVA; 51 sin más stock se rechaza.
 
 ### 8.4. Conservación del saldo vivo por grupo
 
@@ -786,7 +786,7 @@ Ver `RN-VIV-47..61` en [`../90-contratos-integracion/02_contrato_vivero_a_planta
 
 ## 11. Vista pública (transparencia)
 
-La vista de transparencia prevista para subcampañas activas, completadas y finalizadas parciales es **pública sin autenticación**. Esta vista no convierte `GET /api/subcampanias/:id/plan` en un endpoint anónimo: esa ruta exige JWT, incluso cuando se consulta una subcampaña activa. La consulta pública prevista comprende:
+La vista de transparencia prevista para subcampañas activas, completadas y finalizadas parciales es **pública sin autenticación**. Los campos públicos de la primera versión están confirmados en PA-S02; contratos e integración siguen pendientes. Esta vista no convierte `GET /api/subcampanias/:id/plan` en un endpoint anónimo: esa ruta exige JWT, incluso cuando se consulta una subcampaña activa. La consulta pública prevista comprende:
 
 - Mapa interactivo con polígonos de subcampañas y pines GPS de plantaciones.
 - Totalizadores: árboles plantados, captura estimada de CO₂, subcampañas activas, comunidades alcanzadas.
@@ -832,7 +832,7 @@ El catálogo cerrado de roles globales se preserva: `ADMIN | GENERAL | VALIDADOR
 - Polígono obligatorio por subcampaña; GPS validado dentro del polígono (PostGIS como fuente de verdad).
 - Foto + GPS obligatorios en plantación, reposición y mortandad.
 - Activación con stock parcial permitida.
-- No reapertura: si se cerró parcialmente y aparece stock, se crea nueva subcampaña.
+- Sin reapertura: si se cerró parcialmente y aparece stock, se crea nueva subcampaña. ADMIN global tampoco puede volver una cerrada a ACTIVA por cierre erróneo; la excepción propuesta queda fuera del alcance actual.
 - Cancelación de subcampaña sin plantaciones (BORRADOR o ACTIVA sin plantar) → `CANCELADA`; si ya se plantó, el camino es `FINALIZADA_PARCIAL`.
 - Meta agregada de campaña derivada (suma de metas de subcampañas no canceladas, incluye borradores) para planeación; no persistida.
 - Vista pública sin autenticación con drill-down completo.
@@ -895,7 +895,7 @@ Definidos formalmente en `database/00_database_schema.md`. Los valores `OTRO` se
 
 ### Futuro
 
-- Excepciones para usar especies que no se hayan incorporado al plan vigente; no implementadas. La edición de meta/especies en ACTIVA por ADMIN está implementada en el backend local; integración frontend y despliegue verificado pendientes (ADR-PLA-05).
+- Excepciones para usar especies que no se hayan incorporado al plan vigente; no implementadas. La edición de meta/especies en ACTIVA por ADMIN está implementada en el backend local; frontend implementado localmente; QA integrado y despliegue verificado pendientes (ADR-PLA-05).
 - Implementar PAUSADA con su flujo (CANCELADA ya está en MVP, limitada a subcampañas sin plantaciones).
 - Correcciones auditadas de mortandad y plantación.
 - Trazabilidad por árbol individual (no solo por lote).

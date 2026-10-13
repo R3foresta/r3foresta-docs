@@ -77,7 +77,7 @@
       ],
       "reglas_adicionales": [
         "En BORRADOR se permite edicion libre y cancelacion (pasa a CANCELADA; el registro se conserva, inactivacion no borrado fisico).",
-        "Solo ADMIN puede editar el plan de especies y la meta total en BORRADOR o ACTIVA. La revisión atómica en ACTIVA está implementada en el backend local (ADR-PLA-05/062); integración frontend y despliegue verificado pendientes.",
+        "Solo ADMIN puede editar el plan de especies y la meta total en BORRADOR o ACTIVA. La revisión atómica en ACTIVA está implementada en el backend local (ADR-PLA-05/062); frontend implementado localmente; QA integrado y despliegue verificado pendientes.",
         "En BORRADOR la subcampaña no acepta asignaciones ni plantaciones; las asignaciones se hacen despues de activar.",
         "Una campaña tiene al menos 1 subcampaña; sin limite superior.",
         "El cierre recibe fecha_fin_mantenimiento explicita; la UI propone 3 anos de mantenimiento, editables.",
@@ -549,7 +549,7 @@
         "subcampania_id obligatorio",
         "planta_id obligatorio por especie planificada",
         "porcentaje_objetivo > 0 y <= 100",
-        "cantidad_objetivo > 0, calculada desde meta_total_arboles y ajustada por redondeo",
+        "cantidad_objetivo entera > 0, calculada desde meta_total_arboles o ajustada manualmente, manteniendo la suma coherente",
         "created_by / updated_by y timestamps de auditoria",
         "plan_revision (versión del conjunto meta total y especies); revision_esperada al guardar",
         "PLAN_REVISADO en SUBCAMPANIA_HISTORIAL: actor, fecha y snapshots metadata.anterior / metadata.nuevo",
@@ -579,7 +579,7 @@
         "Guardar meta total y plan coherentes como una sola revision; auditar ADMIN, fecha y valores anteriores/nuevos sin reescribir registros historicos.",
         "Una especie nueva debe incorporarse al plan antes de recibir asignaciones PLANTACION_INICIAL; agregarla no crea stock.",
         "El progreso se recalcula contra el plan vigente y la meta agregada de campaña se deriva de las metas actualizadas; el estado sigue ACTIVA hasta cierre manual.",
-        "ADR-PLA-05 está implementada en el backend local con 062 y refuerzo JWT/063; integración frontend y despliegue verificado pendientes. Aplicación hasta 062 y posteriormente de 063 confirmada por el usuario; ver ESTADO.md."
+        "ADR-PLA-05 está implementada en el backend local con 062 y refuerzo JWT/063; frontend implementado localmente; QA integrado y despliegue verificado pendientes. Aplicación hasta 062 y posteriormente de 063 confirmada por el usuario; ver ESTADO.md."
       ]
     }
   ]

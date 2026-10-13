@@ -1,0 +1,63 @@
+# PA-F01 — Participación aliada en Plantación
+
+**Actualización:** 11 de octubre de 2026. **Estado:** PA-S00 y primera versión de PA-S02 aprobadas en comportamiento; PA-S03 cerrada en comportamiento y orquestación funcional, con spec/plan/tareas y propuesta de contratos para posterior backend/frontend/diseño. PA-S01/04 siguen en revisión, con decisiones parciales incorporadas. LCO cerrado, Elaboración autorizada. No acredita implementación ni salida a campo.
+
+## Propósito
+
+Una persona abre el enlace y consulta públicamente el impacto sin cuenta ni perfil. Para registrar una plantación necesita autenticarse y estar habilitada en una subcampaña. No necesita conocer Recolección, Vivero o administración interna. Afiliación y organización no conceden permiso.
+
+**Regla de alcance confirmada: dos experiencias, un único modelo de Plantación.** La sección interna existente conserva su estructura, datos y herramientas para administradores y operativos autorizados de R3Foresta. La nueva sección Impacto y participación es reducida y progresiva: resumen global público → campaña → subcampaña → registro. Visitante y plantador comparten esa experiencia; el plantador suma únicamente acciones/contexto autorizados. No se reemplaza ni se simplifica globalmente la gestión interna, no se abre al profundizar en Impacto y no se duplican campañas, registros o stock. Ver [decisión humana](revision-humana-2026-10-11.md#separación-confirmada-de-experiencias).
+
+El usuario pidió desarrollar y organizar las specs; las decisiones técnicas y cada comportamiento detallado siguen su revisión propia.
+
+## Empieza aquí: orden de revisión
+
+| Orden | Spec | Pregunta que vas a resolver | Estado |
+|---|---|---|---|
+| 1 | [PA-S00 — Entrada y experiencia del participante](00-experiencia-participante/spec.md) | ¿Qué encuentra un visitante sin sesión o una persona que quiere plantar? | Aprobada en comportamiento; preparación técnica habilitada, integración pendiente. |
+| 2 | [PA-S02 — Consulta de impacto y registros](02-consulta-impacto-y-registros/spec.md) | ¿Cómo se presentan los campos públicos y qué datos adicionales quedan fuera? | Primera versión de comportamiento aprobada; boceto, contratos e integración posteriores. |
+| 3 | [PA-S03 — Gestión de acceso por subcampaña](03-gestion-acceso-subcampania/spec.md) | ¿Quién habilita a quién, dónde y qué ocurre al retirar acceso? | Primera versión funcional/orquestación cerrada; propuesta de contratos preparada, adaptación e implementación posteriores. |
+| 4 | [PA-S01 — Registro inicial](01-registro-plantacion-inicial/spec.md) | ¿Cómo registra una vez, revisa y confirma que quedó guardado? | Borrador apoyado en formulario existente. |
+| 5 | [PA-S04 — Corrección excepcional](04-correccion-excepcional/spec.md) | ¿Cómo se resuelve un error real después de guardar? | Borrador; mecanismo y verificación antes de campo. |
+
+Los números de carpeta existentes se conservan para no romper IDs o referencias; no son un orden obligatorio de implementación. El backend de permisos es una dependencia temprana del registro aunque la pantalla de gestión llegue después.
+
+## Qué revisar en cada carpeta
+
+- **`spec.md`:** historias de usuario, reglas, estados y ejemplos de aceptación. Primero revisamos si describen lo que debe pasar.
+- **`plan.md`:** cómo se reparte entre UX, frontend, backend y base de datos, qué reutilizar y qué decisión falta antes del código afectado.
+- **`tasks.md`:** entregas pequeñas con dependencias y evidencia de terminación. No se marcan implementadas por haber escrito el documento.
+- **`03-gestion-acceso-subcampania/contratos.md`:** propuesta que conecta UX, solicitudes, validaciones, persistencia y resultados de acceso; incluye ejemplos para revisión técnica antes del código afectado.
+
+Al revisar una spec, registrar nombre del revisor, fecha, criterios aceptados, cambios solicitados y decisiones pendientes. Aprobar el comportamiento permite preparar su implementación cuando el plan técnico correspondiente esté resuelto. No hace falta aprobar todas las specs de una vez; tampoco iniciar código con una dependencia crítica indefinida.
+
+| Spec | Revisión humana de esta versión | Decisiones principales pendientes |
+|---|---|---|
+| PA-S00 | Favorable, usuario, 11 de octubre; [acta](revision-humana-2026-10-11.md). | PA-DI08 cerrada; PA-DI10 confirmada en producto; PA-DI09 orientada, con contratos/migración pendientes. |
+| PA-S02 | Primera versión de producto aprobada por el usuario, 11 de octubre; incluye consulta pública, presentación principal, faltantes por subcampaña, «Mis registros», afiliación histórica y entrada última campaña/global. | PA-DI05: contratos, boceto final, captura histórica/legado, fuentes de seguimiento, evidencia y campos privados adicionales; correcciones según PA-S04. |
+| PA-S03 | Primera versión de comportamiento y orquestación funcional aprobada por el usuario, 11 de octubre: autoridad/ámbito, BORRADOR, todo-o-nada, reemplazo previo, ADMIN global directo, búsqueda mínima y gestión contextual por estado. Cerrar conserva personas/asignaciones; sin reapertura. | Spec, plan, tareas y [propuesta de contratos](03-gestion-acceso-subcampania/contratos.md) preparados para backend/frontend/diseño. PA-DI01/02/03: persistencia, transición, mecanismos y correspondencia interna pendientes técnicos antes de construir la parte afectada. Propuesta UX de repetición/recuperación por revisar. No acredita implementación. |
+| PA-S01 | Revisión integral pendiente; GPS exterior/manual confirmado. | PA-DI04/06: manejo técnico de GPS, fechas/participantes y guardado recuperable. |
+| PA-S04 | Pendiente | PA-DI07: casos, mecanismo y efectos de corrección. |
+
+## Documentos compartidos
+
+- [Revisión humana del 11 de octubre](revision-humana-2026-10-11.md): decisiones confirmadas, propuesta de roles con fuentes y pendientes de corrección.
+- [Plan inicial y siguiente entrega](plan-inicial.md): orden, razones, dependencias y condiciones de campo.
+- [Diseño compartido de frontend, backend y datos](diseno-tecnico-compartido.md): distribución de trabajo, contratos, tablas reutilizadas/candidatas y cómo preparar migraciones.
+- [Plan de reutilización e integración](plan-reutilizacion-integracion.md): evidencia del código existente, archivos concretos, PA-DI01–07 y tareas de integración.
+- [Boceto de registro y resultado](boceto-registro-resultado.md): propuesta de tres pasos con datos simulados; no diseño visual final.
+- [Diagramas](diagramas/README.md): contexto, casos de uso, actividades, modelo conceptual y dependencias. La incorporación de PA-S00 requiere una siguiente alineación de vistas, indicada en su índice.
+
+No se abren carpetas por cada botón ni se duplican specs en «frontend» y «backend». Cada capacidad conserva su resultado completo y su plan explica la división técnica.
+
+## Fuentes y trazabilidad
+
+- [Ficha LCO](../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md)
+- [ADR-PLA-03](../../../decisiones/02_decisiones_plantacion.md#adr-pla-03--autorizacion-operativa-por-persona-y-subcampana-para-participacion-aliada)
+- [Handoff vigente](../../../03-plantacion-module/05_handoff_registro_plantacion_inicial.md)
+- [Reglas de Plantación](../../../03-plantacion-module/01_reglas_de_negocio_plantacion.md)
+- [Contrato Vivero → Plantación](../../../90-contratos-integracion/02_contrato_vivero_a_plantacion.md)
+- [Migración local 053, antecedente](../../../database/migrations/053_m3_registrar_plantacion_sin_despacho.sql); la definición local posterior de registro es 061 en backend, con metas orientativas y cierre explícito según ADR-PLA-04. Plan/meta: ADR-PLA-05 y 062/063.
+- [Diagramas y dependencias de implementación](diagramas/README.md)
+
+La revisión de fuentes locales es contraste documental; no prueba producción ni resuelve los permisos nuevos.

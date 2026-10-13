@@ -1,0 +1,55 @@
+# R3Foresta - Proyecto de Grado
+
+- Document ID: 1yEfOt8mI1f5nr1XVX17FYLLyP-2ndp2OqSvjGW-Cvb0
+- Revision ID: ANLCKQkDThwuJjp5xYPvx1sJk4zy1MQ0XtWtthXwgGVmFQ5CddLZjw0H5UowKjgo6eZtihLHlU6FVHfLAWtQyi8DfF2FLGFysAIBoaSKG7c
+- Selected tab: all
+- Protected controls: 0
+- Opaque controls: 0
+- Authoritative dropdowns: 0
+
+Protected-control annotations are preservation instructions. Do not insert their displayed placeholder text to recreate a native control.
+
+## Tab 1 (t.0)
+
+[P00001 | 1:33 | NORMAL_TEXT]
+UNIVERSIDAD MAYOR DE SAN ANDRÉS
+
+[P00002 | 33:72 | NORMAL_TEXT]
+FACULTAD DE CIENCIAS PURAS Y NATURALES
+
+[P00003 | 72:95 | NORMAL_TEXT]
+CARRERA DE INFORMÁTICA
+
+[P00004 | 95:98 | NORMAL_TEXT]
+[INLINE_OBJECT kix.yh2ib4esmz4l] 
+
+[P00005 | 98:116 | NORMAL_TEXT]
+PROYECTO DE GRADO
+
+[P00006 | 116:148 | NORMAL_TEXT]
+INCORPORADO AL PLAN DE ESTUDIOS
+
+[P00007 | 148:266 | NORMAL_TEXT]
+SISTEMA DE TRAZABILIDAD DEL MATERIAL VEGETAL PARA REFORESTACIÓN CON PROYECCIÓN HACIA BONOS DE CARBONO: CASO R3FORESTA
+
+[P00008 | 266:338 | NORMAL_TEXT]
+Proyecto de Grado para obtener el Título de Licenciatura en Informática
+
+[P00009 | 338:382 | NORMAL_TEXT]
+Mención Ingeniería de Sistemas Informáticos
+
+[P00010 | 382:415 | NORMAL_TEXT]
+POR: PABLO ANDRES FERNANDEZ CARI
+
+[P00011 | 415:453 | NORMAL_TEXT]
+TUTORA: Ph. D. MARISOL TÉLLEZ RAMÍREZ
+
+[P00012 | 453:470 | NORMAL_TEXT]
+LA PAZ – BOLIVIA
+
+[P00013 | 470:487 | NORMAL_TEXT]
+Septiembre, 2026
+
+[P00014 | 487:488 | NORMAL_TEXT]
+⟦EMPTY PARAGRAPH⟧
+

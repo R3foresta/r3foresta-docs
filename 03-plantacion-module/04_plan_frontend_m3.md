@@ -3,7 +3,7 @@
 > Documento operativo para planificar implementacion frontend. No reemplaza reglas de negocio ni contrato backend. La fuente canonica sigue en `01_reglas_de_negocio_plantacion.md`, `02_Procesos_Modulo_3_Plantacion.md` y `../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`.
 >
 > Actualizado contra el frontend real de `pwa-r3foresta` y contrastado contra backend `Backend-r3foresta` el 2026-07-23.
-> Actualización puntual 2026-10-10: contrato backend de planes 062/063 y JWT confirmado localmente; el cierre frontend de ese contrato sigue pendiente. Ver §4.2 y [ESTADO.md](../ESTADO.md).
+> Actualización puntual 2026-10-10: contrato backend de planes 062/063 y JWT confirmado localmente; editor e integración del cliente implementados en el código frontend local. El QA integrado y la publicación de los últimos ajustes frontend siguen pendientes. Ver §4.2 y [ESTADO.md](../ESTADO.md).
 >
 > Documentacion backend revisada:
 > - `/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/documentacion/frontend/api-reference.md`
@@ -157,11 +157,19 @@ Ya existe:
 Pendiente para MVP:
 
 - asegurar que `GET /subcampanias/:id` devuelva siempre `poligono` para eliminar el fallback local;
-- integrar ajuste de plan y meta total solo por ADMIN en BORRADOR o ACTIVA contra el backend local ya implementado (ADR-PLA-05/062); no otorgar ampliación al coordinador ni al administrador contextual;
-- bloquear GET/PUT /plan cuando falte el token y verificar que no salga la solicitud; enviar Bearer JWT, recuperar sesión ante 401 y tratar 403; `x-auth-id` solo es opcional y debe coincidir con la sesión;
-- leer `plan_revision` y enviar `revision_esperada`, meta total y todas las especies juntas; usar PUT /plan, sin PATCH de meta; ante 409 conservar el formulario, volver a leer y conciliar sin reintento automático;
-- verificar estas interacciones y el guardado contra versiones frontend/backend coordinadas antes del cierre; no se acredita la integración frontend por las pruebas del backend;
+- verificar el QA integrado de revisiones contra versiones frontend/backend coordinadas; la implementación local del cliente ya está completada, pero sus tests simulados no acreditan persistencia en el entorno desplegado;
 - conectar desde el detalle las acciones operativas, no solo configuracion.
+
+#### Revision del plan: implementacion frontend local completada (2026-10-10)
+
+- ADMIN global en BORRADOR/ACTIVA dispone de «Editar meta y especies» desde el detalle; coordinador/administrador contextual no obtienen ese permiso.
+- `EditarPlanSubcampania` carga la revisión persistida; `EditarPlanSubcampaniaModal` y el asistente comparten `PlanMetaEspeciesForm`/`usePlanMetaEspeciesForm`. Permite revisar cantidades enteras y porcentajes con hasta dos decimales, comparar actual/propuesta y confirmar.
+- GET/PUT /plan exigen Bearer JWT. Sin token no sale una petición; el cliente omite `x-auth-id`. 401 permite recuperar la sesión con passkey; 403 bloquea edición sin cerrar sesión; 404 informa que no está disponible.
+- PUT envía meta total, especies y `revision_esperada` leída de `plan_revision`. Si el servidor no ofrece versión, no se guarda. El asistente conserva borradores incompletos localmente y ya no usa PATCH de meta seguido de PUT separado.
+- Un 409, error de red/500 o confirmación incompleta conserva la propuesta y exige consultar/revisar antes de otra escritura. No hay reenvío automático. Antes de recuperar sesión se conserva un borrador temporal por propietario/subcampaña, sin token ni versión para reenvío.
+- Tras una confirmación se refrescan detalle, plan e indicadores/contexto; un fallo de refresco no reenvía la escritura confirmada. El progreso numérico puede superar 100%; solo se limita el ancho visual de la barra.
+
+La guía/auditoría frontend reporta 284 pruebas en 19 suites, lint y build aprobados para los últimos ajustes; esta revisión documental no vuelve a ejecutarlos. AUD-015 conserva QA integrado pendiente y AUD-016 el encabezado exterior desactualizado tras un rechazo por cambio de estado. Son verificaciones/hallazgos separados del editor implementado. Ver [revisión de cierre](07_revision_meta_especies_cierre.md).
 
 ### 4.3 Detalle de subcampania
 

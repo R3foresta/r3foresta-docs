@@ -3,7 +3,7 @@
 > Alcance estricto para adaptar una interfaz de referencia al producto R3foresta.
 > Este documento describe únicamente el registro de **plantación inicial en campo**.
 > No autoriza copiar otros módulos, pantallas o reglas de la aplicación de referencia.
-> Nota 2026-10-10: el contrato Bearer JWT de ADR-PLA-05 aplica específicamente a GET/PUT `/subcampanias/:id/plan`; no sustituye automáticamente los headers de contexto/registro descritos aquí. Leer el plan no concede permisos operativos. La revisión de metas en ACTIVA está implementada en backend local; integración frontend/despliegue pendientes en [ESTADO.md](../ESTADO.md).
+> Nota 2026-10-10: el contrato Bearer JWT de ADR-PLA-05 aplica específicamente a GET/PUT `/subcampanias/:id/plan`; no sustituye automáticamente los headers de contexto/registro descritos aquí. Leer el plan no concede permisos operativos. La revisión de metas en ACTIVA está implementada en backend local; frontend implementado localmente; QA integrado/despliegue pendientes en [ESTADO.md](../ESTADO.md).
 
 ## 1. Resultado esperado
 

@@ -37,6 +37,7 @@
   - revisión de la iteración, demostración e integración;
   - defectos, desviaciones y acciones correctivas.
 - [ ] Registrar por iteración `resultado o incremento → planificado → realizado → evidencia → desviación → decisión → riesgo residual → estado del hito`.
+- [x] Crear el registro inicial de avance en [`../04_metodologia/registro_avance_rup_sdd.md`](../04_metodologia/registro_avance_rup_sdd.md), separando evidencia disponible, verificación y aceptación; mantenerlo actualizado en cada cierre.
 - [ ] Registrar horas académicas por fase, iteración, incremento y actividad transversal.
 
 ## 3. Fase de Inicio — iteración IN-1 — 6 al 19 de julio
@@ -189,7 +190,7 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 ## 9. Coherencia documental
 
 - [x] Propagar RUP, SDD asistido por IA, fases, iteraciones, incrementos e hitos al Perfil, Capítulo I y Capítulo II.
-- [ ] Aplicar la misma estructura al Marco aplicativo cuando se redacte el Capítulo III.
+- [x] Aplicar la misma estructura al primer borrador del Marco aplicativo, relacionando objetivos, fases, iteraciones, incrementos, contratos, pruebas y resultados abiertos.
 - [x] Mantener exactamente tres módulos y las integraciones M1→M2 y M2→M3.
 - [x] Mantener trazabilidad, consultas, historial y evidencias como capacidades transversales.
 - [x] Sustituir toda referencia activa a sprint por fase, iteración o incremento, según corresponda.
@@ -197,6 +198,8 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 - [x] Retirar de documentos activos ciencia del diseño, DSRM, estudio de caso único embebido y FEDS.
 - [x] Diferenciar verificación, validación operativa y aceptación.
 - [x] Mantener el límite respecto de carbono y de los componentes tecnológicos excluidos.
+- [x] Incorporar al Marco aplicativo una base de diagramas de casos de uso, actividades, clases, entidad-relación, secuencias críticas y genealogía del material vegetal.
+- [ ] Contrastar los diagramas con usuarios, reglas canónicas, implementación y observaciones de la tutora antes de considerarlos definitivos.
 - [ ] Aplicar los [`criterios editoriales`](../01_lineamientos/criterios_editoriales_proyecto_grado.md) antes de cerrar cada sección.
 
 ## 10. Documento final y defensa

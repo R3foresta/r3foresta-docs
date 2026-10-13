@@ -1,6 +1,6 @@
 # Reglas de Negocio (RN) - Modulo Plantacion (M3)
 
-> Actualización documental 2026-10-10: [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin) ya está implementada en el backend local: revisión atómica de meta/especies por ADMIN en BORRADOR o ACTIVA, con versión, auditoría y JWT en GET/PUT /plan. El usuario confirmó aplicación hasta 062 y posteriormente de 063 en Supabase; la integración frontend y el despliegue verificado siguen pendientes ([ESTADO.md](../ESTADO.md)). Metas orientativas y cierre manual de ADR-PLA-04 siguen vigentes. No acredita el nuevo modelo de permisos de participación aliada.
+> Actualización documental 2026-10-10: [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin) ya está implementada en el backend local: revisión atómica de meta/especies por ADMIN en BORRADOR o ACTIVA, con versión, auditoría y JWT en GET/PUT /plan. El usuario confirmó aplicación hasta 062 y posteriormente de 063 en Supabase; el frontend también está implementado localmente; el QA integrado y el despliegue verificado siguen pendientes ([ESTADO.md](../ESTADO.md)). Metas orientativas y cierre manual de ADR-PLA-04 siguen vigentes. No acredita el nuevo modelo de permisos de participación aliada.
 
 
 ## 1. Proposito
@@ -87,9 +87,11 @@ Campos tecnicos o de auditoria (`updated_at`, `updated_by`, `metadata_blockchain
 
 Estados: `BORRADOR`, `ACTIVA`, `COMPLETADA`, `FINALIZADA_PARCIAL`, `CANCELADA`. Reservado sin flujo en MVP: `PAUSADA`. Transiciones permitidas: `BORRADOR → ACTIVA` (al activar), `ACTIVA → COMPLETADA` (manual por ADMIN; alcanzar la meta no cierra), `ACTIVA → FINALIZADA_PARCIAL` (manual por ADMIN, con motivo obligatorio), y `BORRADOR → CANCELADA` / `ACTIVA → CANCELADA` (cancelacion, solo si no hay ninguna `PLANTACION_INICIAL` registrada; ver `RN-PLA-37`).
 
-### RN-PLA-07 - No hay reapertura de subcampaña
+### RN-PLA-07 - Sin reapertura
 
-Si una subcampaña queda `FINALIZADA_PARCIAL` y aparece stock nuevo despues, se crea una nueva subcampaña dentro de la misma campaña; la subcampaña cerrada no se reabre.
+No se admite volver de `COMPLETADA`, `FINALIZADA_PARCIAL` o `CANCELADA` a `ACTIVA`, tampoco por ADMIN global ni por cierre hecho por error. Si una subcampaña queda `FINALIZADA_PARCIAL` y aparece stock nuevo despues, se crea una nueva subcampaña dentro de la misma campaña. Las cerradas conservan las operaciones de mantenimiento permitidas; `CANCELADA` conserva RN-PLA-37.
+
+La revisión del 11 de octubre de 2026 descarta la propuesta de reapertura excepcional del alcance actual para seguir los requerimientos y las transiciones existentes. ADR-PLA-06 conserva el acuerdo previo como antecedente sustituido, sin tarea activa de implementación.
 
 ### RN-PLA-08 - Validaciones para activar
 
@@ -151,7 +153,7 @@ Cada `planta_id` aparece una sola vez por subcampaña. Al activar: `SUM(porcenta
 
 ### RN-PLA-17 - Edicion del plan segun estado
 
-Solo `ADMIN` puede editar la meta total y el plan de especies en `BORRADOR` o `ACTIVA`. En ACTIVA puede reajustar objetivos y agregar especies del catalogo; ser `COORDINADOR` no concede este permiso. En `COMPLETADA`, `FINALIZADA_PARCIAL` o `CANCELADA` el plan queda congelado, sin reapertura.
+Solo `ADMIN` puede editar la meta total y el plan de especies en `BORRADOR` o `ACTIVA`. En ACTIVA puede reajustar objetivos y agregar especies del catalogo; ser `COORDINADOR` no concede este permiso. En `COMPLETADA`, `FINALIZADA_PARCIAL` o `CANCELADA` el plan queda congelado; editarlo no reabre la subcampaña.
 
 Cada ajuste en ACTIVA mantiene al menos una especie, especies unicas, objetivos positivos, `SUM(porcentaje_objetivo) = 100` y `SUM(cantidad_objetivo) = meta_total_arboles`. Meta total y plan se guardan como una revision coherente, con auditoria de ADMIN, fecha y valores anteriores/nuevos. No se reescriben plantaciones ni se alteran asignaciones/saldos por editar el plan; no se elimina una especie con plantacion inicial registrada o stock inicial asignado disponible.
 
@@ -161,7 +163,7 @@ Todo guardado de plan, también en BORRADOR, exige la misma coherencia. Se incre
 
 La lectura de GET /plan exige JWT válido y usuario existente, para cualquier rol sin membresía de equipo; PUT /plan exige además ADMIN global. Leer el plan no concede permisos para plantar, gestionar equipo ni acceder a stock.
 
-**Estado de implementación:** backend local implementado con 062 y refuerzo JWT/063; integración frontend y despliegue verificado pendientes. Ver ADR-PLA-05 y [ESTADO.md](../ESTADO.md).
+**Estado de implementación:** backend local implementado con 062 y refuerzo JWT/063; frontend implementado localmente; QA integrado y despliegue verificado pendientes. Ver ADR-PLA-05 y [ESTADO.md](../ESTADO.md).
 
 ### RN-PLA-18 - Metas orientativas y especies permitidas en plantacion inicial
 
@@ -239,7 +241,11 @@ Antes de confirmar, el sistema muestra `cantidad_plantada_inicial`, `cantidad_mu
 
 ### RN-PLA-32 - PostGIS es la autoridad para validar GPS
 
-La funcion `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)` es la fuente de verdad para validar que un punto GPS de plantacion, reposicion o mortandad este dentro del poligono de la subcampaña, con tolerancia configurable (default sugerido 50 m). Fuera de tolerancia, se bloquea el registro. Turf.js u otro chequeo de frontend es opcional y solo sirve para feedback de UX, nunca como autoridad de validacion.
+La funcion `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)` es la fuente de verdad para evaluar un punto GPS con tolerancia configurable (default sugerido 50 m). Turf.js u otro chequeo de frontend es opcional y solo sirve para feedback de UX, nunca como autoridad de validacion.
+
+**Registro inicial, aclaración de producto del 11 de octubre de 2026 (ADR-PLA-03):** estar fuera del polígono/tolerancia no bloquea por sí solo el registro del piloto; conservar coordenadas, resultado/distancia y advertencia. Si falla la captura automática se permite indicar un punto manual válido. No se autoriza omitir coordenadas ni declarar una evaluación exitosa inexistente. La RPC local 061 ya permite punto exterior y bloquea evaluación no disponible; validar el contrato y manejo de fallos técnicos antes del piloto. No acredita despliegue ni extiende esta decisión a otros recorridos.
+
+La regla conceptual previa de bloqueo fuera de tolerancia para reposición/mortandad debe contrastarse en sus propios recorridos; esta revisión solo cierra la decisión del registro inicial. No modificar sus contratos por inferencia.
 
 ### RN-PLA-33 - Poligono obligatorio para activar; area es referencial
 
@@ -253,9 +259,13 @@ El poligono de la subcampaña es obligatorio para pasar a `ACTIVA`. El area en h
 
 Toda la informacion de subcampañas `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIAL` es publica sin autenticacion (mapa, totalizadores, detalle de campaña/subcampaña, drill-down a M2 y M1). Las subcampañas en `BORRADOR` no son publicas.
 
+**Incremento PA-F01, confirmación del 11 de octubre:** consulta pública sin cuenta ni perfil, independiente de permisos operativos y afiliación. Su proyección incluye nombres/participantes históricos, fotos de plantación, mapa/GPS/ubicación, fechas, plantación inicial, faltantes para meta, reposiciones, bajas reportadas y organización/comunidad de referencia. «Toda la información» no debe usarse para exponer indiscriminadamente credenciales, contactos, perfiles completos, metadatos de fotos, observaciones libres o contexto operativo interno; los campos de esta experiencia están delimitados en [PA-S02](../specs/plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md). La trazabilidad pública previa M2/M1 no concede operación ni exige incluir sus herramientas en la navegación del participante.
+
 ### RN-PLA-35 - Roles del MVP sin rol global nuevo
 
 El catalogo cerrado de roles globales (`ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`) no se altera. `ADMIN` crea campañas y subcampañas, asigna coordinador inicial, cierra manualmente y gestiona organizaciones. `GENERAL` registra plantaciones, reposiciones y mortandad en las subcampañas donde es miembro del equipo. `VALIDADOR` no tiene flujo especial propio en MVP. `VOLUNTARIO` no puede ser miembro de `SUBCAMPANIA_EQUIPO` ni registrar eventos en este modulo.
+
+El párrafo anterior describe la base legada. **Para PA-F01, ADR-PLA-03 y revisión del 11 de octubre aprueban la orientación VOLUNTARIO + permiso contextual**: sesión y habilitación de plantador/administrador por subcampaña permiten el registro inicial, sin ascender a GENERAL ni abrir Recolección/Vivero. La transición de tablas, restricciones y usuarios está pendiente; no se afirma que VOLUNTARIO ya pueda operar en el código desplegado. Administrador contextual no equivale a ADMIN global ni a COORDINADOR, y no se introduce rol de campaña con herencia.
 
 ---
 

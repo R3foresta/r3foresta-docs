@@ -355,7 +355,7 @@ SUBCAMPANIA_META_ESPECIE {
     bigint subcampania_id FK "NOT NULL - ON DELETE CASCADE"
     bigint planta_id FK "NOT NULL"
     numeric porcentaje_objetivo "NOT NULL > 0 y <= 100"
-    int cantidad_objetivo "NOT NULL > 0 - referencia orientativa calculada desde meta_total_arboles y ajustada por redondeo"
+    int cantidad_objetivo "NOT NULL > 0 - referencia orientativa calculada o ajustada manualmente; suma coherente con meta_total_arboles"
     timestamptz created_at
     timestamptz updated_at
     bigint created_by FK
@@ -366,7 +366,7 @@ SUBCAMPANIA_META_ESPECIE {
 %% ADR-PLA-05/062: ADMIN revisa meta/especies en BORRADOR o ACTIVA mediante fn_subcampania_revisar_plan; valida coherencia en cada guardado.
 %% Comparte lock de SUBCAMPANIA con asignacion/plantacion, comprueba revision_esperada, incrementa plan_revision y escribe PLAN_REVISADO atomicamente. Un fallo de historial revierte todo.
 %% GET/PUT /plan requieren JWT: cualquier usuario autenticado lee; solo ADMIN escribe. Tras 063 ambas RPC son ejecutables solo por service_role; claves privadas solo en backend.
-%% La lectura del plan no concede permisos de equipo/stock/plantacion. Integracion frontend y verificacion remota pendientes en ESTADO.md.
+%% La lectura del plan no concede permisos de equipo/stock/plantacion. Frontend implementado localmente; QA integrado y verificacion remota pendientes en ESTADO.md.
 %% Inicial exige especies del plan vigente pero puede superar objetivos con stock asignado; no cierra automaticamente.
 %% Migraciones 060-063 viven en Backend-r3foresta. Aplicacion hasta 062 y de 063 confirmada por el usuario; los scripts historicos no prueban despliegue ni verificacion remota.
 

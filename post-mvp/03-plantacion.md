@@ -98,6 +98,6 @@ La ventana vigente de backend para fecha de plantacion es de 10 dias y es sufici
 
 ## PMVP-PLA-07 — Edicion del plan y meta en ACTIVA (reclasificada)
 
-**Estado 2026-10-10:** capacidad del alcance actual, exclusivamente por ADMIN, implementada en el backend local (062, auditoría y versión; JWT y permisos 063). Integración frontend y despliegue verificado pendientes. Aplicación hasta 062 y posteriormente de 063 confirmada por el usuario; ver ESTADO.md. Ya no queda como idea para evaluación futura. Ver [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin).
+**Estado 2026-10-10:** capacidad del alcance actual, exclusivamente por ADMIN, implementada en el backend local (062, auditoría y versión; JWT y permisos 063). Frontend implementado localmente; QA integrado y despliegue verificado pendientes. Aplicación hasta 062 y posteriormente de 063 confirmada por el usuario; ver ESTADO.md. Ya no queda como idea para evaluación futura. Ver [ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin).
 
 El backend local permite BORRADOR o ACTIVA mediante PUT /plan, con revisión atómica y rechazo de versiones obsoletas. La planificación vigente permite reajustar meta total/objetivos y agregar especies mientras ACTIVA, conservando coherencia, historial y saldos reales. No otorga esta facultad al coordinador ni permite reabrir subcampañas cerradas.
