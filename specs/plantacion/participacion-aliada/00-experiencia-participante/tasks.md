@@ -1,13 +1,20 @@
 # Tareas — PA-S00
 
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+
+
+**Reafirmación pública del 13 de octubre:** incorporar PA-S00-CA23/24 a ENT03, ENT04-BE, ENT05-FE y ENT06-QA. Entrega: global y enlaces públicos de campaña/subcampaña/plantación/foto abren en incógnito sin cuenta/login, con el mismo contenido para VOLUNTARIO sin asignación; sesión vencida/fallo de capacidades no bloquean. Guard/backend y rutas/frontend distinguen consulta pública de acciones privadas. No marcar estas pruebas ejecutadas por documentarlas.
+
 Revisión humana de producto registrada el 11 de octubre; implementación y pruebas pendientes. Estos IDs no renumeran PA-T01–21 ni PA-T-INT01–08.
+
+[Acuerdo posterior del 12](../acuerdo-roles-y-permisos-2026-10-12.md) concreta PA-DI09 y CA20–22: nuevas cuentas VOLUNTARIO, roles internos solo por ADMIN global, permisos contextuales backend/DB y presencia global derivada en miembros. Preparación documental completada; ENT04/05/06 siguen pendientes.
 
 | ID | Entrega | Depende de | Criterio de finalización |
 |---|---|---|---|
-| PA-T-ENT01 | Revisión de producto realizada: PA-S00 favorable; PA-DI08/10 confirmadas y PA-DI09 orientada. US07/CA13–15 explicitan las aclaraciones recibidas. | Confirmación humana del 11 de octubre. | [Acta](../revision-humana-2026-10-11.md) con decisiones y pendientes; no marca boceto, implementación o pruebas como terminados. |
-| PA-T-ENT02 | Matriz de identidad/permisos/endpoints y usuarios internos existentes. | ENT01 para alcance. | Cada lectura/escritura clasificada; alta/perfil/rutas legadas incluidas; transición propuesta sin cambios productivos. |
+| PA-T-ENT01 | Revisión de producto realizada: PA-S00 favorable; PA-DI08/10 confirmadas y PA-DI09 concretada posteriormente en el acuerdo del 12 y D01–D12 aceptadas el 13. US07/CA13–15 explicitan las aclaraciones recibidas. | Confirmación humana del 11 de octubre. | [Acta](../revision-humana-2026-10-11.md) con decisiones y pendientes; no marca boceto, implementación o pruebas como terminados. |
+| PA-T-ENT02 | Lectura estática/matriz de endpoints preparada en inventario; completar catálogo destino y manifest concreto de usuarios/ámbitos. | ENT01 y diseño backend aceptado. | Cada lectura/escritura clasificada; cotejo remoto y correspondencia real pendientes, sin reclasificación automática. No marcar migración/pruebas ejecutadas. |
 | PA-T-ENT03 | Boceto de entrada con datos simulados: sin permiso, una/múltiples subcampañas, acceso retirado e interno. | Criterios de ENT01; puede prepararse mientras avanza ENT02. | Usuario reconoce qué puede hacer y cómo llegar a registrar; sin pasos de organización obligatorios. |
-| PA-T-ENT04-BE | Implementar contrato de sesión/capacidades, alta/perfil seguros y controles de API del recorrido. | ENT02 + plan técnico aprobado; coordinar PA-T-INT02. | CA01/03–09 verificados por HTTP, sin confiar en identidad o rol enviados por cliente. |
+| PA-T-ENT04-BE | Implementar contrato de sesión/capacidades, alta VOLUNTARIO/perfil seguros, asignación administrativa separada de roles y controles de API del recorrido. | ENT02 + plan técnico aprobado; coordinar PA-T-INT02. | CA01/03–09/20–22 verificados por HTTP; perfil conserva rol legítimo, solo ADMIN global cambia roles internos y accede sin equipo a subcampañas actuales/nuevas. |
 | PA-T-ENT04-DB | Preparar migraciones/privilegios y ensayo de transición de personas. | ENT02 + diseño PA-DI01/02/09. | Ensayo repetible, auditoría y regresión de facultades internas; sin cambiar asignaciones físicas. |
 | PA-T-ENT05-FE | Integrar landing/layout/menús/rutas y contexto del actor; reutilizar selector y formulario. | Contrato ENT04-BE estable; integración tras BE/DB. | CA02–05/07–12 con pruebas de pantalla, recarga, enlaces y cambio de cuenta. |
 | PA-T-ENT06-QA | Verificación integrada de entrada, permisos y regresión interna. | ENT04-BE/DB y ENT05-FE. | Cuenta sin asignación no opera; habilitada opera solo en su ámbito; personal interno conserva facultades; evidencia enlazada a versiones. |

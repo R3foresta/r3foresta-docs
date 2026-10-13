@@ -1,10 +1,18 @@
 # PA-F01 — Diseño compartido: frontend, backend y datos
 
-**Fecha:** 10 de octubre de 2026. **Estado:** propuesta para revisión técnica. No se ha creado ninguna tabla, ejecutado migraciones ni modificado los repositorios de aplicación en esta tarea.
+**Fecha:** 10 de octubre de 2026. **Estado:** diseño concretado por D01–D12 del contrato backend aceptado el 13; cotejo de catálogo, manifest, implementación y pruebas pendientes. No se ha creado ninguna tabla, ejecutado migraciones ni modificado los repositorios de aplicación en esta tarea.
 
 **Actualización de producto, 11 de octubre:** [revisión humana](revision-humana-2026-10-11.md) confirma consulta pública sin sesión, perfil sin wallet/documento y afiliación opcional, y orienta VOLUNTARIO + permiso contextual. La arquitectura debe servir lectura pública separada de capacidades/datos privados; solo registro y áreas privadas requieren sesión. ADMIN global queda confirmado como autoridad central y puede registrar directamente en cualquier subcampaña ACTIVA, sin permiso contextual adicional y con las validaciones de PA-S01. De PA-DI03 siguen pendientes los mecanismos de identidad/autorización y la correspondencia de facultades internas. La revisión de PA-S00 no aprueba automáticamente las tablas propuestas aquí.
 
+**Preparación técnica del 12 de octubre:** [instrucciones implementables](instrucciones-implementacion.md) concreta contratos/datos/pruebas para revisión del usuario. PA-S01 cerrado en comportamiento; nuevos casos de PA-S04 incorporados con compensaciones propuestas. No se aprueban mecanismos ni implementación por preparar ese documento.
+
+**Acuerdo posterior del 12 de octubre:** [alta, roles y permisos](acuerdo-roles-y-permisos-2026-10-12.md) confirma VOLUNTARIO para toda cuenta nueva y asignación de roles internos solo por ADMIN global, separada del perfil y de permisos contextuales. Backend/DB implementan la autorización. ADMIN global tiene acceso a todas las subcampañas y presencia derivada en su lista administrativa de miembros, sin filas por ámbito ni participación histórica automática. Usuario solicita documentar primero; implementación pendiente.
+
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. D02 define organización del catálogo/«Otra»/ausencia y D08 snapshots históricos. D07 establece LIFO sobre stock ya disponible de la subcampaña, sin nuevo flujo de recepción por organizaciones o administradores. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+
 ## 1. Cómo se divide el trabajo
+
+**Frontera pública/privada reafirmada el 13 de octubre:** Impacto global/campaña/subcampaña/registro/mapa/fotos públicas es accesible y compartible sin cuenta, registro ni login. Visitante y VOLUNTARIO sin asignación consumen la misma proyección pública. Guard JWT protege registro, gestión, lectura propia y contexto privados; no se aplica a esas consultas públicas. Frontend conserva rutas públicas fuera del guard de sesión y separa cargas privadas opcionales de capacidades: su fallo o vencimiento no cierra el contenido público ni redirige a login. Compartir usa detalle público, no `detalle-propio` ni pantallas internas. Se mantienen campos/estados PA-S02 y ADR-PLA-05 para el plan técnico autenticado.
 
 La spec describe un resultado observable de principio a fin. Su plan distribuye responsabilidades: UX define el recorrido; frontend lo presenta y ayuda a completar datos; backend valida identidad, permisos y reglas; PostgreSQL garantiza integridad, concurrencia y persistencia. Una misma historia necesita varias capas.
 
@@ -22,7 +30,7 @@ Backend entrega proyecciones públicas reducidas para resumen global, campañas,
 | [PA-S02 Consulta](02-consulta-impacto-y-registros/spec.md) | Resumen global → campaña → subcampaña → registro, mapa y campos progresivos; registros propios autorizados. | Proyección reducida por audiencia y alcance; reutilizar módulo `impact`. | Consultas sobre registros existentes, sin copiar plantaciones a tablas de un portal. |
 | [PA-S03 Acceso](03-gestion-acceso-subcampania/spec.md) | Gestión contextual y selección de subcampañas actuales. | Autoridad central/contextual; alta/retiro de facultades y búsqueda mínima de personas. | Permiso contextual, auditoría y operaciones serializadas por subcampaña. |
 | [PA-S01 Registro](01-registro-plantacion-inicial/spec.md) | Formulario de tres pasos, revisión, recuperación y comprobante. | Contexto autorizado, evidencias propias, errores identificables, consulta del intento. | Registro/detalles/consumo existentes + idempotencia y comprobante atómicos. |
-| [PA-S04 Corrección](04-correccion-excepcional/spec.md) | Orientación ante error y lectura del resultado autorizado. | Comando central acotado tras revisión del administrador. | Corrección vinculada al original, historial y efectos explícitos. |
+| [PA-S04 Corrección](04-correccion-excepcional/spec.md) | Orientación ante error y lectura del resultado autorizado. | Cantidades/participantes y reversión de duplicados/eliminación lógica de errores por ADMIN global o administrador del ámbito en ACTIVA; observaciones central. | Corrección vinculada al original, historial y efectos explícitos; límites del acuerdo del 12 de octubre. |
 
 ## 2. Base local y riesgos concretos
 
@@ -42,6 +50,8 @@ Referencias directas: [alta y perfil](/Users/pabloandresfernandezcari/Projects/R
 
 ## 3. Contratos que deben acordarse entre frontend y backend
 
+**Contraste de repositorios, 12 de octubre:** [revisión de contratos, tipos y diferencias](revision-contratos-2026-10-12.md) documenta el SQL local, los DTO y sus consumidores, permisos, errores y ausencia de consulta durable del mismo intento; incorpora consultas a los chats de backend/frontend. Distingue lo implementado de PA-F01 propuesto y deja preparada la comprobación de catálogo de solo lectura, pendiente de ejecutar en el entorno destino.
+
 **Decisiones posteriores de producto de PA-S02:** el global muestra total inicial, mapa y campañas; el plantador abre la última campaña con habilitación vigente o el global si no hay anterior utilizable. «Mis registros» incluye autoría y participación históricas, deduplicadas; la afiliación visible es la conservada al plantar. Diseñar recuerdo por cuenta y captura histórica con PA-S01, distinguiendo no declarada de histórica no disponible. No reconstruir desde el perfil actual ni ampliar campos privados del participante por incluirlo en la lista. Ver [acta](revision-humana-2026-10-11.md#revisión-posterior-de-pa-s02-en-llamada); estas decisiones no aprueban mecanismos ni migraciones.
 
 Son necesidades lógicas, no nombres de endpoints ya implementados. Partir de rutas existentes y fijar DTO/Swagger/cliente/pruebas juntos antes de construir la parte afectada.
@@ -55,7 +65,7 @@ Son necesidades lógicas, no nombres de endpoints ya implementados. Partir de ru
 | Otorgar/retirar acceso | Actor verificado, persona destino registrada, subcampañas explícitas y acción permitida. No aceptar `campania_id` como permiso comodín ni heredar a futuras hijas. Auditoría obligatoria. |
 | Guardar / recuperar intento | Identificador estable, huella de contenido, resultado durable y errores distinguibles. Un resultado guardado se recupera incluso tras revocación mediante lectura propia; no se autoriza otra escritura por esa lectura. |
 | Detalle persistido | Comprobante/registro real, visibilidad por audiencia y correcciones aplicables, sin alterar el original ni contar dos veces. |
-| Corrección central | Identificación del original, revisión, motivo, actor autorizado y efectos del caso aprobado. Sin endpoint genérico para editar cualquier campo. |
+| Corrección acotada | Identificación del original, revisión, motivo, autoridad por caso/ámbito y efectos aprobados en PA-S04. Sin endpoint genérico para editar cualquier campo. |
 
 El cliente debe diferenciar sesión inválida, permiso insuficiente, contexto modificado, validación, rechazo confirmado y resultado desconocido. Una desconexión no demuestra que no se guardó. El contrato de intento precisa cómo reintentar la misma operación y cuándo puede comenzar una distinta.
 
@@ -67,11 +77,11 @@ El portal de impacto actual tiene respuestas públicas cacheadas: no introducir 
 
 `usuario`, `campania`, `subcampania`, `subcampania_meta_especie`, `registro_plantacion`, `registro_plantacion_detalle`, `registro_plantacion_coresponsable`, evidencias y `asignacion_vivero_subcampania` siguen siendo la base. `subcampania_historial` ya ofrece un lugar de auditoría que debe evaluarse para nuevos eventos. Ver [esquema actual documentado](../../../database/00_database_schema.md).
 
-No se necesita una tabla de «plantación participante» ni «stock de organización». Tampoco una relación usuario–organización nueva para resolver el permiso del piloto. Un punto del mapa representa un registro grupal; la lectura de impacto es una proyección de esos datos.
+No se necesita una tabla de «plantación participante» ni «stock de organización». La referencia opcional usuario–organización aceptada en D02 describe afiliación de perfil; no resuelve ni concede el permiso del piloto. «Otra» conserva texto, sin crear una organización maestra. Un punto del mapa representa un registro grupal; la lectura de impacto es una proyección de esos datos.
 
 ### Diseño candidato para PA-DI01: permiso por persona y subcampaña
 
-**Separación de responsabilidades aceptada en llamada:** conservar coordinación/logística existente y separar los permisos de participación por persona/subcampaña. **Persistencia candidata por revisar:** tabla separada, nombre provisional `subcampania_permiso`. Antes de aprobar columnas/migración se contrasta el esquema real y todos sus consumidores; evolucionar la tabla existente sigue siendo alternativa si satisface la separación sin migración ambigua. La [propuesta de contratos de PA-S03](03-gestion-acceso-subcampania/contratos.md) conecta UX, backend y persistencia; no acredita implementación.
+**Separación de responsabilidades aceptada en llamada:** conservar coordinación/logística existente y separar los permisos de participación por persona/subcampaña. **Persistencia aceptada en D04 el 13:** `subcampania_permiso` por vigencias y fila estable `subcampania_permiso_revision`, con historial existente. Antes del SQL se contrasta el esquema real y todos sus consumidores; el contrato backend concreta columnas/revisiones y no se sustituye silenciosamente por otra representación. La [propuesta de contratos de PA-S03](03-gestion-acceso-subcampania/contratos.md) conecta UX, backend y persistencia; no acredita implementación.
 
 | Campo lógico propuesto | Para qué sirve |
 |---|---|
@@ -90,21 +100,21 @@ La política de registro admite autoridad ADMIN global verificada sin asignació
 
 ### Diseño candidato para PA-DI06: intento recuperable
 
-Nombre provisional `plantacion_intento`, o extensión equivalente de estructuras existentes si cubren el contrato. Se necesita unicidad de actor + operación + clave de intento, huella del contenido, referencia al registro/recibo y fechas. Respetar privacidad/retención del contenido; no copiar innecesariamente fotos o datos personales.
+**Enfoque elegido por el usuario el 12 de octubre:** tabla compartida de comandos para plantación, permisos y correcciones; implementar primero plantación. `participacion_comando` concretado en D09–D11 aceptadas el 13; la propuesta previa de intento dedicado queda como alternativa evaluada histórica. Se necesita unicidad de actor + operación + clave, huella del contenido, referencia al registro/recibo y fechas. Respetar privacidad/retención del contenido; no copiar innecesariamente fotos o datos personales. [Explicación paso a paso](diseno-comandos-compartidos.md). Enfoque y diseño concreto D09–D11 aceptados el 13; cotejo de catálogo/implementación/verificación pendientes.
 
 La creación del registro, vínculo de fotos, consumo y comprobante deben quedar confirmados atómicamente. Dos envíos equivalentes concurrentes devuelven un único resultado; misma clave con contenido diferente da conflicto. Resolver explícitamente peticiones en curso, rechazo confirmado y pérdida de respuesta. La ausencia momentánea de un recibo no prueba que otro proceso no vaya a confirmar.
 
-Precisar retención, recuperación de cargas de evidencia y claves vencidas antes del SQL; eliminar una clave y aceptar su reuso podría duplicar una operación antigua. Los estados técnicos de un intento no crean una aprobación administrativa pendiente de la plantación.
+D09–D11 aceptadas fijan cargas recuperables, cancelación/clausura transaccional, claves/recibos sin vencimiento durante el piloto y retención de cargas de 30 días. Cotejar/implementar antes del SQL de ejecución; eliminar una clave y aceptar su reuso podría duplicar una operación antigua. Los estados técnicos de un intento no crean una aprobación administrativa pendiente de la plantación.
 
 ### Diseño candidato para PA-DI07: corrección excepcional
 
-Una corrección necesita vincular original, caso/revisión, ejecutor central, fecha, motivo, datos anteriores/nuevos y efectos. Puede representarse con un evento dedicado o una tabla, nombre provisional `registro_plantacion_correccion`; se decide tras acotar los casos de PA-S04. No implica un editor universal ni tres tablas obligatorias desde el primer día.
+Una corrección necesita vincular original, caso/revisión, ejecutor autorizado según PA-S04, fecha, motivo, datos anteriores/nuevos y efectos. Cantidades y participantes admiten ambos administradores en ACTIVA, con sus límites; observaciones permanece central. La ampliación posterior del 12 autoriza reversión de duplicados y eliminación lógica de plantación/baja/reposición erróneas por esos administradores, sin cascada de hechos reales; conservar originales y auditar compensaciones por asignación/grupo. CT09/10 en instrucciones implementables propone la representación y pruebas. Puede representarse con un evento dedicado o una tabla, nombre provisional `registro_plantacion_correccion`; el contrato físico sigue pendiente. No implica un editor universal ni tres tablas obligatorias desde el primer día.
 
 Corregir participantes no consume ni devuelve plantas. Cambiar cantidades exige establecer los hechos físicos, dependencias posteriores, saldos afectados y la representación autorizada. Ninguna corrección devuelve automáticamente plantas al Vivero. Original y correcciones son trazables; la consulta presenta la versión efectiva aprobada sin multiplicar el total.
 
 ### Qué no cambiar por este diseño
 
-- El catálogo global sigue `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`. PA-DI09 orienta VOLUNTARIO para nuevas cuentas participantes con permiso contextual; producto conforme el 11 de octubre, compatibilidad técnica/migración aún pendientes. No crear rol «administrador de campaña» ni conceder permiso por alta.
+- El catálogo global sigue `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`. PA-DI09 confirma el 12 VOLUNTARIO para toda cuenta nueva; solo ADMIN global asigna roles internos, mediante operación separada de perfil/permisos contextuales. Compatibilidad técnica/migración aún pendientes. No crear rol «administrador de campaña» ni conceder permiso por alta; conservar roles legítimos al actualizar perfil y al migrar personas existentes.
 - El estado de campaña se deriva; no se añade columna persistida ni estado de publicación nuevo.
 - `cantidad_asignada` y los hechos físicos se preservan. Plantar consume asignación una vez, sin un segundo débito de Vivero.
 - La meta es orientativa y la especie inicial debe pertenecer al plan. El cierre permanece explícito por ADMIN global, no automático ni concedido al administrador contextual.
@@ -112,7 +122,7 @@ Corregir participantes no consume ni devuelve plantas. Cambiar cantidades exige 
 
 ## 5. Decisiones y responsabilidades
 
-PA-DI01–07 se mantienen en [plan de reutilización, §4](plan-reutilizacion-integracion.md#4-decisiones-que-deben-cerrarse-antes-del-código-afectado), con avances de producto en PA-DI04/05 y contratos aún pendientes. PA-DI08–10 y sus estados se definen en [PA-S00, §5](00-experiencia-participante/spec.md#5-decisiones-confirmadas-y-pendientes-técnicos). Este diseño no cierra por sí mismo mecanismos técnicos.
+PA-DI01–07 se mantienen como trazabilidad en [plan de reutilización, §4](plan-reutilizacion-integracion.md#4-diseño-aceptado-y-cotejos-antes-del-código-afectado), con D01–D12 del contrato backend aceptadas el 13; PA-S04 conserva sus efectos/contratos específicos y catálogo/manifest/implementación siguen pendientes. PA-DI08–10 y sus estados se definen en [PA-S00, §5](00-experiencia-participante/spec.md#5-decisiones-confirmadas-y-pendientes-técnicos). El contrato backend y el acta del 13 acreditan la aceptación técnica; redactar un diseño por sí solo no acredita implementación.
 
 | Revisión | Qué se acepta | Qué no implica |
 |---|---|---|

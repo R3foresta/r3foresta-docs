@@ -1,14 +1,20 @@
 # Plan — PA-S00
 
-**Estado:** propuesta técnica, no implementada por esta tarea. Leer primero [spec](spec.md).
+**Estado:** preparación técnica entregada, con diseño backend D01–D12 aceptado el 13. Implementación y pruebas pendientes. Leer primero [spec](spec.md).
+
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 ## Entrega mínima
 
+**Reafirmación del 13 de octubre:** global y enlaces públicos de Impacto a campaña/subcampaña/plantación/fotos elegibles funcionan sin cuenta, registro ni login, también para VOLUNTARIO sin asignación. Frontend los coloca fuera de `ProtectedRoute`/redirect de sesión y backend los exceptúa del guard privado. La consulta pública no espera perfil/capacidades; su fallo o vencimiento no cierra Impacto. Compartir conserva el destino público del enlace. Verificar CA23/24 de [spec](spec.md) junto con los casos existentes.
+
 Enlace → Impacto público sin sesión → intención de registrar → autenticación → sin permiso / subcampaña habilitada → formulario existente. Se conserva la entrada, estructura y herramientas de la experiencia interna existente para personal autorizado. Se reutilizan autenticación, perfil, Plantación e impacto; se propone una capa frontend `participacion` con navegación propia que compone estas capacidades. El plantador comparte el Impacto reducido del visitante, sumando solo acciones/contextos autorizados; no se lo redirige a la administración interna.
 
-La [revisión del 11 de octubre](../revision-humana-2026-10-11.md) cierra consulta pública PA-DI08 y criterios de perfil PA-DI10, y acepta la orientación VOLUNTARIO + permiso contextual PA-DI09. El plan técnico sigue pendiente. No pedir wallet/documento en el piloto ni perfil para consultar; afiliación opcional.
+La [revisión del 11 de octubre](../revision-humana-2026-10-11.md) cierra consulta pública PA-DI08 y criterios de perfil PA-DI10, y acepta la orientación VOLUNTARIO + permiso contextual PA-DI09. D01–D12 del contrato backend están aceptadas el 13; catálogo, manifest de transición, implementación y pruebas siguen pendientes. No pedir wallet/documento en el piloto ni perfil para consultar; afiliación opcional.
 
-La revisión posterior de PA-S02 confirma última campaña utilizada con habilitación vigente como entrada del plantador; sin anterior utilizable o sin historial de uso, global. Bocetar cambio de campaña/global, «Registrar plantación» y «Mis registros» por autoría/participación. Diseñar recuerdo separado por cuenta y revalidación sin tratar un error de capacidades como revocación; respetar el destino de enlaces públicos directos. Verificar CA18/19 además de los escenarios anteriores. La afiliación visible del registro es la del momento de plantar; captura/persistencia con PA-S01 aún por diseñar.
+El [acuerdo del 12 de octubre](../acuerdo-roles-y-permisos-2026-10-12.md) concreta PA-DI09: toda cuenta nueva VOLUNTARIO; roles internos solo por ADMIN global, mediante operación distinta de perfil; permisos contextuales implementados en backend/DB. Presentar ADMIN global en miembros con autoridad derivada, sin nuevas filas por ámbito. Añadir CA20–22 y pruebas de perfil que conserva rol legítimo, cambio de rol no autorizado y subcampaña nueva con acceso global. Contratos del diseño backend aceptados el 13; cotejo de catálogo, migraciones y ejecución pendientes; preservar cuentas existentes.
+
+La revisión posterior de PA-S02 confirma última campaña utilizada con habilitación vigente como entrada del plantador; sin anterior utilizable o sin historial de uso, global. Bocetar cambio de campaña/global, «Registrar plantación» y «Mis registros» por autoría/participación. Diseñar recuerdo separado por cuenta y revalidación sin tratar un error de capacidades como revocación; respetar el destino de enlaces públicos directos. Verificar CA18/19 además de los escenarios anteriores. La afiliación visible del registro es la del momento de plantar; captura/persistencia histórica definida en D08; cotejo de catálogo, implementación e integración con PA-S01 pendientes.
 
 | Capa | Trabajo | Contrato o dependencia | Evidencia de salida |
 |---|---|---|---|

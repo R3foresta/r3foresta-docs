@@ -1,27 +1,38 @@
 # Especificaciones del incremento MVP
 
-Esta carpeta contiene especificaciones pequeñas, planes y tareas del repositorio documental. Cada `spec.md` requiere revisión propia antes de convertirse en base de construcción. PA-S00 y la primera versión de PA-S02 recibieron aprobación de comportamiento de producto el 11 de octubre; ver [acta](plantacion/participacion-aliada/revision-humana-2026-10-11.md). Ningún documento acredita por sí solo implementación o despliegue.
+**Actualización:** 13 de octubre de 2026. Entrada, registro inicial, consulta de impacto y gestión de acceso de PA-F01 están aprobados en comportamiento. D01–D12 del contrato backend están aceptadas como diseño técnico, con ajustes de afiliación y consumo LIFO. Correcciones conserva acuerdos parciales y contratos propios pendientes. Implementación, migraciones y verificación del incremento tienen estado separado.
 
-## Convenciones
+## Feature activa
 
-- `feature`: resultado observable para la persona usuaria.
-- `capability`: comportamiento verificable que contribuye a una feature.
-- `component spec`: solo cuando existe un contrato técnico propio; no se crea por cada widget.
-- Estados: **confirmado** (decisión humana), **propuesto** (alternativa de diseño), **pendiente** (requiere decisión o contraste).
-- IDs existentes se conservan: `PA-F01` feature; `PA-S00`–`PA-S04` specs; `PA-C01`–`PA-C08` criterios iniciales; `PA-Sxx-USnn` historias y `PA-Sxx-CAnn` escenarios nuevos; `PA-T*` tareas; `PA-R*` riesgos; `PA-DI*` decisiones técnicas. `PA-D01`–`PA-D05` identifican diagramas, no decisiones.
+[PA-F01 — Participación aliada en Plantación](plantacion/participacion-aliada/README.md): consultar y compartir impacto sin cuenta; registrar con identidad y permiso vigentes; gestionar acceso y resolver errores con historial. Se conserva la gestión interna y un único modelo de campañas, registros y stock.
 
-## Feature
+## Estado de las specs
 
-[PA-F01 Participación aliada en Plantación](plantacion/participacion-aliada/README.md): desde una cuenta nueva con experiencia enfocada hasta una plantación guardada por una persona autorizada, con consulta, acceso y corrección trazables. Conserva las herramientas del personal interno según sus facultades.
-
-## Mapa de revisión
-
-| Artefacto | Revisión humana | Estado documental |
+| Spec | Revisión funcional | Trabajo posterior |
 |---|---|---|
-| [PA-S00](plantacion/participacion-aliada/00-experiencia-participante/spec.md) | Entrada pública y experiencia participante | Revisión favorable de producto; técnica pendiente |
-| [PA-S02](plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md) | Primera versión de comportamiento aprobada | Base para boceto y pruebas de recorrido; contratos e integración pendientes |
-| [PA-S03](plantacion/participacion-aliada/03-gestion-acceso-subcampania/spec.md) | Acceso y revocación | Borrador para revisión |
-| [PA-S01](plantacion/participacion-aliada/01-registro-plantacion-inicial/spec.md) | Registro inicial | Borrador para revisión |
-| [PA-S04](plantacion/participacion-aliada/04-correccion-excepcional/spec.md) | Corrección excepcional | Borrador condicionado a diseño previo al campo |
+| [PA-S00 · Entrada y experiencia](plantacion/participacion-aliada/00-experiencia-participante/spec.md) | Aprobada el 11; alta/roles confirmados el 12 y consulta pública compartible reafirmada el 13. | Implementar identidad, alta VOLUNTARIO, perfil seguro y navegación según diseño aceptado. |
+| [PA-S01 · Registro inicial](plantacion/participacion-aliada/01-registro-plantacion-inicial/spec.md) | Cerrada el 12: tres pasos, observaciones, revisión/confirmación y recuperación del intento. LIFO acordado el 13. | Integrar permisos, stock, fotos, comando durable y comprobante; probar concurrencia y recorrido. |
+| [PA-S02 · Consulta de impacto](plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md) | Primera versión aprobada el 11; consulta y enlaces públicos sin login explícitos el 13. | Boceto final, proyecciones efectivas y seguimiento, snapshots históricos, integración y pruebas. |
+| [PA-S03 · Gestión de acceso](plantacion/participacion-aliada/03-gestion-acceso-subcampania/spec.md) | Comportamiento y orquestación aprobados el 11; roles/permisos y diseño backend aceptados posteriormente. | Cotejar catálogo, preparar transición, implementar permisos/versiones y protección de administradores, integrar UI. |
+| [PA-S04 · Corrección excepcional](plantacion/participacion-aliada/04-correccion-excepcional/spec.md) | Cantidades, participantes, duplicados y eliminación lógica de registros erróneos confirmados el 12. | Cierre integral de casos especiales y contratos de efectos/historial; implementación y pruebas propias. |
 
-Cada carpeta contiene `spec.md`, `plan.md` y `tasks.md`. Consulta el [plan general](plantacion/participacion-aliada/plan-inicial.md), el [diseño de frontend/backend/datos](plantacion/participacion-aliada/diseno-tecnico-compartido.md), el [boceto](plantacion/participacion-aliada/boceto-registro-resultado.md) y los [diagramas](plantacion/participacion-aliada/diagramas/README.md).
+## Trabajo documental completado
+
+- Revisión funcional PA-S00/01/02/03 y ampliación del alcance de PA-S04, con [acta funcional](plantacion/participacion-aliada/revision-humana-2026-10-11.md) y [acta de correcciones](plantacion/participacion-aliada/revision-correcciones-2026-10-12.md).
+- [Contraste de contratos existentes](plantacion/participacion-aliada/revision-contratos-2026-10-12.md): DTO, APIs, persistencia y consumidores frontend revisados mediante lectura de código.
+- [Inventario de endpoints y regresión](plantacion/participacion-aliada/inventario-endpoints-y-regresion-participacion.md): segunda lectura estática completada, matriz de facultades, casos de prueba y plantilla de transición preparados. Las pruebas y la transición no están ejecutadas por ese inventario.
+- [Contrato backend](plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md): D01–D12 aceptadas el 13; [acta técnica](plantacion/participacion-aliada/revision-tecnica-2026-10-13.md). El nombre «propuesta» del archivo se conserva por compatibilidad de enlaces.
+
+La revisión del diseño ya no se presenta como una tarea por empezar. La siguiente entrega es **PA-T-INT02-A: identidad, alta VOLUNTARIO y perfil seguro en backend**, con cotejo del catálogo/entorno y fixtures antes del código que dependa de DB. El avance de implementación se registra en [ESTADO.md](../ESTADO.md).
+
+## Convenciones y fuentes
+
+Cada capacidad contiene `spec.md`, `plan.md` y `tasks.md`: comportamiento, diseño de entrega y trabajo verificable. Registrar decisiones humanas, evidencia de código, pruebas y despliegue por separado.
+
+- **Confirmado/aprobado:** decisión humana de producto o diseño, indicando cuál.
+- **Preparado:** documento, inventario o guion entregado; no acredita ejecución de código o pruebas.
+- **Implementado/verificado:** requiere evidencia de la capa y entorno correspondientes.
+- **Pendiente:** nombrar la decisión, cotejo o entrega concreta; no volver a incluir un acuerdo ya aceptado.
+- IDs estables: `PA-F01`, `PA-S00`–`PA-S04`, `PA-C*`, `PA-Sxx-USnn`, `PA-Sxx-CAnn`, `PA-T*`, `PA-R*`, `PA-DI*`. D01–D12 son decisiones del contrato backend; PA-D01–05 son diagramas.
+
+El [índice de PA-F01](plantacion/participacion-aliada/README.md) ubica las fuentes canónicas, acuerdos vigentes y secuencia de entregas. [Decisiones de Plantación](../decisiones/02_decisiones_plantacion.md) conserva las reglas transversales; [ESTADO.md](../ESTADO.md) conserva evidencia de implementación. Código local y migraciones presentes en Git no prueban producción.

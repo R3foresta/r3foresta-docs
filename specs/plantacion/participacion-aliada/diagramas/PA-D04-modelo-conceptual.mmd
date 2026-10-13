@@ -10,7 +10,7 @@ flowchart TB
   allocation["Asignación física con propósito"]
   record["Registro grupal de plantación"]
   detail["Detalle de cantidad consumida"]
-  participants["Corresponsables identificados"]
+  participants["Participantes reales registrados"]
   evidence["Fotos, GPS y fecha"]
   organization["Organización"]
   finance["Crédito / financiación posterior"]
@@ -33,10 +33,13 @@ flowchart TB
   detail -->|"Consume una"| allocation
   detail -->|"Identifica"| species
   person -.->|"Afiliación opcional"| organization
+  campaign -->|"Organizaciones de campaña: relación distinta"| organization
+  participants -->|"Identifican"| person
   organization -.->|"Relación separada"| finance
   finance -.->|"Atribución por definir"| record
   correction -->|"Conserva original"| record
-  correction -.->|"Efectos por definir"| allocation
+  correction -->|"Ajusta consumo trazable, no entrega"| allocation
+  correction -->|"Conserva actor e historial"| person
   style permission fill:#EEF6FF,stroke:#3267A8
   style allocation fill:#EEF6FF,stroke:#3267A8
   style correction fill:#FFF4D6,stroke:#A87700

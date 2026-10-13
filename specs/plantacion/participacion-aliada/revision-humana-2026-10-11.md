@@ -2,6 +2,10 @@
 
 **Revisor:** usuario responsable del producto, en este chat. **Evidencia:** revisión explícita de PA-S00 («Todo está excelente»), respuestas a PA-DI08/09/10, datos públicos, GPS y autoridad central, cierre de la primera versión de producto de PA-S02 y cierre funcional/orquestación de PA-S03 en llamada. Este registro acepta esos comportamientos en sus alcances revisados; no aprueba automáticamente mecanismos técnicos ni acredita implementación, migraciones o pruebas. PA-S01/04 conservan su revisión pendiente.
 
+**Continuación:** §§7–8 incorporan acuerdos parciales de PA-S01 del 11 y 12 de octubre de 2026, conservando este archivo y su historia. La aprobación de cada comportamiento no equivale a un cierre integral de PA-S01; PA-S04 mantiene su revisión propia.
+
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. El [acta del 13](revision-tecnica-2026-10-13.md) sustituye la orientación FIFO anterior para la nueva inicial por LIFO de servidor, exclusivamente sobre stock de esa subcampaña y sin recepción adicional. Se conservan aquí las observaciones/decisiones históricas de su fecha. Afiliación opcional mediante catálogo o «Otra», sin acceso automático. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+
 ## 1. Confirmado
 
 | Tema | Decisión humana | Alcance / pendiente |
@@ -53,7 +57,7 @@ Cuando se diga informalmente «administrador de campaña», usar **administrador
 - «Faltan» debe explicarse: propuesta **faltan para la meta inicial = máximo(meta vigente − plantación inicial, 0)**. No es stock disponible ni árboles muertos. Reposiciones y bajas se muestran separadas; si se expone necesidad de reposición, debe tener su propia etiqueta y regla. La meta sigue siendo orientativa.
 - «Bajas» significa mortandad reportada de plantas ya plantadas; no mezclar merma de vivero/stock previo a plantar. Mostrar conteos reportados, no prometer supervivencia comprobada por una inspección que no ocurrió. La consulta de estos indicadores no amplía la escritura del piloto a nuevos flujos de seguimiento.
 - Distinguir organización de la campaña y afiliación declarada de cada participante. Una plantación puede reunir personas de varias organizaciones; no atribuir toda la cantidad a una ni inferir financiación. Proponer afiliación histórica congelada al registrar o, si solo existe el perfil actual, etiquetarla como actual; decidir el dato antes de prometer historia que no existe.
-- Mostrar fotos de evidencia y GPS del registro no implica compartir el bucket completo, rutas de archivos pendientes, datos de contacto ni metadatos ajenos al contrato. Proponer un aviso claro al registrar de que nombres, afiliación declarada, fotos y ubicación se consultarán públicamente; las personas deben conocer esa visibilidad.
+- Mostrar fotos de evidencia y GPS del registro no implica compartir el bucket completo, rutas de archivos pendientes, datos de contacto ni metadatos ajenos al contrato. En esta etapa se propuso un aviso claro al registrar de que nombres, afiliación declarada, fotos y ubicación se consultarían públicamente; el usuario descarta ese aviso adicional el 12 de octubre, según §8, conservando el alcance de datos acordado.
 - Observaciones libres, campos completos del perfil, roster operativo, contacto, wallet y documento no forman parte de lo aprobado para publicación en esta respuesta. No ampliar la lista por conveniencia técnica.
 
 Estas precisiones son recomendaciones de presentación/diseño; no inventan nuevas decisiones humanas. La política pública debe materializarse en backend/Storage y en los enlaces compartidos, además de la pantalla.
@@ -62,7 +66,7 @@ Estas precisiones son recomendaciones de presentación/diseño; no inventan nuev
 
 En un mensaje posterior de esta misma fecha el usuario confirma ADMIN global como autoridad central; stock disponible fuera de la consulta pública; separación entre organizaciones de campaña y afiliaciones de participantes; y exclusión pública de contactos, perfiles completos y metadatos de fotos. Estas decisiones dejan de ser meras propuestas de §2/3. Pueden coexistir varias organizaciones de campaña y participantes de distintas afiliaciones: no se hereda una relación de la otra ni se atribuyen automáticamente todas las plantas a cada organización.
 
-Los indicadores públicos permanecen diferenciados de stock y bajas; «Ver más» es una opción de UX por revisar, no apertura de stock privado. GPS público del registro y metadatos del archivo fotográfico son distintos: estos últimos no se publican. La fórmula de faltantes, el tratamiento histórico/actual de afiliación, el aviso de visibilidad y el mecanismo de entrega de imágenes siguen en diseño.
+Los indicadores públicos permanecen diferenciados de stock y bajas; «Ver más» es una opción de UX por revisar, no apertura de stock privado. GPS público del registro y metadatos del archivo fotográfico son distintos: estos últimos no se publican. En este punto seguían en diseño fórmula de faltantes, tratamiento histórico/actual de afiliación, aviso de visibilidad y mecanismo de entrega de imágenes. Las decisiones posteriores de PA-S02 resuelven fórmula/afiliación; §8 registra el rechazo del aviso adicional el 12 de octubre.
 
 ### Revisión posterior de PA-S02 en llamada
 
@@ -168,3 +172,99 @@ El usuario solicita explicación de los contratos, confirma que conectan UX, bac
 Se prepara [contratos de PA-S03](03-gestion-acceso-subcampania/contratos.md) con lecturas/búsqueda, habilitación/retiro, designación/cambio/reemplazo, entradas, respuestas, versiones, todo-o-nada, recuperación y ejemplos. Son candidatos técnicos y UX sobre las reglas ya confirmadas. La semántica propuesta de «sin cambios» y el formato de recuperación quedan por revisar con la implementación afectada.
 
 El usuario da por terminada la spec en orquestación, aclarando que es para posterior implementación en backend, frontend y diseño, y no una implementación terminada. Se cierra la primera versión funcional de PA-S03: spec, plan, tareas y propuesta de contratos quedan como base de entrega. Antes del código afectado se concretan persistencia/corte de autorización, correspondencia interna, rutas/DTO y concurrencia real. No se declaran pruebas, migraciones, permisos aplicados ni despliegue.
+
+## 7. PA-S01 — acuerdo parcial del recorrido
+
+**Revisor:** usuario responsable del producto, en llamada el 11 de octubre de 2026. **Evidencia:** tras revisar la propuesta, confirma explícitamente «Excelente, hagámoslo». La autorización se limita a incorporar este acuerdo documental; no aprueba íntegramente PA-S01, código, commit, push ni piloto.
+
+Se confirma un formulario de tres pasos:
+
+1. **Fotos y ubicación:** foto como acción principal y captura GPS con permiso. Tomar una foto no demuestra la ubicación física de la plantación; se conservan coordenadas y evaluación separadas, además de exterior/manual ya acordados.
+2. **Especies y cantidades.** Se mantienen cantidades grupales, especies del plan, metas orientativas, distribución automática y límite de stock; este acuerdo no cambia esas reglas.
+3. **Participantes:** responsable autenticado ya visible y otros participantes opcionales. Al final del mismo paso, resumen compacto de ubicación, cantidades y participantes, posibilidad de volver/corregir y botón explícito «Confirmar plantación».
+
+No se añade una cuarta pantalla de revisión ni se guarda por seleccionar participantes. El comprobante es resultado posterior a un guardado confirmado. Fecha obligatoria y observaciones opcionales existentes se conservan con sus reglas; su ubicación visual quedaba pendiente en ese acuerdo parcial, sin inferir que se eliminan; la continuación del 12 (§9) la cierra.
+
+Se alinea [spec](01-registro-plantacion-inicial/spec.md), [boceto](boceto-registro-resultado.md), [plan](01-registro-plantacion-inicial/plan.md), [tareas](01-registro-plantacion-inicial/tasks.md), índice y plan de reutilización. En este punto se pasa a revisar confirmación del punto GPS; las confirmaciones posteriores se registran abajo. Siguen abiertas fecha, personas seleccionables/revocación, guardado recuperable, evidencias y contratos. No se anticipa aprobación de esos comportamientos ni se modifican las decisiones cerradas de PA-S00/02/03. PA-S04 conserva la revisión propia de casos y efectos de corrección.
+
+### Confirmación y reajuste accesible de ubicación — acuerdo posterior
+
+**Evidencia:** el usuario confirma expresamente que en el primer paso se debe confirmar la ubicación de la plantación, pudiendo reajustarla. Si no concede permiso GPS o la captura falla por cualquier motivo, debe poder introducir coordenadas manualmente o corregir/seleccionar el punto. Enfatiza que la entrada de coordenadas sea una alternativa accesible al mapa, no solo arrastrar un marcador.
+
+Se conserva el requisito de coordenada válida y punto exterior permitido con evaluación/advertencia. La confirmación del usuario no acredita por sí sola evaluación PostGIS ni permite guardar sin ubicación. El fallo técnico del evaluador sigue pendiente y es distinto de negar permiso o fallar la captura del dispositivo; no se inventa una bandera de evaluación. El detalle visual y la verificación de accesibilidad son posteriores. Este acuerdo no aprueba íntegramente PA-S01.
+
+### Especies/cantidades sobre saldo de subcampaña — acuerdo posterior
+
+**Evidencia:** el usuario confirma que el plantador elige especies y cantidades, sin seleccionar vivero/lote, porque las plantas ya fueron entregadas mediante asignación; no puede registrar más que el stock disponible recibido.
+
+Se conserva el dominio vigente: stock físico asignado a la SUBCAMPAÑA, compartido entre personas autorizadas, con saldo elegible restante por especie para PLANTACION_INICIAL. La expresión humana «se le ha hecho una asignación» no decide una asignación personal ni cambia la propiedad del stock. El disponible no es la entrega original ni la meta; las especies siguen en el plan y la meta sigue siendo orientativa.
+
+La distribución de asignaciones se resuelve en servidor según FIFO fecha/id, con revalidación y consumo atómicos al guardar para concurrencia. No se crea un despacho nuevo ni se debita otra vez Vivero. Esta orientación de contrato preserva reglas existentes; los mecanismos y su verificación siguen pendientes. Se incorpora en documentación sin código, commit/push ni aprobación integral de PA-S01 o piloto.
+
+### Participantes registrados y habilitados en el mismo ámbito — confirmados
+
+**Evidencia:** el usuario confirma participantes adicionales opcionales, seleccionables solo entre personas ya registradas y habilitadas en esa misma subcampaña. Responsable autenticado ya visible; sin nombres libres ni personas de otros ámbitos. En este punto la revocación durante captura seguía pendiente; el acuerdo posterior de cambios durante captura la acota, sin inferir aprobación integral.
+
+### Fecha «Hoy» modificable en el segundo paso — confirmada
+
+**Evidencia:** el usuario acepta mostrar «Hoy» por defecto junto a especies/cantidades en el segundo paso y permitir cambiar para trabajo anterior dentro de la ventana vigente, sin otro paso. No cambia la ventana de 10 días, autoriza fechas futuras ni resuelve por inferencia límites exactos, zona horaria o relación con asignaciones. Observaciones existentes se conservan; solo su ubicación visual sigue pendiente.
+
+### Cambios de saldo/permisos durante captura — confirmados
+
+**Evidencia:** el usuario aprueba revalidar stock y permisos al confirmar. Si no alcanza saldo o un participante perdió habilitación antes de la validación correspondiente, conservar borrador bajo sesión/privacidad, explicar qué cambió y permitir revisión explícita, sin reducir cantidades ni quitar personas automáticamente.
+
+Si el responsable perdió autorización efectiva antes de la autorización válida de la operación, rechazar sin registro/consumo. Se conserva el orden canónico de autorización/guardado y retiro: no invalidar retroactivamente una operación válidamente autorizada antes de revocación, mantener demás validaciones y recuperar el resultado si ya persistió. No entregar contexto privado nuevo tras revocación. El orden transaccional, la revalidación de participantes y la conservación privada del borrador siguen por diseñar/verificar.
+
+## 8. PA-S01 — conexión perdida y balance del 12 de octubre
+
+**Fecha:** 12 de octubre de 2026, America/La_Paz. **Revisor:** usuario responsable del producto, en llamada. **Evidencia de conexión perdida:** el usuario confirma explícitamente «Perfecto, se queda así».
+
+Cada envío se identifica. Corte/timeout no prueba fallo ni éxito; conservar datos e identidad del intento bajo reglas de sesión/privacidad y mostrar resultado pendiente de confirmar. Al recuperar conexión, consultar el resultado: si ya persistió, mostrar el mismo comprobante; si corresponde reintentar, usar el mismo intento sin duplicar plantación ni consumo. No crear otro registro ni anunciar éxito mientras sea incierto. No es modo offline completo. Estrategia de idempotencia, consulta, retención y concurrencia pendientes de diseño/verificación; el acuerdo no acredita implementación ni cierre integral.
+
+### Fallo técnico confirmado del evaluador geográfico — aprobado el 12
+
+**Evidencia:** el usuario confirma conservar formulario y ofrecer reintentar ante fallo técnico del evaluador del servidor/PostGIS, sin guardar plantación ni fingir evaluación. En un rechazo confirmado por ese motivo no hay registro ni consumo.
+
+Se distingue de permiso GPS denegado/fallo de captura del dispositivo, con entrada manual permitida, y de punto exterior evaluado, permitido con advertencia. Si lo desconocido es la respuesta del envío por corte/timeout, se aplica resultado incierto y recuperación del mismo intento; no afirmar que no se guardó. Contrato, mensajes finales, orden atómico y verificación geográfica real pendientes.
+
+### Balance de acuerdos y pendientes
+
+Quedan consolidados en [PA-S01](01-registro-plantacion-inicial/spec.md), [boceto](boceto-registro-resultado.md), plan/tareas, índice y reutilización: tres pasos/resumen y confirmación final; ubicación confirmable/reajustable con coordenadas accesibles; especies/cantidades dentro del saldo elegible por especie de subcampaña, sin vivero/lote; participantes registrados/habilitados del mismo ámbito; «Hoy» modificable junto a cantidades dentro de la ventana; revalidación con revisión explícita sin ajustes silenciosos; pérdida de conexión recuperable con el mismo intento; fallo confirmado del evaluador sin guardado/consumo.
+
+**Balance actualizado por cierre posterior del 12 (§9):** ubicación de observaciones y recorrido aprobados; acabado visual/accesibilidad se verifica al implementar. El aviso adicional de datos públicos queda descartado por la decisión posterior de esta sección. No reabrir comportamientos aceptados; la confirmación humana de cierre se registra en §9.
+
+**Técnica pendiente:** identidad/permisos/transición, DTO/errores/consulta mínima de participantes, límites temporales/zona horaria/asignaciones, orden transaccional con retiros/stock/plan/cierre y FIFO, idempotencia/consulta/retención del intento/comprobante, conservación privada del borrador, evidencias públicas sin metadatos excluidos y captura de afiliación histórica. Son mecanismos por diseñar/verificar, no nuevas elecciones sobre reglas ya aprobadas. PA-S04 conserva decisiones propias de casos/campos/efectos de corrección. No se modifica aplicación, ejecuta SQL, hace commit/push ni aprueba piloto por esta consolidación.
+
+### Aviso adicional de visibilidad pública — descartado el 12
+
+**Evidencia:** tras explicar la propuesta de aviso junto al resumen y antes de «Confirmar plantación», el usuario indica que esa aclaración no aporta y decide continuar sin ella. Se omite el aviso adicional y se retira de los pendientes de PA-S01.
+
+La decisión se limita a ese texto de visibilidad pública. Conserva los campos públicos/privados confirmados en PA-S02 y los mensajes acordados de ubicación exterior, validación, rechazo y recuperación de resultado incierto. No se infiere aprobación integral de PA-S01 ni cambio de permisos o publicación de campos adicionales.
+
+## 9. Cierre funcional de PA-S01 y preparación técnica
+
+**Fecha/revisor:** usuario responsable del producto, 12 de octubre de 2026, en esta revisión escrita. **Evidencia:** «1. Si esta muy bien de acuerdo» y «dejame revisarlos mientras tanto cierra el punto 1 y 3».
+
+**Punto 1 cerrado:** acepta observaciones al final del paso 2, después de fecha y antes de continuar; mostrar en resumen del paso 3 si hay contenido y volver al paso 2 para corregir. Aprueba cierre funcional de PA-S01 sobre el recorrido ya acordado y salida del comprobante a detalle o Mi participación. Aviso adicional público sigue descartado; observaciones en resumen privado no adquieren visibilidad pública. Spec, boceto, plan/tareas e índice actualizados. PA-T01 cerrada como revisión funcional, no como código.
+
+**Punto 3 preparado para revisión:** el usuario pide convertir contratos, cambios de datos y pruebas en instrucciones implementables y solicita revisarlas. Se entrega [instrucciones implementables](instrucciones-implementacion.md) con contratos propuestos, persistencia, secuencia transaccional, entregas y resultados esperados. Se cierra la preparación documental; revisión/aceptación técnica por el usuario sigue pendiente. No se declara PA-DI01..07 resuelta ni implementación/SQL/pruebas/despliegue autorizados por este cierre.
+
+**Punto 2 ampliado:** reversión de duplicados y eliminación lógica de registros de plantación, bajas o reposiciones erróneas por ADMIN global o administrador de esa subcampaña. Aclaraciones y límites en [acta de correcciones](revision-correcciones-2026-10-12.md#continuación-duplicados-y-eliminación-de-errores); revisión integral/contratos pendientes.
+
+## 10. Alta VOLUNTARIO y acceso global — acuerdo del 12 de octubre
+
+Tras el contraste de repositorios, el usuario acepta ADMIN global con acceso a todas las subcampañas y presencia derivada en miembros como «Administrador · Acceso global», sin membresía nueva por ámbito. Aclara que todas las cuentas nuevas deben comenzar VOLUNTARIO, y que un administrador autorizado les asigna GENERAL/ADMIN como roles internos diferentes de plantador/administrador contextual. Se concreta autoridad como ADMIN global, no administrador de una subcampaña; permisos contextuales se implementan en backend/DB. Perfil no eleva ni restablece rol legítimo. Conservar catálogo cerrado, cuentas existentes, logística, participantes históricos y reglas operativas.
+
+El usuario elige expresamente **«Document the agreement first»**. Se registra [acuerdo de roles y permisos](acuerdo-roles-y-permisos-2026-10-12.md), se propaga a ADR-PLA-03, PA-S00/03, diseño e instrucciones; CA20–22 y PA-Q01b precisan comprobaciones futuras. No se modifica backend/frontend, no se aplican migraciones ni se marca implementación/pruebas terminadas. El esquema físico y los contratos definitivos conservan sus pendientes.
+
+## 11. Identidad, evidencia propia y opciones de intento — 12 de octubre
+
+El usuario confirma corregir identidad al registrar y exige que la evidencia pendiente pertenezca al actor. Se aclara que el hallazgo de JWT afecta guardado y upload/descarte de pendientes, mientras visualización conserva la política pública/privada de PA-S02. Backend verifica sesión, deriva autor y valida propiedad/tipo/estado antes de vincular fotos en transacción; incluye ADMIN global. Revisar exposición directa de pendientes en Storage. Requisitos documentados en [instrucciones](instrucciones-implementacion.md), sin implementación aún.
+
+Pregunta por opciones para intentos: se explican clave en registro (limitada para rechazos/cargas), intento dedicado y comandos reutilizables en [revisión de contratos §6](revision-contratos-2026-10-12.md#6-definición-propuesta-para-consulta-del-mismo-intento). Se recomienda evaluar comandos comunes con primer recorrido de plantación. Selección del mecanismo y contrato definitivo pendientes; pedir opciones no equivale a aprobar tabla/migración ni iniciar cambios de aplicación.
+
+## 12. Elección de tabla compartida de comandos — 12 de octubre
+
+El usuario confirma «vamos con el tercero», referido a shared command table, y solicita explicación paso a paso de senior a junior. Se acepta registro común de comandos para plantación, permisos y correcciones, con primer recorrido de plantación y políticas específicas por operación. [Explicación documentada](diseno-comandos-compartidos.md); revisión de contratos, diseño compartido e instrucciones actualizados.
+
+PA-DI06 avanza: elección del enfoque cerrada; DTO/rutas/nombre físico, huella, estados observables, rechazo durable, recuperación de cargas, retención, bloqueos y verificación siguen pendientes. Se mantiene documentación primero; no se ejecuta SQL ni se modifican backend/frontend por esta elección.

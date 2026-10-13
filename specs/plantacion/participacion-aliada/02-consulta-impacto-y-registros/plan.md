@@ -1,8 +1,12 @@
 # Plan — PA-S02
 
-**Estado:** propuesta técnica para la primera versión de comportamiento de [PA-S02](spec.md) aprobada por el usuario; contratos y boceto definitivo pendientes. La aprobación habilita preparar boceto y pruebas de recorrido con datos simulados; no aprueba los mecanismos técnicos ni autoriza SQL o publicación de datos reales. **Actualización:** 11 de octubre de 2026.
+**Estado:** propuesta técnica para la primera versión de comportamiento de [PA-S02](spec.md) aprobada por el usuario; diseño backend base D01–D12 aceptado el 13, incluidos audiencia pública y snapshots. Boceto definitivo, proyecciones/fórmulas específicas de seguimiento y correcciones PA-S04 conservan sus entregas propias. Implementación, pruebas, SQL/publicación pendientes. **Actualización:** 13 de octubre de 2026.
+
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 ## 1. Orden y decisiones previas
+
+**Consulta y compartición públicas reafirmadas el 13 de octubre:** global → campaña → subcampaña → plantación y fotos elegibles no requieren cuenta/login/perfil/asignación; enlaces directos conservan destino. Una cuenta VOLUNTARIO sin permiso y un visitante obtienen la misma proyección pública. PA-T07-BE/DB dejan estas lecturas fuera del guard privado; PA-T08-FE las deja fuera de rutas protegidas y no espera capacidades para mostrarlas. PA-T11-QA prueba incógnito, sesión vencida/fallo de capacidades e igualdad de campos/alcance según CA23/24. No modificar audiencia de GET /plan técnico ni permitir escrituras por consulta.
 
 | Paso estable | Trabajo y motivo | Evidencia para avanzar |
 |---|---|---|

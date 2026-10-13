@@ -7,24 +7,25 @@ flowchart TB
   end
 
   subgraph pending ["P0: adaptación o alineación pendiente"]
-    identity["Identidad verificada en backend"]
+    identity["Sesión autenticada en servidor; sin documento de identidad"]
     roles["Permisos por persona y subcampaña"]
     ordering["Orden consistente: autorización y retiro"]
     retry["Idempotencia y resultado incierto"]
-    rules["Contrato alineado: GPS, metas y cierre"]
+    rules["Formalizar contratos: GPS manual, fecha, estado y saldo"]
   end
 
   context["Contexto operativo autorizado"]
   registration["Registro inicial y consumo atómicos"]
   access["Gestión de acceso y último administrador"]
-  visibility["Campos de consulta acordados"]
-  map["Mapa, resumen y registros"]
-  correction["Corrección central con historial"]
+  visibility["Proyección pública sin stock, contactos ni EXIF"]
+  map["Impacto público separado de gestión interna"]
+  correction["Correcciones acotadas por ambos administradores en ACTIVA"]
   verification["Verificación integrada del alcance mínimo"]
   pilot(["Piloto sujeto a preparación"])
 
   users --> identity --> roles
-  roles --> ordering --> retry --> registration
+  roles --> ordering --> registration
+  retry --> registration
   roles --> context
   terrain --> context
   stock --> context

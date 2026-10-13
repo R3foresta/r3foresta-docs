@@ -1,24 +1,28 @@
 # Tareas — PA-S01
 
-- `PA-T01` Revisar boceto y criterios con el usuario.
+**Acuerdos parciales del 11 y 12 de octubre, consolidados el 12:** recorrido fotos/ubicación → especies/cantidades y fecha «Hoy» modificable → participantes opcionales registrados/habilitados en la misma subcampaña, con resumen y «Confirmar plantación» al final del tercero. Ubicación confirmable/reajustable con coordenadas accesibles; cantidades dentro del saldo elegible de subcampaña sin vivero/lote; rechazo confirmado conserva borrador permitido y exige revisión sin cambios silenciosos. Corte/timeout recupera el mismo intento; fallo técnico confirmado del evaluador conserva formulario y permite reintentar sin guardar/consumir. No es modo offline completo. La confirmación posterior del 12 cierra PA-T01 en revisión funcional, incluida ubicación de observaciones; las tareas de implementación siguen pendientes.
+
+- `PA-T01` **Cerrada en revisión funcional, usuario, 12 de octubre:** observaciones después de fecha al final del paso 2, resumen condicional en paso 3 y retorno para corregir. Salida del comprobante a detalle o Mi participación conservada. Aviso adicional de visibilidad pública descartado por el usuario el 12 de octubre. Recorrido, ubicación, cantidades, participantes, fecha, cambios/rechazos y recuperación tienen acuerdos acotados; no reabrirlos.
 - `PA-T02` Documentar matriz de autorización/guardado/retiro y concurrencia.
-- `PA-T03` Contrastar GPS contra handoff, RN-PLA-32 y RPC local vigente 061; conservar 053 como antecedente y registrar PA-DI04.
-- `PA-T04` Contrastar selección FIFO, stock asignado e idempotencia; acordar contrato de intento/recibo PA-DI06 y su persistencia antes del código.
+- `PA-T03` Formalizar/verificar GPS, fecha y selección/revalidación de participantes conforme a los acuerdos; contrastar handoff, RN-PLA-32 y RPC local 061, conservando 053 como antecedente y PA-DI04.
+- `PA-T04` Implementar/verificar selección LIFO del stock de subcampaña e idempotencia conforme al contrato D07/D10/D11 aceptado; cotejar catálogo antes del SQL.
 - `PA-T05` Preparar guion de verificación del flujo y del comprobante.
 - `PA-T06` Solo después de revisión: implementar/verificar en el repositorio de código del usuario.
 
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La inicial consume LIFO del stock disponible de su subcampaña (`fecha_asignacion DESC, id DESC`), sin nueva recepción por organización/administradores ni segundo débito de Vivero. Afiliación opcional: organización existente del catálogo o «Otra»; snapshots históricos conservados. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+
 ## Desglose para ejecutar después de la revisión
 
-Todas pendientes; los sufijos preservan PA-T01–06. No se marca implementación por redactar esta lista.
+Las entregas de código siguen pendientes; PA-T01 está cerrada como revisión funcional. Contratos/datos/pruebas preparados en [instrucciones implementables](../instrucciones-implementacion.md), con D01–D12 aceptadas el 13; catálogo/implementación/verificación pendientes. Los sufijos preservan PA-T01–06. No se marca implementación por redactar esta lista.
 
 | ID | Entrega | Depende de | Terminación verificable |
 |---|---|---|---|
-| PA-T01-UX | Revisar historias, tres pasos, cantidades, responsable/participantes y recuperación. | PA-S00, PA-DI04/10 y boceto. | Recorrido y textos aceptados; cambios/preguntas documentados. |
+| PA-T01-UX | **Revisión funcional cerrada:** observaciones al final del paso 2, resumen condicional, retorno para corregir y salida del comprobante. Verificar acabado/accesibilidad durante PA-T06-FE. | PA-S00 y boceto aprobado. | Aprobación explícita del usuario del 12 de octubre en acta; sin cuarta pantalla ni guardado al seleccionar personas. No implica frontend implementado. |
 | PA-T02-BE | Identidad verificada, contexto y guardado autorizados por subcampaña. | Contrato PA-S03; PA-T02. | CA01/06/08; sin bypass por headers, rol global o ruta legada. |
-| PA-T03-BE | Validación de GPS/fecha y errores acordados; selección válida de participantes. | PA-DI04. | CA09/10 y casos de fecha/participante revocado conforme al contrato. |
-| PA-T04-DB | Migración de guardado/idempotencia, recibo y bloqueo compartido con permisos/stock. | PA-T02/04; diseño compartido aprobado. | CA05–07; una transacción/un consumo, sin alterar cantidad asignada ni debitar otra vez Vivero. |
-| PA-T04-BE | Consulta del mismo intento/detalle propio, huella, evidencia y recuperación. | Contrato PA-DI06 y PA-T04-DB. | Respuesta perdida recuperable; conflicto de contenido distinguible; no eliminar evidencia confirmada. |
-| PA-T06-FE | Integrar formulario existente, capacidades, resumen y comprobante/reintento. | PA-T01-UX y contratos backend. | CA02–04/07–10; conserva datos, controla doble clic y usa siempre identidad durable del intento. |
-| PA-T05-QA | Ejecutar guion por capas con datos sintéticos, PostGIS real y concurrencia. | Entregas anteriores en entorno aislado autorizado. | Evidencias de CA01–11, regresión de meta/plan/cierre, saldos y trazabilidad; fallos pendientes explícitos. |
+| PA-T03-BE | Validación de GPS/fecha y errores acordados; selección/revalidación de personas registradas/habilitadas del mismo ámbito. Distinguir captura/manual/exterior de fallo confirmado del evaluador y resultado incierto. | PA-DI04 y matriz de PA-T02. | CA02/09/10/12/13; límites de fecha verificados, participante revocado rechaza sin efecto/cambio silencioso, evaluador confirmado falla sin registro/consumo y sin evaluación inventada. |
+| PA-T04-DB | Migración de guardado/idempotencia, recibo y bloqueo compartido con permisos, participantes y stock. | PA-T02/04; diseño compartido aprobado. | CA05–07/10/13; una transacción/un consumo, orden de retiros verificado, rollback ante evaluador/participante rechazado, sin alterar cantidad asignada ni debitar otra vez Vivero. |
+| PA-T04-BE | Distribución LIFO en servidor desde especies/cantidades, consulta del mismo intento/detalle propio, huella, evidencia y recuperación. | Contratos LIFO/PA-DI06 y PA-T04-DB. | Saldo elegible de subcampaña revalidado, sin selección de vivero/lote por plantador ni stock personal; respuesta perdida recuperable y conflicto de contenido distinguible; no eliminar evidencia confirmada. |
+| PA-T06-FE | Adaptar los tres pasos, fecha «Hoy» en el segundo, participantes del mismo ámbito y resumen/confirmación final; conservar borrador permitido ante rechazo y recuperar el mismo intento ante corte. | PA-T01-UX y contratos backend. | CA02–04/07–10/12/13; sin reducción/cambio silencioso, cuarta pantalla o guardado por seleccionar; distingue rechazo/evaluador de resultado incierto y usa identidad durable del intento. |
+| PA-T05-QA | Ejecutar guion por capas con datos sintéticos, PostGIS real y concurrencia. | Entregas anteriores en entorno aislado autorizado. | Evidencias de CA01–14, regresión de meta/plan/cierre, saldos y trazabilidad; fallos pendientes explícitos. |
 
 Coordinar con PA-T-INT02/03/04/08 del [plan de integración](../plan-reutilizacion-integracion.md). Pruebas y migraciones son trabajo posterior; no se ejecutan contra producción como parte de revisar estos documentos.

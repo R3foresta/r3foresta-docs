@@ -2,9 +2,15 @@
 
 **Fecha de elaboración:** 8 de octubre de 2026. **Objetivo de campo:** jueves 15 de octubre de 2026, sujeto a controles y corrección excepcional preparados y verificados.
 
-El orden general fue aceptado en el cierre LCO. El refinamiento del 10 de octubre incorpora la experiencia del usuario nuevo y explicita trabajo frontend/backend/datos; sus specs siguen en borrador.
+El orden general fue aceptado en el cierre LCO. El refinamiento del 10 de octubre incorpora la experiencia del usuario nuevo y explicita trabajo frontend/backend/datos; en ese refinamiento las specs estaban en borrador. El estado vigente del 13 se recoge abajo; ese estado histórico no reabre revisiones cerradas.
 
 **Avance de revisión del 11 de octubre:** PA-S00 queda aprobada en comportamiento, lista para preparar boceto y plan técnico; se confirma consulta pública sin sesión, perfil sin wallet/documento y afiliación opcional, orientación VOLUNTARIO + permiso contextual y GPS exterior/manual. ADMIN global queda confirmado como autoridad central; se mantienen contratos, matriz operativa, migración, pruebas y casos de corrección pendientes. Ver [acta](revision-humana-2026-10-11.md); las tablas históricas de orden no significan que las decisiones confirmadas sigan abiertas.
+
+## Estado vigente y siguiente entrega — 13 de octubre
+
+PA-S00/01/02/03 aprobadas en comportamiento; PA-S01 cerrada integralmente el 12. D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) aceptadas con afiliación opcional del catálogo o «Otra», snapshots históricos y LIFO sobre stock existente de subcampaña, sin otra recepción. Contraste de APIs e inventario estático completados; cotejo del catálogo destino, manifest concreto, implementación y pruebas pendientes. PA-S04 conserva revisión específica de casos/efectos.
+
+Siguiente entrega PA-T-INT02-A: identidad, alta VOLUNTARIO y perfil seguro; después permisos/versiones, registro recuperable y gestión contextual según contrato §13. El [índice](README.md#trabajo-ya-realizado-y-tareas-asociadas) distingue preparación documental de ejecución. Las tablas fechadas de orden siguientes conservan la evolución del plan, sin volver a pedir acuerdos aceptados.
 
 ## Orden general aceptado el 8 de octubre
 
@@ -17,14 +23,14 @@ El orden general fue aceptado en el cierre LCO. El refinamiento del 10 de octubr
 | P1 | Consulta común | modelo de visibilidad pendiente | spec revisada y ejemplo de mapa |
 | P1 | Gestión de acceso | adaptación del modelo actual | spec revisada y transición verificable |
 
-## Bloqueos antes de implementar cada recorrido
+## Condiciones de implementación — estado actualizado el 13
 
-- Acordar entrada, alcance de consulta y alta de mínimo privilegio para nuevas cuentas (PA-S00). Inventariar usuarios internos y cerrar rutas/API que permitan eludir la restricción; no basta reducir el menú.
+- Entrada, consulta pública y alta VOLUNTARIO/perfil seguro aceptadas. Cotejar usuarios internos y preparar el manifest concreto; implementar/verificar API y rutas legadas según el inventario.
 - Verificar contrato GPS conforme a la confirmación del 11 de octubre: exterior permitido con evaluación/advertencia y captura manual válida como alternativa; RN-PLA-32 alineada para registro inicial. Distinguir fallo de dispositivo de fallo técnico de evaluación y no inventar coordenadas/resultados.
-- Diseñar autorización/guardado frente a revocación y reintentos concurrentes, sin asumir que pulsar enviar reserva permiso.
-- Confirmar correspondencia entre permisos contextuales nuevos y catálogo global/equipo vigente; no equiparar ADMINISTRADOR contextual con ADMIN global o COORDINADOR.
-- Confirmar que el consumo usa asignación física elegible una sola vez, sin nuevo despacho ni doble débito de Vivero.
-- Precisar la corrección central vinculada al original: campos, casos, límites, actor, historial y efectos sobre saldos/estados.
+- Implementar y verificar el orden de autorización/guardado/retiro y comandos recuperables del diseño aceptado; el clic no reserva permiso.
+- Modelo contextual separado de roles globales y coordinación/logística aceptado. Cotejar catálogo y revisar correspondencia concreta de personas en el manifest; no convertir masivamente COORDINADOR/GENERAL.
+- Verificar consumo LIFO de asignación elegible de la misma subcampaña, una sola vez, sin otra recepción/despacho ni doble débito de Vivero.
+- Concretar los contratos propios de PA-S04 por caso y autoridad: ADMIN global o administrador de esa subcampaña para casos admitidos, observaciones central. Cierre integral/efectos pendientes; no editor general ni cascada de hechos reales.
 
 ## Refinamiento del 10 de octubre: siguiente entrega
 

@@ -2,7 +2,11 @@
 
 **Estado:** backlog propuesto, pendiente de revisión humana. Ninguna tarea de implementación se declara ejecutada. Se conservan PA-T07..11; los sufijos identifican trabajo por capa sin renumerar las tareas base.
 
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+
 ## Preparación y revisión
+
+**Consulta pública reafirmada el 13 de octubre:** incluir PA-S02-CA23/24 en PA-T07-BE/DB, PA-T08-UX/FE y PA-T11-QA. Global y enlaces de campaña/subcampaña/plantación/foto elegible abren sin cuenta, registro ni login, con la misma proyección para VOLUNTARIO sin asignación. Probar destino de enlace compartido, ausencia de `ProtectedRoute`/guard JWT público y continuidad ante sesión vencida/fallo de capacidades. Es regla de producto confirmada; payloads/implementación/pruebas siguen pendientes.
 
 - [ ] **PA-T10 — Inventario de campos.** Contrastar respuestas de impacto, registro, contexto operativo, plan y evidencias con datos persistidos; marcar fuente, audiencia actual, propuesta y campos ausentes. Incluir URLs/metadatos y rutas públicas existentes. Entrega: matriz de PA-S02 §4 con ejemplos sintéticos; sin prometer composición viva por especie ni reconstruir participantes desconocidos.
 - [ ] **PA-T11 — Casos de consulta.** Revisar PA-S02-CA01..22 con responsable, corresponsable y persona que solo consulta, incluida cuenta nueva y permiso retirado. Entrega: confirmaciones de producto y pendientes técnicos identificados, no un reporte ficticio de pruebas pasadas.

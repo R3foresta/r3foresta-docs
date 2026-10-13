@@ -3,22 +3,23 @@ flowchart TB
   context["Cargar contexto operativo"]
   available{"¿Permiso y contexto disponibles?"}
   blocked(["Bloquear apertura y explicar"])
-  evidence["1. Fotos, GPS y fecha"]
-  quantities["2. Cantidades por especie"]
-  summary["3. Revisar resumen y participantes"]
+  evidence["1. Fotos y punto confirmado: GPS o coordenadas manuales"]
+  quantities["2. Especies, cantidades y fecha: Hoy editable"]
+  summary["3. Participantes habilitados y resumen; responsable fijo"]
   confirm["Confirmar un intento"]
   upload["Subir evidencia pendiente"]
   authorize{"¿Permiso vigente al autorizar?"}
   revoked(["Rechazar sin registro ni consumo"])
   validate{"¿Datos, estado y stock válidos?"}
-  rejected["Rechazo confirmado: corregir y actualizar contexto"]
+  rejected["Rechazo confirmado: conservar datos y explicar; sin ajuste automático"]
   transaction["Transacción: registro, detalles, evidencias y consumo"]
   outcome{"¿Resultado verificable?"}
   success(["Comprobante, detalle y saldo actualizado"])
   uncertain["Resultado incierto: no asumir fracaso"]
-  recover["PENDIENTE: recuperar o repetir el mismo intento"]
+  recover["Recuperar o reintentar el mismo envío sin duplicar"]
   abandon(["Abandonar antes del envío"])
-  align["PENDIENTE: alinear GPS, metas y cierre"]
+  geo["Evaluación geográfica del servidor"]
+  geoFail["Fallo técnico confirmado: conservar y reintentar sin guardar"]
 
   start --> context --> available
   available -->|"No"| blocked
@@ -27,18 +28,21 @@ flowchart TB
   summary -->|"Abandonar"| abandon
   confirm --> upload --> authorize
   authorize -->|"No"| revoked
-  authorize -->|"Sí"| validate
+  authorize -->|"Sí"| geo
+  geo -->|"Evaluado, incluso exterior con aviso"| validate
+  geo -->|"Fallo confirmado sin efecto"| geoFail
+  geoFail -->|"Reintentar"| confirm
   validate -->|"No"| rejected
   validate -->|"Sí"| transaction --> outcome
   rejected -->|"Revisar"| context
   outcome -->|"Guardado confirmado"| success
   outcome -->|"Rechazo confirmado"| rejected
   outcome -->|"Sin confirmación"| uncertain
-  uncertain -.-> recover
-  align -.-> validate
+  uncertain --> recover
+  recover -->|"Consultar o reintentar"| outcome
   style transaction fill:#EEF6FF,stroke:#3267A8
   style success fill:#E6F4EA,stroke:#26733B
   style revoked fill:#FCE8E6,stroke:#AD3F35
   style uncertain fill:#FFF4D6,stroke:#A87700
   style recover fill:#FFF4D6,stroke:#A87700
-  style align fill:#FFF4D6,stroke:#A87700
+  style geoFail fill:#FFF4D6,stroke:#A87700

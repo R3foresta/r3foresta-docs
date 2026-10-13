@@ -1,8 +1,10 @@
 # Plan — PA-S03
 
-**Estado:** diseño propuesto para revisión; no autoriza implementación, migración ni cambios de acceso real. **Actualización:** 11 de octubre de 2026.
+**Estado:** diseño backend D01–D12 aceptado el 13, con contratos de identidad/permisos/comandos concretados. Cotejo de catálogo, manifest real, migración, implementación y verificación pendientes. **Actualización:** 13 de octubre de 2026.
 
-**Producto confirmado en llamada:** se pueden preparar asignaciones de acceso desde BORRADOR, incluida la primera designación de administrador por ADMIN global y la incorporación de plantadores por el administrador autorizado. Registrar plantación inicial sigue requiriendo ACTIVA. Nuevos plantadores solo en BORRADOR/ACTIVA; cerradas/canceladas admiten retiros y reemplazo central de administradores con protección del último. Cerrar mantiene las personas/asignaciones existentes y las facultades internas de mantenimiento que correspondan. Incorporar esta matriz en contratos; el mecanismo de inicialización y la transición legada siguen pendientes.
+**Producto confirmado en llamada:** se pueden preparar asignaciones de acceso desde BORRADOR, incluida la primera designación de administrador por ADMIN global y la incorporación de plantadores por el administrador autorizado. Registrar plantación inicial sigue requiriendo ACTIVA. Nuevos plantadores solo en BORRADOR/ACTIVA; cerradas/canceladas admiten retiros y reemplazo central de administradores con protección del último. Cerrar mantiene las personas/asignaciones existentes y las facultades internas de mantenimiento que correspondan. Incorporar esta matriz en contratos; mecanismo de inicialización/transición aceptado en D04; cotejo del catálogo y manifest concreto de personas/ámbitos pendientes.
+
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 ## 1. Orden de trabajo
 

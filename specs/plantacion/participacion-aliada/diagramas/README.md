@@ -1,8 +1,8 @@
 # Diagramas y dependencias de PA-F01
 
-**Actualizados:** 9 de octubre de 2026. **Estado:** apoyo de Elaboración para revisión; no aprueba specs ni acredita implementación.
+**Actualizados:** 12 de octubre de 2026. **Estado:** cinco fuentes Mermaid y SVG regenerados localmente, sin Figma; apoyo de Elaboración, no aprobación de contratos, implementación ni salida a campo.
 
-**Nota de alcance del 10 de octubre:** las specs incorporaron [PA-S00 — cuenta nueva y experiencia participante](../00-experiencia-participante/spec.md) y el [diseño por capas y datos](../diseno-tecnico-compartido.md). Estos renders no se regeneraron en esa organización documental: falta reflejar entrada sin permisos, separación de experiencia interna y contratos de audiencia; las tablas candidatas aún no constituyen un ER aprobado. Usar las specs para esos detalles y alinear `.mmd`/SVG juntos tras revisar las decisiones. El boceto también propone fecha/observaciones en el segundo paso para reutilizar la UI actual.
+**Alcance actualizado:** consulta pública sin sesión y experiencia reducida separada de gestión interna; ADMIN global registra en ACTIVA sin membresía contextual adicional; ubicación manual confirmada; fecha en el segundo paso; recuperación del mismo intento y correcciones acotadas. Ver [PA-S00](../00-experiencia-participante/spec.md), [diseño compartido](../diseno-tecnico-compartido.md) y [acuerdo de correcciones](../revision-correcciones-2026-10-12.md). Modelo conceptual, no ER ni aprobación de tablas nuevas. Ubicación de observaciones aprobada posteriormente al final del paso 2, con resumen condicional en el tercero; el usuario descarta el 12 de octubre el aviso adicional de publicación.
 
 Para responder **«qué debemos tener antes de implementar»**, empezar por [PA-D05 y el análisis de dependencias](DEPENDENCIAS.md). Distingue base reutilizable, adaptación pendiente y condiciones de preparación del piloto, con lectura estática de backend/PWA locales.
 
@@ -18,7 +18,7 @@ Para responder **«qué debemos tener antes de implementar»**, empezar por [PA-
 
 ![Dependencias de implementación](svg/PA-D05-dependencias-implementacion.svg)
 
-Usuarios y datos operativos existen como base. Identidad verificada, nuevos permisos, orden de retiro/guardado, idempotencia y alineación de reglas necesitan trabajo específico. Consulta, gestión de acceso y corrección excepcional son condiciones del piloto aunque no sean pasos obligatorios de cada registro.
+Usuarios y datos operativos existen como base. Sesión verificada en servidor (sin documento de identidad), nuevos permisos, orden de retiro/guardado, idempotencia y contratos necesitan trabajo específico. Consulta, gestión de acceso y corrección excepcional son condiciones del piloto aunque no sean pasos obligatorios de cada registro.
 
 ## PA-D01 — Contexto y límite
 
@@ -30,7 +30,7 @@ Stock de subcampaña entregado antes de plantar. Corrección excepcional dentro 
 
 ![Casos de uso](svg/PA-D02-casos-uso.svg)
 
-Plantador y administrador contextual registran. El administrador incorpora/retira plantadores en su ámbito; R3Foresta designa/cambia/retira administradores y realiza corrección excepcional. Consulta común es una experiencia, no un tercer rol. Retiro conserva lectura propia sin equipo/stock. Las aristas muestran facultades de producto, no permisos desplegados. Es una vista simplificada, no UML exhaustivo.
+Plantador y administrador contextual registran; ADMIN global también puede hacerlo directamente en ACTIVA. El administrador gestiona plantadores de su ámbito según PA-S03; R3Foresta designa/cambia/retira administradores y protege al último. Ambos administradores corrigen cantidades/participantes solo en ACTIVA; observaciones sigue central. Cantidades exige ausencia de bajas y reposiciones, sin cambiar especies; aumento por diferencia, reducción con error y disponibilidad física confirmados. Cero sigue fuera del ajuste simple. La decisión posterior del 12 permite reversión de duplicados y eliminación lógica de registros erróneos; estos casos nuevos aún no se representan en los SVG de esta regeneración, consultar PA-S04 y su acta. Participantes conserva responsable original y no altera stock ni permisos. Todo con historial y autoridad verificada. Consulta pública no expone stock/contactos/perfiles completos/EXIF. Retiro conserva lectura propia autorizada. Vista simplificada de producto, no permisos desplegados ni UML exhaustivo.
 
 ## PA-D03 — Actividades de registro
 
@@ -38,19 +38,19 @@ Plantador y administrador contextual registran. El administrador incorpora/retir
 
 Conserva tres pasos del handoff. Registro, detalles, evidencias y consumo se confirman en una transacción. Cargar contexto, abrir formulario y subir fotos no reservan permiso. La autorización se ordena con el retiro: una operación autorizada antes del retiro termina normalmente, aunque puede fallar por otras validaciones. El mecanismo está pendiente.
 
-GPS fuera del polígono conserva bandera/distancia y advertencia según handoff/SQL local; no evaluable bloquea. Alinear RN-PLA-32. Metas/cierre documentados según ADR-PLA-04 y 060/061 locales; confirmar versión aplicada sin asumir despliegue. Ver [hallazgos de reglas](DEPENDENCIAS.md#pa-dep-04--gps-por-alinear).
+GPS exterior permitido con evaluación/advertencia; captura fallida o permiso denegado admite coordenadas manuales válidas y punto confirmado. Fallo técnico confirmado del evaluador del servidor: conservar formulario y reintentar sin guardar/consumir. Fecha «Hoy» editable en el segundo paso; participantes opcionales registrados/habilitados en el ámbito, responsable fijo y resumen/confirmación al final del tercero. Revalidar estado, permisos, participantes y saldo; conservar borrador permitido, sin ajustes automáticos. Contratos y mecanismos aún deben verificarse.
 
-Resultado incierto puede ser guardado cuya respuesta se perdió. Recuperación/reintento idempotente está pendiente; no se declara una clave/endpoint implementados. Abandonar antes de enviar no crea registro; limpiar fotos pendientes según contrato. Tras resultado incierto, resolver intento antes de asumir fotos libres o enviar uno nuevo.
+Resultado incierto puede ser guardado cuya respuesta se perdió. Recuperar o reintentar el mismo envío sin duplicar está aprobado en comportamiento; clave/endpoint y retención siguen pendientes. La flecha de recuperación representa comprobación o reintento conforme al contrato, no reenvío automático infinito. No es modo offline completo. Abandonar antes de enviar no crea registro; limpiar fotos pendientes según contrato. Tras resultado incierto, resolver intento antes de asumir fotos libres o enviar uno nuevo.
 
 ## PA-D04 — Modelo conceptual
 
 ![Modelo conceptual](svg/PA-D04-modelo-conceptual.svg)
 
-Mapa de conceptos, no ER físico ni tablas nuevas. Permiso por persona/subcampaña; registro con una subcampaña y un responsable real. Detalles conservan cantidades por asignación/lote/especie. Plantación grupal no se multiplica por corresponsables/afiliaciones. Afiliación y financiación son distintas; no inferir crédito desde afiliaciones actuales. Efectos de corrección se precisan aparte, sin devolución automática de stock.
+Mapa de conceptos, no ER físico ni tablas nuevas. Permiso por persona/subcampaña; registro con una subcampaña y un responsable real. Detalles conservan cantidades por asignación/lote/especie. Organizaciones de campaña y afiliaciones personales son relaciones distintas y no multiplican plantaciones. Financiación/crédito sigue fuera de esta definición. Correcciones conservan original/actor/historial; ajuste trazable de consumo no modifica entrega ni vivero. La distribución/reversión física por asignación sigue en diseño.
 
 ## Lectura y mantenimiento
 
-- Revisión humana del 11 de octubre: [consulta pública sin sesión y paso a registro autenticado](../revision-humana-2026-10-11.md) deben reflejarse en la próxima alineación de actores/entrada. GPS exterior/manual está confirmado y RN-PLA-32 alineada para registro inicial; las menciones anteriores de «alinear RN-PLA-32» describen el corte histórico del render. No se regeneraron dibujos ni se consideran aprobados por actualizar las specs.
+- Fuentes de esta regeneración: [revisión humana del 11/12](../revision-humana-2026-10-11.md) y [correcciones del 12](../revision-correcciones-2026-10-12.md). Los renders representan acuerdos; no los aprueban ni prueban ejecución.
 - Flecha continua: relación/acción descrita. En PA-D05: dependencia necesaria, no orden rígido de diseño; entradas convergentes se necesitan juntas.
 - Flecha punteada: contexto, alcance posterior o mecanismo/atribución por definir. Leer su etiqueta.
 - Azul: ámbito/base reutilizable, no «verificado en producción». Ámbar y `PENDIENTE`: adaptación/alineación/mecanismo sin cerrar. Verde: resultado esperado sujeto a verificación.

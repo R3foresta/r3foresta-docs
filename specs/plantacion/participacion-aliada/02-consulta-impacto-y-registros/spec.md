@@ -2,7 +2,11 @@
 
 **Estado:** primera versión de comportamiento de producto aprobada el 11 de octubre de 2026. Incluye consulta pública, presentación principal, fórmula de faltantes por subcampaña, «Mis registros», afiliación histórica y entrada por defecto. Base para preparar boceto y probar recorridos con datos simulados; contratos, boceto definitivo y mecanismos técnicos pendientes antes de la integración con datos reales. No declara implementación ni preparación de campo. **Prioridad de elaboración:** P1; los contratos que utiliza el registro son dependencias tempranas. Evidencia: [revisión humana](../revision-humana-2026-10-11.md).
 
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+
 ## 1. Resultado y relación con las otras specs
+
+**Reafirmación del 13 de octubre:** Impacto es una consulta común y pública, compartible por enlace **sin cuenta, sin registro y sin login**, tanto en el global como al abrir campañas, subcampañas, plantaciones y fotos públicas elegibles. Una cuenta VOLUNTARIO sin asignación obtiene la misma proyección pública que el visitante anónimo. El destinatario de un enlace compartido no necesita ser participante ni afiliado ni completar perfil; ve el nivel enlazado y puede recorrer el resto de Impacto público. Esta audiencia está confirmada; quedan por revisar mecanismos/payloads, no si debe exigirse autenticación.
 
 Una persona entiende el impacto de las plantaciones y puede llegar a los registros que lo explican sin recorrer las herramientas internas de Recolección, Vivero o gestión de campañas. Una persona que registró una plantación también puede recuperar su resultado guardado, incluso después del retiro de su permiso operativo.
 
@@ -13,6 +17,8 @@ Una persona entiende el impacto de las plantaciones y puede llegar a los registr
 Esto no introduce un estado «publicada» en `CAMPANIA`: su estado sigue siendo derivado. Se mantienen estados públicos elegibles de RN-PLA-34; no se decidió ampliar publicación a borradores/canceladas. La proyección pública incluye sus campos aprobados sin retirar automáticamente la autenticación del GET /plan técnico de ADR-PLA-05.
 
 ## 2. Historias de usuario
+
+Compartir el impacto de una plantación significa compartir su detalle público y sus datos permitidos; no el recibo privado ni una URL interna protegida. Global, campaña, subcampaña y registro deben tener enlaces públicos que conserven su destino al abrirse sin sesión. La entrada por última campaña de una cuenta no reemplaza un enlace directo recibido. Alta/login pueden ofrecerse para participar; no se presentan como paso obligatorio para consultar.
 
 | ID | Historia | Resultado verificable |
 |---|---|---|
@@ -69,7 +75,7 @@ La selección principal de campos públicos fue confirmada el 11 de octubre. Los
 | Stock, asignaciones y herramientas de M1/M2 | Confirmado: no publicar stock disponible, tampoco detrás de «Ver más». No incluir contexto operativo interno en las respuestas públicas. | No se obtiene por autoría histórica ni tras revocación. | Solo stock pertinente a la acción autorizada, separado de bajas e indicadores públicos. No implica gestionar entregas ni acceder a todo Vivero/Recolección. |
 | Meta/progreso y plan de especies | Referencia de meta/progreso inicial confirmada para explicar «faltan» en subcampaña; no confundirla con stock. Publicar la proyección necesaria, sin abrir indiscriminadamente un contrato interno ni adoptar la meta de campaña que incluye borradores. | Leer un plan no amplía permisos. | GET /plan mantiene lectura autenticada según ADR-PLA-05; editar sigue reservado a ADMIN global. |
 
-RN-PLA-34 ya contempla consulta sin autenticación; ADR-PLA-03 y la revisión de esta fecha delimitan esta experiencia. Revisar contratos y URLs existentes sin revocar silenciosamente trazabilidad pública previa ni exponer datos internos. Proponer aviso al registrar de que nombres, afiliación declarada, fotos y ubicación serán públicos. Mostrar indicadores reportados, no supervivencia comprobada por inspección inexistente. Esta consulta no incorpora nuevos flujos de escritura de mortandad/reposición al primer piloto.
+RN-PLA-34 ya contempla consulta sin autenticación; ADR-PLA-03 y la revisión de esta fecha delimitan esta experiencia. Revisar contratos y URLs existentes sin revocar silenciosamente trazabilidad pública previa ni exponer datos internos. El usuario descarta el 12 de octubre el aviso adicional de visibilidad pública propuesto para PA-S01; se conservan los campos y exclusiones de esta matriz. Mostrar indicadores reportados, no supervivencia comprobada por inspección inexistente. Esta consulta no incorpora nuevos flujos de escritura de mortandad/reposición al primer piloto.
 
 ## 5. Estados de experiencia
 
@@ -114,6 +120,13 @@ RN-PLA-34 ya contempla consulta sin autenticación; ADR-PLA-03 y la revisión de
 | PA-S02-CA22 | Visitante y plantador consultan global, campaña, subcampaña y registro. | Global: total inicial, mapa y campañas. Subcampaña: inicial/meta/faltantes; seguimiento al ampliar. Registro: fecha, referencia, GPS, especies/cantidades, personas, fotos y contexto separado. Comparten proyección pública; las acciones de registrar y consultar historial propio añaden solo sus contratos autorizados. |
 
 Los casos con propuestas pendientes se convierten en pruebas ejecutables después de aprobar la decisión correspondiente; esta lista no acredita pruebas realizadas.
+
+Casos adicionales de la reafirmación del 13, sin renumerar CA01..22:
+
+| ID | Dado / cuando | Entonces |
+|---|---|---|
+| PA-S02-CA23 | El autor comparte impacto global o enlace directo a campaña/subcampaña/plantación; el destinatario nunca creó cuenta y abre en incógnito. | Global y detalle público abren sin login/registro/perfil/token; fotos públicas elegibles también. No se deriva a «detalle propio» ni a gestión interna. |
+| PA-S02-CA24 | Visitante anónimo y VOLUNTARIO sin asignación consultan el mismo alcance/filtros; sesión expira o falla capacidades. | Reciben los mismos campos, registros y totales públicos; permisos solo cambian acciones/datos privados separados. La consulta pública no devuelve 401 por ausencia de sesión ni depende de capacidades. |
 
 ## 7. Decisiones y evidencia necesarias
 

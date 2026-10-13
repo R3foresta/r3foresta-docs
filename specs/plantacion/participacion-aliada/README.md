@@ -1,63 +1,66 @@
 # PA-F01 — Participación aliada en Plantación
 
-**Actualización:** 11 de octubre de 2026. **Estado:** PA-S00 y primera versión de PA-S02 aprobadas en comportamiento; PA-S03 cerrada en comportamiento y orquestación funcional, con spec/plan/tareas y propuesta de contratos para posterior backend/frontend/diseño. PA-S01/04 siguen en revisión, con decisiones parciales incorporadas. LCO cerrado, Elaboración autorizada. No acredita implementación ni salida a campo.
+**Actualización:** 13 de octubre de 2026. **Estado:** PA-S00/01/02/03 aprobadas en comportamiento; PA-S01 cerrada integralmente en revisión funcional. D01–D12 aceptadas como diseño técnico del backend el 13, con ajustes en D02 y D07. PA-S04 conserva alcance confirmado y cierre integral/contratos propios pendientes. LCO cerrado y Elaboración autorizada; avance de implementación y pruebas separado en [ESTADO.md](../../../ESTADO.md).
 
-## Propósito
+## Acuerdos vigentes
 
-Una persona abre el enlace y consulta públicamente el impacto sin cuenta ni perfil. Para registrar una plantación necesita autenticarse y estar habilitada en una subcampaña. No necesita conocer Recolección, Vivero o administración interna. Afiliación y organización no conceden permiso.
+- **Impacto público y compartible:** global, campaña, subcampaña, registro, mapa y fotos públicas elegibles se consultan sin cuenta, registro o login. VOLUNTARIO sin asignación ve la misma proyección pública. Registrar, gestionar y consultar datos privados exige sesión/autoridad; los enlaces públicos conservan su destino sin redirigir obligatoriamente al login.
+- **Dos experiencias y un dominio:** Impacto y participación es reducido y progresivo; la gestión interna conserva herramientas/datos/facultades legítimas. No duplicar campañas, plantaciones ni stock; profundizar en Impacto no abre datos internos.
+- **Alta, perfil y acceso:** toda cuenta nueva empieza VOLUNTARIO. Solo ADMIN global asigna roles internos mediante operación administrativa separada; el perfil no cambia autoridad. PLANTADOR y ADMINISTRADOR_SUBCAMPANIA son permisos por persona/subcampaña, distintos de coordinación/logística. ADMIN global tiene acceso transversal actual/futuro y presencia derivada deduplicada en miembros, sin filas por ámbito ni participación histórica automática.
+- **Afiliación opcional:** elegir una organización existente del catálogo o «Otra» con texto libre; también puede omitirse. No concede permisos ni crea automáticamente una organización maestra. Conservar nombre/afiliación histórica en el registro según el contrato aceptado.
+- **Registro inicial:** fotos/ubicación → especies/cantidades/fecha/observaciones → participantes/resumen/confirmación. Observaciones después de fecha en paso 2, en resumen solo si hay contenido y corregibles antes de confirmar. Sin aviso público adicional ni cuarta pantalla. Resultado incierto se recupera con el mismo comando.
+- **Stock:** consumir el saldo elegible que ya tiene la subcampaña. D07 acepta **LIFO en servidor**, sustituyendo FIFO propuesto anteriormente para este incremento; validar plan/fecha/stock atómicamente. No añadir recepción por organización/administrador, otra entrega, despacho o segundo débito de Vivero. La asignación física previa conserva su contrato M2→M3.
+- **Comandos:** tabla común elegida para plantación, acceso y correcciones, empezando por plantación. Diseño de comando/cargas/recuperación aceptado en D01–D12; la compartición no concede autoridad ni aprueba efectos específicos de PA-S04.
+- **Correcciones:** ADMIN global y administrador de esa subcampaña corrigen cantidades/participantes en ACTIVA con sus límites. Reversión de duplicados y eliminación lógica de plantación/baja/reposición erróneas conserva original e historial. Liberar consumo hacia asignaciones de la subcampaña no devuelve físicamente a Vivero; baja errónea revierte mortalidad, no stock. No cascada de hechos reales ni reapertura.
 
-**Regla de alcance confirmada: dos experiencias, un único modelo de Plantación.** La sección interna existente conserva su estructura, datos y herramientas para administradores y operativos autorizados de R3Foresta. La nueva sección Impacto y participación es reducida y progresiva: resumen global público → campaña → subcampaña → registro. Visitante y plantador comparten esa experiencia; el plantador suma únicamente acciones/contexto autorizados. No se reemplaza ni se simplifica globalmente la gestión interna, no se abre al profundizar en Impacto y no se duplican campañas, registros o stock. Ver [decisión humana](revision-humana-2026-10-11.md#separación-confirmada-de-experiencias).
+Fuentes de aceptación: [acta funcional](revision-humana-2026-10-11.md), [correcciones](revision-correcciones-2026-10-12.md), [roles y permisos](acuerdo-roles-y-permisos-2026-10-12.md), [acta técnica del 13](revision-tecnica-2026-10-13.md) y [ADR de Plantación](../../../decisiones/02_decisiones_plantacion.md).
 
-El usuario pidió desarrollar y organizar las specs; las decisiones técnicas y cada comportamiento detallado siguen su revisión propia.
+## Estado por capacidad
 
-## Empieza aquí: orden de revisión
-
-| Orden | Spec | Pregunta que vas a resolver | Estado |
-|---|---|---|---|
-| 1 | [PA-S00 — Entrada y experiencia del participante](00-experiencia-participante/spec.md) | ¿Qué encuentra un visitante sin sesión o una persona que quiere plantar? | Aprobada en comportamiento; preparación técnica habilitada, integración pendiente. |
-| 2 | [PA-S02 — Consulta de impacto y registros](02-consulta-impacto-y-registros/spec.md) | ¿Cómo se presentan los campos públicos y qué datos adicionales quedan fuera? | Primera versión de comportamiento aprobada; boceto, contratos e integración posteriores. |
-| 3 | [PA-S03 — Gestión de acceso por subcampaña](03-gestion-acceso-subcampania/spec.md) | ¿Quién habilita a quién, dónde y qué ocurre al retirar acceso? | Primera versión funcional/orquestación cerrada; propuesta de contratos preparada, adaptación e implementación posteriores. |
-| 4 | [PA-S01 — Registro inicial](01-registro-plantacion-inicial/spec.md) | ¿Cómo registra una vez, revisa y confirma que quedó guardado? | Borrador apoyado en formulario existente. |
-| 5 | [PA-S04 — Corrección excepcional](04-correccion-excepcional/spec.md) | ¿Cómo se resuelve un error real después de guardar? | Borrador; mecanismo y verificación antes de campo. |
-
-Los números de carpeta existentes se conservan para no romper IDs o referencias; no son un orden obligatorio de implementación. El backend de permisos es una dependencia temprana del registro aunque la pantalla de gestión llegue después.
-
-## Qué revisar en cada carpeta
-
-- **`spec.md`:** historias de usuario, reglas, estados y ejemplos de aceptación. Primero revisamos si describen lo que debe pasar.
-- **`plan.md`:** cómo se reparte entre UX, frontend, backend y base de datos, qué reutilizar y qué decisión falta antes del código afectado.
-- **`tasks.md`:** entregas pequeñas con dependencias y evidencia de terminación. No se marcan implementadas por haber escrito el documento.
-- **`03-gestion-acceso-subcampania/contratos.md`:** propuesta que conecta UX, solicitudes, validaciones, persistencia y resultados de acceso; incluye ejemplos para revisión técnica antes del código afectado.
-
-Al revisar una spec, registrar nombre del revisor, fecha, criterios aceptados, cambios solicitados y decisiones pendientes. Aprobar el comportamiento permite preparar su implementación cuando el plan técnico correspondiente esté resuelto. No hace falta aprobar todas las specs de una vez; tampoco iniciar código con una dependencia crítica indefinida.
-
-| Spec | Revisión humana de esta versión | Decisiones principales pendientes |
+| Spec | Revisión funcional completada | Qué sigue |
 |---|---|---|
-| PA-S00 | Favorable, usuario, 11 de octubre; [acta](revision-humana-2026-10-11.md). | PA-DI08 cerrada; PA-DI10 confirmada en producto; PA-DI09 orientada, con contratos/migración pendientes. |
-| PA-S02 | Primera versión de producto aprobada por el usuario, 11 de octubre; incluye consulta pública, presentación principal, faltantes por subcampaña, «Mis registros», afiliación histórica y entrada última campaña/global. | PA-DI05: contratos, boceto final, captura histórica/legado, fuentes de seguimiento, evidencia y campos privados adicionales; correcciones según PA-S04. |
-| PA-S03 | Primera versión de comportamiento y orquestación funcional aprobada por el usuario, 11 de octubre: autoridad/ámbito, BORRADOR, todo-o-nada, reemplazo previo, ADMIN global directo, búsqueda mínima y gestión contextual por estado. Cerrar conserva personas/asignaciones; sin reapertura. | Spec, plan, tareas y [propuesta de contratos](03-gestion-acceso-subcampania/contratos.md) preparados para backend/frontend/diseño. PA-DI01/02/03: persistencia, transición, mecanismos y correspondencia interna pendientes técnicos antes de construir la parte afectada. Propuesta UX de repetición/recuperación por revisar. No acredita implementación. |
-| PA-S01 | Revisión integral pendiente; GPS exterior/manual confirmado. | PA-DI04/06: manejo técnico de GPS, fechas/participantes y guardado recuperable. |
-| PA-S04 | Pendiente | PA-DI07: casos, mecanismo y efectos de corrección. |
+| [PA-S00 · Entrada](00-experiencia-participante/spec.md) | Entrada pública, perfil mínimo, alta/roles y acceso por ámbito aprobados. | INT02-A: identidad/alta/perfil; luego capacidades y entrada frontend. |
+| [PA-S01 · Registro inicial](01-registro-plantacion-inicial/spec.md) | Cierre integral el 12, incluidas observaciones; LIFO y diseño backend aceptados el 13. | Guardado recuperable, evidencias, autorización/stock y QA sobre el contrato aceptado. |
+| [PA-S02 · Consulta](02-consulta-impacto-y-registros/spec.md) | Primera versión aprobada: global/detalle, faltantes por subcampaña, Mis registros, afiliación histórica y consulta compartible sin login. | Boceto final, lecturas efectivas/fórmulas de seguimiento, integración y pruebas; correcciones según PA-S04. |
+| [PA-S03 · Acceso](03-gestion-acceso-subcampania/spec.md) | Autoridad/ámbito, BORRADOR, selección todo-o-nada, reemplazo/último administrador y gestión por estado aprobados; contrato backend aceptado. | Cotejo de catálogo, transición, persistencia, comandos de acceso y pruebas reales antes de habilitar personas. |
+| [PA-S04 · Correcciones](04-correccion-excepcional/spec.md) | Cantidades/participantes y duplicados/eliminación lógica errónea confirmados. | Cierre integral de fecha/ubicación y dependencias especiales; contratos de compensación/historial y QA propios. D01–D12 no cierran PA-DI07. |
 
-## Documentos compartidos
+Las carpetas e IDs se conservan; su numeración no impone orden de implementación. Cada carpeta mantiene spec, plan y tareas por capacidad. Un cierre funcional o técnico no marca tareas de código como ejecutadas.
 
-- [Revisión humana del 11 de octubre](revision-humana-2026-10-11.md): decisiones confirmadas, propuesta de roles con fuentes y pendientes de corrección.
-- [Plan inicial y siguiente entrega](plan-inicial.md): orden, razones, dependencias y condiciones de campo.
-- [Diseño compartido de frontend, backend y datos](diseno-tecnico-compartido.md): distribución de trabajo, contratos, tablas reutilizadas/candidatas y cómo preparar migraciones.
-- [Plan de reutilización e integración](plan-reutilizacion-integracion.md): evidencia del código existente, archivos concretos, PA-DI01–07 y tareas de integración.
-- [Boceto de registro y resultado](boceto-registro-resultado.md): propuesta de tres pasos con datos simulados; no diseño visual final.
-- [Diagramas](diagramas/README.md): contexto, casos de uso, actividades, modelo conceptual y dependencias. La incorporación de PA-S00 requiere una siguiente alineación de vistas, indicada en su índice.
+## Trabajo ya realizado y tareas asociadas
 
-No se abren carpetas por cada botón ni se duplican specs en «frontend» y «backend». Cada capacidad conserva su resultado completo y su plan explica la división técnica.
+| Trabajo | Entrega / evidencia | Estado exacto |
+|---|---|---|
+| Revisión funcional del registro | PA-T01/PA-T01-UX; [boceto](boceto-registro-resultado.md) y acta de cierre. | Cerrada en revisión funcional; frontend adaptado al incremento todavía por verificar. |
+| Contraste de APIs, DTO, SQL y consumidores | [Revisión de contratos](revision-contratos-2026-10-12.md). | Lectura estática completada; preserva hallazgos del código vigente. |
+| Inventario de rutas/facultades/regresión | [Inventario y segunda lectura](inventario-endpoints-y-regresion-participacion.md); aporta a ENT02, PA-T15 e INT01. | Inventario documental completado; pruebas y migración de personas no ejecutadas. |
+| Acuerdos de alta/permisos y comandos | [Roles](acuerdo-roles-y-permisos-2026-10-12.md) y [comandos compartidos](diseno-comandos-compartidos.md). | Decisiones de producto/enfoque confirmadas; infraestructura pendiente de implementación. |
+| Instrucciones por capas | [Instrucciones implementables](instrucciones-implementacion.md), PA-CT/PA-Q y entregas INT01–08. | Preparación documental entregada; el contrato backend aceptado precisa sus rutas/DTO/datos. |
+| Diseño técnico de identidad/acceso/registro/cargas | [Contrato backend](contrato-identidad-permisos-backend-propuesta.md) y acta del 13; contribuye a INT01 y prepara INT02/03. | D01–D12 aceptadas con ajustes. Cotejo del entorno y ejecución pendientes; no repetir la revisión como tarea abierta. |
+| Diagramas locales | [Fuentes Mermaid y SVG](diagramas/README.md). | Cinco renders del 12 existentes; incorporar cambios posteriores del 13 en la próxima actualización de diagramas. No representan migraciones aplicadas. |
 
-## Fuentes y trazabilidad
+PA-T-ENT02, PA-T12/15 e INT01 tienen componentes de preparación completados y componentes de transición/verificación pendientes. No marcar completas esas entregas enteras por el inventario o por redactar el contrato. Conservar evidencias y fechas al cerrar cada componente.
 
-- [Ficha LCO](../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md)
-- [ADR-PLA-03](../../../decisiones/02_decisiones_plantacion.md#adr-pla-03--autorizacion-operativa-por-persona-y-subcampana-para-participacion-aliada)
-- [Handoff vigente](../../../03-plantacion-module/05_handoff_registro_plantacion_inicial.md)
-- [Reglas de Plantación](../../../03-plantacion-module/01_reglas_de_negocio_plantacion.md)
-- [Contrato Vivero → Plantación](../../../90-contratos-integracion/02_contrato_vivero_a_plantacion.md)
-- [Migración local 053, antecedente](../../../database/migrations/053_m3_registrar_plantacion_sin_despacho.sql); la definición local posterior de registro es 061 en backend, con metas orientativas y cierre explícito según ADR-PLA-04. Plan/meta: ADR-PLA-05 y 062/063.
-- [Diagramas y dependencias de implementación](diagramas/README.md)
+## Siguiente entrega
 
-La revisión de fuentes locales es contraste documental; no prueba producción ni resuelve los permisos nuevos.
+**PA-T-INT02-A — Identidad, alta VOLUNTARIO y perfil seguro en backend.** Fijar revisiones/entorno, cotejar catálogo necesario y preparar fixtures aisladas antes del código dependiente de DB. El diseño aceptado de D01–D12 guía esa entrega; programar su ejecución en el repositorio de implementación correspondiente.
+
+Después: INT02-B permisos/versiones/transición → INT03-A registro con comandos/cargas/recibo → INT02-C gestión contextual/roles → INT02-D regresiones y corte sin vías legadas que eludan autorización. Integrar PWA/consulta/gestión en INT04/05/06, casos propios de corrección en INT07 y QA/despliegue en INT08. Autorización, retiro y último administrador deben verificarse antes de habilitar registro participante real.
+
+El objetivo de campo del 15 de octubre sigue condicionado a registro, acceso, consulta y corrección disponibles y verificados; la aceptación del diseño no acredita preparación del piloto.
+
+## Mapa de fuentes de verdad
+
+| Documento | Autoridad / uso |
+|---|---|
+| [Specs PA-S00–04](#estado-por-capacidad) y actas | Comportamiento aprobado y límites específicos por capacidad. |
+| [Contrato backend aceptado](contrato-identidad-permisos-backend-propuesta.md) + [acta técnica](revision-tecnica-2026-10-13.md) | D01–D12, DTO/errores, datos, concurrencia, cargas/retención y secuencia de implementación. Su nombre de archivo conserva «propuesta» por compatibilidad. |
+| [Revisión de contratos](revision-contratos-2026-10-12.md) e [inventario](inventario-endpoints-y-regresion-participacion.md) | Evidencia estática del código existente; no reinterpretar como código ya actualizado o verificación remota. |
+| [Plan inicial](plan-inicial.md), [integración](plan-reutilizacion-integracion.md), [diseño compartido](diseno-tecnico-compartido.md) e [instrucciones](instrucciones-implementacion.md) | Orden, responsabilidades, archivos y tareas; referencias históricas de diseño se subordinan a decisiones posteriores aceptadas. |
+| [LCO](../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md) y [handoff](../../../03-plantacion-module/05_handoff_registro_plantacion_inicial.md) | Alcance y base interna reutilizada; adaptación participante conforme a spec/contrato posteriores. |
+| [ADR de Plantación](../../../decisiones/02_decisiones_plantacion.md) y [reglas M3](../../../03-plantacion-module/01_reglas_de_negocio_plantacion.md) | Decisiones transversales e invariantes del dominio. |
+| [Contrato Vivero→Plantación](../../../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) | Entrega física, consumo por asignación, devolución y saldos; el incremento no incorpora otra recepción. |
+| [Esquema documentado](../../../database/00_database_schema.md) | Base estructural existente; nuevas estructuras aceptadas se cotejan/preparan como migraciones antes de acreditar su aplicación. |
+| [ESTADO.md](../../../ESTADO.md) | Qué código, pruebas, migraciones y despliegue están realmente acreditados. |
+
+Las actas conservan historia; una propuesta FIFO anterior o un inventario del cliente existente no sustituye LIFO aceptado el 13. Perfil/afiliación, organizaciones de campaña y autoridad operativa siguen siendo relaciones distintas.
