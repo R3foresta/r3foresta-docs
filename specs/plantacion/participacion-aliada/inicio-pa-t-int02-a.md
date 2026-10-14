@@ -1,5 +1,7 @@
 # PA-T-INT02-A — Inicio de identidad, alta VOLUNTARIO y perfil seguro
 
+> **Cierre del 14 de octubre de 2026: COMPLETADO** en su alcance de identidad/perfil, privacidad e integración de desarrollo; commit y push a main autorizados por Pablo. [Estado, evidencias y pendientes posteriores](../../../ESTADO.md#cierre-de-pa-t-int02-a--14-de-octubre-de-2026). Las instrucciones originales que siguen conservan la trazabilidad del encargo; este cierre no habilita el piloto.
+
 **Fecha:** 13 de octubre de 2026. **Estado:** instrucciones para comenzar implementación en backend, solicitada por Pablo tras aceptar D01–D12. Este documento define el encargo del nuevo chat; no acredita código, migraciones aplicadas, pruebas ejecutadas ni despliegue.
 
 ## 1. Objetivo y repositorios

@@ -1,5 +1,7 @@
 # Plan inicial — PA-F01
 
+> **Actualización del 14 de octubre:** INT02-A completado y publicado en main para identidad/perfil y privacidad en desarrollo. Siguen INT02-B y entregas posteriores; despliegue y piloto no acreditados. [Estado vigente](../../../ESTADO.md#cierre-de-pa-t-int02-a--14-de-octubre-de-2026). Las secciones fechadas siguientes conservan la evolución del plan.
+
 **Fecha de elaboración:** 8 de octubre de 2026. **Objetivo de campo:** jueves 15 de octubre de 2026, sujeto a controles y corrección excepcional preparados y verificados.
 
 El orden general fue aceptado en el cierre LCO. El refinamiento del 10 de octubre incorpora la experiencia del usuario nuevo y explicita trabajo frontend/backend/datos; en ese refinamiento las specs estaban en borrador. El estado vigente del 13 se recoge abajo; ese estado histórico no reabre revisiones cerradas.

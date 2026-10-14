@@ -1,6 +1,6 @@
 # PA-F01 — Participación aliada en Plantación
 
-**Actualización:** 13 de octubre de 2026. **Estado:** PA-S00/01/02/03 aprobadas en comportamiento; PA-S01 cerrada integralmente en revisión funcional. D01–D12 aceptadas como diseño técnico del backend el 13, con ajustes en D02 y D07. PA-S04 conserva alcance confirmado y cierre integral/contratos propios pendientes. LCO cerrado y Elaboración autorizada; avance de implementación y pruebas separado en [ESTADO.md](../../../ESTADO.md).
+**Actualización:** 14 de octubre de 2026. **Estado:** PA-S00/01/02/03 aprobadas en comportamiento; PA-S01 cerrada integralmente en revisión funcional. D01–D12 aceptadas como diseño técnico del backend el 13, con ajustes en D02 y D07. PA-S04 conserva alcance confirmado y cierre integral/contratos propios pendientes. LCO cerrado y Elaboración autorizada; avance de implementación y pruebas separado en [ESTADO.md](../../../ESTADO.md).
 
 ## Acuerdos vigentes
 
@@ -19,7 +19,7 @@ Fuentes de aceptación: [acta funcional](revision-humana-2026-10-11.md), [correc
 
 | Spec | Revisión funcional completada | Qué sigue |
 |---|---|---|
-| [PA-S00 · Entrada](00-experiencia-participante/spec.md) | Entrada pública, perfil mínimo, alta/roles y acceso por ámbito aprobados. | INT02-A: identidad/alta/perfil; luego capacidades y entrada frontend. |
+| [PA-S00 · Entrada](00-experiencia-participante/spec.md) | Entrada pública, perfil mínimo, alta/roles y acceso por ámbito aprobados. | INT02-A completado en identidad/alta/perfil y desarrollo; siguen capacidades e Impacto público en frontend. |
 | [PA-S01 · Registro inicial](01-registro-plantacion-inicial/spec.md) | Cierre integral el 12, incluidas observaciones; LIFO y diseño backend aceptados el 13. | Guardado recuperable, evidencias, autorización/stock y QA sobre el contrato aceptado. |
 | [PA-S02 · Consulta](02-consulta-impacto-y-registros/spec.md) | Primera versión aprobada: global/detalle, faltantes por subcampaña, Mis registros, afiliación histórica y consulta compartible sin login. | Boceto final, lecturas efectivas/fórmulas de seguimiento, integración y pruebas; correcciones según PA-S04. |
 | [PA-S03 · Acceso](03-gestion-acceso-subcampania/spec.md) | Autoridad/ámbito, BORRADOR, selección todo-o-nada, reemplazo/último administrador y gestión por estado aprobados; contrato backend aceptado. | Cotejo de catálogo, transición, persistencia, comandos de acceso y pruebas reales antes de habilitar personas. |
@@ -41,9 +41,9 @@ Las carpetas e IDs se conservan; su numeración no impone orden de implementaci�
 
 PA-T-ENT02, PA-T12/15 e INT01 tienen componentes de preparación completados y componentes de transición/verificación pendientes. No marcar completas esas entregas enteras por el inventario o por redactar el contrato. Conservar evidencias y fechas al cerrar cada componente.
 
-## Siguiente entrega
+## Entrega completada y siguiente paso
 
-**PA-T-INT02-A — Identidad, alta VOLUNTARIO y perfil seguro en backend.** Fijar revisiones/entorno, cotejar catálogo necesario y preparar fixtures aisladas antes del código dependiente de DB. El diseño aceptado de D01–D12 guía esa entrega; programar su ejecución en el repositorio de implementación correspondiente.
+**PA-T-INT02-A — COMPLETADO el 14 de octubre de 2026.** Identidad/alta/perfil, adaptación PWA y cierre de privacidad comprobados en desarrollo; 064–067 aplicadas. Código publicado en main: backend `57e5b71`, PWA `cf13036`. [Estado y límites](../../../ESTADO.md#cierre-de-pa-t-int02-a--14-de-octubre-de-2026). La mejora posterior de UI/UX tiene pruebas sintéticas; su repetición integrada, despliegue y piloto conservan sus controles propios.
 
 Después: INT02-B permisos/versiones/transición → INT03-A registro con comandos/cargas/recibo → INT02-C gestión contextual/roles → INT02-D regresiones y corte sin vías legadas que eludan autorización. Integrar PWA/consulta/gestión en INT04/05/06, casos propios de corrección en INT07 y QA/despliegue en INT08. Autorización, retiro y último administrador deben verificarse antes de habilitar registro participante real.
 
