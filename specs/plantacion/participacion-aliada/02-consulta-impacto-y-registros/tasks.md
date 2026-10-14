@@ -1,6 +1,8 @@
 # Tareas — PA-S02
 
-**Estado:** backlog propuesto, pendiente de revisión humana. Ninguna tarea de implementación se declara ejecutada. Se conservan PA-T07..11; los sufijos identifican trabajo por capa sin renumerar las tareas base.
+**Ejecución al 14 de octubre:** INT05 sigue pendiente como entrega completa. INT02-A preservó y probó consultas públicas existentes; eso no completa las proyecciones, Mis registros ni las pantallas públicas PWA de esta spec. [Entregas y cobertura](../implementacion/README.md).
+
+**Estado:** comportamiento aprobado; contratos y entrega completa de consulta pendientes. Las regresiones existentes de INT02-A no cierran estas tareas. Se conservan PA-T07..11; los sufijos identifican trabajo por capa sin renumerar las tareas base.
 
 **Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
@@ -27,7 +29,7 @@ Las confirmaciones incorporan CA16/17 a PA-T10/11 y PA-T07-BE/DB, PA-T08-UX/FE y
 | PA-T09-FE | Presentar unidades, alcance del filtro y etiquetas de cantidades/meta; evitar superficie plantada y composición viva por especie no sustentadas. | PA-T09-DB; PA-T08-UX. | El usuario distingue hecho inicial, objetivo orientativo y saldo cuando corresponda, sin interpretación falsa del mapa. |
 | PA-T11-QA | Pruebas de contratos, queries y recorrido integrado por audiencia, incluidas URLs directas y cachés. | Tareas anteriores implementadas en entorno de prueba autorizado. | Evidencia vinculada a cada CA, versiones de frontend/backend y datos de prueba; fallos pendientes visibles. |
 
-Las tareas técnicas corresponden a los repositorios de aplicación cuando se autorice implementar. Este backlog no crea tablas ni aplica migraciones. Coordinar con PA-T-INT03/05/08 del [plan de integración](../plan-reutilizacion-integracion.md) y el [diseño técnico compartido](../diseno-tecnico-compartido.md), sin duplicar entregas.
+Las tareas técnicas corresponden a los repositorios de aplicación cuando se autorice implementar. Este backlog no crea tablas ni aplica migraciones. Coordinar con PA-T-INT03/05/08 del [plan de integración](../archivo/plan-reutilizacion-integracion.md) y el [diseño técnico compartido](../archivo/diseno-tecnico-compartido.md), sin duplicar entregas.
 
 La actualización del 11 de octubre añade CA12/13 y exige visitante sin sesión, enlaces profundos y sesión expirada en PA-T11-QA; además, no solicitar perfil, wallet ni documento para consultar. El registro de decisiones no acredita ejecutar estas pruebas.
 

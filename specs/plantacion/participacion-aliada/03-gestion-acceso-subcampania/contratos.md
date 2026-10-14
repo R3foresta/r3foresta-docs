@@ -2,7 +2,7 @@
 
 **Estado:** contratos lógicos preparados el 11 de octubre y concretados en el contrato backend D01–D12 aceptado por Pablo el 13, con ajustes D02/D07. Rutas v1/DTO, vigencias/revisiones, comandos y locks se toman de esa versión. No acredita funciones implementadas, migraciones ni cambios de acceso ejecutados.
 
-Un contrato conecta la experiencia de uso, la solicitud del cliente, las validaciones del servidor y el resultado persistido. Se concreta antes de programar cada acción. Fuente de producto: [spec](spec.md) y [acta](../revision-humana-2026-10-11.md).
+Un contrato conecta la experiencia de uso, la solicitud del cliente, las validaciones del servidor y el resultado persistido. Se concreta antes de programar cada acción. Fuente de producto: [spec](spec.md) y [acta](../archivo/revision-humana-2026-10-11.md).
 
 **Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
@@ -15,9 +15,9 @@ Un contrato conecta la experiencia de uso, la solicitud del cliente, las validac
 - La búsqueda usa nombre o correo exacto, sin organización compartida, mostrando nombre y afiliación declarada opcional. Los cambios sobre varias subcampañas son todo-o-nada.
 - La baja administrativa de una cuenta requiere reemplazo previo en cada ámbito donde sea la última administradora contextual. Los registros anteriores se conservan.
 
-**Orientación aceptada en llamada:** conservar el equipo actual de coordinación/logística y separar los permisos de participación por persona y subcampaña. La tabla contextual candidata y su historia se describen en [diseño compartido](../diseno-tecnico-compartido.md#diseño-candidato-para-pa-di01-permiso-por-persona-y-subcampaña). D04/D12 aceptadas el 13 fijan persistencia y corte de autorización en el contrato backend; cotejar el esquema real y revisar el manifest concreto antes de migrar. Aprobación del diseño no crea tablas ni aplica permisos.
+**Orientación aceptada en llamada:** conservar el equipo actual de coordinación/logística y separar los permisos de participación por persona y subcampaña. La tabla contextual candidata y su historia se describen en [diseño compartido](../archivo/diseno-tecnico-compartido.md#diseño-candidato-para-pa-di01-permiso-por-persona-y-subcampaña). D04/D12 aceptadas el 13 fijan persistencia y corte de autorización en el contrato backend; cotejar el esquema real y revisar el manifest concreto antes de migrar. Aprobación del diseño no crea tablas ni aplica permisos.
 
-Las rutas locales `GET/POST /subcampanias/:id/equipo` y `DELETE /subcampanias/:id/equipo/:usuarioId` son antecedente interno, no los comandos contextuales nuevos. Usan COORDINADOR/OPERARIO y tienen consumidores de activación/logística. No basta renombrar su DTO. Referencias: [controlador local](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/api/subcampanias.controller.ts), [servicio de equipo](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/application/subcampanias-equipo.service.ts), [plan de integración](../plan-reutilizacion-integracion.md).
+Las rutas locales `GET/POST /subcampanias/:id/equipo` y `DELETE /subcampanias/:id/equipo/:usuarioId` son antecedente interno, no los comandos contextuales nuevos. Usan COORDINADOR/OPERARIO y tienen consumidores de activación/logística. No basta renombrar su DTO. Referencias: [controlador local](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/api/subcampanias.controller.ts), [servicio de equipo](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/subcampanias/application/subcampanias-equipo.service.ts), [plan de integración](../archivo/plan-reutilizacion-integracion.md).
 
 ## 2. Identidad, lecturas y datos mínimos
 
@@ -110,7 +110,7 @@ Tras recuperación de un éxito anterior a un cierre o retiro, se muestra lo que
 
 ## 8. Diseño aceptado y trabajo previo a implementación
 
-D01–D12 aceptadas el 13 concretan PA-DI01/02/03/05/09 para el alcance de identidad/acceso: rutas/DTO/errores, búsqueda/capacidades, vigencias/revisiones, autoridad/alta, selección masiva, SIN_CAMBIOS y recuperación. [Acta del 13](../revision-tecnica-2026-10-13.md). Los nombres de contratos lógicos de este documento se conservan; implementación sigue las rutas/campos de la versión backend aceptada.
+D01–D12 aceptadas el 13 concretan PA-DI01/02/03/05/09 para el alcance de identidad/acceso: rutas/DTO/errores, búsqueda/capacidades, vigencias/revisiones, autoridad/alta, selección masiva, SIN_CAMBIOS y recuperación. [Acta del 13](../archivo/revision-tecnica-2026-10-13.md). Los nombres de contratos lógicos de este documento se conservan; implementación sigue las rutas/campos de la versión backend aceptada.
 
 - Cotejar catálogo real, restricciones, grants/RLS/Storage y RPC consumidoras; preparar migraciones nuevas sin reescribir históricas.
 - Completar y revisar manifest concreto de personas/ámbitos y responsabilidades internas; diseño aceptado no autoriza filas de transición desconocidas.

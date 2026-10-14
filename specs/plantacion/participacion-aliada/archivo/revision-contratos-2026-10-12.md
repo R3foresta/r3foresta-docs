@@ -1,12 +1,14 @@
 # Revisión de contratos: base de datos, backend y frontend
 
+> **Acta/contraste archivado.** Conserva decisiones y observaciones de su fecha. El avance posterior se consulta en el [tablero de ejecución](../implementacion/README.md).
+
 **Fecha:** 12 de octubre de 2026. **Alcance:** participación aliada, apartado 3 de [PA-F01](diseno-tecnico-compartido.md#3-contratos-que-deben-acordarse-entre-frontend-y-backend).
 
 **Resultado:** existe una base reutilizable de registro inicial, contexto, evidencias, equipo, plan e impacto. El contrato vigente entre las aplicaciones corresponde al flujo interno anterior. No implementa todavía el permiso contextual, la consulta del mismo intento, la afiliación histórica ni las correcciones de PA-F01. Esta revisión documenta hechos y recomendaciones técnicas; no aprueba nuevas tablas, rutas o migraciones.
 
-**Acuerdo posterior sobre H02/H07:** el usuario confirma [alta VOLUNTARIO, asignación administrativa de roles internos y permisos separados](acuerdo-roles-y-permisos-2026-10-12.md), con ADMIN global visible por autoridad derivada en miembros de todas las subcampañas. Se documenta primero; el código observado y sus diferencias siguen vigentes hasta implementar/verificar el cambio.
+**Acuerdo posterior sobre H02/H07:** el usuario confirma [alta VOLUNTARIO, asignación administrativa de roles internos y permisos separados](../acuerdo-roles-y-permisos-2026-10-12.md), con ADMIN global visible por autoridad derivada en miembros de todas las subcampañas. Se documenta primero; el código observado y sus diferencias siguen vigentes hasta implementar/verificar el cambio.
 
-**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. El [acta del 13](revision-tecnica-2026-10-13.md) sustituye la orientación FIFO anterior para la nueva inicial por LIFO de servidor, exclusivamente sobre stock de esa subcampaña y sin recepción adicional. Se conservan aquí las observaciones/decisiones históricas de su fecha. Afiliación opcional mediante catálogo o «Otra», sin acceso automático. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. El [acta del 13](revision-tecnica-2026-10-13.md) sustituye la orientación FIFO anterior para la nueva inicial por LIFO de servidor, exclusivamente sobre stock de esa subcampaña y sin recepción adicional. Se conservan aquí las observaciones/decisiones históricas de su fecha. Afiliación opcional mediante catálogo o «Otra», sin acceso automático. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 ## 1. Evidencia y límites
 
@@ -18,7 +20,7 @@
 
 Se contrastaron controladores, servicios, DTOs, tipos TypeScript, consumidor del formulario y migraciones locales. También se consultaron los chats existentes de ambos proyectos. Las migraciones indican el esquema esperado, pero su presencia en Git no prueba que estén aplicadas en una base determinada. No se consultaron filas de producción ni se ejecutaron migraciones. Las confirmaciones anteriores de aplicación de 062/063 siguen siendo antecedentes; no constituyen una nueva inspección del catálogo.
 
-Para cerrar la comprobación del entorno se preparó [SQL de inventario de solo lectura](sql/inventario-contratos-solo-lectura.sql): columnas, enums, restricciones, índices, RLS y permisos de funciones. No incluye datos personales ni cambios de esquema. Debe conservarse la salida con identificación del entorno y fecha; no adjuntar credenciales.
+Para cerrar la comprobación del entorno se preparó [SQL de inventario de solo lectura](../sql/inventario-contratos-solo-lectura.sql): columnas, enums, restricciones, índices, RLS y permisos de funciones. No incluye datos personales ni cambios de esquema. Debe conservarse la salida con identificación del entorno y fecha; no adjuntar credenciales.
 
 ## 2. Tipos persistidos que ya se reutilizan
 

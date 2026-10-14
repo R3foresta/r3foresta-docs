@@ -322,7 +322,7 @@ Tres cambios de comportamiento que el equipo de vivero debe internalizar:
 
 ## 8. Reglas de negocio que sostienen este flujo
 
-Las reglas formales viven en [01_reglas_de_negocio_vivero.md](./01_reglas_de_negocio_vivero.md), sección de integración con Plantación (`RN-VIV-47` en adelante). En resumen, los invariantes innegociables son:
+Las reglas formales viven en [01_reglas_de_negocio_vivero.md](01_reglas_de_negocio_vivero.md), sección de integración con Plantación (`RN-VIV-47` en adelante). En resumen, los invariantes innegociables son:
 
 - Asignación es reserva lógica; no genera evento en M2.
 - Devolución no genera evento en M2.
@@ -410,8 +410,8 @@ Esto es exactamente el comportamiento deseado: las reservas están protegidas.
 
 ## 11. Referencias
 
-- [Reglas de negocio Vivero (fuente canónica del contrato M2 ↔ M3: RN-VIV-47 a RN-VIV-60)](./01_reglas_de_negocio_vivero.md)
-- [Addendum del Módulo 2 (referencia histórica de la negociación del contrato, ya absorbida)](../decisiones/_historico/vivero-addendum-m2-m3.md)
-- [Procesos del Módulo 3 — Plantación](../03-plantacion-module/02_Procesos_Modulo_3_Plantacion.md)
-- [Esquema ER](../database/00_database_schema.md)
-- [Estado de implementación](../ESTADO.md)
+- [Reglas de negocio Vivero (fuente canónica del contrato M2 ↔ M3: RN-VIV-47 a RN-VIV-60)](01_reglas_de_negocio_vivero.md)
+- [Addendum del Módulo 2 (referencia histórica de la negociación del contrato, ya absorbida)](../../decisiones/_historico/vivero-addendum-m2-m3.md)
+- [Procesos del Módulo 3 — Plantación](../../03-plantacion-module/02_Procesos_Modulo_3_Plantacion.md)
+- [Esquema ER](../../database/00_database_schema.md)
+- [Estado de implementación](../../ESTADO.md)

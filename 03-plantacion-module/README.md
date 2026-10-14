@@ -20,9 +20,9 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 
 ## Incremento PA-F01 — diseño aceptado el 13 de octubre
 
-El [contrato backend](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) y [acta técnica](../specs/plantacion/participacion-aliada/revision-tecnica-2026-10-13.md) concretan identidad, alta VOLUNTARIO, roles/permisos, comandos y evidencias. Afiliación opcional del catálogo o «Otra», con snapshots históricos. La plantación inicial consume LIFO en servidor del stock elegible que ya tiene la subcampaña; no añade recepción por organización/administrador ni otro débito de Vivero. Impacto global/detalles/mapas/fotos públicas elegibles sigue compartible sin cuenta/login.
+El [contrato backend](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) y [acta técnica](../specs/plantacion/participacion-aliada/archivo/revision-tecnica-2026-10-13.md) concretan identidad, alta VOLUNTARIO, roles/permisos, comandos y evidencias. Afiliación opcional del catálogo o «Otra», con snapshots históricos. La plantación inicial consume LIFO en servidor del stock elegible que ya tiene la subcampaña; no añade recepción por organización/administrador ni otro débito de Vivero. Impacto global/detalles/mapas/fotos públicas elegibles sigue compartible sin cuenta/login.
 
-Las descripciones del registro interno existente conservan su evidencia y fechas; los nuevos permisos, LIFO y recuperación de comandos requieren adaptación/verificación. Siguiente entrega PA-T-INT02-A; el avance aplicado se registra en [ESTADO.md](../ESTADO.md), sin atribuir el incremento nuevo al cierre anterior del registro interno.
+Las descripciones del registro interno existente conservan su evidencia y fechas; los nuevos permisos, LIFO y recuperación de comandos requieren adaptación/verificación. INT02-A completada en identidad/perfil y desarrollo; siguiente entrega [INT02-B](../specs/plantacion/participacion-aliada/implementacion/pa-t-int02-b.md). El [tablero](../specs/plantacion/participacion-aliada/implementacion/README.md) enlaza entregas y specs; el avance aplicado se registra en [ESTADO.md](../ESTADO.md), sin atribuir el incremento nuevo al cierre anterior del registro interno.
 
 ## Dependencias
 

@@ -1,0 +1,47 @@
+flowchart TB
+  subgraph reuse ["Base reutilizable: comprobar versión y datos"]
+    users["Usuarios existentes"]
+    terrain["Subcampaña ACTIVA, plan y polígono"]
+    stock["Stock inicial entregado físicamente"]
+    evidence["Fotos, GPS y fecha"]
+  end
+
+  subgraph pending ["P0: adaptación o alineación pendiente"]
+    identity["Sesión autenticada en servidor; sin documento de identidad"]
+    roles["Permisos por persona y subcampaña"]
+    ordering["Orden consistente: autorización y retiro"]
+    retry["Idempotencia y resultado incierto"]
+    rules["Formalizar contratos: GPS manual, fecha, estado y saldo"]
+  end
+
+  context["Contexto operativo autorizado"]
+  registration["Registro inicial y consumo atómicos"]
+  access["Gestión de acceso y último administrador"]
+  visibility["Proyección pública sin stock, contactos ni EXIF"]
+  map["Impacto público separado de gestión interna"]
+  correction["Correcciones acotadas por ambos administradores en ACTIVA"]
+  verification["Verificación integrada del alcance mínimo"]
+  pilot(["Piloto sujeto a preparación"])
+
+  users --> identity --> roles
+  roles --> ordering --> registration
+  retry --> registration
+  roles --> context
+  terrain --> context
+  stock --> context
+  evidence --> context
+  rules --> context
+  context --> registration
+  roles --> access
+  visibility --> map
+  registration --> verification
+  access --> verification
+  map --> verification
+  correction --> verification
+  verification --> pilot
+
+  style reuse fill:#EEF6FF,stroke:#3267A8
+  style pending fill:#FFF4D6,stroke:#A87700
+  style correction fill:#FFF4D6,stroke:#A87700
+  style visibility fill:#FFF4D6,stroke:#A87700
+  style pilot fill:#E6F4EA,stroke:#26733B

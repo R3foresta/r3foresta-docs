@@ -1,9 +1,11 @@
 # Plan — PA-S01
 
+**Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
+
 **Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La inicial consume LIFO del stock disponible de su subcampaña (`fecha_asignacion DESC, id DESC`), sin nueva recepción por organización/administradores ni segundo débito de Vivero. Afiliación opcional: organización existente del catálogo o «Otra»; snapshots históricos conservados. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 
-**Estado:** comportamiento de PA-S01 cerrado por el usuario el 12 de octubre; diseño backend D01–D12 aceptado el 13; cotejo de catálogo, ejecución y verificación pendientes. Leer primero [spec](spec.md) y [las instrucciones implementables](../instrucciones-implementacion.md). Se conserva el orden de riesgos, con recuperación del guardado como condición crítica del piloto.
+**Estado:** comportamiento de PA-S01 cerrado por el usuario el 12 de octubre; diseño backend D01–D12 aceptado el 13; cotejo de catálogo, ejecución y verificación pendientes. Leer primero [spec](spec.md) y [las instrucciones implementables](../archivo/instrucciones-implementacion.md). Se conserva el orden de riesgos, con recuperación del guardado como condición crítica del piloto.
 
 **Recorrido confirmado en llamada:** fotos y ubicación, con foto como acción principal y captura GPS con permiso → especies y cantidades, con «Hoy» por defecto modificable dentro de la ventana vigente → participantes, con responsable autenticado visible y otros participantes opcionales registrados/habilitados en esa misma subcampaña, sin nombres libres ni otros ámbitos. El tercer paso termina con resumen compacto, retorno para corregir y «Confirmar plantación». Sin cuarta pantalla de revisión ni guardado al seleccionar personas; el comprobante es resultado posterior. Observaciones opcionales al final del segundo paso, después de fecha; visibles en resumen si hay contenido y corregibles antes de confirmar.
 
@@ -24,7 +26,7 @@
 | DB | Nueva migración de RPC y persistencia del intento según diseño aprobado; permiso, stock, registro/detalles, vínculo de evidencias y recibo atómicos. | PostgreSQL aislado: doble petición, competencia por stock y ambos órdenes de revocación; rollback completo ante fallo. |
 | Integración | Conectar entrada PA-S00, permisos PA-S03 y detalle PA-S02; preparar salida PA-S04. | Navegador → API → DB con ID, cantidades, fotos y stock verificados sobre versiones identificadas. |
 
-Referencias de archivos reutilizables: [plan de integración](../plan-reutilizacion-integracion.md). Contratos/tablas candidatas: [diseño compartido](../diseno-tecnico-compartido.md). No duplicar formulario, stock ni backend de Plantación.
+Referencias de archivos reutilizables: [plan de integración](../archivo/plan-reutilizacion-integracion.md). Contratos/tablas candidatas: [diseño compartido](../archivo/diseno-tecnico-compartido.md). No duplicar formulario, stock ni backend de Plantación.
 
 Aplicar el contrato backend aceptado para DTO/errores, permiso, autorización, comando/huella/retención, evidencia, LIFO y GPS; cotejar catálogo y verificar antes de habilitar sus partes. Mantener invariantes de reposición ya existentes al modificar la RPC compartida, aunque la nueva UI solo capture plantación inicial. Probar regresión de plan/meta/cierre y que clientes antiguos no eludan las garantías.
 

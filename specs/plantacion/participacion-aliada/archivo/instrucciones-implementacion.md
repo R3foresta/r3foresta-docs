@@ -1,10 +1,12 @@
 # PA-F01 — Instrucciones de implementación
 
+> **Planificación anterior archivada.** Conserva trazabilidad y propuestas de su fecha. Para ejecutar, leer el [tablero actual](../implementacion/README.md) y el [contrato D01–D12 aceptado](../contrato-identidad-permisos-backend-propuesta.md). Las propuestas de PA-S04 conservan su revisión propia.
+
 **Fecha:** 12 de octubre de 2026; actualización técnica del 13. **Estado:** D01–D12 del contrato backend aceptadas por el usuario el 13 de octubre, con ajustes D02/D07. Las decisiones funcionales de PA-S01 están cerradas. Implementación, migraciones y pruebas integradas siguen pendientes; contratos de efectos específicos de PA-S04 conservan su revisión propia.
 
-Leer [PA-S01](01-registro-plantacion-inicial/spec.md), [PA-S03 y sus contratos](03-gestion-acceso-subcampania/contratos.md), [PA-S04](04-correccion-excepcional/spec.md) y sus actas. Este documento convierte el diseño compartido y el plan de integración en entregas con entradas, efectos y criterios de salida. Conserva sus IDs; no sustituye reglas de producto por decisiones técnicas implícitas.
+Leer [PA-S01](../01-registro-plantacion-inicial/spec.md), [PA-S03 y sus contratos](../03-gestion-acceso-subcampania/contratos.md), [PA-S04](../04-correccion-excepcional/spec.md) y sus actas. Este documento convierte el diseño compartido y el plan de integración en entregas con entradas, efectos y criterios de salida. Conserva sus IDs; no sustituye reglas de producto por decisiones técnicas implícitas.
 
-**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La inicial consume LIFO del stock disponible de su subcampaña (`fecha_asignacion DESC, id DESC`), sin nueva recepción por organización/administradores ni segundo débito de Vivero. Afiliación opcional: organización existente del catálogo o «Otra»; snapshots históricos conservados. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La inicial consume LIFO del stock disponible de su subcampaña (`fecha_asignacion DESC, id DESC`), sin nueva recepción por organización/administradores ni segundo débito de Vivero. Afiliación opcional: organización existente del catálogo o «Otra»; snapshots históricos conservados. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 ## 1. Contratos API propuestos
 
@@ -106,7 +108,7 @@ Propuesta de disciplina común para registro, acceso, correcciones, cierre, devo
 
 Retiro antes de autorización válida rechaza sin efecto. Autorización válida primero puede finalizar con las demás reglas; el retiro espera el orden transaccional. Cierre/devolución/cambio de plan y aparición de baja/reposición se prueban con órdenes controlados. Preservar REGISTRO_REPOSICION y facultades internas de GENERAL/VALIDADOR/COORDINADOR en la transición; administrador contextual no adquiere esas facultades por nombre.
 
-Alta confirmada por [acuerdo del 12 de octubre](acuerdo-roles-y-permisos-2026-10-12.md): toda cuenta nueva VOLUNTARIO en backend, sin permiso contextual automático ni ascenso por completar perfil. Solo ADMIN global asigna/cambia roles internos mediante operación de usuarios separada y autenticada; el perfil conserva el rol legítimo existente. Revisar default/privilegios de DB y todas las vías de alta. Preparar matriz de usuarios existentes y resolución explícita de excepciones; no convertir masivamente GENERAL o COORDINADOR. ADMIN global conserva acceso transversal sin filas de permiso por ámbito y se identifica una vez en miembros como «Administrador · Acceso global»; la proyección no modifica logística ni participantes históricos. PWA antigua: migrar o rechazar explícitamente comandos incompatibles; una ruta anterior no queda como bypass. Contratos definitivos/implementación pendientes.
+Alta confirmada por [acuerdo del 12 de octubre](../acuerdo-roles-y-permisos-2026-10-12.md): toda cuenta nueva VOLUNTARIO en backend, sin permiso contextual automático ni ascenso por completar perfil. Solo ADMIN global asigna/cambia roles internos mediante operación de usuarios separada y autenticada; el perfil conserva el rol legítimo existente. Revisar default/privilegios de DB y todas las vías de alta. Preparar matriz de usuarios existentes y resolución explícita de excepciones; no convertir masivamente GENERAL o COORDINADOR. ADMIN global conserva acceso transversal sin filas de permiso por ámbito y se identifica una vez en miembros como «Administrador · Acceso global»; la proyección no modifica logística ni participantes históricos. PWA antigua: migrar o rechazar explícitamente comandos incompatibles; una ruta anterior no queda como bypass. Contratos definitivos/implementación pendientes.
 
 ## 5. Entregas por repositorio
 
@@ -150,7 +152,7 @@ Agregar PA-Q12 al conjunto de aceptación, sin renumerar PA-Q01..11:
 
 ## 7. Revisión técnica aceptada y cotejos de ejecución
 
-- [x] D01–D12 aceptadas por Pablo el 13, con D02 catálogo/«Otra» opcional y D07 LIFO del stock de subcampaña sin otra recepción. [Contrato concreto](contrato-identidad-permisos-backend-propuesta.md) y [acta](revision-tecnica-2026-10-13.md).
+- [x] D01–D12 aceptadas por Pablo el 13, con D02 catálogo/«Otra» opcional y D07 LIFO del stock de subcampaña sin otra recepción. [Contrato concreto](../contrato-identidad-permisos-backend-propuesta.md) y [acta](revision-tecnica-2026-10-13.md).
 - [x] Identidad/alta/perfil/roles, permisos/versiones, formatos API, fecha/zona, snapshots, comandos/cargas/retención y disciplina de concurrencia definidos en ese contrato. Esta casilla acredita revisión de diseño.
 - [ ] Cotejar catálogo, funciones/constraints/fechas legadas, grants/RLS/Storage y consumidores antes de migraciones nuevas.
 - [ ] Completar y revisar manifest concreto de personas/ámbitos, preservando coordinación/logística y roles internos; no conversión masiva.

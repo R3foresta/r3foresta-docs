@@ -1,6 +1,8 @@
 # Plan inicial — PA-F01
 
-> **Actualización del 14 de octubre:** INT02-A completado y publicado en main para identidad/perfil y privacidad en desarrollo. Siguen INT02-B y entregas posteriores; despliegue y piloto no acreditados. [Estado vigente](../../../ESTADO.md#cierre-de-pa-t-int02-a--14-de-octubre-de-2026). Las secciones fechadas siguientes conservan la evolución del plan.
+> **Planificación anterior archivada.** Conserva trazabilidad y propuestas de su fecha. Para ejecutar, leer el [tablero actual](../implementacion/README.md) y el [contrato D01–D12 aceptado](../contrato-identidad-permisos-backend-propuesta.md). Las propuestas de PA-S04 conservan su revisión propia.
+
+> **Actualización del 14 de octubre:** INT02-A completado y publicado en main para identidad/perfil y privacidad en desarrollo. Siguen INT02-B y entregas posteriores; despliegue y piloto no acreditados. [Estado vigente](../../../../ESTADO.md#cierre-de-pa-t-int02-a--14-de-octubre-de-2026). Las secciones fechadas siguientes conservan la evolución del plan.
 
 **Fecha de elaboración:** 8 de octubre de 2026. **Objetivo de campo:** jueves 15 de octubre de 2026, sujeto a controles y corrección excepcional preparados y verificados.
 
@@ -10,9 +12,9 @@ El orden general fue aceptado en el cierre LCO. El refinamiento del 10 de octubr
 
 ## Estado vigente y siguiente entrega — 13 de octubre
 
-PA-S00/01/02/03 aprobadas en comportamiento; PA-S01 cerrada integralmente el 12. D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) aceptadas con afiliación opcional del catálogo o «Otra», snapshots históricos y LIFO sobre stock existente de subcampaña, sin otra recepción. Contraste de APIs e inventario estático completados; cotejo del catálogo destino, manifest concreto, implementación y pruebas pendientes. PA-S04 conserva revisión específica de casos/efectos.
+PA-S00/01/02/03 aprobadas en comportamiento; PA-S01 cerrada integralmente el 12. D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) aceptadas con afiliación opcional del catálogo o «Otra», snapshots históricos y LIFO sobre stock existente de subcampaña, sin otra recepción. Contraste de APIs e inventario estático completados; cotejo del catálogo destino, manifest concreto, implementación y pruebas pendientes. PA-S04 conserva revisión específica de casos/efectos.
 
-Siguiente entrega PA-T-INT02-A: identidad, alta VOLUNTARIO y perfil seguro; después permisos/versiones, registro recuperable y gestión contextual según contrato §13. El [índice](README.md#trabajo-ya-realizado-y-tareas-asociadas) distingue preparación documental de ejecución. Las tablas fechadas de orden siguientes conservan la evolución del plan, sin volver a pedir acuerdos aceptados.
+Siguiente entrega PA-T-INT02-A: identidad, alta VOLUNTARIO y perfil seguro; después permisos/versiones, registro recuperable y gestión contextual según contrato §13. El [índice](../implementacion/README.md) distingue preparación documental de ejecución. Las tablas fechadas de orden siguientes conservan la evolución del plan, sin volver a pedir acuerdos aceptados.
 
 ## Orden general aceptado el 8 de octubre
 
@@ -48,7 +50,7 @@ Frontend puede bocetar y preparar componentes con contratos simulados mientras b
 
 Responsabilidades: el usuario revisa decisiones de producto y acepta cada spec; el diseño técnico propone contratos/migraciones y evidencia; la implementación se ejecuta por tareas revisadas en los repositorios de aplicación. Registrar ejecutor y revisor al iniciar cada entrega; no se presupone aprobación técnica ni disponibilidad de personas.
 
-Guía de lectura: [índice](README.md). Trabajo por capas y tablas candidatas: [diseño compartido](diseno-tecnico-compartido.md). Inventario de código y tareas PA-T-INT01–08: [plan de reutilización](plan-reutilizacion-integracion.md). Nuevas tareas de entrada: [PA-T-ENT01–06](00-experiencia-participante/tasks.md).
+Guía de lectura: [índice](../README.md). Trabajo por capas y tablas candidatas: [diseño compartido](diseno-tecnico-compartido.md). Inventario de código y tareas PA-T-INT01–08: [plan de reutilización](plan-reutilizacion-integracion.md). Nuevas tareas de entrada: [PA-T-ENT01–06](../00-experiencia-participante/tasks.md).
 
 ## Fuera de esta iteración
 

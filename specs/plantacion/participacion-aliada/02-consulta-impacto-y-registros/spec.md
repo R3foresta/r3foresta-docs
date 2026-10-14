@@ -1,6 +1,8 @@
 # PA-S02 — Consulta de impacto y registros
 
-**Estado:** primera versión de comportamiento de producto aprobada el 11 de octubre de 2026. Incluye consulta pública, presentación principal, fórmula de faltantes por subcampaña, «Mis registros», afiliación histórica y entrada por defecto. Base para preparar boceto y probar recorridos con datos simulados; contratos, boceto definitivo y mecanismos técnicos pendientes antes de la integración con datos reales. No declara implementación ni preparación de campo. **Prioridad de elaboración:** P1; los contratos que utiliza el registro son dependencias tempranas. Evidencia: [revisión humana](../revision-humana-2026-10-11.md).
+**Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
+
+**Estado:** primera versión de comportamiento de producto aprobada el 11 de octubre de 2026. Incluye consulta pública, presentación principal, fórmula de faltantes por subcampaña, «Mis registros», afiliación histórica y entrada por defecto. Base para preparar boceto y probar recorridos con datos simulados; contratos, boceto definitivo y mecanismos técnicos pendientes antes de la integración con datos reales. No declara implementación ni preparación de campo. **Prioridad de elaboración:** P1; los contratos que utiliza el registro son dependencias tempranas. Evidencia: [revisión humana](../archivo/revision-humana-2026-10-11.md).
 
 **Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
@@ -131,9 +133,9 @@ Casos adicionales de la reafirmación del 13, sin renumerar CA01..22:
 ## 7. Decisiones y evidencia necesarias
 
 - PA-DI08 cerrada: implementar y verificar consulta pública por enlace sin login; no queda pendiente elegir entre común y asignadas.
-- PA-DI05 con decisiones adicionales confirmadas: presentación principal, «Mis registros» por autoría/participación, afiliación al plantar, fórmula de faltantes por subcampaña y última campaña habilitada/global como entrada. Precisar payloads, captura histórica con PA-S01, presentación de GPS, entrega de fotos sin metadatos excluidos, observaciones libres y cualquier lectura privada ampliada de corresponsables. Ver [acta](../revision-humana-2026-10-11.md).
+- PA-DI05 con decisiones adicionales confirmadas: presentación principal, «Mis registros» por autoría/participación, afiliación al plantar, fórmula de faltantes por subcampaña y última campaña habilitada/global como entrada. Precisar payloads, captura histórica con PA-S01, presentación de GPS, entrega de fotos sin metadatos excluidos, observaciones libres y cualquier lectura privada ampliada de corresponsables. Ver [acta](../archivo/revision-humana-2026-10-11.md).
 - Concretar fuentes/fórmulas de seguimiento, etiquetas finales, tratamiento de correcciones y datos legados incompletos. Si se incluyen faltantes agregados en campaña/global, revisar su regla antes del contrato. Diseñar recuerdo de campaña por cuenta y revalidación de capacidades, sin confundir falla de lectura con ausencia de permiso. No inventar participantes ni snapshots que no existan.
-- Revisar [plan](plan.md), [tareas](tasks.md) y [diseño técnico compartido](../diseno-tecnico-compartido.md) antes de construir los contratos afectados.
+- Revisar [plan](plan.md), [tareas](tasks.md) y [diseño técnico compartido](../archivo/diseno-tecnico-compartido.md) antes de construir los contratos afectados.
 
 ## 8. Trazabilidad
 

@@ -1,5 +1,7 @@
 # Plan — PA-S02
 
+**Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
+
 **Estado:** propuesta técnica para la primera versión de comportamiento de [PA-S02](spec.md) aprobada por el usuario; diseño backend base D01–D12 aceptado el 13, incluidos audiencia pública y snapshots. Boceto definitivo, proyecciones/fórmulas específicas de seguimiento y correcciones PA-S04 conservan sus entregas propias. Implementación, pruebas, SQL/publicación pendientes. **Actualización:** 13 de octubre de 2026.
 
 **Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
@@ -24,7 +26,7 @@ Se puede avanzar en inventario, boceto y pruebas propuestas mientras se revisan 
 | Backend | Módulo `impact`, agregados de Plantación y hechos existentes. | Contratos por audiencia, identidad verificada para lectura propia/operativa, filtros opcionales y listado autorizado desde servidor. Separar respuesta común de capacidades, stock y equipo privados. | Los endpoints públicos por organización no obligan a una organización inicial ni autorizan campos nuevos. Revisar también rutas legadas que permitan eludir la política. |
 | Base de datos | Campaña/subcampaña, registros/detalles, personas realmente vinculadas y snapshots existentes. | Consultas/proyecciones con agregación por registro antes de unir participantes u organizaciones; índices solo si el contrato y medición los justifican. | No crear otra tabla de plantaciones ni estado persistido de campaña. No materializar crédito individual ni inferir historia desde afiliaciones actuales. |
 
-Ver contratos transversales y alternativas de datos en [diseño técnico compartido](../diseno-tecnico-compartido.md). Los nombres de endpoints/DTO nuevos se fijan al cerrar el contrato, no por copiar una pantalla interna completa.
+Ver contratos transversales y alternativas de datos en [diseño técnico compartido](../archivo/diseno-tecnico-compartido.md). Los nombres de endpoints/DTO nuevos se fijan al cerrar el contrato, no por copiar una pantalla interna completa.
 
 ## 3. Contratos mínimos a revisar
 

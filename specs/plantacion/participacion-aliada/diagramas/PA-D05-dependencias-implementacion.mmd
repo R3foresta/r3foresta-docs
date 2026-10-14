@@ -1,47 +1,42 @@
 flowchart TB
-  subgraph reuse ["Base reutilizable: comprobar versión y datos"]
-    users["Usuarios existentes"]
-    terrain["Subcampaña ACTIVA, plan y polígono"]
-    stock["Stock inicial entregado físicamente"]
-    evidence["Fotos, GPS y fecha"]
-  end
+  design["INT01: D01–D12 aceptadas"]
+  identity["INT02-A: identidad y perfil completos en desarrollo"]
+  catalog["Catálogo cotejado y manifest concreto revisado"]
+  permissions["INT02-B: permisos y transición; siguiente"]
+  data["Datos operativos y stock elegible existente"]
+  environment["PostGIS, cargas privadas y fotos públicas sanitizadas"]
+  commands["INT03-A: motor, inicial LIFO, snapshots y recibo"]
+  access["INT02-C: gestión contextual y capacidades"]
+  cutover["INT02-D: locks, rutas equivalentes y corte"]
+  form["INT04: formulario participante recuperable"]
+  impact["INT05: Impacto público y Mis registros"]
+  accessUi["INT06: interfaz de acceso"]
+  correctionCases["PA-S04: cierre de casos y efectos propios"]
+  corrections["INT07: correcciones y reversiones acotadas"]
+  verification["INT08: transición, QA integrada y despliegue"]
+  pilot(["Decisión posterior de habilitar piloto"])
 
-  subgraph pending ["P0: adaptación o alineación pendiente"]
-    identity["Sesión autenticada en servidor; sin documento de identidad"]
-    roles["Permisos por persona y subcampaña"]
-    ordering["Orden consistente: autorización y retiro"]
-    retry["Idempotencia y resultado incierto"]
-    rules["Formalizar contratos: GPS manual, fecha, estado y saldo"]
-  end
-
-  context["Contexto operativo autorizado"]
-  registration["Registro inicial y consumo atómicos"]
-  access["Gestión de acceso y último administrador"]
-  visibility["Proyección pública sin stock, contactos ni EXIF"]
-  map["Impacto público separado de gestión interna"]
-  correction["Correcciones acotadas por ambos administradores en ACTIVA"]
-  verification["Verificación integrada del alcance mínimo"]
-  pilot(["Piloto sujeto a preparación"])
-
-  users --> identity --> roles
-  roles --> ordering --> registration
-  retry --> registration
-  roles --> context
-  terrain --> context
-  stock --> context
-  evidence --> context
-  rules --> context
-  context --> registration
-  roles --> access
-  visibility --> map
-  registration --> verification
-  access --> verification
-  map --> verification
-  correction --> verification
+  design --> identity --> permissions
+  catalog --> permissions
+  permissions --> commands
+  data --> commands
+  environment --> commands
+  commands --> access --> cutover
+  commands --> form
+  commands --> impact
+  access --> accessUi
+  access --> corrections
+  correctionCases --> corrections
+  cutover --> verification
+  form --> verification
+  impact --> verification
+  accessUi --> verification
+  corrections --> verification
   verification --> pilot
 
-  style reuse fill:#EEF6FF,stroke:#3267A8
-  style pending fill:#FFF4D6,stroke:#A87700
-  style correction fill:#FFF4D6,stroke:#A87700
-  style visibility fill:#FFF4D6,stroke:#A87700
-  style pilot fill:#E6F4EA,stroke:#26733B
+  style design fill:#EEF6FF,stroke:#3267A8
+  style identity fill:#E6F4EA,stroke:#26733B
+  style permissions fill:#FFF4D6,stroke:#A87700
+  style catalog fill:#FFF4D6,stroke:#A87700
+  style correctionCases fill:#FFF4D6,stroke:#A87700
+  style pilot fill:#F5F5F5,stroke:#777777

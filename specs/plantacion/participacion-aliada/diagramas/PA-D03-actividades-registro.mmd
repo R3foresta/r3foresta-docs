@@ -1,48 +1,46 @@
 flowchart TB
-  start(["Acceder al registro"])
-  context["Cargar contexto operativo"]
-  available{"¿Permiso y contexto disponibles?"}
-  blocked(["Bloquear apertura y explicar"])
-  evidence["1. Fotos y punto confirmado: GPS o coordenadas manuales"]
-  quantities["2. Especies, cantidades y fecha: Hoy editable"]
-  summary["3. Participantes habilitados y resumen; responsable fijo"]
-  confirm["Confirmar un intento"]
-  upload["Subir evidencia pendiente"]
-  authorize{"¿Permiso vigente al autorizar?"}
-  revoked(["Rechazar sin registro ni consumo"])
-  validate{"¿Datos, estado y stock válidos?"}
-  rejected["Rechazo confirmado: conservar datos y explicar; sin ajuste automático"]
-  transaction["Transacción: registro, detalles, evidencias y consumo"]
-  outcome{"¿Resultado verificable?"}
-  success(["Comprobante, detalle y saldo actualizado"])
-  uncertain["Resultado incierto: no asumir fracaso"]
-  recover["Recuperar o reintentar el mismo envío sin duplicar"]
-  abandon(["Abandonar antes del envío"])
-  geo["Evaluación geográfica del servidor"]
-  geoFail["Fallo técnico confirmado: conservar y reintentar sin guardar"]
+  start(["Entrar al registro"])
+  authority{"¿Sesión y autoridad para ACTIVA?"}
+  blocked(["Explicar bloqueo sin contexto privado"])
+  context["Contexto privado: plan, revisión y saldo elegible"]
+  prepare["Preparar comando propio y cargas recuperables"]
+  stepOne["1. Fotos y ubicación confirmada"]
+  stepTwo["2. Cantidades, fecha y observaciones"]
+  stepThree["3. Participantes, resumen y Confirmar"]
+  abandon(["Abandono: clausurar preparación sin plantación"])
+  submit["Enviar comando_id y cantidades por especie"]
+  resolve["Verificar actor, clave y contenido"]
+  terminal{"¿Misma intención con recibo terminal?"}
+  validate["Revalidar autoridad, plan, fecha, personas, fotos y GPS"]
+  valid{"¿Validaciones completas?"}
+  atomic["RPC atómica: registro, LIFO, snapshots y recibo"]
+  receipt["Recibo terminal propio persistido"]
+  success(["CONFIRMADO: mismo comprobante y detalle"])
+  rejected(["RECHAZADO: sin efecto, conservar y revisar"])
+  unknown["Resultado pendiente de confirmar"]
+  recover["Consultar comando propio con sesión válida"]
+  known{"¿Hay recibo terminal?"}
+  retry["Conservar misma clave y contenido"]
 
-  start --> context --> available
-  available -->|"No"| blocked
-  available -->|"Sí"| evidence --> quantities --> summary --> confirm
-  summary -->|"Corregir"| evidence
-  summary -->|"Abandonar"| abandon
-  confirm --> upload --> authorize
-  authorize -->|"No"| revoked
-  authorize -->|"Sí"| geo
-  geo -->|"Evaluado, incluso exterior con aviso"| validate
-  geo -->|"Fallo confirmado sin efecto"| geoFail
-  geoFail -->|"Reintentar"| confirm
-  validate -->|"No"| rejected
-  validate -->|"Sí"| transaction --> outcome
-  rejected -->|"Revisar"| context
-  outcome -->|"Guardado confirmado"| success
-  outcome -->|"Rechazo confirmado"| rejected
-  outcome -->|"Sin confirmación"| uncertain
-  uncertain --> recover
-  recover -->|"Consultar o reintentar"| outcome
-  style transaction fill:#EEF6FF,stroke:#3267A8
+  start --> authority
+  authority -->|"No"| blocked
+  authority -->|"Sí"| context --> prepare --> stepOne --> stepTwo --> stepThree
+  stepThree -->|"Volver y corregir"| stepOne
+  stepThree -->|"Abandonar antes del envío"| abandon
+  stepThree -->|"Confirmar explícitamente"| submit --> resolve --> terminal
+  terminal -->|"Sí: sin otros efectos"| receipt
+  terminal -->|"No"| validate --> valid
+  valid -->|"Sí"| atomic --> receipt
+  valid -->|"No: rechazo durable"| receipt
+  receipt -->|"CONFIRMADO"| success
+  receipt -->|"RECHAZADO"| rejected
+  submit -.->|"Respuesta perdida o inconclusa"| unknown
+  unknown --> recover --> known
+  known -->|"Sí"| receipt
+  known -->|"202 o 404 inconcluso"| retry
+  retry -.->|"Consultar o repetir igual"| submit
+  style atomic fill:#EEF6FF,stroke:#3267A8
   style success fill:#E6F4EA,stroke:#26733B
-  style revoked fill:#FCE8E6,stroke:#AD3F35
-  style uncertain fill:#FFF4D6,stroke:#A87700
-  style recover fill:#FFF4D6,stroke:#A87700
-  style geoFail fill:#FFF4D6,stroke:#A87700
+  style rejected fill:#FCE8E6,stroke:#AD3F35
+  style unknown fill:#FFF4D6,stroke:#A87700
+  style retry fill:#FFF4D6,stroke:#A87700

@@ -1,46 +1,56 @@
 flowchart TB
   person["Persona / usuario"]
-  permission["Permiso contextual"]
-  roles["Plantador o administrador contextual"]
+  globalRole["Rol global verificado"]
+  permission["Permiso contextual con vigencia y revisión"]
+  contextualRole["PLANTADOR o ADMINISTRADOR_SUBCAMPANIA"]
+  logistics["Responsabilidad logística: COORDINADOR / OPERARIO"]
   campaign["Campaña"]
   subcampaign["Subcampaña"]
-  plan["Plan por especie"]
+  plan["Plan por especie y revisión"]
   species["Especie"]
   lot["Lote de vivero"]
   allocation["Asignación física con propósito"]
   record["Registro grupal de plantación"]
-  detail["Detalle de cantidad consumida"]
-  participants["Participantes reales registrados"]
-  evidence["Fotos, GPS y fecha"]
-  organization["Organización"]
-  finance["Crédito / financiación posterior"]
-  correction["Corrección excepcional vinculada"]
+  detail["Detalle de consumo LIFO"]
+  participants["Participantes históricos vinculados"]
+  snapshots["Snapshots de nombre y afiliación histórica"]
+  currentAffiliation["Afiliación actual: catálogo, Otra o ausencia"]
+  organization["Organización de campaña"]
+  command["Comando propio: clave e intención"]
+  receipt["Recibo terminal inmutable"]
+  photos["Cargas propias y evidencia vinculada"]
+  correction["Corrección: original, efecto e historial"]
 
+  person -->|"Conserva"| globalRole
+  globalRole -->|"ADMIN: autoridad derivada"| subcampaign
   person -->|"Recibe por ámbito"| permission
-  permission -->|"Uno de dos"| roles
+  permission -->|"Un rol por vigencia"| contextualRole
   permission -->|"Una subcampaña"| subcampaign
+  person -->|"Relación independiente"| logistics
+  logistics --> subcampaign
   campaign -->|"Agrupa"| subcampaign
-  subcampaign -->|"Planifica"| plan
-  plan -->|"Incluye"| species
+  campaign -->|"Contexto organizacional"| organization
+  person -->|"Perfil opcional"| currentAffiliation
+  person -->|"Responsable autenticado"| record
+  person -->|"Participación guardada"| participants
+  participants --> record
+  subcampaign -->|"Planifica"| plan --> species
   lot -->|"Una especie"| species
   lot -->|"Entrega mediante"| allocation
-  allocation -->|"Stock en una"| subcampaign
+  allocation -->|"Stock de una"| subcampaign
   record -->|"Pertenece a una"| subcampaign
-  record -->|"Un responsable real"| person
-  record -->|"Puede identificar"| participants
-  record -->|"Conserva"| evidence
+  record -->|"Congela al guardar"| snapshots
   record -->|"Desglosa cantidades"| detail
   detail -->|"Consume una"| allocation
   detail -->|"Identifica"| species
-  person -.->|"Afiliación opcional"| organization
-  campaign -->|"Organizaciones de campaña: relación distinta"| organization
-  participants -->|"Identifican"| person
-  organization -.->|"Relación separada"| finance
-  finance -.->|"Atribución por definir"| record
+  person -->|"Actor propietario"| command
+  command -->|"Preparación y propiedad"| photos
+  photos -->|"Vínculo atómico"| record
+  command -->|"Resultado con efecto"| receipt
+  receipt -->|"Referencia el original"| record
   correction -->|"Conserva original"| record
-  correction -->|"Ajusta consumo trazable, no entrega"| allocation
-  correction -->|"Conserva actor e historial"| person
+  correction -.->|"Motor común; efectos propios"| command
   style permission fill:#EEF6FF,stroke:#3267A8
   style allocation fill:#EEF6FF,stroke:#3267A8
+  style command fill:#EEF6FF,stroke:#3267A8
   style correction fill:#FFF4D6,stroke:#A87700
-  style finance fill:#F5F5F5,stroke:#777777

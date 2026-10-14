@@ -1,5 +1,7 @@
 # PA-S04 — Acuerdo humano de correcciones, 12 de octubre de 2026
 
+> **Acta/contraste archivado.** Conserva decisiones y observaciones de su fecha. El avance posterior se consulta en el [tablero de ejecución](../implementacion/README.md).
+
 **Fuente:** usuario responsable del producto, en este chat y su revisión por voz. **Estado:** decisiones parciales confirmadas; no aprobación integral de PA-S04, implementación ni habilitación de campo.
 
 ## Confirmado
@@ -23,7 +25,7 @@ La decisión 2 sustituye la exclusividad central anterior **para cantidades y, p
 
 ## Artefactos y límites de esta actualización
 
-[Spec](04-correccion-excepcional/spec.md), [plan](04-correccion-excepcional/plan.md), [tareas](04-correccion-excepcional/tasks.md) y matriz de [accesos](03-gestion-acceso-subcampania/spec.md).
+[Spec](../04-correccion-excepcional/spec.md), [plan](../04-correccion-excepcional/plan.md), [tareas](../04-correccion-excepcional/tasks.md) y matriz de [accesos](../03-gestion-acceso-subcampania/spec.md).
 
 Al registrar inicialmente este acuerdo, Git mantenía conflictos en las referencias centrales. En la continuación del 12 de octubre se revisaron y marcaron resueltos los 14 archivos no fusionados, conservando los cambios existentes; ADR-PLA-03 y CLAUDE.md ya recogen esta decisión. Las formulaciones históricas de exclusividad central se leen con el alcance actualizado aquí. No se ejecutaron cambios en aplicaciones, SQL, correcciones reales, commits ni push.
 
@@ -35,4 +37,4 @@ Al registrar inicialmente este acuerdo, Git mantenía conflictos en las referenc
 
 **Representación documental conforme a invariantes vigentes:** eliminación lógica con original, motivo, actor/fecha e historial; sin DELETE físico. Duplicados liberan consumo efectivo a sus asignaciones de subcampaña y conservan referencia al registro válido. Baja errónea revierte mortalidad, no stock disponible; reposición errónea revierte aporte y consumo hacia REPOSICION. Sin cambio de entrega ni devolución al vivero. Conservar ACTIVA como límite del alcance actual; compensaciones/versiones/concurrencia y dependencias requieren revisión técnica.
 
-Esta continuación sustituye la exclusión previa de duplicados como caso sin tratamiento. No elimina condiciones del ajuste simple de cantidad ni aprueba borrado en cascada de hechos reales. [PA-S04](04-correccion-excepcional/spec.md) y [propuesta implementable](instrucciones-implementacion.md) contienen casos y pruebas; revisión integral/implementación pendientes.
+Esta continuación sustituye la exclusión previa de duplicados como caso sin tratamiento. No elimina condiciones del ajuste simple de cantidad ni aprueba borrado en cascada de hechos reales. [PA-S04](../04-correccion-excepcional/spec.md) y [propuesta implementable](instrucciones-implementacion.md) contienen casos y pruebas; revisión integral/implementación pendientes.

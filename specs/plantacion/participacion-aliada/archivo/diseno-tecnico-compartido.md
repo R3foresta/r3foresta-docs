@@ -1,14 +1,16 @@
 # PA-F01 — Diseño compartido: frontend, backend y datos
 
+> **Planificación anterior archivada.** Conserva trazabilidad y propuestas de su fecha. Para ejecutar, leer el [tablero actual](../implementacion/README.md) y el [contrato D01–D12 aceptado](../contrato-identidad-permisos-backend-propuesta.md). Las propuestas de PA-S04 conservan su revisión propia.
+
 **Fecha:** 10 de octubre de 2026. **Estado:** diseño concretado por D01–D12 del contrato backend aceptado el 13; cotejo de catálogo, manifest, implementación y pruebas pendientes. No se ha creado ninguna tabla, ejecutado migraciones ni modificado los repositorios de aplicación en esta tarea.
 
 **Actualización de producto, 11 de octubre:** [revisión humana](revision-humana-2026-10-11.md) confirma consulta pública sin sesión, perfil sin wallet/documento y afiliación opcional, y orienta VOLUNTARIO + permiso contextual. La arquitectura debe servir lectura pública separada de capacidades/datos privados; solo registro y áreas privadas requieren sesión. ADMIN global queda confirmado como autoridad central y puede registrar directamente en cualquier subcampaña ACTIVA, sin permiso contextual adicional y con las validaciones de PA-S01. De PA-DI03 siguen pendientes los mecanismos de identidad/autorización y la correspondencia de facultades internas. La revisión de PA-S00 no aprueba automáticamente las tablas propuestas aquí.
 
 **Preparación técnica del 12 de octubre:** [instrucciones implementables](instrucciones-implementacion.md) concreta contratos/datos/pruebas para revisión del usuario. PA-S01 cerrado en comportamiento; nuevos casos de PA-S04 incorporados con compensaciones propuestas. No se aprueban mecanismos ni implementación por preparar ese documento.
 
-**Acuerdo posterior del 12 de octubre:** [alta, roles y permisos](acuerdo-roles-y-permisos-2026-10-12.md) confirma VOLUNTARIO para toda cuenta nueva y asignación de roles internos solo por ADMIN global, separada del perfil y de permisos contextuales. Backend/DB implementan la autorización. ADMIN global tiene acceso a todas las subcampañas y presencia derivada en su lista administrativa de miembros, sin filas por ámbito ni participación histórica automática. Usuario solicita documentar primero; implementación pendiente.
+**Acuerdo posterior del 12 de octubre:** [alta, roles y permisos](../acuerdo-roles-y-permisos-2026-10-12.md) confirma VOLUNTARIO para toda cuenta nueva y asignación de roles internos solo por ADMIN global, separada del perfil y de permisos contextuales. Backend/DB implementan la autorización. ADMIN global tiene acceso a todas las subcampañas y presencia derivada en su lista administrativa de miembros, sin filas por ámbito ni participación histórica automática. Usuario solicita documentar primero; implementación pendiente.
 
-**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. D02 define organización del catálogo/«Otra»/ausencia y D08 snapshots históricos. D07 establece LIFO sobre stock ya disponible de la subcampaña, sin nuevo flujo de recepción por organizaciones o administradores. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. D02 define organización del catálogo/«Otra»/ausencia y D08 snapshots históricos. D07 establece LIFO sobre stock ya disponible de la subcampaña, sin nuevo flujo de recepción por organizaciones o administradores. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 ## 1. Cómo se divide el trabajo
 
@@ -26,11 +28,11 @@ Backend entrega proyecciones públicas reducidas para resumen global, campañas,
 
 | Spec | Frontend / UX | Backend | Persistencia |
 |---|---|---|---|
-| [PA-S00 Entrada](00-experiencia-participante/spec.md) | Inicio enfocado, navegación y estados de sesión/contexto. | Alta de mínimo privilegio, perfil propio sin elevar autoridad, capacidades y protección de datos internos. | Usuario existente, permisos de PA-S03 y privilegios de acceso. |
-| [PA-S02 Consulta](02-consulta-impacto-y-registros/spec.md) | Resumen global → campaña → subcampaña → registro, mapa y campos progresivos; registros propios autorizados. | Proyección reducida por audiencia y alcance; reutilizar módulo `impact`. | Consultas sobre registros existentes, sin copiar plantaciones a tablas de un portal. |
-| [PA-S03 Acceso](03-gestion-acceso-subcampania/spec.md) | Gestión contextual y selección de subcampañas actuales. | Autoridad central/contextual; alta/retiro de facultades y búsqueda mínima de personas. | Permiso contextual, auditoría y operaciones serializadas por subcampaña. |
-| [PA-S01 Registro](01-registro-plantacion-inicial/spec.md) | Formulario de tres pasos, revisión, recuperación y comprobante. | Contexto autorizado, evidencias propias, errores identificables, consulta del intento. | Registro/detalles/consumo existentes + idempotencia y comprobante atómicos. |
-| [PA-S04 Corrección](04-correccion-excepcional/spec.md) | Orientación ante error y lectura del resultado autorizado. | Cantidades/participantes y reversión de duplicados/eliminación lógica de errores por ADMIN global o administrador del ámbito en ACTIVA; observaciones central. | Corrección vinculada al original, historial y efectos explícitos; límites del acuerdo del 12 de octubre. |
+| [PA-S00 Entrada](../00-experiencia-participante/spec.md) | Inicio enfocado, navegación y estados de sesión/contexto. | Alta de mínimo privilegio, perfil propio sin elevar autoridad, capacidades y protección de datos internos. | Usuario existente, permisos de PA-S03 y privilegios de acceso. |
+| [PA-S02 Consulta](../02-consulta-impacto-y-registros/spec.md) | Resumen global → campaña → subcampaña → registro, mapa y campos progresivos; registros propios autorizados. | Proyección reducida por audiencia y alcance; reutilizar módulo `impact`. | Consultas sobre registros existentes, sin copiar plantaciones a tablas de un portal. |
+| [PA-S03 Acceso](../03-gestion-acceso-subcampania/spec.md) | Gestión contextual y selección de subcampañas actuales. | Autoridad central/contextual; alta/retiro de facultades y búsqueda mínima de personas. | Permiso contextual, auditoría y operaciones serializadas por subcampaña. |
+| [PA-S01 Registro](../01-registro-plantacion-inicial/spec.md) | Formulario de tres pasos, revisión, recuperación y comprobante. | Contexto autorizado, evidencias propias, errores identificables, consulta del intento. | Registro/detalles/consumo existentes + idempotencia y comprobante atómicos. |
+| [PA-S04 Corrección](../04-correccion-excepcional/spec.md) | Orientación ante error y lectura del resultado autorizado. | Cantidades/participantes y reversión de duplicados/eliminación lógica de errores por ADMIN global o administrador del ámbito en ACTIVA; observaciones central. | Corrección vinculada al original, historial y efectos explícitos; límites del acuerdo del 12 de octubre. |
 
 ## 2. Base local y riesgos concretos
 
@@ -75,13 +77,13 @@ El portal de impacto actual tiene respuestas públicas cacheadas: no introducir 
 
 ### Entidades existentes que se reutilizan
 
-`usuario`, `campania`, `subcampania`, `subcampania_meta_especie`, `registro_plantacion`, `registro_plantacion_detalle`, `registro_plantacion_coresponsable`, evidencias y `asignacion_vivero_subcampania` siguen siendo la base. `subcampania_historial` ya ofrece un lugar de auditoría que debe evaluarse para nuevos eventos. Ver [esquema actual documentado](../../../database/00_database_schema.md).
+`usuario`, `campania`, `subcampania`, `subcampania_meta_especie`, `registro_plantacion`, `registro_plantacion_detalle`, `registro_plantacion_coresponsable`, evidencias y `asignacion_vivero_subcampania` siguen siendo la base. `subcampania_historial` ya ofrece un lugar de auditoría que debe evaluarse para nuevos eventos. Ver [esquema actual documentado](../../../../database/00_database_schema.md).
 
 No se necesita una tabla de «plantación participante» ni «stock de organización». La referencia opcional usuario–organización aceptada en D02 describe afiliación de perfil; no resuelve ni concede el permiso del piloto. «Otra» conserva texto, sin crear una organización maestra. Un punto del mapa representa un registro grupal; la lectura de impacto es una proyección de esos datos.
 
 ### Diseño candidato para PA-DI01: permiso por persona y subcampaña
 
-**Separación de responsabilidades aceptada en llamada:** conservar coordinación/logística existente y separar los permisos de participación por persona/subcampaña. **Persistencia aceptada en D04 el 13:** `subcampania_permiso` por vigencias y fila estable `subcampania_permiso_revision`, con historial existente. Antes del SQL se contrasta el esquema real y todos sus consumidores; el contrato backend concreta columnas/revisiones y no se sustituye silenciosamente por otra representación. La [propuesta de contratos de PA-S03](03-gestion-acceso-subcampania/contratos.md) conecta UX, backend y persistencia; no acredita implementación.
+**Separación de responsabilidades aceptada en llamada:** conservar coordinación/logística existente y separar los permisos de participación por persona/subcampaña. **Persistencia aceptada en D04 el 13:** `subcampania_permiso` por vigencias y fila estable `subcampania_permiso_revision`, con historial existente. Antes del SQL se contrasta el esquema real y todos sus consumidores; el contrato backend concreta columnas/revisiones y no se sustituye silenciosamente por otra representación. La [propuesta de contratos de PA-S03](../03-gestion-acceso-subcampania/contratos.md) conecta UX, backend y persistencia; no acredita implementación.
 
 | Campo lógico propuesto | Para qué sirve |
 |---|---|
@@ -122,7 +124,7 @@ Corregir participantes no consume ni devuelve plantas. Cambiar cantidades exige 
 
 ## 5. Decisiones y responsabilidades
 
-PA-DI01–07 se mantienen como trazabilidad en [plan de reutilización, §4](plan-reutilizacion-integracion.md#4-diseño-aceptado-y-cotejos-antes-del-código-afectado), con D01–D12 del contrato backend aceptadas el 13; PA-S04 conserva sus efectos/contratos específicos y catálogo/manifest/implementación siguen pendientes. PA-DI08–10 y sus estados se definen en [PA-S00, §5](00-experiencia-participante/spec.md#5-decisiones-confirmadas-y-pendientes-técnicos). El contrato backend y el acta del 13 acreditan la aceptación técnica; redactar un diseño por sí solo no acredita implementación.
+PA-DI01–07 se mantienen como trazabilidad en [plan de reutilización, §4](plan-reutilizacion-integracion.md#4-diseño-aceptado-y-cotejos-antes-del-código-afectado), con D01–D12 del contrato backend aceptadas el 13; PA-S04 conserva sus efectos/contratos específicos y catálogo/manifest/implementación siguen pendientes. PA-DI08–10 y sus estados se definen en [PA-S00, §5](../00-experiencia-participante/spec.md#5-decisiones-confirmadas-y-pendientes-técnicos). El contrato backend y el acta del 13 acreditan la aceptación técnica; redactar un diseño por sí solo no acredita implementación.
 
 | Revisión | Qué se acepta | Qué no implica |
 |---|---|---|

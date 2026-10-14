@@ -1,5 +1,7 @@
 # Tareas — PA-S01
 
+**Ejecución al 14 de octubre:** registro participante pendiente. INT03-A agrupa PA-T02/03-BE y PA-T04-BE/DB; INT04 integra PA-T06-FE. La identidad de INT02-A es una dependencia completada, no un cierre del nuevo registro. [Entregas y cobertura](../implementacion/README.md).
+
 **Acuerdos parciales del 11 y 12 de octubre, consolidados el 12:** recorrido fotos/ubicación → especies/cantidades y fecha «Hoy» modificable → participantes opcionales registrados/habilitados en la misma subcampaña, con resumen y «Confirmar plantación» al final del tercero. Ubicación confirmable/reajustable con coordenadas accesibles; cantidades dentro del saldo elegible de subcampaña sin vivero/lote; rechazo confirmado conserva borrador permitido y exige revisión sin cambios silenciosos. Corte/timeout recupera el mismo intento; fallo técnico confirmado del evaluador conserva formulario y permite reintentar sin guardar/consumir. No es modo offline completo. La confirmación posterior del 12 cierra PA-T01 en revisión funcional, incluida ubicación de observaciones; las tareas de implementación siguen pendientes.
 
 - `PA-T01` **Cerrada en revisión funcional, usuario, 12 de octubre:** observaciones después de fecha al final del paso 2, resumen condicional en paso 3 y retorno para corregir. Salida del comprobante a detalle o Mi participación conservada. Aviso adicional de visibilidad pública descartado por el usuario el 12 de octubre. Recorrido, ubicación, cantidades, participantes, fecha, cambios/rechazos y recuperación tienen acuerdos acotados; no reabrirlos.
@@ -13,7 +15,7 @@
 
 ## Desglose para ejecutar después de la revisión
 
-Las entregas de código siguen pendientes; PA-T01 está cerrada como revisión funcional. Contratos/datos/pruebas preparados en [instrucciones implementables](../instrucciones-implementacion.md), con D01–D12 aceptadas el 13; catálogo/implementación/verificación pendientes. Los sufijos preservan PA-T01–06. No se marca implementación por redactar esta lista.
+Las entregas de código siguen pendientes; PA-T01 está cerrada como revisión funcional. Contratos/datos/pruebas preparados en [instrucciones implementables](../archivo/instrucciones-implementacion.md), con D01–D12 aceptadas el 13; catálogo/implementación/verificación pendientes. Los sufijos preservan PA-T01–06. No se marca implementación por redactar esta lista.
 
 | ID | Entrega | Depende de | Terminación verificable |
 |---|---|---|---|
@@ -25,4 +27,4 @@ Las entregas de código siguen pendientes; PA-T01 está cerrada como revisión f
 | PA-T06-FE | Adaptar los tres pasos, fecha «Hoy» en el segundo, participantes del mismo ámbito y resumen/confirmación final; conservar borrador permitido ante rechazo y recuperar el mismo intento ante corte. | PA-T01-UX y contratos backend. | CA02–04/07–10/12/13; sin reducción/cambio silencioso, cuarta pantalla o guardado por seleccionar; distingue rechazo/evaluador de resultado incierto y usa identidad durable del intento. |
 | PA-T05-QA | Ejecutar guion por capas con datos sintéticos, PostGIS real y concurrencia. | Entregas anteriores en entorno aislado autorizado. | Evidencias de CA01–14, regresión de meta/plan/cierre, saldos y trazabilidad; fallos pendientes explícitos. |
 
-Coordinar con PA-T-INT02/03/04/08 del [plan de integración](../plan-reutilizacion-integracion.md). Pruebas y migraciones son trabajo posterior; no se ejecutan contra producción como parte de revisar estos documentos.
+Coordinar con PA-T-INT02/03/04/08 del [plan de integración](../archivo/plan-reutilizacion-integracion.md). Pruebas y migraciones son trabajo posterior; no se ejecutan contra producción como parte de revisar estos documentos.

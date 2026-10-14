@@ -482,7 +482,7 @@ No se admite acción por omisión para cuentas antiguas: sin mapping verificado,
 
 La audiencia de Impacto sin cuenta/login y su igualdad para VOLUNTARIO sin asignación **ya está confirmada**. La revisión de esta sección concierne payloads, implementación y protección de lo privado; no vuelve a plantear si se debe obligar a autenticarse para consultar o compartir el global/detalle público.
 
-Pablo acepta D01–D12 del contrato backend el 13 de octubre, con ajustes D02/D07, según el [acta](revision-tecnica-2026-10-13.md). El inventario conserva lo observado en el código, incluido FIFO legado; el objetivo aceptado para nueva inicial es LIFO sobre stock de la misma subcampaña, sin recepción por organizaciones/administradores. Las comprobaciones siguientes completan catálogo, manifest, implementación y verificación; no vuelven a someter esas doce decisiones a aprobación:
+Pablo acepta D01–D12 del contrato backend el 13 de octubre, con ajustes D02/D07, según el [acta](archivo/revision-tecnica-2026-10-13.md). El inventario conserva lo observado en el código, incluido FIFO legado; el objetivo aceptado para nueva inicial es LIFO sobre stock de la misma subcampaña, sin recepción por organizaciones/administradores. Las comprobaciones siguientes completan catálogo, manifest, implementación y verificación; no vuelven a someter esas doce decisiones a aprobación:
 
 1. Confirmar fuente de identidad por endpoint/cliente legado y plan de retirar `x-auth-id` sin verificabilidad, conciliando tokens y cabeceras antes del corte.
 2. Revisar matriz de facultades actuales ADMIN/GENERAL/VALIDADOR y COORDINADOR/OPERARIO, consumos laterales (activación, entrega/devolución, mantenimiento) y transición sin reclasificación masiva. No mapear todos los GENERAL a participante ni todo COORDINADOR a admin contextual.
@@ -496,10 +496,10 @@ Pablo acepta D01–D12 del contrato backend el 13 de octubre, con ajustes D02/D0
 - [Estado vivo y evidencia de implementación](../../../ESTADO.md)
 - [Decisiones ADR-PLA-03/04/05](../../../decisiones/02_decisiones_plantacion.md#adr-pla-03--autorizacion-operativa-por-persona-y-subcampana-para-participacion-aliada)
 - [Acuerdo de roles del 12 de octubre](acuerdo-roles-y-permisos-2026-10-12.md)
-- [Revisión de contratos observados](revision-contratos-2026-10-12.md)
+- [Revisión de contratos observados](archivo/revision-contratos-2026-10-12.md)
 - [Contrato de identidad/permisos (diseño aceptado, implementación pendiente)](contrato-identidad-permisos-backend-propuesta.md)
-- [Diseño de comandos](diseno-comandos-compartidos.md)
-- [Instrucciones de implementación](instrucciones-implementacion.md)
+- [Diseño de comandos](archivo/diseno-comandos-compartidos.md)
+- [Instrucciones de implementación](archivo/instrucciones-implementacion.md)
 - [PA-S00](00-experiencia-participante/spec.md), [plan](00-experiencia-participante/plan.md), [tareas](00-experiencia-participante/tasks.md)
 - [PA-S01](01-registro-plantacion-inicial/spec.md), [plan](01-registro-plantacion-inicial/plan.md), [tareas](01-registro-plantacion-inicial/tasks.md)
 - [PA-S02](02-consulta-impacto-y-registros/spec.md), [plan](02-consulta-impacto-y-registros/plan.md), [tareas](02-consulta-impacto-y-registros/tasks.md)

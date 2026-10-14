@@ -1,10 +1,12 @@
 # PA-F01 — Revisión técnica del 13 de octubre de 2026
 
+> **Acta/contraste archivado.** Conserva decisiones y observaciones de su fecha. El avance posterior se consulta en el [tablero de ejecución](../implementacion/README.md).
+
 **Revisor:** Pablo. **Fuente:** aceptación explícita del punto 12 del contrato backend en este chat. **Estado:** D01–D12 aceptadas como diseño técnico, con ajustes D02/D07; implementación pendiente.
 
 ## 1. Decisiones aceptadas
 
-La [sección 12 del contrato](contrato-identidad-permisos-backend-propuesta.md#12-decisiones-técnicas-aceptadas-por-pablo--13-de-octubre-de-2026) conserva D01–D12 con su contenido y comprobaciones de implementación. D01, D03–D06 y D08–D12 se aceptan conforme a la propuesta. D02 y D07 se aceptan con las precisiones siguientes. No queda pendiente volver a pedir la aprobación de esas doce decisiones.
+La [sección 12 del contrato](../contrato-identidad-permisos-backend-propuesta.md#12-decisiones-técnicas-aceptadas-por-pablo--13-de-octubre-de-2026) conserva D01–D12 con su contenido y comprobaciones de implementación. D01, D03–D06 y D08–D12 se aceptan conforme a la propuesta. D02 y D07 se aceptan con las precisiones siguientes. No queda pendiente volver a pedir la aprobación de esas doce decisiones.
 
 ## 2. D02 — Afiliación opcional con catálogo o «Otra»
 

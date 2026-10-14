@@ -1,0 +1,44 @@
+flowchart LR
+  r3["Administración central R3Foresta"]
+  admin["Administrador de subcampaña"]
+  plant["Plantador autorizado"]
+  reader["Cualquier persona, sin sesión"]
+  former["Persona con permiso retirado"]
+
+  subgraph operations ["Acciones dentro de la subcampaña autorizada"]
+    register(["Registrar plantación inicial"])
+    review(["Revisar antes de confirmar"])
+    manage(["Incorporar o retirar plantadores"])
+    inspect(["Corregir cantidades y participantes en ACTIVA"])
+  end
+
+  subgraph central ["Facultades centrales"]
+    assign(["Designar, cambiar o retirar administradores"])
+    protect["Conservar al menos un administrador"]
+    correct(["Corregir observaciones con historial"])
+  end
+
+  map(["Consultar impacto público reducido"])
+  limits["Cantidades: sin bajas ni reposiciones; historial obligatorio"]
+  own(["Consultar detalle de registros propios"])
+
+  plant --> register
+  admin --> register
+  r3 -->|"ACTIVA sin membresía adicional"| register
+  register -->|"Antes de guardar"| review
+  admin --> manage
+  r3 --> manage
+  admin --> inspect
+  r3 --> inspect
+  inspect -->|"Respetar límites"| limits
+  r3 --> correct
+  r3 --> assign
+  assign -->|"Cambio o retiro"| protect
+  plant --> map
+  admin --> map
+  reader --> map
+  former --> map
+  former --> own
+  style operations fill:#EEF6FF,stroke:#3267A8
+  style central fill:#F0EAFE,stroke:#7652A8
+  style correct fill:#FFF4D6,stroke:#A87700

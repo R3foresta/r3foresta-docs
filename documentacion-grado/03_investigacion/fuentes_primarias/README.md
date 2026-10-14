@@ -26,7 +26,7 @@ La fecha de FP-02 fue confirmada por Pablo Fernández el 14 de septiembre de 202
 
 El análisis se contrasta con:
 
-- el registro fotográfico del vivero de Chasquipampa del 22 de julio de 2026, conservado en [`../../07_imagenes/`](../../07_imagenes/);
+- el registro fotográfico del vivero de Chasquipampa del 22 de julio de 2026, conservado en [`../../07_imagenes/`](../../07_imagenes);
 - el *Dossier documental de R3Foresta: arborización, reforestación, viveros, semillas y bioregeneración*, elaborado mediante ChatGPT Deep Research con corte al 14 de septiembre de 2026;
 - los requisitos, reglas y flujos operativos consolidados de los módulos Recolección, Vivero y Plantación.
 

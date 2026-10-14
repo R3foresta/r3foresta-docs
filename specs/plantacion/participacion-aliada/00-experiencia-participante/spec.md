@@ -1,6 +1,8 @@
 # PA-S00 — Entrada y experiencia del participante
 
-**Estado:** comportamiento de producto aprobado, con aclaraciones confirmadas el 11 de octubre de 2026; diseño backend D01–D12 aceptado el 13, con cotejo de catálogo, implementación, boceto final y verificación integrada/campo pendientes según el plan. **Prioridad:** P0, previa a habilitar nuevas cuentas en el piloto. Feature: PA-F01. Evidencia: [acta de revisión](../revision-humana-2026-10-11.md).
+**Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
+
+**Estado:** comportamiento de producto aprobado, con aclaraciones confirmadas el 11 de octubre de 2026; diseño backend D01–D12 aceptado el 13, con cotejo de catálogo, implementación, boceto final y verificación integrada/campo pendientes según el plan. **Prioridad:** P0, previa a habilitar nuevas cuentas en el piloto. Feature: PA-F01. Evidencia: [acta de revisión](../archivo/revision-humana-2026-10-11.md).
 
 **Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La afiliación del perfil es opcional: se puede escoger una organización registrada, «Otra» con nombre libre o ninguna. No crea organizaciones ni permisos; D08 congela nombre/origen/ID de procedencia cuando corresponda. D07 consume LIFO del stock de la misma subcampaña, sin recepción adicional por organización/administradores. Impacto sigue público sin cuenta/login. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
@@ -95,6 +97,6 @@ No incluye gestión completa de afiliaciones, solicitudes de acceso, invitacione
 
 Probar primero visitante sin sesión y cuenta sin permisos; después, Palca Norte habilitada y Palca Sur no habilitada. Validar también una cuenta interna real de prueba. La evidencia técnica debe cubrir navegador → API → datos y rutas directas; una captura del menú no demuestra autorización.
 
-**Revisión registrada:** usuario responsable del producto, 11 de octubre de 2026, conformidad explícita con PA-S00 y aclaraciones incorporadas aquí; ver [acta](../revision-humana-2026-10-11.md). Aceptar el comportamiento no aprueba un esquema SQL, una migración, los mecanismos técnicos ni la salida a campo. La representación visual final y los contratos aún deben verificarse.
+**Revisión registrada:** usuario responsable del producto, 11 de octubre de 2026, conformidad explícita con PA-S00 y aclaraciones incorporadas aquí; ver [acta](../archivo/revision-humana-2026-10-11.md). Aceptar el comportamiento no aprueba un esquema SQL, una migración, los mecanismos técnicos ni la salida a campo. La representación visual final y los contratos aún deben verificarse.
 
-Fuentes: [ADR-PLA-03/05](../../../../decisiones/02_decisiones_plantacion.md), [LCO](../../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md), dirección humana de este chat del 10 de octubre y [diseño técnico compartido](../diseno-tecnico-compartido.md).
+Fuentes: [ADR-PLA-03/05](../../../../decisiones/02_decisiones_plantacion.md), [LCO](../../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md), dirección humana de este chat del 10 de octubre y [diseño técnico compartido](../archivo/diseno-tecnico-compartido.md).

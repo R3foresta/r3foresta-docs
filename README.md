@@ -1,44 +1,36 @@
-# r3foresta-docs
+# R3Foresta — documentación
 
-Base documental de R3Foresta: trazabilidad de material vegetal para reforestación. En el Proyecto de Grado, la proyección hacia bonos de carbono es solo contexto: no incluye medición, certificación, emisión, comercialización ni blockchain.
+Base documental de la trazabilidad de material vegetal: `General → Recolección → Vivero → Plantación`. El Proyecto de Grado no incluye medición, certificación ni comercialización de bonos de carbono.
 
-La cadena del dominio: `general (maestros) → recolección (origen) → vivero (maduración) → plantación (campo)`.
+## Empezar aquí
 
-## Índice
+| Necesito… | Leer |
+|---|---|
+| Saber qué existe, qué se verificó y qué falta | [ESTADO.md](ESTADO.md) |
+| Continuar el incremento actual de Participación aliada | [PA-F01: índice](specs/plantacion/participacion-aliada/README.md) → [tablero de ejecución](specs/plantacion/participacion-aliada/implementacion/README.md) |
+| Entender cómo se relacionan specs, tareas y entregas INT | [Guía de specs](specs/README.md) |
+| Trabajar como agente | [AGENTS.md](AGENTS.md), luego las fuentes de la entrega |
 
-* [Capítulo I — problema y alcance](documentacion-grado/06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md)
-  Contexto, problema central, objetivos y alcance del Proyecto de Grado.
+## Fuentes de dominio
 
-* [00-general-module/README.md](00-general-module/README.md)
-  Catálogos y maestros transversales: usuarios, territorios, viveros, plantas, evidencias, `ORGANIZACION`.
-* [01-recoleccion-module/README.md](01-recoleccion-module/README.md)
-  Módulo 1: registro del lote origen, evidencia, validación, saldo.
-* [02-vivero-module/README.md](02-vivero-module/README.md)
-  Módulo 2: maduración pre-plantación, eventos append-only, saldo vivo.
-* [03-plantacion-module/README.md](03-plantacion-module/README.md)
-  Módulo 3: campañas/subcampañas, plantación en campo, mantenimiento, vista pública.
-* [specs/README.md](specs/README.md)
-  Incremento PA-F01: specs de participación aliada, acuerdos de producto, diseño backend aceptado y tareas de implementación/verificación.
-* [90-contratos-integracion/README.md](90-contratos-integracion/README.md)
-  Contratos entre módulos: Recolección → Vivero y Vivero → Plantación.
-* [database/README.md](database/README.md)
-  Esquema ER canónico y scripts.
-* [decisiones/README.md](decisiones/README.md)
-  Registro unificado de decisiones de arquitectura y diseño (ADR) de todos los módulos.
-* [post-mvp/README.md](post-mvp/README.md)
-  Ideas y mejoras deliberadamente fuera del MVP, conservadas para futuras iteraciones.
+| Área | Contenido |
+|---|---|
+| [General](00-general-module/README.md) | Usuarios, organizaciones, territorios, especies y demás catálogos maestros. |
+| [Recolección](01-recoleccion-module/README.md) | Origen del material, evidencia, validación y saldo. |
+| [Vivero](02-vivero-module/README.md) | Lote, maduración, eventos y saldo físico. |
+| [Plantación](03-plantacion-module/README.md) | Campaña/subcampaña, plan, registro en campo y mantenimiento. |
+| [Contratos entre módulos](90-contratos-integracion/README.md) | Recolección → Vivero y Vivero → Plantación. |
+| [Decisiones ADR](decisiones/README.md) | Decisiones transversales e invariantes aceptados. |
+| [Datos y SQL](database/README.md) | Esquema documentado y copias/scripts de soporte; la aplicación en un entorno se acredita en ESTADO. |
 
-## Otros documentos raíz
+Las reglas de los módulos y los ADR definen la base; las [specs](specs/README.md) precisan el incremento. El estado de implementación y la evidencia se consultan por separado. Un diseño aceptado no acredita despliegue.
 
-* [ARCHITECTURE.md](ARCHITECTURE.md) — arquitectura integral observada: PWA, Backend, Supabase, flujos M1–M3, seguridad, despliegue, calidad y riesgos.
-* [database/00_database_schema.md](database/00_database_schema.md) — fuente de verdad estructural del proyecto (tablas + enums en mermaid).
-* [glosario.md](glosario.md) — términos clave del dominio, con enlace a su fuente canónica.
-* [ESTADO.md](ESTADO.md) — estado vivo de implementación: qué está en producción vs. pendiente.
-* [CLAUDE.md](CLAUDE.md) — convenciones e invariantes de dominio del proyecto.
-* [AUDITORIA-DOCUMENTACION.md](AUDITORIA-DOCUMENTACION.md) — informe de auditoría de la documentación.
+## Referencias y archivo
 
-## Participación aliada — estado al 13 de octubre de 2026
+- [ARCHITECTURE.md](ARCHITECTURE.md): arquitectura observada, con su fecha y límites.
+- [Glosario](glosario.md) y [CLAUDE.md](CLAUDE.md): vocabulario y convenciones/invariantes adicionales.
+- [Documentación de grado](documentacion-grado/README.md): investigación, metodología y entregables académicos. [Capítulo I](documentacion-grado/06_entregables/proyecto_grado/01_capitulo_marco_introductorio.md).
+- [Post-MVP](post-mvp/README.md): trabajo expresamente fuera del alcance actual.
+- [Archivo general](archivo/README.md): estados acumulados y auditorías fechadas. [Archivo de PA-F01](specs/plantacion/participacion-aliada/archivo/README.md): actas, planes anteriores y entregas cerradas.
 
-Entrada, registro inicial, consulta de impacto y gestión de acceso están aprobados en comportamiento; correcciones conserva acuerdos confirmados y cierre integral propio pendiente. D01–D12 del diseño backend están aceptadas con afiliación opcional del catálogo o «Otra» y consumo LIFO del stock de la subcampaña. Consulta pública compartible sin cuenta/login; registro y datos privados exigen autorización.
-
-El [índice de PA-F01](specs/plantacion/participacion-aliada/README.md) reúne fuentes y tareas ya trabajadas. El [contrato backend aceptado](specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) guía la siguiente entrega de identidad, alta VOLUNTARIO y perfil seguro. [ESTADO.md](ESTADO.md) distingue preparación documental, implementación, pruebas y despliegue; la aceptación del diseño no acredita el incremento aplicado.
+`bridge/`, `tmp/` y `output/` conservan material de intercambio o generado; sus copias no sustituyen las fuentes anteriores. Los archivos Excalidraw se gestionan aparte y no forman parte de esta ruta de consulta.

@@ -1,44 +1,48 @@
 flowchart LR
-  r3["Administración central R3Foresta"]
-  admin["Administrador de subcampaña"]
-  plant["Plantador autorizado"]
-  reader["Cualquier persona, sin sesión"]
-  former["Persona con permiso retirado"]
+  globalAdmin["ADMIN global activo"]
+  contextual["Administrador de subcampaña"]
+  planter["Plantador autorizado"]
+  visitor["Cualquier persona sin cuenta"]
+  historical["Autor o participante histórico autenticado"]
 
-  subgraph operations ["Acciones dentro de la subcampaña autorizada"]
-    register(["Registrar plantación inicial"])
-    review(["Revisar antes de confirmar"])
+  subgraph contextualActions ["Acciones por ámbito: autoridad y estado se revalidan"]
+    register(["Registrar inicial en ACTIVA"])
     manage(["Incorporar o retirar plantadores"])
-    inspect(["Corregir cantidades y participantes en ACTIVA"])
+    correct(["Corregir cantidades o participantes"])
+    reverse(["Revertir duplicado o registro erróneo"])
+    correctionLimits["PA-S04: ACTIVA, efectos e historial propios"]
   end
 
-  subgraph central ["Facultades centrales"]
-    assign(["Designar, cambiar o retirar administradores"])
-    protect["Conservar al menos un administrador"]
-    correct(["Corregir observaciones con historial"])
+  subgraph centralActions ["Autoridad global: separada del perfil"]
+    appoint(["Designar, cambiar o retirar administradores"])
+    contextualContinuity["Último administrador contextual efectivo protegido"]
+    authority(["Cambiar rol o inactivar cuenta"])
+    globalContinuity["Último ADMIN global activo protegido"]
+    observations(["Corregir observaciones con historial"])
   end
 
-  map(["Consultar impacto público reducido"])
-  limits["Cantidades: sin bajas ni reposiciones; historial obligatorio"]
-  own(["Consultar detalle de registros propios"])
+  publicImpact(["Consultar y compartir Impacto público"])
+  own(["Consultar Mis registros y recibo propio permitido"])
 
-  plant --> register
-  admin --> register
-  r3 -->|"ACTIVA sin membresía adicional"| register
-  register -->|"Antes de guardar"| review
-  admin --> manage
-  r3 --> manage
-  admin --> inspect
-  r3 --> inspect
-  inspect -->|"Respetar límites"| limits
-  r3 --> correct
-  r3 --> assign
-  assign -->|"Cambio o retiro"| protect
-  plant --> map
-  admin --> map
-  reader --> map
-  former --> map
-  former --> own
-  style operations fill:#EEF6FF,stroke:#3267A8
-  style central fill:#F0EAFE,stroke:#7652A8
-  style correct fill:#FFF4D6,stroke:#A87700
+  planter --> register
+  contextual --> register
+  globalAdmin -->|"Cualquier ACTIVA"| register
+  contextual -->|"Su ámbito"| manage
+  globalAdmin --> manage
+  contextual -->|"Su ámbito"| correct
+  globalAdmin --> correct
+  contextual -->|"Su ámbito"| reverse
+  globalAdmin --> reverse
+  correct --> correctionLimits
+  reverse --> correctionLimits
+  globalAdmin --> appoint --> contextualContinuity
+  globalAdmin --> authority --> globalContinuity
+  globalAdmin --> observations
+  visitor --> publicImpact
+  planter --> publicImpact
+  contextual --> publicImpact
+  historical -->|"Incluso tras retiro"| own
+  historical --> publicImpact
+  style contextualActions fill:#EEF6FF,stroke:#3267A8
+  style centralActions fill:#F0EAFE,stroke:#7652A8
+  style correctionLimits fill:#FFF4D6,stroke:#A87700

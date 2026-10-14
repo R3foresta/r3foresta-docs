@@ -1,8 +1,10 @@
 # Plan — PA-S04
 
+**Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
+
 **Estado:** propuesta de diseño, no mecanismo implementado. Esta capacidad se define desde el inicio de Elaboración y se verifica antes de campo.
 
-**Actualización 12 de octubre:** [acuerdo humano](../revision-correcciones-2026-10-12.md) confirma aumento/reducción de cantidad por ADMIN global o administrador contextual en su subcampaña, sin bajas/reposiciones ni cambio de especies. Reducción requiere confirmar disponibilidad física de la diferencia; aumento requiere saldo elegible. Participantes: ambos administradores, únicamente en ACTIVA, con listas anterior/nueva, actor, fecha y motivo; la habilitación operativa actual del participante no es requisito para corregir historia comprobada ni se restaura por esa corrección. Observaciones conserva ejecutor central. Confirmado posteriormente: solo subcampañas ACTIVA; cantidad cero fuera del ajuste simple. Decisión posterior: reversión de duplicados y eliminación lógica de plantación/baja/reposición erróneas por ADMIN global o administrador de esa subcampaña, con historial y compensaciones específicas; no cascada de hechos reales. No se aprueba toda PA-S04. Ver [instrucciones implementables](../instrucciones-implementacion.md), CT08..10.
+**Actualización 12 de octubre:** [acuerdo humano](../archivo/revision-correcciones-2026-10-12.md) confirma aumento/reducción de cantidad por ADMIN global o administrador contextual en su subcampaña, sin bajas/reposiciones ni cambio de especies. Reducción requiere confirmar disponibilidad física de la diferencia; aumento requiere saldo elegible. Participantes: ambos administradores, únicamente en ACTIVA, con listas anterior/nueva, actor, fecha y motivo; la habilitación operativa actual del participante no es requisito para corregir historia comprobada ni se restaura por esa corrección. Observaciones conserva ejecutor central. Confirmado posteriormente: solo subcampañas ACTIVA; cantidad cero fuera del ajuste simple. Decisión posterior: reversión de duplicados y eliminación lógica de plantación/baja/reposición erróneas por ADMIN global o administrador de esa subcampaña, con historial y compensaciones específicas; no cascada de hechos reales. No se aprueba toda PA-S04. Ver [instrucciones implementables](../archivo/instrucciones-implementacion.md), CT08..10.
 
 - `PA-T17` Definir casos y campos de corrección.
 - `PA-T18` Definir historial, vínculo al original y auditoría.
@@ -17,7 +19,7 @@
 | DB | Evento/registro de corrección vinculado, valores anteriores/nuevos, actor/fecha/motivo; versión/idempotencia; efectos e historial atómicos. | No borrar originales, alterar snapshots retroactivamente ni devolver stock sin hecho físico y comando aprobado. |
 | Consulta/integración | Resolver la presentación efectiva y agregados con PA-S02; preservar hechos de PA-S01 y reposiciones existentes. | Una corrección no se cuenta como otra plantación. |
 
-Ver alternativas de persistencia en [diseño compartido](../diseno-tecnico-compartido.md). No elegir una tabla o reutilizar un evento incompatible antes de precisar PA-DI07.
+Ver alternativas de persistencia en [diseño compartido](../archivo/diseno-tecnico-compartido.md). No elegir una tabla o reutilizar un evento incompatible antes de precisar PA-DI07.
 
 ## Puerta de implementación y de campo
 

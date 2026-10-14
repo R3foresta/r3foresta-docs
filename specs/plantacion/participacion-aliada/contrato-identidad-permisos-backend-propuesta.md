@@ -1,8 +1,10 @@
 # PA-T-INT02 — Contrato de identidad, permisos y comandos del backend — diseño aceptado
 
+**Uso vigente:** contrato técnico D01–D12 aceptado. El [tablero de ejecución](implementacion/README.md) registra qué partes ya se implementaron y la siguiente entrega; las secciones de secuencia conservan el orden acordado, no un reporte de ejecución.
+
 **Fecha:** 13 de octubre de 2026, America/La_Paz. **Revisor:** Pablo. **Estado:** D01–D12 aceptadas como diseño técnico el 13 de octubre, con ajustes en D02 y D07; implementación pendiente. Se conserva el nombre del archivo para mantener sus referencias. No se han cambiado backend/frontend, ejecutado migraciones, consultado bases ni desplegado.
 
-**Revisión cerrada el 13 de octubre:** Pablo acepta D01–D12 (§12). D02 permite afiliación opcional mediante una organización existente del catálogo o «Otra» con texto libre. D07 establece LIFO sobre stock ya disponible de la subcampaña y excluye un nuevo registro de recepción por la organización o sus administradores. El contraste con el [inventario de endpoints y regresión](inventario-endpoints-y-regresion-participacion.md) conserva la evidencia estática de 121 rutas; la aceptación no acredita controles remotos. [Acta y precisiones](revision-tecnica-2026-10-13.md); §13 fija el siguiente punto.
+**Revisión cerrada el 13 de octubre:** Pablo acepta D01–D12 (§12). D02 permite afiliación opcional mediante una organización existente del catálogo o «Otra» con texto libre. D07 establece LIFO sobre stock ya disponible de la subcampaña y excluye un nuevo registro de recepción por la organización o sus administradores. El contraste con el [inventario de endpoints y regresión](inventario-endpoints-y-regresion-participacion.md) conserva la evidencia estática de 121 rutas; la aceptación no acredita controles remotos. [Acta y precisiones](archivo/revision-tecnica-2026-10-13.md); §13 fija el siguiente punto.
 
 El diseño aceptado conserva `usuario` y el modelo físico existente, separa permisos de participación de `subcampania_equipo`, generaliza la identidad JWT ya usada por el plan y usa `participacion_comando` para recuperar resultados. Primero se prepara el recorrido de plantación; acceso y correcciones reutilizarán la infraestructura con políticas distintas. Tipos, constraints y compatibilidad se cotejarán con el catálogo del entorno antes del SQL; esta comprobación no vuelve a abrir las decisiones aceptadas.
 
@@ -14,7 +16,7 @@ Esta propuesta especifica alta/perfil y autoridad administrativa, capacidades, g
 
 Fuentes de producto y preparación, leídas para esta propuesta:
 
-- [Acuerdo de alta, roles y permisos del 12](acuerdo-roles-y-permisos-2026-10-12.md), [revisión de contratos](revision-contratos-2026-10-12.md), [comandos compartidos](diseno-comandos-compartidos.md), [diseño compartido](diseno-tecnico-compartido.md) e [instrucciones de implementación](instrucciones-implementacion.md).
+- [Acuerdo de alta, roles y permisos del 12](acuerdo-roles-y-permisos-2026-10-12.md), [revisión de contratos](archivo/revision-contratos-2026-10-12.md), [comandos compartidos](archivo/diseno-comandos-compartidos.md), [diseño compartido](archivo/diseno-tecnico-compartido.md) e [instrucciones de implementación](archivo/instrucciones-implementacion.md).
 - [Inventario de endpoints y regresión](inventario-endpoints-y-regresion-participacion.md), segunda revisión estática completada el 13: complemento de PA-T-ENT02/PA-T15 para clasificar rutas y conservar facultades internas.
 - PA-S00: [spec](00-experiencia-participante/spec.md), [plan](00-experiencia-participante/plan.md), [tareas](00-experiencia-participante/tasks.md). PA-S03: [spec](03-gestion-acceso-subcampania/spec.md), [plan](03-gestion-acceso-subcampania/plan.md), [tareas](03-gestion-acceso-subcampania/tasks.md), [contratos](03-gestion-acceso-subcampania/contratos.md).
 - [PA-S01](01-registro-plantacion-inicial/spec.md), [audiencias PA-S02](02-consulta-impacto-y-registros/spec.md), [límites PA-S04](04-correccion-excepcional/spec.md), [ADR-PLA-03](../../../decisiones/02_decisiones_plantacion.md#adr-pla-03--autorizacion-operativa-por-persona-y-subcampana-para-participacion-aliada), [ADR-PLA-05](../../../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin), [ESTADO.md](../../../ESTADO.md) e [instrucciones del repositorio](../../../CLAUDE.md).
@@ -33,7 +35,7 @@ Todas las referencias siguientes son código local observado, no garantías del 
 
 | Ref. | Evidencia actual | Cambio que necesita el contrato |
 |---|---|---|
-| B01 | [Alta/perfil](../../../../Backend-r3foresta/src/users/users.service.ts): alta inserta GENERAL; `registerForm` escribe `dto.rol` o GENERAL. [DTO](../../../../Backend-r3foresta/src/users/dto/register-form.dto.ts) requiere documento y admite rol libre. | Alta VOLUNTARIO en servidor; perfil sin autoridad y sin documento/wallet obligatorios. |
+| B01 | [Alta/perfil](../../../../Backend-r3foresta/src/users/users.service.ts): alta inserta GENERAL; `registerForm` escribe `dto.rol` o GENERAL. `src/users/dto/register-form.dto.ts` (DTO legado retirado en INT02-A) requería documento y admitía rol libre. | Alta VOLUNTARIO en servidor; perfil sin autoridad y sin documento/wallet obligatorios. |
 | B02 | [Users controller](../../../../Backend-r3foresta/src/users/users.controller.ts) acepta `x-auth-id` antes de comprobar Bearer. [Guard de plan](../../../../Backend-r3foresta/src/subcampanias/api/guards/subcampania-plan-auth.guard.ts) verifica HS256, `sub`, `exp` y coherencia del header. | Generalizar el guard; suprimir el atajo de identidad. |
 | B03 | [Registro HTTP](../../../../Backend-r3foresta/src/plantaciones/api/plantaciones.controller.ts) y [DTO](../../../../Backend-r3foresta/src/plantaciones/api/dto/registrar-plantacion.dto.ts): actor por header, detalles por asignación, sin clave. [Auth de plantación](../../../../Backend-r3foresta/src/plantaciones/application/plantacion-auth.service.ts) excluye VOLUNTARIO. | JWT común, permiso contextual/ADMIN global y cantidades por especie. |
 | B04 | [RPC 061](../../../../Backend-r3foresta/migrations/061_plantacion_meta_especie_orientativa.sql): equipo también para ADMIN; evidencia bloqueada sin comprobar creador/tipo; efectos físicos atómicos, sin recibo durable. | Adaptar autorización y evidencias dentro de la nueva transacción; conservar consumo M3. |
@@ -570,11 +572,11 @@ Para cada caso conservar versión de repos/DB y fixture, HTTP, usuario de sesió
 
 No se ejecutaron esas suites en este contraste. El inventario §7 contiene fuentes y límites por suite adicionales. La entrega futura debe registrar resultado propio por caso, versión y entorno; los resultados históricos de ESTADO no se transfieren automáticamente a la implementación nueva.
 
-## 11. Secuencia de futuras entregas y puertas concretas
+## 11. Secuencia de entregas y puertas concretas
 
-| Entrega | Trabajo futuro | Criterio de salida / dependencia |
+| Entrega | Alcance acordado | Criterio de salida / dependencia |
 |---|---|---|
-| PA-T-INT01 / ENT02 / PA-T12-REV | Pablo revisa D01..12; inventario destino y manifest interno; decide ajustes. | Contrato/versiones/matriz/retención/bloqueos revisados; la redacción actual no marca aprobados estos puntos. |
+| PA-T-INT01 / ENT02 / PA-T12-REV | Revisión técnica D01–D12 aceptada el 13. Catálogo destino y manifest concreto se cotejan en las entregas correspondientes. | Diseño aceptado; la transición de personas/ámbitos requiere su revisión concreta y evidencia de ejecución. |
 | PA-T-INT02-A | Guard para operaciones/datos privados, exclusión explícita de CT11 público, alta VOLUNTARIO/perfil sin rol, actividad/autoridad y cierre de vías equivalentes/diagnósticos sensibles. | ID01..05/13/23/26, CR01..03/05/06; preservar Impacto sin cuenta y plan técnico con JWT. Primer paso de backend tras revisión; preparar entorno/contratos y evidencia de catálogo antes de cambios que dependan del esquema. No abrir participantes mientras puedan elevar rol, suplantar identidad o acceder fuera de audiencia. |
 | PA-T-INT02-B | Migración aditiva de vigencias/revisiones/auditoría y ensayos de inicialización/transición. | Manifest revisado, último administrador y FKs/índices; base real inventariada, sin reclasificación masiva. |
 | PA-T-INT03-A (primer consumidor) | Motor de comandos + preparación/cargas + registro inicial/RPC nueva, LIFO/snapshots, recibo/GET/rechazos durables. | ID14..23 en DB/PostGIS real aislada; terminal y efecto atómicos. Inicial es la primera operación de dominio del registro común, como eligió el usuario. |
@@ -609,8 +611,8 @@ La revisión técnica de estas doce decisiones queda cerrada. Código, migracion
 
 ## 13. Siguiente punto tras la aceptación
 
-**Siguiente punto: PA-T-INT02-A, identidad y alta/perfil seguros en backend.** Antes de programar la parte dependiente de DB, fijar entrega/revisiones/entorno, completar el inventario de catálogo de solo lectura autorizado (schema/defaults/auth_id/actividad/organizaciones/grants/RLS/Storage) y preparar fixtures/pruebas aisladas. Después iniciar guard común con excepción pública de Impacto, actor desde JWT, alta VOLUNTARIO y perfil mínimo con organización opcional del catálogo o «Otra», sin mutación de rol y conservando ADR-PLA-05. La operación administrativa de roles se integra con el motor de comandos en INT02-C; no añadir una vía provisional de cambio de rol en INT02-A.
+**Punto de partida acordado el 13 de octubre: PA-T-INT02-A, identidad y alta/perfil seguros en backend.** INT02-A cerró el 14; la siguiente entrega vigente es [INT02-B](implementacion/pa-t-int02-b.md). Antes de programar la parte dependiente de DB, fijar entrega/revisiones/entorno, completar el inventario de catálogo de solo lectura autorizado (schema/defaults/auth_id/actividad/organizaciones/grants/RLS/Storage) y preparar fixtures/pruebas aisladas. Después iniciar guard común con excepción pública de Impacto, actor desde JWT, alta VOLUNTARIO y perfil mínimo con organización opcional del catálogo o «Otra», sin mutación de rol y conservando ADR-PLA-05. La operación administrativa de roles se integra con el motor de comandos en INT02-C; no añadir una vía provisional de cambio de rol en INT02-A.
 
 Orden posterior: INT02-B prepara permiso/versiones/transición; INT03-A integra el primer recorrido de plantación con comandos/cargas/recibo y LIFO sobre stock de la subcampaña; INT02-C habilita gestión contextual/roles sobre esa base; INT02-D cierra regresión de locks/alias/corte. Luego integrar PWA (INT04/05/06) y los casos específicos PA-S04 (INT07), con QA y despliegue propios (INT08). Los controles críticos de autorización, retirada y último administrador deben estar verificados antes de habilitar registro participante real.
 
-Esta actualización registra la aceptación y prepara el siguiente punto; no inicia código, ejecución de migraciones ni publicación.
+La actualización del 13 registró la aceptación y preparó el primer punto. La ejecución posterior se acredita por separado en el tablero y ESTADO.

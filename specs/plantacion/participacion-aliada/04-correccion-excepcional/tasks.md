@@ -1,8 +1,10 @@
 # Tareas — PA-S04
 
+**Ejecución al 14 de octubre:** INT07 agrupa estas tareas y sigue pendiente. Los acuerdos confirmados se conservan; los casos/efectos propios aún requieren su cierre y verificación. El motor común de INT03-A no aprueba ni implementa por sí solo las correcciones. [Entregas y cobertura](../implementacion/README.md).
+
 **Estado:** pendientes para revisión/ejecución. Se conservan PA-T17–21; no se acredita ningún caso corregido.
 
-**Acuerdo del 12 de octubre incorporado:** [acta](../revision-correcciones-2026-10-12.md). Cantidades por ADMIN global y administrador de la subcampaña, sin bajas/reposiciones ni cambio de especies; aumento con stock y reducción con disponibilidad física confirmada. PA-T17-REV no debe volver a preguntar estas decisiones; ACTIVA y exclusión de cero del ajuste simple también confirmadas. La ampliación posterior admite duplicados y plantación/baja/reposición erróneas mediante reversión/eliminación lógica por ADMIN global o administrador de esa subcampaña; no cascada de hechos reales. Participantes también confirmado: ambos administradores, únicamente en ACTIVA, con historial visible de cambio y actor, sin alterar responsable original ni stock. Quedan contratos de búsqueda histórica/visibilidad y de compensación por caso, propuestos en [instrucciones implementables](../instrucciones-implementacion.md).
+**Acuerdo del 12 de octubre incorporado:** [acta](../archivo/revision-correcciones-2026-10-12.md). Cantidades por ADMIN global y administrador de la subcampaña, sin bajas/reposiciones ni cambio de especies; aumento con stock y reducción con disponibilidad física confirmada. PA-T17-REV no debe volver a preguntar estas decisiones; ACTIVA y exclusión de cero del ajuste simple también confirmadas. La ampliación posterior admite duplicados y plantación/baja/reposición erróneas mediante reversión/eliminación lógica por ADMIN global o administrador de esa subcampaña; no cascada de hechos reales. Participantes también confirmado: ambos administradores, únicamente en ACTIVA, con historial visible de cambio y actor, sin alterar responsable original ni stock. Quedan contratos de búsqueda histórica/visibilidad y de compensación por caso, propuestos en [instrucciones implementables](../archivo/instrucciones-implementacion.md).
 
 - `PA-T20` Redactar matriz de efectos por campo corregible.
 - `PA-T21` Preparar escenario de corrección sin retorno automático de stock.
@@ -18,4 +20,4 @@ La matriz está propuesta en [spec](spec.md); PA-T20 conserva revisión técnica
 | PA-T19-INT | Integrar lecturas/agregados y verificar compatibilidad con cantidades, estados, mortandad/reposición existentes. | Efectos PA-T20 y PA-T18-BE/DB. | CA05–07; ningún doble conteo ni eliminación de hechos posteriores. |
 | PA-T21-QA | Probar caso sintético de aumento/reducción, repetición, concurrencia con bajas/reposiciones, falta de autoridad y duplicado, plantación/baja/reposición erróneas y caso no soportado. | Mecanismo implementado en entorno aislado. | CA01–18 con ID original/corrección, actor, saldos por asignación antes/después, vivero intacto y resultado visible; evidencia para decidir campo. |
 
-Coordinar PA-T-INT07/08 del [plan de integración](../plan-reutilizacion-integracion.md). Ninguna tarea autoriza ejecutar SQL productivo o corregir registros reales al revisar esta documentación.
+Coordinar PA-T-INT07/08 del [plan de integración](../archivo/plan-reutilizacion-integracion.md). Ninguna tarea autoriza ejecutar SQL productivo o corregir registros reales al revisar esta documentación.

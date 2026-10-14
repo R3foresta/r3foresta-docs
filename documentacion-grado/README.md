@@ -27,13 +27,13 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 
 | Carpeta | Función | Contenido principal |
 |---|---|---|
-| [`01_lineamientos/`](01_lineamientos/) | Reglas y decisiones rectoras | Normativa UMSA, principios de trazabilidad, criterios editoriales y lineamiento estratégico vigente. |
-| [`02_planificacion/`](02_planificacion/) | Control y diseño documental | TODO, estructura del perfil y plan histórico. |
-| [`03_investigacion/`](03_investigacion/) | Sustento académico y estado del arte | Antecedentes, análisis crítico, biblioteca razonada y guía de búsqueda. |
-| [`04_metodologia/`](04_metodologia/) | Metodología de desarrollo | RUP adaptado, SDD asistido por IA y antecedentes metodológicos superados. |
-| [`05_recursos/`](05_recursos/) | Recursos transversales | Glosario, convenciones terminológicas e índice bibliográfico. |
-| [`06_entregables/`](06_entregables/) | Documentos que se presentan | Perfil oficial y futuro Proyecto de Grado. |
-| [`07_imagenes/`](07_imagenes/) | Evidencia visual | Fotografías originales vinculadas con el análisis y con los resultados del Proyecto de Grado. |
+| [`01_lineamientos/`](01_lineamientos) | Reglas y decisiones rectoras | Normativa UMSA, principios de trazabilidad, criterios editoriales y lineamiento estratégico vigente. |
+| [`02_planificacion/`](02_planificacion) | Control y diseño documental | TODO, estructura del perfil y plan histórico. |
+| [`03_investigacion/`](03_investigacion) | Sustento académico y estado del arte | Antecedentes, análisis crítico, biblioteca razonada y guía de búsqueda. |
+| [`04_metodologia/`](04_metodologia) | Metodología de desarrollo | RUP adaptado, SDD asistido por IA y antecedentes metodológicos superados. |
+| [`05_recursos/`](05_recursos) | Recursos transversales | Glosario, convenciones terminológicas e índice bibliográfico. |
+| [`06_entregables/`](06_entregables) | Documentos que se presentan | Perfil oficial y futuro Proyecto de Grado. |
+| [`07_imagenes/`](07_imagenes) | Evidencia visual | Fotografías originales vinculadas con el análisis y con los resultados del Proyecto de Grado. |
 
 La numeración expresa el flujo de trabajo académico: primero se fijan los lineamientos; después se planifica, investiga y define la metodología; finalmente esos insumos alimentan los entregables.
 

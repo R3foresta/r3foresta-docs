@@ -562,7 +562,7 @@ Alcance recomendado:
 
 ## 13. Integración con Módulo 3 (Plantación)
 
-> Esta sección resume el contrato Vivero ↔ Plantación. El documento operativo completo vive en [04_consumo_de_vivero.md](./04_consumo_de_vivero.md); la negociación histórica del contrato está archivada en [../decisiones/_historico/vivero-addendum-m2-m3.md](../decisiones/_historico/vivero-addendum-m2-m3.md) (no es fuente operativa). Las reglas formales son `RN-VIV-47` a `RN-VIV-60`.
+> Esta sección resume el contrato Vivero ↔ Plantación. El documento operativo completo vive en [04_consumo_de_vivero.md](04_consumo_de_vivero.md); la negociación histórica del contrato está archivada en [../decisiones/_historico/vivero-addendum-m2-m3.md](../../decisiones/_historico/vivero-addendum-m2-m3.md) (no es fuente operativa). Las reglas formales son `RN-VIV-47` a `RN-VIV-60`.
 
 ### 13.1. Cómo se consume el vivero
 
@@ -623,4 +623,4 @@ Cada afectación dispara una notificación al coordinador de la subcampaña due�
 
 ### 13.8. Estado actual de la integración
 
-El esquema lógico está definido y documentado. La implementación física está en curso; partes del comportamiento descrito aquí pueden no estar activas en producción todavía. Consultar [ESTADO.md](../ESTADO.md) para el estado actual pieza por pieza.
+El esquema lógico está definido y documentado. La implementación física está en curso; partes del comportamiento descrito aquí pueden no estar activas en producción todavía. Consultar [ESTADO.md](../../ESTADO.md) para el estado actual pieza por pieza.

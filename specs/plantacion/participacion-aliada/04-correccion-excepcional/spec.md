@@ -1,6 +1,8 @@
 # PA-S04 — Corrección excepcional vinculada al original
 
-**Estado:** correcciones acotadas y ampliación de reversión/eliminación lógica confirmadas; revisión integral y contratos pendientes antes de implementar. **Actualización:** 12 de octubre de 2026. **Prioridad:** P0 antes de campo. Evidencia: [acuerdo del 12 de octubre](../revision-correcciones-2026-10-12.md).
+**Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
+
+**Estado:** correcciones acotadas y ampliación de reversión/eliminación lógica confirmadas; revisión integral y contratos pendientes antes de implementar. **Actualización:** 12 de octubre de 2026. **Prioridad:** P0 antes de campo. Evidencia: [acuerdo del 12 de octubre](../archivo/revision-correcciones-2026-10-12.md).
 
 ## Acuerdo de partida
 
@@ -17,7 +19,7 @@ Ante un error del piloto se realiza una corrección vinculada al original, regis
 - Cantidad efectiva, efecto en consumo e historial se aplican juntos o no se aplica nada. Sin intervalo de stock liberado durante una sustitución; sin doble efecto por reintento o concurrencia. Conservar original y mostrar resultado efectivo sin duplicar el impacto.
 - Confirmado: correcciones de cantidad solo en subcampaña ACTIVA, también para ADMIN global. Revalidar estado al aplicar; no reabrir ni reactivar. Cantidad cero queda fuera de este ajuste; tampoco habilita eliminación de especie. La decisión posterior del 12 autoriza revertir duplicados y eliminar registros erróneos mediante comandos propios, conservando originales e historial; no mediante cantidad cero. El contrato debe comprobar asignaciones elegibles y rechazar efectos incompatibles con devoluciones/inactivaciones.
 
-La ampliación de reversión se describe a continuación y en [instrucciones implementables](../instrucciones-implementacion.md). Estos son comportamientos exigidos, no mecanismos ya implementados. Contrato de versión/intento, distribución/reversión por asignación, representación original/efectiva y visibilidad del historial siguen en diseño. No concede facultad para anular mortandad.
+La ampliación de reversión se describe a continuación y en [instrucciones implementables](../archivo/instrucciones-implementacion.md). Estos son comportamientos exigidos, no mecanismos ya implementados. Contrato de versión/intento, distribución/reversión por asignación, representación original/efectiva y visibilidad del historial siguen en diseño. No concede facultad para anular mortandad.
 
 ## Reversión y eliminación de registros erróneos — ampliación del 12
 
@@ -31,7 +33,7 @@ La ampliación de reversión se describe a continuación y en [instrucciones imp
 - Aplicación atómica e idempotente de estado lógico, efectos e historial. No compensar dos veces el original después de correcciones previas.
 - Conservar ACTIVA como límite de PA-S04 y validar autoridad/estado/dependencias al ejecutar. Revertir una plantación con bajas/reposiciones reales dependientes, o reabrir cerradas, sigue sin autorización de cascada; requiere tratamiento propio.
 
-Contratos/representación física son propuestas para revisar en [instrucciones implementables](../instrucciones-implementacion.md), CT09/10. Esta ampliación sustituye la exclusión anterior de duplicados como caso atendible; conserva su exclusión del ajuste simple de cantidades.
+Contratos/representación física son propuestas para revisar en [instrucciones implementables](../archivo/instrucciones-implementacion.md), CT09/10. Esta ampliación sustituye la exclusión anterior de duplicados como caso atendible; conserva su exclusión del ajuste simple de cantidades.
 
 ## Historias de usuario
 
@@ -102,4 +104,4 @@ Tras revisar los requerimientos, el usuario descarta la reapertura por cierre er
 
 PA-DI07 parcialmente resuelta: observaciones por autoridad central; participantes y cantidades por ADMIN global o administrador de la subcampaña en ACTIVA, bajo condiciones explícitas. La decisión posterior autoriza reversión de duplicados y eliminación lógica de plantación, baja o reposición erróneas por ambos administradores; «admin de campaña» queda aclarado como administrador de esa subcampaña. Cero permanece fuera del ajuste simple. Antes del cierre integral: revisar búsqueda histórica/visibilidad, contratos de compensación por asignación y grupo, versión/repetición/concurrencia y lectura pública/privada del historial. ACTIVA se conserva como límite actual de PA-S04; no se aprueba cascada de hechos reales ni reapertura. No se aprueba editor general ni anulación de bajas reales; las bajas registradas por error admiten reversión lógica con los controles del caso. ADR-PLA-03 y CLAUDE.md sincronizados el 12 de octubre tras resolver los conflictos documentales; no acredita implementación.
 
-Fuentes: [LCO](../../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md), [ADR-PLA-03](../../../../decisiones/02_decisiones_plantacion.md), [contrato M2→M3](../../../../90-contratos-integracion/02_contrato_vivero_a_plantacion.md), [diseño compartido](../diseno-tecnico-compartido.md). Leer [plan](plan.md) y [tareas](tasks.md) después de revisar estos casos.
+Fuentes: [LCO](../../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md), [ADR-PLA-03](../../../../decisiones/02_decisiones_plantacion.md), [contrato M2→M3](../../../../90-contratos-integracion/02_contrato_vivero_a_plantacion.md), [diseño compartido](../archivo/diseno-tecnico-compartido.md). Leer [plan](plan.md) y [tareas](tasks.md) después de revisar estos casos.

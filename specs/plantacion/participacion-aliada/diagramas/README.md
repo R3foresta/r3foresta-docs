@@ -2,9 +2,9 @@
 
 **Actualizados:** 12 de octubre de 2026. **Estado:** cinco fuentes Mermaid y SVG regenerados localmente, sin Figma; apoyo de Elaboración, no aprobación de contratos, implementación ni salida a campo.
 
-**Alcance actualizado:** consulta pública sin sesión y experiencia reducida separada de gestión interna; ADMIN global registra en ACTIVA sin membresía contextual adicional; ubicación manual confirmada; fecha en el segundo paso; recuperación del mismo intento y correcciones acotadas. Ver [PA-S00](../00-experiencia-participante/spec.md), [diseño compartido](../diseno-tecnico-compartido.md) y [acuerdo de correcciones](../revision-correcciones-2026-10-12.md). Modelo conceptual, no ER ni aprobación de tablas nuevas. Ubicación de observaciones aprobada posteriormente al final del paso 2, con resumen condicional en el tercero; el usuario descarta el 12 de octubre el aviso adicional de publicación.
+**Alcance actualizado:** consulta pública sin sesión y experiencia reducida separada de gestión interna; ADMIN global registra en ACTIVA sin membresía contextual adicional; ubicación manual confirmada; fecha en el segundo paso; recuperación del mismo intento y correcciones acotadas. Ver [PA-S00](../00-experiencia-participante/spec.md), [diseño compartido](../archivo/diseno-tecnico-compartido.md) y [acuerdo de correcciones](../archivo/revision-correcciones-2026-10-12.md). Modelo conceptual, no ER ni aprobación de tablas nuevas. Ubicación de observaciones aprobada posteriormente al final del paso 2, con resumen condicional en el tercero; el usuario descarta el 12 de octubre el aviso adicional de publicación.
 
-Para responder **«qué debemos tener antes de implementar»**, empezar por [PA-D05 y el análisis de dependencias](DEPENDENCIAS.md). Distingue base reutilizable, adaptación pendiente y condiciones de preparación del piloto, con lectura estática de backend/PWA locales.
+Para continuar la implementación, empezar por el [tablero vigente](../implementacion/README.md). [PA-D05 y el análisis de dependencias](DEPENDENCIAS.md) conservan el mapa técnico del 12 de octubre. Distingue base reutilizable, adaptación pendiente y condiciones de preparación del piloto, con lectura estática de backend/PWA locales.
 
 | ID | Vista | Qué permite entender | Fuente editable | Render |
 |---|---|---|---|---|
@@ -50,7 +50,7 @@ Mapa de conceptos, no ER físico ni tablas nuevas. Permiso por persona/subcampa�
 
 ## Lectura y mantenimiento
 
-- Fuentes de esta regeneración: [revisión humana del 11/12](../revision-humana-2026-10-11.md) y [correcciones del 12](../revision-correcciones-2026-10-12.md). Los renders representan acuerdos; no los aprueban ni prueban ejecución.
+- Fuentes de esta regeneración: [revisión humana del 11/12](../archivo/revision-humana-2026-10-11.md) y [correcciones del 12](../archivo/revision-correcciones-2026-10-12.md). Los renders representan acuerdos; no los aprueban ni prueban ejecución.
 - Flecha continua: relación/acción descrita. En PA-D05: dependencia necesaria, no orden rígido de diseño; entradas convergentes se necesitan juntas.
 - Flecha punteada: contexto, alcance posterior o mecanismo/atribución por definir. Leer su etiqueta.
 - Azul: ámbito/base reutilizable, no «verificado en producción». Ámbar y `PENDIENTE`: adaptación/alineación/mecanismo sin cerrar. Verde: resultado esperado sujeto a verificación.

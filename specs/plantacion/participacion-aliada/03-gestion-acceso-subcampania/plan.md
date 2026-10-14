@@ -1,5 +1,7 @@
 # Plan — PA-S03
 
+**Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
+
 **Estado:** diseño backend D01–D12 aceptado el 13, con contratos de identidad/permisos/comandos concretados. Cotejo de catálogo, manifest real, migración, implementación y verificación pendientes. **Actualización:** 13 de octubre de 2026.
 
 **Producto confirmado en llamada:** se pueden preparar asignaciones de acceso desde BORRADOR, incluida la primera designación de administrador por ADMIN global y la incorporación de plantadores por el administrador autorizado. Registrar plantación inicial sigue requiriendo ACTIVA. Nuevos plantadores solo en BORRADOR/ACTIVA; cerradas/canceladas admiten retiros y reemplazo central de administradores con protección del último. Cerrar mantiene las personas/asignaciones existentes y las facultades internas de mantenimiento que correspondan. Incorporar esta matriz en contratos; mecanismo de inicialización/transición aceptado en D04; cotejo del catálogo y manifest concreto de personas/ámbitos pendientes.
@@ -26,7 +28,7 @@ ADMIN global puede registrar directamente en cualquier subcampaña ACTIVA, sin a
 | Backend | Identidad JWT verificada, política contextual por acción y ámbito, búsqueda mínima de personas registradas, listado autorizado y comandos explícitos. Revisar rutas legadas equivalentes y asignación de roles desde perfil. | Llamadas directas/IDs ajenos rechazadas; alta/perfil no autoasignan privilegios; gestionar plantadores no habilita plan, cierre, Vivero o Recolección. |
 | Base de datos | Elegir estructura contextual y transición según PA-DI01/02; unicidad del acceso vigente persona/subcampaña, referencias de identidad/ámbito y auditoría. Comandos atómicos para cambio de permisos e invariante del último administrador. | No duplicación de permisos activos; bloqueo consistente con registro; historial preservado y ningún retiro eludible desde rutas/RPC legadas. |
 
-La propuesta de tablas y contratos vive en [diseño técnico compartido](../diseno-tecnico-compartido.md). Una tabla contextual separada puede convivir con responsabilidades internas legadas, pero debe quedar inequívoco cuál autoriza el nuevo registro y cómo se resuelve cada consumidor. No crear otra tabla de usuarios o permisos por organización para este piloto.
+La propuesta de tablas y contratos vive en [diseño técnico compartido](../archivo/diseno-tecnico-compartido.md). Una tabla contextual separada puede convivir con responsabilidades internas legadas, pero debe quedar inequívoco cuál autoriza el nuevo registro y cómo se resuelve cada consumidor. No crear otra tabla de usuarios o permisos por organización para este piloto.
 
 ## 3. Transacción y concurrencia
 

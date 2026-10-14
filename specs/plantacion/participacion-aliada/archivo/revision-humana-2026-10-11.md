@@ -1,10 +1,12 @@
 # PA-F01 — Revisión humana del 11 de octubre de 2026
 
+> **Acta/contraste archivado.** Conserva decisiones y observaciones de su fecha. El avance posterior se consulta en el [tablero de ejecución](../implementacion/README.md).
+
 **Revisor:** usuario responsable del producto, en este chat. **Evidencia:** revisión explícita de PA-S00 («Todo está excelente»), respuestas a PA-DI08/09/10, datos públicos, GPS y autoridad central, cierre de la primera versión de producto de PA-S02 y cierre funcional/orquestación de PA-S03 en llamada. Este registro acepta esos comportamientos en sus alcances revisados; no aprueba automáticamente mecanismos técnicos ni acredita implementación, migraciones o pruebas. PA-S01/04 conservan su revisión pendiente.
 
 **Continuación:** §§7–8 incorporan acuerdos parciales de PA-S01 del 11 y 12 de octubre de 2026, conservando este archivo y su historia. La aprobación de cada comportamiento no equivale a un cierre integral de PA-S01; PA-S04 mantiene su revisión propia.
 
-**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. El [acta del 13](revision-tecnica-2026-10-13.md) sustituye la orientación FIFO anterior para la nueva inicial por LIFO de servidor, exclusivamente sobre stock de esa subcampaña y sin recepción adicional. Se conservan aquí las observaciones/decisiones históricas de su fecha. Afiliación opcional mediante catálogo o «Otra», sin acceso automático. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. El [acta del 13](revision-tecnica-2026-10-13.md) sustituye la orientación FIFO anterior para la nueva inicial por LIFO de servidor, exclusivamente sobre stock de esa subcampaña y sin recepción adicional. Se conservan aquí las observaciones/decisiones históricas de su fecha. Afiliación opcional mediante catálogo o «Otra», sin acceso automático. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 ## 1. Confirmado
 
@@ -29,7 +31,7 @@ El usuario aclara expresamente que conservar la gestión interna existente es un
 | Gestión interna de R3Foresta | Administradores y operativos internos autorizados; conservar estructura, datos y herramientas especializadas, y seguir mejorándolas para su operación. | No sustituirla por vistas reducidas ni retirar sus funciones para acomodar al participante. |
 | Impacto y participación | Cualquier visitante puede consultar una vista reducida de impacto global, cambiar campañas y profundizar en subcampañas y registros. El plantador utiliza esta misma experiencia y suma acciones/contexto autorizados, como registrar en su subcampaña. | Ni autenticarse ni ser administrador contextual habilita la gestión interna completa. El detalle progresivo sigue siendo una vista pública reducida. |
 
-Son dos experiencias sobre los mismos hechos, no dos modelos de Plantación ni un tercer portal para plantadores. El agregado global usa solo datos públicos elegibles y cuenta cada hecho una vez. El detalle visual, las rutas y los contratos aún deben diseñarse/verificarse; no se declara implementado ni se aprueba íntegramente PA-S02 por esta aclaración. Fuente canónica: [ADR-PLA-03](../../../decisiones/02_decisiones_plantacion.md); comportamiento en [PA-S00](00-experiencia-participante/spec.md) y [PA-S02](02-consulta-impacto-y-registros/spec.md).
+Son dos experiencias sobre los mismos hechos, no dos modelos de Plantación ni un tercer portal para plantadores. El agregado global usa solo datos públicos elegibles y cuenta cada hecho una vez. El detalle visual, las rutas y los contratos aún deben diseñarse/verificarse; no se declara implementado ni se aprueba íntegramente PA-S02 por esta aclaración. Fuente canónica: [ADR-PLA-03](../../../../decisiones/02_decisiones_plantacion.md); comportamiento en [PA-S00](../00-experiencia-participante/spec.md) y [PA-S02](../02-consulta-impacto-y-registros/spec.md).
 
 ## 2. PA-DI09 y autoridad: propuesta trazada para revisar
 
@@ -50,7 +52,7 @@ El **rol global** describe facultades de la plataforma. El **permiso contextual*
 
 Cuando se diga informalmente «administrador de campaña», usar **administrador de subcampaña** para este incremento. Una campaña puede facilitar asignarlo sobre varias hijas actuales; no existe autorización de campaña con herencia a futuras subcampañas. Cambiar ese ámbito requeriría otra decisión.
 
-**Fuentes verificables:** [RN-GEN-03](../../../00-general-module/01_reglas_de_negocio_general.md#rn-gen-03---el-rol-es-controlado-por-catalogo), [RN-PLA-20/35](../../../03-plantacion-module/01_reglas_de_negocio_plantacion.md), [ADR-PLA-03](../../../decisiones/02_decisiones_plantacion.md), [restricción local de Plantación](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/application/plantacion-auth.service.ts), [Recolección](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/recolecciones/application/recoleccion-auth.service.ts), [Vivero](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/lotes-vivero/application/vivero-auth.service.ts).
+**Fuentes verificables:** [RN-GEN-03](../../../../00-general-module/01_reglas_de_negocio_general.md#rn-gen-03---el-rol-es-controlado-por-catalogo), [RN-PLA-20/35](../../../../03-plantacion-module/01_reglas_de_negocio_plantacion.md), [ADR-PLA-03](../../../../decisiones/02_decisiones_plantacion.md), [restricción local de Plantación](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/plantaciones/application/plantacion-auth.service.ts), [Recolección](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/recolecciones/application/recoleccion-auth.service.ts), [Vivero](/Users/pabloandresfernandezcari/Projects/R3foresta/Backend-r3foresta/src/lotes-vivero/application/vivero-auth.service.ts).
 
 ## 3. Información pública: precisiones propuestas
 
@@ -87,13 +89,13 @@ La presentación principal y estas tres últimas decisiones quedan confirmadas; 
 
 **Cierre explícito de la revisión:** el usuario confirma terminada PA-S02 y acepta dejar contratos, boceto definitivo e implementación como trabajo posterior. Aprueba una primera versión sólida del comportamiento como base para preparar un boceto y probar recorridos. Se registra aprobación de producto del alcance revisado; las pruebas con datos simulados y la integración posterior deben aportar su evidencia propia. No se declaran realizadas por este cierre.
 
-PA-S00 queda aprobada en comportamiento de producto y lista para preparar boceto y plan técnico. Su integración real depende de contratos y autorización según su [plan](00-experiencia-participante/plan.md); no requiere aprobar íntegramente todas las demás specs para avanzar en trabajos independientes. No se declaran implementadas ni probadas estas decisiones.
+PA-S00 queda aprobada en comportamiento de producto y lista para preparar boceto y plan técnico. Su integración real depende de contratos y autorización según su [plan](../00-experiencia-participante/plan.md); no requiere aprobar íntegramente todas las demás specs para avanzar en trabajos independientes. No se declaran implementadas ni probadas estas decisiones.
 
 ## 4. Correcciones: todavía por decidir
 
 El usuario expresó que aún no sabe qué casos incluir. Mantener PA-DI07 abierto. Propuesta para discutir primero: correcciones documentales acotadas y, si se confirma, participantes omitidos, ejecutadas por R3Foresta con motivo/historial y sin cambiar stock. Cantidad incorrecta, duplicado y reposiciones dependientes necesitan casos de negocio específicos; una cifra corregida no demuestra devolución física.
 
-Revisar ejemplos concretos antes de elegir el mecanismo. No dar por resuelta la salida ante errores con un mensaje al administrador ni habilitar campo si un caso crítico carece de resolución segura. Ver [PA-S04](04-correccion-excepcional/spec.md).
+Revisar ejemplos concretos antes de elegir el mecanismo. No dar por resuelta la salida ante errores con un mensaje al administrador ni habilitar campo si un caso crítico carece de resolución segura. Ver [PA-S04](../04-correccion-excepcional/spec.md).
 
 ## 5. Próxima revisión
 
@@ -169,7 +171,7 @@ La matriz queda incorporada a PA-S03 y CA21/22. No permite nuevos plantadores co
 
 El usuario solicita explicación de los contratos, confirma que conectan UX, backend y persistencia y autoriza preparar la propuesta. Acepta conservar el equipo actual de coordinación/logística y separar los permisos de participación por persona/subcampaña. Esto orienta PA-DI01/02; no aprueba columnas, SQL ni una migración ya diseñada.
 
-Se prepara [contratos de PA-S03](03-gestion-acceso-subcampania/contratos.md) con lecturas/búsqueda, habilitación/retiro, designación/cambio/reemplazo, entradas, respuestas, versiones, todo-o-nada, recuperación y ejemplos. Son candidatos técnicos y UX sobre las reglas ya confirmadas. La semántica propuesta de «sin cambios» y el formato de recuperación quedan por revisar con la implementación afectada.
+Se prepara [contratos de PA-S03](../03-gestion-acceso-subcampania/contratos.md) con lecturas/búsqueda, habilitación/retiro, designación/cambio/reemplazo, entradas, respuestas, versiones, todo-o-nada, recuperación y ejemplos. Son candidatos técnicos y UX sobre las reglas ya confirmadas. La semántica propuesta de «sin cambios» y el formato de recuperación quedan por revisar con la implementación afectada.
 
 El usuario da por terminada la spec en orquestación, aclarando que es para posterior implementación en backend, frontend y diseño, y no una implementación terminada. Se cierra la primera versión funcional de PA-S03: spec, plan, tareas y propuesta de contratos quedan como base de entrega. Antes del código afectado se concretan persistencia/corte de autorización, correspondencia interna, rutas/DTO y concurrencia real. No se declaran pruebas, migraciones, permisos aplicados ni despliegue.
 
@@ -185,7 +187,7 @@ Se confirma un formulario de tres pasos:
 
 No se añade una cuarta pantalla de revisión ni se guarda por seleccionar participantes. El comprobante es resultado posterior a un guardado confirmado. Fecha obligatoria y observaciones opcionales existentes se conservan con sus reglas; su ubicación visual quedaba pendiente en ese acuerdo parcial, sin inferir que se eliminan; la continuación del 12 (§9) la cierra.
 
-Se alinea [spec](01-registro-plantacion-inicial/spec.md), [boceto](boceto-registro-resultado.md), [plan](01-registro-plantacion-inicial/plan.md), [tareas](01-registro-plantacion-inicial/tasks.md), índice y plan de reutilización. En este punto se pasa a revisar confirmación del punto GPS; las confirmaciones posteriores se registran abajo. Siguen abiertas fecha, personas seleccionables/revocación, guardado recuperable, evidencias y contratos. No se anticipa aprobación de esos comportamientos ni se modifican las decisiones cerradas de PA-S00/02/03. PA-S04 conserva la revisión propia de casos y efectos de corrección.
+Se alinea [spec](../01-registro-plantacion-inicial/spec.md), [boceto](../boceto-registro-resultado.md), [plan](../01-registro-plantacion-inicial/plan.md), [tareas](../01-registro-plantacion-inicial/tasks.md), índice y plan de reutilización. En este punto se pasa a revisar confirmación del punto GPS; las confirmaciones posteriores se registran abajo. Siguen abiertas fecha, personas seleccionables/revocación, guardado recuperable, evidencias y contratos. No se anticipa aprobación de esos comportamientos ni se modifican las decisiones cerradas de PA-S00/02/03. PA-S04 conserva la revisión propia de casos y efectos de corrección.
 
 ### Confirmación y reajuste accesible de ubicación — acuerdo posterior
 
@@ -229,7 +231,7 @@ Se distingue de permiso GPS denegado/fallo de captura del dispositivo, con entra
 
 ### Balance de acuerdos y pendientes
 
-Quedan consolidados en [PA-S01](01-registro-plantacion-inicial/spec.md), [boceto](boceto-registro-resultado.md), plan/tareas, índice y reutilización: tres pasos/resumen y confirmación final; ubicación confirmable/reajustable con coordenadas accesibles; especies/cantidades dentro del saldo elegible por especie de subcampaña, sin vivero/lote; participantes registrados/habilitados del mismo ámbito; «Hoy» modificable junto a cantidades dentro de la ventana; revalidación con revisión explícita sin ajustes silenciosos; pérdida de conexión recuperable con el mismo intento; fallo confirmado del evaluador sin guardado/consumo.
+Quedan consolidados en [PA-S01](../01-registro-plantacion-inicial/spec.md), [boceto](../boceto-registro-resultado.md), plan/tareas, índice y reutilización: tres pasos/resumen y confirmación final; ubicación confirmable/reajustable con coordenadas accesibles; especies/cantidades dentro del saldo elegible por especie de subcampaña, sin vivero/lote; participantes registrados/habilitados del mismo ámbito; «Hoy» modificable junto a cantidades dentro de la ventana; revalidación con revisión explícita sin ajustes silenciosos; pérdida de conexión recuperable con el mismo intento; fallo confirmado del evaluador sin guardado/consumo.
 
 **Balance actualizado por cierre posterior del 12 (§9):** ubicación de observaciones y recorrido aprobados; acabado visual/accesibilidad se verifica al implementar. El aviso adicional de datos públicos queda descartado por la decisión posterior de esta sección. No reabrir comportamientos aceptados; la confirmación humana de cierre se registra en §9.
 
@@ -255,7 +257,7 @@ La decisión se limita a ese texto de visibilidad pública. Conserva los campos 
 
 Tras el contraste de repositorios, el usuario acepta ADMIN global con acceso a todas las subcampañas y presencia derivada en miembros como «Administrador · Acceso global», sin membresía nueva por ámbito. Aclara que todas las cuentas nuevas deben comenzar VOLUNTARIO, y que un administrador autorizado les asigna GENERAL/ADMIN como roles internos diferentes de plantador/administrador contextual. Se concreta autoridad como ADMIN global, no administrador de una subcampaña; permisos contextuales se implementan en backend/DB. Perfil no eleva ni restablece rol legítimo. Conservar catálogo cerrado, cuentas existentes, logística, participantes históricos y reglas operativas.
 
-El usuario elige expresamente **«Document the agreement first»**. Se registra [acuerdo de roles y permisos](acuerdo-roles-y-permisos-2026-10-12.md), se propaga a ADR-PLA-03, PA-S00/03, diseño e instrucciones; CA20–22 y PA-Q01b precisan comprobaciones futuras. No se modifica backend/frontend, no se aplican migraciones ni se marca implementación/pruebas terminadas. El esquema físico y los contratos definitivos conservan sus pendientes.
+El usuario elige expresamente **«Document the agreement first»**. Se registra [acuerdo de roles y permisos](../acuerdo-roles-y-permisos-2026-10-12.md), se propaga a ADR-PLA-03, PA-S00/03, diseño e instrucciones; CA20–22 y PA-Q01b precisan comprobaciones futuras. No se modifica backend/frontend, no se aplican migraciones ni se marca implementación/pruebas terminadas. El esquema físico y los contratos definitivos conservan sus pendientes.
 
 ## 11. Identidad, evidencia propia y opciones de intento — 12 de octubre
 

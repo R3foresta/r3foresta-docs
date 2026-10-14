@@ -16,7 +16,7 @@ Los invariantes de dominio listados en [`CLAUDE.md`](../CLAUDE.md#invariantes-de
 
 ## Histórico
 
-Material de trabajo superado, conservado solo como referencia (no es fuente operativa ni de diseño): [`_historico/`](_historico/).
+Material de trabajo superado, conservado solo como referencia (no es fuente operativa ni de diseño): [`_historico/`](_historico).
 
 * [`_historico/planeacion-bd-vivero.md`](_historico/planeacion-bd-vivero.md) — comparativa de alternativas de arquitectura, superada por `00_decisiones_vivero.md`.
 * [`_historico/vivero-addendum-m2-m3.md`](_historico/vivero-addendum-m2-m3.md) — negociación original del contrato Vivero↔Plantación, ya absorbida en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) (RN-VIV-47 a RN-VIV-60).

@@ -1,5 +1,7 @@
 # Auditoría de documentación — R3Foresta
 
+> **Auditoría histórica.** Describe lo observado al 24 de julio de 2026. La estructura y la implementación posteriores se consultan desde el [índice actual](../README.md) y [ESTADO](../ESTADO.md).
+
 > **Propósito:** entender el estado actual de la documentación y evaluar su calidad como lo haría un ingeniero senior que se incorpora al proyecto, **antes** de proponer cualquier refactor.
 > **Alcance:** todos los `.md`, `.json` y `.sql` del repo. Se **excluyen los `.excalidraw`** (`diagramas/`, `methodology/`) por indicación de `CLAUDE.md`: son material de trabajo en Excalidraw, no documentación canónica. Se excluye también `documentacion-grado/` (no está trackeada por git, es material de trabajo del proyecto de grado, no documentación canónica de dominio).
 > **Auditoría inicial:** 2026-07-01. **Actualización de sincronización:** 2026-07-23. **Re-auditoría completa:** 2026-07-24.

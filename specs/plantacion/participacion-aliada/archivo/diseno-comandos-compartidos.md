@@ -1,8 +1,10 @@
 # Tabla compartida de comandos: elección y explicación del flujo
 
+> **Planificación anterior archivada.** Conserva trazabilidad y propuestas de su fecha. Para ejecutar, leer el [tablero actual](../implementacion/README.md) y el [contrato D01–D12 aceptado](../contrato-identidad-permisos-backend-propuesta.md). Las propuestas de PA-S04 conservan su revisión propia.
+
 **Fecha:** 12 de octubre de 2026; revisión técnica del 13. **Estado:** registro común de comandos elegido por el usuario y diseño concreto aceptado en D09–D11 del contrato backend. `participacion_comando`, preparación/terminal/huella/cancelación y retención del piloto están definidos; catálogo, migraciones, código y ejecución pendientes. Implementar primero plantación.
 
-**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La inicial consume LIFO del stock disponible de su subcampaña (`fecha_asignacion DESC, id DESC`), sin nueva recepción por organización/administradores ni segundo débito de Vivero. Afiliación opcional: organización existente del catálogo o «Otra»; snapshots históricos conservados. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
+**Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La inicial consume LIFO del stock disponible de su subcampaña (`fecha_asignacion DESC, id DESC`), sin nueva recepción por organización/administradores ni segundo débito de Vivero. Afiliación opcional: organización existente del catálogo o «Otra»; snapshots históricos conservados. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 ## 1. Responsabilidad de la tabla
 
@@ -56,4 +58,4 @@ Cambios de acceso y correcciones usan el mismo registro de comandos con polític
 
 Antes de implementar: fijar DTO/rutas y estados observables, esquema/índices/RLS/grants, canonicalización, rechazos durables, retención de claves y recuperación de fotos, compatibilidad de clientes y bloqueos con las RPC actuales. Probar dos solicitudes simultáneas, timeout antes/después de commit, contenido distinto, revocación, foto ajena y competencia por stock. Claves mínimas conservadas durante el piloto sigue siendo propuesta de retención, no nueva decisión de esta elección.
 
-Fuentes: [contraste actual y opciones](revision-contratos-2026-10-12.md#6-definición-propuesta-para-consulta-del-mismo-intento), [instrucciones CT04/05 y secuencia](instrucciones-implementacion.md), [PA-S03](03-gestion-acceso-subcampania/contratos.md) y [PA-S04](04-correccion-excepcional/spec.md).
+Fuentes: [contraste actual y opciones](revision-contratos-2026-10-12.md#6-definición-propuesta-para-consulta-del-mismo-intento), [instrucciones CT04/05 y secuencia](instrucciones-implementacion.md), [PA-S03](../03-gestion-acceso-subcampania/contratos.md) y [PA-S04](../04-correccion-excepcional/spec.md).
