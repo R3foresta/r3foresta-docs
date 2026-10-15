@@ -46,8 +46,8 @@ flowchart TB
   person -->|"Actor propietario"| command
   command -->|"Preparación y propiedad"| photos
   photos -->|"Vínculo atómico"| record
-  command -->|"Resultado con efecto"| receipt
-  receipt -->|"Referencia el original"| record
+  command -->|"Resultado terminal persistido"| receipt
+  receipt -->|"Inicial confirmada"| record
   correction -->|"Conserva original"| record
   correction -.->|"Motor común; efectos propios"| command
   style permission fill:#EEF6FF,stroke:#3267A8

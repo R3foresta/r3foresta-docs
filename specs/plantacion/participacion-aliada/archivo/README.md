@@ -7,6 +7,10 @@ Actas y antecedentes conservados al ordenar la documentación el 14 de octubre d
 - [Cierre de PA-T-INT02-A](cierre-pa-t-int02-a.md): alcance acreditado, versiones, evidencias y límites.
 - [Encargo original de INT02-A](inicio-pa-t-int02-a.md): conserva lo solicitado; ya no es el siguiente paso.
 
+## Versiones de diagramas
+
+- [Diagramas y dependencias anteriores al 14 de octubre](diagramas-antes-2026-10-14/README.md): fuentes Mermaid, renders y análisis previos conservados con sus fechas. La [versión vigente](../diagramas/README.md) incorpora el contrato D01–D12, el cierre de INT02-A y el orden actual de entregas.
+
 ## Actas y contrastes
 
 Las actas siguen siendo evidencia de aceptación. Archivar una revisión cerrada conserva sus decisiones; las specs, el contrato aceptado y los ADR expresan el comportamiento vigente.
@@ -27,6 +31,7 @@ Las actas siguen siendo evidencia de aceptación. Archivar una revisión cerrada
 | [Diseño técnico compartido](diseno-tecnico-compartido.md) | Razonamiento y distribución por capas anteriores al contrato aceptado. |
 | [Comandos compartidos](diseno-comandos-compartidos.md) | Elección de un motor común; los contratos concretos vigentes están en el contrato backend. |
 | [Instrucciones previas](instrucciones-implementacion.md) | Trazabilidad PA-CT/PA-Q, desgloses por capa y propuestas específicas de corrección aún por resolver. |
+| [Ficha previa de INT02-B del 14](pa-t-int02-b-ficha-previa-2026-10-14.md) | Alcance conservado antes del desglose backend/frontend; la ejecución vigente sigue en las fichas B/C/INT06 del tablero. |
 
 Los planes candidatos, rutas propuestas y estados de estas notas se leen con su fecha. Para decidir qué ejecutar prevalece el [tablero actual](../implementacion/README.md); para los mecanismos D01–D12, el [contrato aceptado](../contrato-identidad-permisos-backend-propuesta.md). PA-S04 conserva sus decisiones pendientes propias.
 

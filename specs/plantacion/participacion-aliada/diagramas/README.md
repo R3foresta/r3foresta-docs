@@ -1,66 +1,71 @@
 # Diagramas y dependencias de PA-F01
 
-**Actualizados:** 12 de octubre de 2026. **Estado:** cinco fuentes Mermaid y SVG regenerados localmente, sin Figma; apoyo de Elaboración, no aprobación de contratos, implementación ni salida a campo.
+**Actualizados:** 14 de octubre de 2026. Cinco fuentes Mermaid y SVG alineados con PA-S00–04, D01–D12 aceptadas y el tablero vigente. Son vistas de apoyo; no completan implementación, despliegue ni piloto.
 
-**Alcance actualizado:** consulta pública sin sesión y experiencia reducida separada de gestión interna; ADMIN global registra en ACTIVA sin membresía contextual adicional; ubicación manual confirmada; fecha en el segundo paso; recuperación del mismo intento y correcciones acotadas. Ver [PA-S00](../00-experiencia-participante/spec.md), [diseño compartido](../archivo/diseno-tecnico-compartido.md) y [acuerdo de correcciones](../archivo/revision-correcciones-2026-10-12.md). Modelo conceptual, no ER ni aprobación de tablas nuevas. Ubicación de observaciones aprobada posteriormente al final del paso 2, con resumen condicional en el tercero; el usuario descarta el 12 de octubre el aviso adicional de publicación.
+**Situación:** INT02-A cerró identidad/perfil/privacidad en desarrollo. La siguiente entrega es [INT02-B](../implementacion/pa-t-int02-b.md); la secuencia backend continúa B → INT03-A → C → D. Consultar el [tablero único](../implementacion/README.md) para avance/tareas y el [mapa de dependencias](DEPENDENCIAS.md) para entender las condiciones. La [versión anterior](../archivo/diagramas-antes-2026-10-14/README.md) conserva las fuentes y renders previos.
 
-Para continuar la implementación, empezar por el [tablero vigente](../implementacion/README.md). [PA-D05 y el análisis de dependencias](DEPENDENCIAS.md) conservan el mapa técnico del 12 de octubre. Distingue base reutilizable, adaptación pendiente y condiciones de preparación del piloto, con lectura estática de backend/PWA locales.
-
-| ID | Vista | Qué permite entender | Fuente editable | Render |
+| ID | Vista | Qué explica | Fuente editable | Render |
 |---|---|---|---|---|
-| `PA-D01` | Contexto y límite | Actores, permisos, stock M2→M3 y alcance del piloto. | [Mermaid](PA-D01-contexto-limite.mmd) | [SVG](svg/PA-D01-contexto-limite.svg) |
-| `PA-D02` | Casos de uso | Quién registra, gestiona acceso, consulta y corrige. | [Mermaid](PA-D02-casos-uso.mmd) | [SVG](svg/PA-D02-casos-uso.svg) |
-| `PA-D03` | Actividades | Tres pasos, guardado/consumo atómicos, rechazo y resultado incierto. | [Mermaid](PA-D03-actividades-registro.mmd) | [SVG](svg/PA-D03-actividades-registro.svg) |
-| `PA-D04` | Modelo conceptual | Persona, permiso, stock, registro/evidencia y afiliación/crédito separados. | [Mermaid](PA-D04-modelo-conceptual.mmd) | [SVG](svg/PA-D04-modelo-conceptual.svg) |
-| `PA-D05` | Dependencias | Qué reutilizar, adaptar y verificar antes del piloto. | [Mermaid](PA-D05-dependencias-implementacion.mmd) | [SVG](svg/PA-D05-dependencias-implementacion.svg) |
+| PA-D01 | Contexto y límite | Impacto público, participación autorizada y gestión interna preservada; un dominio/stock común. | [Mermaid](PA-D01-contexto-limite.mmd) | [SVG](svg/PA-D01-contexto-limite.svg) |
+| PA-D02 | Casos de uso | Autoridad contextual/global, lectura propia, continuidad administrativa y correcciones/reversiones. | [Mermaid](PA-D02-casos-uso.mmd) | [SVG](svg/PA-D02-casos-uso.svg) |
+| PA-D03 | Actividades | Tres pasos, comando/cargas, LIFO atómico y recuperación del recibo sin duplicar. | [Mermaid](PA-D03-actividades-registro.mmd) | [SVG](svg/PA-D03-actividades-registro.svg) |
+| PA-D04 | Modelo conceptual | Permisos distintos de logística; registro, snapshots, consumo, comando y recibo. | [Mermaid](PA-D04-modelo-conceptual.mmd) | [SVG](svg/PA-D04-modelo-conceptual.svg) |
+| PA-D05 | Dependencias | Identidad ya disponible en desarrollo, B como siguiente entrega y consumidores hasta INT08. | [Mermaid](PA-D05-dependencias-implementacion.mmd) | [SVG](svg/PA-D05-dependencias-implementacion.svg) |
 
 ## PA-D05 — Qué debe estar preparado
 
 ![Dependencias de implementación](svg/PA-D05-dependencias-implementacion.svg)
 
-Usuarios y datos operativos existen como base. Sesión verificada en servidor (sin documento de identidad), nuevos permisos, orden de retiro/guardado, idempotencia y contratos necesitan trabajo específico. Consulta, gestión de acceso y corrección excepcional son condiciones del piloto aunque no sean pasos obligatorios de cada registro.
+B prepara permisos/vigencias/revisiones/auditoría y transición. El nodo catálogo/manifest muestra el cotejo y revisión necesarios para completar esa entrega; B prepara la propuesta concreta antes de su revisión/aplicación. INT03-A construye motor común, cargas, inicial LIFO, snapshots y recibo; C implementa gestión/capacidades y D cierra locks/rutas equivalentes/corte. Interfaces INT04/05/06 y correcciones INT07 consumen sus contratos. INT08 integra transición, QA, despliegue y decisión de piloto. El [análisis](DEPENDENCIAS.md) explica datos operativos y pendientes sin crear otro plan general. A completada en desarrollo no significa permisos contextuales, registro participante ni producción completados.
+
+Encargos por equipo: [B](../implementacion/pa-t-int02-b.md) y [C](../implementacion/pa-t-int02-c.md) son backend/DB; [INT06](../implementacion/pa-t-int06.md) integra la interfaz frontend después de C verificada. Su boceto puede prepararse antes; D sigue siendo condición de QA/habilitación. La flecha C→INT06 representa la dependencia de las APIs, no obliga a posponer todo el trabajo visual.
 
 ## PA-D01 — Contexto y límite
 
 ![Contexto y límite](svg/PA-D01-contexto-limite.svg)
 
-Stock de subcampaña entregado antes de plantar. Corrección excepcional dentro de preparación del piloto, con mecanismo/efectos pendientes; no hay aprobación del administrador antes de cada guardado. Afiliación y financiación no habilitan permisos.
+Impacto y sus enlaces públicos no exigen cuenta, sesión, perfil ni asignación; cuenta VOLUNTARIO sin permiso recibe la misma proyección. Alta/perfil no otorga autoridad; afiliación puede ser catálogo, Otra o ninguna. Plantador/administrador contextual opera solo en su ámbito; ADMIN global activo registra en cualquier ACTIVA sin permiso contextual adicional. La gestión interna preserva herramientas/facultades legítimas; no se abre por iniciar sesión. Stock ya entregado pertenece a la subcampaña: no añade recepción organizacional ni otro débito de Vivero. Originales de fotos privados, derivados públicos sanitizados y audiencias según PA-S02/contrato.
 
 ## PA-D02 — Casos de uso
 
 ![Casos de uso](svg/PA-D02-casos-uso.svg)
 
-Plantador y administrador contextual registran; ADMIN global también puede hacerlo directamente en ACTIVA. El administrador gestiona plantadores de su ámbito según PA-S03; R3Foresta designa/cambia/retira administradores y protege al último. Ambos administradores corrigen cantidades/participantes solo en ACTIVA; observaciones sigue central. Cantidades exige ausencia de bajas y reposiciones, sin cambiar especies; aumento por diferencia, reducción con error y disponibilidad física confirmados. Cero sigue fuera del ajuste simple. La decisión posterior del 12 permite reversión de duplicados y eliminación lógica de registros erróneos; estos casos nuevos aún no se representan en los SVG de esta regeneración, consultar PA-S04 y su acta. Participantes conserva responsable original y no altera stock ni permisos. Todo con historial y autoridad verificada. Consulta pública no expone stock/contactos/perfiles completos/EXIF. Retiro conserva lectura propia autorizada. Vista simplificada de producto, no permisos desplegados ni UML exhaustivo.
+ADMIN contextual incorpora/retira plantadores dentro de su ámbito; ADMIN global designa/cambia/retira administradores y gestiona roles/baja de cuenta en operación separada del perfil. Nuevas habilitaciones en BORRADOR/ACTIVA; cerradas/canceladas solo retiros/reemplazos permitidos, sin reapertura. Proteger último contextual efectivo una vez inicializado, sin contar presencia global/logística; proteger último ADMIN global activo es otra garantía.
+
+PA-S04 incluye ajustes de cantidad/participantes y reversiones de duplicados o plantación/baja/reposición erróneas por ambos administradores, solo en ACTIVA y según el caso. Cantidades exige ausencia de bajas/reposiciones, especies intactas, aumento por diferencia y reducción con error/disponibilidad física confirmados; cero queda fuera del ajuste simple. Participantes históricos registrados pueden corregirse sin permiso operativo actual, sin cambiar autoría, stock ni acceso. Observaciones sigue central. Compensaciones no cambian entrega/Vivero, no se aplican por cascada ni reabren. Casos/contratos/efectos de INT07 siguen pendientes de cierre integral propio. El diagrama representa autoridad de producto, no operaciones ya desplegadas.
 
 ## PA-D03 — Actividades de registro
 
 ![Actividades de registro](svg/PA-D03-actividades-registro.svg)
 
-Conserva tres pasos del handoff. Registro, detalles, evidencias y consumo se confirman en una transacción. Cargar contexto, abrir formulario y subir fotos no reservan permiso. La autorización se ordena con el retiro: una operación autorizada antes del retiro termina normalmente, aunque puede fallar por otras validaciones. El mecanismo está pendiente.
+Tres pasos aprobados: **fotos/ubicación → cantidades/fecha/observaciones → participantes/resumen/confirmación**. No hay cuarta pantalla; seleccionar participantes no guarda. Responsable fijo de sesión, personas adicionales opcionales/elegibles y revisión sin ajustes automáticos. Ubicación confirmada y reajustable, con GPS o coordenadas manuales válidas; punto exterior evaluado permitido. Fecha Hoy editable dentro de la ventana inclusive de 10 días en America/La_Paz, y no antes de entregas efectivamente consumidas. Metas orientativas, especies del plan y saldo elegible; cierre manual, nunca automático por llegar a meta.
 
-GPS exterior permitido con evaluación/advertencia; captura fallida o permiso denegado admite coordenadas manuales válidas y punto confirmado. Fallo técnico confirmado del evaluador del servidor: conservar formulario y reintentar sin guardar/consumir. Fecha «Hoy» editable en el segundo paso; participantes opcionales registrados/habilitados en el ámbito, responsable fijo y resumen/confirmación al final del tercero. Revalidar estado, permisos, participantes y saldo; conservar borrador permitido, sin ajustes automáticos. Contratos y mecanismos aún deben verificarse.
+Preparar comando/fotos no reserva permiso, stock ni revisión de plan. En v1 el navegador envía cantidades por especie y plan_revision_esperada; el servidor reparte **LIFO por timestamp completo fecha_asignacion DESC, id DESC**, excluyendo entregas posteriores a la fecha elegida. Locks ASC es un orden independiente. Registro/detalles/snapshots/vínculos/consumo y recibo se confirman juntos; no se hace selección manual de lote ni reparto FIFO en cliente.
 
-Resultado incierto puede ser guardado cuya respuesta se perdió. Recuperar o reintentar el mismo envío sin duplicar está aprobado en comportamiento; clave/endpoint y retención siguen pendientes. La flecha de recuperación representa comprobación o reintento conforme al contrato, no reenvío automático infinito. No es modo offline completo. Abandonar antes de enviar no crea registro; limpiar fotos pendientes según contrato. Tras resultado incierto, resolver intento antes de asumir fotos libres o enviar uno nuevo.
+Tras respuesta perdida, recuperar el comando propio con misma clave/contenido; recibo terminal conserva resultado histórico sin repetir efectos ni exigir autoridad contextual para una nueva escritura. Cuenta/sesión válida sigue necesaria. 202 SIN_RESULTADO o 404 COMANDO_NO_CONFIRMADO son inconclusos; no autorizan clave nueva ni afirman EN_CURSO. Conflicto de contenido con misma clave rechaza sin cambiar el recibo. Un rechazo de negocio terminal requiere revisión y nueva confirmación con clave nueva; no revive al cambiar stock/permisos. Fallo del evaluador solo es rechazo sin efecto si hay recibo durable; si no, resolver incertidumbre. El diagrama simplifica errores de guard/DTO/infraestructura y recuperación de cargas, definidos en contrato §§6–7.
+
+Abandono clausura preparación y limpia pendientes bajo su contrato. Si hubo envío inconcluso, no asumir abandono ni borrar fotos vinculadas: consultar resultado/cancelación atómica. No es aprobación administrativa, cola de comandos ni modo offline completo. Backend/recuperación participantes están pendientes en INT03-A/C/D/INT04; aceptación del mecanismo no acredita ejecución.
 
 ## PA-D04 — Modelo conceptual
 
 ![Modelo conceptual](svg/PA-D04-modelo-conceptual.svg)
 
-Mapa de conceptos, no ER físico ni tablas nuevas. Permiso por persona/subcampaña; registro con una subcampaña y un responsable real. Detalles conservan cantidades por asignación/lote/especie. Organizaciones de campaña y afiliaciones personales son relaciones distintas y no multiplican plantaciones. Financiación/crédito sigue fuera de esta definición. Correcciones conservan original/actor/historial; ajuste trazable de consumo no modifica entrega ni vivero. La distribución/reversión física por asignación sigue en diseño.
+Mapa de conceptos/relaciones, no ER físico ni migración aplicada. Persona conserva rol global; permiso contextual con vigencia/revisión es distinto de responsabilidad logística COORDINADOR/OPERARIO. ADMIN global se reconoce de forma derivada, no por filas contextuales automáticas. Un registro conserva responsable, participantes y snapshots conocidos; cambios actuales de perfil/organizaciones no reescriben el pasado. Afiliación retroactiva desconocida no se inventa desde perfil o campaña; ausencia declarada e historia no disponible son distintas.
 
-## Lectura y mantenimiento
+Comando y recibo propio ligan intención a efecto/resultado. Cargas propias terminan vinculadas con el registro. Corrección conserva original/resultado efectivo/historial y reutiliza el motor, con efectos específicos aún por cerrar. Total físico no se multiplica por personas u organizaciones. Crédito/financiación, composición viva por especie, superficie realmente plantada y nuevos recorridos de seguimiento no se añaden por esta actualización.
 
-- Fuentes de esta regeneración: [revisión humana del 11/12](../archivo/revision-humana-2026-10-11.md) y [correcciones del 12](../archivo/revision-correcciones-2026-10-12.md). Los renders representan acuerdos; no los aprueban ni prueban ejecución.
-- Flecha continua: relación/acción descrita. En PA-D05: dependencia necesaria, no orden rígido de diseño; entradas convergentes se necesitan juntas.
-- Flecha punteada: contexto, alcance posterior o mecanismo/atribución por definir. Leer su etiqueta.
-- Azul: ámbito/base reutilizable, no «verificado en producción». Ámbar y `PENDIENTE`: adaptación/alineación/mecanismo sin cerrar. Verde: resultado esperado sujeto a verificación.
-- Cuatro vistas conceptuales previstas más PA-D05 para dependencias. No inventan infraestructura, APIs ni esquema de permisos.
-- Editar `.mmd` y regenerar SVG; ambos deben representar el mismo contenido.
+## Lectura, fuentes y mantenimiento
 
-Configuración de los renders: [mermaid-config.json](mermaid-config.json). Con Mermaid CLI disponible, desde la raíz del repo:
+- PA-D01–04 muestran relaciones/comportamientos objetivo; no son diagramas de infraestructura ni prueba de despliegue. PA-D02 es una vista simplificada de casos de uso, no UML exhaustivo.
+- PA-D05 muestra dependencias de integración. Flechas convergentes requieren todas las condiciones; los bocetos/preparaciones pueden solaparse sin habilitar operación antes de verificar garantías.
+- Verde en A/perfil: alcance acreditado en desarrollo. Azul: base o relación descrita. Ámbar: siguiente entrega, mecanismo/efecto a implementar o verificar. Resultado verde de PA-D03 es éxito esperado del recorrido, no prueba ejecutada.
+- Fuentes vigentes: [tablero](../implementacion/README.md), [ESTADO.md](../../../../ESTADO.md), [contrato D01–D12](../contrato-identidad-permisos-backend-propuesta.md), [PA-S00](../00-experiencia-participante/spec.md), [PA-S01](../01-registro-plantacion-inicial/spec.md), [PA-S02](../02-consulta-impacto-y-registros/spec.md), [PA-S03](../03-gestion-acceso-subcampania/spec.md) y [PA-S04](../04-correccion-excepcional/spec.md). Antecedentes y evidencia fechada en el archivo; el LCO conserva su cierre histórico.
+- Editar .mmd y regenerar SVG juntos. [Configuración](mermaid-config.json). Fuentes/renders anteriores y su análisis se mantienen en el archivo.
+
+Con Mermaid CLI disponible, desde la raíz del repositorio:
 
 ```sh
 mmdc -i specs/plantacion/participacion-aliada/diagramas/PA-D05-dependencias-implementacion.mmd -o specs/plantacion/participacion-aliada/diagramas/svg/PA-D05-dependencias-implementacion.svg -c specs/plantacion/participacion-aliada/diagramas/mermaid-config.json -b white
 ```
 
-Fuentes: [LCO](../../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md), [ADR-PLA-03](../../../../decisiones/02_decisiones_plantacion.md), [handoff](../../../../03-plantacion-module/05_handoff_registro_plantacion_inicial.md), [contrato M2→M3](../../../../90-contratos-integracion/02_contrato_vivero_a_plantacion.md) y [migración 053](../../../../database/migrations/053_m3_registrar_plantacion_sin_despacho.sql). Evidencia y límites en [DEPENDENCIAS.md](DEPENDENCIAS.md).
+Esta actualización verificó fuentes, enlaces y renderizado; no repitió las pruebas de aplicación ni aplicó SQL, permisos o despliegues. El [mapa de dependencias](DEPENDENCIAS.md) distingue evidencias cerradas de implementación y validación pendientes.

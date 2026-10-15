@@ -11,6 +11,8 @@ Base documental de la trazabilidad de material vegetal: `General → Recolecció
 | Entender cómo se relacionan specs, tareas y entregas INT | [Guía de specs](specs/README.md) |
 | Trabajar como agente | [AGENTS.md](AGENTS.md), luego las fuentes de la entrega |
 
+PA-F01 tiene cierre local parcial de [INT02-C](specs/plantacion/participacion-aliada/implementacion/pa-t-int02-c.md): APIs/comandos de acceso y rol/baja verificados; 072/073 confirmadas aplicadas y superficie REST comprobada en desarrollo. Cuerpos SQL remotos, despliegue/entorno frontend e INT03-A/D siguen pendientes. [Informe y pruebas](../Backend-r3foresta/docs/pa-int02c-entrega-local.md).
+
 ## Fuentes de dominio
 
 | Área | Contenido |

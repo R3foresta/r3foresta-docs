@@ -2,15 +2,15 @@ flowchart TB
   design["INT01: D01–D12 aceptadas"]
   identity["INT02-A: identidad y perfil completos en desarrollo"]
   catalog["Catálogo cotejado y manifest concreto revisado"]
-  permissions["INT02-B: permisos y transición; siguiente"]
+  permissions["INT02-B: backend/DB; permisos y transición; siguiente"]
   data["Datos operativos y stock elegible existente"]
   environment["PostGIS, cargas privadas y fotos públicas sanitizadas"]
-  commands["INT03-A: motor, inicial LIFO, snapshots y recibo"]
-  access["INT02-C: gestión contextual y capacidades"]
+  commands["INT03-A: backend/DB; motor e inicial LIFO recuperable"]
+  access["INT02-C: backend/DB; gestión contextual y capacidades"]
   cutover["INT02-D: locks, rutas equivalentes y corte"]
   form["INT04: formulario participante recuperable"]
   impact["INT05: Impacto público y Mis registros"]
-  accessUi["INT06: interfaz de acceso"]
+  accessUi["INT06: frontend; interfaz de acceso"]
   correctionCases["PA-S04: cierre de casos y efectos propios"]
   corrections["INT07: correcciones y reversiones acotadas"]
   verification["INT08: transición, QA integrada y despliegue"]
@@ -24,7 +24,7 @@ flowchart TB
   commands --> access --> cutover
   commands --> form
   commands --> impact
-  access --> accessUi
+  access -->|"APIs de C verificadas"| accessUi
   access --> corrections
   correctionCases --> corrections
   cutover --> verification
