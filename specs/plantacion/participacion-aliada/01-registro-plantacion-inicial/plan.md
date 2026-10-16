@@ -2,6 +2,8 @@
 
 **Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
 
+**Entrega backend al 16 de octubre:** [INT03-A — backend/DB](../implementacion/pa-t-int03-a.md), BE01–BE08 implementadas y verificadas localmente; backend publicado en `main`, commit `a045d9d`. Extiende el motor de C con registro/cargas/LIFO/snapshots y entrega launcher para INT04. La revisión visual de INT06 sigue separada; aplicación SQL remota, conciliación real, corte y regresiones de D permanecen pendientes antes de habilitar el recorrido real.
+
 **Revisión técnica aceptada el 13 de octubre:** D01–D12 del [contrato backend](../contrato-identidad-permisos-backend-propuesta.md) quedan aceptadas por Pablo, con ajustes D02/D07. La inicial consume LIFO del stock disponible de su subcampaña (`fecha_asignacion DESC, id DESC`), sin nueva recepción por organización/administradores ni segundo débito de Vivero. Afiliación opcional: organización existente del catálogo o «Otra»; snapshots históricos conservados. Esa versión concreta prevalece sobre los nombres/candidatos anteriores; la aceptación de diseño no marca implementación, migraciones o pruebas como completadas.
 
 
