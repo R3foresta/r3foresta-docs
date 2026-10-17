@@ -11,7 +11,9 @@ Base documental de la trazabilidad de material vegetal: `General → Recolecció
 | Entender cómo se relacionan specs, tareas y entregas INT | [Guía de specs](specs/README.md) |
 | Trabajar como agente | [AGENTS.md](AGENTS.md), luego las fuentes de la entrega |
 
-PA-F01 tiene cierre local parcial de [INT02-C](specs/plantacion/participacion-aliada/implementacion/pa-t-int02-c.md): APIs/comandos de acceso y rol/baja verificados; 072/073 confirmadas aplicadas y superficie REST comprobada en desarrollo. INT03-A implementa y verifica registro/cargas/LIFO/snapshots localmente y entrega launcher INT04. [Informe](../Backend-r3foresta/docs/pa-int03a-entrega-local.md). Cuerpos SQL remotos, despliegue e integración/corte D siguen pendientes. [Informe y pruebas](../Backend-r3foresta/docs/pa-int02c-entrega-local.md).
+PA-F01 conserva avances parciales de B/C y el cierre técnico local de INT03-A; [INT02-D](specs/plantacion/participacion-aliada/archivo/cierre-pa-t-int02-d.md) completó BE01–BE08 con permisos por objeto, rutas equivalentes, locks compartidos, reposición y corte ensayados localmente. [Informe backend y límites](../Backend-r3foresta/docs/pa-int02d-entrega-local.md). 074–076 están aplicadas en desarrollo según Pablo, con cotejo posterior pendiente; 077–080 solo se acreditan en clústeres sintéticos. Catálogo/Storage remotos, transición real, push/despliegue de D y piloto siguen pendientes. Código D versionado localmente en `75a57eb`.
+
+[INT04: implementación frontend](specs/plantacion/participacion-aliada/implementacion/pa-t-int04.md) completó FE01–FE08 localmente el 17 de octubre: 553 pruebas y 60 checks integrados con D; [evidencia y límites](../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md). Código INT04 versionado localmente en `94f62a9`. El siguiente encargo preparado es [INT05 — Impacto público y Mis registros](specs/plantacion/participacion-aliada/implementacion/pa-t-int05.md), primero backend y después frontend. El [tablero](specs/plantacion/participacion-aliada/implementacion/README.md) conserva los pendientes externos; estos cierres no habilitan el piloto.
 
 ## Fuentes de dominio
 

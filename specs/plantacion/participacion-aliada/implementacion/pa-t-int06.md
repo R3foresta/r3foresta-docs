@@ -6,7 +6,7 @@
 
 Una persona administradora gestiona plantadores en sus subcampañas; ADMIN global dispone además de acciones explícitas sobre administradores. La pantalla identifica persona, responsabilidad, ámbitos y consecuencias, y muestra éxito solo tras validar el recibo del servidor. Usa el mismo dominio/sesión y conserva las herramientas internas autorizadas.
 
-**Primero backend:** [INT02-B](pa-t-int02-b.md) prepara DB; INT03-A prueba el motor común; [INT02-C](pa-t-int02-c.md) entrega APIs. **Después frontend:** integrar estas APIs tras el cierre verificable de C. INT02-D debe estar comprobada antes de habilitar el recorrido participante y cerrar el QA integrado. La entrada/selector para registrar sigue en PA-T-ENT05-FE/INT04; formulario y consulta pública conservan INT04/INT05.
+**Primero backend:** [INT02-B](pa-t-int02-b.md) prepara DB; INT03-A prueba el motor común; [INT02-C](pa-t-int02-c.md) entrega APIs. **Después frontend:** integrar estas APIs tras el cierre verificable de C. INT02-D debe estar comprobada antes de habilitar el recorrido participante y cerrar el QA integrado. INT04 implementa/verifica localmente la entrada/selector, formulario y recuperación; la consulta pública sigue en INT05.
 
 Leer [PA-S03: spec](../03-gestion-acceso-subcampania/spec.md), [plan](../03-gestion-acceso-subcampania/plan.md), [tareas](../03-gestion-acceso-subcampania/tasks.md), [PA-S00: spec](../00-experiencia-participante/spec.md) y [tareas](../00-experiencia-participante/tasks.md); [contrato backend aceptado](../contrato-identidad-permisos-backend-propuesta.md) §2, §4.3, §5 y §7.3–7.4. Usar el informe/OpenAPI/ejemplos del cierre de C y comprobar las versiones actuales de ambos repositorios antes de integrar.
 
@@ -42,7 +42,7 @@ La selección masiva se envía como un comando todo-o-nada; no ejecutar un bucle
 
 ### FE05 — Guardado y recuperación
 
-Generar `comando_id` una vez al confirmar y conservar actor/operación/payload/IDs/revisiones para recuperar ese envío. No depender solo de deshabilitar el botón para evitar duplicados. Reutilizar el mecanismo compartido de comandos/borradores de INT04 cuando esté disponible, sin construir otro motor de recuperación.
+Generar `comando_id` una vez al confirmar y conservar actor/operación/payload/IDs/revisiones para recuperar ese envío. No depender solo de deshabilitar el botón para evitar duplicados. INT04 comparte ahora las primitivas de lifecycle/exclusión y extiende sus contratos y almacenamiento con preparación/fotos; no construir otro motor de recuperación.
 
 | Respuesta/situación | Comportamiento de pantalla |
 |---|---|
@@ -66,7 +66,7 @@ Verificar PA-S03-CA02/03/05–08/11/14/15/18/21/22 y PA-S00-CA09/10/16/17/23/24 
 - PWA `cf130365` más árbol de trabajo; backend `57e5b715` más árbol de C; documentación `89dfdb2` más árbol. No se acredita publicación Git ni despliegue de esta continuación.
 - Implementados cliente v1/validación runtime, capacidades compartidas por cuenta, miembros/búsqueda/revisión, selección/confirmación C04–C09 y conservación/recuperación del comando. IDs/revisiones como cadenas, un UUID por intención, Web Locks y almacenamiento privado por actor; un resultado incierto bloquea una nueva confirmación.
 - La interfaz y los casos locales se registran en el [informe PWA de INT06](../../../../../pwa-r3foresta/docs/QA_GESTION_ACCESOS_INT06.md), con entorno, resultados automatizados, evidencia de navegador → API → DB y límites. La revisión humana de acciones/consecuencias sigue sin acreditarse.
-- FE06 permanece parcial: faltan INT02-D y las carreras/regresiones compartidas, el recorrido de registro/cargas de INT03-A/INT04, Impacto/Mis registros de INT05, WebAuthn real y un entorno externo identificado. La evidencia local de acceso no completa esas entregas ni habilita el piloto.
+- Actualización del 17: D e INT04 acreditan sus alcances técnicos locales, incluidos registro/cargas, dos pestañas, respuesta perdida y reposición. [Informe INT04](../../../../../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md). FE06 permanece parcial: faltan Impacto/Mis registros INT05, WebAuthn real, revisión humana y un entorno externo identificado. La evidencia local de acceso no completa esas entregas ni habilita el piloto.
 - PA-T13-FE/PA-T14-FE registran únicamente el alcance de gestión implementado/verificado localmente. PA-T16-QA, ENT06-QA, INT08 y las capacidades completas conservan sus pendientes.
 
 ## Criterio de cierre

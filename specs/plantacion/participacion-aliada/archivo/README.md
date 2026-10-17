@@ -2,10 +2,18 @@
 
 Actas y antecedentes conservados al ordenar la documentación el 14 de octubre de 2026. [Índice vigente](../README.md) · [Ejecución actual](../implementacion/README.md).
 
-## Entrega cerrada
+## Entregas con cierre registrado
 
 - [Cierre de PA-T-INT02-A](cierre-pa-t-int02-a.md): alcance acreditado, versiones, evidencias y límites.
 - [Encargo original de INT02-A](inicio-pa-t-int02-a.md): conserva lo solicitado; ya no es el siguiente paso.
+- [Cierre técnico local de INT03-A](cierre-pa-t-int03-a.md): BE01–BE08, evidencia del 15 y publicación en `main` del 16; 074–076 aplicadas en desarrollo según Pablo, con cotejo posterior, D e integración pendientes.
+- [Encargo y tareas de INT03-A](pa-t-int03-a.md): contenido completo conservado al cerrar el alcance local; la [ruta anterior](../implementacion/pa-t-int03-a.md) permanece como entrada compatible.
+
+- [Cierre técnico local de INT02-D](cierre-pa-t-int02-d.md): BE01–BE08, código local `75a57eb`, 787 unitarios y SQL/carreras/HTTP; aplicación remota, push/despliegue y piloto pendientes.
+- [Encargo completado de INT02-D](pa-t-int02-d.md): ocho tareas acreditadas; la [ruta anterior](../implementacion/pa-t-int02-d.md) permanece como entrada compatible.
+- [Recepción de INT02-D del 16 de octubre](pa-t-int02-d-recepcion-2026-10-16.md): conserva el árbol/pendiente 40001 y criterios recibidos; la [ficha vigente](../implementacion/pa-t-int02-d.md) registra el cierre local.
+- [Cierre técnico local de INT04](cierre-pa-t-int04.md): FE01–FE08, código local `94f62a9`, 553 pruebas y 60 checks integrados; mantiene pendientes remotos, revisión humana y WebAuthn.
+- [Encargo completado de INT04](pa-t-int04.md): criterios y ocho tareas conservados; la [ruta anterior](../implementacion/pa-t-int04.md) permanece como entrada compatible.
 
 ## Versiones de diagramas
 

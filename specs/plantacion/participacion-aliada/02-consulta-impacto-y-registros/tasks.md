@@ -1,6 +1,6 @@
 # Tareas — PA-S02
 
-**Ejecución al 14 de octubre:** INT05 sigue pendiente como entrega completa. INT02-A preservó y probó consultas públicas existentes; eso no completa las proyecciones, Mis registros ni las pantallas públicas PWA de esta spec. [Entregas y cobertura](../implementacion/README.md).
+**Ejecución al 17 de octubre:** INT05 sigue sin implementar; la [ficha por equipos](../implementacion/pa-t-int05.md) prepara BE01–BE06 → FE01–FE06 tras los cierres locales D/INT04. Sus APIs de fotos/detalle propio y regresiones no completan las proyecciones, Mis registros ni pantallas públicas de esta spec. [Entregas y cobertura](../implementacion/README.md).
 
 **Estado:** comportamiento aprobado; contratos y entrega completa de consulta pendientes. Las regresiones existentes de INT02-A no cierran estas tareas. Se conservan PA-T07..11; los sufijos identifican trabajo por capa sin renumerar las tareas base.
 
