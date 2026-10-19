@@ -10,7 +10,7 @@ Las ocho tareas completadas y su trazabilidad se conservan en el [encargo archiv
 
 ## Entrega a INT04
 
-[INT04](pa-t-int04.md) completó su alcance técnico local después de D; [cierre frontend](../archivo/cierre-pa-t-int04.md). El siguiente encargo es [INT05 — Impacto público y Mis registros](pa-t-int05.md), primero backend y después frontend.
+[INT04](pa-t-int04.md) completó su alcance técnico local después de D; [cierre frontend](../archivo/cierre-pa-t-int04.md). [INT05 — Impacto público y Mis registros](pa-t-int05.md) completó backend y frontend localmente, con consolidación del 19. El siguiente frente funcional es preparar INT07/PA-S04 conforme al [tablero](README.md).
 
 ## Límites y pendientes
 

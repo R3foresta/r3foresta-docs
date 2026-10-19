@@ -10,6 +10,6 @@ Las ocho tareas completadas y todos sus criterios se conservan en el [encargo ar
 
 ## Continuación y límites
 
-**Siguiente: [INT05 — Impacto público y Mis registros](pa-t-int05.md)**, contratos/proyecciones backend antes de integración frontend. La revisión humana de INT04/INT06 puede avanzar en paralelo; INT06 conserva FE06 parcial.
+[INT05 — Impacto público y Mis registros](pa-t-int05.md) completó backend y frontend localmente, con consolidación del 19. El siguiente frente funcional es preparar INT07/PA-S04 conforme al [tablero](README.md). La revisión humana de INT04/INT06 puede avanzar en paralelo; INT06 conserva FE06 parcial.
 
 El perfil de arranque del QA es sintético: WebAuthn real, SQL/Storage/URLs remotos, transición/corte del destino, entorno externo, push/despliegue y piloto siguen pendientes. Se distinguen las revisiones originales de prueba y los commits posteriores de entrega. Este cierre no completa PA-S00/01, las tareas padre de QA ni PA-F01.

@@ -15,6 +15,10 @@ Actas y antecedentes conservados al ordenar la documentación el 14 de octubre d
 - [Cierre técnico local de INT04](cierre-pa-t-int04.md): FE01–FE08, código local `94f62a9`, 553 pruebas y 60 checks integrados; mantiene pendientes remotos, revisión humana y WebAuthn.
 - [Encargo completado de INT04](pa-t-int04.md): criterios y ocho tareas conservados; la [ruta anterior](../implementacion/pa-t-int04.md) permanece como entrada compatible.
 
+- [Encargo INT05 completado y archivado](pa-t-int05.md): BE01–BE06 y FE01–FE06; cortes originales del 17/18, consolidados el 19 en backend `8dc8efc` y PWA `a3a4b28`, push pendiente. La [entrada compatible](../implementacion/pa-t-int05.md) conserva sus anchors.
+- [Cierre backend de INT05](cierre-pa-t-int05-backend.md): BE01–BE06, SQL 081 y verificación técnica local; sin SQL remoto/despliegue.
+- [Cierre frontend de INT05](cierre-pa-t-int05-frontend.md): FE01–FE06, 48 suites/691 pruebas y 111 checks integrados/SQL; sin revisión humana/WebAuthn real ni piloto.
+
 ## Versiones de diagramas
 
 - [Diagramas y dependencias anteriores al 14 de octubre](diagramas-antes-2026-10-14/README.md): fuentes Mermaid, renders y análisis previos conservados con sus fechas. La [versión vigente](../diagramas/README.md) incorpora el contrato D01–D12, el cierre de INT02-A y el orden actual de entregas.
