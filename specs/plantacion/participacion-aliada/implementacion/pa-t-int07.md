@@ -20,6 +20,63 @@ Leer [PA-S04 spec](../04-correccion-excepcional/spec.md), [plan](../04-correccio
 
 **Versionado del22:** motor, recuperación y observaciones guardados en el commit local backend `1585b4c`; build, OpenAPI y 71 suites/950 pruebas aprobados en la [verificación previa](../../../../../Backend-r3foresta/docs/evidencia/pa-int07-084-precommit-2026-10-22.json). Push, despliegue y HTTP remoto pendientes; este versionado no cambia el alcance parcial de INT07.
 
+## Entrega a frontend · 22 de octubre de 2026
+
+**Se puede comenzar la interfaz de observaciones y preparar participantes contra el contrato local.** Observaciones está en el commit backend `1585b4c`, con084 aplicada según Pablo y catálogo cotejado. Participantes085 y sus lecturas están implementados en el árbol local; build y72 suites/982 pruebas aprobaron, pero su integración SQL/HTTP y revisión de migración siguen en curso. **No dar BE03 ni085 por cerradas todavía, ni asumir estas rutas desplegadas.** Antes de conectar un entorno compartido, exigir evidencia final de085, aplicación/cotejo en destino y backend compatible publicado. Cantidades, reversiones y mortandad continúan fuera del incremento consumible. Esta entrega permite iniciar FE01/FE02 y los tramos de FE03/FE04 correspondientes, sin cerrar FE01–FE08.
+
+Fuentes de implementación: [OpenAPI1.5.0:39 rutas/84 schemas](../../../../../Backend-r3foresta/docs/pa-int02c-openapi.json), [observaciones verificadas](../../../../../Backend-r3foresta/docs/pa-int07-motor-observaciones.md), [participantes y lecturas](../../../../../Backend-r3foresta/docs/pa-int07-participantes.md), [evidencia085 en curso](../../../../../Backend-r3foresta/docs/evidencia/pa-int07-participantes-local.json). OpenAPI incluye el incremento local085; no equivale a disponibilidad remota. Las secciones anteriores conservan los cortes históricos.
+
+### APIs y audiencias
+
+Base `/api/v1`. IDs/revisiones son cadenas BIGINT canónicas; campos desconocidos se rechazan. Privadas: Bearer JWT verificado, cuenta activa, `Cache-Control: private, no-store`, `Vary: Authorization`. Nunca enviar actor, rol o identidad por body/headers alternativos. Impacto público no requiere cuenta.
+
+| Método y ruta | Uso y disponibilidad |
+|---|---|
+| GET `/plantaciones/:id/contexto-correccion` | Contexto autorizado: original/efectivo, ámbito, estado, revisión de registro/grupo y capacidades.084 verificada;085 amplía ambos valores con participantes y añade `corregir_participantes`. |
+| GET `/plantaciones/:id/historial-correcciones` | Auditoría administrativa ID DESC; cursor firmado y `limite`20/máximo50.084 observaciones;085 une participantes. |
+| POST `/plantaciones/:id/correcciones/observaciones` | Operación `CORREGIR_OBSERVACIONES_PLANTACION`, solo ADMIN global.084 verificada localmente. |
+| POST `/plantaciones/:id/correcciones/participantes` | Operación `CORREGIR_PARTICIPANTES_PLANTACION`, ADMIN global o administrador vigente del ámbito exacto.085 en integración. |
+| GET `/plantaciones/:id/participantes-historicos-seleccionables?q=...` |085: ID exacto desde1 carácter o nombre NFC/trim3–100; literal sin distinguir mayúsculas. Incluye inactivos, excluye responsable. Solo ID, `nombre_actual`, `activo`, `relacion_historica`. Cursor firmado ASC y límite20/máximo50; no correo/username/directorio sin filtro. |
+| GET `/plantaciones/:id/estado-propio` |085: estado/revisiones, cantidades originales/efectivas, participantes con procedencia y enlace. Autoría o participación efectiva, también para ADMIN. |
+| GET `/plantaciones/:id/historial-propio` |085: historia reducida sin motivo ni antes/después. Cursor firmado DESC, límite20/máximo50. |
+| GET `/plantaciones/mis-registros/estado` |085: estados propios deduplicados; cursor firmado DESC y límite20/máximo50. |
+| GET `/impact/registros/:id/estado` |085: señal mínima pública, sin JWT incluso bearer vencido; estado, existencia de correcciones y enlaces elegibles. `no-store`, sin datos de auditoría/personas. |
+| GET `/participacion/comandos/:comando_id?operacion=...` | Recuperación común por actor original.084 admite observaciones;085 añade participantes. Conserva terminal tras retiro de autoridad, con cuenta activa. |
+
+Contexto/historial/selector administrativos requieren ADMIN global o administrador vigente de esa subcampaña. Ambos casos de escritura exigen ACTIVA, registro VIGENTE y revisión actual. Contextual recibe observaciones originales/efectivas null y `corregir_observaciones:false`; en historial OBSERVACIONES también motivo null. En PARTICIPANTES ambas autoridades ven motivo y snapshots antes/después. No deducir permisos de equipo, organización ni afiliación.
+
+### Entradas y confirmación
+
+Observaciones (todos los campos obligatorios):
+
+```json
+{"comando_id":"1a370000-0000-4000-8000-000000000001","revision_esperada":"0","motivo":"Corrección de transcripción","observaciones":"Texto corregido"}
+```
+
+Participantes085 (todos los campos obligatorios):
+
+```json
+{"comando_id":"1a370000-0000-4000-8000-000000000002","revision_esperada":"1","motivo":"Corregir lista histórica","coresponsable_ids":["12","9007199254740993"]}
+```
+
+Motivo NFC/trim3–1000 caracteres. Observaciones admite null o texto hasta2000; vacío normalizado equivale a null. Lista de participantes es el conjunto completo0–100, sin duplicados y responsable excluido; backend ordena IDs numéricamente. No usar Number para ordenar/transportar BIGINT. UUIDv4 nuevo solo para una intención nueva confirmada. Mostrar propuesta y motivo antes del envío.
+
+El recibo `CORRECCION_PLANTACION` incluye caso, ID de corrección (null en SIN_CAMBIOS), objeto/ámbito, revisiones anterior/nueva de registro/grupo, cambio, estado lógico y referencia vigente. No incluye textos ni listas. SIN_CAMBIOS no crea historia ni incrementa revisión. Observaciones/participantes no cambian revisión de grupo, cantidad, stock o permisos.
+
+### Recuperación y estados de interfaz
+
+Conservar actor+operación+UUID+payload exacto mientras el resultado sea inconcluso. Tras timeout/5xx/respuesta perdida recuperar GET con la misma clave; no fabricar un UUID nuevo.404 `COMANDO_NO_CONFIRMADO`,503 `RESULTADO_NO_DETERMINADO` y202 no acreditan rechazo ni éxito. Respetar `reintento` y el discriminador del sobre: un HTTP de error puede llevar recibo durable RECHAZADO o error fuera de recibo inconcluso. Replay terminal se evalúa antes de nueva autorización y conserva el resultado original.
+
+Tras terminal, refrescar contexto, historial y lecturas efectivas. `REVISION_OBSOLETA` exige nueva lectura y nueva confirmación humana antes de otra intención; no reenviar con revisión cambiada automáticamente. `SUBCAMPANIA_NO_OPERATIVA`/`OBJETO_YA_REVERTIDO` bloquean nueva escritura.401/`CUENTA_INACTIVA` requieren recuperar sesión; un cambio de cuenta no adopta la intención de otra. Clave con contenido distinto produce `COMANDO_REUTILIZADO`. Participantes085: responsable seleccionado →422 `CASO_NO_SOPORTADO`; ID inexistente →422 `PARTICIPANTE_NO_REGISTRADO`, ambos rechazos durables.
+
+### Snapshots, privacidad y pruebas frontend
+
+Responsable inmutable y una sola fila. Altas históricas admiten inactivos sin reactivarlos ni conceder permiso operativo. No rotular un nombre actual como histórico: el nuevo snapshot distingue `procedencia` ORIGINAL/ALTA_CORRECCION/RESTAURACION, `capturado_en` y `nombre_capturado_correccion`. INT05 conserva sus campos; en altas de corrección `nombre_snapshot:null` y afiliación HISTORICA_NO_DISPONIBLE. Restaurar reutiliza el snapshot previo exacto, aunque cambie el perfil.
+
+P01: retirar participación elimina lectura propia salvo autoría u otra relación efectiva; restaurar la recupera. Invalidar datos propios almacenados al recibir404 o tras corrección; revalidar cada página. No reutilizar cursores entre cuentas, objetos, consultas o audiencias. Estado/historia propios no exponen motivo, observaciones ni antes/después administrativos. Mantener fotos privadas y contratos INT04/05/06.
+
+Verificar interfaz: capacidades global/contextual; observaciones null/vacías; participante inactivo; retirada/restauración y acceso propio; responsable protegido; revisión cambiada; pérdida de respuesta y recuperación tras recarga/cuenta/pestaña; cursor alterado; ámbito cerrado; público sin sesión; ningún cambio de cantidades/métricas/fotos. Para085 esperar el resultado final del runner antes de acreditar navegador→API→DB. No crear controles funcionales de cantidades/reversiones/mortandad contra rutas candidatas.
+
 ## Base existente y cotejo requerido
 
 | Pieza acreditada | Reutilización y límite de INT07 |
