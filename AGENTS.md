@@ -2,6 +2,12 @@
 
 Repositorio de documentación de R3Foresta. Trabajar en español y conservar IDs de requisitos, specs, tareas y decisiones.
 
+## Directriz académica vigente — 3 de noviembre de 2026
+
+- El **Capítulo III — Marco aplicativo se trabajará exclusivamente con RUP adaptado**: Inicio, Elaboración, Construcción y Transición, con sus disciplinas, iteraciones, riesgos, artefactos y evidencia. La IA es una herramienta de apoyo bajo responsabilidad humana.
+- La actualización integral de los documentos base para retirar SDD como protocolo declarado queda pendiente en la sección 1.1 de [TODO_PROYECTO_GRADO.md](documentacion-grado/02_planificacion/TODO_PROYECTO_GRADO.md). Esta directriz rige el trabajo nuevo del Capítulo III frente a las formulaciones RUP + SDD que esos documentos todavía conservan.
+- Las especificaciones existentes siguen siendo fuentes de requisitos y diseño. Para el Capítulo III, seleccionar artefactos por utilidad y riesgo, sin exigir el trío `spec.md`/`plan.md`/`tasks.md` ni nuevas familias de IDs para justificar SDD. Conservar rutas, IDs, decisiones aceptadas, fechas y pendientes de verificación y aceptación.
+
 ## Lectura mínima
 
 1. `README.md`: mapa del repositorio.

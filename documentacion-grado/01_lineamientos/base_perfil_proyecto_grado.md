@@ -4,6 +4,8 @@
 > Este documento fija las decisiones que deben mantenerse coherentes desde el Perfil hasta los requerimientos, el diseño, la implementación, las pruebas, la evaluación y el documento final. El texto entregable vive en [PERFIL_PROYECTO_GRADO.md](../06_entregables/perfil/PERFIL_PROYECTO_GRADO.md).
 > La redacción de los artefactos posteriores al Perfil se rige además por [criterios_editoriales_proyecto_grado.md](criterios_editoriales_proyecto_grado.md).
 
+> **Directriz de trabajo — 3 de noviembre de 2026:** el Capítulo III se trabajará exclusivamente con RUP adaptado, con IA como herramienta de apoyo bajo responsabilidad humana. La formulación RUP + SDD de los apartados 8 y 9 corresponde a la base anterior y queda pendiente de actualización en la sección 1.1 de [TODO_PROYECTO_GRADO.md](../02_planificacion/TODO_PROYECTO_GRADO.md); no rige el trabajo nuevo del capítulo. Se conservan el alcance, los objetivos, los IDs y la evidencia del proyecto.
+
 ## 1. Enfoque del proyecto
 
 R3Foresta tiene como objetivo organizacional de largo plazo fortalecer la confianza y explorar mecanismos de financiamiento ambiental. El Proyecto de Grado no intenta resolver ese objetivo completo. Se concentra en una capa anterior y necesaria: registrar y reconstruir la cadena de custodia del material vegetal utilizado para reforestación.

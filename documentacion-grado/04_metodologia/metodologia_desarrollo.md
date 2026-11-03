@@ -1,6 +1,8 @@
 # Metodología de desarrollo del Proyecto de Grado
 
-> El proyecto utilizará el **Rational Unified Process (RUP) adaptado**, complementado con **Spec-Driven Development (SDD) asistido por inteligencia artificial**.
+> **Directriz de trabajo — 3 de noviembre de 2026:** el Capítulo III se desarrollará y revisará exclusivamente con RUP adaptado. La actualización integral de este documento y de las demás fuentes metodológicas queda pendiente en la sección 1.1 de [TODO_PROYECTO_GRADO.md](../02_planificacion/TODO_PROYECTO_GRADO.md). La formulación RUP + SDD y el protocolo que siguen conservan la base anterior para esa revisión; no se imponen al trabajo nuevo del capítulo. La IA continúa como herramienta de apoyo bajo responsabilidad humana.
+
+> **Formulación anterior, pendiente de actualización:** el proyecto utilizará el **Rational Unified Process (RUP) adaptado**, complementado con **Spec-Driven Development (SDD) asistido por inteligencia artificial**.
 
 ## 1. Alcance de la decisión metodológica
 

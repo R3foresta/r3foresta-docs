@@ -2,6 +2,10 @@
 
 Convenciones e invariantes del repositorio. Para empezar una tarea, leer [AGENTS.md](AGENTS.md), [ESTADO.md](ESTADO.md) y, para PA-F01, su [tablero de ejecución](specs/plantacion/participacion-aliada/implementacion/README.md). Los estados fechados de las decisiones siguientes se contrastan con ese seguimiento.
 
+## Trabajo académico con IA — 3 de noviembre de 2026
+
+Aplicar la directriz académica de [AGENTS.md](AGENTS.md): el **Capítulo III se desarrollará y revisará solamente con RUP adaptado**. La IA conserva su función de asistencia bajo revisión humana. La actualización de los documentos base y la retirada del protocolo SDD se controlan como trabajo pendiente en la sección 1.1 de [TODO_PROYECTO_GRADO.md](documentacion-grado/02_planificacion/TODO_PROYECTO_GRADO.md); las menciones anteriores a RUP + SDD no deben imponerse al trabajo nuevo del capítulo.
+
 ## Naturaleza del repositorio
 
 Repositorio **solo de documentación** (no hay build, tests, ni lint). Es la base documental de R3Foresta: requerimientos funcionales, reglas de negocio, guías operativas, decisiones de arquitectura y scripts SQL de soporte. El idioma de trabajo es español; preservarlo en cualquier documento nuevo o edición.

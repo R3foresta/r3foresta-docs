@@ -1,7 +1,9 @@
 # Criterios editoriales para la documentación del Proyecto de Grado
 
-> **Versión 5 — 15 de septiembre de 2026.**
+> **Versión 6 — 3 de noviembre de 2026.** Conserva los criterios de la versión del 15 de septiembre e incorpora la directriz de trabajo del Capítulo III con RUP.
 > Este lineamiento se aplica a las secciones y documentos que se redacten después del Perfil. Registra criterios editoriales y metodológicos; no modifica el contenido aprobado del Perfil de Proyecto de Grado, salvo que el criterio de fuentes de tablas de la sección 9 también se aplicará al Perfil vigente.
+
+> **Directriz para el trabajo con IA:** el Capítulo III se desarrollará y revisará exclusivamente con RUP adaptado. La actualización integral de los documentos base queda pendiente en la sección 1.1 de [TODO_PROYECTO_GRADO.md](../02_planificacion/TODO_PROYECTO_GRADO.md). Las formulaciones anteriores RUP + SDD se revisarán dentro de ese TODO y no se trasladarán como obligaciones al capítulo.
 
 ## 1. Principio rector
 
@@ -77,7 +79,7 @@ La sección 2.10 del Capítulo II constituye una excepción delimitada: puede in
 - **Incremento** denominará una ampliación ejecutable del producto durante Construcción.
 - **Iteración** denominará un ciclo de refinamiento cuando exista evidencia de repetición; no se utilizará como sinónimo automático de módulo.
 - **Sprint** no se utilizará para planificar este proyecto, porque no se adoptó Scrum.
-- **SDD** se presentará como una práctica subordinada a RUP, no como una segunda metodología rectora.
+- **Metodología del Capítulo III:** RUP adaptado será el único proceso declarado. Las especificaciones, contratos y tareas existentes podrán utilizarse como artefactos de requisitos, diseño y gestión; se seleccionarán según su utilidad y riesgo, sin imponer el protocolo SDD.
 - **IA** se presentará como asistencia bajo revisión humana, no como autora, responsable o mecanismo de aprobación.
 - **Verificación**, **validación** y **aceptación** conservarán funciones distintas y no se agruparán bajo la etiqueta genérica “evaluación” cuando esa diferencia sea pertinente.
 
@@ -125,7 +127,7 @@ Antes de aprobar una nueva sección o documento se comprobará:
 8. ¿Cada afirmación relevante puede relacionarse con el problema, un objetivo o una forma de comprobación?
 9. ¿Se evitó repetir explicaciones completas ya establecidas?
 10. ¿Se mantiene la diferencia entre el registro informático y la realidad física?
-11. ¿La terminología distingue fase RUP, iteración, incremento, SDD, asistencia de IA, verificación, validación y aceptación?
+11. ¿La terminología distingue fase RUP, iteración, incremento, asistencia de IA, verificación, validación y aceptación, y el Capítulo III se rige exclusivamente por RUP adaptado?
 12. ¿Cada tabla incluye una nota inmediata que identifica su procedencia y, cuando es de elaboración propia, las fuentes, los datos o las decisiones que sirvieron de base?
 13. ¿Las tablas cumplen su estructura APA 7 y las figuras o diagramas conservan legibilidad, título y nota en la exportación a PDF?
 
@@ -186,4 +188,4 @@ El uso de una figura grande no autoriza a sustituir el texto necesario para inte
 
 ---
 
-*Criterio editorial actualizado el 15 de septiembre de 2026 para la documentación posterior al Perfil, las fuentes de sus tablas y la legibilidad de su maquetación.*
+*Criterio editorial actualizado el 3 de noviembre de 2026 para incorporar la directriz de RUP en el Capítulo III, conservando los criterios del 15 de septiembre sobre documentación posterior al Perfil, fuentes de tablas y legibilidad de maquetación.*

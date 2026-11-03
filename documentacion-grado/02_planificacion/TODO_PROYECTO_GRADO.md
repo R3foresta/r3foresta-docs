@@ -11,10 +11,25 @@
 - [x] Permitir que el recorrido académico se inicie con el origen registrado: una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente.
 - [x] Mantener fuera del alcance monitoreo posterior, CO₂, MRV, certificación, emisión o comercialización de bonos de carbono, blockchain, NFT, contratos inteligentes e IPFS.
 - [x] Adoptar **Rational Unified Process (RUP) adaptado** como metodología de desarrollo.
-- [x] Complementar RUP con **Spec-Driven Development asistido por inteligencia artificial**.
+- [x] Decisión de trabajo del 3 de noviembre de 2026: desarrollar y revisar el **Capítulo III exclusivamente con RUP adaptado**, con IA como herramienta de apoyo. La actualización integral de la base documental queda pendiente en 1.1.
 - [x] Eliminar los sprints y organizar el trabajo mediante fases e iteraciones RUP, con incrementos ejecutables en Construcción.
 - [x] Retirar ciencia del diseño, DSRM, estudio de caso único embebido, FEDS y demás componentes de metodología de investigación.
 - [x] Tratar la verificación, la validación operativa y la aceptación como actividades de Ingeniería de Software.
+
+### 1.1. Actualización documental a RUP
+
+**Estado al 3 de noviembre de 2026: pendiente.** Se acuerda preparar la actualización integral para declarar únicamente RUP adaptado. El Capítulo III se trabajará desde ahora con ese criterio; la IA apoyará la redacción y revisión bajo responsabilidad humana.
+
+**Antecedente:** la base documental declaraba RUP complementado con SDD asistido por IA. Esa formulación, sus flujos y sus productos todavía aparecen en los documentos y en apartados posteriores de este tablero. Se conservan para su revisión; no rigen el trabajo nuevo del Capítulo III. Registrar esta directriz no completa la migración documental ni modifica las aprobaciones históricas.
+
+- [ ] Actualizar `base_perfil_proyecto_grado.md`, `metodologia_desarrollo.md`, el registro de avance y la guía personal de metodología y defensa para retirar el protocolo SDD y explicitar la adaptación de RUP.
+- [ ] Propagar el ajuste al Perfil, capítulos I y II, lineamientos, tableros, índices, figuras y referencias bibliográficas, conservando la versión presentada o aprobada y la fecha real del cambio.
+- [ ] Adecuar el texto existente del Capítulo III y sus cuatro fases a RUP; mantener los requisitos, decisiones, evidencias y límites acreditados, y retirar las obligaciones exclusivas del protocolo SDD.
+- [ ] Revisar los documentos que guían a la IA y el seguimiento operativo: seleccionar artefactos según utilidad y riesgo, aprovechar IDs existentes y reducir actualización duplicada de estados, sin exigir tres archivos por capacidad ni nuevas familias de IDs por razón de SDD.
+- [ ] Comprobar coherencia, enlaces y citas; conservar rutas, contratos, decisiones aceptadas, actas y pendientes de pruebas, validación, despliegue y aceptación. Las copias históricas permanecen identificadas como tales.
+- [ ] Tras la revisión de la versión académica, transferir los cambios que correspondan al Google Docs de presentación y regenerar los entregables vigentes que se utilicen; las capturas locales no son destinos de edición.
+
+El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere documentos vigentes coherentes con RUP y evidencia conservada; no acredita el cierre de LCO, LCA, IOC, PR ni de las entregas técnicas.
 
 ## 2. Productos y evidencia transversales
 
@@ -166,7 +181,9 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 - [ ] Incorporar pruebas frontend mínimas para los recorridos de aceptación.
 - [ ] Confirmar que componentes históricos excluidos no intervienen en el flujo académico.
 
-## 8. Spec-Driven Development y asistencia de IA
+## 8. Protocolo SDD previo y asistencia de IA
+
+El apartado 8.1 conserva los compromisos anteriores para su revisión en 1.1. El Capítulo III se trabajará exclusivamente con RUP adaptado. El control humano de la asistencia de IA se mantiene y su registro se revisará de forma proporcional al trabajo.
 
 ### 8.1. Productos SDD
 
