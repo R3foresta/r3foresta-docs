@@ -2,6 +2,8 @@
 
 **Corte:** 15 de septiembre de 2026
 
+> Las tablas siguientes conservan ese corte. El apartado 8 registra únicamente la actualización documental de Inicio del 29 de octubre; no eleva los estados históricos de hitos ni de implementación.
+
 ## 1. Propósito
 
 Este registro compara el plan metodológico del Proyecto de Grado con la evidencia que puede localizarse al corte. Separa la existencia de artefactos técnicos de su verificación y aceptación formal. También incorpora las capacidades implementadas antes de la iteración prevista, sin presentarlas como incrementos cerrados hasta que se revaliden dentro de la secuencia RUP.
@@ -67,3 +69,11 @@ El expediente consolidado de contribuciones materiales asistidas por IA todavía
 ## 7. Actualización del registro
 
 El registro se actualiza al iniciar y cerrar cada iteración, después de una prueba relevante y cuando cambia el estado de un riesgo o de una aceptación. Cada actualización debe conservar la fecha, la versión evaluada y la evidencia localizable. Los estados se elevan solo con la evidencia requerida: la implementación no implica verificación y la verificación no implica aceptación.
+
+## 8. Consolidación documental de Inicio — 29 de octubre de 2026
+
+La [aplicación de RUP y SDD](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) ocupa la sección 3.1 y la [Fase de Inicio](../06_entregables/proyecto_grado/03_1_fase_inicio.md) la sección 3.2. Se reunieron visión, alcance, actores, casos de uso generales, matriz puente hacia las especificaciones, requisitos no funcionales iniciales, riesgos y evaluación documental de LCO. Se conservaron HAL-01 a HAL-11 de la matriz OBJ-01, NEC-01 a NEC-08, RAN-01 a RAN-10 y CU-01 a CU-12. Los nuevos RNF-INI y RIN son propuestas documentales de esta consolidación, pendientes de revisión.
+
+La decisión de adoptar RUP y organizar el periodo consta el 25 de agosto. Las actividades comprobables del 20 y 22 de julio se relacionan con sus productos sin atribuirles retrospectivamente ejecución bajo IN-1 o EL-1. El autor confirmó el 29 de octubre que no existe acta LCO ni registro anterior al 20 de julio que acredite IN-1. Se mantienen **revisión y decisión LCO pendientes**; la aprobación del Perfil o del LCO de un incremento particular no reemplaza la revisión global.
+
+La corrección fue asistida por Codex mediante contraste documental y revisión del diagrama, sobre cambios locales revisables y con versión anterior de Inicio archivada. La identidad del modelo no se consignó; la revisión humana del contenido académico permanece pendiente. La comprobación de enlaces, numeración y correspondencia de IDs es documental y no acredita pruebas nuevas del producto, aceptación o despliegue.

@@ -15,6 +15,8 @@ PA-F01 conserva avances parciales de B/C y el cierre técnico local de INT03-A; 
 
 [INT04: implementación frontend](specs/plantacion/participacion-aliada/implementacion/pa-t-int04.md) completó FE01–FE08 localmente el 17 de octubre: 553 pruebas y 60 checks integrados con D; [evidencia y límites](../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md). Código INT04 versionado localmente en `94f62a9`. [INT05 — Impacto público y Mis registros](specs/plantacion/participacion-aliada/implementacion/pa-t-int05.md) completó backend y frontend en alcance técnico local; consolidación del 19 en commits locales `8dc8efc`/`a3a4b28`, con pruebas originales del 17/18 y push pendiente; [evidencia PWA y límites](../pwa-r3foresta/docs/QA_IMPACTO_INT05.md). El [tablero](specs/plantacion/participacion-aliada/implementacion/README.md) conserva los pendientes externos; estos cierres no habilitan el piloto.
 
+El siguiente encargo preparado es [INT07 — Correcciones excepcionales](specs/plantacion/participacion-aliada/implementacion/pa-t-int07.md): ocho tareas backend/DB y después ocho frontend. Comienza por cotejar y concretar los contratos propios de PA-S04; la ficha no acredita implementación ni correcciones reales.
+
 ## Fuentes de dominio
 
 | Área | Contenido |

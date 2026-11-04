@@ -30,7 +30,7 @@ La asistencia de IA debe poder distinguirse de las decisiones, revisiones y apro
 
 - [`01_capitulo_marco_introductorio.md`](01_capitulo_marco_introductorio.md)
 - [`02_capitulo_marco_teorico_conceptual.md`](02_capitulo_marco_teorico_conceptual.md)
-- [Capítulo III — aplicación de RUP](03_capitulo_marco_aplicativo.md), con análisis, diseño, diagramas del sistema, evidencia técnica disponible y resultados abiertos. Su adecuación a RUP exclusivamente queda pendiente en el TODO.
+- [Capítulo III — aplicación de RUP, sección 3.1](03_capitulo_marco_aplicativo.md): [Inicio, 3.2](03_1_fase_inicio.md), [Elaboración, 3.3](03_2_fase_elaboracion.md), [Construcción, 3.4](03_3_fase_construccion.md) y [Transición, 3.5](03_4_fase_transicion.md). El texto anterior que incorpora SDD queda pendiente de adecuación según el TODO; la directriz de trabajo vigente es exclusivamente RUP. Inicio reúne los artefactos consolidados el 29 de octubre con revisión y LCO pendientes. Los nombres físicos de los archivos se conservan; las referencias de secciones del Perfil aprobado corresponden a su estructura anterior y no se reescriben como si hubieran sido aprobadas con esta numeración.
 - [`04_referencias_bibliograficas.md`](04_referencias_bibliograficas.md), única bibliografía consolidada de los Capítulos I, II y III
 
 Las referencias no se repiten al final de los capítulos. El control interno de correspondencia entre citas y referencias se conserva en [`../../03_investigacion/matriz_citas_referencias_documento_final.md`](../../03_investigacion/matriz_citas_referencias_documento_final.md).

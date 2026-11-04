@@ -29,7 +29,7 @@ La matriz conserva la relación entre las fuentes, los hallazgos de la situació
 | HAL-07 | Las plantaciones suelen comunicarse públicamente mediante fecha, lugar, cantidad e imágenes; la cobertura es incompleta porque no todas las actividades fueron publicadas o fotografiadas | FP-02; FD-01 | Práctica actual | Alto |
 | HAL-08 | La dirección de R3Foresta centraliza coordinación, decisiones y memoria institucional, mientras las comunidades y responsables locales participan en producción, cuidado y plantación | FP-01; FP-02 | Distribución funcional actual | Medio–alto; los cargos formales varían entre proyectos |
 | HAL-09 | La producción es predominantemente propia; existen donaciones de plantas y se admite la posibilidad excepcional de compra o incorporación externa | FP-02 | Práctica actual y excepción | Alto para producción propia y donaciones; compra tratada como posibilidad |
-| HAL-10 | Las cifras públicas no siempre pueden conciliarse porque faltan identificadores de proyecto, parcela, cohorte y fecha de medición | FD-01 | Contraste documental | Alto como limitación del corpus público |
+| HAL-10 | Se señaló una posible dificultad para conciliar cifras públicas sin identificadores de proyecto, parcela, cohorte y fecha de medición; requiere contraste con las publicaciones originales | FD-01, referido en el índice de fuentes primarias | Contraste documental pendiente | Provisional: no se localizaron el dossier completo ni sus originales en la revisión del 29 de octubre |
 | HAL-11 | Chasquipampa es el proceso operativo seleccionado como referencia: allí se aplica el flujo utilizado por Hernán Lara, se enseña a otras comunidades y se realizarán las pruebas principales | Confirmación del autor del proyecto; FP-02; FO-01 | Decisión de aplicación | Alto |
 
 ## 4. Separación entre situación, propuesta y alcance
@@ -60,7 +60,7 @@ La matriz conserva la relación entre las fuentes, los hallazgos de la situació
 
 ## 6. Reglas confirmadas
 
-La sección 3.1 del Marco aplicativo asigna los identificadores `RAN-01` a `RAN-10` a las reglas derivadas del análisis. Comprenden la separación entre actor de origen y receptor, los tipos de material del flujo estándar, el registro de cantidades y resultados observados, la conservación de procedencia externa, el abastecimiento desde varios lotes, la responsabilidad por evento, el acceso autorizado, el límite probatorio de las fotografías y el cierre del alcance en el registro de la plantación. Su correspondencia con las reglas de negocio canónicas se desarrollará en la sección 3.2.
+La sección 3.2 del Marco aplicativo asigna los identificadores `RAN-01` a `RAN-10` a las reglas derivadas del análisis. Comprenden la separación entre actor de origen y receptor, los tipos de material del flujo estándar, el registro de cantidades y resultados observados, la conservación de procedencia externa, el abastecimiento desde varios lotes, la responsabilidad por evento, el acceso autorizado, el límite probatorio de las fotografías y el cierre del alcance en el registro de la plantación. La sección 3.2.6 distingue condiciones del dominio y decisiones de solución conservando esos IDs; su correspondencia detallada con las reglas canónicas se desarrolla en la sección 3.3.
 
 ## 7. Criterios de cierre del análisis
 
@@ -72,4 +72,8 @@ OBJ-01 podrá declararse cubierto en el documento final cuando:
 4. las evidencias fotográficas estén descritas con sus límites;
 5. los problemas observados conduzcan a necesidades y familias de requisitos identificables;
 6. permanezcan registradas las contradicciones que requieren conciliación posterior;
-7. el resultado pueda enlazarse con el diseño de la sección 3.2 sin anticiparlo.
+7. el resultado pueda enlazarse con el diseño de la sección 3.3 sin anticiparlo.
+
+## 8. Corrección de correspondencia del 29 de octubre de 2026
+
+La tabla de hallazgos de Inicio se alineó con HAL-01 a HAL-11 de esta matriz. El borrador anterior contenía una síntesis de ocho problemas que reutilizaba HAL-03 a HAL-08 con significados diferentes; se conserva en el [archivo previo a la corrección](../06_entregables/proyecto_grado/archivo/03_1_fase_inicio_antes_correcciones_2026-10-29.md). La [matriz puente de Inicio](../06_entregables/proyecto_grado/03_1_fase_inicio.md) relaciona estos hallazgos con NEC-01 a NEC-08, requisitos y casos de uso como correspondencia documental para revisión, sin atribuirles aprobación histórica. HAL-10 permanece provisional hasta contrastar las publicaciones originales.

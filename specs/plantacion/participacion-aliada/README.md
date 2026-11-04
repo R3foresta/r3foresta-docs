@@ -7,7 +7,7 @@ Incremento para consultar y compartir impacto sin cuenta, registrar con identida
 ## Lectura mínima para continuar
 
 1. [Tablero de ejecución](implementacion/README.md): orden de entregas, avance y relación con las specs.
-2. [PA-T-INT05](implementacion/pa-t-int05.md): backend y frontend público/Mis registros cerrados localmente, consolidados el 19 en `8dc8efc`/`a3a4b28`, con push pendiente; [informe PWA](../../../../pwa-r3foresta/docs/QA_IMPACTO_INT05.md). [D](archivo/cierre-pa-t-int02-d.md) e [INT04](archivo/cierre-pa-t-int04.md) cerradas localmente, código en `75a57eb` y `94f62a9`; push pendiente. B/C, entorno remoto, revisión humana y WebAuthn conservan sus pendientes.
+2. [PA-T-INT07](implementacion/pa-t-int07.md): encargo preparado, BE01–BE08 → FE01–FE08; comenzar por cotejo/contratos de PA-S04 antes del código dependiente. Base: [INT05](implementacion/pa-t-int05.md) cerrada localmente en `8dc8efc`/`a3a4b28`, [D](archivo/cierre-pa-t-int02-d.md) e [INT04](archivo/cierre-pa-t-int04.md). Push, B/C real, entorno remoto, revisión humana y WebAuthn conservan sus pendientes.
 3. Spec/tareas de la capacidad afectada y secciones citadas del [contrato backend aceptado](contrato-identidad-permisos-backend-propuesta.md).
 
 **Dónde pertenece INT02-B:** es una entrega de PA-F01, principalmente de PA-S03 (acceso), que habilita entrada PA-S00 y registro PA-S01. La organización es una afiliación opcional del perfil; el permiso se concede a una persona en una subcampaña. El nombre histórico «plantación-organización» del LCO no crea un módulo ni otro backlog de permisos.

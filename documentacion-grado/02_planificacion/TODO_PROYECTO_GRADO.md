@@ -67,6 +67,8 @@ El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere 
 
 ### 3.2. Productos de Inicio
 
+Actualización documental del 29 de octubre: la [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO. Las casillas de cierre permanecen abiertas hasta su revisión. El autor confirmó que no existe acta LCO ni registro previo al 20 de julio que acredite IN-1; cualquier revisión posterior conservará su fecha real. La [sección 3.1](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) explica la aplicación conjunta de RUP y SDD.
+
 - [ ] Cerrar la visión y el alcance del producto.
 - [ ] Cerrar el glosario inicial.
 - [ ] Preparar el modelo inicial de casos de uso.
