@@ -768,23 +768,36 @@ erDiagram
 
 #### 3.3.8.3. Modelo físico y contraste con la base de datos documentada
 
-El modelo físico conserva los nombres de tablas, claves y campos relevantes declarados en el esquema canónico. La Tabla 3.18 permite contrastar el modelo conceptual y lógico con esa estructura. No equivale a afirmar que una instancia de producción ya contiene todas las migraciones: el riesgo RDI-03 mantiene pendiente el replay limpio y la comparación contra la base aplicada.
+El modelo físico se actualizó el 4 de noviembre de 2026 con la exportación estructural de Supabase aportada por el autor: 51 tablas y 564 columnas. Conserva nombres, tipos, nulabilidad, claves primarias, unicidad individual e indicaciones de identidad de esa fuente. Las referencias simples se contrastaron con el catálogo PostgREST del proyecto `vyrjlehkhabydkhjxagx`; las referencias compuestas documentadas en las migraciones 070, 072, 074 y 082 se identifican por separado. El [modelo físico completo y sus fuentes](../../../database/00_database_schema.md) permiten reconstruir esta representación. El contraste estructural no sustituye el replay limpio, la revisión completa de restricciones y privilegios ni las pruebas funcionales de RDI-03.
+
+**Modelo físico del recorrido registrado**
+
+![Modelo físico con todas las columnas de las catorce tablas del núcleo de Recolección, Vivero y Plantación](../../../database/diagramas/modelo-fisico-nucleo.svg)
+
+**Modelo físico de permisos, comandos y cargas**
+
+![Modelo físico que distingue usuario, permisos contextuales, equipo logístico, comandos, auditoría y cargas recuperables](../../../database/diagramas/modelo-fisico-participacion.svg)
+
+*Nota.* Elaboración propia a partir de la exportación aportada de Supabase y las fuentes de relaciones identificadas en el modelo físico. Las dos vistas conservan todas las columnas de las tablas que muestran y solo dibujan relaciones entre sus extremos incluidos; el diagrama completo contiene las 51 tablas, incluidas las conservadas de Plantación y la tabla técnica de PostGIS. `PK`, `FK` y `UK` identifican claves; `NN` y `NULL` conservan la nulabilidad exportada. La presencia de tablas de mantenimiento o corrección no amplía el alcance académico ni acredita sus interfaces. No se representan como desplegadas las nuevas incorporaciones de plantines ni el acceso de operarios por vivero.
 
 **Tabla 3.18**
 
-*Correspondencia del modelo físico documentado para el recorrido académico*
+*Correspondencia del modelo físico con la exportación de Supabase*
 
 | Componente físico documentado | Claves y campos de trazabilidad | Relación o restricción relevante | Estado del contraste |
 |---|---|---|---|
-| RECOLECCION | id; planta_id, ubicacion_id y vivero_id; cantidad_inicial_canonica, unidad_canonica, saldo_actual y snapshots | origen único de cada LOTE_VIVERO; el saldo se explica por RECOLECCION_MOVIMIENTO | documentado; contraste de replay pendiente |
-| RECOLECCION_MOVIMIENTO | id; recoleccion_id, lote_vivero_id, tipo_movimiento, delta y unidad_medida_movimiento | CONSUMO_A_VIVERO relaciona el origen con el lote sin convertir su unidad | documentado; operación y prueba deben contrastarse con la RPC vigente |
-| LOTE_VIVERO y EVENTO_LOTE_VIVERO | recoleccion_id, planta_id, vivero_id, saldo_vivo_actual; lote_id, tipo_evento, cantidad_afectada y saldos antes/después | un lote tiene un único origen y conserva eventos append-only; lote_id es el nombre físico de la FK del evento | documentado; algunos enlaces físicos auxiliares siguen sujetos a alineación de migraciones |
-| CAMPANIA, SUBCAMPANIA, SUBCAMPANIA_META_ESPECIE y SUBCAMPANIA_EQUIPO | campania_id, zona_id, poligono_geom, meta_total_arboles y membresías | la campaña agrupa subcampañas; la meta y el equipo pertenecen a la subcampaña | documentado; los estados y totales agregados se derivan según el esquema |
-| ASIGNACION_VIVERO_SUBCAMPANIA | lote_vivero_id, subcampania_id, cantidades asignada, consumida, devuelta, mermada y saldo derivado | representa la salida física del lote y evita descontarlo de nuevo al plantar | documentado; requiere revalidación integrada M2→M3 |
-| REGISTRO_PLANTACION y REGISTRO_PLANTACION_DETALLE | subcampania_id, responsable_id, latitud, longitud y cantidad_total_plantada; asignacion_id, lote_vivero_id, planta_id y cantidad | cada detalle debe coincidir con la asignación y conserva lote y especie de procedencia | documentado; la conducta GPS mantiene la discrepancia RDI-04 |
-| TIPOS_ENTIDAD_EVIDENCIA y EVIDENCIAS_TRAZABILIDAD | tipo_entidad_id, entidad_id, ruta_archivo y metadata | asociación polimórfica para evidencia vinculada con el hecho respaldado | documentado; el vínculo se valida por tipo, no por una FK única |
+| RECOLECCION | id; planta_id, ubicacion_id y vivero_id; cantidad_inicial_canonica, unidad_canonica, saldo_actual, snapshots, eliminación lógica y motivo_rechazo | conserva origen, estado y saldo; fechas operativas e historial con granularidad DATE | columnas contrastadas con la exportación; replay y pruebas conservan su verificación propia |
+| RECOLECCION_MOVIMIENTO | id; recoleccion_id, lote_vivero_id, tipo_movimiento, delta, unidad_medida_evento y unidad_operativa | la unidad física es unidad_medida_evento; lote_vivero_id existe como columna, pero el catálogo consultado no lo identifica como FK | columnas contrastadas; el enlace semántico con el lote no se dibuja como FK física |
+| LOTE_VIVERO y EVENTO_LOTE_VIVERO | recoleccion_id, planta_id, vivero_id, saldo_vivo_actual; lote_id, tipo_evento, cantidad_afectada y saldos antes/después | recoleccion_id y vivero_id del lote son NN; el evento referencia el lote mediante lote_id | columnas y referencias simples contrastadas; no admite aún origen nulo de incorporación |
+| CAMPANIA, SUBCAMPANIA, SUBCAMPANIA_META_ESPECIE y SUBCAMPANIA_EQUIPO | campania_id, zona_id, poligono_geom, meta_total_arboles, plan_revision y membresías | CAMPANIA no almacena estado; SUBCAMPANIA sí conserva estado y contadores; coordinación es una fila de equipo | estructura contrastada; no se confunden contadores materializados con valores derivados |
+| ASIGNACION_VIVERO_SUBCAMPANIA | lote_vivero_id, subcampania_id, cantidades asignada, consumida, devuelta, mermada, saldo_asignado_disponible y fecha_entrega_operativa | representa la entrega física del lote; saldo disponible figura nullable en la exportación | columnas y referencias simples contrastadas; la fórmula y la atomicidad requieren su evidencia SQL y de pruebas |
+| REGISTRO_PLANTACION y REGISTRO_PLANTACION_DETALLE | subcampania_id, responsable_id, latitud, longitud, cantidad_total_plantada y revision_registro; asignacion_id, lote_vivero_id, planta_id y cantidad | el detalle conserva asignación, lote, especie y snapshots; GPS pertenece al registro | columnas y referencias simples contrastadas; esto no acredita el comportamiento de la validación espacial |
+| TIPOS_ENTIDAD_EVIDENCIA y EVIDENCIAS_TRAZABILIDAD | tipo_entidad_id, entidad_id, bucket, ruta_archivo y metadata | tipo_entidad_id tiene FK; entidad_id participa en un vínculo polimórfico | columnas contrastadas; no se inventan FKs a cada tabla operativa |
+| USUARIO, SUBCAMPANIA_PERMISO y SUBCAMPANIA_PERMISO_REVISION | rol, activo, revision_autoridad, organizacion_id; persona, ámbito, vigencias y revisión del permiso | autorización contextual separada de SUBCAMPANIA_EQUIPO | presentes en la exportación; referencias compuestas identificadas con fuente SQL |
+| PARTICIPACION_COMANDO, USUARIO_AUTORIDAD_HISTORIAL y tablas de cargas | actor, operación, UUID, resultado, auditoría, generaciones y referencias de evidencia | claves de operación y de generación pueden ser compuestas; no son UUID globalmente únicos por inferencia | presentes; columnas contrastadas y procedencia de relaciones documentada |
+| Tablas de corrección, estado efectivo y compensaciones | original, revisiones, participantes efectivos, créditos y compensaciones | preservan estructuras del original y su interpretación efectiva | siete tablas presentes; no acredita ejecución completa de todos los casos de PA-S04 |
 
-*Nota.* Elaboración propia a partir de `database/00_database_schema.md`, ADR-VIV-01 a ADR-VIV-12, ADR-PLA-01 y ADR-PLA-02. Durante la maquetación se recomienda orientación horizontal solo si la tabla no resulta legible en orientación vertical; se repetirá su encabezado si continúa en otra página.
+*Nota.* Elaboración propia a partir de la exportación de Supabase del autor, el catálogo de referencias simples consultado el 4 de noviembre de 2026, las referencias compuestas de las migraciones indicadas y [database/00_database_schema.md](../../../database/00_database_schema.md). La exportación no incluye todas las restricciones, fórmulas generadas, índices, triggers ni políticas de seguridad. Durante la maquetación se recomienda orientación horizontal solo si la tabla no resulta legible en orientación vertical; se repetirá su encabezado si continúa en otra página.
 
 Las subsecciones 3.3.9 a 3.3.12 forman un bloque transversal de control del diseño. Explican las propiedades, la arquitectura, los riesgos y el resultado que condicionan los seis productos ya presentados; no añaden una etapa entre el modelo de datos y la implementación, que continúa en la sección 3.4.
 

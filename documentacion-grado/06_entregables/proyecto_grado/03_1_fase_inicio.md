@@ -311,12 +311,13 @@ Las funciones organizativas de la sección 3.2.4 describen quién participa en e
 
 | Actor del sistema | Interacción principal | Casos de uso y alcance |
 |---|---|---|
-| Administración | mantener referencias, planificar y operar los módulos conforme a sus reglas; registrar y revisar Recolección, operar Vivero, asignar y devolver plantas, registrar plantaciones y gestionar accesos | CU-01 a CU-11; CU-12 en las vistas internas permitidas. No queda limitada a CU-01 y CU-08; la incorporación especial por ADMIN sigue pendiente |
+| Administración | mantener referencias y usuarios, planificar y operar los módulos conforme a sus reglas; registrar y revisar Recolección, operar Vivero, asignar y devolver plantas, registrar plantaciones y gestionar accesos | CU-01 a CU-11; CU-12 en las vistas internas permitidas; PA-S03 para gestionar plantadores y administradores contextuales. No queda limitada a CU-01 y CU-08; la incorporación especial por ADMIN sigue pendiente |
 | Operador de Recolección | registrar el origen y las operaciones autorizadas sobre su cantidad disponible | CU-02, CU-04; dependen también de autoría, estado y operación |
 | Revisor de Recolección | revisar la información de origen y resolver aprobación o rechazo | CU-03; función que también puede ejercer ADMIN |
 | Operador de Vivero | recibir material, iniciar lotes, registrar resultados y movimientos y consultar información operativa | CU-05, CU-06, CU-07 y consultas permitidas. Recepción y manejo corresponden al mismo operario; la restricción por viveros asignados es una propuesta pendiente |
 | Coordinación de Plantación | gestionar las entregas y devoluciones del stock de su subcampaña | CU-09, CU-10; responsabilidad logística contextual, distinta del permiso para registrar plantaciones |
 | Participante autorizado | registrar una plantación inicial donde tiene autorización vigente | CU-11; ADMIN global o permiso PLANTADOR o ADMINISTRADOR_SUBCAMPANIA, sujeto a las condiciones de la actividad |
+| Administrador de subcampaña | registrar plantaciones e incorporar o retirar plantadores de sus ámbitos; conserva su rol global | CU-11 y PA-S03; designar, cambiar, retirar o reemplazar administradores corresponde a ADMIN global |
 | Usuario de consulta privada u operativa | consultar sus registros o información interna según el vínculo y la autorización de cada vista | CU-12 para el recorrido permitido; PA-S02 para la consulta propia. No implica exposición pública de toda la traza |
 | Visitante de consulta pública | consultar Impacto y registros públicos elegibles de Plantación sin cuenta | PA-S02; consulta pública acotada, sin prometer acceso a datos privados de Recolección o Vivero |
 
@@ -330,9 +331,9 @@ La Figura 3.5 representa esta frontera mediante notación UML de casos de uso: a
 
 **Figura 3.5. Actores y casos de uso generales del sistema académico**
 
-![Diagrama UML con actores funcionales, Administración transversal, casos CU-01 a CU-12 y consulta pública PA-S02](figuras/03_05_casos_uso_inicio.svg)
+![Diagrama UML con actores funcionales, ADMIN transversal, administración de subcampaña, casos CU-01 a CU-12 y consultas pública y propia PA-S02](figuras/03_05_casos_uso_inicio.svg)
 
-*Nota.* Elaboración propia a partir de la tabla anterior y de los requisitos `RF-GEN-*`, `RF-REC-*`, `RF-VIV-*` y `RF-PLA-*` seleccionados para el alcance académico. Las asociaciones indican interacciones principales y no privilegios exclusivos. La consulta pública se distingue de la consulta operativa y propia. El acceso por vivero y las incorporaciones se conservan como capacidades pendientes; el diagrama no acredita su implementación. Las reglas, alternativas y criterios de aceptación se desarrollan en la sección 3.3.
+*Nota.* Elaboración propia a partir de la tabla anterior, los requisitos `RF-GEN-*`, `RF-REC-*`, `RF-VIV-*` y `RF-PLA-*` seleccionados para el alcance académico, y PA-S02/PA-S03 para situar las audiencias y el acceso al registro de Plantación. Las asociaciones indican interacciones principales y no privilegios exclusivos; una misma persona puede desempeñar varios actores. Se distinguen consulta pública, consulta propia por vínculo autorizado y consulta operativa. Administrar una subcampaña no concede administración global, logística ni facultad para designar otros administradores. PA-S02 y PA-S03 aportan contexto al recorrido académico; no amplían sus criterios de evaluación. El acceso por vivero y las incorporaciones se conservan como capacidades pendientes; el diagrama no acredita su implementación. Las reglas, alternativas y criterios de aceptación se desarrollan en la sección 3.3.
 
 CU-04 conserva la denominación «afectar saldo de Recolección». Según RN-REC-10A, el consumo hacia Vivero se genera al iniciar el lote mediante CU-05; no constituye una acción manual independiente del operador de Recolección. El desecho sigue su operación autorizada correspondiente.
 
@@ -382,7 +383,3 @@ LCO (*Lifecycle Objectives*, objetivos del ciclo de vida) requiere una decisión
 *Nota.* Elaboración propia a partir de los criterios de control de hitos de `metodologia_desarrollo.md`, el Perfil, el Capítulo I, el registro de avance metodológico y los productos de esta sección, con consolidación del 29 de octubre y ajuste documental del 4 de noviembre de 2026. El LCO de una capacidad o incremento particular no sustituye el LCO global del Proyecto de Grado.
 
 **Estado de Inicio:** productos documentales reunidos, revisión y decisión LCO pendientes. La confirmación del autor de que no existe acta ni registro previo de IN-1 se conserva como límite de acreditación. Una revisión posterior podrá evaluar estos productos y registrar su decisión con fecha real; no cambiará las fechas del levantamiento ni acreditará una ejecución histórica no documentada.
-
-El ajuste del 4 de noviembre conserva las necesidades e IDs existentes y deja identificadas dos capacidades por desarrollar: operación por vivero e incorporación de plantines vivos. Sus decisiones, diseño y pruebas continúan en los documentos de trabajo enlazados y en Elaboración; este ajuste no cambia el estado de implementación ni cierra hitos. La [copia previa a esta revisión](../../../archivo/documentacion-grado/proyecto_grado/revision-inicio-rup-2026-11-04/README.md) conserva el texto y diagrama anteriores.
-
-La sección 3.3 utiliza estas necesidades para justificar la organización de la información, las relaciones del recorrido, las reglas e invariantes y las especificaciones detalladas. Los productos de Construcción, las pruebas, la publicación y el despliegue se acreditan en sus secciones y repositorios correspondientes.

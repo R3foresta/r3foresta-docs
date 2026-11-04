@@ -1,0 +1,16 @@
+{
+  "theme": "base",
+  "htmlLabels": false,
+  "maxTextSize": 250000,
+  "maxEdges": 1000,
+  "themeVariables": {
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "fontSize": "16px",
+    "primaryColor": "#ffffff",
+    "primaryTextColor": "#17212b",
+    "primaryBorderColor": "#475569",
+    "lineColor": "#475569",
+    "tertiaryColor": "#ffffff"
+  },
+  "er": { "useMaxWidth": false, "fontSize": 16, "layoutDirection": "TB" }
+}

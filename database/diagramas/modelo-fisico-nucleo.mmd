@@ -1,0 +1,348 @@
+---
+title: Modelo físico · recorrido Recolección → Vivero → Plantación
+---
+erDiagram
+  direction TB
+  %% Generado por database/scripts/generar-modelo-fisico.mjs.
+  %% NULL / NN e IDENTITY proceden de la exportación aportada.
+  %% FK simples: catálogo PostgREST. FK compuestas: SQL 070/072/074/082.
+  %% La vista temática solo dibuja relaciones cuyos dos extremos están incluidos.
+  recoleccion {
+    int8 id PK "NN"
+    date fecha "NN"
+    tipo_material_origen tipo_material "NN"
+    bool especie_nueva "NN"
+    text observaciones "NULL"
+    int8 usuario_id FK "NN"
+    int8 ubicacion_id FK "NN"
+    int8 vivero_id FK "NULL"
+    int8 metodo_id FK "NN"
+    int8 planta_id FK "NULL"
+    date created_at "NN"
+    text codigo_trazabilidad UK "NN"
+    text blockchain_url "NULL"
+    text token_id "NULL"
+    text transaction_hash "NULL"
+    estado_registro_recoleccion estado_registro "NN"
+    unidad_medida unidad_canonica "NN"
+    numeric cantidad_inicial_canonica "NN"
+    int8 usuario_validacion_id FK "NULL"
+    date fecha_validacion "NULL"
+    numeric saldo_actual "NN"
+    estado_operativo_recoleccion estado_operativo "NN"
+    text nombre_cientifico_snapshot "NULL"
+    text nombre_comercial_snapshot "NULL"
+    text variedad_snapshot "NULL"
+    text nombre_comunidad_snapshot "NULL"
+    text nombre_recolector_snapshot "NULL"
+    date eliminado_en "NULL"
+    int8 eliminado_por_usuario_id FK "NULL"
+    text motivo_eliminacion "NULL"
+    text motivo_rechazo "NULL"
+  }
+
+  recoleccion_historial {
+    int8 id PK "NN; IDENTITY"
+    int8 recoleccion_id FK "NN"
+    tipo_historial_recoleccion tipo_historial "NN"
+    estado_registro_recoleccion estado_origen "NULL"
+    estado_registro_recoleccion estado_destino "NULL"
+    text observaciones "NULL"
+    jsonb metadata "NN"
+    int8 actor_user_id FK "NULL"
+    date created_at "NN"
+  }
+
+  recoleccion_movimiento {
+    int8 id PK "NN; IDENTITY"
+    int8 recoleccion_id FK "NN"
+    tipo_movimiento_recoleccion tipo_movimiento "NN"
+    numeric delta "NN"
+    unidad_medida unidad_medida_evento "NN"
+    motivo_movimiento_recoleccion motivo "NULL"
+    text motivo_otro "NULL"
+    int8 lote_vivero_id "NULL"
+    jsonb detalle_cambios "NULL"
+    int8 created_by FK "NN"
+    date created_at "NN"
+    text transaction_hash "NULL"
+    unidad_medida unidad_operativa "NULL"
+  }
+
+  lote_vivero {
+    int8 id PK "NN; IDENTITY"
+    int8 recoleccion_id FK "NN"
+    int8 planta_id FK "NN"
+    int8 vivero_id FK "NN"
+    int8 responsable_id FK "NN"
+    text nombre_cientifico_snapshot "NN"
+    text nombre_comercial_snapshot "NN"
+    tipo_material_origen tipo_material_snapshot "NN"
+    date fecha_inicio "NN"
+    numeric cantidad_inicial_en_proceso "NN"
+    unidad_medida unidad_medida_inicial "NN"
+    int4 plantas_vivas_iniciales "NULL"
+    int4 saldo_vivo_actual "NULL"
+    subetapa_adaptabilidad subetapa_actual "NULL"
+    estado_lote_vivero estado_lote "NN"
+    motivo_cierre_lote motivo_cierre "NULL"
+    text codigo_trazabilidad UK "NN"
+    date created_at "NN"
+    date updated_at "NN"
+    text variedad_snapshot "NULL"
+    text nombre_comunidad_origen_snapshot "NULL"
+    text nombre_responsable_snapshot "NULL"
+  }
+
+  evento_lote_vivero {
+    int8 id PK "NN; IDENTITY"
+    int8 lote_id FK "NN"
+    tipo_evento_vivero tipo_evento "NN"
+    date fecha_evento "NN"
+    date created_at "NN"
+    int8 responsable_id FK "NN"
+    numeric cantidad_afectada "NULL"
+    unidad_medida unidad_medida_evento "NULL"
+    causa_merma_vivero causa_merma "NULL"
+    destino_tipo_vivero destino_tipo "NULL"
+    text destino_referencia "NULL"
+    int8 comunidad_destino_id FK "NULL"
+    subetapa_adaptabilidad subetapa_destino "NULL"
+    int4 saldo_vivo_antes "NULL"
+    int4 saldo_vivo_despues "NULL"
+    motivo_cierre_lote motivo_cierre_calculado "NULL"
+    int8 ref_evento_trigger_id FK "NULL"
+    jsonb metadata_blockchain "NULL"
+    text observaciones "NULL"
+    origen_despacho_vivero origen_despacho "NULL"
+    int8 subcampania_id FK "NULL"
+    int8 campania_id FK "NULL"
+    int8 registro_plantacion_id FK "NULL"
+    jsonb metadata "NULL"
+    causa_descarte_pre_embolsado causa_descarte_pre_embolsado "NULL"
+    int8 asignacion_id FK "NULL"
+  }
+
+  campania {
+    int8 id PK "NN; IDENTITY"
+    text nombre UK "NN"
+    text descripcion "NULL"
+    date fecha_estimada_inicio "NULL"
+    date fecha_estimada_fin "NULL"
+    text codigo_trazabilidad UK "NN"
+    timestamptz created_at "NN"
+    timestamptz updated_at "NN"
+    int8 created_by FK "NN"
+    int8 updated_by FK "NN"
+    timestamptz deleted_at "NULL"
+    int8 deleted_by FK "NULL"
+    jsonb metadata_blockchain "NULL"
+    tipo_subcampania tipo "NN"
+  }
+
+  subcampania {
+    int8 id PK "NN; IDENTITY"
+    int8 campania_id FK "NN"
+    text nombre "NN"
+    text descripcion "NULL"
+    tipo_subcampania tipo "NN"
+    estado_subcampania estado "NN"
+    fase_mantenimiento_subcampania fase_mantenimiento "NN"
+    int8 zona_id FK "NN"
+    geometry poligono_geom "NULL"
+    numeric area_hectareas "NULL"
+    int4 meta_total_arboles "NN"
+    date fecha_estimada_inicio "NULL"
+    date fecha_estimada_fin "NULL"
+    timestamptz fecha_cierre_operativo "NULL"
+    date fecha_fin_mantenimiento "NULL"
+    motivo_cierre_parcial motivo_cierre_parcial "NULL"
+    text observaciones_cierre "NULL"
+    int4 tolerancia_gps_metros "NN"
+    text nombre_zona_snapshot "NULL"
+    text nombre_coordinador_snapshot "NULL"
+    _text nombres_organizaciones_snapshot "NULL"
+    text codigo_trazabilidad UK "NN"
+    int4 total_plantado_inicial "NN"
+    int4 total_repuesto "NN"
+    int4 total_muerto_acumulado "NN"
+    int4 saldo_vivo_actual "NULL"
+    timestamptz created_at "NN"
+    timestamptz updated_at "NN"
+    int8 created_by FK "NN"
+    int8 updated_by FK "NN"
+    timestamptz deleted_at "NULL"
+    int8 deleted_by FK "NULL"
+    jsonb metadata_blockchain "NULL"
+    int8 plan_revision "NN"
+    timestamptz participacion_inicializada_en "NULL"
+    int8 participacion_inicializada_por FK "NULL"
+  }
+
+  subcampania_historial {
+    int8 id PK "NN; IDENTITY"
+    int8 subcampania_id FK "NN"
+    tipo_historial_subcampania tipo_historial "NN"
+    estado_subcampania estado_origen "NULL"
+    estado_subcampania estado_destino "NULL"
+    text observaciones "NULL"
+    jsonb metadata "NN"
+    int8 actor_user_id FK "NULL"
+    timestamptz created_at "NN"
+    int8 participacion_comando_id FK "NULL"
+  }
+
+  subcampania_meta_especie {
+    int8 id PK "NN; IDENTITY"
+    int8 subcampania_id FK "NN"
+    int8 planta_id FK "NN"
+    numeric porcentaje_objetivo "NN"
+    int4 cantidad_objetivo "NN"
+    timestamptz created_at "NN"
+    timestamptz updated_at "NN"
+    int8 created_by FK "NN"
+    int8 updated_by FK "NN"
+  }
+
+  asignacion_vivero_subcampania {
+    int8 id PK "NN; IDENTITY"
+    int8 subcampania_id FK "NN"
+    int8 lote_vivero_id FK "NN"
+    proposito_asignacion proposito "NN"
+    estado_asignacion_vivero estado "NN"
+    int4 cantidad_asignada "NN"
+    int4 cantidad_consumida "NN"
+    int4 cantidad_devuelta "NN"
+    int4 cantidad_mermada "NN"
+    int4 saldo_asignado_disponible "NULL"
+    int8 usuario_asignacion_id FK "NN"
+    timestamptz fecha_asignacion "NN"
+    timestamptz updated_at "NN"
+    date fecha_entrega_operativa "NULL"
+  }
+
+  registro_plantacion {
+    int8 id PK "NN; IDENTITY"
+    int8 subcampania_id FK "NN"
+    bool es_reposicion "NN"
+    int8 registro_plantacion_origen_id FK "NULL"
+    date fecha_plantacion "NN"
+    int8 responsable_id FK "NN"
+    numeric latitud "NN"
+    numeric longitud "NN"
+    bool gps_dentro_poligono "NN"
+    numeric gps_distancia_a_poligono_m "NULL"
+    int4 cantidad_total_plantada "NN"
+    int4 cantidad_muerta_acumulada "NN"
+    int4 cantidad_repuesta_acumulada "NN"
+    int4 saldo_vivo_grupo "NULL"
+    text nombre_subcampania_snapshot "NULL"
+    text nombre_zona_snapshot "NULL"
+    text nombre_responsable_snapshot "NULL"
+    text observaciones "NULL"
+    text codigo_trazabilidad UK "NN"
+    timestamptz created_at "NN"
+    int8 created_by FK "NN"
+    jsonb metadata_blockchain "NULL"
+    int8 revision_registro "NN"
+    text afiliacion_responsable_snapshot "NULL"
+    text afiliacion_responsable_estado "NN"
+    text afiliacion_responsable_tipo "NULL"
+    int8 organizacion_responsable_id_snapshot FK "NULL"
+  }
+
+  registro_plantacion_detalle {
+    int8 id PK "NN; IDENTITY"
+    int8 registro_plantacion_id FK "NN"
+    int8 asignacion_id FK "NN"
+    int8 lote_vivero_id FK "NN"
+    int8 planta_id FK "NN"
+    int4 cantidad "NN"
+    text nombre_cientifico_snapshot "NULL"
+    text nombre_comercial_snapshot "NULL"
+    text variedad_snapshot "NULL"
+    int8 evento_lote_vivero_despacho_id FK "NULL"
+    timestamptz created_at "NN"
+  }
+
+  registro_plantacion_coresponsable {
+    int8 id PK "NN; IDENTITY"
+    int8 registro_plantacion_id FK "NN"
+    int8 usuario_id FK "NN"
+    timestamptz created_at "NN"
+    text nombre_snapshot "NULL"
+    text afiliacion_snapshot "NULL"
+    text afiliacion_estado "NN"
+    text afiliacion_tipo "NULL"
+    int8 organizacion_id_snapshot FK "NULL"
+  }
+
+  evento_plantacion {
+    int8 id PK "NN; IDENTITY"
+    tipo_evento_plantacion tipo_evento "NN"
+    int8 subcampania_id FK "NN"
+    int8 registro_plantacion_id FK "NULL"
+    int8 asignacion_id FK "NULL"
+    timestamptz fecha_evento "NN"
+    int8 responsable_id FK "NN"
+    text observaciones "NULL"
+    int4 cantidad_muerta_delta "NULL"
+    causa_mortandad_plantacion causa_mortandad "NULL"
+    numeric latitud "NULL"
+    numeric longitud "NULL"
+    int4 cantidad_devuelta "NULL"
+    motivo_devolucion_plantacion motivo_devolucion "NULL"
+    int4 cantidad_asignada_evento "NULL"
+    timestamptz created_at "NN"
+    int8 created_by FK "NN"
+    jsonb metadata_blockchain "NULL"
+  }
+
+  %% PostgREST: lote_vivero(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o{ lote_vivero : "recoleccion_id"
+  %% PostgREST: recoleccion_historial(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o{ recoleccion_historial : "recoleccion_id"
+  %% PostgREST: registro_plantacion(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ registro_plantacion : "subcampania_id"
+  %% PostgREST: registro_plantacion(registro_plantacion_origen_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ registro_plantacion : "registro_plantacion_origen_id"
+  %% PostgREST: subcampania_historial(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ subcampania_historial : "subcampania_id"
+  %% PostgREST: recoleccion_movimiento(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o{ recoleccion_movimiento : "recoleccion_id"
+  %% PostgREST: evento_plantacion(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ evento_plantacion : "subcampania_id"
+  %% PostgREST: evento_plantacion(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ evento_plantacion : "registro_plantacion_id"
+  %% PostgREST: evento_plantacion(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania |o..o{ evento_plantacion : "asignacion_id"
+  %% PostgREST: subcampania_meta_especie(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ subcampania_meta_especie : "subcampania_id"
+  %% PostgREST: registro_plantacion_detalle(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ registro_plantacion_detalle : "registro_plantacion_id"
+  %% PostgREST: registro_plantacion_detalle(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania ||..o{ registro_plantacion_detalle : "asignacion_id"
+  %% PostgREST: registro_plantacion_detalle(lote_vivero_id) -> lote_vivero(id)
+  lote_vivero ||..o{ registro_plantacion_detalle : "lote_vivero_id"
+  %% PostgREST: registro_plantacion_detalle(evento_lote_vivero_despacho_id) -> evento_lote_vivero(id)
+  evento_lote_vivero |o..o{ registro_plantacion_detalle : "evento_lote_vivero_despacho_id"
+  %% PostgREST: evento_lote_vivero(lote_id) -> lote_vivero(id)
+  lote_vivero ||..o{ evento_lote_vivero : "lote_id"
+  %% PostgREST: evento_lote_vivero(ref_evento_trigger_id) -> evento_lote_vivero(id)
+  evento_lote_vivero |o..o{ evento_lote_vivero : "ref_evento_trigger_id"
+  %% PostgREST: evento_lote_vivero(subcampania_id) -> subcampania(id)
+  subcampania |o..o{ evento_lote_vivero : "subcampania_id"
+  %% PostgREST: evento_lote_vivero(campania_id) -> campania(id)
+  campania |o..o{ evento_lote_vivero : "campania_id"
+  %% PostgREST: evento_lote_vivero(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ evento_lote_vivero : "registro_plantacion_id"
+  %% PostgREST: evento_lote_vivero(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania |o..o{ evento_lote_vivero : "asignacion_id"
+  %% PostgREST: asignacion_vivero_subcampania(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ asignacion_vivero_subcampania : "subcampania_id"
+  %% PostgREST: asignacion_vivero_subcampania(lote_vivero_id) -> lote_vivero(id)
+  lote_vivero ||..o{ asignacion_vivero_subcampania : "lote_vivero_id"
+  %% PostgREST: registro_plantacion_coresponsable(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ registro_plantacion_coresponsable : "registro_plantacion_id"
+  %% PostgREST: subcampania(campania_id) -> campania(id)
+  campania ||..o{ subcampania : "campania_id"

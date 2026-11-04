@@ -1,0 +1,129 @@
+---
+title: Modelo físico · tablas de Plantación conservadas y seguimiento
+---
+erDiagram
+  direction TB
+  %% Generado por database/scripts/generar-modelo-fisico.mjs.
+  %% NULL / NN e IDENTITY proceden de la exportación aportada.
+  %% FK simples: catálogo PostgREST. FK compuestas: SQL 070/072/074/082.
+  %% La vista temática solo dibuja relaciones cuyos dos extremos están incluidos.
+  plantacion {
+    int8 id PK "NN"
+    text codigo_trazabilidad UK "NN"
+    text destino "NN"
+    int4 ubicacion_id FK "NN"
+    int4 cantidad_arboles "NN"
+    date fecha_plantacion "NN"
+    numeric superficie_m2 "NULL"
+    numeric tamano_promedio_cm "NULL"
+    text propietario "NULL"
+    text origen_propiedad "NULL"
+    int4 frecuencia_monitoreo_dias "NULL"
+    int4 created_by FK "NULL"
+    timestamptz created_at "NN"
+  }
+
+  plantacion_usuario {
+    int8 plantacion_id PK, FK "NN"
+    int4 usuario_id PK, FK "NN"
+    text rol "NULL"
+  }
+
+  plantacion_riego {
+    int8 plantacion_id PK, FK "NN"
+    int4 tipo_riego_id PK, FK "NN"
+  }
+
+  plantacion_abono {
+    int8 plantacion_id PK, FK "NN"
+    int4 tipo_abono_id PK, FK "NN"
+  }
+
+  plantacion_foto {
+    int8 id PK "NN"
+    int8 plantacion_id FK "NN"
+    text url "NN"
+    int4 peso_bytes "NULL"
+    text formato "NULL"
+    text descripcion "NULL"
+  }
+
+  plantacion_monitoreo {
+    int8 id PK "NN"
+    int8 plantacion_id FK "NN"
+    date fecha_monitoreo "NN"
+    int4 arboles_vivos "NULL"
+    int4 arboles_muertos "NULL"
+    int4 arboles_reemplazados "NULL"
+    text notas "NULL"
+    int4 usuario_id FK "NULL"
+    timestamptz created_at "NN"
+  }
+
+  tipo_riego {
+    int4 id PK "NN"
+    text nombre UK "NN"
+    text descripcion "NULL"
+  }
+
+  tipo_abono {
+    int4 id PK "NN"
+    text nombre UK "NN"
+    text descripcion "NULL"
+  }
+
+  usuario {
+    int8 id PK "NN"
+    text nombre "NN"
+    text doc_identidad UK "NULL"
+    text wallet_address UK "NULL"
+    text organizacion "NULL"
+    text contacto "NULL"
+    rol_usuario rol "NN"
+    timestamptz created_at "NN"
+    text username UK "NULL"
+    text auth_id "NN"
+    text correo UK "NULL"
+    text apellido "NULL"
+    text foto_perfil_url "NULL"
+    bool activo "NN"
+    int8 revision_autoridad "NN"
+    int8 organizacion_id FK "NULL"
+  }
+
+  ubicacion {
+    int8 id PK "NN"
+    numeric latitud "NULL"
+    numeric longitud "NULL"
+    timestamptz created_at "NN"
+    int8 pais_id FK "NULL"
+    int8 division_id FK "NULL"
+    text nombre "NULL"
+    int4 precision_m "NULL"
+    text fuente "NULL"
+    text referencia "NULL"
+    timestamptz updated_at "NULL"
+  }
+
+  %% PostgREST: plantacion_riego(plantacion_id) -> plantacion(id)
+  plantacion ||--o{ plantacion_riego : "plantacion_id"
+  %% PostgREST: plantacion_riego(tipo_riego_id) -> tipo_riego(id)
+  tipo_riego ||--o{ plantacion_riego : "tipo_riego_id"
+  %% PostgREST: plantacion_abono(plantacion_id) -> plantacion(id)
+  plantacion ||--o{ plantacion_abono : "plantacion_id"
+  %% PostgREST: plantacion_abono(tipo_abono_id) -> tipo_abono(id)
+  tipo_abono ||--o{ plantacion_abono : "tipo_abono_id"
+  %% PostgREST: plantacion_usuario(plantacion_id) -> plantacion(id)
+  plantacion ||--o{ plantacion_usuario : "plantacion_id"
+  %% PostgREST: plantacion_usuario(usuario_id) -> usuario(id)
+  usuario ||--o{ plantacion_usuario : "usuario_id"
+  %% PostgREST: plantacion_monitoreo(plantacion_id) -> plantacion(id)
+  plantacion ||..o{ plantacion_monitoreo : "plantacion_id"
+  %% PostgREST: plantacion_monitoreo(usuario_id) -> usuario(id)
+  usuario |o..o{ plantacion_monitoreo : "usuario_id"
+  %% PostgREST: plantacion_foto(plantacion_id) -> plantacion(id)
+  plantacion ||..o{ plantacion_foto : "plantacion_id"
+  %% PostgREST: plantacion(ubicacion_id) -> ubicacion(id)
+  ubicacion ||..o{ plantacion : "ubicacion_id"
+  %% PostgREST: plantacion(created_by) -> usuario(id)
+  usuario |o..o{ plantacion : "created_by"
