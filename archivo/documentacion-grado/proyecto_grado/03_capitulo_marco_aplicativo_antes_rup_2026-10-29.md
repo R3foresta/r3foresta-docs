@@ -40,7 +40,7 @@ El registro fotográfico del 22 de julio permite observar el componente de Viver
 
 **Figura 3.1. Plantines en ambiente protegido del vivero de Chasquipampa**
 
-![Vista general de plantines en bolsas dentro de un ambiente protegido en Chasquipampa](<../../../07_imagenes/Plantines en germinación y sombra 4 2026-07-22.jpeg>)
+![Vista general de plantines en bolsas dentro de un ambiente protegido en Chasquipampa](<../../../documentacion-grado/07_imagenes/Plantines en germinación y sombra 4 2026-07-22.jpeg>)
 
 *Nota.* Registro fotográfico propio del 22 de julio de 2026. La fecha y la ubicación fueron proporcionadas por el autor; el archivo no conserva esos datos en metadatos EXIF. La imagen respalda la observación del ambiente de vivero, pero no certifica especies, cantidades ni procedencias.
 
@@ -48,7 +48,7 @@ También se observó un espacio exterior con plantas embolsadas expuestas direct
 
 **Figura 3.2. Plantas embolsadas en exposición directa al sol**
 
-![Vista general de plantas embolsadas expuestas al sol directo en Chasquipampa](<../../../07_imagenes/Plantas en sol directo 3 2026-07-22.jpeg>)
+![Vista general de plantas embolsadas expuestas al sol directo en Chasquipampa](<../../../documentacion-grado/07_imagenes/Plantas en sol directo 3 2026-07-22.jpeg>)
 
 *Nota.* Registro fotográfico propio del 22 de julio de 2026. La fotografía documenta una condición de manejo del vivero; no permite establecer por sí sola cuánto tiempo permaneció cada planta en esa etapa ni su aptitud para plantación.
 

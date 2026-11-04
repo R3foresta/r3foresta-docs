@@ -24,7 +24,7 @@
 
 - [ ] Actualizar `base_perfil_proyecto_grado.md`, `metodologia_desarrollo.md`, el registro de avance y la guía personal de metodología y defensa para retirar el protocolo SDD y explicitar la adaptación de RUP.
 - [ ] Propagar el ajuste al Perfil, capítulos I y II, lineamientos, tableros, índices, figuras y referencias bibliográficas, conservando la versión presentada o aprobada y la fecha real del cambio.
-- [ ] Adecuar el texto existente del Capítulo III y sus cuatro fases a RUP; mantener los requisitos, decisiones, evidencias y límites acreditados, y retirar las obligaciones exclusivas del protocolo SDD.
+- [x] Adecuar el texto existente del Capítulo III y sus cuatro fases a RUP; mantener los requisitos, decisiones, evidencias y límites acreditados, y retirar las obligaciones exclusivas del protocolo SDD. Ajuste textual del 4 de noviembre; Transición ya era compatible. No cierra revisión académica, actualización de los documentos base, diseño de variantes ni hitos.
 - [ ] Revisar los documentos que guían a la IA y el seguimiento operativo: seleccionar artefactos según utilidad y riesgo, aprovechar IDs existentes y reducir actualización duplicada de estados, sin exigir tres archivos por capacidad ni nuevas familias de IDs por razón de SDD.
 - [ ] Comprobar coherencia, enlaces y citas; conservar rutas, contratos, decisiones aceptadas, actas y pendientes de pruebas, validación, despliegue y aceptación. Las copias históricas permanecen identificadas como tales.
 - [ ] Tras la revisión de la versión académica, transferir los cambios que correspondan al Google Docs de presentación y regenerar los entregables vigentes que se utilicen; las capturas locales no son destinos de edición.
@@ -67,7 +67,7 @@ El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere 
 
 ### 3.2. Productos de Inicio
 
-Actualización documental del 29 de octubre: la [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO. Las casillas de cierre permanecen abiertas hasta su revisión. El autor confirmó que no existe acta LCO ni registro previo al 20 de julio que acredite IN-1; cualquier revisión posterior conservará su fecha real. La [sección 3.1](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) explica la aplicación conjunta de RUP y SDD.
+Actualización documental del 29 de octubre: la [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO. Las casillas de cierre permanecen abiertas hasta su revisión. El autor confirmó que no existe acta LCO ni registro previo al 20 de julio que acredite IN-1; cualquier revisión posterior conservará su fecha real. Esa formulación del 29 de octubre se adecuó el 4 de noviembre: la [sección 3.1](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) explica ahora exclusivamente RUP adaptado conforme a la directriz vigente.
 
 - [ ] Cerrar la visión y el alcance del producto.
 - [ ] Cerrar el glosario inicial.
@@ -90,6 +90,8 @@ Actualización documental del 29 de octubre: la [sección 3.2 del Capítulo III]
 - [ ] Preparar una línea vertical arquitectónica mínima M1→M2→M3 para comprobar identidad, procedencia, contratos, integridad e historial.
 
 ### 4.2. Especificaciones y riesgos
+
+**Continuidad del análisis — 4 de noviembre:** Inicio incorpora las precisiones del autor sin acreditar implementación de las dos capacidades pendientes. La [propuesta de operarios por vivero](../../../Backend-r3foresta/documentacion/tareas/propuesta-permisos-por-vivero.md) desarrolla el acceso por establecimiento y la recepción por el mismo operario. La [propuesta de incorporación de plantines](../../../Backend-r3foresta/documentacion/tareas/plan-incorporacion-plantas-procedencia.md) conserva alternativas que deben conciliarse con las últimas respuestas del autor registradas en [Inicio](../06_entregables/proyecto_grado/03_1_fase_inicio.md): incorporación especial por ADMIN, etapa actual sin habilitación adicional de aptitud, comprobantes y notas opcionales, y comienzo del historial en recepción o conteo. Concretar esa frontera de responsabilidades, la recepción directa y sus remanentes antes de actualizar contratos e implementar. El registro de plantaciones ya realizadas permanece como tratamiento por definir. La migración metodológica de los documentos base sigue pendiente en 1.1.
 
 - [ ] Priorizar escenarios por valor, dependencia y riesgo.
 - [ ] Definir criterios para seleccionar y justificar escenarios operativos representativos a partir de variantes reales del proceso de R3Foresta.

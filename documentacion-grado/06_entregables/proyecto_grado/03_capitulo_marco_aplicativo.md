@@ -4,13 +4,13 @@ El presente capítulo describe la aplicación de RUP adaptado en el desarrollo d
 
 El capítulo conserva la relación con los cinco objetivos específicos: analizar la información, diseñar su organización, implementar las funciones, verificar su coherencia y evaluar la reconstrucción del recorrido. La evidencia técnica se distingue de la verificación y de la aceptación; los resultados sin ejecución o decisión documentada permanecen abiertos.
 
-La redacción original conserva principalmente el corte del 15 de septiembre de 2026. La consolidación de Inicio y las vistas de participación incorporadas posteriormente se identifican con la revisión del 29 de octubre. Los otros contenidos históricos requieren contraste con sus versiones y evidencias antes de presentarlos como estado vigente del producto.
+La redacción original conserva principalmente el corte del 15 de septiembre de 2026. La consolidación de Inicio y las vistas de participación incorporadas posteriormente se identifican con la revisión del 29 de octubre. La adecuación metodológica del 4 de noviembre aplica la directriz de trabajar el capítulo exclusivamente con RUP adaptado. Los otros contenidos históricos requieren contraste con sus versiones y evidencias antes de presentarlos como estado vigente del producto.
 
-## 3.1. Aplicación de RUP y prácticas SDD
+## 3.1. Aplicación de RUP adaptado
 
 ### 3.1.1. Estrategia metodológica general
 
-RUP adaptado organiza las decisiones del proyecto por fases, iteraciones, riesgos y productos. Las técnicas de entrevista, observación y análisis documental aportan información a las disciplinas de requisitos y análisis; no constituyen una metodología investigativa independiente. La aplicación conserva Inicio, Elaboración, Construcción y Transición y simplifica los artefactos según las necesidades del proyecto, conforme al Perfil y a la [metodología de desarrollo](../../04_metodologia/metodologia_desarrollo.md).
+RUP adaptado organiza las decisiones del proyecto por fases, iteraciones, riesgos y productos. Las técnicas de entrevista, observación y análisis documental aportan información a las disciplinas de requisitos y análisis; no constituyen una metodología investigativa independiente. La aplicación conserva Inicio, Elaboración, Construcción y Transición y selecciona los artefactos según su utilidad y riesgo. La directriz del 3 de noviembre, registrada en el [tablero académico, sección 1.1](../../02_planificacion/TODO_PROYECTO_GRADO.md#11-actualización-documental-a-rup), rige esta revisión del capítulo. El Perfil y la [metodología de desarrollo](../../04_metodologia/metodologia_desarrollo.md) conservan sus versiones y decisiones anteriores; su actualización integral sigue pendiente en ese tablero.
 
 En Inicio se reúnen diagnóstico, visión, alcance, actores, requisitos iniciales, riesgos y plan. Elaboración justifica los modelos, contratos y arquitectura y detalla los casos de uso prioritarios. Construcción desarrolla e integra capacidades y comprueba requisitos e invariantes. Transición reúne la validación operativa, la estabilización y la aceptación de una versión identificada. Las disciplinas se solapan: el análisis puede refinarse después de Inicio y las pruebas acompañan la construcción, sin que cada actividad se convierta en una fase adicional.
 
@@ -33,19 +33,19 @@ El Perfil establece tres módulos funcionales asociados con las etapas del mater
 
 *Nota.* Elaboración propia a partir del alcance del Perfil, el Capítulo I y los índices de General, Recolección, Vivero y Plantación. Los ingresos externos son variantes de Vivero o Plantación. Historial, trazabilidad, consultas y evidencias son capacidades transversales, no un cuarto módulo funcional.
 
-### 3.1.3. Integración de SDD en las iteraciones
+### 3.1.3. Artefactos, trazabilidad y asistencia de IA
 
-SDD se aplica como práctica de especificación dentro de RUP. Las necesidades se relacionan con requisitos y casos de uso; las especificaciones precisan el comportamiento y los criterios de aceptación; los planes distribuyen responsabilidades y decisiones técnicas; las tareas enlazan la implementación con las pruebas y sus resultados. La cadena adoptada es `necesidad → requisito → especificación → diseño → tarea → cambio → prueba → resultado → aceptación`.
+Las disciplinas de RUP relacionan las necesidades con requisitos y casos de uso, las decisiones de diseño con los cambios de implementación y estos con pruebas, resultados y revisiones. La relación `necesidad → requisito → diseño → cambio → prueba → resultado → aceptación` permite localizar la evidencia y reconocer vacíos. Los artefactos necesarios para documentarla se seleccionan según el riesgo y la decisión que deben sustentar, aprovechando los identificadores y documentos existentes.
 
 En Inicio basta identificar y priorizar necesidades y requisitos, como muestra la matriz puente de la sección 3.2.6. Elaboración desarrolla las reglas, escenarios, contratos y criterios de las capacidades prioritarias; Construcción los refina cuando corresponde y vincula cada entrega con código y pruebas. Transición evalúa el producto integrado y registra aceptación y condiciones residuales. La visión, los riesgos y las revisiones de hitos conservan su finalidad transversal.
 
-Los módulos existentes ya contienen requisitos y reglas que actúan como especificaciones de base. En los incrementos que utilizan carpetas SDD, `spec.md` define comportamiento, `plan.md` organiza responsabilidades y `tasks.md` desglosa trabajo. La [guía de specs](../../../specs/README.md) conserva esa relación y los identificadores existentes. Las entregas INT pueden agrupar tareas de varias specs; no equivalen a funcionalidades independientes ni se añaden como iteraciones RUP. La correspondencia académica se documenta con la fecha de cada artefacto y no convierte las specs de octubre en entregables de julio.
+Los módulos y las especificaciones existentes aportan comportamiento, reglas y criterios de aceptación; los contratos y ADR sustentan las fronteras y decisiones del diseño. Los planes y las tareas disponibles permiten relacionar el trabajo con sus cambios y comprobaciones. La [guía de specs](../../../specs/README.md) describe la organización técnica de esas fuentes. Las entregas INT pueden agrupar tareas de varias especificaciones y aportan evidencia a las iteraciones académicas según su alcance y fecha. La correspondencia se documenta con la fecha real de cada artefacto, conservando la distinción entre los productos de julio y los refinamientos posteriores.
 
 La IA puede asistir el análisis, la redacción, el código y las pruebas. La revisión humana conserva la responsabilidad sobre requisitos, decisiones y aceptación. Una salida generada o un documento creado no acredita por sí solo una aprobación ni un resultado de prueba.
 
 ### 3.1.4. Fases, iteraciones e hitos
 
-La Tabla 3.2 presenta el calendario adoptado por el proyecto. Es una referencia de planificación; la ejecución acreditada y las decisiones de salida se consultan en el [registro de avance RUP y SDD](../../04_metodologia/registro_avance_rup_sdd.md) y el [tablero académico](../../02_planificacion/TODO_PROYECTO_GRADO.md). Sus cortes deben conservarse al interpretar los estados.
+La Tabla 3.2 presenta el calendario adoptado por el proyecto. Es una referencia de planificación; la ejecución acreditada y las decisiones de salida se consultan en el [registro de avance metodológico](../../04_metodologia/registro_avance_rup_sdd.md) y el [tablero académico](../../02_planificacion/TODO_PROYECTO_GRADO.md). Sus cortes deben conservarse al interpretar los estados; la actualización integral de las formulaciones metodológicas anteriores del registro permanece en la sección 1.1 del tablero.
 
 **Tabla 3.2**
 
@@ -127,4 +127,4 @@ El desarrollo del capítulo continúa en:
 - [3.4. Fase de Construcción](03_3_fase_construccion.md): implementación, integración, verificación y preparación de IOC.
 - [3.5. Fase de Transición](03_4_fase_transicion.md): escenarios de validación, aceptación y decisión PR.
 
-Los nombres físicos de los archivos se conservan; la numeración académica se expresa en sus encabezados. Las tablas y figuras mantienen título y nota para su maquetación conforme a APA 7. Los diagramas de trabajo posteriores al corte original conservan su fecha y requieren revisión antes de la entrega universitaria. Se mantienen el [capítulo previo a la reorganización](archivo/03_capitulo_marco_aplicativo_antes_rup_2026-10-29.md) y la [versión de Inicio anterior a estas correcciones](archivo/03_1_fase_inicio_antes_correcciones_2026-10-29.md).
+Los nombres físicos de los archivos se conservan; la numeración académica se expresa en sus encabezados. Las tablas y figuras mantienen título y nota para su maquetación conforme a APA 7. Los diagramas de trabajo posteriores al corte original conservan su fecha y requieren revisión antes de la entrega universitaria. Se mantienen el [capítulo previo a la reorganización](../../../archivo/documentacion-grado/proyecto_grado/03_capitulo_marco_aplicativo_antes_rup_2026-10-29.md) y la [versión de Inicio anterior a estas correcciones](../../../archivo/documentacion-grado/proyecto_grado/03_1_fase_inicio_antes_correcciones_2026-10-29.md).

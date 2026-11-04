@@ -1,6 +1,6 @@
 ## 3.4. Fase de Construcción: implementación e integración de los módulos
 
-> Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Las tablas y resultados del desarrollo original conservan el corte del 15 de septiembre de 2026; la sección 3.4.5.1 añade una revisión local del 29 de octubre. Las afirmaciones históricas y sus pruebas requieren actualización para una versión candidata.
+> Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Las tablas y resultados del desarrollo original conservan el corte del 15 de septiembre de 2026; la sección 3.4.5.1 añade una revisión local del 29 de octubre. La adecuación metodológica de la sección 3.4.6 corresponde al 4 de noviembre. Las afirmaciones históricas y sus pruebas requieren actualización para una versión candidata.
 
 ### 3.4.1. Propósito, corte y correspondencia con RUP
 
@@ -149,13 +149,13 @@ sequenceDiagram
 
 *Nota.* Elaboración propia a partir de la revisión de backend `9eef958` y frontend `dd36c57` del 29 de octubre de 2026. La evidencia de un registro confirmado mediante backend local el 26 de octubre se conserva en [`QA_REGISTRO_GUARDADO_51.md`](../../../../pwa-r3foresta/docs/QA_REGISTRO_GUARDADO_51.md); no demuestra por sí sola los demás recorridos ni el despliegue remoto. La Figura 3.23 conserva el flujo documentado en septiembre y requiere actualización antes de la edición final.
 
-### 3.4.6. Aplicación de SDD y asistencia de IA
+### 3.4.6. Artefactos, evidencia y asistencia de IA
 
-Los documentos revisados cubren partes de la cadena SDD. Los archivos de requisitos expresan capacidades y validaciones; las reglas precisan invariantes; los flujos operativos organizan la experiencia; los contratos resuelven las fronteras; los ADR registran decisiones; los planes de frontend descomponen trabajo; las migraciones materializan operaciones; y `ESTADO.md` registra confirmaciones técnicas disponibles. Esta correspondencia todavía no está consolidada con identificadores estables de especificación, tarea, prueba, resultado y aceptación, por lo que no se presenta como una aplicación metodológica plenamente demostrada.
+Los documentos revisados aportan evidencia a las disciplinas de requisitos, análisis y diseño, implementación, pruebas y gestión de configuración de RUP. Los archivos de requisitos expresan capacidades y validaciones; las reglas precisan invariantes; los flujos operativos organizan la experiencia; los contratos resuelven las fronteras; los ADR registran decisiones; los planes de frontend descomponen trabajo; las migraciones materializan operaciones; y `ESTADO.md` registra confirmaciones técnicas disponibles. Queda pendiente consolidar las relaciones entre esos artefactos, los cambios, las versiones evaluadas, las pruebas y las decisiones de revisión, conservando los identificadores existentes.
 
-La asistencia de IA participó en análisis, contraste documental, planificación, implementación y redacción bajo revisión humana. Para cumplir plenamente la metodología, falta completar el registro por aporte material con fecha, herramienta y versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio. La existencia de archivos generados o revisados con IA no equivale por sí sola a esa trazabilidad de proceso.
+La IA se utilizó como herramienta de apoyo en análisis, contraste documental, planificación, implementación y redacción. Las contribuciones materiales deben poder relacionarse con los artefactos o cambios afectados, su fecha, la revisión humana y las comprobaciones pertinentes. La responsabilidad académica y las decisiones de aprobación permanecen en las personas competentes. La existencia de archivos generados o revisados con IA no acredita por sí sola esa revisión ni una prueba ejecutada.
 
-El archivo `../../04_metodologia/registro_avance_rup_sdd.md` concentra el estado por iteración e hito, la cobertura actual de la cadena SDD y la plantilla de control de IA. Este registro permite incorporar evidencia a medida que se verifica, sin reconstruir retrospectivamente cierres o aceptaciones que no fueron documentados.
+El [registro de avance metodológico](../../04_metodologia/registro_avance_rup_sdd.md) conserva el balance por iteración e hito y la evidencia disponible en sus cortes documentales. Sus formulaciones anteriores se revisarán en la [actualización integral de los documentos base](../../02_planificacion/TODO_PROYECTO_GRADO.md#11-actualización-documental-a-rup). La revisión actual del capítulo aplica exclusivamente RUP adaptado y mantiene pendientes los cierres o aceptaciones que carecen de una decisión documentada.
 
 ### 3.4.7. Control del alcance implementado
 
