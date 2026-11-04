@@ -46,6 +46,10 @@ La revisión humana puede comprobar en paralelo comprensión y uso móvil de los
 
 INT02, PA-S00/01/02/03/04, tareas padre de QA y PA-F01 no se declaran completos por estos cierres locales. Se archivan las fichas terminadas y se mantienen activas las que conservan pendientes.
 
+## Administración de usuarios · incremento transversal del 3 de noviembre
+
+Selector exclusivo ADMIN y pantalla de asignación de roles globales implementados y verificados localmente; versionados en backend `5fb723b` y PWA `37cec4d`. Las pruebas conservan sus bases backend `f26cbfa` y PWA `c684ad9` más árbol. Conserva ADMIN/GENERAL/VALIDADOR/VOLUNTARIO y el motor072 de revisión/auditoría/recuperación/último ADMIN; añade lectura091 y `/app/usuarios`. [Contrato y evidencia backend](../Backend-r3foresta/documentacion/frontend/modulos/usuarios.md#administración-de-roles-globales), [QA frontend](../pwa-r3foresta/docs/QA_USUARIOS_ADMINISTRACION.md). Build/lint aplicables, 1.190 unitarios backend, 1.129 pruebas frontend, 26 grupos SQL/ocho carreras/15 HTTP y 27 comprobaciones de navegador aprobados en entorno sintético aislado. Pablo confirmó la aplicación de091; [registro y límites](../Backend-r3foresta/docs/evidencia/usuarios-administracion-091-aplicacion-reportada.json), sin entorno identificado en la confirmación. Cotejo de catálogo/HTTP remoto y WebAuthn real pendientes; push y despliegue no acreditados por este versionado. Este incremento no cierra las tareas PA-F01 que conservan pendientes.
+
 ## Otros pendientes conservados
 
 El [estado anterior](archivo/estado-2026-10-17-antes-consolidacion.md#base-existente-y-pendientes-conservados) conserva evidencia y rutas de la integración física M2→M3, QA completo del plan, aplicación 046 no acreditada en su registro, despacho/replay SQL/TIPO_PLANTA, job de ciclo de vida/estado público, merma y mantenimiento fuera de este cierre, lint global backend y ramas anteriores sin fusionar/eliminar. Ninguno se cierra por esta consolidación.
