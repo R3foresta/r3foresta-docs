@@ -2,6 +2,8 @@
 
 Espacio reservado para el documento universitario final de R3Foresta. Su redacción debe partir del perfil aprobado y de la evidencia generada durante las fases e iteraciones de RUP, los incrementos ejecutables, la verificación técnica, la validación operativa y la aceptación.
 
+> **Directriz de trabajo — 3 de noviembre de 2026:** el **Capítulo III se desarrollará y revisará exclusivamente con RUP adaptado**, con IA como herramienta de apoyo bajo responsabilidad humana. La actualización integral del Perfil, los documentos base y los textos existentes queda pendiente en la sección 1.1 de [TODO_PROYECTO_GRADO.md](../../02_planificacion/TODO_PROYECTO_GRADO.md). Las menciones RUP + SDD y las cadenas de trabajo anteriores se revisarán dentro de ese TODO; para el trabajo nuevo del capítulo se seleccionarán artefactos por utilidad y riesgo, conservando los IDs y la evidencia existentes.
+
 La lista centralizada de validaciones, evidencias y correcciones de los dos primeros capítulos se encuentra en [`../../02_planificacion/TODO_CAPITULOS_1_Y_2.md`](../../02_planificacion/TODO_CAPITULOS_1_Y_2.md).
 
 ## Estructura prevista
@@ -9,7 +11,7 @@ La lista centralizada de validaciones, evidencias y correcciones de los dos prim
 1. Resumen independiente, que se redactará al finalizar todos los capítulos.
 2. Capítulo I — Marco introductorio, comenzando con la Introducción e incluida la metodología de desarrollo.
 3. Capítulo II — Marco teórico y conceptual, incluidos RUP, SDD y asistencia de IA.
-4. Capítulo III — Marco aplicativo: análisis, diseño, implementación, integración, verificación, validación, aceptación y resultados.
+4. Capítulo III — Marco aplicativo, exclusivamente con RUP adaptado: análisis, diseño, implementación, integración, verificación, validación, aceptación y resultados.
 5. Conclusiones y Recomendaciones.
 6. Referencias bibliográficas consolidadas y anexos.
 

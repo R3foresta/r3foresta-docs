@@ -1,5 +1,7 @@
 # Documentación universitaria de grado — R3Foresta
 
+> **Directriz vigente — 3 de noviembre de 2026:** el Capítulo III se trabajará exclusivamente con RUP adaptado y asistencia de IA bajo responsabilidad humana. La actualización integral de los documentos base queda pendiente en la sección 1.1 de [TODO_PROYECTO_GRADO.md](02_planificacion/TODO_PROYECTO_GRADO.md). Las menciones RUP + SDD del Perfil y de las fuentes anteriores se revisarán dentro de ese TODO; no rigen el trabajo nuevo del capítulo.
+
 > **Estado al 2 de septiembre de 2026:** el Perfil quedó cerrado. Adopta RUP adaptado, complementado con Spec-Driven Development asistido por IA. La ejecución académica abarca del 6 de julio al 15 de noviembre de 2026; los capítulos I y II y el Proyecto de Grado continúan en sus tableros propios.
 
 Espacio de trabajo para producir los dos resultados académicos del proyecto de grado de la UMSA, Carrera de Informática — mención Ingeniería de Sistemas:
