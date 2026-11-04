@@ -22,7 +22,7 @@ El corte documental del 15 de septiembre de 2026 se encuentra dentro de CO-2 seg
 | Construcción, CO-4 | integrar trazabilidad transversal y preparar versión candidata | IOC | consulta integral, regresión, manual preliminar y versión candidata | relaciones y timelines parciales, arquitectura y contratos definidos | planificada; faltan consulta integral, regresión y cierre IOC |
 | Transición, TR-1 | ejecutar pruebas de sistema, validación operativa, despliegue y aceptación | PR | resultados de validación, manuales, incidencias y acta de aceptación | matriz de verificación en 3.4.9 y escenarios de evaluación en 3.5 | planificada; ejecución y cierre PR pendientes |
 
-*Nota.* Elaboración propia a partir de `metodologia_desarrollo.md`, `registro_avance_rup_sdd.md`, `TODO_PROYECTO_GRADO.md`, `ESTADO.md`, `ARCHITECTURE.md` y los planes operativos de los módulos, con corte al 15 de septiembre de 2026. “Evidencia disponible” no significa “verificado” ni “aceptado”.
+*Nota.* Elaboración propia a partir de `metodologia_desarrollo.md`, el [registro de avance metodológico](../../04_metodologia/registro_avance_rup_sdd.md), `TODO_PROYECTO_GRADO.md`, `ESTADO.md`, `ARCHITECTURE.md` y los planes operativos de los módulos, con corte al 15 de septiembre de 2026. “Evidencia disponible” no significa “verificado” ni “aceptado”.
 
 ### 3.4.2. Implementación de la arquitectura
 

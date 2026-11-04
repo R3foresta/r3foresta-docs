@@ -18,16 +18,19 @@
 
 ### 1.1. Actualización documental a RUP
 
-**Estado al 3 de noviembre de 2026: pendiente.** Se acuerda preparar la actualización integral para declarar únicamente RUP adaptado. El Capítulo III se trabajará desde ahora con ese criterio; la IA apoyará la redacción y revisión bajo responsabilidad humana.
+**Estado al 4 de noviembre de 2026: parcial.** Los entregables vigentes del documento final —capítulos I, II y III, índices, figura metodológica y bibliografía— declaran únicamente RUP adaptado, con IA como apoyo bajo revisión humana. Las versiones previas se conservan en el [archivo del documento final](../../archivo/documentacion-grado/proyecto_grado/README.md), fuera de los entregables. La revisión actual no modifica el Perfil aprobado; la actualización integral de los documentos de apoyo sigue pendiente.
 
-**Antecedente:** la base documental declaraba RUP complementado con SDD asistido por IA. Esa formulación, sus flujos y sus productos todavía aparecen en los documentos y en apartados posteriores de este tablero. Se conservan para su revisión; no rigen el trabajo nuevo del Capítulo III. Registrar esta directriz no completa la migración documental ni modifica las aprobaciones históricas.
+**Antecedente:** la base documental declaraba RUP complementado con SDD asistido por IA. Esa formulación, sus flujos y sus productos todavía aparecen en documentos de apoyo y en apartados posteriores de este tablero. Se conservan para su revisión; no rigen los entregables actualizados del documento final. Este ajuste no completa la migración documental ni modifica las aprobaciones históricas.
 
 - [ ] Actualizar `base_perfil_proyecto_grado.md`, `metodologia_desarrollo.md`, el registro de avance y la guía personal de metodología y defensa para retirar el protocolo SDD y explicitar la adaptación de RUP.
-- [ ] Propagar el ajuste al Perfil, capítulos I y II, lineamientos, tableros, índices, figuras y referencias bibliográficas, conservando la versión presentada o aprobada y la fecha real del cambio.
+- [x] Actualizar los capítulos I y II, los índices de entregables y documento final, la Figura 2.6 y la bibliografía para declarar solamente RUP adaptado. Revisión del 4 de noviembre: se retiran el flujo SDD y GitHub Spec Kit; se conservan los requisitos útiles, IDs, fechas, evidencia y pendientes. La copia anterior y el archivo histórico se mantienen fuera de `06_entregables`.
+- [ ] Propagar el ajuste a los documentos base, lineamientos y tableros de apoyo, conservando la versión presentada o aprobada y la fecha real del cambio. El Perfil permanece intacto por el alcance del encargo del 4 de noviembre; una eventual actualización se tratará por separado.
 - [x] Adecuar el texto existente del Capítulo III y sus cuatro fases a RUP; mantener los requisitos, decisiones, evidencias y límites acreditados, y retirar las obligaciones exclusivas del protocolo SDD. Ajuste textual del 4 de noviembre; Transición ya era compatible. No cierra revisión académica, actualización de los documentos base, diseño de variantes ni hitos.
 - [ ] Revisar los documentos que guían a la IA y el seguimiento operativo: seleccionar artefactos según utilidad y riesgo, aprovechar IDs existentes y reducir actualización duplicada de estados, sin exigir tres archivos por capacidad ni nuevas familias de IDs por razón de SDD.
 - [ ] Comprobar coherencia, enlaces y citas; conservar rutas, contratos, decisiones aceptadas, actas y pendientes de pruebas, validación, despliegue y aceptación. Las copias históricas permanecen identificadas como tales.
 - [ ] Tras la revisión de la versión académica, transferir los cambios que correspondan al Google Docs de presentación y regenerar los entregables vigentes que se utilicen; las capturas locales no son destinos de edición.
+
+**Comprobación local de los entregables — 4 de noviembre:** 238 enlaces locales y 14 anclas Markdown revisados sin errores; sin menciones visibles a specs o SDD en el texto vigente. Se cotejaron los IDs, las copias históricas y la copia previa a esta revisión. Los tres archivos del Perfil y la figura activa de casos de uso conservan su contenido anterior al encargo. Las rutas técnicas existentes se mantienen como referencias de evidencia. Esta comprobación documental no cierra la revisión académica ni la actualización de los documentos de apoyo.
 
 El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere documentos vigentes coherentes con RUP y evidencia conservada; no acredita el cierre de LCO, LCA, IOC, PR ni de las entregas técnicas.
 

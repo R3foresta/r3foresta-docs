@@ -12,7 +12,7 @@ Este Proyecto de Grado aborda ese primer nivel del problema y desarrolla un sist
 
 R3Foresta puede así comenzar a construir un historial organizado de sus actividades de reforestación que responda a sus necesidades actuales y que, en el futuro, pueda evaluarse como parte de una base documental para iniciativas de carbono. El alcance del proyecto concluye con el registro de la plantación y no incluye el monitoreo posterior de los árboles, la cuantificación de carbono ni los procesos de certificación o emisión de créditos.
 
-El Resumen constituye un elemento preliminar independiente y se redactará cuando el documento completo esté estabilizado. Después de este capítulo, el Capítulo II desarrolla los fundamentos teóricos y conceptuales de la trazabilidad, RUP, SDD y asistencia de IA, y delimita la proyección hacia bonos de carbono; el Capítulo III presenta el análisis, el diseño, la implementación e integración, la verificación y la evaluación del recorrido. Finalmente se incluyen las Conclusiones, las Recomendaciones, las Referencias bibliográficas y los Anexos.
+El Resumen constituye un elemento preliminar independiente y se redactará cuando el documento completo esté estabilizado. Después de este capítulo, el Capítulo II desarrolla los fundamentos teóricos y conceptuales de la trazabilidad, RUP y asistencia de IA, y delimita la proyección hacia bonos de carbono; el Capítulo III presenta el análisis, el diseño, la implementación e integración, la verificación y la evaluación del recorrido. Finalmente se incluyen las Conclusiones, las Recomendaciones, las Referencias bibliográficas y los Anexos.
 
 ## 1.2 Antecedentes
 
@@ -131,7 +131,7 @@ Los registros de trazabilidad pueden evaluarse para su posible reutilización y 
 
 ## 1.7 Metodología de desarrollo
 
-El proyecto adopta un proceso de desarrollo basado en **Rational Unified Process (RUP)**, complementado con **Spec-Driven Development (SDD) asistido por inteligencia artificial**. RUP organiza el ciclo de vida completo; SDD guía el paso de las especificaciones al diseño, las tareas, la implementación y las pruebas; la IA actúa como herramienta de apoyo bajo control humano. No se incorpora una metodología de investigación adicional ni se organiza el trabajo mediante sprints. Los fundamentos se desarrollan en el Capítulo II; esta sección explica su aplicación al proyecto.
+El proyecto adopta **Rational Unified Process (RUP) adaptado como única metodología de desarrollo**. Las fases, iteraciones, disciplinas, riesgos y revisiones de RUP organizan el ciclo de vida completo. La inteligencia artificial actúa como herramienta de apoyo bajo revisión y responsabilidad humanas. Los fundamentos se desarrollan en el Capítulo II; esta sección explica su aplicación al proyecto.
 
 ### 1.7.1 RUP como proceso rector
 
@@ -142,6 +142,8 @@ En Inicio se delimitan el problema, los actores, el alcance, los requisitos inic
 ### 1.7.2 Adaptación de RUP al proyecto
 
 La adaptación conserva las fases, los hitos, las iteraciones, las disciplinas y la evidencia necesaria para revisar el avance, pero simplifica los roles y documentos que no aportan a una ejecución individual. Las disciplinas de requisitos, análisis y diseño, implementación, pruebas, despliegue, gestión del proyecto y gestión de configuración y cambios se aplican según el objetivo de cada iteración.
+
+Los artefactos se seleccionan por su utilidad para comunicar decisiones, controlar riesgos y comprobar el resultado. Se aprovechan los requisitos, reglas, contratos y decisiones existentes, con sus identificadores y fechas. Un mismo documento puede reunir varios productos relacionados; la adaptación no exige una cantidad fija de archivos por capacidad.
 
 Los hitos son **LCO** (*Lifecycle Objectives*, objetivos del ciclo de vida), **LCA** (*Lifecycle Architecture*, arquitectura del ciclo de vida), **IOC** (*Initial Operational Capability*, capacidad operativa inicial) y **PR** (*Product Release*, liberación del producto). Su cierre depende de la revisión de productos, resultados y riesgos residuales; una fecha cumplida o la existencia de código no equivalen a la aprobación del hito.
 
@@ -162,15 +164,15 @@ Construcción produce cuatro incrementos ejecutables:
 
 Las cuatro iteraciones de Construcción mantienen el orden M1 Recolección → M2 Vivero e integración M1→M2 → M3 Plantación e integración M2→M3 → trazabilidad transversal, regresión y versión candidata. Las consultas, el historial y la reconstrucción son capacidades transversales y no un cuarto módulo.
 
-### 1.7.5 Flujo SDD asistido por IA
+### 1.7.5 Trabajo dentro de una iteración
 
-SDD se aplica como práctica subordinada a RUP mediante la cadena `necesidad → requisito → especificación → diseño → tarea → implementación → prueba → resultado → aceptación`. Antes de programar una capacidad se definen sus actores, escenarios, reglas, datos, casos límite y criterios de aceptación. Luego se preparan el diseño y las tareas; la implementación y las pruebas deben corresponder a esa especificación.
+Cada iteración de RUP prioriza objetivos y riesgos y combina las disciplinas necesarias para obtener un resultado revisable. Los casos de uso, las reglas y los criterios de aceptación orientan el análisis y el diseño; la implementación y las pruebas comprueban las capacidades seleccionadas. La intensidad de esas actividades depende de la fase y del riesgo que se busca resolver.
 
-Si una prueba o la implementación revela una ambigüedad, se actualizan primero la especificación y los productos afectados. SDD no reemplaza la visión, la arquitectura, el registro de riesgos, las revisiones de iteración, los hitos ni el despliegue de RUP.
+Una ambigüedad o un defecto puede requerir revisar requisitos, diseño o código dentro de la misma iteración. La gestión de cambios conserva la decisión y actualiza los artefactos afectados. La revisión final compara el objetivo con el resultado, examina las pruebas y los riesgos residuales y orienta la siguiente iteración; los incrementos de Construcción se integran con lo ya desarrollado.
 
 ### 1.7.6 Asistencia de inteligencia artificial y control humano
 
-La inteligencia artificial puede apoyar el análisis, el diseño, el código, las pruebas y la documentación. Sus salidas se consideran propuestas sujetas a revisión. La IA no aprueba el alcance, los requisitos, las reglas del dominio, los resultados ni la liberación, y no sustituye la revisión del código ni la responsabilidad autoral (GitHub, 2026; Tabassi, 2023).
+La inteligencia artificial puede apoyar el análisis, el diseño, el código, las pruebas y la documentación. Sus salidas se consideran propuestas sujetas a revisión. La IA no aprueba el alcance, los requisitos, las reglas del dominio, los resultados ni la liberación, y no sustituye la revisión del código ni la responsabilidad autoral (Tabassi, 2023).
 
 Cada aporte material debe registrar la fecha, la herramienta y el modelo o versión disponible, la tarea, el artefacto afectado, la salida adoptada, modificada o rechazada, la revisión humana, la prueba y la referencia al cambio. No es necesario publicar conversaciones privadas completas.
 
@@ -184,7 +186,7 @@ La **validación operativa** utiliza escenarios representativos derivados de var
 
 El seguimiento compara lo planificado con lo realizado por fase e iteración. Cada revisión registra objetivos, riesgos, productos, decisiones, pruebas, desviaciones, resultado, riesgo residual y estado de aceptación. Se conservan dos cadenas complementarias:
 
-1. `necesidad → requisito → especificación → decisión de diseño → tarea → cambio → prueba → resultado → aceptación`;
+1. `necesidad → requisito o caso de uso → decisión de diseño → cambio → prueba → resultado → aceptación`;
 2. `requisito → regla → invariante → mecanismo → prueba → resultado`.
 
 La presencia de un documento, una migración, una prueba o una función implementada se registra como evidencia técnica disponible. Solo se utiliza el estado **verificado** cuando existe un resultado reproducible vinculado con la versión evaluada, y **aceptado** cuando la persona competente toma y registra esa decisión.
@@ -209,4 +211,4 @@ La presencia de un documento, una migración, una prueba o una función implemen
 
 Al 15 de septiembre de 2026 existen productos de análisis, arquitectura, requisitos, reglas, contratos, implementación y pruebas que respaldan avances de IN-1, EL-1 y Construcción. Sin embargo, no se han consolidado las actas de cierre de LCO y LCA ni el expediente de cierre de CO-1. CO-2 se encuentra dentro de su periodo planificado. La implementación adelantada de capacidades de M2 y M3 se conserva como evidencia técnica disponible, pero deberá revalidarse en la iteración que corresponda y vincularse con especificaciones, tareas, pruebas y decisiones de aceptación.
 
-El registro `../../04_metodologia/registro_avance_rup_sdd.md` muestra por separado lo planificado, la evidencia disponible, los vacíos y el estado de cada iteración e hito. Por ello, este documento describe una estructura metodológica adoptada y avances respaldados, sin declarar completadas actividades o aprobaciones que aún no cuentan con registro.
+El [registro de avance metodológico](../../04_metodologia/registro_avance_rup_sdd.md) muestra por separado lo planificado, la evidencia disponible, los vacíos y el estado de cada iteración e hito. Por ello, este documento describe una estructura metodológica adoptada y avances respaldados, sin declarar completadas actividades o aprobaciones que aún no cuentan con registro. La revisión metodológica del documento final corresponde al 4 de noviembre de 2026; los estados históricos conservan sus fechas y la actualización de los documentos de apoyo continúa en el [tablero académico](../../02_planificacion/TODO_PROYECTO_GRADO.md#11-actualización-documental-a-rup).

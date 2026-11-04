@@ -16,8 +16,6 @@ Food and Agriculture Organization of the United Nations. (s. f.). *Forest reprod
 
 Fowler, M. (2004). *UML distilled: A brief guide to the standard object modeling language* (3.ª ed.). Addison-Wesley Professional.
 
-GitHub. (2026, 21 de agosto). *GitHub Spec Kit*. https://github.github.com/spec-kit/
-
 Gotel, O. C. Z., & Finkelstein, A. C. W. (1994). An analysis of the requirements traceability problem. En *Proceedings of the First International Conference on Requirements Engineering* (pp. 94–101). IEEE Computer Society Press. https://doi.org/10.1109/ICRE.1994.292398
 
 GS1 AISBL. (2023). *EPCIS and CBV implementation guideline* (Release 2.0). https://ref.gs1.org/guidelines/epcis-cbv/
