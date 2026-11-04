@@ -61,7 +61,7 @@ La Tabla 3.2 presenta el calendario adoptado por el proyecto. Es una referencia 
 | Construcción, CO-4 | 19 de octubre–1 de noviembre | trazabilidad transversal, regresión y versión candidata | IOC: capacidad operativa inicial |
 | Transición, TR-1 | 2–15 de noviembre | validación operativa, estabilización, manuales y aceptación | PR: liberación del producto |
 
-*Nota.* Elaboración propia a partir del cronograma del Perfil, la metodología y el registro de decisiones del 25 de agosto de 2026. Los periodos no prueban ejecución ni cierre. El registro del 15 de septiembre conserva pendientes LCO y LCA; la evaluación documental actual de Inicio se presenta en 3.2.10.
+*Nota.* Elaboración propia a partir del cronograma del Perfil, la metodología y el registro de decisiones del 25 de agosto de 2026. Los periodos no prueban ejecución ni cierre. El registro del 15 de septiembre conserva su estado histórico; el autor confirma Inicio/LCO terminado el 4 de noviembre para continuar. La decisión actual se registra en 3.2.10 y la preparación de LCA en 3.3.12.
 
 La Figura 3.1 relaciona fases, productos e hitos. Las migraciones y entregas aportan evidencia técnica a las iteraciones; su existencia no determina el cierre metodológico. Cada revisión debe identificar la versión y la evidencia examinadas, participantes, resultado, condiciones y riesgos residuales.
 

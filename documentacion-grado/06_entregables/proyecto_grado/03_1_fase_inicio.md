@@ -1,6 +1,6 @@
 ## 3.2. Fase de Inicio
 
-> Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Diagnóstico con corte principal al 22 de julio de 2026; contraste documental de septiembre, consolidación del 29 de octubre y precisiones del autor incorporadas el 4 de noviembre. La exposición metodológica sigue exclusivamente RUP adaptado conforme a la directriz del 3 de noviembre. Los artefactos reunidos aquí no acreditan un cierre histórico de IN-1 ni la aprobación de LCO.
+> Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Diagnóstico con corte principal al 22 de julio de 2026; contraste documental de septiembre, consolidación del 29 de octubre y precisiones del autor incorporadas el 4 de noviembre. La exposición metodológica sigue exclusivamente RUP adaptado conforme a la directriz del 3 de noviembre. El autor confirma el cierre actual de Inicio/LCO el 4 de noviembre para continuar con Elaboración; se conserva la ausencia de acta histórica de IN-1 y no se atribuye aceptación institucional no documentada.
 
 ### 3.2.1. Propósito y correspondencia con RUP
 
@@ -353,11 +353,11 @@ Los riesgos se priorizan por su efecto sobre la posibilidad de reconstruir el re
 | RIN-04 — alta | atribuir permisos a cargos o afiliaciones: permite operaciones indebidas o bloquea a participantes legítimos | distinguir funciones, cuentas y autorización por actividad; revisar casos permitidos y denegados | autor con coordinación de R3Foresta; abierto |
 | RIN-05 — alta | confundir expectativas de carbono o seguimiento posterior con compromisos del proyecto | mantener RAN-10 y someter cualquier ampliación a revisión de alcance y viabilidad | autor con tutora y referente institucional según competencia; frontera documentada, seguimiento abierto |
 | RIN-06 — media | cobertura desigual o dependencia de publicaciones: limita la validación y conciliación de resultados | seleccionar escenarios con registros identificados; comprobar originales de FD-01 si se utilizan sus cifras | autor con responsables operativos; abierto |
-| RIN-07 — alta | ausencia de evidencia temporal y de revisión de Inicio: impide acreditar el cierre metodológico | conservar fechas reales, reunir productos y registrar una revisión actual sin atribuirle fecha anterior | autor con revisores por confirmar; ausencia histórica confirmada, revisión pendiente |
+| RIN-07 — alta | ausencia de evidencia temporal de IN-1 y de acta histórica: limita la acreditación de julio | conservar fechas reales y registrar la decisión actual del autor sin atribuirle fecha anterior | cierre de Inicio/LCO confirmado por el autor el 4 de noviembre; ausencia histórica conservada |
 
 *Nota.* Elaboración propia a partir de HAL-01 a HAL-11, los límites del Perfil, el registro metodológico y las confirmaciones del autor del 29 de octubre y 4 de noviembre. RIN-01 a RIN-07 se conservan desde la consolidación de octubre; RIN-01 a RIN-04 se precisan con las propuestas de noviembre. La prioridad es cualitativa; los responsables son funciones propuestas, no designaciones acreditadas. Los riesgos técnicos detectados posteriormente se desarrollan en Elaboración con sus propios identificadores y fechas.
 
-La primera prioridad es cerrar procedencia, unidades y movimientos de la ruta principal y sus variantes, junto con el modelo de autorización. La consulta transversal depende de esas relaciones. El plan de iteraciones organiza su tratamiento, pero faltan una estimación consolidada del esfuerzo restante, responsables de revisión confirmados y una decisión de viabilidad que acompañe LCO. La existencia de código adelantado no resuelve por sí sola estos pendientes.
+La primera prioridad de continuidad es concretar procedencia, unidades y movimientos de la ruta principal y sus variantes, junto con el modelo de autorización. La consulta transversal depende de esas relaciones. Con Inicio/LCO confirmado por el autor el 4 de noviembre, Elaboración debe actualizar la estimación del esfuerzo restante, los responsables de revisión y la viabilidad del trabajo residual. La existencia de código adelantado no resuelve por sí sola estos pendientes de diseño y verificación.
 
 ### 3.2.10. Resultados y evaluación del hito de Inicio
 
@@ -365,21 +365,21 @@ El diagnóstico identifica procesos, actores funcionales, información, soportes
 
 La consolidación reúne once hallazgos canónicos, ocho necesidades, las condiciones RAN-01 a RAN-10 separadas por naturaleza, visión y alcance, actores del sistema, los casos de uso generales y una lista inicial de requisitos no funcionales y riesgos. La matriz puente permite continuar hacia los modelos y especificaciones de Elaboración sin duplicar los requisitos existentes. Estos son productos documentales disponibles para revisión; su existencia no equivale a aceptación de OBJ-01 o de la fase.
 
-LCO (*Lifecycle Objectives*, objetivos del ciclo de vida) requiere una decisión humana sobre la coherencia del producto, el alcance, los casos principales, los riesgos y el plan. La evaluación siguiente contrasta lo reunido con los criterios de la metodología adoptada, sin sustituir esa decisión.
+LCO (*Lifecycle Objectives*, objetivos del ciclo de vida) requiere una decisión humana sobre la coherencia del producto, el alcance, los casos principales, los riesgos y el plan. La evaluación siguiente relaciona los productos reunidos, la confirmación de cierre del autor del 4 de noviembre y las condiciones que continúan en Elaboración.
 
 **Tabla 3.15**
 
-*Evaluación documental del hito LCO global del proyecto*
+*Evaluación documental de LCO y continuidad hacia Elaboración*
 
-| Criterio de revisión | Evidencia disponible | Condición pendiente |
+| Criterio de revisión | Evidencia disponible | Continuidad o límite conservado |
 |---|---|---|
-| Visión y alcance comprensibles | Perfil aprobado, Capítulo I y sección 3.2.7 | revisar la síntesis con las personas competentes; conservar expresamente las variantes externas |
-| Actores y casos de uso principales | funciones organizativas, tabla de actores, Figura 3.5 y catálogo CU-01 a CU-12 | confirmar responsables reales y revisar la correspondencia con la autorización detallada |
-| Necesidades y requisitos iniciales trazables | matriz OBJ-01, tabla puente y RNF iniciales | revisar los enlaces, precisar criterios de los RNF y completar la especificación de ingresos externos |
-| Riesgos prioritarios identificados | RIN-01 a RIN-07 y vacíos de Elaboración | confirmar responsables, tratamiento, riesgo residual y efecto en el plan |
-| Plan y viabilidad del trabajo | cronograma del Perfil, plan metodológico y tablero académico | contrastar esfuerzo y recursos con el trabajo pendiente; registrar ajustes y decisión de viabilidad |
-| Revisión de Inicio y decisión de salida | registro metodológico del 15 de septiembre sin cierre; ausencia de acta confirmada por el autor el 29 de octubre | registrar fecha actual, participantes, evidencia examinada, resultado y condiciones; no reconstruir un acta retroactiva |
+| Visión y alcance comprensibles | Perfil aprobado, Capítulo I y sección 3.2.7 | conservar las variantes externas al desarrollar sus contratos |
+| Actores y casos de uso principales | funciones organizativas, tabla de actores, Figura 3.5 y catálogo CU-01 a CU-12 | detallar autorización y responsables de revisión en Elaboración |
+| Necesidades y requisitos iniciales trazables | matriz OBJ-01, tabla puente y RNF iniciales | operacionalizar RNF y completar especificación de ingresos externos |
+| Riesgos prioritarios identificados | RIN-01 a RIN-07 y vacíos de Elaboración | actualizar responsables, tratamiento, riesgo residual y efecto en el plan |
+| Plan y viabilidad del trabajo | cronograma del Perfil, plan metodológico y tablero académico | estimar y ajustar el trabajo residual con fecha real |
+| Revisión de Inicio y decisión de salida | confirmación actual del autor: Inicio/LCO terminado el 4 de noviembre y continuación hacia Elaboración | decisión del autor sobre los productos consolidados; no reconstruye un acta histórica ni acredita aceptación institucional independiente |
 
 *Nota.* Elaboración propia a partir de los criterios de control de hitos de `metodologia_desarrollo.md`, el Perfil, el Capítulo I, el registro de avance metodológico y los productos de esta sección, con consolidación del 29 de octubre y ajuste documental del 4 de noviembre de 2026. El LCO de una capacidad o incremento particular no sustituye el LCO global del Proyecto de Grado.
 
-**Estado de Inicio:** productos documentales reunidos, revisión y decisión LCO pendientes. La confirmación del autor de que no existe acta ni registro previo de IN-1 se conserva como límite de acreditación. Una revisión posterior podrá evaluar estos productos y registrar su decisión con fecha real; no cambiará las fechas del levantamiento ni acreditará una ejecución histórica no documentada.
+**Estado de Inicio — actualización del 4 de noviembre de 2026:** el autor confirma que Inicio/LCO está terminado y dispone continuar con Elaboración. Se registra esta decisión actual sobre los productos consolidados y se trasladan las precisiones de diseño, verificación y responsables a Elaboración. La confirmación no reconstruye un acta de julio ni acredita una aprobación independiente de la tutora o de la organización. La versión anterior a este registro se conserva en la [copia de continuidad hacia Elaboración](../../../archivo/documentacion-grado/proyecto_grado/elaboracion-rup-2026-11-04/README.md).

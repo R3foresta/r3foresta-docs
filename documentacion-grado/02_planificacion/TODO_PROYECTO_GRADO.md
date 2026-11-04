@@ -70,18 +70,20 @@ El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere 
 
 ### 3.2. Productos de Inicio
 
-Actualización documental del 29 de octubre: la [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO. Las casillas de cierre permanecen abiertas hasta su revisión. El autor confirmó que no existe acta LCO ni registro previo al 20 de julio que acredite IN-1; cualquier revisión posterior conservará su fecha real. Esa formulación del 29 de octubre se adecuó el 4 de noviembre: la [sección 3.1](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) explica ahora exclusivamente RUP adaptado conforme a la directriz vigente.
+La [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO, consolidados desde el 29 de octubre. El 4 de noviembre el autor confirma Inicio/LCO terminado y dispone continuar con Elaboración. Se conserva la ausencia de acta histórica y de registro previo al 20 de julio que acredite IN-1; la decisión actual no modifica esas fechas. La [sección 3.1](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) explica exclusivamente RUP adaptado. Las casillas de detalle siguientes conservan su auditoría documental propia.
 
 - [ ] Cerrar la visión y el alcance del producto.
 - [ ] Cerrar el glosario inicial.
 - [ ] Preparar el modelo inicial de casos de uso.
 - [ ] Preparar la lista priorizada de requisitos y riesgos.
 - [ ] Preparar el plan de fases, iteraciones, incrementos, productos y criterios de salida.
-- [ ] Revisar y cerrar el hito **LCO — Objetivos del ciclo de vida**.
+- [x] Cierre de **Inicio/LCO — Objetivos del ciclo de vida** confirmado por el autor el 4 de noviembre de 2026 para continuar con Elaboración. La decisión actual no acredita un acta histórica ni aceptación institucional independiente; las casillas de detalle conservan su auditoría documental propia.
 
 ## 4. Fase de Elaboración — iteración EL-1 — 20 de julio al 16 de agosto
 
 ### 4.1. Dominio y arquitectura
+
+**Avance documental — 4 de noviembre de 2026:** la [sección 3.3](../06_entregables/proyecto_grado/03_2_fase_elaboracion.md) integra requisitos/CU, procesos, interacciones, modelos conceptual/lógico y el modelo físico de `445f24f` (51 tablas y 564 columnas), con INV-01–INV-11, RNF-INI y tratamiento actualizado de RDI-01–RDI-08. Los diagramas distinguen meta orientativa, cierre manual, GPS exterior con advertencia y resultado recuperable. Las casillas de cierre integral siguientes permanecen abiertas por las variantes y verificaciones pendientes; la existencia de estos productos no cierra LCA.
 
 - [ ] Especificar entidades, eventos, estados, cantidades, unidades, saldos, responsables y evidencias.
 - [ ] Diferenciar transferencia de transformación biológica u operativa.
@@ -95,6 +97,8 @@ Actualización documental del 29 de octubre: la [sección 3.2 del Capítulo III]
 ### 4.2. Especificaciones y riesgos
 
 **Continuidad del análisis — 4 de noviembre:** Inicio incorpora las precisiones del autor sin acreditar implementación de las dos capacidades pendientes. La [propuesta de operarios por vivero](../../../Backend-r3foresta/documentacion/tareas/propuesta-permisos-por-vivero.md) desarrolla el acceso por establecimiento y la recepción por el mismo operario. La [propuesta de incorporación de plantines](../../../Backend-r3foresta/documentacion/tareas/plan-incorporacion-plantas-procedencia.md) conserva alternativas que deben conciliarse con las últimas respuestas del autor registradas en [Inicio](../06_entregables/proyecto_grado/03_1_fase_inicio.md): incorporación especial por ADMIN, etapa actual sin habilitación adicional de aptitud, comprobantes y notas opcionales, y comienzo del historial en recepción o conteo. Concretar esa frontera de responsabilidades, la recepción directa y sus remanentes antes de actualizar contratos e implementar. El registro de plantaciones ya realizadas permanece como tratamiento por definir. La migración metodológica de los documentos base sigue pendiente en 1.1.
+
+**Orden inmediato de Elaboración:** completar los contratos de incorporación y acceso por vivero, incluida evidencia mínima y continuidad de operaciones; concretar recepción directa y remanentes sin reemplazar las reglas de cierre aceptadas; vincular la línea M1→M2→M3 con versión, entorno, resultados y reconstrucción del recorrido; evaluar LCA con sus riesgos residuales. GPS y D01–D12 conservan sus decisiones aceptadas. Este orden se controla aquí, sin otro plan general.
 
 - [ ] Priorizar escenarios por valor, dependencia y riesgo.
 - [ ] Definir criterios para seleccionar y justificar escenarios operativos representativos a partir de variantes reales del proceso de R3Foresta.

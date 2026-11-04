@@ -2,7 +2,7 @@
 
 **Corte:** 15 de septiembre de 2026
 
-> Las tablas siguientes conservan ese corte. El apartado 8 registra únicamente la actualización documental de Inicio del 29 de octubre; no eleva los estados históricos de hitos ni de implementación.
+> Las tablas siguientes conservan ese corte. El apartado 8 registra la actualización documental de Inicio del 29 de octubre. El apartado 9 registra la decisión actual del autor y el avance de Elaboración del 4 de noviembre; no modifica los estados históricos de septiembre ni acredita implementación nueva. La adecuación integral de este documento a RUP exclusivo sigue en el tablero académico.
 
 ## 1. Propósito
 
@@ -77,3 +77,11 @@ La [aplicación de RUP y SDD](../06_entregables/proyecto_grado/03_capitulo_marco
 La decisión de adoptar RUP y organizar el periodo consta el 25 de agosto. Las actividades comprobables del 20 y 22 de julio se relacionan con sus productos sin atribuirles retrospectivamente ejecución bajo IN-1 o EL-1. El autor confirmó el 29 de octubre que no existe acta LCO ni registro anterior al 20 de julio que acredite IN-1. Se mantienen **revisión y decisión LCO pendientes**; la aprobación del Perfil o del LCO de un incremento particular no reemplaza la revisión global.
 
 La corrección fue asistida por Codex mediante contraste documental y revisión del diagrama, sobre cambios locales revisables y con versión anterior de Inicio archivada. La identidad del modelo no se consignó; la revisión humana del contenido académico permanece pendiente. La comprobación de enlaces, numeración y correspondencia de IDs es documental y no acredita pruebas nuevas del producto, aceptación o despliegue.
+
+## 9. Continuidad hacia Elaboración — 4 de noviembre de 2026
+
+El autor confirma Inicio/LCO terminado y dispone avanzar con Elaboración, tomando como base el chat [Reorganizar fase de inicio](codex://threads/01a18917-6cf3-74e3-9d48-8b56800da7a7). Se registra una decisión actual sobre los productos consolidados; no se atribuye fecha de julio ni una aceptación institucional independiente no aportada. Las tablas de los apartados 3 y 4 conservan el corte del 15 de septiembre.
+
+La [sección 3.3](../06_entregables/proyecto_grado/03_2_fase_elaboracion.md) se consolida exclusivamente con RUP adaptado y utiliza los diagramas de `445f24f`, incluido el contraste físico de 51 tablas y 564 columnas. Actualiza actores, procesos, interacciones, modelos conceptual/lógico, propiedades INV/RNF y riesgos RDI. Mantiene GPS exterior con advertencia, metas orientativas, cierre manual e idempotencia por intención según las decisiones aceptadas. Incorporación de plantines, acceso por vivero, recepción directa y remanentes conservan sus puntos de contrato e implementación pendientes.
+
+**LCA:** preparación documental avanzada, sin nueva decisión de cierre. La revisión requiere contratos de las variantes, evidencia ejecutable de la línea M1→M2→M3, versión/entorno/resultados, viabilidad del trabajo residual y decisión humana con condiciones. El [tablero académico](../02_planificacion/TODO_PROYECTO_GRADO.md) mantiene el orden de ejecución; el detalle técnico sigue en sus tableros existentes. Esta actualización no acredita aplicación SQL, nuevas pruebas de producto, despliegue ni aceptación de PA-F01. La [copia anterior](../../archivo/documentacion-grado/proyecto_grado/elaboracion-rup-2026-11-04/README.md) conserva el estado previo.
