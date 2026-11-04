@@ -1,0 +1,56 @@
+flowchart LR
+  AUT[Usuario autenticado]
+  ADM[ADMIN]
+  GEN[GENERAL]
+  VAL[VALIDADOR]
+  VOL[VOLUNTARIO]
+  COO[Coordinador<br/>de subcampaña]
+  OPE[Operario<br/>de subcampaña]
+
+  ADM -. especializa .-> AUT
+  GEN -. especializa .-> AUT
+  VAL -. especializa .-> AUT
+  VOL -. especializa .-> AUT
+  COO -. membresía contextual .-> AUT
+  OPE -. membresía contextual .-> AUT
+
+  subgraph SYS[R3Foresta — límite del sistema académico]
+    subgraph MG[Módulo General]
+      CU01([CU-01 Administrar<br/>datos maestros])
+    end
+    subgraph M1[M1 Recolección]
+      CU02([CU-02 Registrar<br/>recolección])
+      CU03([CU-03 Revisar<br/>recolección])
+      CU04([CU-04 Afectar saldo<br/>de Recolección])
+    end
+    subgraph M2[M2 Vivero]
+      CU05([CU-05 Iniciar lote])
+      CU06([CU-06 Registrar resultado<br/>observado])
+      CU07([CU-07 Registrar<br/>movimientos])
+      CU09([CU-09 Asignar plantas])
+      CU10([CU-10 Devolver plantas])
+    end
+    subgraph M3[M3 Plantación]
+      CU08([CU-08 Planificar campaña<br/>y subcampaña])
+      CU11([CU-11 Registrar<br/>plantación inicial])
+    end
+    subgraph CT[Capacidad transversal]
+      CU12([CU-12 Reconstruir<br/>un recorrido])
+    end
+  end
+
+  ADM --> CU01
+  ADM --> CU04
+  ADM --> CU08
+  ADM --> CU09
+  ADM --> CU10
+  GEN --> CU02
+  GEN --> CU04
+  GEN --> CU05
+  GEN --> CU06
+  GEN --> CU07
+  VAL --> CU03
+  COO --> CU09
+  COO --> CU10
+  OPE --> CU11
+  AUT --> CU12

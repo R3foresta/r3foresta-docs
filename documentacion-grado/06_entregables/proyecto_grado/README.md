@@ -8,6 +8,8 @@ La lista centralizada de validaciones, evidencias y correcciones de los dos prim
 
 ## Estructura prevista
 
+Los diagramas del Capítulo III se encuentran en el [catálogo de figuras](figuras/README.md), con enlaces a los documentos, las fuentes Mermaid independientes y los SVG disponibles del modelo físico y de casos de uso generales.
+
 1. Resumen independiente, que se redactará al finalizar todos los capítulos.
 2. Capítulo I — Marco introductorio, comenzando con la Introducción e incluida la metodología de desarrollo.
 3. Capítulo II — Marco teórico y conceptual, incluidos RUP adaptado y asistencia de IA bajo control humano.

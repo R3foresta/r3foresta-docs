@@ -1,0 +1,118 @@
+erDiagram
+  USUARIO {
+    bigint id PK
+    string auth_id
+    string rol
+  }
+  PLANTA {
+    bigint id PK
+    string nombre_comun_principal
+    string nombre_cientifico
+  }
+  UBICACION {
+    bigint id PK
+    decimal latitud
+    decimal longitud
+  }
+  RECOLECCION {
+    bigint id PK
+    bigint planta_id FK
+    bigint ubicacion_id FK
+    bigint vivero_id FK
+    decimal cantidad_inicial_canonica
+    string unidad_canonica
+    string estado_registro
+    decimal saldo_actual
+  }
+  RECOLECCION_MOVIMIENTO {
+    bigint id PK
+    bigint recoleccion_id FK
+    bigint lote_vivero_id FK
+    string tipo_movimiento
+    decimal delta
+    string unidad_medida_movimiento
+    datetime created_at
+  }
+  LOTE_VIVERO {
+    bigint id PK
+    bigint recoleccion_id FK
+    bigint planta_id FK
+    bigint vivero_id FK
+    decimal cantidad_inicial_en_proceso
+    int saldo_vivo_actual
+    string estado_lote
+  }
+  EVENTO_LOTE_VIVERO {
+    bigint id PK
+    bigint lote_id FK
+    string tipo_evento
+    decimal cantidad_afectada
+    int saldo_vivo_despues
+  }
+  CAMPANIA {
+    bigint id PK
+    string codigo_trazabilidad
+    string tipo
+  }
+  SUBCAMPANIA {
+    bigint id PK
+    bigint campania_id FK
+    geometry poligono_geom
+    int meta_total_arboles
+    string estado
+  }
+  ASIGNACION_VIVERO_SUBCAMPANIA {
+    bigint id PK
+    bigint lote_vivero_id FK
+    bigint subcampania_id FK
+    int cantidad_asignada
+    int cantidad_consumida
+    int cantidad_devuelta
+    int cantidad_mermada
+    int saldo_asignado_disponible
+  }
+  REGISTRO_PLANTACION {
+    bigint id PK
+    bigint subcampania_id FK
+    bigint responsable_id FK
+    decimal latitud
+    decimal longitud
+    int cantidad_total_plantada
+    date fecha_plantacion
+  }
+  REGISTRO_PLANTACION_DETALLE {
+    bigint id PK
+    bigint registro_plantacion_id FK
+    bigint asignacion_id FK
+    bigint lote_vivero_id FK
+    bigint planta_id FK
+    int cantidad
+  }
+  TIPOS_ENTIDAD_EVIDENCIA {
+    smallint id PK
+    string codigo UK
+  }
+  EVIDENCIAS_TRAZABILIDAD {
+    bigint id PK
+    smallint tipo_entidad_id FK
+    bigint entidad_id
+    string ruta_archivo
+    datetime creado_en
+  }
+
+  USUARIO ||--o{ RECOLECCION : registra
+  PLANTA ||--o{ RECOLECCION : identifica
+  UBICACION ||--o{ RECOLECCION : situa
+  RECOLECCION ||--o{ RECOLECCION_MOVIMIENTO : explica
+  RECOLECCION ||--o{ LOTE_VIVERO : origina
+  LOTE_VIVERO ||--o{ EVENTO_LOTE_VIVERO : registra
+  CAMPANIA ||--o{ SUBCAMPANIA : contiene
+  LOTE_VIVERO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : entrega
+  SUBCAMPANIA ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : recibe
+  SUBCAMPANIA ||--o{ REGISTRO_PLANTACION : agrupa
+  USUARIO ||--o{ REGISTRO_PLANTACION : ejecuta
+  REGISTRO_PLANTACION ||--|{ REGISTRO_PLANTACION_DETALLE : desglosa
+  ASIGNACION_VIVERO_SUBCAMPANIA ||--o{ REGISTRO_PLANTACION_DETALLE : abastece
+  LOTE_VIVERO ||--o{ REGISTRO_PLANTACION_DETALLE : conserva_origen
+  PLANTA ||--o{ REGISTRO_PLANTACION_DETALLE : identifica
+  TIPOS_ENTIDAD_EVIDENCIA ||--o{ EVIDENCIAS_TRAZABILIDAD : clasifica

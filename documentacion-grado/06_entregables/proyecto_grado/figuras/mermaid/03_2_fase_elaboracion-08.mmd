@@ -1,0 +1,19 @@
+flowchart TD
+  I([Inicio]) --> O[Seleccionar recolección validada,<br/>unidad y cantidad disponible]
+  O --> A[Crear atómicamente lote, evento INICIO<br/>y movimiento de consumo M1→M2]
+  A --> P[Registrar manejo del material en proceso]
+  P --> V{¿Se observaron<br/>plantas vivas?}
+  V -- No --> D[Registrar descarte pre-embolsado<br/>con causa y evidencia]
+  D --> F1([Cerrar lote sin saldo vivo])
+  V -- Sí --> E[Registrar EMBOLSADO<br/>y saldo vivo observado]
+  E --> M{¿Qué movimiento ocurre?}
+  M -- Adaptabilidad --> AD[Registrar observación]
+  M -- Merma --> ME[Disminuir saldo con causa]
+  M -- Despacho manual --> DE[Disminuir saldo y registrar destino]
+  M -- Asignación --> AS[Entregar físicamente a subcampaña<br/>en operación atómica]
+  AD --> Z{¿Saldo físico igual a cero?}
+  ME --> Z
+  DE --> Z
+  AS --> Z
+  Z -- No --> M
+  Z -- Sí --> F2([Cerrar lote])

@@ -1,0 +1,17 @@
+flowchart LR
+  GEN[Datos maestros y evidencia<br/>Módulo General]
+  REC[M1 Recolección<br/>lote de origen]
+  VIV[M2 Vivero<br/>lote y eventos]
+  ASG[Asignación física<br/>stock de subcampaña]
+  PLA[M3 Plantación<br/>registro y detalle]
+  EV[Ingreso externo en Vivero<br/>pendiente de formalización técnica]
+  EP[Ingreso externo en Plantación<br/>pendiente de formalización técnica]
+
+  REC -->|contrato M1→M2| VIV
+  VIV -->|salida física| ASG
+  ASG -->|consumo registrado| PLA
+  EV -. variante comprometida .-> VIV
+  EP -. variante comprometida .-> PLA
+  GEN -. usuarios, plantas,<br/>ubicaciones y evidencia .-> REC
+  GEN -. datos transversales .-> VIV
+  GEN -. datos transversales .-> PLA

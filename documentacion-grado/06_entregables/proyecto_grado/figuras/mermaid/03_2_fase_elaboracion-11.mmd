@@ -1,0 +1,21 @@
+sequenceDiagram
+  actor C as Admin o coordinador
+  actor O as Operario de subcampaña
+  participant A as API
+  participant B as PostgreSQL
+  participant V as Lote de vivero
+  participant S as Asignación
+  participant P as Registro de plantación
+
+  C->>A: asignar cantidad con evidencia
+  A->>B: operación atómica de asignación
+  B->>V: validar y disminuir saldo físico
+  B->>S: crear stock asignado
+  B-->>C: confirmar entrega
+
+  O->>A: registrar plantación con GPS, evidencia y detalles
+  A->>B: operación atómica de plantación
+  B->>S: validar y aumentar cantidad consumida
+  B->>P: crear registro y detalle por lote y especie
+  Note over B,V: el saldo de Vivero no se descuenta otra vez
+  B-->>O: devolver registro, consumos y saldos resultantes
