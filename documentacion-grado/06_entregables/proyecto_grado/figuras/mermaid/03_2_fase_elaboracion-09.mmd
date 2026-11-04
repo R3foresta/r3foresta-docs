@@ -1,20 +1,11 @@
-flowchart TD
-  I([Inicio]) --> C[Crear campaña y subcampaña]
-  C --> P[Definir tipo, meta, especies,<br/>polígono y equipo]
-  P --> A{¿Cumple condiciones<br/>de activación?}
-  A -- No --> C
-  A -- Sí --> AC[Activar subcampaña]
-  AC --> S[Asignar físicamente stock desde Vivero]
-  S --> X[Consultar contexto, permisos,<br/>plan y saldos asignados]
-  X --> E[Capturar evidencia y GPS]
-  E --> Q[Registrar cantidades por especie]
-  Q --> G{¿Permisos, evidencia, meta<br/>y saldos son válidos?}
-  G -- No --> R[Rechazar sin efectos parciales]
-  R --> X
-  G -- Sí --> GPS[Evaluar punto respecto<br/>del polígono]
-  GPS --> T{¿Fuera de tolerancia?}
-  T -- Sí --> W[Registrar advertencia espacial]
-  T -- No --> AT[Crear registro y detalles<br/>y consumir asignaciones atómicamente]
-  W --> AT
-  AT --> H[Mostrar código, cantidades,<br/>procedencia y saldos]
-  H --> F([Fin])
+stateDiagram-v2
+    [*] --> BORRADOR
+    BORRADOR --> ACTIVA: ADMIN activa con plan, coordinación y polígono
+    BORRADOR --> CANCELADA: ADMIN cancela sin plantaciones
+    ACTIVA --> ACTIVA: registro inicial, incluso al superar meta
+    ACTIVA --> CANCELADA: ADMIN cancela sin plantaciones
+    ACTIVA --> COMPLETADA: cierre manual por ADMIN
+    ACTIVA --> FINALIZADA_PARCIAL: cierre manual por ADMIN con motivo
+    COMPLETADA --> [*]
+    FINALIZADA_PARCIAL --> [*]
+    CANCELADA --> [*]

@@ -2,7 +2,7 @@
 
 **Corte:** 15 de septiembre de 2026
 
-> Las tablas siguientes conservan ese corte. El apartado 8 registra la actualización documental de Inicio del 29 de octubre. El apartado 9 registra la decisión actual del autor y el avance de Elaboración del 4 de noviembre; no modifica los estados históricos de septiembre ni acredita implementación nueva. La adecuación integral de este documento a RUP exclusivo sigue en el tablero académico.
+> Las tablas siguientes conservan ese corte. El apartado 8 registra la actualización documental de Inicio del 29 de octubre. El apartado 9 registra la decisión actual del autor y el avance de Elaboración del 4 de noviembre. El apartado 10 registra la continuidad hacia Construcción y el cierre de redacción del Capítulo III; estas actualizaciones no modifican los estados históricos de septiembre ni acreditan implementación nueva. La adecuación integral de este documento a RUP exclusivo sigue en el tablero académico.
 
 ## 1. Propósito
 
@@ -85,3 +85,13 @@ El autor confirma Inicio/LCO terminado y dispone avanzar con Elaboración, toman
 La [sección 3.3](../06_entregables/proyecto_grado/03_2_fase_elaboracion.md) se consolida exclusivamente con RUP adaptado y utiliza los diagramas de `445f24f`, incluido el contraste físico de 51 tablas y 564 columnas. Actualiza actores, procesos, interacciones, modelos conceptual/lógico, propiedades INV/RNF y riesgos RDI. Mantiene GPS exterior con advertencia, metas orientativas, cierre manual e idempotencia por intención según las decisiones aceptadas. Incorporación de plantines, acceso por vivero, recepción directa y remanentes conservan sus puntos de contrato e implementación pendientes.
 
 **LCA:** preparación documental avanzada, sin nueva decisión de cierre. La revisión requiere contratos de las variantes, evidencia ejecutable de la línea M1→M2→M3, versión/entorno/resultados, viabilidad del trabajo residual y decisión humana con condiciones. El [tablero académico](../02_planificacion/TODO_PROYECTO_GRADO.md) mantiene el orden de ejecución; el detalle técnico sigue en sus tableros existentes. Esta actualización no acredita aplicación SQL, nuevas pruebas de producto, despliegue ni aceptación de PA-F01. La [copia anterior](../../archivo/documentacion-grado/proyecto_grado/elaboracion-rup-2026-11-04/README.md) conserva el estado previo.
+
+## 10. Cierre de redacción del Capítulo III — 4 de noviembre de 2026
+
+El autor dio por terminado el texto de Elaboración y pidió avanzar con Construcción, concluir el Capítulo III y hablar del sistema como desarrollado. Se completaron las [secciones 3.4](../06_entregables/proyecto_grado/03_3_fase_construccion.md) y [3.5](../06_entregables/proyecto_grado/03_4_fase_transicion.md) en tono retrospectivo, exclusivamente con RUP adaptado. La instrucción se registró como continuidad y cierre de redacción; las decisiones formales de LCA, IOC y PR conservaron sus evidencias independientes.
+
+Construcción integró los módulos, la separación de entrega física y consumo, LIFO en servidor, metas orientativas, cierre manual, GPS exterior con advertencia, comandos recuperables y privacidad por audiencia. Las Tablas 3.22 y 3.23 relacionaron las pruebas documentadas con versiones, entornos y TC-01–TC-15, corrigiendo la repetición de hallazgos de julio ya tratados en las rutas inspeccionadas. Transición relacionó EVA-01–EVA-09 con evidencia disponible, distinguió ensayos controlados del guardado local confirmado del 26 de octubre y reunió los aportes y límites por objetivo en la Tabla 3.25.
+
+La edición fue asistida por Codex mediante lectura documental y contraste de los guards de identidad actuales. Los resultados numéricos procedieron de informes existentes y no se repitieron las pruebas de aplicación. Las comprobaciones de esta edición fueron documentales: enlaces, IDs, numeración, coherencia de reglas y renderizado de los diagramas. La revisión humana del texto y la maquetación conservaron su control académico.
+
+La [copia previa](../../archivo/documentacion-grado/proyecto_grado/cierre-capitulo-iii-2026-11-04/README.md) preservó los textos, el seguimiento y las copias de diagramas disponibles al iniciar el encargo. ESTADO.md y el tablero PA-F01 mantuvieron sus estados técnicos; esta edición no cerró PA-S04, tareas de QA, despliegues, piloto ni aceptaciones sin evidencia.

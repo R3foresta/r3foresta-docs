@@ -1,16 +1,11 @@
-flowchart TD
-  I([Inicio]) --> B[Crear recolección en BORRADOR]
-  B --> D[Registrar especie, material, cantidad,<br/>unidad, fecha, responsable y ubicación]
-  D --> E[Adjuntar evidencia requerida]
-  E --> S[Solicitar validación]
-  S --> C{¿Ficha completa y<br/>evidencia suficiente?}
-  C -- No --> R[Rechazar con observaciones]
-  R --> D
-  C -- Sí --> V[Aprobar y congelar snapshots]
-  V --> O{¿Destino del saldo?}
-  O -- Vivero --> T[Consumir cantidad mediante<br/>contrato M1→M2]
-  O -- Desecho --> X[Registrar movimiento de desecho]
-  T --> Z{¿Saldo igual a cero?}
-  X --> Z
-  Z -- No --> O
-  Z -- Sí --> F([Cerrar saldo del lote])
+stateDiagram-v2
+  [*] --> BORRADOR
+  BORRADOR --> PENDIENTE_VALIDACION: solicitar validación
+  PENDIENTE_VALIDACION --> VALIDADO: aprobar y congelar snapshots
+  PENDIENTE_VALIDACION --> RECHAZADO: rechazar
+  RECHAZADO --> PENDIENTE_VALIDACION: corregir y reenviar
+  VALIDADO --> VALIDADO: consumo a Vivero o desecho
+  state "Saldo operativo" as SALDO {
+    [*] --> ABIERTO
+    ABIERTO --> CERRADO: saldo igual a cero
+  }

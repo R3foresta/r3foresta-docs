@@ -1,10 +1,10 @@
 # CAPÍTULO III — MARCO APLICATIVO
 
-El presente capítulo describe la aplicación de RUP adaptado en el desarrollo de R3Foresta para organizar y mantener vinculada la información del material vegetal desde su origen registrado hasta la plantación. El recorrido comprende los módulos de Recolección, Vivero y Plantación, apoyados por los datos maestros del Módulo General. El alcance académico concluye con el registro de la plantación; no comprende la medición, certificación ni comercialización de bonos de carbono.
+El presente capítulo documenta el desarrollo de R3Foresta mediante RUP adaptado. El sistema organizó y mantuvo vinculada la información del material vegetal desde su origen registrado hasta la plantación mediante los módulos de Recolección, Vivero y Plantación, apoyados por los datos maestros del Módulo General. El alcance académico concluyó con el registro de la plantación y conservó fuera de la evaluación la medición, certificación y comercialización de bonos de carbono.
 
 El capítulo conserva la relación con los cinco objetivos específicos: analizar la información, diseñar su organización, implementar las funciones, verificar su coherencia y evaluar la reconstrucción del recorrido. La evidencia técnica se distingue de la verificación y de la aceptación; los resultados sin ejecución o decisión documentada permanecen abiertos.
 
-La redacción original conserva principalmente el corte del 15 de septiembre de 2026. La consolidación de Inicio y las vistas de participación incorporadas posteriormente se identifican con la revisión del 29 de octubre. La adecuación metodológica del 4 de noviembre aplica la directriz de trabajar el capítulo exclusivamente con RUP adaptado. Los otros contenidos históricos requieren contraste con sus versiones y evidencias antes de presentarlos como estado vigente del producto.
+La edición del 4 de noviembre de 2026 integró Inicio, Elaboración, Construcción y Transición en una exposición retrospectiva del sistema desarrollado, conforme a la instrucción del autor. Los informes de implementación y pruebas conservaron sus fechas, versiones y entornos. La síntesis de la sección 3.5.6 relacionó los productos con cada objetivo y delimitó lo demostrado por la evidencia disponible. La [versión anterior a este cierre de redacción](../../../archivo/documentacion-grado/proyecto_grado/cierre-capitulo-iii-2026-11-04/README.md) conserva los estados históricos sustituidos.
 
 ## 3.1. Aplicación de RUP adaptado
 
@@ -12,7 +12,7 @@ La redacción original conserva principalmente el corte del 15 de septiembre de 
 
 RUP adaptado organiza las decisiones del proyecto por fases, iteraciones, riesgos y productos. Las técnicas de entrevista, observación y análisis documental aportan información a las disciplinas de requisitos y análisis; no constituyen una metodología investigativa independiente. La aplicación conserva Inicio, Elaboración, Construcción y Transición y selecciona los artefactos según su utilidad y riesgo. La directriz del 3 de noviembre, registrada en el [tablero académico, sección 1.1](../../02_planificacion/TODO_PROYECTO_GRADO.md#11-actualización-documental-a-rup), rige esta revisión del capítulo. El Perfil y la [metodología de desarrollo](../../04_metodologia/metodologia_desarrollo.md) conservan sus versiones y decisiones anteriores; su actualización integral sigue pendiente en ese tablero.
 
-En Inicio se reúnen diagnóstico, visión, alcance, actores, requisitos iniciales, riesgos y plan. Elaboración justifica los modelos, contratos y arquitectura y detalla los casos de uso prioritarios. Construcción desarrolla e integra capacidades y comprueba requisitos e invariantes. Transición reúne la validación operativa, la estabilización y la aceptación de una versión identificada. Las disciplinas se solapan: el análisis puede refinarse después de Inicio y las pruebas acompañan la construcción, sin que cada actividad se convierta en una fase adicional.
+Inicio reunió diagnóstico, visión, alcance, actores, requisitos iniciales, riesgos y plan. Elaboración justificó los modelos, contratos y arquitectura y detalló los casos de uso prioritarios. Construcción desarrolló e integró capacidades y examinó requisitos e invariantes. Transición organizó la evaluación de la reconstrucción, la estabilización y las condiciones de entrega y aceptación. Las disciplinas se solaparon: el análisis se refinó después de Inicio y las pruebas acompañaron la construcción, sin que cada actividad se convirtiera en una fase adicional.
 
 Las etiquetas de iteración describen la organización académica adoptada el 25 de agosto de 2026. Las fechas reales de levantamiento, implementación y prueba se conservan por separado. Una actividad anterior puede aportar evidencia a un producto metodológico sin que ello pruebe la ejecución o el cierre de la iteración prevista.
 
@@ -61,7 +61,7 @@ La Tabla 3.2 presenta el calendario adoptado por el proyecto. Es una referencia 
 | Construcción, CO-4 | 19 de octubre–1 de noviembre | trazabilidad transversal, regresión y versión candidata | IOC: capacidad operativa inicial |
 | Transición, TR-1 | 2–15 de noviembre | validación operativa, estabilización, manuales y aceptación | PR: liberación del producto |
 
-*Nota.* Elaboración propia a partir del cronograma del Perfil, la metodología y el registro de decisiones del 25 de agosto de 2026. Los periodos no prueban ejecución ni cierre. El registro del 15 de septiembre conserva su estado histórico; el autor confirma Inicio/LCO terminado el 4 de noviembre para continuar. La decisión actual se registra en 3.2.10 y la preparación de LCA en 3.3.12.
+*Nota.* Elaboración propia a partir del cronograma del Perfil, la metodología y el registro de decisiones del 25 de agosto de 2026. Los periodos no prueban ejecución ni cierre. El registro del 15 de septiembre conserva su estado histórico; el autor confirmó Inicio/LCO terminado y, posteriormente, el texto de Elaboración concluido el 4 de noviembre. Las decisiones actuales se registran en 3.2.10 y 3.3.12; los balances de Construcción y Transición se presentan en 3.4.9.5 y 3.5.4.
 
 La Figura 3.1 relaciona fases, productos e hitos. Las migraciones y entregas aportan evidencia técnica a las iteraciones; su existencia no determina el cierre metodológico. Cada revisión debe identificar la versión y la evidencia examinadas, participantes, resultado, condiciones y riesgos residuales.
 
@@ -123,8 +123,8 @@ flowchart TB
 El desarrollo del capítulo continúa en:
 
 - [3.2. Fase de Inicio](03_1_fase_inicio.md): diagnóstico, visión, alcance, actores, requisitos iniciales, riesgos y evaluación documental de LCO.
-- [3.3. Fase de Elaboración](03_2_fase_elaboracion.md): requisitos detallados, modelos, arquitectura y preparación de LCA.
-- [3.4. Fase de Construcción](03_3_fase_construccion.md): implementación, integración, verificación y preparación de IOC.
-- [3.5. Fase de Transición](03_4_fase_transicion.md): escenarios de validación, aceptación y decisión PR.
+- [3.3. Fase de Elaboración](03_2_fase_elaboracion.md): requisitos detallados, modelos, arquitectura y balance de LCA.
+- [3.4. Fase de Construcción](03_3_fase_construccion.md): módulos implementados, integración, resultados de verificación y balance de IOC.
+- [3.5. Fase de Transición](03_4_fase_transicion.md): evaluación de escenarios, condiciones de entrega y síntesis de resultados por objetivo.
 
-Los nombres físicos de los archivos se conservan; la numeración académica se expresa en sus encabezados. Las tablas y figuras mantienen título y nota para su maquetación conforme a APA 7. Los diagramas de trabajo posteriores al corte original conservan su fecha y requieren revisión antes de la entrega universitaria. Se mantienen el [capítulo previo a la reorganización](../../../archivo/documentacion-grado/proyecto_grado/03_capitulo_marco_aplicativo_antes_rup_2026-10-29.md) y la [versión de Inicio anterior a estas correcciones](../../../archivo/documentacion-grado/proyecto_grado/03_1_fase_inicio_antes_correcciones_2026-10-29.md).
+Los nombres físicos de los archivos se conservaron y la numeración académica se expresó en sus encabezados. Las tablas y figuras mantuvieron título y nota para su maquetación conforme a APA 7; el [catálogo de diagramas](figuras/README.md) reunió sus fuentes actualizadas. La revisión universitaria y la maquetación conservaron su control en el tablero académico. Las [versiones históricas](../../../archivo/documentacion-grado/proyecto_grado/README.md) mantuvieron accesibles los textos y estados anteriores.

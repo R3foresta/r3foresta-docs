@@ -1,60 +1,46 @@
 sequenceDiagram
     actor U as Persona autorizada
-    participant PWA as Frontend
-    participant API as Backend
+    participant PWA as PWA
+    participant API as API NestJS
     participant DB as PostgreSQL/PostGIS
-    participant STO as Storage privado
+    participant STO as Almacenamiento privado
 
-    U->>PWA: Elegir subcampaña
-    PWA->>API: Consultar capacidades
-    API->>DB: Verificar cuenta y autoridad por ámbito
-    DB-->>PWA: Subcampañas y acciones permitidas
-
-    opt Consultar equipo
-        PWA->>API: Solicitar miembros del ámbito
-        API->>DB: Lectura autorizada por 087
-        DB-->>PWA: Miembros y responsabilidades
-    end
-
-    U->>PWA: Iniciar captura
-    PWA->>API: Consultar contexto de registro
-    API->>DB: Leer plan, revisión y stock elegible
-    DB-->>API: Avance inicial y pendiente por especie
-    API-->>PWA: Contexto autorizado
-
-    Note over PWA,DB: La meta orienta; el saldo elegible limita la cantidad
-
+    U->>PWA: Seleccionar subcampaña
+    PWA->>API: Consultar capacidades y contexto
+    API->>DB: Verificar cuenta, permiso, plan y stock
+    DB-->>API: Contexto autorizado
+    API-->>PWA: Especies, disponibilidad y revisión
+    U->>PWA: Completar captura y revisar datos
     PWA->>API: Preparar comando propio
-    API->>DB: Guardar preparación
-    U->>PWA: Añadir fotos y ubicación
-    PWA->>API: Enviar fotografías
-    API->>STO: Guardar original y derivada
-    API->>DB: Marcar cargas disponibles
-
-    U->>PWA: Confirmar cantidades, fecha y participantes
-    PWA->>API: Enviar misma intención con comando_id
-    API->>DB: Ejecutar RPC transaccional
-
-    alt El comando ya tiene resultado terminal
+    API->>DB: Persistir preparación sin reservar stock
+    PWA->>API: Cargar fotografías con identidad estable
+    API->>STO: Guardar originales y derivadas
+    API->>DB: Registrar cargas disponibles
+    U->>PWA: Confirmar resumen
+    PWA->>PWA: Persistir clave y contenido definitivo
+    PWA->>API: Enviar registro con comando_id
+    API->>DB: Ejecutar operación transaccional
+    alt El intento ya tiene resultado terminal
         DB-->>API: Recuperar el mismo recibo
-    else Nueva ejecución válida
-        DB->>DB: Revalidar cuenta, permiso, ACTIVA y revisión
-        DB->>DB: Validar fecha, GPS, fotos y saldo
-        DB->>DB: Consumir asignaciones elegibles en orden LIFO
+    else Primera ejecución válida
+        DB->>DB: Revalidar autoridad, ACTIVA, plan y fecha
+        DB->>DB: Evaluar GPS y validar evidencia y cantidades
+        Note over DB: Exterior válido con advertencia<br/>Fallo técnico sin confirmación
+        DB->>DB: Consumir stock elegible mediante LIFO
         DB->>DB: Guardar registro, detalles y snapshots
-        DB->>DB: Vincular evidencia y recibo en la misma transacción
-        DB-->>API: Resultado terminal
+        DB->>DB: Vincular evidencia y recibo en la transacción
+        DB-->>API: Confirmación o rechazo durable
     end
-
-    API-->>PWA: Confirmación o rechazo durable
-
+    API-->>PWA: Resultado del mismo intento
     opt Respuesta perdida o inconclusa
-        PWA->>API: Recuperar con misma clave y operación
-        API->>DB: Consultar recibo del actor
-        DB-->>PWA: Terminal o resultado aún no determinado
+        PWA->>API: Consultar resultado propio con la misma clave
+        API->>DB: Leer recibo sin nuevo consumo
+        DB-->>API: Terminal o resultado aún no determinado
+        API-->>PWA: Estado recuperable
+        Note over PWA,API: Reenvío autorizado conserva clave y contenido
     end
-
-    U->>PWA: Consultar Mis registros
-    PWA->>API: Solicitar registros propios
-    API->>DB: Verificar autoría o participación efectiva
-    DB-->>PWA: Registros, especies y referencia de foto autorizada
+    U->>PWA: Consultar comprobante o Mis registros
+    PWA->>API: Solicitar detalle propio
+    API->>DB: Verificar autoría o participación histórica
+    DB-->>API: Datos y referencia de evidencia permitidos
+    API-->>PWA: Detalle según audiencia

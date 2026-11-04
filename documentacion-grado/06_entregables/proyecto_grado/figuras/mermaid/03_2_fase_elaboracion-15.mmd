@@ -1,46 +1,54 @@
-flowchart TB
-    U["Usuario registrado<br/>identidad y cuenta activa"]
+classDiagram
+    direction TB
 
-    subgraph GLOBAL["Rol global de la cuenta"]
-        V["VOLUNTARIO<br/>valor inicial del alta"]
-        G["GENERAL"]
-        VA["VALIDADOR"]
-        A["ADMIN"]
-    end
+    class Persona
+    class RolGlobal
+    class AccesoVivero
+    class PermisoSubcampania
+    class ResponsabilidadLogistica
+    class Vivero
+    class Campania
+    class Subcampania
+    class Especie
+    class Recoleccion
+    class Lote
+    class LoteDesdeRecoleccion
+    class LoteIncorporado
+    class Incorporacion
+    class EventoLote
+    class Asignacion
+    class Plantacion
+    class DetalleConsumo
+    class ParticipacionHistorica
+    class Evidencia
 
-    subgraph CONTEXTUAL["Permisos por persona y subcampaña"]
-        P["PLANTADOR"]
-        AS["ADMINISTRADOR_SUBCAMPANIA"]
-        SC["Subcampaña específica"]
-    end
+    Persona "0..*" --> "1" RolGlobal : tiene
+    Persona "1" -- "0..*" AccesoVivero : recibe
+    Vivero "1" -- "0..*" AccesoVivero : delimita
+    Persona "1" -- "0..*" PermisoSubcampania : recibe
+    Subcampania "1" -- "0..*" PermisoSubcampania : delimita
+    Persona "1" -- "0..*" ResponsabilidadLogistica : asume
+    Subcampania "1" -- "0..*" ResponsabilidadLogistica : organiza
 
-    subgraph LOGISTICA["Responsabilidades logísticas independientes"]
-        C["COORDINADOR"]
-        O["OPERARIO"]
-        EQ["Equipo logístico de subcampaña"]
-    end
+    Campania "1" -- "0..*" Subcampania : agrupa
 
-    U -->|"Tiene un rol global"| GLOBAL
-    U -->|"Puede recibir permisos"| CONTEXTUAL
-    U -->|"Puede tener responsabilidad logística"| LOGISTICA
+    Lote <|-- LoteDesdeRecoleccion
+    Lote <|-- LoteIncorporado
+    Recoleccion "1" -- "0..*" LoteDesdeRecoleccion : origina
+    Incorporacion "1" -- "1" LoteIncorporado : inicia
+    Especie "1" -- "0..*" Lote : identifica
+    Lote "1" -- "0..*" EventoLote : historiza
 
-    P --> SC
-    AS --> SC
-    C --> EQ
-    O --> EQ
+    Lote "1" -- "0..*" Asignacion : abastece
+    Subcampania "1" -- "0..*" Asignacion : recibe
+    Subcampania "1" -- "0..*" Plantacion : contiene
+    Plantacion "1" -- "1..*" DetalleConsumo : desglosa
+    Asignacion "1" -- "0..*" DetalleConsumo : consume
+    Plantacion "1" -- "0..*" ParticipacionHistorica : conserva
+    Persona "1" -- "0..*" ParticipacionHistorica : participa
 
-    P --> PL["Registrar plantación inicial<br/>en su ámbito ACTIVA"]
-    P --> LE["Consultar equipo de su ámbito<br/>lectura incorporada en 087"]
+    EventoLote "1" -- "0..*" Evidencia : documenta
+    Plantacion "1" -- "1..*" Evidencia : documenta
 
-    AS --> PL
-    AS --> LE
-    AS --> GP["Incorporar y retirar plantadores<br/>según estado y autoridad"]
-
-    A --> GA["Designar, cambiar o retirar<br/>administradores contextuales"]
-    A --> RG["Gestionar roles globales<br/>e inactivación de cuentas"]
-    A --> AT["Autoridad sobre todas las subcampañas<br/>con las validaciones de cada operación"]
-
-    C --> FI["Asignaciones y devoluciones físicas<br/>según política logística"]
-
-    U --> AF["Afiliación opcional a organización"]
-    AF -.-> NA["La afiliación no concede permisos"]
+    note for Lote "Una especie y un origen homogéneo. Identidad histórica conservada."
+    note for Incorporacion "Recepción o inventario inicial; procedencia y etapa al ingresar."

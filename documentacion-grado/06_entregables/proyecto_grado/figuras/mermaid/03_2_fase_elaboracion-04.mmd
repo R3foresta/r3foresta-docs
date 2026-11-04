@@ -1,11 +1,50 @@
-stateDiagram-v2
-  [*] --> BORRADOR
-  BORRADOR --> PENDIENTE_VALIDACION: solicitar validación
-  PENDIENTE_VALIDACION --> VALIDADO: aprobar y congelar snapshots
-  PENDIENTE_VALIDACION --> RECHAZADO: rechazar
-  RECHAZADO --> PENDIENTE_VALIDACION: corregir y reenviar
-  VALIDADO --> VALIDADO: consumo a Vivero o desecho
-  state "Saldo operativo" as SALDO {
-    [*] --> ABIERTO
-    ABIERTO --> CERRADO: saldo igual a cero
-  }
+flowchart LR
+    OP["Operador de Recolección"]
+    RV["VALIDADOR o ADMIN"]
+    AD["ADMIN"]
+
+    subgraph M1["M1 · Recolección"]
+        CRE(["Crear recolección"])
+        EDI(["Editar ficha permitida"])
+        DAT(["Registrar especie, material,<br/>cantidad, unidad y ubicación"])
+        ENV(["Solicitar validación"])
+        VAL(["Comprobar ficha y evidencia"])
+        REV(["Revisar recolección"])
+        APR(["Aprobar y congelar identidad"])
+        REJ(["Rechazar con motivo"])
+        COR(["Corregir rechazo y reenviar"])
+        DEL(["Eliminar lógicamente<br/>un BORRADOR"])
+        DES(["Registrar DESECHO"])
+        SAL(["Validar estado,<br/>unidad y saldo"])
+        HIS(["Registrar historial"])
+        CONH(["Consultar historial autorizado"])
+        ESP(["Consultar historial administrativo<br/>por especie"])
+    end
+
+    OP --- CRE
+    OP --- EDI
+    OP --- ENV
+    OP --- COR
+    OP --- DEL
+    OP --- DES
+    OP --- CONH
+
+    AD --- CRE
+    AD --- EDI
+    AD --- DEL
+    AD --- DES
+    AD --- ESP
+
+    RV --- REV
+    RV --- APR
+    RV --- REJ
+
+    CRE -.->|"«include»"| DAT
+    ENV -.->|"«include»"| VAL
+    COR -.->|"«include»"| VAL
+    REV -.->|"«include»"| VAL
+    REJ -.->|"«include»"| HIS
+    APR -.->|"«include»"| HIS
+    DEL -.->|"«include»"| HIS
+    DES -.->|"«include»"| SAL
+    DES -.->|"«include»"| HIS

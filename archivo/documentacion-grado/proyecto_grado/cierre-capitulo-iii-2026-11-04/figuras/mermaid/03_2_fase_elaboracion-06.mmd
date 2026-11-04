@@ -1,0 +1,10 @@
+stateDiagram-v2
+  [*] --> BORRADOR
+  BORRADOR --> ACTIVA: activar con plan, equipo y polígono
+  BORRADOR --> CANCELADA: cancelar sin plantaciones
+  ACTIVA --> CANCELADA: cancelar si no existe plantación inicial
+  ACTIVA --> COMPLETADA: alcanzar meta inicial
+  ACTIVA --> FINALIZADA_PARCIAL: cierre administrativo con plantaciones
+  COMPLETADA --> [*]
+  FINALIZADA_PARCIAL --> [*]
+  CANCELADA --> [*]

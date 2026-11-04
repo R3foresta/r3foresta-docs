@@ -1,10 +1,12 @@
-flowchart LR
-  S[Seleccionar escenario<br/>y versión] --> D[Preparar datos y<br/>precondiciones]
-  D --> E[Ejecutar operaciones]
-  E --> R[Intentar reconstrucción<br/>desde origen o destino]
-  R --> C[Contrastar completitud,<br/>coherencia y tiempo]
-  C --> H[Registrar evidencia,<br/>vacíos y defectos]
-  H --> Q{¿Cumple criterios<br/>de aceptación?}
-  Q -- No --> X[Corregir o aceptar<br/>limitación explícita]
-  Q -- Sí --> A[Aceptar escenario]
-  X --> R
+flowchart TD
+    S[Identificar escenario, versión<br/>entorno y datos reales o controlados] --> E[Localizar ejecución y evidencia<br/>o registrar ausencia de resultado]
+    E --> R[Reconstruir relaciones, cantidades<br/>responsables, ubicaciones y archivos]
+    R --> C[Contrastar completitud,<br/>coherencia y recuperabilidad]
+    C --> D{Evidencia suficiente<br/>para el escenario}
+    D -- Sí --> V[Registrar resultado sustentado<br/>y sus límites de entorno]
+    D -- Parcial --> P[Identificar tramo recuperado<br/>y vacío de cobertura]
+    D -- No --> N[Registrar resultado no acreditado<br/>sin completar datos por inferencia]
+    V --> H[Revisión de la persona competente]
+    P --> H
+    N --> H
+    H --> A[Decisión documentada:<br/>aceptación, observación o rechazo]

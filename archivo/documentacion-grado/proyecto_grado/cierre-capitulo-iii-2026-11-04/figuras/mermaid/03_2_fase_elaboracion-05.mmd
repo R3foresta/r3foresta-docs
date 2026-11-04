@@ -1,0 +1,16 @@
+flowchart TD
+  I[INICIO<br/>material en proceso] --> D{¿Se observaron plantas vivas?}
+  D -- No --> DP[DESCARTE PRE EMBOLSADO]
+  DP --> C1[CIERRE AUTOMÁTICO]
+  D -- Sí --> E[EMBOLSADO<br/>nace el saldo vivo]
+  E --> A[ADAPTABILIDAD opcional]
+  E --> M[MERMA]
+  E --> DM[DESPACHO MANUAL]
+  E --> AS[ASIGNACIÓN FÍSICA A SUBCAMPAÑA]
+  AS --> DEV[DEVOLUCIÓN FÍSICA<br/>si queda stock no consumido]
+  M --> Z{¿Saldo físico igual a cero?}
+  DM --> Z
+  AS --> Z
+  Z -- Sí --> C2[CIERRE AUTOMÁTICO]
+  Z -- No --> E
+  DEV --> E

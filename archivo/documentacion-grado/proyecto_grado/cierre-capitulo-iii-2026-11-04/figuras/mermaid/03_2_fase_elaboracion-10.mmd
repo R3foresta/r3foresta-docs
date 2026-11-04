@@ -1,0 +1,19 @@
+sequenceDiagram
+  actor U as Usuario de Vivero
+  participant A as API
+  participant B as PostgreSQL
+  participant R as Recolección
+  participant V as Vivero
+  U->>A: iniciar lote con origen, cantidad y evidencia
+  A->>B: ejecutar operación atómica
+  B->>R: bloquear y validar estado, unidad y saldo
+  B->>R: insertar CONSUMO_A_VIVERO
+  B->>V: crear lote y evento INICIO
+  B->>V: vincular snapshots y evidencia
+  alt todas las condiciones se cumplen
+    B-->>A: confirmar lote y saldo resultante
+    A-->>U: mostrar operación registrada
+  else falla una condición o escritura
+    B-->>A: revertir todos los efectos
+    A-->>U: informar rechazo sin cambios parciales
+  end

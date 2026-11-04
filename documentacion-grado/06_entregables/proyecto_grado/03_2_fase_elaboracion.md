@@ -944,7 +944,7 @@ LCA (*Lifecycle Architecture*, arquitectura del ciclo de vida) requiere revisar 
 4. **Viabilidad de Construcción.** El tablero mantiene CO-1–CO-4 y TR-1. Es necesario estimar el trabajo residual de variantes y verificación, asignar responsables y registrar ajustes del plan con fecha real; no se crean iteraciones académicas por cada migración o entrega INT.
 5. **Decisión humana.** Registrar fecha, versión y entorno, productos y resultados revisados, participantes competentes, decisión y condiciones residuales. No se dispone de una nueva decisión LCA por esta actualización documental.
 
-**Estado de Elaboración:** consolidación documental avanzada; LCA pendiente de revisión y evidencia de salida. El siguiente trabajo prioritario es concretar los contratos de incorporación y autorización por vivero, y completar la línea arquitectónica con pruebas y reconstrucción del recorrido. La implementación continúa en sus repositorios y sus cierres se acreditan por separado.
+**Cierre de redacción de Elaboración — 4 de noviembre de 2026:** el autor dio por terminado este texto y dispuso continuar con Construcción y concluir el Capítulo III con una exposición retrospectiva del sistema desarrollado. Los contratos de incorporación y autorización por vivero y la evidencia integral del recorrido conservaron sus pendientes técnicos en RDI-01/02 y el tablero académico. La decisión de continuar la redacción se distinguió de la revisión formal de LCA y de los cierres de implementación, pruebas y entorno. Los resultados se desarrollaron en [Construcción](03_3_fase_construccion.md) y [Transición](03_4_fase_transicion.md).
 
 ### 3.3.13. Correspondencia de actores, permisos y fuentes de continuidad
 

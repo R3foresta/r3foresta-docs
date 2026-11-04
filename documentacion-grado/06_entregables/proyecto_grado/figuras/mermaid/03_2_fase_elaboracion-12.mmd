@@ -1,85 +1,19 @@
-classDiagram
-  class MaterialVegetal {
-    +int planta_id
-    +string nombre_comercial
-    +string nombre_cientifico
-  }
-  class LoteRecoleccion {
-    +int recoleccion_id
-    +string codigo
-    +decimal cantidad_inicial
-    +string unidad
-    +decimal saldo_disponible
-    +string estado_validacion
-  }
-  class LoteVivero {
-    +int lote_vivero_id
-    +string codigo
-    +decimal cantidad_inicial_proceso
-    +decimal saldo_vivo_actual
-    +string estado
-  }
-  class EventoVivero {
-    +int evento_id
-    +string tipo
-    +decimal cantidad_afectada
-    +decimal saldo_anterior
-    +decimal saldo_posterior
-    +datetime fecha
-  }
-  class Subcampania {
-    +int subcampania_id
-    +string codigo
-    +int meta_total
-    +string estado
-  }
-  class AsignacionFisica {
-    +int asignacion_id
-    +decimal cantidad_asignada
-    +decimal cantidad_consumida
-    +decimal cantidad_devuelta
-  }
-  class RegistroPlantacion {
-    +int registro_id
-    +string codigo
-    +datetime fecha
-    +decimal cantidad_total
-    +decimal latitud
-    +decimal longitud
-  }
-  class DetallePlantacion {
-    +int detalle_id
-    +decimal cantidad
-  }
-  class Usuario {
-    +int usuario_id
-    +string rol_global
-  }
-  class Ubicacion {
-    +int ubicacion_id
-    +decimal latitud
-    +decimal longitud
-  }
-  class Evidencia {
-    +int evidencia_id
-    +string tipo_entidad
-    +int entidad_id
-    +string ruta
-  }
-
-  MaterialVegetal "1" --> "0..*" LoteRecoleccion : identifica
-  Usuario "1" --> "0..*" LoteRecoleccion : registra
-  Ubicacion "1" --> "0..*" LoteRecoleccion : situa
-  LoteRecoleccion "1" --> "0..*" LoteVivero : origina
-  LoteVivero "1" *-- "1..*" EventoVivero : explica
-  LoteVivero "1" --> "0..*" AsignacionFisica : entrega
-  Subcampania "1" --> "0..*" AsignacionFisica : recibe
-  Subcampania "1" --> "0..*" RegistroPlantacion : agrupa
-  RegistroPlantacion "1" *-- "1..*" DetallePlantacion : desglosa
-  AsignacionFisica "1" --> "0..*" DetallePlantacion : abastece
-  MaterialVegetal "1" --> "0..*" DetallePlantacion : identifica
-  Usuario "1" --> "0..*" EventoVivero : registra
-  Usuario "1" --> "0..*" RegistroPlantacion : ejecuta
-  Evidencia "0..*" --> "0..1" LoteRecoleccion : respalda
-  Evidencia "0..*" --> "0..1" EventoVivero : respalda
-  Evidencia "0..*" --> "0..1" RegistroPlantacion : respalda
+flowchart TD
+    I(["Inicio"]) --> C["Consultar capacidades, subcampaña ACTIVA,<br/>plan y stock elegible por especie"]
+    C --> F["Capturar 1–10 fotos y coordenada válida<br/>GPS o entrada manual; confirmar ubicación"]
+    F --> Q["Indicar cantidades, fecha y observaciones<br/>meta orientativa; stock limita"]
+    Q --> P["Añadir participantes habilitados opcionales<br/>y revisar resumen"]
+    P --> K["Confirmar con identidad del mismo intento"]
+    K --> V{"Validación transaccional"}
+    V -->|"Cuenta, permiso, plan, stock<br/>o datos no válidos"| R["Rechazo confirmado sin efecto<br/>revisar captura permitida"]
+    V -->|"Evaluador espacial falla"| R
+    V -->|"Coordenada evaluada<br/>interior o exterior advertido"| T["Consumir LIFO y guardar registro,<br/>detalles, participantes, evidencia y recibo"]
+    T --> RESP{"¿Respuesta conocida?"}
+    RESP -->|"Sí"| OK["Abrir el mismo comprobante"]
+    RESP -->|"No"| U["Resultado pendiente de confirmar"]
+    U --> REC["Recuperar con misma clave y contenido"]
+    REC --> TERM{"¿Hay resultado terminal?"}
+    TERM -->|"Confirmado"| OK
+    TERM -->|"Rechazado"| R
+    TERM -->|"Aún inconcluso"| U
+    OK --> FIN(["Fin"])

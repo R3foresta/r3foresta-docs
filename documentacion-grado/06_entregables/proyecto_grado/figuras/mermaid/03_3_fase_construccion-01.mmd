@@ -1,13 +1,16 @@
 flowchart TD
-  C[Consultar contexto de subcampaña] --> P{¿ACTIVA, usuario miembro,<br/>plan y stock disponibles?}
-  P -- No --> B[Bloquear operación<br/>y mostrar causa]
-  P -- Sí --> E[1 Evidencia y GPS]
-  E --> Q[2 Cantidades por especie]
-  Q --> R[Resolver detalle por asignación<br/>fecha e identificador ascendentes]
-  R --> S[3 Resumen y confirmación]
-  S --> U[Subir evidencia pendiente]
-  U --> G[Guardar registro en transacción]
-  G --> V{¿Cumple saldos, meta,<br/>permisos y evidencia?}
-  V -- No --> X[Rechazar y reconsultar contexto]
-  V -- Sí --> F[Crear registro y detalles<br/>consumir asignaciones]
-  F --> H[Mostrar código, cantidades,<br/>GPS y saldos resultantes]
+    C[Consultar capacidades y contexto] --> P{Cuenta y permiso vigentes,<br/>subcampaña ACTIVA y stock elegible}
+    P -- No --> B[Mostrar causa y conservar<br/>recuperación propia si existe]
+    P -- Sí --> E[1 Fotografías y coordenadas<br/>capturadas o manuales]
+    E --> Q[2 Cantidades por especie<br/>y participantes opcionales]
+    Q --> S[3 Resumen y confirmación explícita]
+    S --> U[Preparar intento y cargas<br/>con identificadores estables]
+    U --> G[Enviar contenido persistido<br/>con el mismo comando]
+    G --> V{Resultado recibido}
+    V -- Confirmado --> F[Mostrar recibo y detalle<br/>del consumo registrado]
+    V -- Rechazo terminal --> X[Mostrar causa y permitir<br/>una revisión explícita]
+    V -- Inconcluso --> R[Conservar clave, contenido y fotos<br/>consultar el mismo resultado]
+    R --> T{Existe resultado terminal}
+    T -- Sí --> V
+    T -- No --> I[Conservar pendiente y ofrecer<br/>reintento con la misma clave]
+    I -- Reenvío autorizado --> G

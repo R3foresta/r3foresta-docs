@@ -1,56 +1,68 @@
 flowchart LR
-  AUT[Usuario autenticado]
-  ADM[ADMIN]
-  GEN[GENERAL]
-  VAL[VALIDADOR]
-  VOL[VOLUNTARIO]
-  COO[Coordinador<br/>de subcampaña]
-  OPE[Operario<br/>de subcampaña]
+    ADM["ADMIN global"]
+    REC["Operador de Recolección"]
+    REV["Revisor de Recolección"]
+    VIV["Operario de Vivero"]
+    COO["Coordinador de Plantación"]
+    PLA["Plantador autorizado"]
+    ASC["Administrador de subcampaña"]
+    PUB["Persona consultante"]
+    PRO["Autor o participante autenticado"]
+    CON["Persona autorizada<br/>para consulta operativa"]
 
-  ADM -. especializa .-> AUT
-  GEN -. especializa .-> AUT
-  VAL -. especializa .-> AUT
-  VOL -. especializa .-> AUT
-  COO -. membresía contextual .-> AUT
-  OPE -. membresía contextual .-> AUT
+    subgraph SYS["R3Foresta · límite del sistema"]
+        C1(["CU-01<br/>Administrar datos maestros"])
+        UR(["Administrar usuarios<br/>y roles globales"])
+        AV(["Asignar operarios<br/>a viveros"])
 
-  subgraph SYS[R3Foresta — límite del sistema académico]
-    subgraph MG[Módulo General]
-      CU01([CU-01 Administrar<br/>datos maestros])
-    end
-    subgraph M1[M1 Recolección]
-      CU02([CU-02 Registrar<br/>recolección])
-      CU03([CU-03 Revisar<br/>recolección])
-      CU04([CU-04 Afectar saldo<br/>de Recolección])
-    end
-    subgraph M2[M2 Vivero]
-      CU05([CU-05 Iniciar lote])
-      CU06([CU-06 Registrar resultado<br/>observado])
-      CU07([CU-07 Registrar<br/>movimientos])
-      CU09([CU-09 Asignar plantas])
-      CU10([CU-10 Devolver plantas])
-    end
-    subgraph M3[M3 Plantación]
-      CU08([CU-08 Planificar campaña<br/>y subcampaña])
-      CU11([CU-11 Registrar<br/>plantación inicial])
-    end
-    subgraph CT[Capacidad transversal]
-      CU12([CU-12 Reconstruir<br/>un recorrido])
-    end
-  end
+        C2(["CU-02<br/>Registrar y completar recolección"])
+        C3(["CU-03<br/>Revisar recolección"])
+        C4(["CU-04<br/>Afectar saldo de Recolección"])
 
-  ADM --> CU01
-  ADM --> CU04
-  ADM --> CU08
-  ADM --> CU09
-  ADM --> CU10
-  GEN --> CU02
-  GEN --> CU04
-  GEN --> CU05
-  GEN --> CU06
-  GEN --> CU07
-  VAL --> CU03
-  COO --> CU09
-  COO --> CU10
-  OPE --> CU11
-  AUT --> CU12
+        C5(["CU-05<br/>Iniciar lote desde Recolección"])
+        C6(["CU-06<br/>Registrar resultado observado"])
+        C7(["CU-07<br/>Registrar movimientos de Vivero"])
+        INC(["Incorporar plantines<br/>e inventario inicial"])
+
+        C8(["CU-08<br/>Planificar campaña y subcampaña"])
+        C9(["CU-09<br/>Asignar plantas a subcampaña"])
+        C10(["CU-10<br/>Devolver plantas"])
+        C11(["CU-11<br/>Registrar plantación inicial"])
+
+        ACC(["Gestionar permisos<br/>por subcampaña"])
+        C12(["CU-12<br/>Reconstruir recorrido autorizado"])
+        IMP(["Consultar Impacto público"])
+        MIS(["Consultar Mis registros"])
+    end
+
+    ADM --- C1
+    ADM --- UR
+    ADM --- AV
+    ADM --- C2
+    ADM --- C3
+    ADM --- C4
+    ADM --- C5
+    ADM --- C6
+    ADM --- C7
+    ADM --- INC
+    ADM --- C8
+    ADM --- C9
+    ADM --- C10
+    ADM --- C11
+    ADM --- ACC
+    ADM --- C12
+
+    REC --- C2
+    REC --- C4
+    REV --- C3
+    VIV --- C5
+    VIV --- C6
+    VIV --- C7
+    COO --- C9
+    COO --- C10
+    PLA --- C11
+    ASC --- C11
+    ASC --- ACC
+    PUB --- IMP
+    PRO --- MIS
+    CON --- C12

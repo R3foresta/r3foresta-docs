@@ -1,56 +1,51 @@
-flowchart LR
-    VIS["Visitante"]
-    USR["Usuario autenticado"]
-    PLA["Plantador autorizado"]
-    ASC["Administrador de subcampaña"]
-    ADM["ADMIN global"]
+erDiagram
+    USUARIO ||--o{ ACCESO_VIVERO : recibe
+    VIVERO ||--o{ ACCESO_VIVERO : delimita
+    USUARIO ||--o{ PERMISO_SUBCAMPANIA : recibe
+    SUBCAMPANIA ||--o{ PERMISO_SUBCAMPANIA : delimita
+    USUARIO ||--o{ EQUIPO_SUBCAMPANIA : integra
+    SUBCAMPANIA ||--o{ EQUIPO_SUBCAMPANIA : organiza
 
-    subgraph SYS["R3Foresta · Participación en Plantación"]
-        IMP(["Consultar y compartir<br/>Impacto público"])
-        PERF(["Gestionar perfil propio"])
-        MIS(["Consultar Mis registros"])
-        ZON(["Consultar subcampañas autorizadas"])
-        EQU(["Consultar equipo de subcampaña"])
-        REG(["Registrar plantación inicial"])
-        CTX(["Validar autoridad, estado,<br/>plan y stock elegible"])
-        FOT(["Incorporar fotos y ubicación"])
-        DET(["Guardar consumo trazable<br/>y recibo"])
-        COL(["Seleccionar colaboradores<br/>adicionales"])
-        BOR(["Conservar o recuperar<br/>captura propia"])
+    CAMPANIA ||--o{ SUBCAMPANIA : contiene
+    SUBCAMPANIA ||--o{ META_ESPECIE : planifica
+    PLANTA ||--o{ META_ESPECIE : identifica
 
-        GP(["Incorporar o retirar plantadores"])
-        REV(["Revisar persona, ámbito<br/>y permiso vigente"])
-        GA(["Designar, cambiar, retirar<br/>o reemplazar administrador"])
-        CONT(["Proteger continuidad<br/>administrativa"])
-        RG(["Cambiar rol global<br/>o inactivar cuenta"])
-    end
+    RECOLECCION |o--o{ LOTE : origen_condicional
+    INCORPORACION |o--|| LOTE : ingreso_alternativo
+    PLANTA ||--o{ LOTE : especie
+    VIVERO |o--o{ LOTE : custodia_fisica
+    LOTE ||--o{ EVENTO_LOTE : historial
 
-    VIS --- IMP
-    USR --- PERF
-    USR --- MIS
-    PLA --- ZON
-    PLA --- EQU
-    PLA --- REG
-    PLA --- BOR
+    LOTE ||--o{ ASIGNACION : abastece
+    SUBCAMPANIA ||--o{ ASIGNACION : recibe
+    SUBCAMPANIA ||--o{ PLANTACION : contiene
+    PLANTACION ||--|{ DETALLE_CONSUMO : desglosa
+    ASIGNACION ||--o{ DETALLE_CONSUMO : procedencia
+    PLANTA ||--o{ DETALLE_CONSUMO : identifica
 
-    ASC --- ZON
-    ASC --- EQU
-    ASC --- REG
-    ASC --- GP
+    USUARIO ||--o{ PLANTACION : responsable
+    PLANTACION ||--o{ PARTICIPANTE : conserva
+    USUARIO ||--o{ PARTICIPANTE : participa
 
-    ADM --- ZON
-    ADM --- EQU
-    ADM --- REG
-    ADM --- GP
-    ADM --- GA
-    ADM --- RG
+    USUARIO ||--o{ OPERACION_RECUPERABLE : ejecuta
+    OPERACION_RECUPERABLE ||--o{ CARGA_EVIDENCIA : prepara
+    CARGA_EVIDENCIA }o--o| EVIDENCIA : vincula
 
-    REG -.->|"«include»"| CTX
-    REG -.->|"«include»"| FOT
-    REG -.->|"«include»"| DET
-    COL -.->|"«extend»<br/>si se añaden colaboradores"| REG
+    INCORPORACION {
+        string modalidad
+        string procedencia
+        string referencia_procedencia
+        date fecha_recepcion_o_conteo
+        int cantidad_viva
+        string etapa_inicial
+        string identidad_vegetal_snapshot
+        string responsable_snapshot
+    }
 
-    GP -.->|"«include»"| REV
-    GA -.->|"«include»"| REV
-    GA -.->|"«include»"| CONT
-    RG -.->|"«include»"| CONT
+    ACCESO_VIVERO {
+        bigint usuario_id
+        bigint vivero_id
+        datetime otorgado_en
+        datetime retirado_en
+        bigint otorgado_por
+    }

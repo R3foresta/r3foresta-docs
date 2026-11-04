@@ -9,6 +9,7 @@ Versiones históricas conservadas fuera de `documentacion-grado/06_entregables`.
 | [Copia previa al ajuste de Inicio y RUP del 4 de noviembre](revision-inicio-rup-2026-11-04/README.md) | Conserva los cuatro textos y la figura disponibles antes de esa revisión. |
 | [Copia previa a la revisión metodológica del documento final del 4 de noviembre](antes-rup-exclusivo-2026-11-04/README.md) | Conserva los capítulos I, II y III, sus fases, bibliografía, índices y figura antes de retirar SDD de los entregables vigentes. |
 | [Copia previa a la consolidación de Elaboración del 4 de noviembre](elaboracion-rup-2026-11-04/README.md) | Conserva la base `445f24f`, incluido el contraste físico de Supabase, antes de integrar los diagramas en toda Elaboración y registrar el cierre actual de Inicio por el autor. |
+| [Copia previa al cierre de redacción del Capítulo III del 4 de noviembre](cierre-capitulo-iii-2026-11-04/README.md) | Conserva Construcción, Transición, Elaboración, entrada, índices, seguimiento y copias de diagramas antes de la edición retrospectiva del sistema desarrollado. |
 
 El 4 de noviembre de 2026 se trasladó aquí el contenido de `documentacion-grado/06_entregables/proyecto_grado/archivo/`. Se conservaron los nombres de archivo y los subdirectorios, y se ajustaron los enlaces relativos al destino de cada fuente. También se guardó la copia previa a la revisión del documento final, incluidos los cambios locales existentes al iniciar el encargo. Las formulaciones RUP + SDD de estas copias documentan el antecedente y no rigen el documento vigente.
 

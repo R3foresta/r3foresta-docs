@@ -1,0 +1,13 @@
+flowchart TD
+  C[Consultar contexto de subcampaña] --> P{¿ACTIVA, usuario miembro,<br/>plan y stock disponibles?}
+  P -- No --> B[Bloquear operación<br/>y mostrar causa]
+  P -- Sí --> E[1 Evidencia y GPS]
+  E --> Q[2 Cantidades por especie]
+  Q --> R[Resolver detalle por asignación<br/>fecha e identificador ascendentes]
+  R --> S[3 Resumen y confirmación]
+  S --> U[Subir evidencia pendiente]
+  U --> G[Guardar registro en transacción]
+  G --> V{¿Cumple saldos, meta,<br/>permisos y evidencia?}
+  V -- No --> X[Rechazar y reconsultar contexto]
+  V -- Sí --> F[Crear registro y detalles<br/>consumir asignaciones]
+  F --> H[Mostrar código, cantidades,<br/>GPS y saldos resultantes]

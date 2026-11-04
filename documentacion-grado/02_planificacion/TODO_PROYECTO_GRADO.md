@@ -98,7 +98,7 @@ La [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_i
 
 **Continuidad del análisis — 4 de noviembre:** Inicio incorpora las precisiones del autor sin acreditar implementación de las dos capacidades pendientes. La [propuesta de operarios por vivero](../../../Backend-r3foresta/documentacion/tareas/propuesta-permisos-por-vivero.md) desarrolla el acceso por establecimiento y la recepción por el mismo operario. La [propuesta de incorporación de plantines](../../../Backend-r3foresta/documentacion/tareas/plan-incorporacion-plantas-procedencia.md) conserva alternativas que deben conciliarse con las últimas respuestas del autor registradas en [Inicio](../06_entregables/proyecto_grado/03_1_fase_inicio.md): incorporación especial por ADMIN, etapa actual sin habilitación adicional de aptitud, comprobantes y notas opcionales, y comienzo del historial en recepción o conteo. Concretar esa frontera de responsabilidades, la recepción directa y sus remanentes antes de actualizar contratos e implementar. El registro de plantaciones ya realizadas permanece como tratamiento por definir. La migración metodológica de los documentos base sigue pendiente en 1.1.
 
-**Orden inmediato de Elaboración:** completar los contratos de incorporación y acceso por vivero, incluida evidencia mínima y continuidad de operaciones; concretar recepción directa y remanentes sin reemplazar las reglas de cierre aceptadas; vincular la línea M1→M2→M3 con versión, entorno, resultados y reconstrucción del recorrido; evaluar LCA con sus riesgos residuales. GPS y D01–D12 conservan sus decisiones aceptadas. Este orden se controla aquí, sin otro plan general.
+**Trabajo técnico residual del diseño:** completar los contratos de incorporación y acceso por vivero, incluida evidencia mínima y continuidad de operaciones; concretar recepción directa y remanentes sin reemplazar las reglas de cierre aceptadas; vincular la línea M1→M2→M3 con versión, entorno, resultados y reconstrucción del recorrido; evaluar LCA con sus riesgos residuales. El autor dio por terminado el texto de Elaboración el 4 de noviembre y dispuso continuar la redacción con Construcción; estos pendientes conservan su estado técnico. GPS y D01–D12 conservan sus decisiones aceptadas. Este orden se controla aquí, sin otro plan general.
 
 - [ ] Priorizar escenarios por valor, dependencia y riesgo.
 - [ ] Definir criterios para seleccionar y justificar escenarios operativos representativos a partir de variantes reales del proceso de R3Foresta.
@@ -108,6 +108,8 @@ La [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_i
 - [ ] Revisar y cerrar el hito **LCA — Arquitectura del ciclo de vida**.
 
 ## 5. Fase de Construcción
+
+**Redacción completada — 4 de noviembre de 2026:** tras dar por terminado el texto de Elaboración, el autor dispuso continuar con Construcción y concluir el Capítulo III en tono retrospectivo de sistema desarrollado. La [sección 3.4](../06_entregables/proyecto_grado/03_3_fase_construccion.md) integra módulos, contratos, LIFO en servidor, GPS exterior con advertencia, recuperación del mismo intento y las matrices de resultados y cobertura TC-01–TC-15. La edición actualiza los hallazgos históricos de identidad y ausencia de pruebas frontend. Las casillas siguientes conservan su estado técnico: el cierre de redacción no acredita tareas de implementación, regresión integral ni IOC.
 
 Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 
@@ -153,6 +155,8 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 - [ ] Revisar y cerrar el hito **IOC — Capacidad operativa inicial**.
 
 ## 6. Fase de Transición — iteración TR-1 — 2 al 15 de noviembre
+
+**Redacción completada — 4 de noviembre de 2026:** la [sección 3.5](../06_entregables/proyecto_grado/03_4_fase_transicion.md) presenta la evaluación documental de EVA-01–EVA-09, los resultados técnicos y el guardado local confirmado del 26 de octubre, las condiciones de entrega y la síntesis de objetivos. No atribuye nueve ejecuciones nuevas, mediciones de tiempo ni validación operativa integral. Las casillas de ejecución y aceptación mantienen sus evidencias propias; PR no se cierra por esta edición.
 
 ### 6.1. Verificación y validación — 2 al 8 de noviembre
 
@@ -233,8 +237,8 @@ El apartado 8.1 conserva los compromisos anteriores para su revisión en 1.1. El
 ## 10. Documento final y defensa
 
 - [ ] Integrar las versiones aprobadas de los capítulos I y II.
-- [ ] Desarrollar el Capítulo III por fases e iteraciones RUP, mostrando especificaciones, diseño, incrementos, integraciones, pruebas y resultados.
-- [ ] Relacionar cada objetivo con productos y evidencia verificable.
+- [x] Completar la redacción del Capítulo III por fases e iteraciones RUP, mostrando diseño, incrementos, integraciones, pruebas y resultados con sus límites de cobertura — 4 de noviembre de 2026; revisión académica y maquetación conservan su control propio.
+- [x] Relacionar cada objetivo con productos y evidencia verificable en la Tabla 3.25, sin declarar cierre técnico o aceptación donde no consta — 4 de noviembre de 2026.
 - [ ] Redactar conclusiones que respondan a cada objetivo sin generalizaciones no respaldadas.
 - [ ] Redactar recomendaciones separadas de los resultados.
 - [ ] Cerrar referencias y anexos.
