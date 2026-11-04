@@ -30,7 +30,7 @@ La asistencia de IA debe poder distinguirse de las decisiones, revisiones y apro
 
 - [`01_capitulo_marco_introductorio.md`](01_capitulo_marco_introductorio.md)
 - [`02_capitulo_marco_teorico_conceptual.md`](02_capitulo_marco_teorico_conceptual.md)
-- [Capítulo III — aplicación de RUP](03_capitulo_marco_aplicativo.md), con análisis, diseño, diagramas del sistema, evidencia técnica disponible y resultados abiertos. Su adecuación a RUP exclusivamente queda pendiente en el TODO.
+- [Capítulo III — introducción y fases RUP](03_capitulo_marco_aplicativo.md): [Inicio](03_1_fase_inicio.md), [Elaboración](03_2_fase_elaboracion.md), [Construcción](03_3_fase_construccion.md) y [Transición](03_4_fase_transicion.md). Conserva evidencia técnica y resultados abiertos según su corte metodológico.
 - [`04_referencias_bibliograficas.md`](04_referencias_bibliograficas.md), única bibliografía consolidada de los Capítulos I, II y III
 
 Las referencias no se repiten al final de los capítulos. El control interno de correspondencia entre citas y referencias se conserva en [`../../03_investigacion/matriz_citas_referencias_documento_final.md`](../../03_investigacion/matriz_citas_referencias_documento_final.md).

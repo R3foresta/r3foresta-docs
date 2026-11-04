@@ -20,7 +20,7 @@ Espacio de trabajo para producir los dos resultados académicos del proyecto de 
 - [`03_investigacion/ficha_institucional_r3foresta.md`](03_investigacion/ficha_institucional_r3foresta.md) — misión y visión oficiales, identidad del modelo, relación entre R3Carbon y R3foresta App, antecedentes, aspectos preliminares del diagnóstico y evidencia institucional pendiente.
 - [`05_recursos/indice_fuentes_bibliograficas.md`](05_recursos/indice_fuentes_bibliograficas.md) — acceso temático a las fuentes del perfil y del futuro marco teórico.
 - [`06_entregables/proyecto_grado/README.md`](06_entregables/proyecto_grado/README.md) — espacio reservado y guía inicial para el documento final.
-- [`06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md`](06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) — Marco aplicativo; la sección 3.1 desarrolla el análisis correspondiente al objetivo específico 1.
+- [`06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md`](06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) — introducción y acceso al Marco aplicativo organizado en las cuatro fases RUP.
 - [`06_entregables/proyecto_grado/04_referencias_bibliograficas.md`](06_entregables/proyecto_grado/04_referencias_bibliograficas.md) — bibliografía única del documento final.
 - [`03_investigacion/matriz_citas_referencias_documento_final.md`](03_investigacion/matriz_citas_referencias_documento_final.md) — control interno de correspondencia entre las citas de los capítulos y la bibliografía final.
 - [`03_investigacion/inventario_evidencia_fotografica_2026-07-22.md`](03_investigacion/inventario_evidencia_fotografica_2026-07-22.md) — inventario y límites de uso de las fotografías de Chasquipampa.
