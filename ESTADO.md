@@ -71,3 +71,8 @@ T3 implementada y verificada localmente en PWA sobre `dbcedc5`, con backend `6f5
 El [estado anterior](archivo/estado-2026-10-17-antes-consolidacion.md#base-existente-y-pendientes-conservados) conserva evidencia y rutas de la integración física M2→M3, QA completo del plan, aplicación 046 no acreditada en su registro, despacho/replay SQL/TIPO_PLANTA, job de ciclo de vida/estado público, merma y mantenimiento fuera de este cierre, lint global backend y ramas anteriores sin fusionar/eliminar. Ninguno se cierra por esta consolidación.
 
 Para registrar otra entrega, actualizar su ficha, tareas de capacidad y tablero; enlazar evidencia/versiones/entorno aquí. Archivar el estado previo antes de sustituir detalle extenso y mantener visibles los pendientes sin cierre.
+
+
+## Recepción de semillas · T4 local del 6 de noviembre
+
+T4 implementada y verificada localmente sobre Backend `032527a` y PWA `fc48be2` más árbol: 096 añade recepción/validación atómicas por M2, incidencia/resolución conforme, recuperación propia y elegibilidad física de consumo/desecho; la PWA sirve a solo M2. [Contrato y conciliación](../Backend-r3foresta/docs/t4-recepcion-semillas.md), [bases/huellas/pruebas](../Backend-r3foresta/docs/evidencia/t4-validacion-2026-11-06.json), [QA PWA](../pwa-r3foresta/docs/QA_T4_RECEPCION.md). [Revisión coordinadora cerrada](../Backend-r3foresta/docs/evidencia/t4-revision-coordinadora-2026-11-06.json) tras corregir comparación decimal y retiro de datos por vivero; [QA de las correcciones](../pwa-r3foresta/docs/QA_T4_REVISION_2026-11-06.md): 1.273 pruebas PWA, 1.268 Backend y SQL/HTTP aislados aprobados. Sin commit de entrega, SQL remoto, corte, push o despliegue. Legados con movimientos requieren conciliación real; T5 no iniciado.
