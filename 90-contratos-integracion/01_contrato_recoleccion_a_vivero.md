@@ -1,5 +1,7 @@
 # Contrato de integracion - Recoleccion -> Vivero
 
+> Política T2 elegida el5 de noviembre de2026: el operario necesita acceso vigente al vivero y consume por el camino ordinario en el mismo establecimiento de almacenamiento M1. Almacenamiento y destino M2 siguen siendo campos distintos; ADMIN conserva la compatibilidad explícita de destinos diferentes. No implementa traslados ni recepción física de T4. [Contrato local, pruebas y aplicación reportada](../../Backend-r3foresta/docs/t2-acceso-viveros.md); cotejo y despliegue separados.
+
 ## 1. Proposito
 
 Este contrato responde:

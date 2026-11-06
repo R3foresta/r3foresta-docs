@@ -1,5 +1,7 @@
 # Contrato de integracion - Vivero -> Plantacion
 
+> Autorización T2 elegida el5 de noviembre de2026: entrega/devolución explícitas requieren ADMIN o la intersección operario vigente del vivero del lote + COORDINADOR de la subcampaña. Cancelación y desactivación masiva administrativas conservan devoluciones atómicas. Plantar sigue consumiendo asignaciones sin acceso al vivero original ni segundo débito. [Contrato local, pruebas y aplicación reportada](../../Backend-r3foresta/docs/t2-acceso-viveros.md); cotejo y despliegue separados.
+
 > Aclaración PA-F01 aceptada el 2026-10-13: entrega física desde Vivero y consumo al plantar son hechos separados. El registro participante consume stock ya disponible de su subcampaña; no incorpora recepción, acuse o confirmación por organización/administrador. D07 del [contrato backend](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) define LIFO en servidor para inicial, sin alterar la entrega ni descontar nuevamente Vivero. [Acta técnica](../specs/plantacion/participacion-aliada/archivo/revision-tecnica-2026-10-13.md); implementación pendiente. Reposición interna y logística conservan contratos específicos. Las compensaciones de PA-S04 se definen por consumo trazable de subcampaña, no como devolución física implícita a Vivero.
 
 ## 1. Proposito
