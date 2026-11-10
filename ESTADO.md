@@ -76,3 +76,35 @@ Para registrar otra entrega, actualizar su ficha, tareas de capacidad y tablero;
 ## Recepción de semillas · T4 local del 6 de noviembre
 
 T4 implementada y verificada localmente sobre Backend `032527a` y PWA `fc48be2` más árbol: 096 añade recepción/validación atómicas por M2, incidencia/resolución conforme, recuperación propia y elegibilidad física de consumo/desecho; la PWA sirve a solo M2. [Contrato y conciliación](../Backend-r3foresta/docs/t4-recepcion-semillas.md), [bases/huellas/pruebas](../Backend-r3foresta/docs/evidencia/t4-validacion-2026-11-06.json), [QA PWA](../pwa-r3foresta/docs/QA_T4_RECEPCION.md). [Revisión coordinadora cerrada](../Backend-r3foresta/docs/evidencia/t4-revision-coordinadora-2026-11-06.json) tras corregir comparación decimal y retiro de datos por vivero; [QA de las correcciones](../pwa-r3foresta/docs/QA_T4_REVISION_2026-11-06.md): 1.273 pruebas PWA, 1.268 Backend y SQL/HTTP aislados aprobados. Sin commit de entrega, SQL remoto, corte, push o despliegue. Legados con movimientos requieren conciliación real; T5 no iniciado.
+
+## Conciliación del remanente de Vivero · implementación local del 9 de noviembre
+
+Backend `2174934` y PWA `8b9dae1` más cambios locales. 097 incorpora padrón
+individual ADMIN, ficha de saldo y trazabilidad, comprobación física M2 y recibo
+recuperable. La PWA distingue saldo habilitado, pendiente e incidencia. La
+conciliación habilita el remanente en su custodia y conserva el registro
+original. [Contrato, pruebas y procedimiento del piloto](../Backend-r3foresta/docs/vivero-conciliacion-historica.md).
+El catálogo aportado el 9 confirmó los antecedentes y motivó un ajuste local de
+097 verificado el 10 de noviembre. Cierra escritura cliente en Recolección y su
+ledger e invalida la conciliación ante movimientos de corrección posteriores.
+[Regresión ampliada](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-cotejo-validacion-2026-11-10.json).
+El postflight aportado el 10 de noviembre acredita aplicación y cotejo focal de
+097 en el catálogo observado de PostgreSQL 17.6. Coinciden las 13 funciones
+cotejadas, sus grants/configuraciones, las tablas privadas y los triggers.
+Registra cero eventos y cero orígenes en padrón. El informe no identifica el
+proyecto. [Evidencia aportada y límites](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-postflight-aportado-2026-11-10.json).
+El 10 de noviembre se aplicó 098 en el proyecto identificado en su evidencia
+y se creó por API el bucket privado de conciliación. Sus seis controles de
+catálogo y metadatos quedaron conformes; 39 grupos SQL/RLS aislados aprobaron.
+Con Backend/PWA locales se verificaron Material con M2 en VIV-001 y VIV-002
+y la ficha fuera del padrón con ADMIN en VIV-003. [Storage aplicado, entorno y límites](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-storage-aplicado-2026-11-10.json).
+Quedan por acreditar la ficha M2 con historial de padrón, la carga real, HTTP/PWA desplegados,
+inventario físico, piloto, publicación y despliegue. El cierre general de
+lecturas legadas sigue separado.
+
+La revisión posterior corrigió la selección de INICIO cuando faltan datos del
+origen, la precisión decimal y la habilitación conciliada en Recolección.
+099 añade localmente una lectura optativa de requisitos y saldo exacto; su
+aplicación y el corte cliente-servidor quedan pendientes. [Regresión SQL/HTTP](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-099-local-2026-11-10.json).
+Versionado local en Backend `d55e547` y PWA `30b16b4`. Build y 1.281
+unitarios Backend, build/lint y 1.289 pruebas PWA aprobados. [Cierre de la revisión](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-cierre-2026-11-10.json).
