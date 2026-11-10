@@ -100,7 +100,10 @@ lecturas legadas sigue separado.
 
 La revisión posterior corrigió la selección de INICIO cuando faltan datos del
 origen, la precisión decimal y la habilitación conciliada en Recolección.
-099 añade localmente una lectura optativa de requisitos y saldo exacto; su
-aplicación y el corte cliente-servidor quedan pendientes. [Regresión SQL/HTTP](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-099-local-2026-11-10.json).
+099 añade una lectura optativa de requisitos y saldo exacto. Su catálogo se
+cotejó el 10 de noviembre en `vyrjlehkhabydkhjxagx` (PostgreSQL 17.6): cuerpos,
+firmas, configuración y permisos efectivos conformes; PostgREST reconoce la
+firma nueva. [Cotejo de destino y límites](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-099-destino-2026-11-10.json).
+El corte cliente-servidor y despliegue quedan pendientes. [Regresión SQL/HTTP](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-099-local-2026-11-10.json).
 Versionado local en Backend `d55e547` y PWA `30b16b4`. Build y 1.281
 unitarios Backend, build/lint y 1.289 pruebas PWA aprobados. [Cierre de la revisión](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-cierre-2026-11-10.json).
