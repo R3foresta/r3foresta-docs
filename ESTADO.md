@@ -108,3 +108,22 @@ origen, la precisión decimal y la habilitación conciliada en Recolección.
 aplicación y el corte cliente-servidor quedan pendientes. [Regresión SQL/HTTP](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-099-local-2026-11-10.json).
 Versionado local en Backend `d55e547` y PWA `30b16b4`. Build y 1.281
 unitarios Backend, build/lint y 1.289 pruebas PWA aprobados. [Cierre de la revisión](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-cierre-2026-11-10.json).
+
+
+## Incorporación de plantas vivas · T5 verificada en pruebas el14 de noviembre
+
+Backend `7984368` incorpora T5 y `db95e70` añade el cierre aditivo108 del catálogo
+observado. En Supabase de pruebas `vyrjlehkhabydkhjxagx` se cotejaron21 funciones,
+se aplicó/cotejó108 y se creó/verificó el bucket privado por API oficial. Con
+backend/PWA locales y sesión ADMIN legítima pasaron17 comprobaciones HTTP/Storage:
+alta SALDO_INICIAL con foto sintética, recuperación/replay, conflicto409,
+saldo3 sin duplicación y privacidad de imagen. El fixture auditable se conserva.
+[Resultado, evidencia y puntos de retorno](../Backend-r3foresta/docs/t5-correcciones-pruebas-2026-11-14.md).
+Build y1386 unitarios backend,37 grupos focales108 y regresión aislada T5 de126
+grupos SQL/11 carreras/8 HTTP aprobados; PWA `0007ee0` carga/recarga Vivero y pasa
+build/92 pruebas del módulo con Node24.19, sin parche de producto. La causa del
+bloqueo transitorio anterior no está determinada. Interfaz T5 de producto,
+otros roles/recorrido M3 remotos, despliegue externo y QA completo siguen
+pendientes. No modifica los cierres parciales de PA-F01. Git no revierte por sí
+mismo los cambios remotos; aplicación SQL, commits, push y despliegue se acreditan
+por separado.
