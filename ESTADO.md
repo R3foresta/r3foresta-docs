@@ -127,3 +127,15 @@ otros roles/recorrido M3 remotos, despliegue externo y QA completo siguen
 pendientes. No modifica los cierres parciales de PA-F01. Git no revierte por sí
 mismo los cambios remotos; aplicación SQL, commits, push y despliegue se acreditan
 por separado.
+
+## Revisión del MVP · altas y WebAuthn del16 de noviembre
+
+Backend sobre `3cb82e4` más árbol local: orígenes exactos para WebAuthn/CORS y
+altas atómicas de campaña/organizaciones111, subcampaña/historial112 y
+usuario/passkey113. Revisión coordinadora, build,101 suites/1.487 unitarios,
+91 comprobaciones SQL aisladas y cuatro controles OpenAPI aprobados.
+[Informe, contratos y evidencia](../Backend-r3foresta/docs/revision-altas-mvp-2026-11-16.md).
+Pablo confirmó `Success` de111–113; sus firmas privadas se observaron en REST
+del Supabase de pruebas. Cuerpos SQL completos, configuración `CORS_ORIGINS`
+desplegada, recorrido real WebAuthn, push y despliegue conservan verificación
+separada. No cierra las tareas padre de PA-F01 ni acredita el paso a producción.
