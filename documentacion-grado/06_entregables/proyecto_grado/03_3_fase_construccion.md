@@ -6,6 +6,8 @@ Para maquetar las figuras en hojas carta verticales, usar las [láminas por figu
 
 ### 3.3.1. Propósito y organización de la construcción
 
+Los incrementos reciben los [47 requisitos funcionales explícitos de 3.1.6.2](03_1_fase_inicio.md#3162-requerimientos-funcionales), las 170 RN que los condicionan y los seis RNF transversales. La [derivación de 3.2.3.1](03_2_fase_elaboracion.md#3231-derivación-del-diseño-y-los-incrementos-por-requerimiento) asigna cada RF a un actor/caso, artefacto e incremento; los cambios y las entregas se vinculan con esos IDs y con las [comprobaciones de 3.4.3](03_verificacion_pruebas.md#343-correspondencia-con-los-casos-prioritarios). La relación documental identifica qué debe satisfacerse; los resultados de implementación mantienen sus versiones, entornos y límites propios.
+
 La fase de Construcción materializó el tercer objetivo específico: **implementar en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido**. A partir de los requisitos, modelos y contratos de Elaboración, se desarrollaron las pantallas, los servicios y las operaciones de persistencia que relacionaron el origen registrado con el destino plantado.
 
 El trabajo se organizó mediante CO-1, CO-2, CO-3 y CO-4. Estas etiquetas conservaron la distribución académica del proyecto; las fechas reales de los cambios y las pruebas se mantuvieron en sus informes. Los componentes construidos antes del periodo planificado se incorporaron como antecedentes técnicos. Las entregas INT de Participación aliada aportaron refinamientos de autorización, captura, recuperación y consulta, sin convertirse en nuevas fases de RUP.
@@ -41,11 +43,15 @@ La autenticación privada utilizó un token JWT verificado y la consulta de la c
 
 #### 3.3.3.1. Módulo General
 
+**Entradas funcionales:** RF-GEN-01–RF-GEN-07 y RN-GEN correspondientes. Sus datos maestros, identidad, accesos, ubicaciones y evidencias sostienen todos los incrementos; la verificación por RF distingue los catálogos sin cierre individual del control técnico de permisos ya ensayado.
+
 El Módulo General proporcionó las referencias compartidas de usuarios, especies, viveros, organizaciones, territorios y ubicaciones. Se mantuvo el catálogo cerrado de roles ADMIN, GENERAL, VALIDADOR y VOLUNTARIO. La afiliación declarada a una organización se conservó separada de la autoridad para operar, y los registros históricos utilizaron copias de los datos relevantes, denominadas snapshots, para conservar su interpretación ante cambios posteriores de los catálogos.
 
 La administración de roles globales se incorporó mediante una pantalla exclusiva de ADMIN. La operación conservó el motivo, la confirmación explícita, la comprobación de autoridad vigente y la protección del último administrador. Su [verificación local del 3 de noviembre](../../../../pwa-r3foresta/docs/QA_USUARIOS_ADMINISTRACION.md) identificó las versiones backend `5fb723b` y PWA `37cec4d`.
 
 #### 3.3.3.2. Módulo Recolección
+
+**Entradas funcionales:** RF-REC-01–RF-REC-06 y sus RN-REC. Captura, edición, recepción, inventario y consulta pública tienen resultados exigidos distintos; AUD-036, clasificación fotográfica y consulta propia completa conservan los pendientes identificados en 3.4.3.1.
 
 Recolección implementó el registro de procedencia, especie, tipo de material, cantidad, unidad, fecha, responsable, vivero, ubicación y evidencia. El flujo distinguió borrador, solicitud de validación y decisión de aprobación o rechazo. La solicitud de validación exigió la ubicación y la evidencia fotográfica establecidas en RF-REC-04. Las semillas conservaron su cantidad en gramos o unidades, mientras que los esquejes utilizaron unidades enteras.
 
@@ -56,6 +62,8 @@ La recepción única de semillas vinculó el hecho físico y la validación en u
 El expediente de CO-1 mantuvo un alcance distinto del de los ensayos de Participación aliada: las pruebas de M3 no acreditaron por extensión todas las operaciones de M1. La consolidación de sus resultados completos se conservó como RDI-07, sin alterar la descripción funcional del módulo desarrollado.
 
 ### 3.3.4. Módulo Vivero e integración M1→M2
+
+**Entradas funcionales:** RF-VIV-01–RF-VIV-09, incluido RF-VIV-02A, y RF-VIV-15, con RN del núcleo y del contrato M1→M2. RF-VIV-11–14 se relacionan con la integración física descrita en 3.3.5. RF-VIV-10 se conserva como complemento externo fuera del incremento académico.
 
 Vivero implementó el lote como unidad de seguimiento del material recibido desde una recolección. El inicio conservó la cantidad y la unidad del material de origen, registró su consumo y creó el evento INICIO. La relación permitió que una misma recolección abasteciera varios lotes mediante consumos diferenciados, conservando un único origen por lote.
 
@@ -68,6 +76,8 @@ Los movimientos de salida se diferenciaron según su destino. El despacho manual
 El [contrato M1→M2](../../../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md) relacionó el movimiento de origen, el lote y el evento inicial. El historial del lote conservó los hechos de manejo y las salidas posteriores. La incorporación T5 creó un lote de plantas vivas desde una recepción o conteo, con procedencia declarada, foto privada y una base viva alternativa a EMBOLSADO. El QA del 16 de noviembre documentó la reconstrucción inversa, con sesión ADMIN en Chrome local, desde el registro de plantación 20 hasta la asignación 53 y el lote 125, con consulta de historial y foto. Identificó PWA `c6bdec9` y backend de integración `3cb82e4` incluido en `b57192c`; la aplicación de 109/110 fue confirmada por Pablo. Teléfono físico, otros roles y recorridos, despliegue externo y diferencias de etapa y variedad permanecen pendientes. La recepción externa directa en Plantación conserva su diseño y evaluación pendientes. [QA T5](../../../../pwa-r3foresta/docs/QA_T5_ITERACION_3.md) · [Estado](../../../ESTADO.md).
 
 ### 3.3.5. Módulo Plantación e integración M2→M3
+
+**Entradas funcionales:** RF-PLA-01–RF-PLA-08, RF-PLA-12–RF-PLA-15 y RF-PLA-17/18, junto con RF-VIV-11–14 y las RN de integración. Las porciones de mantenimiento de esos requisitos y RF-PLA-09–11/16 conservan el contexto del producto y no se convierten en implementación académica acreditada. PA-S00–PA-S04 precisan identidad, inicial, lectura, permisos y correcciones, con su cobertura parcial documentada.
 
 Plantación implementó campañas y subcampañas con zona, fechas, plan por especie, polígono y equipo. La campaña obtuvo su estado y su meta agregada mediante sus subcampañas. La coordinación se representó como responsabilidad del equipo y se mantuvo separada del rol global y de los permisos de participación.
 

@@ -14,6 +14,22 @@ La verificación técnica respondió si las operaciones cubiertas respetaron sus
 
 ### 3.5.2. Escenarios y resultados de reconstrucción
 
+Los escenarios reciben los [requisitos y reglas de 3.1.6](03_1_fase_inicio.md#316-necesidades-requerimientos-y-reglas-de-negocio) y los resultados de la [verificación por requisito de 3.4.3](03_verificacion_pruebas.md#343-correspondencia-con-los-casos-prioritarios). La derivación siguiente conserva sus IDs: especifica qué debe alimentar cada evaluación, sin convertir la existencia de una relación en un resultado aceptado. Los RF de catálogo/consulta y los 103 CA participantes conservan además su comprobación individual en 3.4; no se fuerza a cada uno a representar por sí solo una traza completa ni se crean EVA nuevos.
+
+| Escenario existente | Entradas funcionales y reglas principales | Condición transversal que debe conservar |
+|---|---|---|
+| EVA-01 | RF-REC-01–05; RF-VIV-01/02/11/13; RF-PLA-04/06/14; RN de origen, herencia, entrega y consumo | Identidad, cantidades, unidad, autorización, snapshots y evidencia del mismo recorrido. |
+| EVA-02 | RF-REC-05 y RF-VIV-01; RN-REC-24/24A y RN-VIV-04/05/06/17A | Consumo parcial y varios lotes conservan saldo y unidad, sin efectos parciales. |
+| EVA-03 | RF-VIV-01/02/02A/03/08; RN-VIV-11/11A/17C/19/24 | Material en proceso, plantas vivas observadas y pérdida posterior son hechos diferentes. |
+| EVA-04 | RF-VIV-11/13, RF-PLA-04/06; RN-VIV-47/49/52/53 y RN-PLA-23/26 | La entrega descuenta una vez; el detalle explica consumo y remanente sin multiplicar cantidades por personas. |
+| EVA-05 | RF-VIV-12/13 y RF-PLA-05; RN-VIV-48/49/57 | El retorno físico se vincula al lote original y no excede el disponible. |
+| EVA-06 | RF-VIV-15/07/11 y RF-PLA-06/14; RN-VIV-02/11/18/40/61 | El conteo o recepción conserva procedencia, foto y recuperación sin inventar crianza previa. |
+| EVA-07 | NEC-01/NEC-07 y RDI-01; recepción directa sin RF/contrato específico cerrado | Mantener explícita la necesidad pendiente de custodia y remanentes; no simular ingreso a Vivero. |
+| EVA-08 | RF-VIV-07, RF-PLA-14/15 y PA-S02/04; RN-PLA-22/23/25/34 | Reconstrucción por consumos persistidos, audiencias y participación efectiva; vacíos y fallos diferenciados. |
+| EVA-09 | RF-REC-04/05, RF-VIV-01/12/13/15 y RF-PLA-06/13/17/18; RN de atomicidad, permisos, evidencia y saldos | RNF-INI-01/03/04: autoridad, un solo efecto, rollback, recuperación y privacidad. |
+
+La historia de RF-GEN, los seis RNF y la evidencia aplicable acompañan las entradas anteriores según sus reglas. La aceptación también requiere uso representativo y recuperación de información conforme a RNF-INI-05/06; las ausencias de procedimiento de respaldo, métricas y ensayos humanos conservan su condición pendiente.
+
 Los escenarios EVA-01–EVA-09 se derivaron de la ruta propia, las operaciones que alteran o explican el saldo, las incorporaciones externas y la recuperación de antecedentes. La Tabla 3.24 compara el resultado esperado con la evidencia existente. Cuando el respaldo se limita al diseño o a una parte del recorrido, se identifica el vínculo o la comprobación que falta.
 
 **Tabla 3.24**

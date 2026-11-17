@@ -158,6 +158,85 @@ Las nuevas capacidades se nombran sin renumerar CU-01–CU-12: **asignar operari
 
 Los criterios de integridad se desarrollan en 3.2.9. Los límites académicos se mantienen: el resultado evaluable termina en la plantación y su trazabilidad. Las vistas de Impacto y Mis registros sitúan las audiencias de consulta; no acreditan una consulta pública integral de todos los módulos. Mantenimiento posterior, carbono y blockchain quedan fuera del cumplimiento académico.
 
+<!-- trazabilidad-rf-diseno-inicio -->
+
+#### 3.2.3.1. Derivación del diseño y los incrementos por requerimiento
+
+El [catálogo explícito de 3.1.6](03_1_fase_inicio.md#316-necesidades-requerimientos-y-reglas-de-negocio) es la entrada de esta realización. Cada RN indica qué RF condiciona; las filas siguientes conservan **los 47 RF** y relacionan su actor/caso con el artefacto que debe responder a esa exigencia y el incremento al que aporta. Las incorporaciones y refinamientos posteriores se integran por su alcance y fecha real, sin inventar una iteración por cada migración.
+
+La columna de incremento señala el lugar donde debe justificarse el cambio; no certifica su ejecución. Las capacidades complementarias se identifican como tales. El modelo de datos de 3.2.8, la arquitectura de 3.2.10 y las propiedades de 3.2.9 reciben estas exigencias; la [matriz de 3.4.3.1](03_verificacion_pruebas.md#3431-comprobaciones-por-requerimiento-funcional) conserva el resultado exigido y el límite de cobertura de cada una.
+
+**General**
+
+| RF de entrada | Actor y caso/capacidad | Producto de diseño e incremento |
+|---|---|---|
+| [RF-GEN-01](03_1_fase_inicio.md#rf-gen-01) | ADMIN y cuenta propia · CU-01; PA-S00/03 | Identidad, passkey, rol, accesos M1/M2 y permisos contextuales; matriz de autorización y auditoría. General transversal, CO-1–CO-4, 3.3.3.1/3.3.6. |
+| [RF-GEN-02](03_1_fase_inicio.md#rf-gen-02) | ADMIN; operario autorizado · CU-01/CU-05 | Catálogo VIVERO, UBICACION y acceso por vivero; almacenamiento M1 y destino M2 separados. General y Vivero, CO-1/CO-2, 3.3.3.1/3.3.4. |
+| [RF-GEN-03](03_1_fase_inicio.md#rf-gen-03) | ADMIN; usuarios operativos · CU-01/CU-02/CU-05 | Catálogo PLANTA y snapshots de identidad en origen, lote y detalle. General e integración, CO-1–CO-4, 3.3.3.1/3.3.6. |
+| [RF-GEN-04](03_1_fase_inicio.md#rf-gen-04) | ADMIN; capturador y registrador autorizado · CU-01/CU-02/CU-11 | Ubicación territorial y GPS; representación por módulo y evaluación PostGIS. General, Recolección y Plantación, CO-1/CO-3. |
+| [RF-GEN-05](03_1_fase_inicio.md#rf-gen-05) | ADMIN; usuario que selecciona territorio · CU-01/CU-02 | DIVISION_ADMINISTRATIVA, jerarquía territorial y snapshots de comunidad/zona. General y Recolección, CO-1, 3.3.3. |
+| [RF-GEN-06](03_1_fase_inicio.md#rf-gen-06) | Actor autorizado por hecho; visitante de derivados · CU-02/CU-06/CU-07/CU-11/CU-12; PA-S02 | TIPOS_ENTIDAD_EVIDENCIA, vínculo polimórfico, archivos privados, derivados y cargas por operación. Transversal, CO-1–CO-4, 3.3.6. |
+| [RF-GEN-07](03_1_fase_inicio.md#rf-gen-07) | ADMIN · CU-01/CU-08 | ORGANIZACION y CAMPANIA_ORGANIZACION, con nombres históricos al activar. General y Plantación, CO-3, 3.3.3.1/3.3.5. |
+
+**Recolección**
+
+| RF de entrada | Actor y caso/capacidad | Producto de diseño e incremento |
+|---|---|---|
+| [RF-REC-01](03_1_fase_inicio.md#rf-rec-01) | GENERAL/VALIDADOR con M1, o ADMIN · CU-02 | Ficha BORRADOR, material/unidad canónica, ubicación, fotos y datos de control. Recolección, CO-1, 3.3.3.2. |
+| [RF-REC-02](03_1_fase_inicio.md#rf-rec-02) | Autor autorizado o ADMIN · CU-02 | Referencia UBICACION y estructura territorial, con sustitución de referencia al cambiar GPS. Recolección, CO-1, 3.3.3.2. |
+| [RF-REC-03](03_1_fase_inicio.md#rf-rec-03) | Autor autorizado o ADMIN · CU-02/CU-03/CU-12 | Estados de ficha, historial de ciclo de vida, revisión y eliminación lógica separados del ledger. Recolección, CO-1, 3.3.3.2. |
+| [RF-REC-04](03_1_fase_inicio.md#rf-rec-04) | ADMIN o VALIDADOR asignado distinto del recolector · CU-03 | RECOLECCION_RECEPCION, revisión, fotos propias, snapshot oficial y comando recuperable. Recolección/entrada M2, CO-1/CO-2, 3.3.3.2/3.3.4. |
+| [RF-REC-05](03_1_fase_inicio.md#rf-rec-05) | Custodio autorizado o ADMIN · CU-04/CU-05 | Ledger, saldo del origen y transacción de entrada M1→M2. Integración M1→M2, CO-2, 3.3.4. |
+| [RF-REC-06](03_1_fase_inicio.md#rf-rec-06) | Visitante sin cuenta · capacidad RF-REC-06 | Proyección pública de semillas separada de historial privado, con estados y fotos elegibles. Consulta transversal; refinamiento posterior, 3.3.6. |
+
+**Vivero**
+
+| RF de entrada | Actor y caso/capacidad | Producto de diseño e incremento |
+|---|---|---|
+| [RF-VIV-01](03_1_fase_inicio.md#rf-viv-01) | ADMIN u operario M2 autorizado · CU-05 | Lote de propagación, INICIO, débito del origen, identidad heredada y evidencia propia atómicos. Vivero y M1→M2, CO-2, 3.3.4. |
+| [RF-VIV-02](03_1_fase_inicio.md#rf-viv-02) | ADMIN u operario del vivero · CU-06 | EMBOLSADO como única base viva observada de propagación, en UNIDAD. Vivero, CO-2, 3.3.4. |
+| [RF-VIV-02A](03_1_fase_inicio.md#rf-viv-02a) | ADMIN u operario del vivero · CU-06 | Descarte total previo, causa/evidencia y cierre automático con saldo vivo nulo. Vivero, CO-2, 3.3.4. |
+| [RF-VIV-03](03_1_fase_inicio.md#rf-viv-03) | ADMIN u operario del vivero · CU-07 | Evento MERMA, saldo antes/después y cierre según causa efectiva. Vivero, CO-2, 3.3.4. |
+| [RF-VIV-04](03_1_fase_inicio.md#rf-viv-04) | ADMIN u operario del vivero · CU-07 | Evento ADAPTABILIDAD y subetapa del lote, sin cambio de saldo ni puerta de salida adicional. Vivero, CO-2, 3.3.4. |
+| [RF-VIV-05](03_1_fase_inicio.md#rf-viv-05) | ADMIN u operario del vivero · CU-07 | DESPACHO manual con destino, evidencia y débito físico; separado de asignación M3. Vivero, CO-2, 3.3.4. |
+| [RF-VIV-06](03_1_fase_inicio.md#rf-viv-06) | Actor autorizado por evento · CU-05/CU-06/CU-07 | Vínculo al hecho, obligatoriedad por evento, privacidad y firma temporal T5. Vivero/transversal, CO-2/CO-4, 3.3.4/3.3.6. |
+| [RF-VIV-07](03_1_fase_inicio.md#rf-viv-07) | ADMIN u operario autorizado a leer vivero · CU-12 | Timeline por corte, snapshots y procedencia desde origen o incorporación. Trazabilidad transversal, CO-4, 3.3.6. |
+| [RF-VIV-08](03_1_fase_inicio.md#rf-viv-08) | Sistema al confirmar evento autorizado · CU-07 | Estado FINALIZADO, motivo y disparador de cierre; excepción de devolución al origen. Vivero, CO-2, 3.3.4. |
+| [RF-VIV-09](03_1_fase_inicio.md#rf-viv-09) | ADMIN u operario del vivero · CU-12 | Listado/filtros/totales autorizados; modalidad, procedencia y base viva visibles. Vivero/transversal, CO-2/CO-4. |
+| [RF-VIV-10](03_1_fase_inicio.md#rf-viv-10) | Integración externa complementaria · sin CU académico priorizado | Metadata de anclaje complementaria del producto, separada del núcleo evaluado. Fuera del incremento académico. |
+| [RF-VIV-11](03_1_fase_inicio.md#rf-viv-11) | ADMIN o coordinación más acceso M2 · CU-09 | Asignación física, salida M2, débito, evidencia y evento M3 conjuntos. M2→M3, CO-3, 3.3.5. |
+| [RF-VIV-12](03_1_fase_inicio.md#rf-viv-12) | ADMIN o coordinación más acceso M2 · CU-10 | Devolución al origen y actualización conjunta de remanente/lote e historial M2/M3. M2→M3, CO-3, 3.3.5. |
+| [RF-VIV-13](03_1_fase_inicio.md#rf-viv-13) | Sistema en cada movimiento; consulta autorizada · CU-09/CU-10/CU-11/CU-12 | Saldos separados y derivados; conservación por detalle y locks de consumo. Integración y regresión, CO-3/CO-4. |
+| [RF-VIV-14](03_1_fase_inicio.md#rf-viv-14) | Custodio M2 y futuro flujo autorizado de campo · CU-07; parte de campo sin CU cerrado | Merma física M2 separada de cantidad_mermada de stock entregado y su futuro flujo M3. CO-2 para M2; merma de campo conserva diseño/flujo pendientes. |
+| [RF-VIV-15](03_1_fase_inicio.md#rf-viv-15) | ADMIN global · capacidad RF-VIV-15 relacionada con CU-05 | Lote incorporado, INCORPORACION, procedencia, fotos privadas y comando propio recuperable. Refinamiento T5 e integración transversal, 3.3.4/3.3.6; aporta a CO-2/CO-4 por alcance, sin inventar otra iteración. |
+
+**Plantación**
+
+| RF de entrada | Actor y caso/capacidad | Producto de diseño e incremento |
+|---|---|---|
+| [RF-PLA-01](03_1_fase_inicio.md#rf-pla-01) | ADMIN · CU-08 | CAMPANIA, organizaciones, código e historial/efectos de baja; estado/meta derivados. Plantación, CO-3, 3.3.5. |
+| [RF-PLA-02](03_1_fase_inicio.md#rf-pla-02) | ADMIN · CU-08 | SUBCAMPANIA BORRADOR, código histórico, zona, coordinación, plan y alta atómica. Plantación, CO-3, 3.3.5. |
+| [RF-PLA-03](03_1_fase_inicio.md#rf-pla-03) | ADMIN · CU-08 | Transición BORRADOR→ACTIVA, plan coherente y snapshots de activación. Plantación, CO-3, 3.3.5. |
+| [RF-PLA-04](03_1_fase_inicio.md#rf-pla-04) | ADMIN o coordinación más acceso M2 · CU-09 | Entrega con propósito, estado/especie elegibles y procedencia persistida. M2→M3, CO-3, 3.3.5. |
+| [RF-PLA-05](03_1_fase_inicio.md#rf-pla-05) | ADMIN o coordinación más acceso M2 · CU-10 | Retorno físico al lote y eventos de devolución conjuntos. M2→M3, CO-3, 3.3.5. |
+| [RF-PLA-06](03_1_fase_inicio.md#rf-pla-06) | Equipo interno autorizado; permiso contextual o ADMIN · CU-11 | Registro, detalles LIFO, snapshots, participantes, GPS, evidencia y recibo. Plantación, CO-3, 3.3.5.1. |
+| [RF-PLA-07](03_1_fase_inicio.md#rf-pla-07) | ADMIN · contexto de ciclo de vida de CU-08 | Cierre manual COMPLETADA y bloqueo de inicial; fechas y sobrantes conservados. Borde de Plantación, CO-3; mantenimiento posterior excluido. |
+| [RF-PLA-08](03_1_fase_inicio.md#rf-pla-08) | ADMIN · contexto de ciclo de vida de CU-08 | Cierre parcial motivado y conservación de lo plantado, sin reapertura. Borde de Plantación, CO-3; mantenimiento posterior excluido. |
+| [RF-PLA-09](03_1_fase_inicio.md#rf-pla-09) | ADMIN o equipo interno · sin CU académico posterior priorizado | Mortandad y saldo del grupo del producto posterior a plantación. Fuera del incremento académico evaluado. |
+| [RF-PLA-10](03_1_fase_inicio.md#rf-pla-10) | Integrante autorizado del equipo · sin CU académico posterior priorizado | Reposición vinculada, propósito, pendiente y especie real del producto. Fuera de la evaluación académica; compatibilidad técnica D separada. |
+| [RF-PLA-11](03_1_fase_inicio.md#rf-pla-11) | Proceso temporal del sistema · sin CU académico priorizado | Transición de fase de mantenimiento independiente del estado operativo. Fuera de la evaluación académica. |
+| [RF-PLA-12](03_1_fase_inicio.md#rf-pla-12) | ADMIN/COORDINADOR · soporte interno de CU-08/CU-11 | Equipo logístico separado de permisos contextuales y participación efectiva. Plantación y autorización transversal, CO-3/CO-4. |
+| [RF-PLA-13](03_1_fase_inicio.md#rf-pla-13) | Actor autorizado por operación · CU-09/CU-11; PA-S01 | Cargas, originales privados, derivados, coordenada válida y evaluación PostGIS. Plantación/transversal, CO-3/CO-4. |
+| [RF-PLA-14](03_1_fase_inicio.md#rf-pla-14) | Autor/participante efectivo o administrador según vista · CU-12; PA-S02/04 | Original/versión efectiva, detalle→asignación→lote→origen y consultas por audiencia/corte. Trazabilidad transversal, CO-4, 3.3.6. |
+| [RF-PLA-15](03_1_fase_inicio.md#rf-pla-15) | Visitante sin cuenta · PA-S02 relacionada con consulta de CU-12 | Proyecciones elegibles, agregados/mapa/detalle consistentes y fotos sanitizadas. Consulta transversal, CO-4, 3.3.6. |
+| [RF-PLA-16](03_1_fase_inicio.md#rf-pla-16) | Integración externa complementaria · sin CU académico priorizado | Anclaje externo y referencias originales conservadas como contexto de producto. Fuera del incremento académico. |
+| [RF-PLA-17](03_1_fase_inicio.md#rf-pla-17) | ADMIN, equipo y permisos contextuales según operación · CU-01/CU-08/CU-11/CU-12; PA-S00/03 | Matriz de autoridad, roles, revisiones, ámbitos y presencia derivada de ADMIN. Transversal y Plantación, CO-3/CO-4, 3.3.6. |
+| [RF-PLA-18](03_1_fase_inicio.md#rf-pla-18) | ADMIN escribe; usuario autenticado lee según contrato · CU-08 | Plan por especie, meta, plan_revision y PLAN_REVISADO atómicos, separados del stock. Planificación Plantación, CO-3, 3.3.5. |
+
+Las cinco especificaciones PA-S00–PA-S04 alimentan además los componentes de identidad, captura, proyecciones, permisos y correcciones de las figuras de actores, secuencias y arquitectura. Sus 103 criterios no se convierten en otros 103 RF; en 3.4.3.3 se conservan como condiciones concretas para verificar esos recorridos. Los riesgos RDI identifican las diferencias y variantes aún no resueltas.
+
+<!-- trazabilidad-rf-diseno-fin -->
+
 ### 3.2.4. Realización de casos de uso: vista general
 
 La Figura 3.5 de Inicio conserva la vista general UML actualizada en `445f24f`. La Figura 3.8 desarrolla su distribución funcional, incorporando los permisos contextuales, la consulta propia y las capacidades de Vivero. Una asociación señala interacción y no concede por sí sola autoridad. Una persona puede desempeñar varias funciones sin tener varios roles globales.
@@ -1008,7 +1087,7 @@ Se conservan RDI-01–RDI-08 de la revisión de septiembre y se actualiza su tra
 |---|---|---|---|
 | RDI-01 | refinamiento aprobado el 16 de noviembre y núcleo T5 implementado con origen nullable y base viva alternativa; conserva diferencias de etapa/variedad y aceptación | verificar continuidad de RF-VIV-15 y su evidencia por entorno, conservar las diferencias de diseño pendientes y desarrollar custodia directa en campo y remanentes de esa variante | autor con responsables de Vivero/Plantación |
 | RDI-02 | acceso M1/M2 y recepción por operación refinados e implementados en los contratos locales T1–T4; corte y verificación externa pendientes | conservar guard JWT/actividad y autoridad por operación, accesos por ID/agregados/evidencia y logística entre ámbitos; cotejar rutas y permisos del destino | responsable backend y revisión de seguridad |
-| RDI-03 | contraste documental del 16 de noviembre con 57 tablas/622 columnas y relaciones del adjunto; proyecto y fecha de exportación sin identificar, reproducibilidad integral pendiente | replay limpio y actualización de base existente, incluidos TIPO_PLANTA/destinos; cotejar restricciones, índices, RPC, grants y RLS que el extracto no enumera | responsable de base y backend |
+| RDI-03 | contraste documental del 16 de noviembre con 57 tablas/622 columnas y relaciones del adjunto; proyecto y fecha de exportación sin identificar, reproducibilidad integral pendiente | replay limpio y actualización de base existente, incluidos TIPO_PLANTA/destinos; cotejar restricciones, índices, RPC, grants y RLS que el extracto no enumera; precisar la aplicabilidad de RN-GEN-06 a las coordenadas directas M3 de RF-GEN-04 | responsable de base y backend |
 | RDI-04 | decisión funcional resuelta el 11–12 de octubre: exterior evaluado con advertencia; fallo técnico sin guardado | mantener RN-PLA-32 y PA-S01 alineados; vincular CA10 y pruebas PostGIS reales a versión y entorno; no reabrir la decisión como bloqueo/advertencia | responsable backend/PWA y QA |
 | RDI-05 | diferencia histórica de campos de DONACION en despacho manual sin nuevo cierre acreditado aquí | cotejar matriz canónica, DTO, RPC y pruebas del despacho vigente; separar despacho saliente de incorporación entrante | responsable M2 y QA |
 | RDI-06 | recuperación por comandos disponible en PA, accesos, recepción e incorporación; altas111–113 conservan respuesta incierta y consulta posterior | verificar cada frontera y sus operaciones legadas, repetir el mismo intento conforme a su contrato y conciliar duplicados físicos del inventario | backend/PWA y QA de concurrencia |
