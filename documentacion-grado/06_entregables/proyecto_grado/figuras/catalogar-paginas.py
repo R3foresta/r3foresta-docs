@@ -11,7 +11,9 @@ for chapter in sorted(ROOT.parent.glob('03*.md')):
     source = chapter.read_text()
     for i, block in enumerate(re.finditer(r'^```mermaid\s*\n([\s\S]*?)^```', source, re.M), 1):
         figures = re.findall(r'^\*\*(Figura [^\n]+?)\*\*\s*$', source[:block.start()], re.M)
-        titles[f'{chapter.stem}-{i:02}'] = figures[-1]
+        marker = re.search(r'<!-- diagrama: ([\w-]+) -->\s*$', source[:block.start()])
+        key = marker[1] if marker else f'{chapter.stem}-{i:02}'
+        titles[key] = figures[-1]
 titles.update({
     '03_05_casos_uso_inicio': 'Figura 3.5. Actores y casos de uso generales',
     'modelo-conceptual': 'Figura 3.20 · vista conceptual resumida',

@@ -1,12 +1,12 @@
-## 3.2. Fase de Inicio
+## 3.1. Análisis de requerimientos
 
 Para maquetar las figuras en hojas carta verticales, usar las [láminas por figura](figuras/paginas/README.md). Los bloques Mermaid conservan la fuente completa; los diagramas extensos continúan en paneles legibles.
 
 > Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Diagnóstico con corte principal al 22 de julio de 2026; contraste documental de septiembre, consolidación del 29 de octubre y precisiones del autor incorporadas el 4 y el 16 de noviembre. La exposición metodológica sigue exclusivamente RUP adaptado conforme a la directriz del 3 de noviembre. El autor confirma el cierre actual de Inicio/LCO el 4 de noviembre para continuar con Elaboración; se conserva la ausencia de acta histórica de IN-1 y no se atribuye aceptación institucional no documentada.
 
-### 3.2.1. Propósito y correspondencia con RUP
+### 3.1.1. Propósito y correspondencia con RUP
 
-Esta sección responde al primer objetivo específico: **analizar la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta**. Conserva el diagnóstico y lo relaciona con los productos de Inicio: visión, alcance, actores del sistema, casos de uso principales, requisitos iniciales, riesgos y evaluación documental del hito LCO. El diseño detallado continúa en la sección 3.3.
+Esta sección responde al primer objetivo específico: **analizar la información que se genera y cómo se gestiona actualmente en las actividades de Recolección, Vivero y Plantación de R3Foresta**. Conserva el diagnóstico y lo relaciona con los productos de Inicio: visión, alcance, actores del sistema, casos de uso principales, requisitos iniciales, riesgos y evaluación documental del hito LCO. Inicio expresa la correspondencia metodológica de estos productos dentro de RUP adaptado. La sección se organiza por el análisis de requerimientos; las fases y disciplinas se retoman durante las iteraciones. El análisis y diseño detallados continúan en la sección 3.2.
 
 La planificación metodológica adoptada el 25 de agosto de 2026 organiza el periodo académico en IN-1, del 6 al 19 de julio, y EL-1, del 20 de julio al 16 de agosto, seguidas por Construcción y Transición. Esta organización posterior permite relacionar los productos con las fases, pero no demuestra que las actividades se hubieran ejecutado originalmente bajo esos identificadores. Las fechas comprobables del levantamiento son el 20 y el 22 de julio; no se dispone de un registro anterior al 20 de julio que acredite la ejecución de IN-1 ni de un acta de LCO, según la confirmación del autor del 29 de octubre.
 
@@ -47,7 +47,7 @@ Las precisiones posteriores del autor se consultaron en los chats [Revisar actor
 
 Para interpretar las fuentes se utilizaron cinco categorías: práctica actual, necesidad, propuesta futura, decisión de alcance y dato pendiente de confirmación. Esta separación resultó necesaria porque en las reuniones aparecen, dentro de una misma explicación, actividades efectivamente realizadas, funciones que se deseaba incorporar a la aplicación y proyecciones relacionadas con carbono, blockchain o expansión territorial. Las dos últimas no se tratan como capacidades vigentes ni como compromisos del producto académico.
 
-### 3.2.2. Contexto operativo seleccionado
+### 3.1.2. Contexto operativo seleccionado
 
 R3Foresta trabaja con viveros, comunidades, juntas vecinales, instituciones educativas y otros aliados. Sin embargo, las actividades no se desarrollan con una estructura idéntica en todos los lugares. Para disponer de un contexto operativo concreto se seleccionó Chasquipampa como referencia principal. Según la confirmación del responsable del proyecto, este proceso es el utilizado por Hernán Lara, sirve para enseñar la secuencia a otras comunidades y será el escenario principal de las pruebas del sistema.
 
@@ -69,7 +69,7 @@ También se observó un espacio exterior con plantas embolsadas expuestas direct
 
 *Nota.* Registro fotográfico propio del 22 de julio de 2026. La fotografía documenta una condición de manejo del vivero; no permite establecer por sí sola cuánto tiempo permaneció cada planta en esa etapa ni su aptitud para plantación.
 
-### 3.2.3. Flujo operativo actual
+### 3.1.3. Flujo operativo actual
 
 El recorrido de propagación informado en julio parte de la obtención de semillas o esquejes y continúa con su recepción y manejo en vivero, el embolsado de las plantas resultantes, su exposición progresiva a sombra, media sombra o sol directo y la selección de plantines para una plantación. La secuencia física produce información en distintos momentos, pero antes del sistema esa información no se conservaba en un historial integrado.
 
@@ -77,6 +77,7 @@ La práctica descrita no es completamente lineal. Un mismo origen puede alimenta
 
 **Figura 3.4. Flujo actual y soportes de información identificados**
 
+<!-- diagrama: 03_1_fase_inicio-01 -->
 ```mermaid
 flowchart TB
   A[Árbol madre, comunidad<br/>o aportante externo] --> B[Recolección o entrega<br/>de semillas/esquejes]
@@ -103,7 +104,7 @@ flowchart TB
 
 El refinamiento del 4 de noviembre distingue ese recorrido de la recepción de plantas que ya están vivas: compradas, donadas o existentes antes del uso del sistema. Su historial debe comenzar en la recepción o el conteo actual y continuar desde la etapa en que se incorporan. No corresponde atribuirles una recolección, germinación o pérdida anterior no registrada. La entrega directa en campo también es una variante contemplada, sin suponer tránsito físico por Vivero; su diseño y continuidad de stock permanecen pendientes. La Figura 3.4 conserva la ruta de propagación del diagnóstico de julio, no todas estas variantes posteriores.
 
-#### 3.2.3.1. Recolección e ingreso de semillas o esquejes
+#### 3.1.3.1. Recolección e ingreso de semillas o esquejes
 
 La identificación de árboles madre se realiza considerando características observables como tamaño, condición general, fruto y hojas, además de la cercanía entre la procedencia y el lugar donde se espera utilizar el material. A partir de esos árboles pueden obtenerse semillas o esquejes. La organización considera relevantes el nombre común, el nombre científico, el tipo de material, la ubicación y la cantidad, expresada mediante conteo o peso según corresponda (FP-02).
 
@@ -111,7 +112,7 @@ La recolección no está asignada exclusivamente a un cargo. Puede efectuarla pe
 
 En la práctica anterior, una parte de esa información permanecía en la memoria de quienes participaron o acompañaba físicamente al material durante su traslado. No existía un registro uniforme que permitiera consultar el origen, la cantidad recibida, la fecha, el responsable y la evidencia como una sola unidad. Por ello, el ingreso al vivero se convierte en un punto de control decisivo: si el origen no se recupera en ese momento, la relación resulta difícil de reconstruir después.
 
-#### 3.2.3.2. Manejo dentro del vivero
+#### 3.1.3.2. Manejo dentro del vivero
 
 Al recibir el material, el personal del vivero puede pesarlo o contarlo y organizar su incorporación al proceso. Las semillas pasan al semillero y los esquejes siguen el tratamiento correspondiente. La germinación o el enraizamiento producen resultados observados, no una conversión automática de la cantidad inicial. Después se reconocen plantas que pueden embolsarse, grupos que sufren pérdidas y lotes que continúan su desarrollo.
 
@@ -119,7 +120,7 @@ El manejo incluye momentos descritos como germinación, embolsado, sombra, media
 
 La entrevista señala que la información más útil para la gestión comprende la cantidad que ingresó, la cantidad que produjo plantas, las plantas que permanecen vivas en el vivero y las pérdidas registradas durante el proceso. También resulta necesario conocer qué material se encuentra disponible para atender una plantación. Antes de la estructuración del sistema, estos valores no se mantenían de forma uniforme en Excel, cuadernos u otra base compartida; el estado del vivero se conocía principalmente mediante observación directa y memoria de los responsables (FP-02).
 
-#### 3.2.3.3. Selección, salida y plantación
+#### 3.1.3.3. Selección, salida y plantación
 
 Cuando se requiere una actividad de arborización, forestación o reforestación, se define el lugar, la cantidad de plantas y las especies que se pretenden utilizar. Una plantación puede abastecerse con plantas procedentes de uno o varios viveros. Esto exige diferenciar la cantidad observada en el vivero, la cantidad comprometida para un destino, la cantidad entregada y la cantidad finalmente plantada.
 
@@ -144,7 +145,7 @@ La información que con mayor frecuencia se difundía después de una plantació
 
 *Nota.* Elaboración propia a partir de FP-01, FP-02 y FO-01. La expresión “información generada o necesaria” no implica que todos esos datos se registraran de manera sistemática antes del proyecto.
 
-### 3.2.4. Actores y distribución funcional de responsabilidades
+### 3.1.4. Actores y distribución funcional de responsabilidades
 
 La estructura actual se comprende mejor mediante funciones que mediante cargos rígidos. En proyectos comunitarios, una misma persona puede recolectar material, apoyar el vivero y participar en la plantación; a su vez, la dirección puede coordinar varias etapas. Durante las reuniones se propusieron niveles de vivero, plantación y zona, pero esa jerarquía se presentó como una necesidad de crecimiento y no como una estructura homogénea ya implantada.
 
@@ -165,7 +166,7 @@ La estructura actual se comprende mejor mediante funciones que mediante cargos r
 
 *Nota.* Elaboración propia a partir de FP-01, FP-02 y las aclaraciones proporcionadas por el autor del proyecto. La tabla caracteriza funciones y no constituye todavía el modelo de autorización del sistema.
 
-Una persona puede colaborar físicamente en la plantación sin operar la aplicación. Los actores de interacción se presentan en la [sección 3.2.8](#328-actores-del-sistema-y-casos-de-uso-generales) y su correspondencia con roles y permisos se desarrolla en la [sección 3.3.13 de Elaboración](03_2_fase_elaboracion.md#3313-correspondencia-de-actores-permisos-y-fuentes-de-continuidad). En el recorrido digital definido en [PA-S01](../../../specs/plantacion/participacion-aliada/01-registro-plantacion-inicial/spec.md), la selección individual de participantes adicionales se limita a personas registradas y habilitadas en la misma subcampaña; ese recorrido no contempla identificar individualmente a colaboradores sin cuenta. Esta restricción del registro digital no limita su participación física en la actividad.
+Una persona puede colaborar físicamente en la plantación sin operar la aplicación. Los actores de interacción se presentan en la [sección 3.1.8](#318-actores-del-sistema-y-casos-de-uso-generales) y su correspondencia con roles y permisos se desarrolla en la [sección 3.2.13 de Elaboración](03_2_fase_elaboracion.md#3213-correspondencia-de-actores-permisos-y-fuentes-de-continuidad). En el recorrido digital definido en [PA-S01](../../../specs/plantacion/participacion-aliada/01-registro-plantacion-inicial/spec.md), la selección individual de participantes adicionales se limita a personas registradas y habilitadas en la misma subcampaña; ese recorrido no contempla identificar individualmente a colaboradores sin cuenta. Esta restricción del registro digital no limita su participación física en la actividad.
 
 El control formal del material comienza principalmente con su recepción en vivero, pero la trazabilidad exige capturar también el antecedente disponible. Por ello, no resulta adecuado identificar a una sola persona como “encargado de recolección” para todos los casos. La necesidad real es distinguir al actor que origina o entrega el material del responsable que lo recibe y registra.
 
@@ -173,7 +174,7 @@ La distinción entre quien entrega y quien recibe conserva RAN-01. La recepción
 
 Dentro del vivero se identifican funciones de recepción, manejo y seguimiento. En Chasquipampa estas actividades son coordinadas por R3Foresta y ejecutadas por las personas que atienden el espacio. Para la plantación, la coordinación puede permanecer en la dirección o delegarse a un responsable de la actividad. Los cargos de encargado zonal y los niveles jerárquicos comunitarios mencionados en la entrevista se tratarán como evolución organizativa; no se utilizarán para afirmar que todos los proyectos ya operan con esa estructura.
 
-### 3.2.5. Gestión y calidad de la información disponible
+### 3.1.5. Gestión y calidad de la información disponible
 
 El problema no consiste en una ausencia absoluta de información. Existen fotografías, publicaciones, nombres de lugares, cantidades declaradas y conocimiento acumulado por los responsables. La dificultad es que esos elementos no comparten una estructura que permita vincularlos y recuperarlos como un recorrido.
 
@@ -203,9 +204,13 @@ La evidencia fotográfica presenta una limitación semejante. Las figuras 3.2 y 
 
 *Nota.* Elaboración propia a partir de la [matriz de análisis de OBJ-01](../../03_investigacion/matriz_analisis_objetivo_1.md), FP-01, FP-02 y FO-01. Se conservan los significados de HAL-01 a HAL-11 de esa matriz. El borrador anterior reutilizaba HAL-03 a HAL-08 para otra síntesis; su copia archivada permite reconocer la corrección. HAL-10 conserva su carácter provisional por depender de FD-01.
 
-### 3.2.6. Necesidades y requisitos iniciales derivados
+### 3.1.6. Necesidades, requerimientos y reglas de negocio
 
 Los hallazgos permiten formular necesidades de información antes de decidir tablas, servicios o interfaces. Cada etapa necesita conservar datos propios y relaciones suficientes para reconstruir el recorrido. La necesidad es mantener identidad y procedencia al recibir, transformar o trasladar material. Utilizar el lote como unidad de trazabilidad es una propuesta de solución desarrollada en Elaboración; su granularidad, sus divisiones y sus relaciones deben justificarse allí, sin deducirlos únicamente de las agrupaciones visibles en las fotografías.
+
+#### 3.1.6.1. Reglas de negocio y condiciones del dominio
+
+El análisis distingue las condiciones declaradas de la operación y las restricciones que orientan la solución. Los códigos RAN conservan esa clasificación y sus fuentes. Las reglas de negocio vigentes se mantienen en los módulos y contratos con sus identificadores; el análisis y diseño de la sección 3.2 desarrolla su relación con los modelos y las propiedades que deben comprobarse.
 
 **Tabla 3.8**
 
@@ -234,6 +239,10 @@ Los hallazgos permiten formular necesidades de información antes de decidir tab
 | RAN-10 | concluir el recorrido académico en el registro de la plantación | frontera del Perfil aprobado; excluye seguimiento posterior y cuantificación de carbono |
 
 *Nota.* Elaboración propia a partir de las necesidades del diagnóstico, el alcance y los controles transversales del Perfil y del Capítulo I. Las cláusulas de conservación de procedencia de RAN-02, RAN-05 y RAN-06 se desarrollan mediante NEC-01, NEC-02 y NEC-07. Esta clasificación no acredita que todos los requisitos se aprobaran durante julio.
+
+#### 3.1.6.2. Requerimientos funcionales
+
+Los requerimientos funcionales expresan las capacidades necesarias para registrar el origen, manejar el material, explicar los movimientos y recuperar el destino. La matriz siguiente conserva la relación entre hallazgos, necesidades, requisitos y casos de uso; los refinamientos posteriores mantienen su fecha y su alcance documental.
 
 **Tabla 3.10**
 
@@ -265,6 +274,8 @@ La [propuesta de incorporación y procedencia](../../../../Backend-r3foresta/doc
 
 El 16 de noviembre el autor aprobó los refinamientos de RF-REC-04 y el nuevo RF-VIV-15. La recepción y validación son conjuntas por ADMIN o VALIDADOR asignado al vivero, distinto del recolector. La incorporación por ADMIN exige fotografía y conserva el origen recibido o contado. RF-REC-06 incorpora la consulta pública de semillas con su proyección. Las diferencias de etapa actual y variedad del diseño previo frente al DTO T5 mantienen su revisión pendiente. Las versiones y evidencias se enlazan desde [ESTADO.md](../../../ESTADO.md).
 
+#### 3.1.6.3. Requerimientos no funcionales
+
 Además de las funciones, se consolidan los siguientes requisitos no funcionales iniciales. Sus identificadores se introducen en esta revisión y no se presentan como un catálogo aprobado en IN-1. Las reglas de cantidades y movimientos de la matriz anterior son requisitos de integridad del dominio; las condiciones siguientes describen propiedades transversales que deben concretarse y comprobarse.
 
 **Tabla 3.11**
@@ -284,7 +295,7 @@ Además de las funciones, se consolidan los siguientes requisitos no funcionales
 
 La autorización concedida para utilizar nombres, ubicaciones y convenios en el documento académico no elimina la necesidad de controlar su publicación en el producto. Tampoco la presencia de fotografías o coordenadas acredita por sí sola la correspondencia absoluta entre un registro y el mundo físico.
 
-### 3.2.7. Visión y delimitación del sistema
+### 3.1.7. Visión y delimitación del sistema
 
 La visión del producto es ofrecer a R3Foresta un sistema integrado para registrar y consultar la procedencia, los cambios y el destino del material vegetal hasta su plantación, con cantidades, responsables, fechas, ubicaciones y evidencia relacionadas. Se espera que los responsables puedan reconstruir el recorrido registrado y explicar sus cantidades; la evaluación deberá determinar en qué medida esa propiedad se cumple y con qué limitaciones.
 
@@ -309,9 +320,9 @@ Las tres etapas físicas se corresponden con los tres módulos operativos. El M�
 
 El alcance aprobado incluye ingresos externos, pero su inclusión no demuestra que la documentación técnica o el software los resuelvan. La ruta principal especificada exige una recolección validada para iniciar Vivero y stock asignado desde Vivero para registrar la plantación. La incorporación de plantas vivas cuenta con avances acreditados por versión y entorno; su cobertura integral y la variante directa en campo requieren completar las reglas y comprobaciones pendientes. Esta diferencia se registra como riesgo y condición del trabajo de Elaboración.
 
-### 3.2.8. Actores del sistema y casos de uso generales
+### 3.1.8. Actores del sistema y casos de uso generales
 
-Las funciones organizativas de la sección 3.2.4 describen quién participa en el trabajo de campo. Un actor del sistema representa, en cambio, una forma de interactuar con el producto. Una persona puede asumir varios actores y pertenecer a una comunidad o ser donante no le concede automáticamente una cuenta ni permisos. La vista inicial utiliza responsabilidades de interacción y deja para Elaboración su correspondencia con roles y autorizaciones por ámbito.
+Las funciones organizativas de la sección 3.1.4 describen quién participa en el trabajo de campo. Un actor del sistema representa, en cambio, una forma de interactuar con el producto. Una persona puede asumir varios actores y pertenecer a una comunidad o ser donante no le concede automáticamente una cuenta ni permisos. La vista inicial utiliza responsabilidades de interacción y deja para Elaboración su correspondencia con roles y autorizaciones por ámbito.
 
 **Tabla 3.13**
 
@@ -339,13 +350,29 @@ La Figura 3.5 representa esta frontera mediante notación UML de casos de uso: a
 
 **Figura 3.5. Actores y casos de uso generales del sistema académico**
 
-![Diagrama UML con actores funcionales, ADMIN transversal, administración de subcampaña, casos CU-01 a CU-12 y consultas pública y propia PA-S02](figuras/03_05_casos_uso_inicio.svg)
+La figura se presenta en cuatro partes independientes para insertarlas en hojas carta verticales. ADMIN y el límite del mismo sistema se repiten para facilitar la lectura.
 
-*Nota.* Elaboración propia a partir de la tabla anterior, los requisitos `RF-GEN-*`, `RF-REC-*`, `RF-VIV-*` y `RF-PLA-*` seleccionados para el alcance académico, y PA-S02/PA-S03 para situar las audiencias y el acceso al registro de Plantación. Las asociaciones indican interacciones principales y no privilegios exclusivos; una misma persona puede desempeñar varios actores. Se distinguen consulta pública, consulta propia por vínculo autorizado y consulta operativa. Administrar una subcampaña no concede administración global, logística ni facultad para designar otros administradores. PA-S02 y PA-S03 aportan contexto al recorrido académico; no amplían sus criterios de evaluación. El diagrama expresa interacciones y no acredita implementación ni cobertura integral de acceso o incorporación. Las reglas, alternativas y criterios de aceptación se desarrollan en la sección 3.3.
+**a) General y Recolección**
+
+![Figura 3.5a: General y Recolección](figuras/03_05_casos_uso_inicio.svg)
+
+**b) Vivero**
+
+![Figura 3.5b: Vivero](figuras/03_05_casos_uso_inicio_b.svg)
+
+**c) Plantación y acceso contextual**
+
+![Figura 3.5c: Plantación y acceso contextual](figuras/03_05_casos_uso_inicio_c.svg)
+
+**d) Consulta y administración contextual**
+
+![Figura 3.5d: consulta y administración contextual](figuras/03_05_casos_uso_inicio_d.svg)
+
+*Nota.* Elaboración propia a partir de la tabla anterior, los requisitos `RF-GEN-*`, `RF-REC-*`, `RF-VIV-*` y `RF-PLA-*` seleccionados para el alcance académico, y PA-S02/PA-S03 para situar las audiencias y el acceso al registro de Plantación. Las asociaciones indican interacciones principales y no privilegios exclusivos; una misma persona puede desempeñar varios actores. Se distinguen consulta pública, consulta propia por vínculo autorizado y consulta operativa. Administrar una subcampaña no concede administración global, logística ni facultad para designar otros administradores. PA-S02 y PA-S03 aportan contexto al recorrido académico; no amplían sus criterios de evaluación. El diagrama expresa interacciones y no acredita implementación ni cobertura integral de acceso o incorporación. Las reglas, alternativas y criterios de aceptación se desarrollan en la sección 3.2.
 
 CU-04 conserva la denominación «afectar saldo de Recolección». Según RN-REC-10A, el consumo hacia Vivero se genera al iniciar el lote mediante CU-05; no constituye una acción manual independiente del operador de Recolección. El desecho sigue su operación autorizada correspondiente.
 
-### 3.2.9. Riesgos iniciales y prioridades
+### 3.1.9. Riesgos iniciales y prioridades
 
 Los riesgos se priorizan por su efecto sobre la posibilidad de reconstruir el recorrido y cumplir el alcance. Esta es una lista cualitativa consolidada a partir del diagnóstico; no reconstruye una evaluación numérica realizada en julio. Los responsables de seguimiento indicados son propuestas por función y requieren confirmación en la revisión metodológica.
 
@@ -367,7 +394,7 @@ Los riesgos se priorizan por su efecto sobre la posibilidad de reconstruir el re
 
 La primera prioridad de continuidad es concretar procedencia, unidades y movimientos de la ruta principal y sus variantes, junto con el modelo de autorización. La consulta transversal depende de esas relaciones. Con Inicio/LCO confirmado por el autor el 4 de noviembre, Elaboración debe actualizar la estimación del esfuerzo restante, los responsables de revisión y la viabilidad del trabajo residual. La existencia de código adelantado no resuelve por sí sola estos pendientes de diseño y verificación.
 
-### 3.2.10. Resultados y evaluación del hito de Inicio
+### 3.1.10. Resultados y evaluación del hito de Inicio
 
 El diagnóstico identifica procesos, actores funcionales, información, soportes y dificultades de gestión. La observación fotográfica respalda dos condiciones del manejo en Vivero; Recolección y Plantación se sustentan principalmente en las declaraciones de FP-01 y FP-02 y requieren sus propias evidencias para la validación operativa. No se utilizan cifras del dossier no verificadas como resultados confirmados.
 
@@ -381,7 +408,7 @@ LCO (*Lifecycle Objectives*, objetivos del ciclo de vida) requiere una decisión
 
 | Criterio de revisión | Evidencia disponible | Continuidad o límite conservado |
 |---|---|---|
-| Visión y alcance comprensibles | Perfil aprobado, Capítulo I y sección 3.2.7 | conservar las variantes externas al desarrollar sus contratos |
+| Visión y alcance comprensibles | Perfil aprobado, Capítulo I y sección 3.1.7 | conservar las variantes externas al desarrollar sus contratos |
 | Actores y casos de uso principales | funciones organizativas, tabla de actores, Figura 3.5 y catálogo CU-01 a CU-12 | detallar autorización y responsables de revisión en Elaboración |
 | Necesidades y requisitos iniciales trazables | matriz OBJ-01, tabla puente y RNF iniciales | operacionalizar RNF y completar especificación de ingresos externos |
 | Riesgos prioritarios identificados | RIN-01 a RIN-07 y vacíos de Elaboración | actualizar responsables, tratamiento, riesgo residual y efecto en el plan |

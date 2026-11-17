@@ -16,6 +16,8 @@
 - [x] Retirar ciencia del diseño, DSRM, estudio de caso único embebido, FEDS y demás componentes de metodología de investigación.
 - [x] Tratar la verificación, la validación operativa y la aceptación como actividades de Ingeniería de Software.
 
+**Organización editorial — 16 de noviembre de 2026:** el Capítulo III se presenta en 3.1 Análisis de requerimientos, 3.2 Análisis y diseño, 3.3 Implementación por iteraciones RUP, 3.4 Verificación y pruebas y 3.5 Validación y aceptación. Se conservan las cuatro fases y sus hitos; las pruebas no constituyen una quinta fase. El Capítulo I incorpora RF/RNF, actores y casos de uso, y reglas de negocio en 1.6.3–1.6.5. El diseño incluye un diccionario seleccionado de 20 campos y la Figura 3.5 se divide en cuatro SVG para carta vertical. Esta edición no cierra las casillas de implementación, verificación ni aceptación. [Entrada vigente](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) · [Estado previo archivado](../../archivo/documentacion-grado/proyecto_grado/antes-estructura-por-resultados-2026-11-16/README.md).
+
 ### 1.1. Actualización documental a RUP
 
 **Estado al 4 de noviembre de 2026: parcial.** Los entregables vigentes del documento final —capítulos I, II y III, índices, figura metodológica y bibliografía— declaran únicamente RUP adaptado, con IA como apoyo bajo revisión humana. Las versiones previas se conservan en el [archivo del documento final](../../archivo/documentacion-grado/proyecto_grado/README.md), fuera de los entregables. La revisión actual no modifica el Perfil aprobado; la actualización integral de los documentos de apoyo sigue pendiente.
@@ -70,7 +72,7 @@ El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere 
 
 ### 3.2. Productos de Inicio
 
-La [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO, consolidados desde el 29 de octubre. El 4 de noviembre el autor confirma Inicio/LCO terminado y dispone continuar con Elaboración. Se conserva la ausencia de acta histórica y de registro previo al 20 de julio que acredite IN-1; la decisión actual no modifica esas fechas. La [sección 3.1](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) explica exclusivamente RUP adaptado. Las casillas de detalle siguientes conservan su auditoría documental propia.
+La [sección 3.1 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO, consolidados desde el 29 de octubre. El 4 de noviembre el autor confirma Inicio/LCO terminado y dispone continuar con Elaboración. Se conserva la ausencia de acta histórica y de registro previo al 20 de julio que acredite IN-1; la decisión actual no modifica esas fechas. La [introducción metodológica](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) explica exclusivamente RUP adaptado. Las casillas de detalle siguientes conservan su auditoría documental propia.
 
 - [ ] Cerrar la visión y el alcance del producto.
 - [ ] Cerrar el glosario inicial.
@@ -83,7 +85,7 @@ La [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_i
 
 ### 4.1. Dominio y arquitectura
 
-**Avance documental — 4 de noviembre de 2026:** la [sección 3.3](../06_entregables/proyecto_grado/03_2_fase_elaboracion.md) integra requisitos/CU, procesos, interacciones, modelos conceptual/lógico y el modelo físico de `445f24f` (51 tablas y 564 columnas), con INV-01–INV-11, RNF-INI y tratamiento actualizado de RDI-01–RDI-08. Los diagramas distinguen meta orientativa, cierre manual, GPS exterior con advertencia y resultado recuperable. Las casillas de cierre integral siguientes permanecen abiertas por las variantes y verificaciones pendientes; la existencia de estos productos no cierra LCA.
+**Avance documental — 4 de noviembre de 2026:** la [sección 3.2](../06_entregables/proyecto_grado/03_2_fase_elaboracion.md) integra requisitos/CU, procesos, interacciones, modelos conceptual/lógico y el modelo físico de `445f24f` (51 tablas y 564 columnas), con INV-01–INV-11, RNF-INI y tratamiento actualizado de RDI-01–RDI-08. Los diagramas distinguen meta orientativa, cierre manual, GPS exterior con advertencia y resultado recuperable. Las casillas de cierre integral siguientes permanecen abiertas por las variantes y verificaciones pendientes; la existencia de estos productos no cierra LCA.
 
 - [ ] Especificar entidades, eventos, estados, cantidades, unidades, saldos, responsables y evidencias.
 - [ ] Diferenciar transferencia de transformación biológica u operativa.
@@ -109,7 +111,7 @@ La [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_i
 
 ## 5. Fase de Construcción
 
-**Redacción completada — 4 de noviembre de 2026:** tras dar por terminado el texto de Elaboración, el autor dispuso continuar con Construcción y concluir el Capítulo III en tono retrospectivo de sistema desarrollado. La [sección 3.4](../06_entregables/proyecto_grado/03_3_fase_construccion.md) integra módulos, contratos, LIFO en servidor, GPS exterior con advertencia, recuperación del mismo intento y las matrices de resultados y cobertura TC-01–TC-15. La edición actualiza los hallazgos históricos de identidad y ausencia de pruebas frontend. Las casillas siguientes conservan su estado técnico: el cierre de redacción no acredita tareas de implementación, regresión integral ni IOC.
+**Redacción completada — 4 de noviembre de 2026:** tras dar por terminado el texto de Elaboración, el autor dispuso continuar con Construcción y concluir el Capítulo III en tono retrospectivo de sistema desarrollado. La [sección 3.3](../06_entregables/proyecto_grado/03_3_fase_construccion.md) integra módulos, contratos, LIFO en servidor, GPS exterior con advertencia, recuperación del mismo intento y las matrices de resultados y cobertura TC-01–TC-15. La edición actualiza los hallazgos históricos de identidad y ausencia de pruebas frontend. Las casillas siguientes conservan su estado técnico: el cierre de redacción no acredita tareas de implementación, regresión integral ni IOC.
 
 Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 
