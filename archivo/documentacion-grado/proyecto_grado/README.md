@@ -16,6 +16,8 @@ Versiones históricas conservadas fuera de `documentacion-grado/06_entregables`.
 
 | [Capítulos anteriores a la estructura por resultados del 16 de noviembre](antes-estructura-por-resultados-2026-11-16/README.md) | Conserva el estado `267c250`, anterior a los cinco apartados académicos y a la división de la Figura 3.5 en cuatro SVG independientes. |
 
+| [Capítulo III anterior al catálogo explícito del 16 de noviembre](antes-catalogo-explicito-2026-11-16/README.md) | Conserva el texto anterior a desarrollar los 47 RF, seis RNF y 170 RN con enunciados y derivación hacia diseño, incrementos, pruebas y aceptación. |
+
 El 4 de noviembre de 2026 se trasladó aquí el contenido de `documentacion-grado/06_entregables/proyecto_grado/archivo/`. Se conservaron los nombres de archivo y los subdirectorios, y se ajustaron los enlaces relativos al destino de cada fuente. También se guardó la copia previa a la revisión del documento final, incluidos los cambios locales existentes al iniciar el encargo. Las formulaciones RUP + SDD de estas copias documentan el antecedente y no rigen el documento vigente.
 
 La revisión no modifica decisiones aceptadas, fechas, versiones técnicas ni pendientes de pruebas, validación, despliegue o aceptación. El seguimiento de la actualización de los documentos de apoyo permanece en la [sección 1.1 del tablero académico](../../../documentacion-grado/02_planificacion/TODO_PROYECTO_GRADO.md#11-actualización-documental-a-rup).
