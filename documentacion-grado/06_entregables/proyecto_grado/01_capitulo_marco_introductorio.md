@@ -129,6 +129,24 @@ Los registros de trazabilidad pueden evaluarse para su posible reutilización y 
 - Blockchain, NFT, contratos inteligentes, IPFS, anclajes criptográficos y componentes equivalentes quedan fuera del aporte académico, de la verificación y de los resultados.
 - El producto se desarrolla para el caso y los procesos de R3Foresta; no incluye una operación nacional, un despliegue masivo ni la generalización automática a otras organizaciones.
 
+### 1.6.3 Requerimientos funcionales y no funcionales
+
+Los requerimientos funcionales comprenden el registro del origen y su evidencia, la recepción y el manejo en Vivero, los movimientos de cantidades, la entrega física y el registro de Plantación, así como las consultas autorizadas del recorrido. Se conservan los identificadores RF-GEN, RF-REC, RF-VIV y RF-PLA de las fuentes de cada módulo. Los ingresos externos mantienen sus reglas y límites de cobertura; su inclusión en el alcance no acredita su implementación completa.
+
+Los requisitos RNF-INI-01 a RNF-INI-06 establecen las condiciones de autorización, conservación histórica, consistencia y recuperación de operaciones, protección de datos y evidencia, respaldo y usabilidad. El [análisis de requerimientos del Capítulo III, sección 3.1](03_1_fase_inicio.md#31-análisis-de-requerimientos) desarrolla su relación con las necesidades y distingue los criterios definidos, las precisiones pendientes y la evidencia de cumplimiento.
+
+### 1.6.4 Actores y casos de uso
+
+Los actores representan funciones de interacción: administración, operación de Recolección, revisión y recepción, operación de Vivero, coordinación de Plantación, registro autorizado y consulta pública o privada. Una persona puede desempeñar varias funciones; estas se ejercen conforme al rol global y a los permisos vigentes de cada operación.
+
+Los casos CU-01 a CU-12 relacionan esas funciones con los objetivos del sistema. Los requisitos y las especificaciones existentes precisan las consultas y los permisos contextuales. La [sección 3.1 del Capítulo III](03_1_fase_inicio.md#31-análisis-de-requerimientos) presenta la vista general de actores y casos de uso; la sección 3.2 desarrolla las realizaciones y las condiciones del diseño.
+
+### 1.6.5 Reglas de negocio
+
+Las reglas conservan la procedencia y la identidad histórica del material, distinguen las cantidades de entrada de las plantas vivas observadas y exigen saldos no negativos. La entrega a Plantación descuenta el saldo de Vivero; plantar consume la asignación recibida. Las incorporaciones externas comienzan con los antecedentes disponibles, sin inventar procesos anteriores.
+
+Los originales, eventos y correcciones conservan su trazabilidad conforme a las reglas de cada operación. Las fuentes de los módulos y los contratos mantienen sus identificadores y decisiones aceptadas. La [sección 3.1 del Capítulo III](03_1_fase_inicio.md#31-análisis-de-requerimientos) relaciona las condiciones del dominio con esas reglas; el análisis y diseño, la implementación y las pruebas desarrollan sus mecanismos y su comprobación dentro del alcance definido.
+
 ## 1.7 Metodología de desarrollo
 
 El proyecto adopta **Rational Unified Process (RUP) adaptado como única metodología de desarrollo**. Las fases, iteraciones, disciplinas, riesgos y revisiones de RUP organizan el ciclo de vida completo. La inteligencia artificial actúa como herramienta de apoyo bajo revisión y responsabilidad humanas. Los fundamentos se desarrollan en el Capítulo II; esta sección explica su aplicación al proyecto.

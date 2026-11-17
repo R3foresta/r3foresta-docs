@@ -76,15 +76,11 @@ def panel(n, title, cases, actors, admin):
     return ''.join(parts)
 
 style = '<style>text{font-family:Arial,Helvetica,sans-serif;fill:#172b23;text-anchor:middle}</style>'
-body = []
 for i, data in enumerate(PANELS):
     content = panel(i, *data)
     title = escape(data[0])
     svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1550" viewBox="0 0 1200 1550" role="img"><title>Figura 3.5: {title}</title>{style}{content}</svg>'
     (OUT / f'03_05_casos_uso_inicio-p{i+1:02}.svg').write_text(svg)
-    body.append(f'<g transform="translate(0 {1550*i})">{content}</g>')
-(ROOT / '03_05_casos_uso_inicio.svg').write_text(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="6200" viewBox="0 0 1200 6200" role="img">'
-    '<title>Figura 3.5: actores y casos de uso generales, cuatro paneles verticales</title>'
-    + style + ''.join(body) + '</svg>')
-print('Figura 3.5: cuatro paneles verticales generados.')
+    suffix = '' if i == 0 else f'_{chr(97+i)}'
+    (ROOT / f'03_05_casos_uso_inicio{suffix}.svg').write_text(svg)
+print('Figura 3.5: cuatro SVG independientes generados para carta vertical.')

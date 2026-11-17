@@ -14,7 +14,7 @@ Los [modelos de datos](modelos-datos/README.md) conservan sus fuentes editables.
 
 ## Diagramas en SVG
 
-- [Figura 3.5 — Actores y casos de uso generales](03_05_casos_uso_inicio.svg).
+- Figura 3.5 en cuatro SVG independientes: [a) General y Recolección](03_05_casos_uso_inicio.svg), [b) Vivero](03_05_casos_uso_inicio_b.svg), [c) Plantación y acceso](03_05_casos_uso_inicio_c.svg), [d) Consultas](03_05_casos_uso_inicio_d.svg).
 - [Modelo físico completo y cinco vistas temáticas](../../../../database/00_database_schema.md): SVG y fuentes Mermaid, junto con procedencia y scripts de generación.
 
 ## Fuentes Mermaid del capítulo
