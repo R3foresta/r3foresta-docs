@@ -1,12 +1,12 @@
 # Módulo General - Catálogos y Maestros Transversales
 
-Este módulo documenta las entidades base que sostienen a todo R3Foresta y que son compartidas por Recolección, Vivero y los módulos futuros.
+Este módulo documenta las entidades base compartidas por Recolección, Vivero y Plantación. La actualización funcional del 16 de noviembre de 2026 incorpora autoridad por operación y ámbito, alta atómica de usuario/passkey y evidencia original con audiencia definida.
 
 ## Propósito
 
-Definir una base documental común para:
+Definir una base documental común que cubre
 
-* usuarios y roles,
+* usuarios, roles globales y accesos M1/M2/contextuales,
 * comunidades y estructura territorial,
 * ubicaciones,
 * viveros,
@@ -44,3 +44,5 @@ Las decisiones de diseño cerradas para el MVP (comunidad, naming de planta, rol
 * Vivero hereda snapshots desde Recolección, pero la fuente maestra original de plantas, usuarios, viveros y territorios vive aquí.
 * Plantación (Módulo 3) consume `ORGANIZACION` (`RF-GEN-07`) vía el puente `CAMPANIA_ORGANIZACION`.
 * Base de datos usa este módulo como contrato semántico para tablas maestras.
+
+Las reglas de [recepción única](../../Backend-r3foresta/docs/t4-recepcion-semillas.md) y [altas/WebAuthn](../../Backend-r3foresta/docs/revision-altas-mvp-2026-11-16.md) identifican sus contratos y límites de entorno. La actualización de requisitos no acredita aplicación SQL, despliegue ni aceptación de recorridos pendientes.

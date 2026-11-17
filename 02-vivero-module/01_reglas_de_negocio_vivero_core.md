@@ -1,5 +1,7 @@
 # Reglas de Negocio (RN) - Modulo 2: Vivero Core - Version MVP
 
+Actualización de requisitos aprobada el 16 de noviembre de 2026. Incorpora acceso por vivero, recepción única de Recolección y plantas vivas con procedencia. La evidencia por versión y entorno se consulta en [ESTADO.md](../ESTADO.md) y en los contratos enlazados.
+
 ## 1. Proposito
 
 Estas reglas definen el nucleo operativo de Vivero sin mezclar contratos de integracion. El core cubre:
@@ -8,6 +10,7 @@ Estas reglas definen el nucleo operativo de Vivero sin mezclar contratos de inte
 - origen unico,
 - eventos append-only,
 - nacimiento y control del saldo vivo,
+- incorporación de plantas vivas por recepción o conteo inicial,
 - descarte pre-embolsado,
 - merma,
 - despacho manual,
@@ -24,9 +27,11 @@ Los contratos entre modulos viven fuera de este directorio:
 ## 2. Definiciones base
 
 - **Lote origen:** registro de Recoleccion que abastece al vivero. Sus condiciones de consumo pertenecen al contrato Recoleccion -> Vivero.
-- **Lote de vivero:** lote iniciado en Modulo 2 a partir de un unico lote origen.
+- **Lote de vivero:** lote homogéneo con un único origen registrado, mediante Recolección o incorporación de plantas vivas.
+- **Base viva:** nacimiento único del saldo mediante `EMBOLSADO` en propagación o `INCORPORACION` para plantas ya vivas.
+- **Incorporación:** recepción de compra/donación o conteo inicial de existencias, con un lote nuevo y procedencia declarada conforme a `RF-VIV-15`.
 - **Material en proceso:** material registrado en `INICIO`; todavia no representa plantas vivas.
-- **Plantas vivas:** saldo operativo que nace en `EMBOLSADO`.
+- **Plantas vivas:** saldo operativo que nace en `EMBOLSADO` o `INCORPORACION`, según el camino del lote.
 - **Saldo vivo:** cantidad actual de plantas vivas disponibles en el lote.
 - **Persistencia oficial de unidades:** `ENUM(unidad_medida) = [UNIDAD, G]`.
 - **Normalizacion de entrada:** el frontend puede aceptar `kg`, `g` y `unidad`; el backend normaliza `kg -> G`, `g -> G` y `unidad -> UNIDAD`. `kg` no se persiste.
@@ -45,11 +50,13 @@ Los contratos entre modulos viven fuera de este directorio:
 
 Todo lote de vivero debe poseer un identificador unico e inmutable generado por el sistema.
 
-El `codigo_trazabilidad` del lote de vivero debe construirse con el formato:
+Para el camino de propagación, el `codigo_trazabilidad` del lote de vivero debe construirse con el formato:
 
 `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`
 
 El codigo de vivero es propio del lote y no reemplaza el codigo de la recoleccion; lo concatena para conservar el vinculo visible con el origen.
+
+El camino incorporado utiliza un código independiente `VIV-INC-` generado por el sistema. Las relaciones del lote y del evento conservan la procedencia consultable.
 
 ### RN-VIV-02 - Origen unico del lote
 
@@ -57,7 +64,7 @@ El codigo de vivero es propio del lote y no reemplaza el codigo de la recoleccio
 - **Aplica en MVP:** Si
 - **Relevancia carbono:** Alta
 
-Todo lote de vivero debe estar vinculado a un solo lote origen.
+Todo lote conserva un único origen registrado. El camino de propagación referencia una Recolección recibida y validada. El camino incorporado referencia su evento `INCORPORACION` y su procedencia, con `recoleccion_id` nulo.
 
 No se permite mezclar multiples lotes origen en un mismo lote de vivero.
 
@@ -92,7 +99,7 @@ Un mismo lote origen puede abastecer a multiples lotes de vivero, siempre que ca
 - **Aplica en MVP:** Si
 - **Relevancia carbono:** Alta
 
-Todo lote de vivero debe iniciar con:
+El lote de propagación inicia con:
 
 1. `INICIO`
 2. `EMBOLSADO` o `DESCARTE_PRE_EMBOLSADO`
@@ -100,6 +107,8 @@ Todo lote de vivero debe iniciar con:
 Si sigue el camino de `EMBOLSADO`, luego puede registrar `ADAPTABILIDAD`, `MERMA` y `DESPACHO` manual, hasta cerrar automaticamente cuando `saldo_vivo_actual = 0`.
 
 Si el lote nunca produce plantas vivas, debe cerrarse con `DESCARTE_PRE_EMBOLSADO` y no quedar activo indefinidamente.
+
+El lote incorporado nace con `INCORPORACION` y saldo vivo en `UNIDAD`. Ese lote puede continuar con adaptabilidad, merma, despacho y operaciones del contrato con Plantación. Cada lote admite una sola base viva.
 
 ### RN-VIV-09 - Adaptabilidad como seguimiento operativo
 
@@ -128,21 +137,21 @@ No se permite registrar:
 - `EMBOLSADO` sin `INICIO` previo,
 - `DESCARTE_PRE_EMBOLSADO` sin `INICIO` previo,
 - `DESCARTE_PRE_EMBOLSADO` si ya existe `EMBOLSADO`,
-- `MERMA` sin `EMBOLSADO` previo,
-- `DESPACHO` manual sin `EMBOLSADO` previo,
-- `ADAPTABILIDAD` sin `EMBOLSADO` previo.
+- `MERMA`, `DESPACHO` manual o `ADAPTABILIDAD` sin base viva confirmada mediante `EMBOLSADO` o `INCORPORACION`,
+- `INICIO`, `EMBOLSADO` o `DESCARTE_PRE_EMBOLSADO` en un lote incorporado,
+- una segunda base viva en el mismo lote.
 
 `ADAPTABILIDAD` no es requisito para registrar `MERMA` ni `DESPACHO` manual.
 
-### RN-VIV-11 - Embolsado como nacimiento del saldo vivo
+### RN-VIV-11 - Nacimiento único del saldo vivo
 
 - **Severidad:** BLOQUEANTE
 - **Aplica en MVP:** Si
 - **Relevancia carbono:** Alta
 
-El saldo de plantas vivas nace unicamente en el evento `EMBOLSADO`. Antes de ese hito solo existe material en proceso.
+En propagación, el saldo de plantas vivas nace en `EMBOLSADO`. Antes de ese hito solo existe material en proceso. En el camino incorporado nace en `INCORPORACION` conforme a `RF-VIV-15`.
 
-El evento `EMBOLSADO` solo puede registrarse una vez por lote.
+Cada lote admite una única base viva, mediante uno de esos eventos.
 
 ### RN-VIV-11A - Descarte pre-embolsado cierra lotes sin plantas vivas
 
@@ -241,7 +250,7 @@ Para `SEMILLA`, el consumo del origen puede mantenerse en `G` o `UNIDAD` segun l
 
 Para `ESQUEJE`, la unidad es siempre `UNIDAD`, con entero estricto y sin decimales.
 
-Desde `EMBOLSADO`, el saldo vivo se maneja siempre en `UNIDAD`.
+Desde `EMBOLSADO` o `INCORPORACION`, el saldo vivo se maneja siempre en `UNIDAD`.
 
 Si `tipo_material_snapshot = OTRO`, el flujo queda fuera del estandar del MVP y requiere definicion adicional.
 
@@ -280,7 +289,7 @@ El sistema no convierte automaticamente gramos en plantas vivas.
 - **Aplica en MVP:** Si
 - **Relevancia carbono:** Alta
 
-Los eventos `EMBOLSADO`, `MERMA` y `DESPACHO` manual deben registrar:
+Los eventos `EMBOLSADO`, `INCORPORACION`, `MERMA` y `DESPACHO` manual deben registrar:
 
 - `saldo_vivo_antes`
 - `saldo_vivo_despues`
@@ -289,6 +298,7 @@ Reglas especificas:
 
 - en `EMBOLSADO`, `saldo_vivo_antes = null`,
 - en `EMBOLSADO`, `saldo_vivo_despues = plantas_vivas_iniciales`,
+- en `INCORPORACION`, `saldo_vivo_antes = 0` y `saldo_vivo_despues = cantidad` recibida o contada,
 - en `MERMA` y `DESPACHO` manual, el saldo lo calcula el sistema.
 
 ### RN-VIV-18A - Reglas de unidad por evento
@@ -301,6 +311,7 @@ Reglas obligatorias por evento:
 
 - `INICIO`: usa la misma unidad definida por el contrato Recoleccion -> Vivero.
 - `EMBOLSADO`: `cantidad_afectada = plantas_vivas_iniciales` y `unidad_medida_evento = UNIDAD`.
+- `INCORPORACION`: `cantidad_afectada = plantas_vivas_iniciales` y `unidad_medida_evento = UNIDAD`.
 - `DESCARTE_PRE_EMBOLSADO`: usa la unidad del material en proceso (`UNIDAD` o `G`) y no crea saldo vivo.
 - `ADAPTABILIDAD`, `MERMA` y `DESPACHO` manual operan sobre saldo vivo en `UNIDAD`.
 - `CIERRE_AUTOMATICO` hereda la semantica del evento que lo dispara: saldo vivo `0` si viene de `MERMA`/`DESPACHO`, o saldo vivo nulo si viene de `DESCARTE_PRE_EMBOLSADO`.
@@ -315,7 +326,7 @@ Para `ADAPTABILIDAD`, si el modelo persiste `cantidad_afectada`, esta debe expre
 
 Toda perdida operativa debe registrarse mediante un evento `MERMA` con causa, cantidad y responsable.
 
-Excepcion semantica: si la perdida ocurre antes de `EMBOLSADO`, no es `MERMA`; debe registrarse como `DESCARTE_PRE_EMBOLSADO`.
+En propagación, la pérdida total del material en proceso anterior a `EMBOLSADO` se registra como `DESCARTE_PRE_EMBOLSADO`. Las pérdidas posteriores al nacimiento vivo por `EMBOLSADO` o `INCORPORACION` se registran como `MERMA`.
 
 ### RN-VIV-20 - Despachos manuales y mermas no pueden exceder el saldo aplicable
 
@@ -339,15 +350,13 @@ Reglas por tipo:
 
 Ningun evento puede dejar el saldo vivo en un valor negativo.
 
-### RN-VIV-22 - El saldo vivo no aumenta en el MVP
+### RN-VIV-22 - Aumentos de saldo vivo y devoluciones
 
 - **Severidad:** BLOQUEANTE
 - **Aplica en MVP:** Si
 - **Relevancia carbono:** Alta
 
-En el MVP, el saldo vivo solo puede mantenerse o disminuir.
-
-No se permiten incrementos de saldo vivo una vez nacido en `EMBOLSADO`.
+El nacimiento vivo fija la cantidad inicial del lote mediante `EMBOLSADO` o `INCORPORACION`. Cada ingreso incorporado crea un lote nuevo. Los aumentos posteriores del saldo físico se limitan a las devoluciones autorizadas al mismo lote de origen según el contrato Vivero → Plantación. La cantidad inicial y la cantidad entregada se conservan.
 
 ### RN-VIV-23 - Cierre automatico por saldo vivo 0
 
@@ -357,7 +366,7 @@ No se permiten incrementos de saldo vivo una vez nacido en `EMBOLSADO`.
 
 Cuando el saldo vivo llegue a `0`, el lote debe pasar automaticamente a estado `FINALIZADO`.
 
-Si el lote nunca llega a `EMBOLSADO`, el cierre ocurre por `DESCARTE_PRE_EMBOLSADO` y no por saldo vivo `0`.
+Si el lote de propagación tuvo `INICIO` y nunca produjo saldo vivo, el cierre ocurre por `DESCARTE_PRE_EMBOLSADO`.
 
 ### RN-VIV-24 - Motivo de cierre obligatorio
 
@@ -382,6 +391,8 @@ Todo cierre automatico debe calcular y guardar un `motivo_cierre`:
 
 Una vez que el lote pase a `FINALIZADO`, no se permiten nuevos eventos operativos normales.
 
+La devolución autorizada al lote de origen es la excepción operativa del contrato con Plantación. Si el lote estaba `FINALIZADO`, el retorno de plantas lo deja `ACTIVO` con el saldo restituido y `motivo_cierre` actual nulo. Los eventos de cierre anteriores permanecen en el historial y la subcampaña conserva su estado.
+
 ## 7. Evidencia de trazabilidad
 
 ### RN-VIV-26 - Evidencia minima por evento critico
@@ -394,6 +405,7 @@ En el MVP, cada evento principal requiere minimo 1 foto como evidencia:
 
 - `INICIO` requiere evidencia,
 - `EMBOLSADO` requiere evidencia,
+- `INCORPORACION` requiere evidencia privada de recepción o conteo,
 - `DESCARTE_PRE_EMBOLSADO` requiere evidencia,
 - `MERMA` requiere evidencia,
 - `DESPACHO` manual requiere evidencia.
@@ -401,6 +413,8 @@ En el MVP, cada evento principal requiere minimo 1 foto como evidencia:
 `ADAPTABILIDAD` puede registrar evidencia, pero no es obligatoria. Sus subetapas (`SOMBRA`, `MEDIA_SOMBRA`, `SOL_DIRECTO`) pueden registrarse sin foto.
 
 La evidencia debe almacenarse y vincularse directamente al evento que la origina.
+
+Las fotos T5 se preparan bajo solicitud propia y contexto de vivero, con ADMIN actual. El alta vincula esas fotos al evento en la misma transacción. Su consulta utiliza el historial autorizado del lote y URLs firmadas temporales. Un fallo de consulta o firma conserva los metadatos disponibles e informa la parte pendiente.
 
 ### RN-VIV-27 - No se permite completar un evento critico sin evidencia requerida
 
@@ -447,6 +461,8 @@ Todo evento debe registrar:
 - `fecha_evento`
 - `created_at`
 
+La fecha física y la fecha de persistencia se muestran con la precisión disponible. En la estructura legada, `created_at` es `DATE`. Las incorporaciones nuevas conservan además `registrado_en` como sello temporal de confirmación.
+
 ### RN-VIV-32 - No se permiten fechas futuras
 
 - **Severidad:** BLOQUEANTE
@@ -461,7 +477,7 @@ No se permite registrar eventos con `fecha_evento` futura.
 - **Aplica en MVP:** Si
 - **Relevancia carbono:** Media
 
-Se permite registrar eventos hasta 10 dias en el pasado respecto de la fecha actual del sistema. Este valor debe ser configurable.
+Se permite registrar eventos dentro de diez días inclusivos respecto del día operativo en `America/La_Paz`. La incorporación utiliza esa ventana también para `SALDO_INICIAL`, con la fecha del conteo actual. Las fechas antiguas de adquisición pueden conservarse como antecedentes.
 
 ### RN-VIV-34 - Coherencia temporal por hitos
 
@@ -491,6 +507,7 @@ Los tipos de evento minimos del core MVP son:
 
 - `INICIO`
 - `EMBOLSADO`
+- `INCORPORACION`
 - `DESCARTE_PRE_EMBOLSADO`
 - `ADAPTABILIDAD`
 - `MERMA`
@@ -550,6 +567,10 @@ La consulta del lote debe hacer visible la secuencia:
 
 `recoleccion origen -> contrato de consumo -> INICIO -> (DESCARTE_PRE_EMBOLSADO -> CIERRE_AUTOMATICO | EMBOLSADO -> ADAPTABILIDAD -> MERMA/DESPACHO MANUAL -> CIERRE_AUTOMATICO)`
 
+Para plantas incorporadas, la secuencia comienza en recepción o conteo → `INCORPORACION` → movimientos y cierre. Conservar los antecedentes disponibles y los vacíos de historia previa. El listado y el historial distinguen la modalidad, procedencia y base viva del lote.
+
+El historial recorre todas las páginas del mismo corte antes de declararse completo y revalida acceso en cada página. Comunica las páginas pendientes y los errores de lectura o firma de fotos. El saldo actual procede de la lectura autorizada del servidor, incluso cuando existen eventos retroactivos.
+
 ### RN-VIV-41 - Reportes distinguen tipos de cierre
 
 - **Severidad:** BLOQUEANTE
@@ -586,12 +607,25 @@ No se introduce el rol `AUDITOR`.
 - **Aplica en MVP:** Si
 - **Relevancia carbono:** Media
 
-- `ADMIN`: parametriza, consulta y administra.
-- `GENERAL`: registra eventos permitidos y consulta lotes.
-- `VALIDADOR`: existe como rol global, pero en este modulo no activa un flujo especial en el MVP.
-- `VOLUNTARIO`: no deberia registrar eventos criticos del modulo salvo parametrizacion explicita.
+- `ADMIN` activo administra asignaciones de acceso y opera con alcance global.
+- `GENERAL` y `VALIDADOR` activos requieren asignación vigente a cada vivero para consultar y operar sus lotes, evidencias y material permitido. Listas, totales y filtros se limitan al ámbito autorizado antes de paginar.
+- Recibir y validar Recolección exige `ADMIN` activo o `VALIDADOR` con asignación vigente al vivero de almacenamiento. La persona receptora debe ser distinta de quien recolectó, incluido ADMIN.
+- Nuevas incorporaciones y sus fotos pendientes requieren `ADMIN` global actual. El resultado propio confirmado sigue siendo recuperable por una cuenta activa después de perder ese rol.
+- `VOLUNTARIO` conserva las capacidades expresamente definidas para participación y los resultados propios recuperables que correspondan.
 
 `COORDINADOR` no debe asumirse como rol global de Vivero. Si aparece en contratos con Plantacion, debe tratarse como responsabilidad asociada a subcampania o quedar como decision pendiente del contrato.
+
+La entrega y devolución explícitas requieren ADMIN activo o la intersección de asignación vigente al vivero y coordinación de la subcampaña. El retiro de un ámbito conserva los demás, la historia y los recibos propios definidos por contrato. La autoridad se revalida en servidor y se coordina con su retiro o cambio de rol. [Contrato de acceso M2](../../Backend-r3foresta/docs/t2-acceso-viveros.md).
+
+### Incorporación de plantas vivas — RF-VIV-15
+
+ADMIN registra `RECEPCION` de `COMPRA` o `DONACION`, o `SALDO_INICIAL` de existencias contadas. Saldo inicial admite además `PRODUCCION_PROPIA` y `DESCONOCIDA`, con observaciones obligatorias para esta última. Especie activa, vivero, cantidad entera positiva, fecha física, responsable y foto privada son obligatorios. Tercero y referencia documental son opcionales.
+
+Lote, evento, procedencia, evidencia y resultado de solicitud se confirman juntos. La misma solicitud propia con intención idéntica recupera el hecho confirmado. Otra intención con la misma clave produce conflicto. Ante respuesta perdida o resultado inconcluso se conserva la solicitud y se consulta antes de decidir el reintento explícito.
+
+El conteo inicial requiere excluir existencias ya representadas en otros lotes. Una compra antigua de 300 plantas con 210 contadas actualmente se registra por 210 como saldo inicial, conservando las 300 como antecedente. Compra y saldo inicial se distinguen de la producción del período registrada por `EMBOLSADO`.
+
+El [requisito funcional](00_requerimientos_vivero_core.json) mantiene los criterios de aceptación y el [contrato T5](../../Backend-r3foresta/docs/t5-incorporacion-plantas.md) precisa validaciones, recuperación y privacidad. La [integración backend del 15 de noviembre](../../Backend-r3foresta/docs/t5-integracion-backend-2026-11-15.md) fija la autoridad ADMIN mediante 109 y la procedencia administrativa mediante 110.
 
 ## 12. Alcance real del MVP
 
@@ -619,7 +653,7 @@ El MVP core prioriza:
 Quedan fuera del core MVP:
 
 - correcciones posteriores por eventos compensatorios,
-- reapertura de lotes,
+- reapertura discrecional de lotes, con la excepción de la devolución autorizada al origen definida en `RN-VIV-25` y el contrato con Plantación,
 - excepciones de evidencia,
 - evidencia tardia,
 - blockchain multi-hito,
@@ -644,7 +678,7 @@ El diseno del MVP debe dejar preparada una evolucion futura para incorporar, sin
 
 ## 13. Reglas movidas al contrato Vivero -> Plantacion
 
-Las reglas originales `RN-VIV-47` a `RN-VIV-60` ya no pertenecen al core puro de Vivero. Se conservan con su ID original en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md).
+Las reglas originales `RN-VIV-47` a `RN-VIV-61` ya no pertenecen al core puro de Vivero. Se conservan con su ID original en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md).
 
 ## 14. TODO / Decision pendiente
 

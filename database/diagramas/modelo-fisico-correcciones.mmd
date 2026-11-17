@@ -5,257 +5,258 @@ erDiagram
   direction TB
   %% Generado por database/scripts/generar-modelo-fisico.mjs.
   %% NULL / NN e IDENTITY proceden de la exportación aportada.
-  %% FK simples: catálogo PostgREST. FK compuestas: SQL 070/072/074/082.
+  %% FK del extracto aportado. Claves compuestas agrupadas y contrastadas con SQL local.
+  %% USER_DEFINED conserva el tipo no resuelto por el extracto.
   %% La vista temática solo dibuja relaciones cuyos dos extremos están incluidos.
   participacion_comando {
-    int8 id PK "NN; IDENTITY"
-    int8 actor_id FK "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
     text operacion "NN"
     uuid comando_id "NN"
-    int2 version_contrato "NN"
-    int2 version_huella "NN"
+    smallint version_contrato "NN"
+    smallint version_huella "NN"
     bytea huella "NULL"
     text estado "NN"
-    int8 subcampania_preparacion_id FK "NULL"
-    int8 registro_plantacion_id FK "NULL"
+    bigint subcampania_preparacion_id FK "NULL"
+    bigint registro_plantacion_id FK "NULL"
     jsonb resultado "NULL"
     jsonb error "NULL"
-    int2 http_terminal "NULL"
-    timestamptz creado_en "NN"
-    timestamptz finalizado_en "NULL"
+    smallint http_terminal "NULL"
+    timestamp_with_time_zone creado_en "NN"
+    timestamp_with_time_zone finalizado_en "NULL"
   }
 
   registro_plantacion {
-    int8 id PK "NN; IDENTITY"
-    int8 subcampania_id FK "NN"
-    bool es_reposicion "NN"
-    int8 registro_plantacion_origen_id FK "NULL"
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    boolean es_reposicion "NN"
+    bigint registro_plantacion_origen_id FK "NULL"
     date fecha_plantacion "NN"
-    int8 responsable_id FK "NN"
+    bigint responsable_id FK "NN"
     numeric latitud "NN"
     numeric longitud "NN"
-    bool gps_dentro_poligono "NN"
+    boolean gps_dentro_poligono "NN"
     numeric gps_distancia_a_poligono_m "NULL"
-    int4 cantidad_total_plantada "NN"
-    int4 cantidad_muerta_acumulada "NN"
-    int4 cantidad_repuesta_acumulada "NN"
-    int4 saldo_vivo_grupo "NULL"
+    integer cantidad_total_plantada "NN"
+    integer cantidad_muerta_acumulada "NN"
+    integer cantidad_repuesta_acumulada "NN"
+    integer saldo_vivo_grupo "NULL"
     text nombre_subcampania_snapshot "NULL"
     text nombre_zona_snapshot "NULL"
     text nombre_responsable_snapshot "NULL"
     text observaciones "NULL"
     text codigo_trazabilidad UK "NN"
-    timestamptz created_at "NN"
-    int8 created_by FK "NN"
+    timestamp_with_time_zone created_at "NN"
+    bigint created_by FK "NN"
     jsonb metadata_blockchain "NULL"
-    int8 revision_registro "NN"
+    bigint revision_registro "NN"
     text afiliacion_responsable_snapshot "NULL"
     text afiliacion_responsable_estado "NN"
     text afiliacion_responsable_tipo "NULL"
-    int8 organizacion_responsable_id_snapshot FK "NULL"
+    bigint organizacion_responsable_id_snapshot FK "NULL"
   }
 
   registro_plantacion_coresponsable {
-    int8 id PK "NN; IDENTITY"
-    int8 registro_plantacion_id FK "NN"
-    int8 usuario_id FK "NN"
-    timestamptz created_at "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint registro_plantacion_id FK "NN"
+    bigint usuario_id FK "NN"
+    timestamp_with_time_zone created_at "NN"
     text nombre_snapshot "NULL"
     text afiliacion_snapshot "NULL"
     text afiliacion_estado "NN"
     text afiliacion_tipo "NULL"
-    int8 organizacion_id_snapshot FK "NULL"
+    bigint organizacion_id_snapshot FK "NULL"
   }
 
   registro_plantacion_detalle {
-    int8 id PK "NN; IDENTITY"
-    int8 registro_plantacion_id FK "NN"
-    int8 asignacion_id FK "NN"
-    int8 lote_vivero_id FK "NN"
-    int8 planta_id FK "NN"
-    int4 cantidad "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint registro_plantacion_id FK "NN"
+    bigint asignacion_id FK "NN"
+    bigint lote_vivero_id FK "NN"
+    bigint planta_id FK "NN"
+    integer cantidad "NN"
     text nombre_cientifico_snapshot "NULL"
     text nombre_comercial_snapshot "NULL"
     text variedad_snapshot "NULL"
-    int8 evento_lote_vivero_despacho_id FK "NULL"
-    timestamptz created_at "NN"
+    bigint evento_lote_vivero_despacho_id FK "NULL"
+    timestamp_with_time_zone created_at "NN"
   }
 
   evento_plantacion {
-    int8 id PK "NN; IDENTITY"
-    tipo_evento_plantacion tipo_evento "NN"
-    int8 subcampania_id FK "NN"
-    int8 registro_plantacion_id FK "NULL"
-    int8 asignacion_id FK "NULL"
-    timestamptz fecha_evento "NN"
-    int8 responsable_id FK "NN"
+    bigint id PK "NN / IDENTITY"
+    USER_DEFINED tipo_evento "NN"
+    bigint subcampania_id FK "NN"
+    bigint registro_plantacion_id FK "NULL"
+    bigint asignacion_id FK "NULL"
+    timestamp_with_time_zone fecha_evento "NN"
+    bigint responsable_id FK "NN"
     text observaciones "NULL"
-    int4 cantidad_muerta_delta "NULL"
-    causa_mortandad_plantacion causa_mortandad "NULL"
+    integer cantidad_muerta_delta "NULL"
+    USER_DEFINED causa_mortandad "NULL"
     numeric latitud "NULL"
     numeric longitud "NULL"
-    int4 cantidad_devuelta "NULL"
-    motivo_devolucion_plantacion motivo_devolucion "NULL"
-    int4 cantidad_asignada_evento "NULL"
-    timestamptz created_at "NN"
-    int8 created_by FK "NN"
+    integer cantidad_devuelta "NULL"
+    USER_DEFINED motivo_devolucion "NULL"
+    integer cantidad_asignada_evento "NULL"
+    timestamp_with_time_zone created_at "NN"
+    bigint created_by FK "NN"
     jsonb metadata_blockchain "NULL"
   }
 
   asignacion_vivero_subcampania {
-    int8 id PK "NN; IDENTITY"
-    int8 subcampania_id FK "NN"
-    int8 lote_vivero_id FK "NN"
-    proposito_asignacion proposito "NN"
-    estado_asignacion_vivero estado "NN"
-    int4 cantidad_asignada "NN"
-    int4 cantidad_consumida "NN"
-    int4 cantidad_devuelta "NN"
-    int4 cantidad_mermada "NN"
-    int4 saldo_asignado_disponible "NULL"
-    int8 usuario_asignacion_id FK "NN"
-    timestamptz fecha_asignacion "NN"
-    timestamptz updated_at "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    bigint lote_vivero_id FK "NN"
+    USER_DEFINED proposito "NN"
+    USER_DEFINED estado "NN"
+    integer cantidad_asignada "NN"
+    integer cantidad_consumida "NN"
+    integer cantidad_devuelta "NN"
+    integer cantidad_mermada "NN"
+    integer saldo_asignado_disponible "NULL"
+    bigint usuario_asignacion_id FK "NN"
+    timestamp_with_time_zone fecha_asignacion "NN"
+    timestamp_with_time_zone updated_at "NN"
     date fecha_entrega_operativa "NULL"
   }
 
   registro_plantacion_grupo_revision {
-    int8 grupo_registro_id PK, FK "NN"
-    int8 revision_grupo "NN"
+    bigint grupo_registro_id PK, FK "NN"
+    bigint revision_grupo "NN"
   }
 
   registro_plantacion_correccion {
-    int8 id PK "NN; IDENTITY"
-    int8 comando_interno_id FK, UK "NN"
-    int8 actor_id FK "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint comando_interno_id FK, UK "NN"
+    bigint actor_id FK "NN"
     text actor_nombre_snapshot "NULL"
-    int8 subcampania_id FK "NN"
-    int8 grupo_registro_id FK "NN"
-    int8 registro_plantacion_id FK "NULL"
-    int8 evento_plantacion_id FK "NULL"
+    bigint subcampania_id FK "NN"
+    bigint grupo_registro_id FK "NN"
+    bigint registro_plantacion_id FK "NULL"
+    bigint evento_plantacion_id FK "NULL"
     text caso "NN"
     text motivo "NN"
     jsonb anterior "NN"
     jsonb nuevo "NN"
-    int8 revision_anterior "NN"
-    int8 revision_nueva "NN"
-    int8 revision_grupo_anterior "NN"
-    int8 revision_grupo_nueva "NN"
-    int8 referencia_registro_vigente_id FK "NULL"
-    int8 referencia_revision_registro "NULL"
-    int8 referencia_revision_grupo "NULL"
-    timestamptz creado_en "NN"
+    bigint revision_anterior "NN"
+    bigint revision_nueva "NN"
+    bigint revision_grupo_anterior "NN"
+    bigint revision_grupo_nueva "NN"
+    bigint referencia_registro_vigente_id FK "NULL"
+    bigint referencia_revision_registro "NULL"
+    bigint referencia_revision_grupo "NULL"
+    timestamp_with_time_zone creado_en "NN"
   }
 
   registro_plantacion_efectivo {
-    int8 registro_plantacion_id PK, FK "NN"
-    int8 subcampania_id FK "NN"
+    bigint registro_plantacion_id PK, FK "NN"
+    bigint subcampania_id FK "NN"
     text estado "NN"
-    int4 cantidad_efectiva "NN"
+    integer cantidad_efectiva "NN"
     text observaciones_efectivas "NULL"
-    int8 ultima_correccion_id FK "NULL"
+    bigint ultima_correccion_id FK "NULL"
   }
 
   evento_plantacion_efectivo {
-    int8 evento_plantacion_id PK, FK "NN"
-    int8 grupo_registro_id FK "NN"
-    int8 subcampania_id FK "NN"
+    bigint evento_plantacion_id PK, FK "NN"
+    bigint grupo_registro_id FK "NN"
+    bigint subcampania_id FK "NN"
     text estado "NN"
-    int4 cantidad_muerta_efectiva "NN"
-    int8 revision_evento "NN"
-    int8 ultima_correccion_id FK "NULL"
+    integer cantidad_muerta_efectiva "NN"
+    bigint revision_evento "NN"
+    bigint ultima_correccion_id FK "NULL"
   }
 
   registro_plantacion_participante_efectivo {
-    int8 registro_plantacion_id PK, FK "NN"
-    int8 usuario_id PK, FK "NN"
-    int8 coresponsable_original_id FK, UK "NULL"
+    bigint registro_plantacion_id PK, FK "NN"
+    bigint usuario_id PK, FK "NN"
+    bigint coresponsable_original_id FK, UK "NULL"
     text estado "NN"
     text procedencia "NN"
     text nombre_snapshot "NULL"
     text afiliacion_snapshot "NULL"
     text afiliacion_estado "NN"
     text afiliacion_tipo "NULL"
-    int8 organizacion_id_snapshot FK "NULL"
-    timestamptz snapshot_capturado_en "NULL"
-    int8 correccion_incorporacion_id FK "NULL"
-    int8 ultima_correccion_id FK "NULL"
+    bigint organizacion_id_snapshot FK "NULL"
+    timestamp_with_time_zone snapshot_capturado_en "NULL"
+    bigint correccion_incorporacion_id FK "NULL"
+    bigint ultima_correccion_id FK "NULL"
   }
 
   registro_plantacion_consumo_credito {
-    int8 id PK "NN; IDENTITY"
-    int8 registro_plantacion_id FK "NN"
-    int8 asignacion_id FK "NN"
-    int8 planta_id FK "NN"
-    proposito_asignacion proposito "NN"
-    int4 cantidad "NN"
-    int8 detalle_original_id FK, UK "NULL"
-    int8 correccion_id FK "NULL"
-    int8 revision_origen "NN"
-    timestamptz creado_en "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint registro_plantacion_id FK "NN"
+    bigint asignacion_id FK "NN"
+    bigint planta_id FK "NN"
+    USER_DEFINED proposito "NN"
+    integer cantidad "NN"
+    bigint detalle_original_id FK, UK "NULL"
+    bigint correccion_id FK "NULL"
+    bigint revision_origen "NN"
+    timestamp_with_time_zone creado_en "NN"
   }
 
   registro_plantacion_consumo_compensacion {
-    int8 id PK "NN; IDENTITY"
-    int8 credito_id FK "NN"
-    int8 correccion_id FK "NN"
-    int4 cantidad "NN"
-    timestamptz creado_en "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint credito_id FK "NN"
+    bigint correccion_id FK "NN"
+    integer cantidad "NN"
+    timestamp_with_time_zone creado_en "NN"
   }
 
-  %% PostgREST: registro_plantacion(registro_plantacion_origen_id) -> registro_plantacion(id)
+  %% Extracto aportado: registro_plantacion(registro_plantacion_origen_id) -> registro_plantacion(id)
   registro_plantacion |o..o{ registro_plantacion : "registro_plantacion_origen_id"
-  %% PostgREST: registro_plantacion_correccion(grupo_registro_id) -> registro_plantacion(id)
-  registro_plantacion ||..o{ registro_plantacion_correccion : "grupo_registro_id"
-  %% PostgREST: registro_plantacion_correccion(registro_plantacion_id) -> registro_plantacion(id)
-  registro_plantacion |o..o{ registro_plantacion_correccion : "registro_plantacion_id"
-  %% PostgREST: registro_plantacion_correccion(evento_plantacion_id) -> evento_plantacion(id)
-  evento_plantacion |o..o{ registro_plantacion_correccion : "evento_plantacion_id"
-  %% PostgREST: registro_plantacion_correccion(referencia_registro_vigente_id) -> registro_plantacion(id)
-  registro_plantacion |o..o{ registro_plantacion_correccion : "referencia_registro_vigente_id"
-  %% PostgREST: registro_plantacion_participante_efectivo(registro_plantacion_id) -> registro_plantacion(id)
-  registro_plantacion ||--o{ registro_plantacion_participante_efectivo : "registro_plantacion_id"
-  %% PostgREST: registro_plantacion_participante_efectivo(coresponsable_original_id) -> registro_plantacion_coresponsable(id)
-  registro_plantacion_coresponsable |o..o| registro_plantacion_participante_efectivo : "coresponsable_original_id"
-  %% PostgREST: registro_plantacion_participante_efectivo(correccion_incorporacion_id) -> registro_plantacion_correccion(id)
-  registro_plantacion_correccion |o..o{ registro_plantacion_participante_efectivo : "correccion_incorporacion_id"
-  %% PostgREST: registro_plantacion_participante_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
-  registro_plantacion_correccion |o..o{ registro_plantacion_participante_efectivo : "ultima_correccion_id"
-  %% PostgREST: evento_plantacion(registro_plantacion_id) -> registro_plantacion(id)
-  registro_plantacion |o..o{ evento_plantacion : "registro_plantacion_id"
-  %% PostgREST: evento_plantacion(asignacion_id) -> asignacion_vivero_subcampania(id)
-  asignacion_vivero_subcampania |o..o{ evento_plantacion : "asignacion_id"
-  %% PostgREST: registro_plantacion_grupo_revision(grupo_registro_id) -> registro_plantacion(id)
-  registro_plantacion ||--o| registro_plantacion_grupo_revision : "grupo_registro_id"
-  %% PostgREST: participacion_comando(registro_plantacion_id) -> registro_plantacion(id)
-  registro_plantacion |o..o{ participacion_comando : "registro_plantacion_id"
-  %% PostgREST: evento_plantacion_efectivo(evento_plantacion_id) -> evento_plantacion(id)
-  evento_plantacion ||--o| evento_plantacion_efectivo : "evento_plantacion_id"
-  %% PostgREST: evento_plantacion_efectivo(grupo_registro_id) -> registro_plantacion(id)
-  registro_plantacion ||..o{ evento_plantacion_efectivo : "grupo_registro_id"
-  %% PostgREST: evento_plantacion_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
-  registro_plantacion_correccion |o..o{ evento_plantacion_efectivo : "ultima_correccion_id"
-  %% PostgREST: registro_plantacion_efectivo(registro_plantacion_id) -> registro_plantacion(id)
-  registro_plantacion ||--o| registro_plantacion_efectivo : "registro_plantacion_id"
-  %% PostgREST: registro_plantacion_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
-  registro_plantacion_correccion |o..o{ registro_plantacion_efectivo : "ultima_correccion_id"
-  %% PostgREST: registro_plantacion_consumo_credito(registro_plantacion_id) -> registro_plantacion(id)
-  registro_plantacion ||..o{ registro_plantacion_consumo_credito : "registro_plantacion_id"
-  %% PostgREST: registro_plantacion_consumo_credito(asignacion_id) -> asignacion_vivero_subcampania(id)
-  asignacion_vivero_subcampania ||..o{ registro_plantacion_consumo_credito : "asignacion_id"
-  %% PostgREST: registro_plantacion_consumo_credito(detalle_original_id) -> registro_plantacion_detalle(id)
-  registro_plantacion_detalle |o..o| registro_plantacion_consumo_credito : "detalle_original_id"
-  %% PostgREST: registro_plantacion_consumo_credito(correccion_id) -> registro_plantacion_correccion(id)
-  registro_plantacion_correccion |o..o{ registro_plantacion_consumo_credito : "correccion_id"
-  %% PostgREST: registro_plantacion_detalle(registro_plantacion_id) -> registro_plantacion(id)
+  %% Extracto aportado: registro_plantacion_detalle(registro_plantacion_id) -> registro_plantacion(id)
   registro_plantacion ||..o{ registro_plantacion_detalle : "registro_plantacion_id"
-  %% PostgREST: registro_plantacion_detalle(asignacion_id) -> asignacion_vivero_subcampania(id)
+  %% Extracto aportado: registro_plantacion_detalle(asignacion_id) -> asignacion_vivero_subcampania(id)
   asignacion_vivero_subcampania ||..o{ registro_plantacion_detalle : "asignacion_id"
-  %% PostgREST: registro_plantacion_consumo_compensacion(credito_id) -> registro_plantacion_consumo_credito(id)
-  registro_plantacion_consumo_credito ||..o{ registro_plantacion_consumo_compensacion : "credito_id"
-  %% PostgREST: registro_plantacion_consumo_compensacion(correccion_id) -> registro_plantacion_correccion(id)
-  registro_plantacion_correccion ||..o{ registro_plantacion_consumo_compensacion : "correccion_id"
-  %% PostgREST: registro_plantacion_coresponsable(registro_plantacion_id) -> registro_plantacion(id)
+  %% Extracto aportado: registro_plantacion_coresponsable(registro_plantacion_id) -> registro_plantacion(id)
   registro_plantacion ||..o{ registro_plantacion_coresponsable : "registro_plantacion_id"
-  %% SQL 082: registro_plantacion_correccion(comando_interno_id,actor_id) -> participacion_comando(id,actor_id)
+  %% Extracto aportado: evento_plantacion(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ evento_plantacion : "registro_plantacion_id"
+  %% Extracto aportado: evento_plantacion(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania |o..o{ evento_plantacion : "asignacion_id"
+  %% Extracto aportado: participacion_comando(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ participacion_comando : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_grupo_revision(grupo_registro_id) -> registro_plantacion(id)
+  registro_plantacion ||--o| registro_plantacion_grupo_revision : "grupo_registro_id"
+  %% Extracto aportado: registro_plantacion_correccion(grupo_registro_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ registro_plantacion_correccion : "grupo_registro_id"
+  %% Extracto aportado: registro_plantacion_correccion(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ registro_plantacion_correccion : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_correccion(evento_plantacion_id) -> evento_plantacion(id)
+  evento_plantacion |o..o{ registro_plantacion_correccion : "evento_plantacion_id"
+  %% Extracto aportado: registro_plantacion_correccion(referencia_registro_vigente_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ registro_plantacion_correccion : "referencia_registro_vigente_id"
+  %% Extracto y SQL 082: registro_plantacion_correccion(comando_interno_id,actor_id) -> participacion_comando(id,actor_id)
   participacion_comando ||..o| registro_plantacion_correccion : "comando_interno_id+actor_id"
+  %% Extracto aportado: registro_plantacion_efectivo(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||--o| registro_plantacion_efectivo : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ registro_plantacion_efectivo : "ultima_correccion_id"
+  %% Extracto aportado: evento_plantacion_efectivo(evento_plantacion_id) -> evento_plantacion(id)
+  evento_plantacion ||--o| evento_plantacion_efectivo : "evento_plantacion_id"
+  %% Extracto aportado: evento_plantacion_efectivo(grupo_registro_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ evento_plantacion_efectivo : "grupo_registro_id"
+  %% Extracto aportado: evento_plantacion_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ evento_plantacion_efectivo : "ultima_correccion_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||--o{ registro_plantacion_participante_efectivo : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(coresponsable_original_id) -> registro_plantacion_coresponsable(id)
+  registro_plantacion_coresponsable |o..o| registro_plantacion_participante_efectivo : "coresponsable_original_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(correccion_incorporacion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ registro_plantacion_participante_efectivo : "correccion_incorporacion_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ registro_plantacion_participante_efectivo : "ultima_correccion_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ registro_plantacion_consumo_credito : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania ||..o{ registro_plantacion_consumo_credito : "asignacion_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(detalle_original_id) -> registro_plantacion_detalle(id)
+  registro_plantacion_detalle |o..o| registro_plantacion_consumo_credito : "detalle_original_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ registro_plantacion_consumo_credito : "correccion_id"
+  %% Extracto aportado: registro_plantacion_consumo_compensacion(credito_id) -> registro_plantacion_consumo_credito(id)
+  registro_plantacion_consumo_credito ||..o{ registro_plantacion_consumo_compensacion : "credito_id"
+  %% Extracto aportado: registro_plantacion_consumo_compensacion(correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion ||..o{ registro_plantacion_consumo_compensacion : "correccion_id"

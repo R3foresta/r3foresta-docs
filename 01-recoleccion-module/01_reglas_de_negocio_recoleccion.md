@@ -28,7 +28,7 @@ Estas reglas gobiernan el ciclo de vida del **Lote Origen / Recolección**.
 * **Estados del registro:** `BORRADOR`, `PENDIENTE_VALIDACION`, `VALIDADO`, `RECHAZADO`.
 * **Estado operativo:** `ABIERTO` o `CERRADO`, derivado del saldo.
 * **Ubicación estructurada:** latitud/longitud obligatorias desde `BORRADOR` + comunidad/localidad/zona obligatoria por catálogo o valor controlado permitido.
-* **Evidencia:** fotos obligatorias desde `BORRADOR` (mínimo 1 de Lugar + 1 de Total recolectado = 2 total, máximo 5+5 = 10 total), formato JPG/PNG.
+* **Evidencia:** fotos obligatorias desde `BORRADOR` (mínimo 1 de Lugar + 1 de Total recolectado = 2 total, máximo 5+5 = 10 total), formatos y limites de RN-REC-15.
 * **Historial:** bitácora inmutable de eventos del ciclo de vida del registro, indicando quién, cuándo y qué transición ocurrió.
 * **Snapshot:** copia congelada de datos oficiales de identidad en un momento formal del proceso, para que cambios posteriores en tablas maestras no alteren el historial ya validado.
 
@@ -58,7 +58,7 @@ Una recolección **es** un “lote origen” para los módulos siguientes. Por t
 
 Mientras el registro está en `BORRADOR` o `RECHAZADO`, esos campos pueden recalcularse desde las fuentes vivas (`PLANTA`, comunidad y recolector) porque la ficha todavía es editable.
 
-Al aprobar la validación, esos mismos campos quedan congelados como snapshot oficial. Desde `VALIDADO` no se recalculan ni se modifican.
+Al confirmar la recepcion fisica conforme, esos mismos campos quedan congelados como snapshot oficial. Desde `VALIDADO` no se recalculan ni se modifican.
 
 Los campos snapshot mínimos son:
 
@@ -74,18 +74,13 @@ Su propósito es congelar el dato oficial validado para que cambios posteriores 
 
 ## 4. Reglas de captura y campos mínimos
 
-### RN-REC-04 — Fecha de recolección obligatoria y acotada
+### RN-REC-04 — Fecha de captura y fechas fisicas coherentes
 
-La **fecha de recolección** es obligatoria y debe cumplir:
+Al crear o cambiar explicitamente la fecha de recoleccion se exige un dia entre hoy menos 45 dias y hoy en `America/La_Paz`. Conservar el dia original permite corregir otros campos, reenviar y recibir la ficha aunque luego supere 45 dias. El material recibido conserva su habilitacion al envejecer.
 
-* No puede ser futura.
-* Puede ser retroactiva hasta **45 días** como máximo.
+Se exige `fecha_recoleccion <= fecha_recepcion <= hoy`. INICIO no puede preceder la recepcion fisica. `fecha_recepcion` es el dia fisico y `registrado_en` conserva el instante real del hecho.
 
-Además, el sistema registra automáticamente:
-
-* `fecha_registro` (timestamp del sistema),
-* `usuario_registro`.
-
+La consistencia completa del recorrido PWA para una ficha envejecida permanece pendiente de verificacion. Esta regla define el comportamiento requerido y no declara cerrado ese pendiente.
 
 ### RN-REC-06 — Método de recolección desde catálogo cerrado
 
@@ -106,7 +101,7 @@ Cada recolección maneja **dos estados**:
 
 1) **Estado del registro (Web2 / calidad de datos):**
 - `BORRADOR` (editable)
-- `PENDIENTE_VALIDACION` (congelado mientras revisa el validador)
+- `PENDIENTE_VALIDACION` (congelado en espera de revision y recepcion fisica)
 - `VALIDADO` (sellado)
 - `RECHAZADO` (no consumible; puede corregirse y reenviarse a validación)
 
@@ -126,25 +121,26 @@ Al crear una recolección:
 
 ### RN-REC-09A — Soft delete solo para borradores
 
-En el MVP, un registro solo puede eliminarse si está en `BORRADOR`.
+La eliminacion solo procede en BORRADOR por actor autorizado a mantener la ficha. Retiro logico, auditoria y retiro de evidencias permitidas se confirman de forma atomica. Se preserva la identidad y trazabilidad del registro creado.
 
-La eliminación debe resolverse como **soft delete**, preservando trazabilidad mínima del registro creado.
+Ante una respuesta perdida se consulta el estado antes de repetir. La confirmacion local del cliente no acredita el resultado del servidor.
 
-### RN-REC-10 — Restricción de uso por estado (consumo a vivero)
+### RN-REC-10 — Recepcion conforme como precondicion de consumo
 
-Para que una recolección pueda alimentar lotes del Módulo 2 (Vivero) debe cumplir:
+Una recoleccion puede alimentar Vivero cuando conserva todas estas condiciones.
 
-- `estado_registro = VALIDADO`
-- `estado_operativo = ABIERTO`
-- `saldo_actual >= cantidad_a_consumir`
+- `estado_registro = VALIDADO` y `estado_operativo = ABIERTO`.
+- Hecho inmutable de recepcion conforme en el vivero de almacenamiento.
+- Saldo suficiente y snapshot oficial congelado.
+- Autoridad vigente para INICIO y fecha igual o posterior a la recepcion.
 
-Si está en `BORRADOR`, `PENDIENTE_VALIDACION`, `RECHAZADO` o `CERRADO`, **no puede** consumirse.
+BORRADOR, PENDIENTE_VALIDACION, RECHAZADO y CERRADO impiden consumir. La visibilidad publica del banco de semillas no modifica esta elegibilidad.
 
 ### RN-REC-10D — El snapshot oficial se fija solo al validar
 
 - En `BORRADOR` y `RECHAZADO`, los campos snapshot son `NOT NULL`, pero sus valores pueden recalcularse desde fuentes vivas.
 - En `PENDIENTE_VALIDACION`, la ficha queda congelada mientras se revisa.
-- El snapshot oficial se fija recién al aprobar la validación.
+- El snapshot oficial se fija recién al confirmar la recepcion fisica conforme.
 - Una vez `VALIDADO`, el snapshot oficial no debe recalcularse ni sobrescribirse por cambios posteriores en tablas maestras.
 - El naming oficial del campo comercial congelado es `nombre_comercial_snapshot`; no se usa `nombre_comun_snapshot`.
 
@@ -181,15 +177,15 @@ En Recolección deben separarse dos responsabilidades:
 - Cuando `saldo_actual = 0` ⇒ `estado_operativo = CERRADO`.
 - En el MVP, todos los `delta_movimientos` persistidos son negativos porque `CORRECCION` queda fuera de alcance.
 
-### RN-REC-10E — Reglas del descarte post-validacion
+### RN-REC-10E — Descarte bajo autoridad de custodia
 
-- Solo el creador de la recoleccion o un `ADMIN` puede registrar `DESECHO`.
-- La cantidad debe ser mayor que 0 y no puede superar `saldo_actual` en el momento de la operacion.
-- El movimiento conserva la unidad canonica de la recoleccion (`G` o `UNIDAD`).
-- No se permite `DESECHO` en `BORRADOR`, `PENDIENTE_VALIDACION`, `RECHAZADO` ni cuando el saldo esta `CERRADO`.
-- Si el saldo queda en 0, el sistema cambia automaticamente `estado_operativo` a `CERRADO`.
-- El descarte es append-only y no tiene reversa ni edicion en el MVP.
-- El Frontend no solicita fotos, motivo ni fecha: usuario y fecha se toman automaticamente y el motivo se fija como `DESECHO_OTRO`.
+- ADMIN global o GENERAL/VALIDADOR con acceso M2 vigente al vivero de almacenamiento puede registrar DESECHO. La autoria por si misma no concede esa autoridad.
+- La recoleccion debe estar VALIDADO, ABIERTO y recibida conforme.
+- La cantidad es positiva y no supera el saldo disponible al confirmar.
+- El movimiento conserva G o UNIDAD y delta negativo. Puede ser parcial repetido o total.
+- Al llegar a cero, el estado operativo pasa a CERRADO.
+- El movimiento es append-only y conserva actor y fecha del sistema con motivo tecnico `DESECHO_OTRO`.
+- El formulario no solicita fotografia, motivo libre ni fecha.
 
 ## 6. Reglas de cantidades y unidades
 
@@ -237,19 +233,18 @@ Para `ESQUEJE`:
   - **Sección "Total recolectado":** mínimo 1, máximo 5 fotos que evidencien la cantidad/volumen recolectado.
   - Total mínimo: 2 fotos (1+1). Total máximo: 10 fotos (5+5).
 
-Se pueden agregar más dentro de los límites por sección.
+Se pueden agregar mas dentro de los limites por seccion. El backend vigente comprueba el total de 2 a 10 fotografias. La comprobacion por seccion permanece como brecha de implementacion y no reduce el requisito aprobado.
 
 
 (Fuera del MVP: se puede evaluar validación comunitaria adicional, con registro explícito de quiénes validaron y cuándo.)
 
-### RN-REC-15 — Formato y tamaño por foto
+### RN-REC-15 — Formato, tamano y original auditable
 
-Cada foto debe cumplir:
+Cada fotografia admite JPG/JPEG/PNG/WEBP/HEIC/HEIF hasta 15 MiB. La carga completa admite hasta 100 MiB y respeta ademas los limites de fotos de su operacion.
 
-- Formato: **JPG o PNG**.
-- Tamaño máximo: **5 MB**.
+El archivo original se conserva con SHA256, tamano y MIME y se envia por multipart. Los derivados para visualizacion o consulta publica conservan su relacion con el original. Si un archivo excede el limite, el sistema informa el error sin sustituir el original por una unica copia comprimida.
 
-Si excede: procesar la imagen para reducir tamaño o rechazar con error claro.
+Recepcion conforme exige entre 1 y 5 fotos propias cargadas para el origen, vivero y revision de captura actuales. Rechazar exige motivo y no requiere foto. La audiencia de los originales y los derivados se rige por [RF-GEN-06](../00-general-module/00_Requerimientos_Modulo_General.json).
 
 ## 8. Reglas de observaciones
 
@@ -314,20 +309,15 @@ Este historial:
 - no reemplaza `RECOLECCION_MOVIMIENTO`,
 - y **no se puede borrar**.
 
-### RN-REC-21 — Reglas de edición por estado
+### RN-REC-21 — Edicion, correccion y revision de captura
 
-- En `BORRADOR`: se permite editar los campos del registro (incluyendo fotos y ubicación).
-- En `BORRADOR`: se permite eliminar mediante soft delete.
-- En `BORRADOR`: `created_at` no se edita; `updated_at` y `updated_by` deben reflejar la última edición.
-- En `PENDIENTE_VALIDACION`: la ficha queda congelada mientras el validador decide.
-- En `RECHAZADO`: el registro no es consumible, pero puede corregirse y reenviarse a validación.
-- En `RECHAZADO`: `created_at` no se edita; `updated_at` y `updated_by` deben reflejar la última corrección.
-- En `VALIDADO`: **no se permite editar la ficha**. Solo se permiten movimientos append-only:
-  - `CONSUMO_A_VIVERO`
-  - `DESECHO`
-- En `VALIDADO`, `DESECHO` solo puede registrarlo el creador de la recoleccion o un `ADMIN`.
+BORRADOR permite mantener ficha y fotos propias, y eliminar logicamente. RECHAZADO permite corregir la misma ficha y codigo, guardar BORRADOR y volver a enviar. PENDIENTE_VALIDACION congela la ficha mientras se decide la recepcion y VALIDADO conserva la ficha sellada con movimientos append-only.
 
-No hay correcciones operativas en el MVP una vez validado/subido el registro. El borrador sí se puede modificar antes de validar.
+La captura y mantenimiento propio exige GENERAL o VALIDADOR con acceso M1 vigente, o autoridad global ADMIN. DESECHO se autoriza por custodia M2 segun RN-REC-10E.
+
+Omitir ubicacion o enviar sus mismos valores conserva la referencia y sus coordenadas, comunidad, pais, nombre, precision y fuente. Cambiar cantidad, observaciones o fotos no exige recapturar GPS. Un cambio explicito de ubicacion crea una nueva referencia sin modificar la anterior ni otras fichas que la compartan. Omitir o conservar la fecha mantiene el dia original.
+
+Cada rechazo conserva snapshot de la ficha revisada con cantidad, unidad, vivero, ubicacion, fecha, revision, motivo, actor y comando. El motivo actual puede cambiar al corregir y el historial mantiene cada ciclo. La revision de captura impide confirmar una ficha modificada o usar fotos de una revision anterior.
 
 ### RN-REC-22 — Qué cambios deben registrar historial
 
@@ -337,8 +327,8 @@ Por eso, `RECOLECCION_HISTORIAL` debe registrar como mínimo:
 
 - creación del borrador,
 - solicitud de validación,
-- aprobación del validador,
-- rechazo del validador,
+- recepcion fisica conforme por receptor autorizado,
+- rechazo motivado por receptor autorizado,
 - eliminación de borrador.
 
 Los movimientos `CONSUMO_A_VIVERO` y `DESECHO` pertenecen a `RECOLECCION_MOVIMIENTO`, porque afectan saldo. No deben registrarse en `RECOLECCION_HISTORIAL` como historial general de ficha. Aunque `DESECHO` no tenga foto, conserva usuario y fecha automaticos en el movimiento.
@@ -349,14 +339,11 @@ La edición del borrador se resuelve con campos de control de la ficha (`updated
 
 Los datos de control (usuario, timestamps) se toman automáticamente del sistema.
 
-### RN-REC-22B — Cómo se construye el timeline mínimo del MVP
+### RN-REC-22B — Fuentes del historial y alcance de consulta
 
-El timeline mínimo de una recolección puede construirse combinando:
+El historial requerido combina creacion de BORRADOR, eventos de `RECOLECCION_HISTORIAL`, hecho `RECOLECCION_RECEPCION` y movimientos de inventario. `recibido_por`, `fecha_recepcion` y `registrado_en` pertenecen a la recepcion inmutable y sustituyen la persistencia de usuario y fecha de validacion en Recoleccion.
 
-- `RECOLECCION.created_at` para “se creó borrador”,
-- `RECOLECCION_HISTORIAL` para `SOLICITUD_VALIDACION`, `VALIDACION_APROBADA`, `VALIDACION_RECHAZADA` y `BORRADOR_ELIMINADO`,
-- `RECOLECCION.fecha_validacion` como dato materializado del momento en que quedó validada,
-- y `RECOLECCION_MOVIMIENTO.created_at` para consumos y desechos.
+La bandeja/detalle del receptor muestra su historial autorizado y la lectura administrativa conserva su alcance. La existencia de estas fuentes no acredita una pantalla de historial propio completa para todo recolector.
 
 ## 11. Reglas de integración con Módulo 2 (Vivero)
 
@@ -366,8 +353,9 @@ Solo se puede iniciar un lote de vivero desde una recolección que esté:
 
 - `estado_registro = VALIDADO`
 - `estado_operativo = ABIERTO`
-- con evidencia mínima completa (≥ 2 fotos: 1 de Lugar + 1 de Total recolectado)
+- con evidencia minima completa de 1 a 5 fotos por seccion Lugar y Total recolectado
 - con ubicación válida: latitud, longitud y comunidad/localidad/zona por catálogo o valor controlado permitido
+- con recepcion conforme unica, snapshot oficial y autoridad vigente sobre la custodia
 - con tipo_material definido
 - con `saldo_actual` suficiente para el consumo
 
@@ -379,7 +367,7 @@ Cuando se crea un lote de vivero desde una recolección, el sistema debe:
 
 - registrar el vínculo (recolección → lote_vivero),
 - generar el `LOTE_VIVERO.codigo_trazabilidad` con formato `VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}`,
-- usar el `vivero_id` seleccionado para el lote de vivero, no heredarlo automáticamente desde `RECOLECCION.vivero_id`,
+- seleccionar destino operativo y autorizarlo bajo la politica de custodia, mismo vivero para el operario y excepcion explicita ADMIN para otro destino con origen recibido,
 - registrar un movimiento `CONSUMO_A_VIVERO` con delta negativo en la recoleccion_movimiento,
 - persistir `RECOLECCION_MOVIMIENTO.unidad_medida_movimiento` con la misma unidad que `RECOLECCION.unidad_canonica`,
 - recalcular `saldo_actual` y el estado operativo:
@@ -415,31 +403,43 @@ Fuera del MVP:
 
 ## 12. Roles y estrategia blockchain (MVP)
 
-### RN-REC-25 — Roles mínimos (MVP)
+### RN-REC-25 — Autoridad por operacion
 
-* **GENERAL:** crea borradores, edita borradores y solicita validación. En operación puede actuar como recolector y registrar `DESECHO` sobre sus propias recolecciones ya validadas.
-* **VALIDADOR:** revisa registros en `PENDIENTE_VALIDACION` y los aprueba o rechaza.
-* **ADMIN:** administra catálogos y puede intervenir según permisos del sistema, incluido registrar `DESECHO` sobre cualquier recolección validada.
-* **VOLUNTARIO:** no debe tener permisos operativos críticos salvo habilitación explícita.
+- GENERAL y VALIDADOR con acceso M1 vigente capturan y mantienen sus propias fichas. ADMIN deriva autoridad M1.
+- ADMIN global recibe en cualquier vivero. VALIDADOR recibe solo con asignacion vigente al vivero de almacenamiento. Bandeja, detalle, fotos, conformidad y rechazo comparten esa autoridad, sin exigir M1 al receptor.
+- Se prohibe autorrecepcion tambien para ADMIN. GENERAL con M2 conserva INICIO y DESECHO sobre material recibido.
+- El acceso operativo M2 se comprueba por vivero. El camino ordinario consume en la misma custodia y ADMIN conserva la excepcion explicita de otro destino con recepcion conforme.
+- VOLUNTARIO conserva las acciones propias y publicas de su contrato y carece de autoridad M1/M2 por su rol global.
 
-La consulta de historial debe tratarse como permiso de consulta asignable a roles existentes, no como un rol separado.
-
-(Futuro: se pueden agregar roles de “comunidad” para validación colaborativa, con registro de quién validó qué y cuándo.)
+Organizacion, afiliacion, equipo y autoria no conceden por si mismos permisos operativos actuales. La lectura de historial mantiene la autoridad por audiencia y no constituye un nuevo rol.
 
 ### RN-REC-26 — Para registrar recolecciones nuevas solo se usan las plantas del catálogo
 
 No se permite registrar una recolección con un nombre científico que no exista en el catálogo de plantas (RF-GEN-03). Esto garantiza que cada recolección esté vinculada a una planta con identidad oficial.
 
-### RN-REC-27 — Anclaje blockchain (MVP)
+### RN-REC-27 — Anclaje posterior a la recepcion conforme
 
-Para mantener **confianza sin complicarnos**, el anclaje se considera “oficial” desde `VALIDADO`.
+La primera recepcion conforme puede ejecutar Pinata y blockchain despues de confirmar el hecho SQL. El recibo declara `FUERA_TRANSACCION` en RECIBIR y `NO_APLICA` en RECHAZAR. El indicador de primera ejecucion evita repetir el mint al recuperar o reproducir el comando.
 
-MVP recomendado:
+Un fallo externo no revierte la recepcion. Una caida posterior al commit puede dejar anclaje pendiente porque el recorrido carece de outbox durable y recuperacion automatica. La validacion funcional y la confirmacion del anclaje conservan sus resultados propios.
 
-- Anclar a blockchain el **snapshot** al pasar a `VALIDADO`.
-- Anclar también cada **movimiento post-validación**:
-  - `CONSUMO_A_VIVERO`
-  - `DESECHO`
+Los movimientos pueden conservar referencias de anclaje cuando la integracion las produzca. La existencia de BORRADOR, solicitud o rechazo no acredita anclaje.
 
-`BORRADOR` no se considera historia oficial (no requiere anclaje).
-`PENDIENTE_VALIDACION` y `RECHAZADO` forman parte del ciclo Web2 del registro, pero tampoco se consideran historia oficial anclada.
+
+## 13. Recepcion y comandos recuperables
+
+`RF-REC-04` usa una decision fisica unica. La conformidad compara cantidad y unidad exactas despues de normalizar G/KG a G con hasta seis decimales canonicos. UNIDAD exige entero y ESQUEJE solo admite UNIDAD. Una diferencia impide confirmar, sin recepcion parcial, recuento aceptado ni ajuste automatico. El receptor puede rechazar con motivo de 10 a 500 caracteres para que el recolector corrija la misma ficha.
+
+El comando fija actor, UUID, accion e intencion y exige revision esperada. Misma clave e intencion devuelve el resultado inicial y otra intencion da conflicto. Recepcion, snapshots, historia, evidencias y recibo se confirman juntos. Rechazar una ficha correctamente es un comando CONFIRMADO con ficha RECHAZADO.
+
+Timeout, 503 y 202 SIN_RESULTADO mantienen la incertidumbre. El cliente conserva clave, intencion y fotos, consulta el mismo comando y evita una nueva clave automatica. La recuperacion propia requiere cuenta activa aunque se haya perdido el rol o asignacion y no concede acceso operativo actual. Storage y anclaje conservan sus resultados externos.
+
+El [contrato de recepcion unica](../../Backend-r3foresta/docs/t4-recepcion-semillas.md) identifica la version100 y los antecedentes096–099. La actualizacion funcional de estas reglas no acredita un nuevo corte, aplicacion SQL ni despliegue.
+
+## 14. Banco publico de semillas — RF-REC-06
+
+La consulta publica sin cuenta ofrece resumen, filtros, listado paginado y detalle de recolecciones de SEMILLA no eliminadas. Incluye BORRADOR, PENDIENTE_VALIDACION, VALIDADO y RECHAZADO, con estado visible y cantidades de G y UNIDAD separadas. La visibilidad no modifica elegibilidad de consumo ni acredita recepcion conforme.
+
+La proyeccion entrega codigo, fecha, especie, ubicacion y GPS disponibles, cantidades, saldo y referencia blockchain verificable cuando existe. Excluye datos de cuenta, credenciales, correo, contacto, observaciones y captions libres. Las fotos publicas solo corresponden a VALIDADO y se sanitizan. Cada descarga verifica de nuevo estado, pertenencia y ausencia de eliminacion.
+
+Un fallo de consulta o de fotografia declara indisponibilidad con reintento. Una lista vacia corresponde a una lectura valida sin resultados. La consulta publica no concede acceso a originales privados ni a operaciones M1/M2.

@@ -1,10 +1,10 @@
 # Módulo Plantación — Campo, Campañas y Subcampañas
 
-Módulo 3. Documenta la plantación efectiva en campo: campañas estratégicas y subcampañas operativas, base de los bonos de carbono y de la vista pública.
+Módulo 3. Documenta campañas, subcampañas, registros en campo y su trazabilidad hasta el origen disponible del material vegetal.
 
 ## Propósito
 
-Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`, aplicado vía migraciones 027–032. Cubre la planificación por especie, el mantenimiento post-plantación y la transición a monitoreo histórico.
+Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`, con planificación por especie y consulta por audiencia. Los contratos de mantenimiento, mortandad y reposición conservan su alcance documentado y sus pendientes de implementación. Las migraciones 027–032 son antecedentes del modelo, ampliado por las entregas posteriores.
 
 ## Documentos de este módulo
 
@@ -22,7 +22,7 @@ Modelar `CAMPANIA → SUBCAMPANIA → REGISTRO_PLANTACION → EVENTO_PLANTACION`
 
 El [contrato backend](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) y [acta técnica](../specs/plantacion/participacion-aliada/archivo/revision-tecnica-2026-10-13.md) concretan identidad, alta VOLUNTARIO, roles/permisos, comandos y evidencias. Afiliación opcional del catálogo o «Otra», con snapshots históricos. La plantación inicial consume LIFO en servidor del stock elegible que ya tiene la subcampaña; no añade recepción por organización/administrador ni otro débito de Vivero. Impacto global/detalles/mapas/fotos públicas elegibles sigue compartible sin cuenta/login.
 
-Las descripciones del registro interno existente conservan su evidencia y fechas; los nuevos permisos, LIFO y recuperación de comandos requieren adaptación/verificación. INT02-A completada en identidad/perfil y desarrollo; siguiente entrega [INT02-B](../specs/plantacion/participacion-aliada/implementacion/pa-t-int02-b.md). El [tablero](../specs/plantacion/participacion-aliada/implementacion/README.md) enlaza entregas y specs; el avance aplicado se registra en [ESTADO.md](../ESTADO.md), sin atribuir el incremento nuevo al cierre anterior del registro interno.
+El [tablero único](../specs/plantacion/participacion-aliada/implementacion/README.md) mantiene cobertura y pendientes por entrega. INT04/05/06 conservan sus verificaciones locales. INT07 tiene observaciones y participantes 084/085 implementados en backend con cierre parcial, fallo pendiente en el runner HTTP 085 y frontend de correcciones pendiente. La evidencia por versión y entorno se enlaza desde [ESTADO.md](../ESTADO.md).
 
 ## Dependencias
 
@@ -38,9 +38,15 @@ Detalladas en [CLAUDE.md](../CLAUDE.md); no se repiten aquí. Las de mayor impac
 * Estado de campaña derivado en tiempo real, nunca persistido como columna.
 * Edición básica de campaña en MVP; el tipo solo cambia antes de la primera subcampaña. La desactivación estricta exige que no haya hijas vivas no canceladas; la acción masiva puede cancelar atómicamente hijas `BORRADOR`/`ACTIVA` sin plantaciones, devolver stock y desactivar la campaña.
 * Coordinador es membresía en `SUBCAMPANIA_EQUIPO.rol_en_subcampania`, no rol global.
-* Asignación de lote a subcampaña es entrega física: genera salida en M2 y crea stock consumible en M3.
+* Asignación de lote a subcampaña es entrega física y conserva origen y base viva EMBOLSADO o INCORPORACION. La devolución conserva lote y asignación exactos. Su ejecución requiere ADMIN o coordinación y acceso al vivero según el contrato M2↔M3.
 * Plantar o reponer en M3 consume `saldo_asignado_disponible`; no genera `DESPACHO AUTOMATICO_PLANTACION`.
 * Metas total y por especie orientativas: se puede asignar y plantar por encima del objetivo, dentro del stock disponible y usando especies del plan para plantación inicial.
 * Solo ADMIN puede editar meta/especies en BORRADOR o ACTIVA; la edición en ACTIVA está implementada en el backend local, con editor frontend implementado localmente; QA integrado y despliegue verificado pendientes ([ADR-PLA-05](../decisiones/02_decisiones_plantacion.md#adr-pla-05--edicion-de-meta-y-especies-en-activa-solo-admin)). Alcanzar la meta no cierra; ADMIN cierra explícitamente y la devolución de sobrantes es separada.
 
 Actualización documental del 2026-10-10: ADR-PLA-04 conserva metas orientativas/cierre manual; ADR-PLA-05 implementa revisión atómica con `plan_revision`, `PLAN_REVISADO` y Bearer JWT en GET/PUT /plan. Cualquier usuario autenticado existente lee el plan; solo ADMIN global lo modifica. La lectura no concede permisos operativos. Aplicación hasta 062 y posteriormente de 063 confirmada por el usuario; frontend implementado localmente; publicación de sus últimos ajustes y QA integrado/verificación remota siguen pendientes en [ESTADO.md](../ESTADO.md). Los SQL anteriores se conservan como históricos.
+
+## Contraste documental del 16 de noviembre de 2026
+
+RF-PLA-14 reconstruye procedencia por consumos persistidos y snapshots, con consulta propia y administrativa privada. RF-PLA-15 limita Impacto a los campos públicos de PA-S02/D12. [QA local T5](../../pwa-r3foresta/docs/QA_T5_ITERACION_3.md) acredita el recorrido ADMIN de Plantación a Vivero en Chrome y conserva pendiente la aceptación en teléfono físico.
+
+RF-PLA-01/02 incorporan altas atómicas y correlativos completos al superar 999. Las [migraciones 111/112 y su evidencia](../../Backend-r3foresta/docs/revision-altas-mvp-2026-11-16.md) distinguen aplicación reportada, metadatos observados, cuerpos SQL y despliegue. RN-PLA-05 y la introducción de las reglas de subcampaña conservan dos diferencias sin resolver frente al contrato implementado, sobre una o más organizaciones y fechas estimadas futuras al crear.

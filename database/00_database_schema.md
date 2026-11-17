@@ -1,63 +1,73 @@
 # Modelo físico de la base de datos de R3Foresta
 
-**Actualización documental:** 4 de noviembre de 2026. **Cobertura:** 51 tablas y 564 columnas de la exportación de Supabase aportada por Pablo. Este modelo representa estructura física; las reglas y capacidades de aplicación se consultan en los módulos, contratos y [ESTADO.md](../ESTADO.md).
+**Actualización documental del 16 de noviembre de 2026.** El esquema aportado por Pablo y confirmado en el chat como la última versión contiene **57 tablas y 622 columnas**. La fecha identifica esta recepción documental. El adjunto carece de identificador de proyecto y fecha de exportación. Su estructura se representa con esa procedencia y las capacidades se consultan en los módulos, contratos y [ESTADO.md](../ESTADO.md).
 
-[Ver diagrama completo en SVG](diagramas/modelo-fisico-completo.svg) · [Fuente Mermaid completa](diagramas/modelo-fisico-completo.mmd)
+[Diagrama completo en SVG](diagramas/modelo-fisico-completo.svg) · [Fuente Mermaid completa](diagramas/modelo-fisico-completo.mmd)
 
 ## Vistas del mismo modelo
 
 | Vista | Tablas | Uso |
 |---|---:|---|
-| [Recorrido principal](diagramas/modelo-fisico-nucleo.svg) · [Mermaid](diagramas/modelo-fisico-nucleo.mmd) | 14 | Recolección, movimientos, lotes, eventos, campañas, asignaciones y registros de plantación. |
+| [Recorrido principal](diagramas/modelo-fisico-nucleo.svg) · [Mermaid](diagramas/modelo-fisico-nucleo.mmd) | 16 | Recolección, recepción, movimientos, lotes, incorporación, campañas, asignaciones y registros de Plantación. |
 | [General](diagramas/modelo-fisico-general.svg) · [Mermaid](diagramas/modelo-fisico-general.mmd) | 13 | Usuarios, credenciales, organizaciones, plantas, territorio y evidencias. |
 | [Participación](diagramas/modelo-fisico-participacion.svg) · [Mermaid](diagramas/modelo-fisico-participacion.mmd) | 11 | Permisos, equipo logístico, comandos, auditoría de autoridad y cargas. |
 | [Correcciones](diagramas/modelo-fisico-correcciones.svg) · [Mermaid](diagramas/modelo-fisico-correcciones.mmd) | 13 | Originales, revisiones, estado efectivo, participantes, créditos y compensaciones. |
-| [Tablas conservadas de Plantación](diagramas/modelo-fisico-legado.svg) · [Mermaid](diagramas/modelo-fisico-legado.mmd) | 10 | Estructura anterior de plantación y tablas de riego, abono y monitoreo. |
+| [Operación por vivero](diagramas/modelo-fisico-operacion.svg) · [Mermaid](diagramas/modelo-fisico-operacion.mmd) | 20 | Accesos M1/M2, recepción, contexto de fotografías e incorporación. |
 
-Las vistas temáticas repiten tablas compartidas para poder leerse de forma independiente. Conservan todas las columnas de cada tabla representada y solo dibujan relaciones cuyos dos extremos aparecen en la vista. El diagrama completo incluye también `spatial_ref_sys`, tabla técnica de PostGIS. Las tablas de seguimiento y los campos históricos de blockchain permanecen en el inventario físico sin ampliar el alcance académico.
-
-## Lectura de la notación
-
-- `PK`: columna de la clave primaria. Cuando varias columnas tienen PK, forman una sola clave compuesta.
-- `UK`: unicidad individual indicada en la exportación. No se atribuye unicidad individual a cada componente de un índice compuesto.
-- `FK`: componente de una clave foránea de las fuentes identificadas abajo.
-- `NN` y `NULL`: obligatoriedad y nulabilidad declaradas por la exportación; `IDENTITY` conserva su indicación de generación.
-- Tipos como `int8`, `int4`, `bool`, `bpchar`, `citext`, `geometry` y `_text` conservan el nombre del extracto. `_text` representa un arreglo de texto.
-- Línea continua: relación identificadora, con las columnas FK incluidas en la PK hija. Línea discontinua: relación no identificadora.
-- La opcionalidad del extremo padre sigue la nulabilidad de la FK. El extremo hijo es cero-a-uno únicamente cuando la exportación acredita PK o unicidad suficiente; en los demás casos se muestra cero-a-muchos.
+Las vistas temáticas repiten tablas compartidas y conservan todas sus columnas. Cada vista dibuja relaciones con ambos extremos incluidos. El completo incluye `spatial_ref_sys`, tabla técnica de PostGIS. Los campos históricos de blockchain y las tablas de corrección conservan su presencia física y su alcance funcional propio.
 
 ## Fuentes y correspondencia
 
-1. [Exportación aportada de Supabase](fuentes/supabase-estructura-2026-11-04.md): fuente de nombres, orden, tipos, columnas, PK, unicidad individual, nulabilidad, identity y enumeraciones. Se conserva el texto recibido, con normalización del salto de línea final.
-2. [Metadatos de relaciones](fuentes/supabase-relaciones-2026-11-04.json): lectura `GET /rest/v1/` del proyecto `vyrjlehkhabydkhjxagx`, realizada el 4 de noviembre. Se utilizaron 139 referencias simples entre tablas de la exportación. No se consultaron filas de negocio.
-3. Las siete referencias compuestas se documentan separadamente en ese archivo, con su origen en las migraciones backend [070](../../Backend-r3foresta/migrations/070_pa_int02b_permisos_contextuales.sql), [072](../../Backend-r3foresta/migrations/072_pa_int02c_comandos_acceso.sql), [074](../../Backend-r3foresta/migrations/074_pa_int03a_cargas.sql) y [082](../../Backend-r3foresta/migrations/082_pa_int07_persistencia.sql). Los comentarios Mermaid distinguen `PostgREST` de `SQL 070/072/074/082`. No se presentan como una nueva inspección de `pg_constraint` del entorno remoto.
+1. [Extracto contextual recibido el 16 de noviembre](fuentes/supabase-estructura-2026-11-16.sql). Se preservan exactamente los bytes del adjunto y su advertencia de uso contextual. De aquí proceden nombres, orden, tipos declarados, nulabilidad, claves primarias, unicidad individual, identidad y las restricciones visibles.
+2. [Procedencia de relaciones y huella SHA-256](fuentes/supabase-relaciones-2026-11-16.json). El extracto contiene 190 filas de referencias que representan **175 relaciones**, distribuidas en 160 simples y 15 compuestas. Las compuestas aparecen divididas bajo un mismo nombre de restricción. Se agrupan por tabla y nombre y se contrastan sus pares de columnas con las migraciones locales 070, 072, 074, 082, 092, 094 y 100. El archivo identifica la migración de cada una.
+3. El [extracto del 4 de noviembre](fuentes/supabase-estructura-2026-11-04.md) y sus [metadatos](fuentes/supabase-relaciones-2026-11-04.json) conservan el corte histórico de 51 tablas y 564 columnas, incluidas las 139 referencias simples de PostgREST cotejadas entonces y las siete compuestas documentadas en ese corte. Esa consulta conserva su fecha y entorno propios.
 
-El extracto no proporciona longitudes, precisión/escala, expresiones DEFAULT o GENERATED, todas las restricciones CHECK, índices compuestos/parciales, triggers ni privilegios/RLS. El diagrama no inventa esos detalles ni equivale a un DDL de reconstrucción o a una certificación de replay de las 91 migraciones. El catálogo REST tampoco permite afirmar que esta lista sea una auditoría exhaustiva de todas las claves del servidor.
+La revisión actual utilizó el adjunto y las migraciones locales. El catálogo remoto, los cuerpos RPC, índices completos, triggers, grants, RLS, Storage y replay de migraciones mantienen su comprobación independiente. Las migraciones 111–113 afectan altas y funciones cuya aplicación completa no puede establecerse mediante este inventario de tablas. Las claves compuestas agrupadas describen una sola restricción por nombre y tabla.
 
-Las descripciones históricas de tablas se conservan literalmente en la fuente, pero no sustituyen los contratos vigentes de la aplicación. Por ejemplo, la descripción antigua de corresponsables no convierte el equipo logístico en autorización para el registro participante actual.
+## Lectura de la notación
+
+- `PK` identifica columnas de clave primaria. Varios componentes forman una sola clave compuesta.
+- `UK` identifica unicidad individual visible. Una clave compuesta conserva su conjunto de columnas.
+- `FK` identifica componentes de referencias explícitas del extracto y del contraste documentado.
+- `NN`, `NULL` e `IDENTITY` conservan obligatoriedad e identidad. Una PK implica obligatoriedad.
+- `USER_DEFINED` representa el literal `USER-DEFINED` del adjunto. El tipo enumerado o dominio concreto queda sin resolver en esta fuente. Los nombres históricos del extracto del 4 de noviembre mantienen su procedencia histórica.
+- Los tipos con espacios utilizan guiones bajos para ser legibles por Mermaid, como `timestamp_with_time_zone` y `character_varying`. Las expresiones originales permanecen en la fuente SQL.
+- La línea continua identifica relaciones cuyas columnas FK pertenecen a la PK hija. La discontinua identifica las restantes.
+- La opcionalidad del padre depende de la nulabilidad de la FK. La cardinalidad hija cero-a-uno se representa cuando PK o unicidad individual visible la sustentan. Las demás relaciones se dibujan cero-a-muchos, pendientes de índices y restricciones adicionales ausentes del extracto.
+
+## Cambios frente al corte del 4 de noviembre
+
+Se incorporan catorce tablas al inventario recibido.
+
+| Familia | Tablas |
+|---|---|
+| Acceso M1 | `recoleccion_acceso_comando`, `usuario_acceso_recoleccion`, `usuario_acceso_recoleccion_revision`, `usuario_acceso_recoleccion_historial` |
+| Acceso M2 | `vivero_acceso_comando`, `usuario_vivero`, `usuario_vivero_revision`, `usuario_vivero_historial` |
+| Evidencia operativa | `m2_evidencia_contexto` |
+| Recepción | `recoleccion_recepcion_comando`, `recoleccion_recepcion`, `recoleccion_recepcion_evidencia_contexto`, `recoleccion_recepcion_evidencia` |
+| Incorporación | `vivero_incorporacion` |
+
+Las ocho tablas `plantacion`, `plantacion_usuario`, `plantacion_riego`, `plantacion_abono`, `plantacion_foto`, `plantacion_monitoreo`, `tipo_riego` y `tipo_abono` están ausentes del extracto actual. El [diagrama legado del 4 de noviembre](diagramas/modelo-fisico-legado.svg) y su [fuente](diagramas/modelo-fisico-legado.mmd) conservan aquella observación. La ausencia en un extracto acredita la diferencia entre fuentes y deja pendiente el acto y fecha de retirada en cada entorno.
 
 ## Precisiones físicas relevantes
 
-- `usuario` contiene `activo`, `revision_autoridad` y `organizacion_id`. El rol global permanece en una sola columna.
-- `subcampania_permiso` y `subcampania_permiso_revision` están separadas de `subcampania_equipo`. Permisos de participación y logística no son la misma relación.
-- `participacion_comando`, `usuario_autoridad_historial`, `participacion_carga` y `participacion_carga_generacion` forman parte del inventario.
-- Las siete tablas de persistencia efectiva y compensaciones también se incluyen. Su existencia no acredita todos los ejecutores o interfaces de corrección.
-- `lote_vivero.recoleccion_id` y `lote_vivero.vivero_id` permanecen NN. No se agregan una tabla de operarios por vivero, columnas de incorporación externa ni un evento de incorporación como si ya estuvieran desplegados.
-- `recoleccion_movimiento` utiliza `unidad_medida_evento`; el campo `unidad_operativa` es adicional y nullable.
-- `recoleccion_movimiento.lote_vivero_id` figura como columna, pero no se dibuja una FK hacia `lote_vivero`: el catálogo consultado no la identifica como tal.
-- `evidencias_trazabilidad.entidad_id` es el identificador de una asociación polimórfica. No se dibujan FKs físicas desde esa columna a Recolección, eventos de Vivero o Plantación.
-- `campania` no contiene una columna de estado. Las vistas y funciones derivadas no se representan como tablas.
-- Los tres saldos generados exportados como nullable conservan esa nulabilidad; no se confunde una regla de negocio o una expresión generada con una restricción NOT NULL.
+- `recoleccion.revision_captura` es NN y permite vincular fotografías y decisiones a la revisión correspondiente. `usuario_validacion_id` y `fecha_validacion` dejan de figurar en Recolección. El hecho inmutable de recepción contiene `fecha_recepcion`, `recibido_por` y `registrado_en`.
+- `lote_vivero.recoleccion_id`, `tipo_material_snapshot`, `cantidad_inicial_en_proceso` y `unidad_medida_inicial` son nullable. El contrato limita esos nulos al camino incorporado. `vivero_id` y `planta_id` permanecen NN.
+- `vivero_incorporacion` extiende el evento por `evento_id` PK/FK y contiene modalidad, procedencia, tercero/referencia opcionales, solicitud UUID única, huella y instante de registro. La base viva única corresponde a las restricciones y transacciones de T5.
+- `m2_evidencia_contexto` admite el contexto `INCORPORACION` y `solicitud_id`. El permiso de lectura o escritura exige su contrato de audiencia.
+- `recoleccion_movimiento.lote_vivero_id` permanece como columna sin una FK explícita al lote en este extracto. Su vínculo semántico se consulta en el contrato M1→M2.
+- `evidencias_trazabilidad.entidad_id` conserva su asociación polimórfica. El diagrama representa las FKs que figuran expresamente en la fuente.
+- Permisos de participación y equipo logístico conservan tablas distintas. El rol global permanece en `usuario.rol`.
+- `campania` conserva estado derivado. Las vistas y funciones no aparecen como tablas adicionales.
+- Las columnas de saldo generadas conservan la nulabilidad exportada. Las fórmulas, CHECK y DEFAULT visibles permanecen en el SQL contextual.
 
 ## Regeneración
-
-Las columnas de los diagramas se generan mecánicamente con el [script](scripts/generar-modelo-fisico.mjs):
 
 ```sh
 node database/scripts/generar-modelo-fisico.mjs
 node database/scripts/renderizar-modelo-fisico.mjs
 ```
 
-El segundo script requiere Mermaid CLI (`mmdc`) y renderiza las seis vistas. También admite `--cli /ruta/a/mermaid-cli/src/cli.js` para una instalación local. Antes de cambiar las relaciones, actualizar su fuente y conservar la distinción entre catálogo remoto y migraciones. No editar únicamente el SVG generado.
+El primer script valida las referencias y sus columnas, genera seis fuentes Mermaid y publica conteos por vista. El segundo requiere Mermaid CLI (`mmdc`) o `--cli /ruta/a/mermaid-cli/src/cli.js` y regenera los seis SVG actuales. El diagrama legado histórico queda accesible por separado. Las modificaciones se realizan en las fuentes y el generador antes de regenerar los SVG.
 
-El [esquema anterior](archivo/00_database_schema-antes-2026-11-04.md) conserva el ER, comentarios, enumeraciones y funciones documentados antes de este contraste.
+El [esquema anterior al 4 de noviembre](archivo/00_database_schema-antes-2026-11-04.md) conserva la documentación histórica previa a ambos contrastes.

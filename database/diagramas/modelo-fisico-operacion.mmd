@@ -1,0 +1,396 @@
+---
+title: Modelo físico · acceso por vivero, recepción e incorporación
+---
+erDiagram
+  direction TB
+  %% Generado por database/scripts/generar-modelo-fisico.mjs.
+  %% NULL / NN e IDENTITY proceden de la exportación aportada.
+  %% FK del extracto aportado. Claves compuestas agrupadas y contrastadas con SQL local.
+  %% USER_DEFINED conserva el tipo no resuelto por el extracto.
+  %% La vista temática solo dibuja relaciones cuyos dos extremos están incluidos.
+  usuario {
+    bigint id PK "NN"
+    text nombre "NN"
+    text doc_identidad UK "NULL"
+    text wallet_address UK "NULL"
+    text organizacion "NULL"
+    text contacto "NULL"
+    USER_DEFINED rol "NN"
+    timestamp_with_time_zone created_at "NN"
+    text username UK "NULL"
+    text auth_id "NN"
+    text correo UK "NULL"
+    text apellido "NULL"
+    text foto_perfil_url "NULL"
+    boolean activo "NN"
+    bigint revision_autoridad "NN"
+    bigint organizacion_id FK "NULL"
+  }
+
+  vivero {
+    bigint id PK "NN"
+    text codigo UK "NN"
+    USER_DEFINED nombre "NN"
+    bigint ubicacion_id FK, UK "NN"
+    timestamp_with_time_zone created_at "NN"
+  }
+
+  recoleccion {
+    bigint id PK "NN"
+    date fecha "NN"
+    USER_DEFINED tipo_material "NN"
+    boolean especie_nueva "NN"
+    text observaciones "NULL"
+    bigint usuario_id FK "NN"
+    bigint ubicacion_id FK "NN"
+    bigint vivero_id FK "NULL"
+    bigint metodo_id FK "NN"
+    bigint planta_id FK "NULL"
+    date created_at "NN"
+    text codigo_trazabilidad UK "NN"
+    text blockchain_url "NULL"
+    text token_id "NULL"
+    text transaction_hash "NULL"
+    USER_DEFINED estado_registro "NN"
+    USER_DEFINED unidad_canonica "NN"
+    numeric cantidad_inicial_canonica "NN"
+    numeric saldo_actual "NN"
+    USER_DEFINED estado_operativo "NN"
+    text nombre_cientifico_snapshot "NULL"
+    text nombre_comercial_snapshot "NULL"
+    text variedad_snapshot "NULL"
+    text nombre_comunidad_snapshot "NULL"
+    text nombre_recolector_snapshot "NULL"
+    date eliminado_en "NULL"
+    bigint eliminado_por_usuario_id FK "NULL"
+    text motivo_eliminacion "NULL"
+    text motivo_rechazo "NULL"
+    bigint revision_captura "NN"
+  }
+
+  lote_vivero {
+    bigint id PK "NN / IDENTITY"
+    bigint recoleccion_id FK "NULL"
+    bigint planta_id FK "NN"
+    bigint vivero_id FK "NN"
+    bigint responsable_id FK "NN"
+    text nombre_cientifico_snapshot "NN"
+    text nombre_comercial_snapshot "NN"
+    USER_DEFINED tipo_material_snapshot "NULL"
+    date fecha_inicio "NN"
+    numeric cantidad_inicial_en_proceso "NULL"
+    USER_DEFINED unidad_medida_inicial "NULL"
+    integer plantas_vivas_iniciales "NULL"
+    integer saldo_vivo_actual "NULL"
+    USER_DEFINED subetapa_actual "NULL"
+    USER_DEFINED estado_lote "NN"
+    USER_DEFINED motivo_cierre "NULL"
+    text codigo_trazabilidad UK "NN"
+    date created_at "NN"
+    date updated_at "NN"
+    text variedad_snapshot "NULL"
+    text nombre_comunidad_origen_snapshot "NULL"
+    text nombre_responsable_snapshot "NULL"
+  }
+
+  evento_lote_vivero {
+    bigint id PK "NN / IDENTITY"
+    bigint lote_id FK "NN"
+    USER_DEFINED tipo_evento "NN"
+    date fecha_evento "NN"
+    date created_at "NN"
+    bigint responsable_id FK "NN"
+    numeric cantidad_afectada "NULL"
+    USER_DEFINED unidad_medida_evento "NULL"
+    USER_DEFINED causa_merma "NULL"
+    USER_DEFINED destino_tipo "NULL"
+    text destino_referencia "NULL"
+    bigint comunidad_destino_id FK "NULL"
+    USER_DEFINED subetapa_destino "NULL"
+    integer saldo_vivo_antes "NULL"
+    integer saldo_vivo_despues "NULL"
+    USER_DEFINED motivo_cierre_calculado "NULL"
+    bigint ref_evento_trigger_id FK "NULL"
+    jsonb metadata_blockchain "NULL"
+    text observaciones "NULL"
+    USER_DEFINED origen_despacho "NULL"
+    bigint subcampania_id FK "NULL"
+    bigint campania_id FK "NULL"
+    bigint registro_plantacion_id FK "NULL"
+    jsonb metadata "NULL"
+    USER_DEFINED causa_descarte_pre_embolsado "NULL"
+    bigint asignacion_id FK "NULL"
+  }
+
+  evidencias_trazabilidad {
+    bigint id PK "NN / IDENTITY"
+    smallint tipo_entidad_id FK "NN"
+    bigint entidad_id "NN"
+    text codigo_trazabilidad "NULL"
+    text bucket "NN"
+    text ruta_archivo "NN"
+    uuid storage_object_id "NULL"
+    text tipo_archivo "NN"
+    text mime_type "NN"
+    bigint tamano_bytes "NULL"
+    text hash_sha256 "NULL"
+    text titulo "NULL"
+    text descripcion "NULL"
+    jsonb metadata "NN"
+    boolean es_principal "NN"
+    integer orden "NN"
+    timestamp_with_time_zone tomado_en "NULL"
+    date creado_en "NN"
+    date actualizado_en "NN"
+    date eliminado_en "NULL"
+    bigint creado_por_usuario_id FK "NN"
+    bigint actualizado_por_usuario_id FK "NULL"
+    bigint eliminado_por_usuario_id FK "NULL"
+  }
+
+  recoleccion_acceso_comando {
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
+    uuid comando_id "NN"
+    text operacion "NN"
+    jsonb intencion "NN"
+    text estado "NN"
+    jsonb resultado "NULL"
+    jsonb error "NULL"
+    integer http_terminal "NN"
+    timestamp_with_time_zone finalizado_en "NN"
+  }
+
+  usuario_acceso_recoleccion_revision {
+    bigint usuario_id PK, FK "NN"
+    bigint revision "NN"
+  }
+
+  usuario_acceso_recoleccion {
+    bigint id PK "NN / IDENTITY"
+    bigint usuario_id FK "NN"
+    timestamp_with_time_zone otorgado_en "NN"
+    bigint otorgado_por FK "NN"
+    bigint comando_otorgamiento_id FK "NN"
+    timestamp_with_time_zone revocado_en "NULL"
+    bigint revocado_por FK "NULL"
+    bigint comando_retiro_id FK "NULL"
+  }
+
+  usuario_acceso_recoleccion_historial {
+    bigint id PK "NN / IDENTITY"
+    bigint usuario_id FK "NN"
+    bigint actor_id FK "NN"
+    bigint comando_id FK, UK "NN"
+    bigint acceso_id FK "NN"
+    text evento "NN"
+    bigint revision_anterior "NN"
+    bigint revision_nueva "NN"
+    text motivo "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  vivero_acceso_comando {
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
+    uuid comando_id "NN"
+    text operacion "NN"
+    jsonb intencion "NN"
+    text estado "NN"
+    jsonb resultado "NULL"
+    jsonb error "NULL"
+    integer http_terminal "NN"
+    timestamp_with_time_zone finalizado_en "NN"
+  }
+
+  usuario_vivero_revision {
+    bigint usuario_id PK, FK "NN"
+    bigint revision "NN"
+  }
+
+  usuario_vivero {
+    bigint vivero_id FK "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint usuario_id FK "NN"
+    timestamp_with_time_zone otorgado_en "NN"
+    bigint otorgado_por FK "NN"
+    bigint comando_otorgamiento_id FK "NN"
+    timestamp_with_time_zone revocado_en "NULL"
+    bigint revocado_por FK "NULL"
+    bigint comando_retiro_id FK "NULL"
+  }
+
+  usuario_vivero_historial {
+    bigint vivero_id FK "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint usuario_id FK "NN"
+    bigint actor_id FK "NN"
+    bigint comando_id FK, UK "NN"
+    bigint acceso_id FK "NN"
+    text evento "NN"
+    bigint revision_anterior "NN"
+    bigint revision_nueva "NN"
+    text motivo "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  m2_evidencia_contexto {
+    bigint evidencia_id PK, FK "NN"
+    bigint vivero_id FK "NN"
+    bigint lote_id FK "NULL"
+    text evento "NN"
+    bigint actor_id FK "NN"
+    timestamp_with_time_zone creado_en "NN"
+    uuid solicitud_id "NULL"
+  }
+
+  recoleccion_recepcion_comando {
+    bigint actor_id PK, FK "NN"
+    uuid comando_id PK "NN"
+    jsonb intencion "NN"
+    integer http_status "NN"
+    jsonb recibo "NN"
+    timestamp_with_time_zone registrado_en "NN"
+  }
+
+  recoleccion_recepcion {
+    bigint id PK "NN / IDENTITY"
+    bigint recoleccion_id FK, UK "NN"
+    bigint vivero_id FK "NN"
+    numeric cantidad_recibida "NN"
+    USER_DEFINED unidad_recibida "NN"
+    date fecha_recepcion "NN"
+    bigint recibido_por FK "NN"
+    timestamp_with_time_zone registrado_en "NN"
+    uuid comando_id FK "NN"
+  }
+
+  recoleccion_recepcion_evidencia_contexto {
+    bigint evidencia_id PK, FK "NN"
+    bigint recoleccion_id FK "NN"
+    bigint vivero_id FK "NN"
+    bigint actor_id FK "NN"
+    timestamp_with_time_zone registrado_en "NN"
+    bigint revision_captura "NN"
+  }
+
+  recoleccion_recepcion_evidencia {
+    bigint evidencia_id PK, FK "NN"
+    bigint recepcion_id FK "NN"
+  }
+
+  vivero_incorporacion {
+    bigint evento_id PK, FK "NN"
+    text modalidad "NN"
+    text procedencia "NN"
+    text tercero_origen "NULL"
+    text referencia_documental "NULL"
+    uuid solicitud_id UK "NN"
+    jsonb huella_solicitud "NN"
+    timestamp_with_time_zone registrado_en "NN"
+  }
+
+  %% Extracto aportado: recoleccion(usuario_id) -> usuario(id)
+  usuario ||..o{ recoleccion : "usuario_id"
+  %% Extracto aportado: recoleccion(vivero_id) -> vivero(id)
+  vivero |o..o{ recoleccion : "vivero_id"
+  %% Extracto aportado: recoleccion(eliminado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ recoleccion : "eliminado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(creado_por_usuario_id) -> usuario(id)
+  usuario ||..o{ evidencias_trazabilidad : "creado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(actualizado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ evidencias_trazabilidad : "actualizado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(eliminado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ evidencias_trazabilidad : "eliminado_por_usuario_id"
+  %% Extracto aportado: lote_vivero(recoleccion_id) -> recoleccion(id)
+  recoleccion |o..o{ lote_vivero : "recoleccion_id"
+  %% Extracto aportado: lote_vivero(vivero_id) -> vivero(id)
+  vivero ||..o{ lote_vivero : "vivero_id"
+  %% Extracto aportado: lote_vivero(responsable_id) -> usuario(id)
+  usuario ||..o{ lote_vivero : "responsable_id"
+  %% Extracto aportado: evento_lote_vivero(responsable_id) -> usuario(id)
+  usuario ||..o{ evento_lote_vivero : "responsable_id"
+  %% Extracto aportado: evento_lote_vivero(ref_evento_trigger_id) -> evento_lote_vivero(id)
+  evento_lote_vivero |o..o{ evento_lote_vivero : "ref_evento_trigger_id"
+  %% Extracto aportado: evento_lote_vivero(lote_id) -> lote_vivero(id)
+  lote_vivero ||..o{ evento_lote_vivero : "lote_id"
+  %% Extracto aportado: recoleccion_acceso_comando(actor_id) -> usuario(id)
+  usuario ||..o{ recoleccion_acceso_comando : "actor_id"
+  %% Extracto aportado: usuario_acceso_recoleccion_revision(usuario_id) -> usuario(id)
+  usuario ||--o| usuario_acceso_recoleccion_revision : "usuario_id"
+  %% Extracto aportado: usuario_acceso_recoleccion(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_acceso_recoleccion : "usuario_id"
+  %% Extracto aportado: usuario_acceso_recoleccion(otorgado_por) -> usuario(id)
+  usuario ||..o{ usuario_acceso_recoleccion : "otorgado_por"
+  %% Extracto aportado: usuario_acceso_recoleccion(revocado_por) -> usuario(id)
+  usuario |o..o{ usuario_acceso_recoleccion : "revocado_por"
+  %% Extracto y SQL 092: usuario_acceso_recoleccion(comando_otorgamiento_id,otorgado_por) -> recoleccion_acceso_comando(id,actor_id)
+  recoleccion_acceso_comando ||..o{ usuario_acceso_recoleccion : "comando_otorgamiento_id+otorgado_por"
+  %% Extracto y SQL 092: usuario_acceso_recoleccion(comando_retiro_id,revocado_por) -> recoleccion_acceso_comando(id,actor_id)
+  recoleccion_acceso_comando |o..o{ usuario_acceso_recoleccion : "comando_retiro_id+revocado_por"
+  %% Extracto aportado: usuario_acceso_recoleccion_historial(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_acceso_recoleccion_historial : "usuario_id"
+  %% Extracto aportado: usuario_acceso_recoleccion_historial(actor_id) -> usuario(id)
+  usuario ||..o{ usuario_acceso_recoleccion_historial : "actor_id"
+  %% Extracto aportado: usuario_acceso_recoleccion_historial(acceso_id) -> usuario_acceso_recoleccion(id)
+  usuario_acceso_recoleccion ||..o{ usuario_acceso_recoleccion_historial : "acceso_id"
+  %% Extracto y SQL 092: usuario_acceso_recoleccion_historial(comando_id,actor_id) -> recoleccion_acceso_comando(id,actor_id)
+  recoleccion_acceso_comando ||..o| usuario_acceso_recoleccion_historial : "comando_id+actor_id"
+  %% Extracto aportado: vivero_acceso_comando(actor_id) -> usuario(id)
+  usuario ||..o{ vivero_acceso_comando : "actor_id"
+  %% Extracto aportado: usuario_vivero_revision(usuario_id) -> usuario(id)
+  usuario ||--o| usuario_vivero_revision : "usuario_id"
+  %% Extracto aportado: usuario_vivero(vivero_id) -> vivero(id)
+  vivero ||..o{ usuario_vivero : "vivero_id"
+  %% Extracto aportado: usuario_vivero(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_vivero : "usuario_id"
+  %% Extracto aportado: usuario_vivero(otorgado_por) -> usuario(id)
+  usuario ||..o{ usuario_vivero : "otorgado_por"
+  %% Extracto aportado: usuario_vivero(revocado_por) -> usuario(id)
+  usuario |o..o{ usuario_vivero : "revocado_por"
+  %% Extracto y SQL 094: usuario_vivero(comando_otorgamiento_id,otorgado_por) -> vivero_acceso_comando(id,actor_id)
+  vivero_acceso_comando ||..o{ usuario_vivero : "comando_otorgamiento_id+otorgado_por"
+  %% Extracto y SQL 094: usuario_vivero(comando_retiro_id,revocado_por) -> vivero_acceso_comando(id,actor_id)
+  vivero_acceso_comando |o..o{ usuario_vivero : "comando_retiro_id+revocado_por"
+  %% Extracto aportado: usuario_vivero_historial(vivero_id) -> vivero(id)
+  vivero ||..o{ usuario_vivero_historial : "vivero_id"
+  %% Extracto aportado: usuario_vivero_historial(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_vivero_historial : "usuario_id"
+  %% Extracto aportado: usuario_vivero_historial(actor_id) -> usuario(id)
+  usuario ||..o{ usuario_vivero_historial : "actor_id"
+  %% Extracto aportado: usuario_vivero_historial(acceso_id) -> usuario_vivero(id)
+  usuario_vivero ||..o{ usuario_vivero_historial : "acceso_id"
+  %% Extracto y SQL 094: usuario_vivero_historial(comando_id,actor_id) -> vivero_acceso_comando(id,actor_id)
+  vivero_acceso_comando ||..o| usuario_vivero_historial : "comando_id+actor_id"
+  %% Extracto aportado: m2_evidencia_contexto(evidencia_id) -> evidencias_trazabilidad(id)
+  evidencias_trazabilidad ||--o| m2_evidencia_contexto : "evidencia_id"
+  %% Extracto aportado: m2_evidencia_contexto(vivero_id) -> vivero(id)
+  vivero ||..o{ m2_evidencia_contexto : "vivero_id"
+  %% Extracto aportado: m2_evidencia_contexto(lote_id) -> lote_vivero(id)
+  lote_vivero |o..o{ m2_evidencia_contexto : "lote_id"
+  %% Extracto aportado: m2_evidencia_contexto(actor_id) -> usuario(id)
+  usuario ||..o{ m2_evidencia_contexto : "actor_id"
+  %% Extracto aportado: recoleccion_recepcion_comando(actor_id) -> usuario(id)
+  usuario ||--o{ recoleccion_recepcion_comando : "actor_id"
+  %% Extracto aportado: recoleccion_recepcion(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o| recoleccion_recepcion : "recoleccion_id"
+  %% Extracto aportado: recoleccion_recepcion(vivero_id) -> vivero(id)
+  vivero ||..o{ recoleccion_recepcion : "vivero_id"
+  %% Extracto aportado: recoleccion_recepcion(recibido_por) -> usuario(id)
+  usuario ||..o{ recoleccion_recepcion : "recibido_por"
+  %% Extracto y SQL 100: recoleccion_recepcion(recibido_por,comando_id) -> recoleccion_recepcion_comando(actor_id,comando_id)
+  recoleccion_recepcion_comando ||..o{ recoleccion_recepcion : "recibido_por+comando_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia_contexto(evidencia_id) -> evidencias_trazabilidad(id)
+  evidencias_trazabilidad ||--o| recoleccion_recepcion_evidencia_contexto : "evidencia_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia_contexto(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o{ recoleccion_recepcion_evidencia_contexto : "recoleccion_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia_contexto(vivero_id) -> vivero(id)
+  vivero ||..o{ recoleccion_recepcion_evidencia_contexto : "vivero_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia_contexto(actor_id) -> usuario(id)
+  usuario ||..o{ recoleccion_recepcion_evidencia_contexto : "actor_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia(evidencia_id) -> recoleccion_recepcion_evidencia_contexto(evidencia_id)
+  recoleccion_recepcion_evidencia_contexto ||--o| recoleccion_recepcion_evidencia : "evidencia_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia(recepcion_id) -> recoleccion_recepcion(id)
+  recoleccion_recepcion ||..o{ recoleccion_recepcion_evidencia : "recepcion_id"
+  %% Extracto aportado: vivero_incorporacion(evento_id) -> evento_lote_vivero(id)
+  evento_lote_vivero ||--o| vivero_incorporacion : "evento_id"

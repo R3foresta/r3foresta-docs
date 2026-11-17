@@ -1,32 +1,62 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
-// Generación mecánica: columnas de la exportación; relaciones de sus fuentes
-// declaradas. No consulta la base ni interpreta nombres *_id como claves.
+// Columnas y restricciones del extracto contextual aportado.
+// Las claves compuestas conservan la procedencia de su contraste SQL local.
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const source = fs.readFileSync(path.join(root, 'fuentes/supabase-estructura-2026-11-04.md'), 'utf8');
-const metadata = JSON.parse(fs.readFileSync(path.join(root, 'fuentes/supabase-relaciones-2026-11-04.json'), 'utf8'));
+const source = fs.readFileSync(path.join(root, 'fuentes/supabase-estructura-2026-11-16.sql'), 'utf8');
+const metadata = JSON.parse(fs.readFileSync(path.join(root, 'fuentes/supabase-relaciones-2026-11-16.json'), 'utf8'));
+if (createHash('sha256').update(source).digest('hex') !== metadata.sha256) {
+  throw new Error('La fuente SQL difiere de la huella documentada. Revisar su procedencia.');
+}
 const tables = new Map();
-let table;
-for (const line of source.split('\n')) {
-  const heading = line.match(/^## Table `([^`]+)`$/);
-  if (heading) {
-    table = { name: heading[1], columns: [] };
-    if (tables.has(table.name)) throw new Error(`Tabla duplicada: ${table.name}`);
-    tables.set(table.name, table);
-  } else if (line.startsWith('## Custom Types')) {
-    table = undefined;
-  } else {
-    const row = line.match(/^\| `([^`]+)` \| `([^`]+)` \|\s*(.*?)\s*\|$/);
-    if (table && row) table.columns.push({ name: row[1], type: row[2], constraints: row[3] });
+const relationships = [];
+for (const match of source.matchAll(/^CREATE TABLE public\.(\w+) \(\n([\s\S]*?)\n\);/gm)) {
+  const table = { name: match[1], columns: [] };
+  if (tables.has(table.name)) throw new Error(`Tabla duplicada: ${table.name}`);
+  tables.set(table.name, table);
+  const foreignKeys = new Map();
+  for (const line of match[2].split('\n')) {
+    const row = line.match(/^  (\w+) (.+)/);
+    if (row && row[1] !== 'CONSTRAINT') {
+      const declaration = row[2].replace(/,$/, '');
+      const rawType = declaration.split(/\s+(?:NOT NULL|NULL|DEFAULT|GENERATED|CHECK|UNIQUE|PRIMARY KEY|REFERENCES)\b/)[0];
+      const type = rawType.replaceAll(' ', '_').replaceAll('-', '_').replaceAll('[]', '_array');
+      table.columns.push({ name: row[1], type, declaration, primary: false,
+        unique: /\bUNIQUE\b/.test(declaration), nullable: !/\bNOT NULL\b/.test(declaration),
+        identity: /\bAS IDENTITY\b/.test(declaration) });
+    }
+    const key = line.match(/CONSTRAINT (\w+) FOREIGN KEY \(([^)]+)\) REFERENCES public\.(\w+)\(([^)]+)\)/);
+    if (key) {
+      const f = foreignKeys.get(key[1]) ?? { table: table.name, name: key[1], target: key[3], columns: [], targetColumns: [] };
+      if (f.target !== key[3]) throw new Error(`Destino incompatible: ${key[1]}`);
+      f.columns.push(...key[2].split(',').map(c => c.trim()));
+      f.targetColumns.push(...key[4].split(',').map(c => c.trim()));
+      foreignKeys.set(key[1], f);
+    }
+  }
+  const primary = match[2].match(/CONSTRAINT \w+ PRIMARY KEY \(([^)]+)\)/);
+  for (const name of primary?.[1].split(',').map(c => c.trim()) ?? []) {
+    const column = table.columns.find(c => c.name === name);
+    if (!column) throw new Error(`Columna PK desconocida: ${table.name}.${name}`);
+    column.primary = true;
+    column.nullable = false;
+  }
+  relationships.push(...foreignKeys.values());
+}
+for (const f of relationships) {
+  f.source = 'Extracto aportado';
+  if (f.columns.length > 1) {
+    const origin = metadata.fuentes_compuestas.find(c => c.table === f.table && c.name === f.name);
+    if (!origin || JSON.stringify(origin.columns) !== JSON.stringify(f.columns) ||
+        origin.target !== f.target || JSON.stringify(origin.targetColumns) !== JSON.stringify(f.targetColumns)) {
+      throw new Error(`Clave compuesta sin contraste documentado: ${f.table}.${f.name}`);
+    }
+    f.source = `Extracto y SQL ${origin.migration}`;
   }
 }
-const composites = metadata.fuentes_compuestas.map(f => ({ ...f, source: `SQL ${f.migration}` }));
-const relationships = metadata.foreignKeys
-  .filter(f => tables.has(f.table) && tables.has(f.target))
-  .map(f => ({ ...f, columns: [f.column], targetColumns: [f.targetColumn], source: 'PostgREST' }));
-relationships.push(...composites);
 function col(t, name) {
   const c = tables.get(t)?.columns.find(c => c.name === name);
   if (!c) throw new Error(`Columna no encontrada: ${t}.${name}`);
@@ -37,12 +67,12 @@ for (const f of relationships) {
   f.targetColumns.forEach(c => col(f.target, c));
 }
 const views = {
-  completo: { title: 'Modelo físico completo · Supabase · 4 de noviembre de 2026', tables: [...tables.keys()] },
+  completo: { title: 'Modelo físico completo · extracto aportado · revisión 16 de noviembre de 2026', tables: [...tables.keys()] },
   nucleo: { title: 'Modelo físico · recorrido Recolección → Vivero → Plantación', tables: [
     'recoleccion', 'recoleccion_historial', 'recoleccion_movimiento', 'lote_vivero', 'evento_lote_vivero',
     'campania', 'subcampania', 'subcampania_historial', 'subcampania_meta_especie',
     'asignacion_vivero_subcampania', 'registro_plantacion', 'registro_plantacion_detalle',
-    'registro_plantacion_coresponsable', 'evento_plantacion',
+    'registro_plantacion_coresponsable', 'evento_plantacion', 'recoleccion_recepcion', 'vivero_incorporacion',
   ] },
   general: { title: 'Modelo físico · identidad, catálogos, territorio y evidencias', tables: [
     'usuario', 'usuario_credencial', 'organizacion', 'planta', 'tipo_planta', 'pais',
@@ -61,9 +91,13 @@ const views = {
     'evento_plantacion_efectivo', 'registro_plantacion_participante_efectivo',
     'registro_plantacion_consumo_credito', 'registro_plantacion_consumo_compensacion',
   ] },
-  legado: { title: 'Modelo físico · tablas de Plantación conservadas y seguimiento', tables: [
-    'plantacion', 'plantacion_usuario', 'plantacion_riego', 'plantacion_abono', 'plantacion_foto',
-    'plantacion_monitoreo', 'tipo_riego', 'tipo_abono', 'usuario', 'ubicacion',
+  operacion: { title: 'Modelo físico · acceso por vivero, recepción e incorporación', tables: [
+    'usuario', 'vivero', 'recoleccion', 'lote_vivero', 'evento_lote_vivero', 'evidencias_trazabilidad',
+    'recoleccion_acceso_comando', 'usuario_acceso_recoleccion_revision', 'usuario_acceso_recoleccion',
+    'usuario_acceso_recoleccion_historial', 'vivero_acceso_comando', 'usuario_vivero_revision',
+    'usuario_vivero', 'usuario_vivero_historial', 'm2_evidencia_contexto',
+    'recoleccion_recepcion_comando', 'recoleccion_recepcion', 'recoleccion_recepcion_evidencia_contexto',
+    'recoleccion_recepcion_evidencia', 'vivero_incorporacion',
   ] },
 };
 const out = path.join(root, 'diagramas');
@@ -74,7 +108,8 @@ for (const [name, view] of Object.entries(views)) {
   const lines = ['---', `title: ${view.title}`, '---', 'erDiagram', '  direction TB',
     '  %% Generado por database/scripts/generar-modelo-fisico.mjs.',
     '  %% NULL / NN e IDENTITY proceden de la exportación aportada.',
-    '  %% FK simples: catálogo PostgREST. FK compuestas: SQL 070/072/074/082.',
+    '  %% FK del extracto aportado. Claves compuestas agrupadas y contrastadas con SQL local.',
+    '  %% USER_DEFINED conserva el tipo no resuelto por el extracto.',
     '  %% La vista temática solo dibuja relaciones cuyos dos extremos están incluidos.',
   ];
   for (const t of view.tables) {
@@ -83,10 +118,8 @@ for (const [name, view] of Object.entries(views)) {
     const fks = new Set(relationships.filter(f => f.table === t).flatMap(f => f.columns));
     lines.push(`  ${t} {`);
     for (const c of data.columns) {
-      const keys = [c.constraints.includes('Primary') && 'PK', fks.has(c.name) && 'FK',
-        c.constraints.includes('Unique') && 'UK'].filter(Boolean);
-      const comment = [c.constraints.includes('Nullable') ? 'NULL' : 'NN',
-        c.constraints.includes('Identity') && 'IDENTITY'].filter(Boolean).join('; ');
+      const keys = [c.primary && 'PK', fks.has(c.name) && 'FK', c.unique && 'UK'].filter(Boolean);
+      const comment = [c.nullable ? 'NULL' : 'NN', c.identity && 'IDENTITY'].filter(Boolean).join(' / ');
       lines.push(`    ${c.type} ${c.name}${keys.length ? ' ' + keys.join(', ') : ''} "${comment}"`);
     }
     lines.push('  }', '');
@@ -94,11 +127,11 @@ for (const [name, view] of Object.entries(views)) {
   let count = 0;
   for (const f of relationships.filter(f => selected.has(f.table) && selected.has(f.target))) {
     const cs = f.columns.map(c => col(f.table, c));
-    const primary = tables.get(f.table).columns.filter(c => c.constraints.includes('Primary')).map(c => c.name);
+    const primary = tables.get(f.table).columns.filter(c => c.primary).map(c => c.name);
     const exactPk = primary.length === cs.length && primary.every(c => f.columns.includes(c));
-    const unique = exactPk || cs.some(c => c.constraints.includes('Unique'));
-    const optional = cs.some(c => c.constraints.includes('Nullable'));
-    const identifying = cs.every(c => c.constraints.includes('Primary'));
+    const unique = exactPk || cs.some(c => c.unique);
+    const optional = cs.some(c => c.nullable);
+    const identifying = cs.every(c => c.primary);
     lines.push(`  %% ${f.source}: ${f.table}(${f.columns.join(',')}) -> ${f.target}(${f.targetColumns.join(',')})`);
     lines.push(`  ${f.target} ${optional ? '|o' : '||'}${identifying ? '--' : '..'}${unique ? 'o|' : 'o{'} ${f.table} : "${f.columns.join('+')}"`);
     count++;
@@ -106,4 +139,5 @@ for (const [name, view] of Object.entries(views)) {
   fs.writeFileSync(path.join(out, `modelo-fisico-${name}.mmd`), lines.join('\n') + '\n');
   stats.push({ view: name, tables: selected.size, columns: view.tables.reduce((n, t) => n + tables.get(t).columns.length, 0), relationships: count });
 }
+const composites = relationships.filter(f => f.columns.length > 1);
 console.log(JSON.stringify({ tables: tables.size, columns: [...tables.values()].reduce((n, t) => n + t.columns.length, 0), simpleRelationships: relationships.length - composites.length, compositeRelationshipsFromSql: composites.length, views: stats }, null, 2));

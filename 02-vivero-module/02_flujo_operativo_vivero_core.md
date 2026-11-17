@@ -15,11 +15,15 @@ La integracion con Plantacion mediante asignaciones fisicas, devoluciones fisica
 ## 2. Flujo core
 
 ```text
-Recoleccion validada
+Recoleccion recibida y validada
 -> INICIO
 -> [DESCARTE_PRE_EMBOLSADO -> CIERRE_AUTOMATICO]
    o
    [EMBOLSADO -> ADAPTABILIDAD opcional -> MERMA y/o DESPACHO MANUAL -> CIERRE_AUTOMATICO]
+
+Recepcion de compra/donacion o conteo inicial de plantas vivas
+-> INCORPORACION en un lote nuevo
+-> ADAPTABILIDAD opcional -> MERMA y/o DESPACHO MANUAL -> CIERRE_AUTOMATICO
 ```
 
 ## 3. Lectura de cada hito
@@ -46,6 +50,8 @@ En este punto:
 
 `fecha_inicio` del lote debe coincidir con `fecha_evento` del evento `INICIO`, salvo excepcion explicita documentada.
 
+El origen debe tener recepción conforme y saldo elegible. GENERAL/VALIDADOR activos operan con asignación vigente al vivero y destino igual al almacenamiento del origen. ADMIN conserva la selección explícita de un destino distinto. INICIO respeta la fecha de recepción física del material.
+
 ### 3.2 DESCARTE_PRE_EMBOLSADO
 
 `DESCARTE_PRE_EMBOLSADO` cierra un lote que inicio en vivero pero nunca producira plantas vivas.
@@ -70,7 +76,7 @@ No se permite descarte pre-embolsado parcial. Si se confirma este evento, el lot
 
 ### 3.3 EMBOLSADO
 
-`EMBOLSADO` marca el nacimiento del saldo vivo.
+`EMBOLSADO` marca el nacimiento del saldo vivo en propagación.
 
 Reglas clave:
 
@@ -86,13 +92,25 @@ Reglas clave:
 
 El sistema no convierte automaticamente gramos en plantas vivas. El embolsado registra un conteo observado.
 
+### 3.3.1 INCORPORACION de plantas vivas
+
+ADMIN global activo elige un vivero, especie activa y modalidad `RECEPCION` o `SALDO_INICIAL`. Recepción admite `COMPRA` y `DONACION`. Saldo inicial admite además `PRODUCCION_PROPIA` y `DESCONOCIDA`, con observaciones obligatorias para esta última. Tercero y referencia documental son opcionales.
+
+Se conserva una solicitud propia antes de cargar las fotos privadas de recepción o conteo. La cantidad es entera positiva en `UNIDAD`, y la fecha física queda dentro de los diez días inclusivos permitidos en `America/La_Paz`.
+
+Confirmar crea un lote nuevo, un evento `INCORPORACION`, la procedencia y los vínculos de evidencia en una transacción. Fija saldo anterior 0 y saldo inicial igual a la cantidad recibida o contada. Cada lote tiene una sola base viva. Los campos de material en proceso y la referencia a Recolección son nulos para esta variante.
+
+La misma solicitud propia confirmada conserva su lote y resultado al reintentarse. Ante respuesta perdida se consulta la solicitud guardada. Un resultado inconcluso conserva clave, intención y evidencias hasta resolverlo. El resultado propio confirmado se recupera con cuenta activa después de perder ADMIN.
+
+Antes de registrar saldo inicial se excluyen las plantas ya representadas en otro lote. Una compra antigua de 300 con 210 contadas actualmente se registra por 210 como `SALDO_INICIAL/COMPRA`, con los antecedentes disponibles. El historial comienza en la recepción o conteo. [RF-VIV-15 y criterios de aceptación](00_requerimientos_vivero_core.json).
+
 ### 3.4 ADAPTABILIDAD opcional
 
 `ADAPTABILIDAD` registra seguimiento operativo del fortalecimiento del lote.
 
 Reglas clave:
 
-- requiere `EMBOLSADO` previo,
+- requiere base viva confirmada mediante `EMBOLSADO` o `INCORPORACION`,
 - puede ocurrir multiples veces,
 - admite subetapas como `SOMBRA`, `MEDIA_SOMBRA` y `SOL_DIRECTO`,
 - no cambia saldo vivo,
@@ -112,7 +130,7 @@ saldo_vivo_antes = saldo_vivo_despues = saldo_vivo_actual
 
 Reglas clave:
 
-- requiere `EMBOLSADO` previo,
+- requiere base viva confirmada mediante `EMBOLSADO` o `INCORPORACION`,
 - `cantidad_afectada > 0`,
 - `unidad_medida_evento = UNIDAD`,
 - `cantidad_afectada <= saldo_vivo_actual`,
@@ -131,7 +149,7 @@ La politica de mermas sobre asignaciones activas pertenece al contrato Vivero ->
 
 Reglas clave:
 
-- requiere `EMBOLSADO` previo,
+- requiere base viva confirmada mediante `EMBOLSADO` o `INCORPORACION`,
 - `cantidad_afectada > 0`,
 - `unidad_medida_evento = UNIDAD`,
 - requiere destino estructurado: el campo condicionado depende de `destino_tipo` (matriz completa en `RF-VIV-05` y `ADR-VIV-16`); ningun `destino_tipo` manual pide campania/subcampania, ni siquiera `PLANTACION_PROPIA`,
@@ -185,9 +203,17 @@ INICIO
      -> MERMA*
      -> DESPACHO MANUAL*
      -> CIERRE_AUTOMATICO cuando saldo_vivo_actual = 0
+
+o
+
+INCORPORACION
+  -> ADAPTABILIDAD*
+  -> MERMA*
+  -> DESPACHO MANUAL*
+  -> CIERRE_AUTOMATICO cuando saldo_vivo_actual = 0
 ```
 
-`ADAPTABILIDAD`, `MERMA` y `DESPACHO MANUAL` pueden intercalarse despues de `EMBOLSADO`, respetando fechas y saldo.
+`ADAPTABILIDAD`, `MERMA` y `DESPACHO MANUAL` pueden intercalarse después del nacimiento vivo, respetando fechas, saldo y autorización por vivero. Las devoluciones del contrato con Plantación aumentan el saldo del mismo lote de origen.
 
 ## 5. Evidencia
 
@@ -195,6 +221,7 @@ Eventos con evidencia obligatoria en core:
 
 - `INICIO`
 - `EMBOLSADO`
+- `INCORPORACION`
 - `DESCARTE_PRE_EMBOLSADO`
 - `MERMA`
 - `DESPACHO`
@@ -204,6 +231,8 @@ Evento con evidencia opcional:
 - `ADAPTABILIDAD`
 
 La evidencia se vincula al `EVENTO_LOTE_VIVERO.id` mediante `EVIDENCIAS_TRAZABILIDAD`.
+
+Las fotos T5 se sirven mediante URLs firmadas temporales desde el historial autorizado. Al consultar se recorren todas las páginas del mismo corte antes de indicar historia completa y se comunican por separado los errores de consulta o firma de fotos, conservando la información disponible.
 
 ## 6. Fuera del core
 
@@ -218,24 +247,22 @@ No forman parte de esta guia operativa:
 
 Estos puntos son contrato entre modulos y viven en [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md).
 
-## 7. Plan de implementacion
+## 7. Comprobaciones del descarte pre-embolsado
 
 ### 7.1 Backend / BD
 
-- Agregar `DESCARTE_PRE_EMBOLSADO` a `tipo_evento_vivero`.
-- Agregar `DESCARTE_PRE_EMBOLSADO` a `motivo_cierre_lote`.
-- Crear `causa_descarte_pre_embolsado`.
-- Agregar `EVENTO_LOTE_VIVERO.causa_descarte_pre_embolsado`.
-- Crear RPC transaccional `fn_vivero_registrar_descarte_pre_embolsado`.
+- Verificar `DESCARTE_PRE_EMBOLSADO` en `tipo_evento_vivero` y `motivo_cierre_lote`.
+- Verificar `causa_descarte_pre_embolsado` y `EVENTO_LOTE_VIVERO.causa_descarte_pre_embolsado`.
+- Verificar la RPC transaccional `fn_vivero_registrar_descarte_pre_embolsado`.
 - La RPC debe exigir evidencia, causa, cantidad total afectada, unidad y observaciones cuando aplique.
 - La RPC debe validar `INICIO` previo, ausencia de `EMBOLSADO`, lote `ACTIVO` y fecha operativa valida.
 - La RPC debe finalizar el lote con `motivo_cierre = DESCARTE_PRE_EMBOLSADO` y registrar `CIERRE_AUTOMATICO`.
-- Si el lote ya tiene `EMBOLSADO`, no se debe permitir `DESCARTE_PRE_EMBOLSADO`; para perdida total post-embolsado se usa `MERMA` por el total del `saldo_vivo_actual`.
+- Para una pérdida total posterior a `EMBOLSADO` o `INCORPORACION` se usa `MERMA` por el total del `saldo_vivo_actual`.
 
 ### 7.2 Frontend
 
 - En detalle de lote, si el lote esta `ACTIVO`, tiene `INICIO` y no tiene `EMBOLSADO`, mostrar accion para registrar descarte total pre-embolsado.
 - El formulario debe pedir fecha, responsable, causa, cantidad material afectado, unidad, observaciones y evidencia obligatoria.
 - La cantidad debe venir precargada con `cantidad_inicial_en_proceso` y no permitir parcialidad en esta accion.
-- Si el lote ya tiene `EMBOLSADO`, la accion equivalente debe usar perdida total post-embolsado (`MERMA` por todo el `saldo_vivo_actual`) y no `DESCARTE_PRE_EMBOLSADO`.
+- Si el lote tiene base viva por `EMBOLSADO` o `INCORPORACION`, la pérdida total usa `MERMA` por todo el `saldo_vivo_actual`.
 - Al guardar, refrescar estado, motivo de cierre y timeline.

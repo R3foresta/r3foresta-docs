@@ -8,7 +8,7 @@ El objetivo operativo es:
 
 - crear un lote origen confiable,
 - registrar evidencia fotografica y ubicacion estructurada,
-- revisar formalmente el registro antes de habilitar consumo,
+- recibir fisicamente y confirmar conformidad antes de habilitar consumo,
 - controlar el saldo disponible del lote origen,
 - mantener trazabilidad entre Recoleccion y Vivero.
 
@@ -31,7 +31,7 @@ El modulo separa dos estados:
 
 ### Snapshot oficial
 
-Los snapshots de identidad existen desde `BORRADOR`. En `BORRADOR` y `RECHAZADO` pueden recalcularse desde fuentes vivas. Al aprobar la validacion quedan congelados como identidad oficial y no se recalculan.
+Los snapshots de identidad existen desde `BORRADOR`. En `BORRADOR` y `RECHAZADO` pueden recalcularse desde fuentes vivas. Al confirmar la recepcion fisica conforme quedan congelados como identidad oficial y no se recalculan.
 
 Snapshots minimos:
 
@@ -68,13 +68,13 @@ Fuera del MVP:
 
 ### Integracion con Vivero
 
-Vivero solo puede consumir una recoleccion `VALIDADO`, `ABIERTO` y con saldo suficiente. La creacion del lote de vivero y el descuento del saldo deben ocurrir en una misma transaccion logica: si una parte falla, la otra no se persiste.
+Vivero solo puede consumir una recoleccion VALIDADO, ABIERTO, recibida conforme y con saldo suficiente. La creacion del lote de vivero y el descuento del saldo se confirman en una sola transaccion atomica.
 
 ## 3. Flujo principal del modulo
 
 ### 3.1 Crear BORRADOR
 
-Una recoleccion nace siempre en `BORRADOR`.
+Una recoleccion nace siempre en BORRADOR. Captura y mantenimiento propio requieren GENERAL o VALIDADOR con acceso M1 vigente, o autoridad global ADMIN.
 
 Datos minimos para guardar:
 
@@ -96,14 +96,17 @@ No se permite guardar un borrador sin evidencia minima ni ubicacion minima. Pais
 
 ### 3.2 Completar evidencia y ubicacion
 
-Mientras la ficha esta en `BORRADOR` o `RECHAZADO`, el usuario puede corregir datos, fotos y ubicacion.
+Mientras la ficha esta en BORRADOR o RECHAZADO, el recolector autorizado puede corregir datos, fotos y ubicacion. Omitir o conservar ubicacion mantiene su referencia y datos. Un cambio explicito crea referencia nueva y conserva la anterior. Cambiar notas, cantidad o fotos no exige recapturar GPS.
+
+La ventana de 45 dias se aplica al crear o cambiar explicitamente la fecha. Conservarla permite corregir, reenviar y recibir la ficha al envejecer. La verificacion completa del recorrido PWA para ese caso permanece pendiente.
 
 Reglas de evidencia:
 
 - Lugar: minimo 1 foto, maximo 5.
 - Total recolectado: minimo 1 foto, maximo 5.
-- Formatos permitidos: JPG y PNG.
-- Tamano maximo por foto: 5 MB.
+- Formatos JPG/JPEG/PNG/WEBP/HEIC/HEIF.
+- Originales hasta 15 MiB por archivo y 100 MiB acumulados por carga, con hash y metadatos tecnicos.
+- La distribucion 1 a 5 por seccion se mantiene y su validacion backend por seccion permanece pendiente.
 
 Reglas de ubicacion:
 
@@ -114,7 +117,7 @@ Reglas de ubicacion:
 
 ### 3.3 Solicitar validacion
 
-Puede solicitar validacion un registro en `BORRADOR` o `RECHAZADO` si cumple las reglas minimas.
+El recolector autorizado envia un BORRADOR completo. Para una ficha RECHAZADO, primero corrige y guarda BORRADOR de la misma identidad y despues vuelve a enviar.
 
 Al solicitar validacion:
 
@@ -122,25 +125,23 @@ Al solicitar validacion:
 - se registra `SOLICITUD_VALIDACION` en `RECOLECCION_HISTORIAL`,
 - la ficha queda congelada mientras se revisa.
 
-### 3.4 Aprobar o rechazar validacion
+### 3.4 Recibir y validar conformidad fisica o rechazar
 
-El `VALIDADOR` revisa registros en `PENDIENTE_VALIDACION`.
+ADMIN global o VALIDADOR con acceso vigente al vivero de almacenamiento revisa una ficha pendiente ajena. Esa autoridad habilita bandeja, detalle, fotos y decision, sin exigir M1 al receptor. Tambien ADMIN tiene prohibida la autorrecepcion.
 
-Si aprueba:
+Para confirmar recibe la revision actual, compara cantidad y unidad normalizadas y carga entre 1 y 5 fotos de recepcion. Debe cumplirse `fecha_recoleccion <= fecha_recepcion <= hoy` en America/La_Paz. Cantidad diferente impide confirmar y permite rechazo motivado para corregir la ficha.
 
-- el estado pasa a `VALIDADO`,
-- se registran `usuario_validacion` y `fecha_validacion`,
-- se registra `VALIDACION_APROBADA`,
-- se congelan los snapshots oficiales,
-- el registro queda compatible con anclaje blockchain,
-- la ficha deja de ser editable.
+Al confirmar se producen juntos estos hechos.
 
-Si rechaza:
+- Hecho inmutable RECOLECCION_RECEPCION con dia fisico, recibido_por y registrado_en real.
+- Estado VALIDADO y snapshots oficiales congelados.
+- VALIDACION_APROBADA, vinculos de evidencia y recibo del comando.
 
-- el estado pasa a `RECHAZADO`,
-- se registra `VALIDACION_RECHAZADA`,
-- el registro no puede alimentar Vivero,
-- la ficha puede corregirse y reenviarse a validacion.
+El rechazo exige motivo de 10 a 500 caracteres y no exige foto. Conserva snapshot de la ficha revisada y VALIDACION_RECHAZADA. El recolector corrige la misma ficha y codigo, guarda BORRADOR y vuelve a enviar. La decision usa una revision esperada y fotos de otra revision no sirven.
+
+Se conserva UUID e intencion ante timeout, 503 o 202 SIN_RESULTADO y se consulta el mismo comando. Misma clave e intencion devuelve el resultado inicial y otra intencion produce conflicto. La recuperacion propia exige cuenta activa aun tras perder autoridad.
+
+Pinata/blockchain se ejecuta despues de confirmar SQL. El replay evita repetir el mint y una caida posterior al commit puede dejar anclaje pendiente. Storage y anclaje conservan verificacion externa propia.
 
 ### 3.5 Consumo automatico desde Vivero
 
@@ -152,7 +153,9 @@ Condiciones:
 - `estado_operativo = ABIERTO`,
 - saldo suficiente,
 - unidad del consumo igual a la unidad canonica de la recoleccion,
-- snapshots oficiales ya congelados.
+- snapshots oficiales ya congelados,
+- hecho de recepcion conforme y autoridad vigente,
+- fecha de INICIO igual o posterior al dia fisico de recepcion.
 
 Efecto:
 
@@ -162,29 +165,15 @@ Efecto:
 - se enlaza `recoleccion_id -> lote_vivero_id`,
 - el lote de vivero hereda los snapshots oficiales de Recoleccion.
 
-El lote de vivero selecciona su propio `vivero_id`; no lo hereda automaticamente desde `RECOLECCION.vivero_id`.
+Almacenamiento M1 y destino M2 conservan campos distintos. El operario consume en el mismo vivero de custodia y ADMIN conserva la excepcion explicita de otro destino si el origen esta recibido conforme.
 
-### 3.6 Desecho parcial o total
+### 3.6 Desecho parcial o total bajo custodia
 
-`DESECHO` registra una perdida real del saldo disponible del lote origen.
+DESECHO registra perdida real sobre una recoleccion VALIDADO, ABIERTO y recibida conforme. Requiere ADMIN global o GENERAL/VALIDADOR con acceso M2 vigente al vivero de almacenamiento. La autoria por si misma no autoriza.
 
-Solo esta disponible cuando la recoleccion esta `VALIDADO` y `ABIERTO`. El creador
-de la recoleccion puede registrar el movimiento sobre su propio lote y `ADMIN`
-puede hacerlo sobre cualquier lote validado.
+El movimiento conserva cantidad positiva hasta el saldo disponible, delta negativo y unidad canonica. Puede repetirse de forma parcial o agotar el saldo. Al llegar a cero, el estado operativo pasa a CERRADO.
 
-Debe incluir:
-
-- cantidad descartada,
-- delta negativo,
-- unidad igual a la unidad canonica de la recoleccion,
-- usuario y fecha/hora del movimiento, tomados automaticamente,
-- motivo tecnico `DESECHO_OTRO`, asignado automaticamente por el backend.
-
-No requiere fotografia, evidencia, motivo capturado por el usuario ni fecha
-capturada por el usuario. Puede registrarse varias veces mientras quede saldo.
-La cantidad de cada movimiento no puede superar el saldo actual.
-
-Si el desecho deja el saldo en 0, el estado operativo pasa a `CERRADO`.
+El servidor fija actor, fecha y motivo tecnico DESECHO_OTRO. El formulario solicita cantidad y no exige foto, motivo libre ni fecha. El movimiento es append-only.
 
 ## 4. Diagrama del flujo principal
 
@@ -197,11 +186,11 @@ flowchart TD
   edit --> draft
 
   ready -- Si --> pending[PENDIENTE_VALIDACION<br/>Ficha congelada]
-  pending --> review{Validador aprueba}
+  pending --> review{Receptor autorizado confirma conformidad fisica}
 
   review -- No --> rejected[RECHAZADO<br/>No consumible<br/>Corregible]
   rejected --> fixRejected[Corregir RECHAZADO]
-  fixRejected --> ready
+  fixRejected --> draft
 
   review -- Si --> validated[VALIDADO<br/>Snapshot oficial congelado<br/>Ficha no editable]
 
@@ -210,7 +199,7 @@ flowchart TD
   atomic -- Falla --> consumeError[Rechazar operacion<br/>No crear lote<br/>No descontar saldo]
   atomic -- OK --> recalc1[Recalcular saldo]
 
-  validated --> waste[Registrar DESECHO<br/>Motivo obligatorio]
+  validated --> waste[DESECHO bajo custodia M2<br/>Cantidad<br/>Motivo tecnico automatico]
   waste --> recalc2[Recalcular saldo]
 
   recalc1 --> balance{Saldo = 0}
@@ -225,9 +214,9 @@ flowchart TD
 flowchart LR
   subgraph registro[Estado del registro]
     draft[BORRADOR<br/>Editable<br/>Fotos, GPS y ubicacion operativa obligatorias<br/>Soft delete permitido] --> pending[PENDIENTE_VALIDACION<br/>Ficha congelada]
-    pending --> validated[VALIDADO<br/>Snapshot oficial congelado<br/>No editable]
+    pending -- Recepcion conforme --> validated[VALIDADO<br/>Recepcion fisica registrada<br/>Snapshot congelado]
     pending --> rejected[RECHAZADO<br/>No consumible<br/>Editable para corregir]
-    rejected -- Corregir y reenviar --> pending
+    rejected -- Corregir y guardar --> draft
   end
 
   subgraph operativo[Estado operativo]
@@ -239,7 +228,7 @@ flowchart LR
   recalc --> opOpen
   recalc --> opClosed
 
-  note1[Solo VALIDADO puede alimentar Vivero]:::note
+  note1[Recepcion conforme y autoridad vigente habilitan consumo]:::note
   note2[CERRADO no borra el registro; solo indica saldo agotado]:::note
 
   note1 --- validated
@@ -252,7 +241,7 @@ flowchart LR
 
 - Toda recoleccion nace en `BORRADOR`.
 - `BORRADOR` requiere evidencia minima, latitud, longitud y comunidad/localidad/zona desde la creacion.
-- Solo `VALIDADO` puede alimentar Vivero.
+- VALIDADO con recepcion conforme, saldo y autoridad vigente puede alimentar Vivero.
 - `PENDIENTE_VALIDACION` congela la ficha.
 - `RECHAZADO` no habilita consumo, pero permite corregir y reenviar.
 - `VALIDADO` no permite editar la ficha.
@@ -263,7 +252,7 @@ flowchart LR
 - `SEMILLA` puede persistirse en `G` o `UNIDAD`.
 - El saldo nunca puede quedar negativo.
 - `CONSUMO_A_VIVERO` y `DESECHO` usan delta negativo.
-- `DESECHO` solo puede ser registrado por el creador de la recoleccion o `ADMIN`.
+- DESECHO exige ADMIN global o GENERAL/VALIDADOR con acceso M2 al almacenamiento y material recibido conforme.
 - `DESECHO` no solicita evidencia fotografica.
 - La creacion del lote de vivero y el consumo de recoleccion deben ser atomicos.
 
@@ -275,11 +264,13 @@ flowchart LR
 - Consultar detalle.
 - Listar por estado.
 - Solicitar validacion.
-- Aprobar validacion.
-- Rechazar validacion.
+- Recibir y validar conformidad fisica ajena.
+- Rechazar con motivo y snapshot de la ficha revisada.
 - Registrar desecho.
 - Consultar historial.
-- Consultar movimientos de saldo.
+- Consultar movimientos de saldo con la autoridad correspondiente.
+- Recuperar el comando propio ante resultado incierto.
+- Consultar el banco publico de semillas.
 
 ## 8. Enums funcionales del modulo
 
@@ -320,11 +311,19 @@ No documentar otros movimientos como acciones operativas del modulo.
 
 ## 10. Lectura rapida del historial
 
-El timeline minimo del modulo se interpreta asi:
+Las fuentes del historial requerido se interpretan asi. La pantalla de historial propio completo conserva su pendiente de verificacion.
 
 - `RECOLECCION.created_at`: momento de creacion del borrador.
 - `RECOLECCION_HISTORIAL`: ciclo de vida del registro, incluyendo solicitud, aprobacion, rechazo y soft delete.
-- `RECOLECCION.fecha_validacion`: momento materializado de aprobacion.
+- `RECOLECCION_RECEPCION` conserva fecha_recepcion fisica, recibido_por y registrado_en real.
 - `RECOLECCION_MOVIMIENTO.created_at`: consumos hacia Vivero y desechos.
 
 `RECOLECCION_HISTORIAL` no reemplaza los movimientos de saldo, y `RECOLECCION_MOVIMIENTO` no debe usarse como historial general de edicion.
+
+## 11. Consulta publica del banco de semillas
+
+RF-REC-06 permite explorar resumen, especies, ubicaciones, fechas, listado paginado y detalle de SEMILLA no eliminada sin cuenta. Incluye BORRADOR, PENDIENTE_VALIDACION, VALIDADO y RECHAZADO, con cantidades separadas por G y UNIDAD. La consulta no habilita consumo.
+
+Solo VALIDADO ofrece fotos sanitizadas. Cada descarga revalida estado, pertenencia y ausencia de eliminacion. La proyeccion excluye datos de cuenta, credenciales, correo, contacto, observaciones y captions libres. Un fallo de lectura o imagen declara indisponibilidad y permite reintento.
+
+El [contrato backend de recepcion unica](../../Backend-r3foresta/docs/t4-recepcion-semillas.md) y el [contrato M1-M2](../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md) complementan este flujo. Su actualizacion funcional no acredita un nuevo corte, SQL aplicado ni despliegue.

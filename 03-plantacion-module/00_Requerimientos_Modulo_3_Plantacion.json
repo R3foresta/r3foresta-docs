@@ -6,7 +6,7 @@
       "nombre": "Crear campaña estrategica con organizaciones asociadas",
       "descripcion": "Permitir crear una campaña como contenedor estrategico del proyecto. La campaña agrupa N subcampañas operativas y puede tener 1 o mas organizaciones asociadas.",
       "campos": [
-        "Identificador unico de campaña",
+        "Identificador y codigo de trazabilidad unicos de campaña, con correlativo que conserva todos sus digitos al superar 999",
         "Nombre obligatorio",
         "Descripcion opcional",
         "Tipo: REFORESTACION / ARBORIZACION / FORESTACION obligatorio (define el tipo de toda subcampaña hija)",
@@ -36,7 +36,10 @@
         "Una campaña puede tener 1 o mas organizaciones asociadas (relacion many-to-many).",
         "Si se quiere ampliar el proyecto, se crea una nueva subcampaña dentro de la misma campaña; no existe el concepto de fases ni campañas hijas.",
         "Solo ADMIN puede crear campañas en el MVP.",
-        "Se registran automaticamente campos de auditoria (creado_por/creado_en/actualizado_por/actualizado_en)."
+        "Se registran automaticamente campos de auditoria (creado_por/creado_en/actualizado_por/actualizado_en).",
+        "Codigo, campaña y asociaciones a organizaciones se confirman en una sola transaccion con ADMIN activo revalidado. Si falla un vinculo, se revierten las filas de toda el alta.",
+        "Los codigos existentes se conservan. Un salto de secuencia tras un fallo no acredita una campaña creada.",
+        "Atomicidad del alta no acredita replay idempotente. Ante respuesta perdida se consulta la campaña antes de repetir la solicitud."
       ]
     },
     {
@@ -45,7 +48,7 @@
       "nombre": "Crear y planificar subcampaña (BORRADOR)",
       "descripcion": "Permitir crear una subcampaña en estado BORRADOR dentro de una campaña existente. La subcampaña es la unidad operativa real del modulo.",
       "campos": [
-        "Identificador unico de subcampaña",
+        "Identificador y codigo de trazabilidad unicos de subcampaña, sin truncar el correlativo al superar 999",
         "campania_id obligatorio (campaña padre)",
         "Nombre obligatorio",
         "Tipo: REFORESTACION / ARBORIZACION / FORESTACION obligatorio; debe coincidir con el tipo de la campaña padre (se hereda y valida con CHECK)",
@@ -83,7 +86,10 @@
         "El cierre recibe fecha_fin_mantenimiento explicita; la UI propone 3 anos de mantenimiento, editables.",
         "Cancelacion (RN-PLA-37): solo ADMIN, y solo si total_plantado_inicial = 0 (BORRADOR o ACTIVA sin plantar); si ya hay plantaciones, el cierre correcto es FINALIZADA_PARCIAL. Al cancelar se registra SUBCAMPANIA_CANCELADA, la meta sale del agregado de campaña y las asignaciones activas entregadas fisicamente deben resolverse con devolucion fisica al vivero.",
         "PAUSADA existe en el enum pero no se usa en MVP.",
-        "Se registran automaticamente campos de auditoria."
+        "Se registran automaticamente campos de auditoria.",
+        "La generacion del codigo, el INSERT de BORRADOR y el historial BORRADOR_CREADO se confirman juntos bajo lock de cuenta y campaña. Un fallo de historial revierte toda el alta.",
+        "El correlativo considera el historial de codigos, incluidos registros retirados, y conserva los existentes.",
+        "Ante respuesta perdida se consulta antes de repetir. El alta atomica no dispone de recibo ni replay idempotente."
       ]
     },
     {
@@ -138,12 +144,12 @@
         "cantidad_asignada <= LOTE_VIVERO.saldo_vivo_actual.",
         "Las asignaciones se cargan en cantidad absoluta; el porcentaje sobre saldo del lote es solo ayuda visual.",
         "El lote de vivero debe estar en estado ACTIVO.",
-        "El lote de vivero debe tener EMBOLSADO registrado.",
+        "El lote de vivero debe tener una unica base viva registrada, EMBOLSADO o INCORPORACION, y saldo vivo suficiente.",
         "Asignaciones con proposito PLANTACION_INICIAL solo se aceptan en subcampañas ACTIVA.",
         "Asignaciones con proposito PLANTACION_INICIAL solo pueden usar lotes cuya planta_id exista en SUBCAMPANIA_META_ESPECIE para esa subcampaña.",
         "Asignaciones con proposito REPOSICION se aceptan en ACTIVA, COMPLETADA o FINALIZADA_PARCIAL.",
         "No se aceptan asignaciones en subcampañas BORRADOR.",
-        "Solo ADMIN o COORDINADOR de la subcampaña pueden asignar."
+        "Solo ADMIN global o COORDINADOR de la subcampaña con acceso vigente al vivero afectado en la misma cuenta pueden asignar. Administrar participantes no concede esta facultad."
       ],
       "reglas_adicionales": [
         "Una asignacion genera una salida fisica en el Modulo 2 y descuenta LOTE_VIVERO.saldo_vivo_actual.",
@@ -157,7 +163,8 @@
         "saldo_asignado_disponible = cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada.",
         "Si saldo_asignado_disponible = 0, estado = AGOTADA.",
         "Si toda la cantidad fue devuelta sin consumir, estado = DEVUELTA.",
-        "Cada asignacion debe registrarse como evento ASIGNACION_VIVERO en EVENTO_PLANTACION."
+        "Cada asignacion debe registrarse como evento ASIGNACION_VIVERO en EVENTO_PLANTACION.",
+        "La entrega conserva el origen del lote, RECOLECCION o INCORPORACION, y su modalidad/procedencia cuando corresponda. La incorporacion no genera consumo de Recoleccion ni INICIO/EMBOLSADO ficticios."
       ]
     },
     {
@@ -175,14 +182,14 @@
       "validaciones": [
         "cantidad_devuelta <= saldo_asignado_disponible.",
         "No se permite devolver si la asignacion ya esta DEVUELTA.",
-        "Solo ADMIN o COORDINADOR de la subcampaña pueden devolver."
+        "Solo ADMIN global o COORDINADOR de la subcampaña con acceso vigente al vivero afectado en la misma cuenta pueden devolver."
       ],
       "reglas_adicionales": [
         "La devolucion aumenta ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_devuelta.",
         "La devolucion aumenta LOTE_VIVERO.saldo_vivo_actual del lote origen.",
         "Debe registrarse como evento DEVOLUCION_A_VIVERO en EVENTO_PLANTACION.",
         "En MVP no requiere fotos ni evidencia obligatoria.",
-        "Cuando el esquema M2 lo soporte, debe registrarse un evento de entrada fisica en EVENTO_LOTE_VIVERO."
+        "Registra DEVOLUCION_PLANTACION en EVENTO_LOTE_VIVERO y conserva los vinculos exactos al lote y asignacion. Admite lotes con base viva EMBOLSADO o INCORPORACION."
       ]
     },
     {
@@ -193,8 +200,8 @@
       "campos": [
         "Identificador unico del registro",
         "subcampania_id obligatorio (debe estar ACTIVA)",
-        "responsable_id obligatorio (operario o coordinador)",
-        "co_responsables_ids opcional (subconjunto del equipo)",
+        "responsable_id obligatorio, derivado del actor autorizado segun el contrato interno o PA-S01",
+        "Participantes opcionales segun el contrato autorizado, con snapshots y sin deducir permisos de su afiliacion",
         "fecha_plantacion obligatoria",
         "Latitud y Longitud obligatorias por GPS",
         "Fotografias obligatorias (minimo 1)",
@@ -216,26 +223,27 @@
         "La cantidad consumida no puede exceder el saldo_asignado_disponible de las asignaciones afectadas.",
         "Latitud en [-90, 90] con 6 decimales.",
         "Longitud en [-180, 180] con 6 decimales.",
-        "El punto GPS debe estar dentro del poligono de la subcampaña con tolerancia configurable (default 50m); fuera de tolerancia se bloquea.",
+        "PA-S01-CA10 exige coordenadas validas y evaluacion PostGIS. Permite punto exterior con resultado/distancia y advertencia. Ante fallo tecnico confirmado del evaluador conserva formulario y permite reintentar sin registro ni consumo. Una respuesta perdida se recupera como resultado incierto.",
         "fecha_plantacion no futura, hasta 10 dias en el pasado.",
         "Minimo 1 foto valida.",
-        "El responsable debe ser miembro del equipo o el coordinador de la subcampaña.",
-        "Los co_responsables deben ser subconjunto del equipo de la subcampaña.",
+        "El registro interno conserva su autoridad por equipo. PA-S01 admite actor con permiso contextual vigente, sin exigir membresia logistica ni acceso M2.",
+        "Los participantes se seleccionan conforme al contrato del registro. Su relacion historica y su permiso operativo son hechos distintos.",
         "Si la subcampaña esta COMPLETADA o FINALIZADA_PARCIAL, no se permite PLANTACION_INICIAL."
       ],
       "reglas_adicionales": [
         "El flujo muestra progreso por especie: meta, plantado previo, plantando ahora y total proyectado.",
         "El flujo muestra stock asignado disponible para consumir en la subcampaña.",
         "Si solo hay una asignacion/lote disponible para la especie, el sistema puede consumirla automaticamente.",
-        "Si hay varias asignaciones/lotes para la especie, el MVP puede consumir automaticamente con orden estable o exponer seleccion manual; siempre debe persistir el detalle real por asignacion/lote/especie.",
+        "PA-S01 consume LIFO en servidor sobre asignaciones elegibles de la misma especie y subcampaña. Persiste cada cantidad por asignacion/lote/especie y conserva su orden estable.",
         "No genera DESPACHO en EVENTO_LOTE_VIVERO; el despacho fisico ya ocurrio al crear la asignacion.",
         "No usa origen_despacho = AUTOMATICO_PLANTACION.",
         "SUM(REGISTRO_PLANTACION_DETALLE.cantidad) por registro = REGISTRO_PLANTACION.cantidad_total_plantada.",
         "Unidad siempre UNIDAD.",
-        "El registro es append-only: no se permite edicion posterior en el MVP.",
+        "El original y sus snapshots se conservan. PA-S04 admite correcciones acotadas vinculadas al original, con version efectiva, auditoria y recuperacion segun caso.",
         "Cada plantacion inicial debe registrarse como fila en REGISTRO_PLANTACION con es_reposicion = false.",
         "Las reposiciones NO cuentan para la meta; solo PLANTACION_INICIAL avanza la barra de progreso.",
-        "Sin porcentaje de participacion entre co-responsables; todos por igual."
+        "Sin porcentaje de participacion entre co-responsables; todos por igual.",
+        "El stock asignado puede proceder de lotes con base viva EMBOLSADO o INCORPORACION. La plantacion conserva esa procedencia y no crea una nueva recepcion ni otro descuento M2."
       ]
     },
     {
@@ -323,7 +331,7 @@
         "Se registra como evento MORTANDAD_REPORTADA en EVENTO_PLANTACION, append-only.",
         "Se permite reportar mortandad incluso durante MONITOREO_HISTORICO (aunque no se espere activamente).",
         "saldo_vivo del grupo se recalcula automaticamente.",
-        "En el MVP no se permite correccion de mortandad (sin reescritura)."
+        "El evento original de mortandad se conserva. PA-S04 admite la reversion auditable de una baja registrada por error mediante su caso especifico, con efectos e implementacion pendientes de acreditar en INT07."
       ]
     },
     {
@@ -352,7 +360,7 @@
         "Cada lote seleccionado debe tener asignacion ACTIVA con proposito REPOSICION en esa subcampaña.",
         "Permitido en estados operativos: ACTIVA, COMPLETADA, FINALIZADA_PARCIAL.",
         "Permitido en fase MANTENIMIENTO_ACTIVO y MONITOREO_HISTORICO.",
-        "Validaciones de GPS y poligono identicas a PLANTACION_INICIAL (PostGIS via gps_dentro_poligono_con_tolerancia).",
+        "Coordenadas validas y evaluacion PostGIS segun el contrato de reposicion. La decision de punto exterior de PA-S01-CA10 se limita al registro inicial y no amplia este recorrido por analogia.",
         "Especie libre: no se exige que la especie repuesta coincida con la del grupo origen (RN-VIV-60). El grupo puede quedar con composicion mixta.",
         "El responsable debe ser miembro de SUBCAMPANIA_EQUIPO (sea COORDINADOR u OPERARIO) de la subcampaña destino.",
         "UX pre-confirmacion obligatoria: antes de confirmar la reposicion el sistema muestra cantidad_plantada_inicial, cantidad_muerta_acumulada, cantidad_repuesta_acumulada y cantidad_pendiente_reposicion = muerta - repuesta. Si la cantidad ingresada excede cantidad_pendiente_reposicion, se bloquea el registro."
@@ -364,7 +372,8 @@
         "Se registra como fila en REGISTRO_PLANTACION con es_reposicion = true, append-only.",
         "Las reposiciones NO cuentan para la meta; suman al saldo vivo del grupo origen.",
         "Sin limite temporal en el MVP: una reposicion puede registrarse meses o anos despues.",
-        "El sistema diferencia visualmente reposiciones hechas en MANTENIMIENTO_ACTIVO vs MONITOREO_HISTORICO."
+        "El sistema diferencia visualmente reposiciones hechas en MANTENIMIENTO_ACTIVO vs MONITOREO_HISTORICO.",
+        "Las asignaciones de REPOSICION pueden proceder de lotes con base viva EMBOLSADO o INCORPORACION. El detalle conserva origen, modalidad/procedencia y cantidades efectivamente consumidas sin otro debito de Vivero."
       ]
     },
     {
@@ -410,14 +419,14 @@
       ],
       "reglas_adicionales": [
         "El equipo se puede gestionar en estados ACTIVA, COMPLETADA y FINALIZADA_PARCIAL (puede haber mantenimiento por hacer).",
-        "Los co-responsables de futuros registros deben ser subconjunto del equipo actual."
+        "El registro interno conserva su seleccion de co-responsables desde el equipo actual. PA-S01 selecciona participantes mediante su contrato contextual y PA-S04 trata su correccion historica efectiva."
       ]
     },
     {
       "codigo": "RF-PLA-13",
       "modulo": "Plantacion",
       "nombre": "Evidencia y geolocalizacion estricta por evento",
-      "descripcion": "Gestionar evidencias fotograficas y GPS como soportes obligatorios en todos los eventos operativos del MVP.",
+      "descripcion": "Gestionar evidencia fotografica y coordenadas validas por evento conforme al contrato de cada operacion, con evaluacion geográfica autorizada.",
       "campos": [
         "Modelo polimorfico: tipo_entidad_id + entidad_id apuntando a REGISTRO_PLANTACION, EVENTO_PLANTACION o EVENTO_LOTE_VIVERO segun corresponda",
         "Latitud/Longitud capturadas en PLANTACION_INICIAL, REPOSICION y MORTANDAD_REPORTADA",
@@ -428,9 +437,9 @@
         "PLANTACION_INICIAL, REPOSICION y MORTANDAD_REPORTADA requieren minimo 1 foto y GPS valido.",
         "ASIGNACION fisica desde Vivero a subcampaña requiere evidencia fotografica de entrega/salida.",
         "DEVOLUCION_A_VIVERO no requiere evidencia fotografica en MVP.",
-        "El GPS debe estar dentro del poligono de la subcampaña con tolerancia configurable.",
-        "Formato de fotos: JPG/PNG.",
-        "Tamaño maximo por foto: 5 MB.",
+        "PA-S01-CA10 permite punto exterior con coordenada valida, evaluacion y advertencia. Reposicion y mortandad conservan la validacion geografica de su propio contrato.",
+        "PA-S01/D09 admite JPG, JPEG, PNG, WEBP, HEIC y HEIF, con validacion por decodificacion real. Conserva originales privados y genera la version publica sanitizada conforme a D12.",
+        "PA-S01 admite de 1 a 10 fotos, cada archivo de hasta 10 MiB. Las operaciones internas legadas y la evidencia de entrega M2 mantienen cantidades, formatos y limites de su contrato especifico, sin convertir 10 o 15 MiB en una regla universal.",
         "Si un evento requiere evidencia y no la tiene, no debe registrarse.",
         "No se aceptan excepciones de evidencia en eventos obligatorios en el MVP.",
         "No se acepta evidencia tardia en el MVP."
@@ -439,58 +448,70 @@
         "La evidencia se asocia al evento usando EVIDENCIAS_TRAZABILIDAD.",
         "El poligono de subcampaña es obligatorio para activar.",
         "El area en hectareas es referencial, no es meta ni se valida.",
-        "Si el GPS cae fuera del poligono pero dentro de tolerancia, se permite con advertencia visual.",
-        "Si el GPS cae fuera de tolerancia, se bloquea el registro."
+        "Para el registro inicial se muestra el resultado/distancia de la evaluacion geográfica y la advertencia exterior. Ante fallo de captura automatica se admite indicar o corregir una coordenada manual valida.",
+        "Un punto exterior por si solo no bloquea PA-S01. El fallo tecnico confirmado de PostGIS rechaza sin registro ni consumo y conserva formulario para reintentar. Si se perdió la respuesta del envio, se consulta el mismo intento antes de afirmar ausencia de efectos. Esta decision no amplia por analogia los recorridos de reposicion o mortandad."
       ]
     },
     {
       "codigo": "RF-PLA-14",
       "modulo": "Plantacion",
       "nombre": "Historial y cadena de custodia",
-      "descripcion": "Visualizar el timeline completo de campaña, subcampaña y cada grupo plantado, con drill-down hacia Modulo 2 y Modulo 1.",
+      "descripcion": "Consultar los hechos originales y efectivos de campaña, subcampaña y registro, con procedencia reconstruida por consumos persistidos y acceso segun audiencia.",
       "campos": [
-        "Timeline de campaña: CAMPANIA_HISTORIAL",
-        "Timeline de subcampaña: SUBCAMPANIA_HISTORIAL + EVENTO_PLANTACION agregados",
-        "Timeline del grupo plantado: PLANTACION_INICIAL + MORTANDAD_REPORTADA + REPOSICION asociados",
-        "Datos derivados: progreso de meta, saldo vivo, % supervivencia",
-        "Vinculos hacia DESPACHO del Modulo 2 por cada plantacion/reposicion",
-        "Vinculos hacia LOTE_VIVERO y RECOLECCION para drill-down completo",
-        "Filtros: por estado operativo, por fase de mantenimiento, por zona, por coordinador, por operario, por especie, por rango de fechas"
+        "Timeline de campaña y subcampaña, con sus hechos e identificadores persistidos",
+        "Timeline del grupo plantado con PLANTACION_INICIAL, MORTANDAD_REPORTADA y REPOSICION asociados, segun el alcance implementado de cada flujo",
+        "Original, estado efectivo y señal de correccion conforme a PA-S04 y a la audiencia de consulta",
+        "Por consumo, detalle_id, asignacion_id, lote_vivero_id, planta_id, cantidad y snapshots historicos disponibles",
+        "Origen discriminado del lote, RECOLECCION, INCORPORACION con modalidad/procedencia o HISTORICO_SIN_ORIGEN",
+        "Vinculos exactos de entrega y devolucion hacia asignacion, lote y subcampaña cuando esten persistidos",
+        "Fechas operativas separadas de instantes de registro y evidencia autorizada",
+        "Filtros por estado operativo, fase de mantenimiento, zona, coordinador, operario, especie y fechas, con paginacion segun el contrato de cada consulta",
+        "Indicadores derivados de progreso de meta, saldo vivo y supervivencia cuando exista formula y fuente aprobadas en PA-S02"
       ],
       "validaciones": [
-        "No se pueden ocultar eventos del historial.",
-        "Los eventos son append-only y no editables.",
-        "El historial debe mostrar identidad congelada (snapshots) sin recalcular desde catalogos vivos.",
-        "Control de acceso por rol para vistas privadas; vista publica habilitada sin autenticacion."
+        "Los eventos y originales se conservan. Correcciones y reversiones no se cuentan como nuevas plantaciones.",
+        "La suma de cantidades de los detalles persistidos coincide con la cantidad del registro. Una especie puede consumir varios lotes sin perder su procedencia individual.",
+        "La identidad historica usa snapshots. Una ausencia se muestra como no disponible, sin rellenarla desde catalogos o perfiles actuales.",
+        "SALDO_INICIAL conserva el conteo registrado e informa que la historia anterior no esta registrada.",
+        "La consulta propia exige autoria o participacion efectiva. La administrativa privada exige ADMIN global para procedencia M3. Abrir el historial M2 requiere su autorizacion propia.",
+        "La proyeccion publica se limita a RF-PLA-15 y PA-S02. Motivos, historial administrativo, stock interno y fotos privadas quedan sujetos a su lectura autorizada."
       ],
       "reglas_adicionales": [
-        "Drill-down disponible desde campaña/subcampaña hasta recoleccion origen.",
+        "La procedencia se atribuye por CONSUMOS_PERSISTIDOS y vinculos exactos, sin inferirla por especie, saldo, cercania temporal o codigo.",
+        "El historial paginado comunica el corte consultado y su completitud. Un fallo de pagina o cambio de corte no se presenta como historial completo.",
+        "Consulta fallida de evidencias, ausencia confirmada, fallo de firma y expiracion de foto son estados distintos. Las fotos T5 usan acceso privado temporal.",
+        "El recibo original conserva el resultado confirmado entonces. Las lecturas posteriores muestran la version efectiva autorizada.",
         "Las reposiciones se diferencian visualmente de las plantaciones iniciales.",
-        "Reposiciones en MANTENIMIENTO_ACTIVO vs MONITOREO_HISTORICO se diferencian visualmente."
+        "Reposiciones en MANTENIMIENTO_ACTIVO y MONITOREO_HISTORICO se diferencian visualmente."
       ]
     },
     {
       "codigo": "RF-PLA-15",
       "modulo": "Plantacion",
       "nombre": "Vista publica sin autenticacion",
-      "descripcion": "Exponer informacion de campañas, subcampañas y plantaciones sin login, alineada con el caracter blockchain de transparencia.",
+      "descripcion": "Exponer Impacto global y detalles elegibles de campaña, subcampaña y plantacion mediante proyecciones publicas compartibles sin cuenta ni login, conforme a PA-S02 y D12.",
       "campos": [
-        "Home publico con totalizadores globales",
-        "Mapa interactivo con poligonos de subcampañas y pines GPS",
-        "Listado de campañas con sus subcampañas y organizaciones asociadas",
-        "Detalle de subcampaña con barra de progreso, composicion real de especies plantadas, galeria, equipo",
-        "Drill-down hacia Modulo 2 y Modulo 1",
-        "Estimacion de captura de CO2 (formulas referenciales)"
+        "Resumen global del alcance publico con total inicialmente plantado, mapa y campañas",
+        "Mapa de zonas de trabajo y registros grupales, sin atribuir al poligono superficie efectivamente plantada",
+        "Campañas y subcampañas publicas con nombres, organizaciones de campaña y progreso inicial",
+        "Registro con fecha, referencia, ubicacion/GPS, cantidades por especie, responsable, participantes efectivos y fotos publicas elegibles",
+        "Afiliaciones historicas separadas de organizaciones de campaña, distinguiendo ausencia declarada de historia no disponible",
+        "Señal publica minima de correccion o reversion y enlace vigente elegible conforme a PA-S04"
       ],
       "validaciones": [
-        "Las subcampañas en BORRADOR no son publicas.",
-        "Las subcampañas con al menos un PLANTACION_INICIAL son publicas.",
-        "Los datos blockchain anclados se muestran como verificables."
+        "Las subcampañas BORRADOR no son publicas. Se conservan los estados y hechos elegibles de PA-S02, sin publicar automaticamente ambitos internos.",
+        "Anonimo y VOLUNTARIO sin asignacion reciben la misma proyeccion publica. Ausencia de sesion o token vencido no exige login para consultar Impacto.",
+        "No se entregan credenciales, contactos, perfiles completos, motivos internos, observaciones libres, stock, asignaciones internas ni evidencias pendientes o privadas.",
+        "Los archivos y URLs publicos cumplen D12, con originales privados conservados y metadatos excluidos retirados de la version publica.",
+        "Agregados, mapa y detalle usan el mismo alcance elegible. Un registro se cuenta una vez con independencia de sus participantes u organizaciones.",
+        "Los datos blockchain anclados que se publiquen se muestran con sus referencias verificables, sin ampliar la proyeccion autorizada."
       ],
       "reglas_adicionales": [
-        "Toda la informacion publica en MVP, sin restricciones.",
-        "Vista responsive priorizando mapa, fotos y progreso.",
-        "Permite compartir links directos."
+        "Los enlaces compartidos conservan su destino global/campaña/subcampaña/registro sin atravesar login ni fichas administrativas.",
+        "La consulta publica no concede permisos operativos, acceso a fichas internas M1/M2 ni lectura privada por autor o ADMIN.",
+        "Faltan para meta inicial = max(meta vigente - plantacion inicial, 0) por subcampaña. Reposiciones y bajas se muestran separadas y no cambian ese faltante.",
+        "La consulta se limita a indicadores con fuente y regla aprobadas en PA-S02. No incorpora estimaciones de CO2.",
+        "Vista responsive priorizando mapa, fotos y progreso."
       ]
     },
     {
@@ -511,33 +532,35 @@
       "reglas_adicionales": [
         "Se prioriza anclar PLANTACION_INICIAL por ser el evento mas visible publicamente.",
         "El anclaje es complementario, no indispensable.",
-        "No hay correcciones operativas en MVP."
+        "PA-S04 admite sus correcciones excepcionales vinculadas al original, con auditoria y estado efectivo. Se conservan el original y sus referencias de anclaje. Esta capacidad no reabre subcampañas ni concede un editor general."
       ]
     },
     {
       "codigo": "RF-PLA-17",
       "modulo": "Plantacion",
       "nombre": "Roles y permisos",
-      "descripcion": "Mapear permisos del modulo sobre roles globales existentes y membresias contextuales de subcampaña.",
+      "descripcion": "Autorizar cada operacion con identidad activa, rol global, permiso contextual o membresia logistica segun su contrato, conservando las facultades internas legitimas.",
       "campos": [
-        "ADMIN: crea campañas y subcampañas, asigna coordinadores, cierra a FINALIZADA_PARCIAL, gestiona organizaciones",
-        "COORDINADOR: membresia contextual en SUBCAMPANIA_EQUIPO.rol_en_subcampania, no rol global nuevo",
-        "COORDINADOR gestiona sus subcampañas asignadas, asigna/devuelve lotes, gestiona equipo y opera como operario",
-        "GENERAL (operario): registra plantaciones, reposiciones y mortandad en subcampañas donde es parte del equipo",
-        "VALIDADOR: rol global, sin flujo especial en este modulo en MVP",
-        "VOLUNTARIO: sin permisos operativos criticos y no puede ser miembro de SUBCAMPANIA_EQUIPO en el MVP"
+        "ADMIN global crea campañas/subcampañas, asigna coordinadores, cierra, gestiona organizaciones y designa administradores contextuales. Registra inicial en cualquier ACTIVA con las mismas validaciones y sin asignacion contextual adicional",
+        "COORDINADOR es membresia logistica en SUBCAMPANIA_EQUIPO.rol_en_subcampania. Entrega y devuelve con acceso vigente al vivero segun el contrato M2-M3",
+        "GENERAL y VALIDADOR conservan sus lecturas y facultades internas legitimas segun la operacion y la matriz de transicion",
+        "VOLUNTARIO con permiso contextual PLANTADOR vigente registra plantacion inicial en esa subcampaña segun PA-S01, conservando su rol global",
+        "ADMINISTRADOR_SUBCAMPANIA vigente registra inicial y gestiona plantadores en su ambito conforme a PA-S03. La correccion excepcional sigue la autoridad por caso de PA-S04",
+        "Consulta publica sin permiso operativo y lecturas propias segun autoria o participacion efectiva"
       ],
       "validaciones": [
-        "Solo ADMIN crea campañas y subcampañas en MVP.",
-        "Solo ADMIN cierra a FINALIZADA_PARCIAL.",
-        "COORDINADOR opera solo sobre sus subcampañas asignadas.",
-        "GENERAL solo registra en subcampañas donde es parte del equipo.",
-        "La membresia en equipo se valida al registrar eventos operativos."
+        "Solo ADMIN global crea campañas/subcampañas, cierra manualmente y asigna o cambia roles globales mediante operacion administrativa separada del perfil.",
+        "Backend verifica cuenta activa, autoridad y ambito exacto en cada operacion. Confirmar registro revalida ACTIVA, participantes, plan, fecha, evidencia, geografia y stock.",
+        "El permiso PLANTADOR o ADMINISTRADOR_SUBCAMPANIA no promueve a GENERAL/ADMIN, no convierte a la persona en COORDINADOR y no concede acceso operativo M1/M2.",
+        "Administrar una subcampaña no permite asignar roles globales ni designar administradores contextuales. La designacion corresponde a ADMIN global segun PA-S03.",
+        "La membresia logistica se valida para las operaciones internas que la exigen. El permiso contextual habilita registro inicial segun PA-S01 sin exigir esa membresia.",
+        "La lectura de GENERAL y las demas facultades internas legitimas se conservan segun su contrato. Una lectura no concede capacidad de escritura ni acceso a datos privados ajenos."
       ],
       "reglas_adicionales": [
-        "No se crea COORDINADOR en el enum rol_usuario; el enum global se mantiene ADMIN / GENERAL / VALIDADOR / VOLUNTARIO.",
-        "Un usuario con membresia COORDINADOR tambien puede operar dentro de esa subcampaña.",
-        "Un usuario puede ser COORDINADOR de varias subcampañas simultaneamente y OPERARIO en otras."
+        "El enum rol_usuario se mantiene ADMIN / GENERAL / VALIDADOR / VOLUNTARIO. PLANTADOR y ADMINISTRADOR_SUBCAMPANIA son permisos por persona y ambito.",
+        "Un usuario puede ser COORDINADOR de varias subcampañas y OPERARIO en otras. Equipo logistico, permisos de participacion y participacion historica permanecen relaciones distintas.",
+        "La presencia derivada de ADMIN global en miembros se deduplica. No crea automaticamente una membresia COORDINADOR ni participacion historica.",
+        "Retirar permiso operativo conserva la lectura propia historica efectiva. Corregir una participacion erronea aplica P01 de PA-S04 y se revalida en cada pagina."
       ]
     },
     {

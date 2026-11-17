@@ -2,9 +2,17 @@
 
 **Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
 
-**Estado:** correcciones acotadas y ampliación de reversión/eliminación lógica confirmadas; revisión integral y contratos pendientes antes de implementar. **Actualización:** 12 de octubre de 2026. **Prioridad:** P0 antes de campo. Evidencia: [acuerdo del 12 de octubre](../archivo/revision-correcciones-2026-10-12.md).
+**Estado.** Comportamiento de correcciones acotadas y reversiones confirmado. Observaciones 084 y participantes/lecturas 085 tienen implementación backend parcial de INT07, conservando fallo HTTP pendiente en 085, frontend y demás casos sin cierre. **Actualización documental del 16 de noviembre de 2026.** Prioridad P0 antes de campo. El [acuerdo del 12 de octubre](../archivo/revision-correcciones-2026-10-12.md) conserva sus decisiones.
 
-**Preparación de ejecución, 19 de octubre:** [INT07](../implementacion/pa-t-int07.md) desglosa BE01–BE08 → FE01–FE08, con contratos propios por concretar, dependencias y pruebas. Conserva los acuerdos siguientes; fecha/GPS siguen sin tratamiento de corrección aprobado y no se implementan por analogía. No acredita contrato técnico cerrado ni código/SQL/pruebas de corrección.
+**Preparación de ejecución, corte histórico del 19 de octubre:** [INT07](../implementacion/pa-t-int07.md) desglosa BE01–BE08 → FE01–FE08, con contratos propios por concretar, dependencias y pruebas. Conserva los acuerdos siguientes; fecha/GPS siguen sin tratamiento de corrección aprobado y no se implementan por analogía. No acredita contrato técnico cerrado ni código/SQL/pruebas de corrección.
+
+## Implementación y límites al 16 de noviembre de 2026
+
+La [entrega de participantes](../../../../../Backend-r3foresta/docs/pa-int07-participantes.md), versionada en backend `41026ae`, amplía 084 con 085. Reemplaza el conjunto efectivo de corresponsables con motivo, revisión y comando recuperable por ADMIN global o administrador vigente de la subcampaña ACTIVA exacta. Mantiene responsable, originales, cantidades, grupo, stock y permisos. SIN_CAMBIOS conserva revisión e historial. La búsqueda histórica admite cuentas hoy inactivas y distingue nombre capturado al corregir de snapshot original. Restaurar reutiliza la captura previa.
+
+P01 rige lista, detalle e historial propios y se revalida en cada página. La retirada por error elimina esa relación salvo autoría u otra participación efectiva, mientras restaurar la recupera con cuenta activa. La lectura propia tampoco se concede a ADMIN sin esa relación. Historial propio y señal pública son proyecciones reducidas. Motivos y valores antes/después administrativos requieren su audiencia autorizada.
+
+La [evidencia aislada 085](../../../../../Backend-r3foresta/docs/evidencia/pa-int07-participantes-local.json) registra casos SQL y carreras correctos, pero el resultado general es FALLIDO con causa «Falló HTTP INT07 participantes/lecturas.». La implementación disponible no cierra BE03/BE07/BE08 ni PA-T18/19/21. Quedan resolución y repetición del runner, aplicación/cotejo en destino, frontend, cantidades, reversiones, frontera de mortandad y QA completo. [Ficha INT07](../implementacion/pa-t-int07.md).
 
 ## Acuerdo de partida
 
