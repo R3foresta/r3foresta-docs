@@ -1,0 +1,981 @@
+{
+  "fecha_edicion": "2026-11-16",
+  "estado": "preparacion_local_carta_vertical",
+  "actualizacion_remota": false,
+  "edicion_anterior": "../../../../archivo/documentacion-grado/proyecto_grado/diagramas-horizontales-2026-11-16/correspondencia-google-docs-anterior.json",
+  "figures": [
+    {
+      "source": "03_1_fase_inicio-01",
+      "title": "Figura 3.4. Flujo actual y soportes de información identificados",
+      "sourcePath": "mermaid/03_1_fase_inicio-01.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_1_fase_inicio-01-hoja-01.png",
+          "svg": "paginas/03_1_fase_inicio-01-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_1_fase_inicio-01-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "3c45f67a62c678892e6c22bef1e9ec4630eb99b92f14233dc8c15cba6cfce0cb"
+        },
+        {
+          "path": "paginas/03_1_fase_inicio-01-hoja-02.png",
+          "svg": "paginas/03_1_fase_inicio-01-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_1_fase_inicio-01-p02",
+            "03_1_fase_inicio-01-p03"
+          ],
+          "minTextPt": 9.75,
+          "sha256": "279f4c84c4fa44c7d24ddd5a1083707fef244988c2dec8c6279e0f2715966a78"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-01",
+      "title": "Figura 3.6. Recorrido del diseño integrado y variantes de ingreso",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-01.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-01-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-01-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-01-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "5bb175f200c1a63dc766716e5a85f365985d18aebefab3d45595622b310d0121"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-01-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-01-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-01-p02"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "16d1dbaf9db95a197e186b3ac3fe380f03317711c44444e2b49f8d9350b138fe"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-01-hoja-03.png",
+          "svg": "paginas/03_2_fase_elaboracion-01-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-01-p03"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "eee59390157096a944c3a318062587a044b3e8cfa8afb3876141ee2db84510df"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-01-hoja-04.png",
+          "svg": "paginas/03_2_fase_elaboracion-01-hoja-04.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-01-p04"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "b19d271adefe7a9c98b8e1ebc321d8b6f2aecbc69a8490c3254f66cebf2dcdd1"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-02",
+      "title": "Figura 3.7. Genealogía del material vegetal en la ruta principal",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-02.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-02-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-02-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-02-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "2173f59bba7f4fc93f11ba77a937dd2921d9847fe692c9005ace7b8303947912"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-03",
+      "title": "Figura 3.8. Actores y capacidades del diseño integrado",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-03.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-03-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-03-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-03-p01",
+            "03_2_fase_elaboracion-03-p02",
+            "03_2_fase_elaboracion-03-p03",
+            "03_2_fase_elaboracion-03-p04"
+          ],
+          "minTextPt": 10.1,
+          "sha256": "252c4af96e123aa9b9d5b87122aabc90ce16ce35bad961755e9466abaa724828"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-03-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-03-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-03-p05",
+            "03_2_fase_elaboracion-03-p06",
+            "03_2_fase_elaboracion-03-p07"
+          ],
+          "minTextPt": 9.44,
+          "sha256": "676a5be158dd2584b3fafe4467c63bf46ec0e03c6880be16de9b26325c98701b"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-04",
+      "title": "Figura 3.9. Casos de uso específicos de Recolección",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-04.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-04-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-04-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-04-p01",
+            "03_2_fase_elaboracion-04-p02",
+            "03_2_fase_elaboracion-04-p03"
+          ],
+          "minTextPt": 10.08,
+          "sha256": "f343a2d60a446a8d921ad3fea1350743abbc99aa362b2d8144c8300a7d427207"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-04-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-04-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-04-p04"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "52b3677774307d17c08abd10b267ac42e5c5a0d4334dff5c6740d26558eb644f"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-05",
+      "title": "Figura 3.10. Casos de uso específicos de Vivero",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-05.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-05-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-05-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-05-p01",
+            "03_2_fase_elaboracion-05-p02"
+          ],
+          "minTextPt": 10.05,
+          "sha256": "9cf232e7c3e90fe1ef74acc63bf69ede4aa4489eaf984503a7fd365b29c0e259"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-05-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-05-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-05-p03",
+            "03_2_fase_elaboracion-05-p04"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "3019353c01a39371265bfc6274ef4be8e2522d74a31310de5b7ece6520caa336"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-06",
+      "title": "Figura 3.11. Casos de uso específicos de Plantación",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-06.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-06-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-06-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-06-p01",
+            "03_2_fase_elaboracion-06-p02"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "6af9ab1efb7f4e7406fac649b54927faae6ad39b14b75a10c59db31f35109dff"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-06-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-06-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-06-p03",
+            "03_2_fase_elaboracion-06-p04",
+            "03_2_fase_elaboracion-06-p05"
+          ],
+          "minTextPt": 9.53,
+          "sha256": "048da878ccb92419dfd0a082f5acd65a3cabf942f6f2c4384b5c64f5b9edd74d"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-07",
+      "title": "Figura 3.12. Estados de Recolección y saldo operativo",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-07.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-07-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-07-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-07-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "231ca93d37e5af3659c0491e202fe4f68628f841ebc90666e662091ac156c159"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-08",
+      "title": "Figura 3.13. Bases iniciales y movimientos del lote de vivero",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-08.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-08-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-08-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-08-p01"
+          ],
+          "minTextPt": 10.1,
+          "sha256": "00add59d04fdc662bc2f4562be8ac05307f922cd251f3b85e94a41a54c473c60"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-09",
+      "title": "Figura 3.14. Estados operativos de la subcampaña pertinentes al recorrido",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-09.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-09-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-09-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-09-p01"
+          ],
+          "minTextPt": 9.92,
+          "sha256": "96c705674f3377c26a50328815e82199b66fcb0fa7c1babc8afd51a864990195"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-10",
+      "title": "Figura 3.15. Actividad de Recolección",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-10.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-10-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-10-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-10-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "61ef1eec5e6145a4836bfd4bc0a3b8c1dd5ce5ece09f5a345af05093c14657d6"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-10-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-10-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-10-p02"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "c96fa893e06cd59a5e722a21a4993fe15957f8f62a23cb1c4c737b9a068ff685"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-11",
+      "title": "Figura 3.16. Actividad de Vivero por modalidad de ingreso",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-11.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-11-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-11-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-11-p01"
+          ],
+          "minTextPt": 9.62,
+          "sha256": "d713fdb4e25668e23a5ac70fbb96c724d55241f88745800d29c8ea207a20009a"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-11-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-11-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-11-p02"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "746f8527fc786077e9bf86855401201b95f14f237cc2c83d5180037ea0e55605"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-12",
+      "title": "Figura 3.17. Actividad de Plantación y recuperación del resultado",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-12.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-12-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-12-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-12-p01"
+          ],
+          "minTextPt": 10.93,
+          "sha256": "0fa6874bbe0ae151f2348c669e6f4748055a3739b6aa3a0e3d7ad51ac02ad998"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-12-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-12-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-12-p02"
+          ],
+          "minTextPt": 10.78,
+          "sha256": "e63d7527d84912f1b0e905f83e993eab8666f5c72cd86cbdad114c6cb37e6344"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-12-hoja-03.png",
+          "svg": "paginas/03_2_fase_elaboracion-12-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-12-p03"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "bc3e6e628779754c3070219907f3dcd60ee51e19b924eb1272b20d9f582de757"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-13",
+      "title": "Figura 3.18. Secuencia diseñada para el contrato M1→M2",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-13.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-13-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-13-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-13-p01"
+          ],
+          "minTextPt": 10.13,
+          "sha256": "ff476781654b6d23739b6d689c939646bf0b59c3e05659a50276f0587290afee"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-14",
+      "title": "Figura 3.19. Entrega física, consumo de stock y resultado recuperable",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-14.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-14-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-14-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-14-p01",
+            "03_2_fase_elaboracion-14-p02"
+          ],
+          "minTextPt": 10.17,
+          "sha256": "3480c31acab2caaffd242d8ac47d8fea444d116e0847918216db337ed6b227cf"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-14-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-14-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-14-p03",
+            "03_2_fase_elaboracion-14-p04"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "02416d4f75172b606e41b0746978dec24e48a2e9ae9bddb9150fffa66b45bff8"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-14-hoja-03.png",
+          "svg": "paginas/03_2_fase_elaboracion-14-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-14-p05"
+          ],
+          "minTextPt": 9.47,
+          "sha256": "4fd292cbd52e869277e34da49b5b7b3b6592df6a05a976c0ab782d693df7f51e"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-14-hoja-04.png",
+          "svg": "paginas/03_2_fase_elaboracion-14-hoja-04.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-14-p06"
+          ],
+          "minTextPt": 9.69,
+          "sha256": "06831a6a7dec3b27fb398514aadc9939a06ac43e740839abf7cf9f8dc472354e"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-15",
+      "title": "Figura 3.20. Modelo conceptual del recorrido y sus modalidades de origen",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-15.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-15-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-15-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-15-p01",
+            "03_2_fase_elaboracion-15-p02"
+          ],
+          "minTextPt": 9.13,
+          "sha256": "06fc44c3fd082856d4ffab02ce5875dab75a3457bc68a4c5e87d564f52e0cad8"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-15-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-15-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-15-p03",
+            "03_2_fase_elaboracion-15-p04"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "357e1ffa55a7ddfe902497f1a5ef633cb305d23a042960328945486804bb7ffd"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-15-hoja-03.png",
+          "svg": "paginas/03_2_fase_elaboracion-15-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-15-p05"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "7b4657a9baef3b76e405046b2746daf721c1d947f81ce16baf837818fc4e02ad"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-16",
+      "title": "Figura 3.21. Relaciones lógicas del diseño integrado",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-16.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-16-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-16-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-16-p01",
+            "03_2_fase_elaboracion-16-p02"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "30d991634a412f1e18c31d33b09df13d9d98e2129340051c65c5d25bdf879b97"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-16-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-16-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-16-p03",
+            "03_2_fase_elaboracion-16-p04"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "677768ed3f7b9b424d34e2b2b314f3294a31a579744b555c69963821407158b5"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-16-hoja-03.png",
+          "svg": "paginas/03_2_fase_elaboracion-16-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-16-p05"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "49ec3892731c64b8550f9d281efa011a736d456f7d9f9a21e04950e4ba007755"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-16-hoja-04.png",
+          "svg": "paginas/03_2_fase_elaboracion-16-hoja-04.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-16-p06"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "f645642dfa3ae1d174cecdf314b05ea819a65f7a577b429d1ceb4fccce17e868"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-16-hoja-05.png",
+          "svg": "paginas/03_2_fase_elaboracion-16-hoja-05.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-16-p07"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "0272384007a1c34802c953eb92a62119eb7fc451cdfd3decca3136e7bd391153"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-16-hoja-06.png",
+          "svg": "paginas/03_2_fase_elaboracion-16-hoja-06.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-16-p08"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "94e0e7a2ea11f8baefa16e9d6de2599babca71e7364732e967067aa134218345"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-16-hoja-07.png",
+          "svg": "paginas/03_2_fase_elaboracion-16-hoja-07.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-16-p09"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "cb250e603015b62387d4e4d345b667f507c76f69740ca22486606570392df430"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-17",
+      "title": "Figura 3.22. Componentes y responsabilidades de la arquitectura académica",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-17.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-17-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-17-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-17-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "83dc06ea07d2b3790880b2b142bb8bbb0a78866aa8b7a28d37da4a530ab00074"
+        }
+      ]
+    },
+    {
+      "source": "03_2_fase_elaboracion-18",
+      "title": "Figura 3.22. Componentes y responsabilidades de la arquitectura académica",
+      "sourcePath": "mermaid/03_2_fase_elaboracion-18.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_2_fase_elaboracion-18-hoja-01.png",
+          "svg": "paginas/03_2_fase_elaboracion-18-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-18-p01",
+            "03_2_fase_elaboracion-18-p02"
+          ],
+          "minTextPt": 9.71,
+          "sha256": "74528e534c1b3832768bfbd63291b3def5fe5c1458036697a58180dcfa30c109"
+        },
+        {
+          "path": "paginas/03_2_fase_elaboracion-18-hoja-02.png",
+          "svg": "paginas/03_2_fase_elaboracion-18-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_2_fase_elaboracion-18-p03",
+            "03_2_fase_elaboracion-18-p04"
+          ],
+          "minTextPt": 9.7,
+          "sha256": "f09f0cacd851862b3d93b9d237e786aa1d502c16c602777d5a0d6938e9282093"
+        }
+      ]
+    },
+    {
+      "source": "03_3_fase_construccion-01",
+      "title": "Figura 3.23. Flujo y secuencia del registro inicial de plantación",
+      "sourcePath": "mermaid/03_3_fase_construccion-01.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_3_fase_construccion-01-hoja-01.png",
+          "svg": "paginas/03_3_fase_construccion-01-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_3_fase_construccion-01-p01"
+          ],
+          "minTextPt": 9.84,
+          "sha256": "df9298582e0325e18df13f5e67a92ce0ebf3fb9f84217fb1a691fbf2649ad6d2"
+        },
+        {
+          "path": "paginas/03_3_fase_construccion-01-hoja-02.png",
+          "svg": "paginas/03_3_fase_construccion-01-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_3_fase_construccion-01-p02"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "b4381ea81fc75ab6f853619caa2b555d0830a270f4f59b93000e87349fc47c5a"
+        },
+        {
+          "path": "paginas/03_3_fase_construccion-01-hoja-03.png",
+          "svg": "paginas/03_3_fase_construccion-01-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_3_fase_construccion-01-p03"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "3ee5532bf5dc11594a4a76e489f9e0151fca3661cf5747a76ddc4ee2d248ea20"
+        }
+      ]
+    },
+    {
+      "source": "03_3_fase_construccion-02",
+      "title": "Figura 3.23. Flujo y secuencia del registro inicial de plantación",
+      "sourcePath": "mermaid/03_3_fase_construccion-02.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_3_fase_construccion-02-hoja-01.png",
+          "svg": "paginas/03_3_fase_construccion-02-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_3_fase_construccion-02-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "87627c9458ba19df926cd09b54576f49f19a51fabae107361bc17ea96eac8cae"
+        },
+        {
+          "path": "paginas/03_3_fase_construccion-02-hoja-02.png",
+          "svg": "paginas/03_3_fase_construccion-02-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_3_fase_construccion-02-p02"
+          ],
+          "minTextPt": 9.1,
+          "sha256": "b2ec1ddc8e5ff1c112819511e0b859ba3b793854ee2f4e751edfb6922aca139a"
+        },
+        {
+          "path": "paginas/03_3_fase_construccion-02-hoja-03.png",
+          "svg": "paginas/03_3_fase_construccion-02-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_3_fase_construccion-02-p03"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "a70a267f7304de8822a43cd276ff6fb9778a532441d7dbf28655ed7df7e0826c"
+        }
+      ]
+    },
+    {
+      "source": "03_4_fase_transicion-01",
+      "title": "Figura 3.24. Evaluación de una traza y registro de la decisión",
+      "sourcePath": "mermaid/03_4_fase_transicion-01.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_4_fase_transicion-01-hoja-01.png",
+          "svg": "paginas/03_4_fase_transicion-01-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_4_fase_transicion-01-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "c133491ceed48756d99ae3f59ce4e337c3e4042c158ecbe1c135d632f41c532f"
+        },
+        {
+          "path": "paginas/03_4_fase_transicion-01-hoja-02.png",
+          "svg": "paginas/03_4_fase_transicion-01-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_4_fase_transicion-01-p02"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "d617d21f8353b15f9fe532489a864ec5d1607232e40a9092e495242983646c8e"
+        }
+      ]
+    },
+    {
+      "source": "03_capitulo_marco_aplicativo-01",
+      "title": "Figura 3.1. Organización del proceso RUP y relación con la evidencia técnica",
+      "sourcePath": "mermaid/03_capitulo_marco_aplicativo-01.mmd",
+      "pages": [
+        {
+          "path": "paginas/03_capitulo_marco_aplicativo-01-hoja-01.png",
+          "svg": "paginas/03_capitulo_marco_aplicativo-01-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_capitulo_marco_aplicativo-01-p01"
+          ],
+          "minTextPt": 10.93,
+          "sha256": "59d1c40e8aeb76d9c9a1cfa991023c5690971a14c10be53a50c5b70e71774e8b"
+        },
+        {
+          "path": "paginas/03_capitulo_marco_aplicativo-01-hoja-02.png",
+          "svg": "paginas/03_capitulo_marco_aplicativo-01-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_capitulo_marco_aplicativo-01-p02"
+          ],
+          "minTextPt": 10.88,
+          "sha256": "cab310091d9a7f1a2788832996b6b523397c7976103289fc30c24c806025d84e"
+        },
+        {
+          "path": "paginas/03_capitulo_marco_aplicativo-01-hoja-03.png",
+          "svg": "paginas/03_capitulo_marco_aplicativo-01-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_capitulo_marco_aplicativo-01-p03"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "0fe2362e503b60da2d91aac01d9122b0b0b31c05b26025578ce1b275875a0629"
+        },
+        {
+          "path": "paginas/03_capitulo_marco_aplicativo-01-hoja-04.png",
+          "svg": "paginas/03_capitulo_marco_aplicativo-01-hoja-04.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_capitulo_marco_aplicativo-01-p04"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "8687618fee18e339482bce36ce20a0398207555f6d8cbef6b5d0d852ea5df037"
+        }
+      ]
+    },
+    {
+      "source": "modelo-conceptual",
+      "title": "Figura 3.20 · vista conceptual resumida",
+      "sourcePath": "modelos-datos/modelo-conceptual.mmd",
+      "pages": [
+        {
+          "path": "paginas/modelo-conceptual-hoja-01.png",
+          "svg": "paginas/modelo-conceptual-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-conceptual-p01",
+            "modelo-conceptual-p02",
+            "modelo-conceptual-p03"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "563cac379f51af0166f016e13e0b069999a26624424c6dffb4afeb47fc6f2c0a"
+        }
+      ]
+    },
+    {
+      "source": "modelo-fisico",
+      "title": "Sección 3.3.8.3 · modelo físico parcial del recorrido",
+      "sourcePath": "modelos-datos/modelo-fisico.mmd",
+      "pages": [
+        {
+          "path": "paginas/modelo-fisico-hoja-01.png",
+          "svg": "paginas/modelo-fisico-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-fisico-p01"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "b08faa83ba4b257b44fa023a2d2907f7349dafed171d31377b85a74550436537"
+        },
+        {
+          "path": "paginas/modelo-fisico-hoja-02.png",
+          "svg": "paginas/modelo-fisico-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-fisico-p02"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "3190cc6b45e7cffd4ddb4f16cb6e6bc7399100dfddedcdcacdc0f01ce9721665"
+        },
+        {
+          "path": "paginas/modelo-fisico-hoja-03.png",
+          "svg": "paginas/modelo-fisico-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-fisico-p03"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "0d68a2601656564f9d3bd8cd455aa52da67ce42454376982e5a79daa0801fdc8"
+        },
+        {
+          "path": "paginas/modelo-fisico-hoja-04.png",
+          "svg": "paginas/modelo-fisico-hoja-04.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-fisico-p04"
+          ],
+          "minTextPt": 9.86,
+          "sha256": "a4d8810db1cd6fc4a98f7446d701434ab744a683e6688ba447e7a44c16750121"
+        },
+        {
+          "path": "paginas/modelo-fisico-hoja-05.png",
+          "svg": "paginas/modelo-fisico-hoja-05.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-fisico-p05"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "918ea9b9f50a8d7f8fc9348f54ca971a7df03269e7edfe581984c881b6da1c30"
+        },
+        {
+          "path": "paginas/modelo-fisico-hoja-06.png",
+          "svg": "paginas/modelo-fisico-hoja-06.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-fisico-p06"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "42a1ed6d22eead44398dbc3cb29ca1fe0d531563db7bce5c3c90116e45cd54ed"
+        },
+        {
+          "path": "paginas/modelo-fisico-hoja-07.png",
+          "svg": "paginas/modelo-fisico-hoja-07.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-fisico-p07"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "1a22dcf995d4b433634ad884c0b3db9f70cda318081c980efd5206415169e3da"
+        },
+        {
+          "path": "paginas/modelo-fisico-hoja-08.png",
+          "svg": "paginas/modelo-fisico-hoja-08.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-fisico-p08"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "2ffd1121340916093754f981221396b2e439fc4639c1b3225c01e87a46e6d196"
+        }
+      ]
+    },
+    {
+      "source": "modelo-logico",
+      "title": "Figura 3.21 · vista lógica resumida",
+      "sourcePath": "modelos-datos/modelo-logico.mmd",
+      "pages": [
+        {
+          "path": "paginas/modelo-logico-hoja-01.png",
+          "svg": "paginas/modelo-logico-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "modelo-logico-p01",
+            "modelo-logico-p02",
+            "modelo-logico-p03"
+          ],
+          "minTextPt": 11.0,
+          "sha256": "a25684b073e814991c873f6719cd620c730a69cf588a81e02d78c35ab5dcddf1"
+        }
+      ]
+    },
+    {
+      "source": "03_05_casos_uso_inicio",
+      "title": "Figura 3.5. Actores y casos de uso generales",
+      "sourcePath": "03_05_casos_uso_inicio.svg",
+      "pages": [
+        {
+          "path": "paginas/03_05_casos_uso_inicio-hoja-01.png",
+          "svg": "paginas/03_05_casos_uso_inicio-hoja-01.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_05_casos_uso_inicio-p01"
+          ],
+          "minTextPt": 9.76,
+          "sha256": "af9dfe96526991477930710ca939a95e216cb8c7b03125307f1ea82296ceecae"
+        },
+        {
+          "path": "paginas/03_05_casos_uso_inicio-hoja-02.png",
+          "svg": "paginas/03_05_casos_uso_inicio-hoja-02.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_05_casos_uso_inicio-p02"
+          ],
+          "minTextPt": 9.76,
+          "sha256": "4b04f8a29c3408f3f976b7fc1a8627ebc12601a061d606f41e3cd8d6aef5c1fe"
+        },
+        {
+          "path": "paginas/03_05_casos_uso_inicio-hoja-03.png",
+          "svg": "paginas/03_05_casos_uso_inicio-hoja-03.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_05_casos_uso_inicio-p03"
+          ],
+          "minTextPt": 9.76,
+          "sha256": "0a4b544ca58c580ffbbe0708990b94678a2f07758b0ccb3e759ed2032706c835"
+        },
+        {
+          "path": "paginas/03_05_casos_uso_inicio-hoja-04.png",
+          "svg": "paginas/03_05_casos_uso_inicio-hoja-04.svg",
+          "widthPt": 468,
+          "heightPt": 620,
+          "panels": [
+            "03_05_casos_uso_inicio-p04"
+          ],
+          "minTextPt": 9.76,
+          "sha256": "6d54d105c3f08a123ba512a7295eb70ec401a23e43ee3ff126ac221a87f880d6"
+        }
+      ]
+    }
+  ]
+}

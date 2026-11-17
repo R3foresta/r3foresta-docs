@@ -1,0 +1,48 @@
+flowchart TB
+    subgraph I["INICIO"]
+        IN1["IN-1<br/>Necesidades, alcance, actores y riesgos"]
+        EI["Entregables<br/>visión, requisitos iniciales y plan"]
+        LCO{"Revisión LCO"}
+        IN1 --> EI --> LCO
+    end
+
+    subgraph E["ELABORACIÓN"]
+        EL1["EL-1<br/>Casos de uso, arquitectura y contratos"]
+        EE["Entregables<br/>modelos, especificaciones e invariantes"]
+        LCA{"Revisión LCA"}
+        EL1 --> EE --> LCA
+    end
+
+    subgraph C["CONSTRUCCIÓN"]
+        CO1["CO-1<br/>Recolección"]
+        CO2["CO-2<br/>Vivero e integración M1→M2"]
+        CO3["CO-3<br/>Plantación e integración M2→M3"]
+        CO4["CO-4<br/>Trazabilidad transversal,<br/>regresión y versión candidata"]
+        EC["Entregables<br/>software integrado, pruebas,<br/>defectos conocidos y manual preliminar"]
+        IOC{"Revisión IOC"}
+        CO1 --> CO2 --> CO3 --> CO4 --> EC --> IOC
+    end
+
+    subgraph T["TRANSICIÓN"]
+        TR1["TR-1<br/>Validación operativa, estabilización<br/>y preparación de liberación"]
+        ET["Entregables<br/>resultados, manuales,<br/>incidencias y aceptación"]
+        PR{"Decisión PR"}
+        TR1 --> ET --> PR
+    end
+
+    LCO --> EL1
+    LCA --> CO1
+    IOC --> TR1
+
+    PA["PA-F01 · Participación aliada<br/>PA-S00–PA-S04 y entregas INT"]
+    PA -.->|"Aporta evidencia técnica a integrar"| CO3
+    PA -.->|"Integración y regresión"| CO4
+
+    CAM["Commits y migraciones 064–088"]
+    CAM --> PA
+
+    REV["En cada iteración:<br/>requisitos → diseño → implementación<br/>→ pruebas → revisión"]
+    REV -.-> IN1
+    REV -.-> EL1
+    REV -.-> CO4
+    REV -.-> TR1

@@ -1,0 +1,11 @@
+erDiagram
+    direction TB
+    USUARIO ||--o{ ACCESO_VIVERO : recibe
+    VIVERO ||--o{ ACCESO_VIVERO : delimita
+ACCESO_VIVERO {
+        bigint usuario_id
+        bigint vivero_id
+        datetime otorgado_en
+        datetime retirado_en
+        bigint otorgado_por
+    }

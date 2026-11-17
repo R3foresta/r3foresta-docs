@@ -1,0 +1,14 @@
+flowchart TB
+    ADM["ADMIN global"]
+    VIV["Operario de Vivero"]
+    C5(["CU-05<br/>Iniciar lote desde Recolección"])
+    C6(["CU-06<br/>Registrar resultado observado"])
+    C7(["CU-07<br/>Registrar movimientos de Vivero"])
+    INC(["Incorporar plantines<br/>e inventario inicial"])
+    ADM --- C5
+    ADM --- C6
+    ADM --- C7
+    ADM --- INC
+    VIV --- C5
+    VIV --- C6
+    VIV --- C7

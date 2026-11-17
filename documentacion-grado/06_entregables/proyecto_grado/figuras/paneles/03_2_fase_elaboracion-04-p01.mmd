@@ -1,0 +1,18 @@
+flowchart TB
+    OP["Operador de Recolección"]
+    AD["ADMIN"]
+    CRE(["Crear recolección"])
+    EDI(["Editar ficha permitida"])
+    DAT(["Registrar especie, material,<br/>cantidad, unidad y ubicación"])
+    ENV(["Solicitar validación"])
+    VAL(["Comprobar ficha y evidencia"])
+    COR(["Corregir rechazo y reenviar"])
+    OP --- CRE
+    OP --- EDI
+    OP --- ENV
+    OP --- COR
+    AD --- CRE
+    AD --- EDI
+    CRE -.->|"«include»"| DAT
+    ENV -.->|"«include»"| VAL
+    COR -.->|"«include»"| VAL

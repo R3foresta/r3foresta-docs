@@ -1,0 +1,24 @@
+flowchart LR
+  O[Origen registrado<br/>recolección validada]
+  LR[Lote de Recolección<br/>cantidad y unidad de origen]
+  LV1[Lote de Vivero A<br/>material en proceso]
+  LV2[Lote de Vivero B<br/>consumo parcial del mismo origen]
+  EV1[Eventos de Vivero<br/>INICIO, EMBOLSADO, MERMA]
+  EV2[Eventos de Vivero<br/>INICIO, EMBOLSADO]
+  A1[Asignación física<br/>a subcampaña]
+  A2[Asignación física<br/>a subcampaña]
+  P[Registro de plantación]
+  D1[Detalle plantado<br/>lote A, especie y cantidad]
+  D2[Detalle plantado<br/>lote B, especie y cantidad]
+
+  O --> LR
+  LR -->|movimiento de consumo| LV1
+  LR -->|movimiento de consumo| LV2
+  LV1 --> EV1
+  LV2 --> EV2
+  EV1 -->|saldo vivo entregado| A1
+  EV2 -->|saldo vivo entregado| A2
+  A1 --> D1
+  A2 --> D2
+  P --> D1
+  P --> D2

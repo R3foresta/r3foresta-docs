@@ -1,0 +1,11 @@
+flowchart TB
+    ADM["ADMIN global"]
+    COO["Coordinador de Plantación"]
+    C8(["CU-08<br/>Planificar campaña y subcampaña"])
+    C9(["CU-09<br/>Asignar plantas a subcampaña"])
+    C10(["CU-10<br/>Devolver plantas"])
+    ADM --- C8
+    ADM --- C9
+    ADM --- C10
+    COO --- C9
+    COO --- C10

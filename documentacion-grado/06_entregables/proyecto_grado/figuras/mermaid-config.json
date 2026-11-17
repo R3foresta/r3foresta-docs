@@ -1,0 +1,45 @@
+{
+  "theme": "base",
+  "htmlLabels": false,
+  "themeVariables": {
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "fontSize": "18px",
+    "primaryColor": "#f5faf7",
+    "primaryTextColor": "#172b23",
+    "primaryBorderColor": "#476556",
+    "lineColor": "#476556",
+    "secondaryColor": "#f3f6fa",
+    "tertiaryColor": "#ffffff"
+  },
+  "flowchart": {
+    "useMaxWidth": false,
+    "nodeSpacing": 22,
+    "rankSpacing": 36,
+    "padding": 12,
+    "curve": "linear"
+  },
+  "class": {
+    "useMaxWidth": false
+  },
+  "state": {
+    "useMaxWidth": false
+  },
+  "er": {
+    "useMaxWidth": false,
+    "fontSize": 18,
+    "layoutDirection": "TB"
+  },
+  "sequence": {
+    "useMaxWidth": false,
+    "wrap": true,
+    "width": 100,
+    "actorMargin": 18,
+    "messageMargin": 28,
+    "diagramMarginX": 12,
+    "mirrorActors": false,
+    "actorFontSize": 16,
+    "messageFontSize": 16,
+    "noteFontSize": 16
+  },
+  "themeCSS": ".edgeTerminals, .relationshipLabel, .cardinality, .edgeLabel .label { font-size: 18px !important; }"
+}

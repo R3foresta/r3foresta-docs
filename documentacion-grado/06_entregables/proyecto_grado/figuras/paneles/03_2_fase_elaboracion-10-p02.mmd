@@ -1,0 +1,14 @@
+flowchart TB
+    V[Recibir y validar por revisor autorizado<br/>distinto del recolector; congelar snapshots]
+    O{¿Destino del saldo?}
+    T[Consumir cantidad mediante<br/>contrato M1→M2]
+    X[Registrar movimiento de desecho]
+    Z{¿Saldo igual a cero?}
+    F([Cerrar saldo del lote])
+    V --> O
+    O -- Vivero --> T
+    O -- Desecho --> X
+    T --> Z
+    X --> Z
+    Z -- No --> O
+    Z -- Sí --> F

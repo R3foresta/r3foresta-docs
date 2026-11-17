@@ -1,0 +1,46 @@
+sequenceDiagram
+    actor U as Persona autorizada
+    participant PWA as PWA
+    participant API as API NestJS
+    participant DB as PostgreSQL/PostGIS
+    participant STO as Almacenamiento privado
+
+    U->>PWA: Seleccionar subcampaña
+    PWA->>API: Consultar capacidades y contexto
+    API->>DB: Verificar cuenta, permiso, plan y stock
+    DB-->>API: Contexto autorizado
+    API-->>PWA: Especies, disponibilidad y revisión
+    U->>PWA: Completar captura y revisar datos
+    PWA->>API: Preparar comando propio
+    API->>DB: Persistir preparación sin reservar stock
+    PWA->>API: Cargar fotografías con identidad estable
+    API->>STO: Guardar originales y derivadas
+    API->>DB: Registrar cargas disponibles
+    U->>PWA: Confirmar resumen
+    PWA->>PWA: Persistir clave y contenido definitivo
+    PWA->>API: Enviar registro con comando_id
+    API->>DB: Ejecutar operación transaccional
+    alt El intento ya tiene resultado terminal
+        DB-->>API: Recuperar el mismo recibo
+    else Primera ejecución válida
+        DB->>DB: Revalidar autoridad, ACTIVA, plan y fecha
+        DB->>DB: Evaluar GPS y validar evidencia y cantidades
+        Note over DB: Exterior válido con advertencia<br/>Fallo técnico sin confirmación
+        DB->>DB: Consumir stock elegible mediante LIFO
+        DB->>DB: Guardar registro, detalles y snapshots
+        DB->>DB: Vincular evidencia y recibo en la transacción
+        DB-->>API: Confirmación o rechazo durable
+    end
+    API-->>PWA: Resultado del mismo intento
+    opt Respuesta perdida o inconclusa
+        PWA->>API: Consultar resultado propio con la misma clave
+        API->>DB: Leer recibo sin nuevo consumo
+        DB-->>API: Terminal o resultado aún no determinado
+        API-->>PWA: Estado recuperable
+        Note over PWA,API: Reenvío autorizado conserva clave y contenido
+    end
+    U->>PWA: Consultar comprobante o Mis registros
+    PWA->>API: Solicitar detalle propio
+    API->>DB: Verificar autoría o participación histórica
+    DB-->>API: Datos y referencia de evidencia permitidos
+    API-->>PWA: Detalle según audiencia

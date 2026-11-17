@@ -1,0 +1,83 @@
+erDiagram
+    direction LR
+    %% Vista parcial del extracto del 16-11-2026; solo se dibujan las FK seleccionadas.
+    recoleccion {
+        bigint id PK
+        date fecha
+        text codigo_trazabilidad UK
+        numeric saldo_actual
+        bigint revision_captura
+    }
+    recoleccion_recepcion {
+        bigint id PK
+        bigint recoleccion_id FK, UK
+        bigint vivero_id FK
+        numeric cantidad_recibida
+        date fecha_recepcion
+        timestamp_with_time_zone registrado_en
+    }
+    lote_vivero {
+        bigint id PK
+        bigint recoleccion_id FK "NULL"
+        bigint planta_id FK
+        bigint vivero_id FK
+        integer saldo_vivo_actual "NULL"
+        text codigo_trazabilidad UK
+    }
+    evento_lote_vivero {
+        bigint id PK
+        bigint lote_id FK
+        USER_DEFINED tipo_evento
+        date fecha_evento
+    }
+    vivero_incorporacion {
+        bigint evento_id PK, FK
+        text modalidad
+        text procedencia
+        uuid solicitud_id UK
+        timestamp_with_time_zone registrado_en
+    }
+    campania {
+        bigint id PK
+        text nombre UK
+        text codigo_trazabilidad UK
+    }
+    subcampania {
+        bigint id PK
+        bigint campania_id FK
+        text codigo_trazabilidad UK
+    }
+    asignacion_vivero_subcampania {
+        bigint id PK
+        bigint subcampania_id FK
+        bigint lote_vivero_id FK
+        integer cantidad_asignada
+        integer cantidad_consumida
+        integer cantidad_devuelta
+    }
+    registro_plantacion {
+        bigint id PK
+        bigint subcampania_id FK
+        date fecha_plantacion
+        integer cantidad_total_plantada
+        text codigo_trazabilidad UK
+    }
+    registro_plantacion_detalle {
+        bigint id PK
+        bigint registro_plantacion_id FK
+        bigint asignacion_id FK
+        bigint lote_vivero_id FK
+        bigint planta_id FK
+        integer cantidad
+    }
+    recoleccion ||..o| recoleccion_recepcion : recoleccion_id
+    recoleccion |o..o{ lote_vivero : recoleccion_id
+    lote_vivero ||..o{ evento_lote_vivero : lote_id
+    evento_lote_vivero ||--o| vivero_incorporacion : evento_id
+    lote_vivero ||..o{ asignacion_vivero_subcampania : lote_vivero_id
+    campania ||..o{ subcampania : campania_id
+    subcampania ||..o{ asignacion_vivero_subcampania : subcampania_id
+    subcampania ||..o{ registro_plantacion : subcampania_id
+    asignacion_vivero_subcampania ||..o{ registro_plantacion_detalle : asignacion_id
+    lote_vivero ||..o{ registro_plantacion_detalle : lote_vivero_id
+    registro_plantacion ||..o{ registro_plantacion_detalle : registro_plantacion_id

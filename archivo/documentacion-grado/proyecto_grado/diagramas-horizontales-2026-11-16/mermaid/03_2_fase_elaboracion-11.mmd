@@ -1,0 +1,16 @@
+flowchart LR
+    I(["Inicio"]) --> MOD{"Modalidad de ingreso"}
+    MOD -->|"Desde Recolección"| O["Consultar origen validado, unidad y saldo<br/>con autorización vigente"]
+    O --> T["Crear lote, INICIO y consumo<br/>en una transacción"]
+    T --> P["Observar resultado de propagación"]
+    P --> R{"¿Hay plantas vivas?"}
+    R -->|"Sí"| E["Registrar EMBOLSADO observado"]
+    R -->|"No, se descarta"| X["Registrar descarte, causa y evidencia"]
+    MOD -->|"Plantines o existencias previas"| AD["ADMIN registra especie, procedencia,<br/>fecha, cantidad y foto privada"]
+    AD --> N["Crear base inicial una sola vez<br/>sin consumo M1 ni embolsado ficticio"]
+    E --> SAL["Consultar saldo físico e historial"]
+    N --> SAL
+    SAL --> OP["Registrar manejo, merma, despacho<br/>o entrega según autorización y saldo"]
+    OP --> SAL
+    OP --> FIN(["Fin de la operación"])
+    X --> FIN

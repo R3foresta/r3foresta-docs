@@ -1,0 +1,18 @@
+flowchart TB
+    AD["ADMIN global"]
+    PL["PLANTADOR"]
+    AS["ADMINISTRADOR_SUBCAMPANIA"]
+    REG(["Registrar plantación inicial"])
+    CTX(["Revalidar autoridad, ACTIVA,<br/>plan, fecha y stock"])
+    GEO(["Registrar GPS y evaluar<br/>relación con polígono"])
+    FOT(["Vincular fotografías"])
+    LIFO(["Consumir asignaciones elegibles<br/>y guardar detalles"])
+    COL(["Añadir colaboradores opcionales"])
+    AD --- REG
+    PL --- REG
+    AS --- REG
+    REG -.->|"«include»"| CTX
+    REG -.->|"«include»"| GEO
+    REG -.->|"«include»"| FOT
+    REG -.->|"«include»"| LIFO
+    COL -.->|"«extend»<br/>si participan otras personas"| REG

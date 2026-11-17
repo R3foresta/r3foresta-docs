@@ -1,0 +1,12 @@
+stateDiagram-v2
+    direction LR
+    [*] --> BORRADOR
+    BORRADOR --> ACTIVA: ADMIN activa con plan, coordinación y polígono
+    BORRADOR --> CANCELADA: ADMIN cancela sin plantaciones
+    ACTIVA --> ACTIVA: registro inicial, incluso al superar meta
+    ACTIVA --> CANCELADA: ADMIN cancela sin plantaciones
+    ACTIVA --> COMPLETADA: cierre manual por ADMIN
+    ACTIVA --> FINALIZADA_PARCIAL: cierre manual por ADMIN con motivo
+    COMPLETADA --> [*]
+    FINALIZADA_PARCIAL --> [*]
+    CANCELADA --> [*]

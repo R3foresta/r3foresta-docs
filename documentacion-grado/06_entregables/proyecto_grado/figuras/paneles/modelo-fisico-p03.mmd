@@ -1,0 +1,25 @@
+erDiagram
+    direction TB
+    lote_vivero ||..o{ evento_lote_vivero : lote_id
+    evento_lote_vivero ||--o| vivero_incorporacion : evento_id
+lote_vivero {
+        bigint id PK
+        bigint recoleccion_id FK "NULL"
+        bigint planta_id FK
+        bigint vivero_id FK
+        integer saldo_vivo_actual "NULL"
+        text codigo_trazabilidad UK
+    }
+evento_lote_vivero {
+        bigint id PK
+        bigint lote_id FK
+        USER_DEFINED tipo_evento
+        date fecha_evento
+    }
+vivero_incorporacion {
+        bigint evento_id PK, FK
+        text modalidad
+        text procedencia
+        uuid solicitud_id UK
+        timestamp_with_time_zone registrado_en
+    }

@@ -1,0 +1,44 @@
+flowchart LR
+    subgraph ORIGEN["Entradas al recorrido"]
+        REC["Semillas o esquejes<br/>registrados en Recolección"]
+        COMP["Plantines comprados"]
+        DON["Plantines donados"]
+        EXIST["Plantines existentes<br/>al comenzar el sistema"]
+    end
+
+    REC --> VAL["Recepción y validación<br/>de Recolección"]
+    VAL --> INI["INICIO de lote<br/>consumo atómico del origen"]
+    INI --> PROC["Material en proceso<br/>sin saldo vivo"]
+    PROC --> RES{"Resultado observado"}
+    RES -->|"Plantas vivas"| EMB["EMBOLSADO<br/>crea saldo vivo"]
+    RES -->|"Sin plantas viables"| PRE["DESCARTE_PRE_EMBOLSADO<br/>y cierre"]
+
+    COMP --> RECEP["Recepción de plantines<br/>registrada por ADMIN"]
+    DON --> RECEP
+    EXIST --> INVENT["Inventario inicial<br/>conteo actual registrado por ADMIN"]
+
+    RECEP --> IDENT["Especie, procedencia y fecha<br/>cantidad contada, responsable<br/>y foto privada obligatoria"]
+    INVENT --> IDENT
+    IDENT --> INC["INCORPORACIÓN<br/>crea saldo vivo una sola vez"]
+
+    EMB --> LOTE["Lote trazable de plantas vivas"]
+    INC --> LOTE
+
+    LOTE --> MAN["Manejo y adaptabilidad"]
+    MAN --> MER["Merma real registrada"]
+    MAN --> SAL["Saldo físico disponible"]
+    MER --> SAL
+
+    SAL --> ENTREGA["Entrega física a subcampaña"]
+    ENTREGA --> ASIG["Asignación con lote,<br/>especie, cantidad y propósito"]
+    ASIG --> PLANT["Plantación inicial autorizada<br/>consumo LIFO de asignaciones"]
+    PLANT --> TRAZA["Registro + detalles + participantes<br/>ubicación + evidencia + recibo"]
+
+    ASIG --> DEV["Remanente devuelto físicamente"]
+    DEV --> SAL
+
+    DIRECTA["Recepción externa directa en campo<br/>diseño por concretar"] -.-> CAMPO["Stock de subcampaña<br/>sin entrada ficticia a Vivero"]
+    CAMPO -.-> PLANT
+    TRAZA --> PUBLICO["Información pública elegible"]
+    TRAZA --> PROPIO["Consulta propia autorizada"]
+    TRAZA --> CUSTODIA["Reconstrucción del recorrido registrado"]

@@ -1,0 +1,31 @@
+erDiagram
+    direction TB
+    lote_vivero ||..o{ asignacion_vivero_subcampania : lote_vivero_id
+    campania ||..o{ subcampania : campania_id
+    subcampania ||..o{ asignacion_vivero_subcampania : subcampania_id
+lote_vivero {
+        bigint id PK
+        bigint recoleccion_id FK "NULL"
+        bigint planta_id FK
+        bigint vivero_id FK
+        integer saldo_vivo_actual "NULL"
+        text codigo_trazabilidad UK
+    }
+campania {
+        bigint id PK
+        text nombre UK
+        text codigo_trazabilidad UK
+    }
+subcampania {
+        bigint id PK
+        bigint campania_id FK
+        text codigo_trazabilidad UK
+    }
+asignacion_vivero_subcampania {
+        bigint id PK
+        bigint subcampania_id FK
+        bigint lote_vivero_id FK
+        integer cantidad_asignada
+        integer cantidad_consumida
+        integer cantidad_devuelta
+    }

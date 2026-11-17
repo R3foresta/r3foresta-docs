@@ -41,6 +41,6 @@ sequenceDiagram
     end
     U->>PWA: Consultar comprobante o Mis registros
     PWA->>API: Solicitar detalle propio
-    API->>DB: Verificar autoría o participación histórica
+    API->>DB: Verificar autoría o participación efectiva
     DB-->>API: Datos y referencia de evidencia permitidos
     API-->>PWA: Detalle según audiencia

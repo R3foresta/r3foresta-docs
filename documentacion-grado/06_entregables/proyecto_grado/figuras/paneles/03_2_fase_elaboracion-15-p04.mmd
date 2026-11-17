@@ -1,0 +1,7 @@
+classDiagram
+    direction TB
+    class ParticipacionHistorica
+    class Persona
+    class Plantacion
+    Plantacion "1" -- "0..*" ParticipacionHistorica : conserva
+    Persona "1" -- "0..*" ParticipacionHistorica : participa

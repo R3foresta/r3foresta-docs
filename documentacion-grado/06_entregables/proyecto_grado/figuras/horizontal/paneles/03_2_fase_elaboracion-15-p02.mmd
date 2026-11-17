@@ -1,0 +1,19 @@
+classDiagram
+    direction TB
+    class Asignacion
+    class Especie
+    class EventoLote
+    class Incorporacion
+    class Lote
+    class LoteDesdeRecoleccion
+    class LoteIncorporado
+    class Recoleccion
+    Lote <|-- LoteDesdeRecoleccion
+    Lote <|-- LoteIncorporado
+    Recoleccion "1" -- "0..*" LoteDesdeRecoleccion : origina
+    Incorporacion "1" -- "1" LoteIncorporado : inicia
+    Especie "1" -- "0..*" Lote : identifica
+    Lote "1" -- "0..*" EventoLote : historiza
+    Lote "1" -- "0..*" Asignacion : abastece
+    note for Lote "Una especie y un origen homogéneo. Identidad histórica conservada."
+    note for Incorporacion "Recepción o inventario inicial; procedencia y foto del ingreso."

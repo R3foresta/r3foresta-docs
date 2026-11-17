@@ -1,0 +1,15 @@
+erDiagram
+    direction TB
+    subcampania ||..o{ registro_plantacion : subcampania_id
+subcampania {
+        bigint id PK
+        bigint campania_id FK
+        text codigo_trazabilidad UK
+    }
+registro_plantacion {
+        bigint id PK
+        bigint subcampania_id FK
+        date fecha_plantacion
+        integer cantidad_total_plantada
+        text codigo_trazabilidad UK
+    }

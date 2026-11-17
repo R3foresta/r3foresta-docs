@@ -6,6 +6,12 @@ Los documentos del capítulo conservan la fuente vigente de los diagramas Mermai
 node documentacion-grado/06_entregables/proyecto_grado/figuras/exportar-mermaid.mjs
 ```
 
+## Impresión en carta vertical
+
+Las figuras vigentes se preparan para hojas carta de 612 × 792 pt (21,59 × 27,94 cm), con un área de figura de 468 × 620 pt. Los diagramas extensos se dividen en paneles; se repiten los nodos frontera y los participantes para conservar continuidad. El [catálogo de láminas verticales](paginas/README.md) es la entrada para insertar las figuras en el documento. Los SVG completos sirven para consulta y edición, y no deben reducirse a una sola página cuando su tamaño de texto resulte insuficiente.
+
+Los [modelos de datos](modelos-datos/README.md) conservan sus fuentes editables. Las carpetas `paneles/`, `renderizados/` y `paginas/` se regeneran desde las fuentes vigentes. La [edición horizontal anterior](horizontal/README.md) queda como antecedente, sustituida por la corrección del autor del 16 de noviembre. No se actualizó ningún documento remoto de Google Docs.
+
 ## Diagramas en SVG
 
 - [Figura 3.5 — Actores y casos de uso generales](03_05_casos_uso_inicio.svg).

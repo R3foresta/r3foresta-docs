@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant UI as PWA
+    participant API as API NestJS
+    participant DB as PostgreSQL y PostGIS
+    participant ST as Storage
+    UI->>API: Enviar fotografías del mismo comando
+    API->>ST: Preparar originales y derivadas<br/>privadas
+    API->>DB: Registrar cargas y generaciones<br/>disponibles

@@ -47,8 +47,9 @@ classDiagram
     Plantacion "1" -- "0..*" ParticipacionHistorica : conserva
     Persona "1" -- "0..*" ParticipacionHistorica : participa
 
-    EventoLote "1" -- "0..*" Evidencia : documenta
-    Plantacion "1" -- "1..*" Evidencia : documenta
+    EventoLote "0..1" -- "0..*" Evidencia : documenta
+    Plantacion "0..1" -- "1..*" Evidencia : documenta
 
     note for Lote "Una especie y un origen homogéneo. Identidad histórica conservada."
-    note for Incorporacion "Recepción o inventario inicial; procedencia y etapa al ingresar."
+    note for Incorporacion "Recepción o inventario inicial; procedencia y foto del ingreso."
+    note for Evidencia "Cada evidencia pertenece a un solo hecho según su tipo. Evento y plantación son vínculos excluyentes."

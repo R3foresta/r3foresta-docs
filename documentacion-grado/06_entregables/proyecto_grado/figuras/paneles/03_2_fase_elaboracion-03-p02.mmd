@@ -1,0 +1,13 @@
+flowchart TB
+    ADM["ADMIN global"]
+    REC["Operador de Recolección"]
+    REV["Revisor de Recolección"]
+    C2(["CU-02<br/>Registrar y completar recolección"])
+    C3(["CU-03<br/>Revisar recolección"])
+    C4(["CU-04<br/>Afectar saldo de Recolección"])
+    ADM --- C2
+    ADM --- C3
+    ADM --- C4
+    REC --- C2
+    REC --- C4
+    REV --- C3

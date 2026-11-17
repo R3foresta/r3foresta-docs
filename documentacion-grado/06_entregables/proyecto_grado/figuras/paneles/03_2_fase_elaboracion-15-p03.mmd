@@ -1,0 +1,10 @@
+classDiagram
+    direction TB
+    class Asignacion
+    class DetalleConsumo
+    class Plantacion
+    class Subcampania
+    Subcampania "1" -- "0..*" Asignacion : recibe
+    Subcampania "1" -- "0..*" Plantacion : contiene
+    Plantacion "1" -- "1..*" DetalleConsumo : desglosa
+    Asignacion "1" -- "0..*" DetalleConsumo : consume

@@ -1,0 +1,10 @@
+flowchart TB
+    S[Identificar escenario, versión<br/>entorno y datos reales o controlados]
+    E[Localizar ejecución y evidencia<br/>o registrar ausencia de resultado]
+    R[Reconstruir relaciones, cantidades<br/>responsables, ubicaciones y archivos]
+    C[Contrastar completitud,<br/>coherencia y recuperabilidad]
+    D{Evidencia suficiente<br/>para el escenario}
+    S --> E
+    E --> R
+    R --> C
+    C --> D

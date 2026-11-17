@@ -1,0 +1,18 @@
+flowchart TB
+    OP["Operador de Recolección"]
+    AD["ADMIN"]
+    DEL(["Eliminar lógicamente<br/>un BORRADOR"])
+    DES(["Registrar DESECHO"])
+    SAL(["Validar estado,<br/>unidad y saldo"])
+    HIS(["Registrar historial"])
+    CONH(["Consultar historial autorizado"])
+    ESP(["Consultar historial administrativo<br/>por especie"])
+    OP --- DEL
+    OP --- DES
+    OP --- CONH
+    AD --- DEL
+    AD --- DES
+    AD --- ESP
+    DEL -.->|"«include»"| HIS
+    DES -.->|"«include»"| SAL
+    DES -.->|"«include»"| HIS

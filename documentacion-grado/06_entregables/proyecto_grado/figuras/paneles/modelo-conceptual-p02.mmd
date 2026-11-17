@@ -1,0 +1,8 @@
+flowchart TB
+    A["Asignación"]
+    C["Campaña"]
+    S["Subcampaña"]
+    P["Registro de plantación"]
+    C -->|"agrupa"| S
+    S -->|"recibe"| A
+    S -->|"contiene"| P

@@ -1,4 +1,5 @@
 erDiagram
+    direction TB
     USUARIO ||--o{ ACCESO_VIVERO : recibe
     VIVERO ||--o{ ACCESO_VIVERO : delimita
     USUARIO ||--o{ PERMISO_SUBCAMPANIA : recibe
@@ -37,7 +38,6 @@ erDiagram
         string referencia_procedencia
         date fecha_recepcion_o_conteo
         int cantidad_viva
-        string etapa_inicial
         string identidad_vegetal_snapshot
         string responsable_snapshot
     }

@@ -1,0 +1,14 @@
+flowchart TB
+    D{Evidencia suficiente<br/>para el escenario}
+    V[Registrar resultado sustentado<br/>y sus límites de entorno]
+    P[Identificar tramo recuperado<br/>y vacío de cobertura]
+    N[Registrar resultado no acreditado<br/>sin completar datos por inferencia]
+    H[Revisión de la persona competente]
+    A[Decisión documentada:<br/>aceptación, observación o rechazo]
+    D -- Sí --> V
+    D -- Parcial --> P
+    D -- No --> N
+    V --> H
+    P --> H
+    N --> H
+    H --> A

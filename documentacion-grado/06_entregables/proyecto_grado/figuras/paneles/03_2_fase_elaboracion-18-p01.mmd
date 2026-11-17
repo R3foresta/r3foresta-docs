@@ -1,0 +1,10 @@
+classDiagram
+    direction TB
+    class AdministradorGlobal
+    class PersonaConsultante
+    class UsuarioAutenticado
+    class Visitante
+    PersonaConsultante <|-- Visitante
+    PersonaConsultante <|-- UsuarioAutenticado
+    UsuarioAutenticado <|-- AdministradorGlobal
+    note for AdministradorGlobal "Rol global ADMIN. Administración transversal<br/>y operación sujeta a reglas del dominio."

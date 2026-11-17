@@ -1,0 +1,18 @@
+classDiagram
+    direction TB
+    class AccesoVivero
+    class Campania
+    class PermisoSubcampania
+    class Persona
+    class ResponsabilidadLogistica
+    class RolGlobal
+    class Subcampania
+    class Vivero
+    Persona "0..*" --> "1" RolGlobal : tiene
+    Persona "1" -- "0..*" AccesoVivero : recibe
+    Vivero "1" -- "0..*" AccesoVivero : delimita
+    Persona "1" -- "0..*" PermisoSubcampania : recibe
+    Subcampania "1" -- "0..*" PermisoSubcampania : delimita
+    Persona "1" -- "0..*" ResponsabilidadLogistica : asume
+    Subcampania "1" -- "0..*" ResponsabilidadLogistica : organiza
+    Campania "1" -- "0..*" Subcampania : agrupa

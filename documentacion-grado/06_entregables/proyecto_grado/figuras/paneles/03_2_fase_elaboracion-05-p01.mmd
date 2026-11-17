@@ -1,0 +1,13 @@
+flowchart TB
+    OP["Operario de Vivero<br/>operación autorizada"]
+    AD["ADMIN global"]
+    SEM(["Consultar semillas elegibles<br/>del vivero"])
+    INI(["Iniciar lote desde Recolección"])
+    CON(["Consumir origen y crear INICIO<br/>en una transacción"])
+    EVI(["Vincular evidencia operativa"])
+    OP --- SEM
+    OP --- INI
+    AD --- INI
+    INI -.->|"«include»"| SEM
+    INI -.->|"«include»"| CON
+    INI -.->|"«include»"| EVI

@@ -1,0 +1,1055 @@
+[
+  {
+    "name": "03_05_casos_uso_inicio-p01",
+    "width": 1200,
+    "height": 1550,
+    "minFontPx": 26,
+    "widthPt": 450.58,
+    "heightPt": 582,
+    "textPt": 9.76
+  },
+  {
+    "name": "03_05_casos_uso_inicio-p02",
+    "width": 1200,
+    "height": 1550,
+    "minFontPx": 26,
+    "widthPt": 450.58,
+    "heightPt": 582,
+    "textPt": 9.76
+  },
+  {
+    "name": "03_05_casos_uso_inicio-p03",
+    "width": 1200,
+    "height": 1550,
+    "minFontPx": 26,
+    "widthPt": 450.58,
+    "heightPt": 582,
+    "textPt": 9.76
+  },
+  {
+    "name": "03_05_casos_uso_inicio-p04",
+    "width": 1200,
+    "height": 1550,
+    "minFontPx": 26,
+    "widthPt": 450.58,
+    "heightPt": 582,
+    "textPt": 9.76
+  },
+  {
+    "name": "03_1_fase_inicio-01",
+    "width": 901.6875,
+    "height": 934.734375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 485.15,
+    "textPt": 9.34
+  },
+  {
+    "name": "03_1_fase_inicio-01-p01",
+    "width": 260.140625,
+    "height": 838.734375,
+    "minFontPx": 18,
+    "widthPt": 180.51,
+    "heightPt": 582,
+    "textPt": 12.49
+  },
+  {
+    "name": "03_1_fase_inicio-01-p02",
+    "width": 864.390625,
+    "height": 203.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 110.23,
+    "textPt": 9.75
+  },
+  {
+    "name": "03_1_fase_inicio-01-p03",
+    "width": 441.203125,
+    "height": 203.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 215.96,
+    "textPt": 19.09
+  },
+  {
+    "name": "03_2_fase_elaboracion-01",
+    "width": 1128,
+    "height": 1885.453125,
+    "minFontPx": 18,
+    "widthPt": 348.19,
+    "heightPt": 582,
+    "textPt": 5.56
+  },
+  {
+    "name": "03_2_fase_elaboracion-01-p01",
+    "width": 447.8125,
+    "height": 812.515625,
+    "minFontPx": 18,
+    "widthPt": 320.77,
+    "heightPt": 582,
+    "textPt": 12.89
+  },
+  {
+    "name": "03_2_fase_elaboracion-01-p02",
+    "width": 720.125,
+    "height": 478.328125,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 310.86,
+    "textPt": 11.7
+  },
+  {
+    "name": "03_2_fase_elaboracion-01-p03",
+    "width": 457.734375,
+    "height": 798.328125,
+    "minFontPx": 18,
+    "widthPt": 333.7,
+    "heightPt": 582,
+    "textPt": 13.12
+  },
+  {
+    "name": "03_2_fase_elaboracion-01-p04",
+    "width": 642.265625,
+    "height": 597.796875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 435.6,
+    "textPt": 13.12
+  },
+  {
+    "name": "03_2_fase_elaboracion-02",
+    "width": 724.25,
+    "height": 706,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 456.21,
+    "textPt": 11.63
+  },
+  {
+    "name": "03_2_fase_elaboracion-02-p01",
+    "width": 724.25,
+    "height": 706,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 456.21,
+    "textPt": 11.63
+  },
+  {
+    "name": "03_2_fase_elaboracion-03",
+    "width": 1323.234375,
+    "height": 1910.390625,
+    "minFontPx": 18,
+    "widthPt": 403.12,
+    "heightPt": 582,
+    "textPt": 5.48
+  },
+  {
+    "name": "03_2_fase_elaboracion-03-p01",
+    "width": 585.015625,
+    "height": 167.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 134.07,
+    "textPt": 14.4
+  },
+  {
+    "name": "03_2_fase_elaboracion-03-p02",
+    "width": 646.3125,
+    "height": 187.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 135.69,
+    "textPt": 13.03
+  },
+  {
+    "name": "03_2_fase_elaboracion-03-p03",
+    "width": 834.078125,
+    "height": 167.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 94.04,
+    "textPt": 10.1
+  },
+  {
+    "name": "03_2_fase_elaboracion-03-p04",
+    "width": 604.953125,
+    "height": 187.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 144.97,
+    "textPt": 13.93
+  },
+  {
+    "name": "03_2_fase_elaboracion-03-p05",
+    "width": 617.296875,
+    "height": 187.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 142.07,
+    "textPt": 13.65
+  },
+  {
+    "name": "03_2_fase_elaboracion-03-p06",
+    "width": 892.46875,
+    "height": 187.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 98.27,
+    "textPt": 9.44
+  },
+  {
+    "name": "03_2_fase_elaboracion-03-p07",
+    "width": 239,
+    "height": 167.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 328.18,
+    "textPt": 35.25
+  },
+  {
+    "name": "03_2_fase_elaboracion-04",
+    "width": 1767.734375,
+    "height": 2650,
+    "minFontPx": 18,
+    "widthPt": 388.23,
+    "heightPt": 582,
+    "textPt": 3.95
+  },
+  {
+    "name": "03_2_fase_elaboracion-04-p01",
+    "width": 784.140625,
+    "height": 319,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 190.39,
+    "textPt": 10.74
+  },
+  {
+    "name": "03_2_fase_elaboracion-04-p02",
+    "width": 598.171875,
+    "height": 259.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 203.1,
+    "textPt": 14.08
+  },
+  {
+    "name": "03_2_fase_elaboracion-04-p03",
+    "width": 835.6875,
+    "height": 299.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 167.55,
+    "textPt": 10.08
+  },
+  {
+    "name": "03_2_fase_elaboracion-04-p04",
+    "width": 239,
+    "height": 167.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 328.18,
+    "textPt": 35.25
+  },
+  {
+    "name": "03_2_fase_elaboracion-05",
+    "width": 2332.796875,
+    "height": 2828.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 567.47,
+    "textPt": 3.61
+  },
+  {
+    "name": "03_2_fase_elaboracion-05-p01",
+    "width": 669.703125,
+    "height": 299.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 209.08,
+    "textPt": 12.58
+  },
+  {
+    "name": "03_2_fase_elaboracion-05-p02",
+    "width": 837.984375,
+    "height": 370.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 206.97,
+    "textPt": 10.05
+  },
+  {
+    "name": "03_2_fase_elaboracion-05-p03",
+    "width": 645.28125,
+    "height": 279.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 202.63,
+    "textPt": 13.05
+  },
+  {
+    "name": "03_2_fase_elaboracion-05-p04",
+    "width": 706.25,
+    "height": 279.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 185.14,
+    "textPt": 11.93
+  },
+  {
+    "name": "03_2_fase_elaboracion-06",
+    "width": 1971.65625,
+    "height": 2917,
+    "minFontPx": 18,
+    "widthPt": 393.38,
+    "heightPt": 582,
+    "textPt": 3.59
+  },
+  {
+    "name": "03_2_fase_elaboracion-06-p01",
+    "width": 627.21875,
+    "height": 299.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 223.24,
+    "textPt": 13.43
+  },
+  {
+    "name": "03_2_fase_elaboracion-06-p02",
+    "width": 420.15625,
+    "height": 299.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 333.26,
+    "textPt": 20.05
+  },
+  {
+    "name": "03_2_fase_elaboracion-06-p03",
+    "width": 883.96875,
+    "height": 362.796875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 192.08,
+    "textPt": 9.53
+  },
+  {
+    "name": "03_2_fase_elaboracion-06-p04",
+    "width": 631.234375,
+    "height": 187.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 138.93,
+    "textPt": 13.35
+  },
+  {
+    "name": "03_2_fase_elaboracion-06-p05",
+    "width": 426.109375,
+    "height": 167.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 184.07,
+    "textPt": 19.77
+  },
+  {
+    "name": "03_2_fase_elaboracion-07",
+    "width": 547.640625,
+    "height": 860.4375,
+    "minFontPx": 18,
+    "widthPt": 370.42,
+    "heightPt": 582,
+    "textPt": 12.18
+  },
+  {
+    "name": "03_2_fase_elaboracion-07-p01",
+    "width": 547.640625,
+    "height": 860.4375,
+    "minFontPx": 18,
+    "widthPt": 370.42,
+    "heightPt": 582,
+    "textPt": 12.18
+  },
+  {
+    "name": "03_2_fase_elaboracion-08",
+    "width": 834.4375,
+    "height": 857.125,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 480.72,
+    "textPt": 10.1
+  },
+  {
+    "name": "03_2_fase_elaboracion-08-p01",
+    "width": 834.4375,
+    "height": 857.125,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 480.72,
+    "textPt": 10.1
+  },
+  {
+    "name": "03_2_fase_elaboracion-09",
+    "width": 848.90625,
+    "height": 491.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 270.79,
+    "textPt": 9.92
+  },
+  {
+    "name": "03_2_fase_elaboracion-09-p01",
+    "width": 848.90625,
+    "height": 491.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 270.79,
+    "textPt": 9.92
+  },
+  {
+    "name": "03_2_fase_elaboracion-10",
+    "width": 625.5,
+    "height": 1617.15625,
+    "minFontPx": 18,
+    "widthPt": 225.11,
+    "heightPt": 582,
+    "textPt": 6.48
+  },
+  {
+    "name": "03_2_fase_elaboracion-10-p01",
+    "width": 425.203125,
+    "height": 897.3125,
+    "minFontPx": 18,
+    "widthPt": 275.79,
+    "heightPt": 582,
+    "textPt": 11.67
+  },
+  {
+    "name": "03_2_fase_elaboracion-10-p02",
+    "width": 527.203125,
+    "height": 839.234375,
+    "minFontPx": 18,
+    "widthPt": 365.61,
+    "heightPt": 582,
+    "textPt": 12.48
+  },
+  {
+    "name": "03_2_fase_elaboracion-11",
+    "width": 668,
+    "height": 1399.828125,
+    "minFontPx": 18,
+    "widthPt": 277.73,
+    "heightPt": 582,
+    "textPt": 7.48
+  },
+  {
+    "name": "03_2_fase_elaboracion-11-p01",
+    "width": 643.234375,
+    "height": 1088.421875,
+    "minFontPx": 18,
+    "widthPt": 343.95,
+    "heightPt": 582,
+    "textPt": 9.62
+  },
+  {
+    "name": "03_2_fase_elaboracion-11-p02",
+    "width": 588.21875,
+    "height": 426.59375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 339.41,
+    "textPt": 14.32
+  },
+  {
+    "name": "03_2_fase_elaboracion-12",
+    "width": 933.265625,
+    "height": 2082.609375,
+    "minFontPx": 18,
+    "widthPt": 260.81,
+    "heightPt": 582,
+    "textPt": 5.03
+  },
+  {
+    "name": "03_2_fase_elaboracion-12-p01",
+    "width": 257.375,
+    "height": 958.390625,
+    "minFontPx": 18,
+    "widthPt": 156.3,
+    "heightPt": 582,
+    "textPt": 10.93
+  },
+  {
+    "name": "03_2_fase_elaboracion-12-p02",
+    "width": 781.703125,
+    "height": 843.734375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 505.14,
+    "textPt": 10.78
+  },
+  {
+    "name": "03_2_fase_elaboracion-12-p03",
+    "width": 447.140625,
+    "height": 613.078125,
+    "minFontPx": 18,
+    "widthPt": 424.47,
+    "heightPt": 582,
+    "textPt": 17.09
+  },
+  {
+    "name": "03_2_fase_elaboracion-13",
+    "width": 604,
+    "height": 929,
+    "minFontPx": 16,
+    "widthPt": 378.39,
+    "heightPt": 582,
+    "textPt": 10.02
+  },
+  {
+    "name": "03_2_fase_elaboracion-13-p01",
+    "width": 739,
+    "height": 803,
+    "minFontPx": 16,
+    "widthPt": 468,
+    "heightPt": 508.53,
+    "textPt": 10.13
+  },
+  {
+    "name": "03_2_fase_elaboracion-14",
+    "width": 724,
+    "height": 2882,
+    "minFontPx": 16,
+    "widthPt": 146.21,
+    "heightPt": 582,
+    "textPt": 3.23
+  },
+  {
+    "name": "03_2_fase_elaboracion-14-p01",
+    "width": 700,
+    "height": 435,
+    "minFontPx": 16,
+    "widthPt": 468,
+    "heightPt": 290.83,
+    "textPt": 10.7
+  },
+  {
+    "name": "03_2_fase_elaboracion-14-p02",
+    "width": 736,
+    "height": 369,
+    "minFontPx": 16,
+    "widthPt": 468,
+    "heightPt": 234.64,
+    "textPt": 10.17
+  },
+  {
+    "name": "03_2_fase_elaboracion-14-p03",
+    "width": 601,
+    "height": 277,
+    "minFontPx": 16,
+    "widthPt": 468,
+    "heightPt": 215.7,
+    "textPt": 12.46
+  },
+  {
+    "name": "03_2_fase_elaboracion-14-p04",
+    "width": 421,
+    "height": 149,
+    "minFontPx": 16,
+    "widthPt": 468,
+    "heightPt": 165.63,
+    "textPt": 17.79
+  },
+  {
+    "name": "03_2_fase_elaboracion-14-p05",
+    "width": 791,
+    "height": 873,
+    "minFontPx": 16,
+    "widthPt": 468,
+    "heightPt": 516.52,
+    "textPt": 9.47
+  },
+  {
+    "name": "03_2_fase_elaboracion-14-p06",
+    "width": 773,
+    "height": 653,
+    "minFontPx": 16,
+    "widthPt": 468,
+    "heightPt": 395.35,
+    "textPt": 9.69
+  },
+  {
+    "name": "03_2_fase_elaboracion-15",
+    "width": 2521.46875,
+    "height": 589.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 109.36,
+    "textPt": 3.34
+  },
+  {
+    "name": "03_2_fase_elaboracion-15-p01",
+    "width": 891.390625,
+    "height": 404,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 212.11,
+    "textPt": 9.45
+  },
+  {
+    "name": "03_2_fase_elaboracion-15-p02",
+    "width": 922.6875,
+    "height": 404,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 204.91,
+    "textPt": 9.13
+  },
+  {
+    "name": "03_2_fase_elaboracion-15-p03",
+    "width": 302.046875,
+    "height": 404,
+    "minFontPx": 18,
+    "widthPt": 435.13,
+    "heightPt": 582,
+    "textPt": 25.93
+  },
+  {
+    "name": "03_2_fase_elaboracion-15-p04",
+    "width": 276.078125,
+    "height": 250,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 423.79,
+    "textPt": 30.51
+  },
+  {
+    "name": "03_2_fase_elaboracion-15-p05",
+    "width": 552.203125,
+    "height": 301,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 255.1,
+    "textPt": 15.26
+  },
+  {
+    "name": "03_2_fase_elaboracion-16",
+    "width": 3618.046875,
+    "height": 1214.5,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 157.1,
+    "textPt": 2.33
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p01",
+    "width": 386.046875,
+    "height": 432.5,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 524.31,
+    "textPt": 21.82
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p02",
+    "width": 447.71875,
+    "height": 299.796875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 313.38,
+    "textPt": 18.82
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p03",
+    "width": 447.71875,
+    "height": 299.796875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 313.38,
+    "textPt": 18.82
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p04",
+    "width": 434.421875,
+    "height": 464,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 499.86,
+    "textPt": 19.39
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p05",
+    "width": 664.984375,
+    "height": 510,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 358.93,
+    "textPt": 12.67
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p06",
+    "width": 379.765625,
+    "height": 464,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 571.81,
+    "textPt": 22.18
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p07",
+    "width": 759.46875,
+    "height": 464,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 285.93,
+    "textPt": 11.09
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p08",
+    "width": 321.734375,
+    "height": 464,
+    "minFontPx": 18,
+    "widthPt": 403.55,
+    "heightPt": 582,
+    "textPt": 22.58
+  },
+  {
+    "name": "03_2_fase_elaboracion-16-p09",
+    "width": 249.046875,
+    "height": 667.796875,
+    "minFontPx": 18,
+    "widthPt": 217.05,
+    "heightPt": 582,
+    "textPt": 15.69
+  },
+  {
+    "name": "03_2_fase_elaboracion-17",
+    "width": 535.515625,
+    "height": 794.703125,
+    "minFontPx": 18,
+    "widthPt": 392.18,
+    "heightPt": 582,
+    "textPt": 13.18
+  },
+  {
+    "name": "03_2_fase_elaboracion-17-p01",
+    "width": 535.515625,
+    "height": 794.703125,
+    "minFontPx": 18,
+    "widthPt": 392.18,
+    "heightPt": 582,
+    "textPt": 13.18
+  },
+  {
+    "name": "03_2_fase_elaboracion-18",
+    "width": 2090.453125,
+    "height": 387.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 86.68,
+    "textPt": 4.03
+  },
+  {
+    "name": "03_2_fase_elaboracion-18-p01",
+    "width": 582.890625,
+    "height": 387.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 310.87,
+    "textPt": 14.45
+  },
+  {
+    "name": "03_2_fase_elaboracion-18-p02",
+    "width": 867.25,
+    "height": 387.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 208.94,
+    "textPt": 9.71
+  },
+  {
+    "name": "03_2_fase_elaboracion-18-p03",
+    "width": 848.953125,
+    "height": 367.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 202.53,
+    "textPt": 9.92
+  },
+  {
+    "name": "03_2_fase_elaboracion-18-p04",
+    "width": 868.5,
+    "height": 367.390625,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 197.97,
+    "textPt": 9.7
+  },
+  {
+    "name": "03_3_fase_construccion-01",
+    "width": 1006.640625,
+    "height": 1897.625,
+    "minFontPx": 18,
+    "widthPt": 308.74,
+    "heightPt": 582,
+    "textPt": 5.52
+  },
+  {
+    "name": "03_3_fase_construccion-01-p01",
+    "width": 498.25,
+    "height": 1064.59375,
+    "minFontPx": 18,
+    "widthPt": 272.39,
+    "heightPt": 582,
+    "textPt": 9.84
+  },
+  {
+    "name": "03_3_fase_construccion-01-p02",
+    "width": 734.515625,
+    "height": 492.109375,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 313.55,
+    "textPt": 11.47
+  },
+  {
+    "name": "03_3_fase_construccion-01-p03",
+    "width": 461.71875,
+    "height": 793.234375,
+    "minFontPx": 18,
+    "widthPt": 338.77,
+    "heightPt": 582,
+    "textPt": 13.21
+  },
+  {
+    "name": "03_3_fase_construccion-02",
+    "width": 630,
+    "height": 2877,
+    "minFontPx": 16,
+    "widthPt": 127.45,
+    "heightPt": 582,
+    "textPt": 3.24
+  },
+  {
+    "name": "03_3_fase_construccion-02-p01",
+    "width": 606,
+    "height": 835,
+    "minFontPx": 16,
+    "widthPt": 422.39,
+    "heightPt": 582,
+    "textPt": 11.15
+  },
+  {
+    "name": "03_3_fase_construccion-02-p02",
+    "width": 791,
+    "height": 1023,
+    "minFontPx": 16,
+    "widthPt": 450.01,
+    "heightPt": 582,
+    "textPt": 9.1
+  },
+  {
+    "name": "03_3_fase_construccion-02-p03",
+    "width": 666,
+    "height": 744,
+    "minFontPx": 16,
+    "widthPt": 468,
+    "heightPt": 522.81,
+    "textPt": 11.24
+  },
+  {
+    "name": "03_4_fase_transicion-01",
+    "width": 744.59375,
+    "height": 1159.484375,
+    "minFontPx": 18,
+    "widthPt": 373.75,
+    "heightPt": 582,
+    "textPt": 9.04
+  },
+  {
+    "name": "03_4_fase_transicion-01-p01",
+    "width": 257.171875,
+    "height": 776.6875,
+    "minFontPx": 18,
+    "widthPt": 192.71,
+    "heightPt": 582,
+    "textPt": 13.49
+  },
+  {
+    "name": "03_4_fase_transicion-01-p02",
+    "width": 744.59375,
+    "height": 621.6875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 390.75,
+    "textPt": 11.31
+  },
+  {
+    "name": "03_capitulo_marco_aplicativo-01",
+    "width": 1128.859375,
+    "height": 2526.40625,
+    "minFontPx": 18,
+    "widthPt": 260.05,
+    "heightPt": 582,
+    "textPt": 4.15
+  },
+  {
+    "name": "03_capitulo_marco_aplicativo-01-p01",
+    "width": 252.125,
+    "height": 958.109375,
+    "minFontPx": 18,
+    "widthPt": 153.15,
+    "heightPt": 582,
+    "textPt": 10.93
+  },
+  {
+    "name": "03_capitulo_marco_aplicativo-01-p02",
+    "width": 259.4375,
+    "height": 962.84375,
+    "minFontPx": 18,
+    "widthPt": 156.82,
+    "heightPt": 582,
+    "textPt": 10.88
+  },
+  {
+    "name": "03_capitulo_marco_aplicativo-01-p03",
+    "width": 259.15625,
+    "height": 437.84375,
+    "minFontPx": 18,
+    "widthPt": 344.48,
+    "heightPt": 582,
+    "textPt": 23.93
+  },
+  {
+    "name": "03_capitulo_marco_aplicativo-01-p04",
+    "width": 736.1875,
+    "height": 860.1875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 546.83,
+    "textPt": 11.44
+  },
+  {
+    "name": "modelo-conceptual-p01",
+    "width": 366.6875,
+    "height": 287.796875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 367.31,
+    "textPt": 22.97
+  },
+  {
+    "name": "modelo-conceptual-p02",
+    "width": 401.21875,
+    "height": 268,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 312.61,
+    "textPt": 21
+  },
+  {
+    "name": "modelo-conceptual-p03",
+    "width": 549.28125,
+    "height": 164,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 139.73,
+    "textPt": 15.34
+  },
+  {
+    "name": "modelo-fisico-p01",
+    "width": 515.734375,
+    "height": 623.75,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 566.02,
+    "textPt": 16.33
+  },
+  {
+    "name": "modelo-fisico-p02",
+    "width": 397.4375,
+    "height": 623.75,
+    "minFontPx": 18,
+    "widthPt": 370.84,
+    "heightPt": 582,
+    "textPt": 16.8
+  },
+  {
+    "name": "modelo-fisico-p03",
+    "width": 483.703125,
+    "height": 921.5,
+    "minFontPx": 18,
+    "widthPt": 305.5,
+    "heightPt": 582,
+    "textPt": 11.37
+  },
+  {
+    "name": "modelo-fisico-p04",
+    "width": 854.34375,
+    "height": 921.5,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 504.79,
+    "textPt": 9.86
+  },
+  {
+    "name": "modelo-fisico-p05",
+    "width": 374.96875,
+    "height": 507.5,
+    "minFontPx": 18,
+    "widthPt": 430.01,
+    "heightPt": 582,
+    "textPt": 20.64
+  },
+  {
+    "name": "modelo-fisico-p06",
+    "width": 358.921875,
+    "height": 662.5,
+    "minFontPx": 18,
+    "widthPt": 315.31,
+    "heightPt": 582,
+    "textPt": 15.81
+  },
+  {
+    "name": "modelo-fisico-p07",
+    "width": 397.4375,
+    "height": 662.5,
+    "minFontPx": 18,
+    "widthPt": 349.15,
+    "heightPt": 582,
+    "textPt": 15.81
+  },
+  {
+    "name": "modelo-fisico-p08",
+    "width": 374.96875,
+    "height": 623.75,
+    "minFontPx": 18,
+    "widthPt": 349.87,
+    "heightPt": 582,
+    "textPt": 16.8
+  },
+  {
+    "name": "modelo-logico-p01",
+    "width": 420.046875,
+    "height": 268,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 298.6,
+    "textPt": 20.05
+  },
+  {
+    "name": "modelo-logico-p02",
+    "width": 360.734375,
+    "height": 268,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 347.69,
+    "textPt": 23.35
+  },
+  {
+    "name": "modelo-logico-p03",
+    "width": 512.75,
+    "height": 164,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 149.69,
+    "textPt": 16.43
+  }
+]

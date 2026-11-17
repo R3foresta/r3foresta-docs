@@ -1,0 +1,19 @@
+erDiagram
+    direction TB
+    lote_vivero ||..o{ registro_plantacion_detalle : lote_vivero_id
+lote_vivero {
+        bigint id PK
+        bigint recoleccion_id FK "NULL"
+        bigint planta_id FK
+        bigint vivero_id FK
+        integer saldo_vivo_actual "NULL"
+        text codigo_trazabilidad UK
+    }
+registro_plantacion_detalle {
+        bigint id PK
+        bigint registro_plantacion_id FK
+        bigint asignacion_id FK
+        bigint lote_vivero_id FK
+        bigint planta_id FK
+        integer cantidad
+    }

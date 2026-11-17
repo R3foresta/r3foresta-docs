@@ -1,0 +1,68 @@
+flowchart LR
+    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
+    OP["Operario de Vivero<br/>operación autorizada"]
+    AD["ADMIN global"]
+
+    subgraph M2["M2 · Vivero"]
+        SEM(["Consultar semillas elegibles<br/>del vivero"])
+        INI(["Iniciar lote desde Recolección"])
+        CON(["Consumir origen y crear INICIO<br/>en una transacción"])
+
+        INC(["Incorporar plantines"])
+        INV(["Registrar inventario inicial"])
+        ID(["Identificar especie, procedencia,<br/>fecha, cantidad y foto privada"])
+        BASE(["Crear lote, saldo vivo<br/>e historial de incorporación"])
+        DOC(["Adjuntar comprobante<br/>o nota opcional"])
+
+        EMB(["Registrar EMBOLSADO"])
+        PRE(["Registrar descarte<br/>pre-embolsado"])
+        ADA(["Registrar ADAPTABILIDAD"])
+        MER(["Registrar MERMA"])
+        DES(["Registrar despacho manual"])
+        SAL(["Validar saldo físico<br/>y condiciones del lote"])
+        EVI(["Vincular evidencia operativa"])
+        HIS(["Consultar lote e historial"])
+    end
+
+    OP --- SEM
+    OP --- INI
+    OP --- EMB
+    OP --- PRE
+    OP --- ADA
+    OP --- MER
+    OP --- DES
+    OP --- HIS
+
+    AD --- INI
+    AD --- INC
+    AD --- INV
+    AD --- EMB
+    AD --- PRE
+    AD --- ADA
+    AD --- MER
+    AD --- DES
+    AD --- HIS
+
+    INI -.->|"«include»"| SEM
+    INI -.->|"«include»"| CON
+    INI -.->|"«include»"| EVI
+
+    INC -.->|"«include»"| ID
+    INV -.->|"«include»"| ID
+    INC -.->|"«include»"| BASE
+    INV -.->|"«include»"| BASE
+    INC -.->|"«include»"| EVI
+    INV -.->|"«include»"| EVI
+
+    DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INC
+    DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INV
+
+    EMB -.->|"«include»"| EVI
+    PRE -.->|"«include»"| EVI
+    MER -.->|"«include»"| SAL
+    MER -.->|"«include»"| EVI
+    DES -.->|"«include»"| SAL
+    DES -.->|"«include»"| EVI
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    SEM ~~~ INI ~~~ INC ~~~ INV ~~~ DOC ~~~ EMB ~~~ PRE ~~~ ADA ~~~ MER ~~~ DES ~~~ HIS

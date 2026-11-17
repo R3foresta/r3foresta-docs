@@ -1,4 +1,4 @@
-flowchart LR
+flowchart TB
     ADM["ADMIN global"]
     REC["Operador de Recolección"]
     REV["Revisor de Recolección"]
@@ -32,6 +32,7 @@ flowchart LR
         ACC(["Gestionar permisos<br/>por subcampaña"])
         C12(["CU-12<br/>Reconstruir recorrido autorizado"])
         IMP(["Consultar Impacto público"])
+        BAN(["RF-REC-06<br/>Consultar banco público de semillas"])
         MIS(["Consultar Mis registros"])
     end
 
@@ -64,5 +65,9 @@ flowchart LR
     ASC --- C11
     ASC --- ACC
     PUB --- IMP
+    PUB --- BAN
     PRO --- MIS
     CON --- C12
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    C1 ~~~ UR ~~~ AV ~~~ C2 ~~~ C3 ~~~ C4 ~~~ C5 ~~~ C6 ~~~ C7 ~~~ INC ~~~ C8 ~~~ C9 ~~~ C10 ~~~ C11 ~~~ ACC ~~~ C12 ~~~ IMP ~~~ MIS

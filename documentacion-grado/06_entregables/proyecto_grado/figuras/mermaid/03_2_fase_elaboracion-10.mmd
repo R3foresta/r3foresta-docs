@@ -1,4 +1,4 @@
-flowchart TD
+flowchart TB
   I([Inicio]) --> B[Crear recolección en BORRADOR]
   B --> D[Registrar especie, material, cantidad,<br/>unidad, fecha, responsable y ubicación]
   D --> E[Adjuntar evidencia requerida]
@@ -6,7 +6,7 @@ flowchart TD
   S --> C{¿Ficha completa y<br/>evidencia suficiente?}
   C -- No --> R[Rechazar con observaciones]
   R --> D
-  C -- Sí --> V[Aprobar y congelar snapshots]
+  C -- Sí --> V[Recibir y validar por revisor autorizado<br/>distinto del recolector; congelar snapshots]
   V --> O{¿Destino del saldo?}
   O -- Vivero --> T[Consumir cantidad mediante<br/>contrato M1→M2]
   O -- Desecho --> X[Registrar movimiento de desecho]

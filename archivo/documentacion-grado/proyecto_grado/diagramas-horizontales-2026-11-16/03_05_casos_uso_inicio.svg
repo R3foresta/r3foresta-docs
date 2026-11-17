@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3200" height="1800" viewBox="0 0 3200 1800" role="img" aria-labelledby="title description">
+<title id="title">Actores y casos de uso generales de R3Foresta</title>
+<desc id="description">Vista horizontal en cuatro paneles del mismo sistema y del mismo actor ADMIN global. La recepción y validación de semillas corresponde a ADMIN o VALIDADOR asignado al vivero de almacenamiento y distinto del recolector. Las asociaciones indican interacción, sujeta a las reglas de cada operación.</desc>
+<defs><g id="actor" fill="none" stroke="#17212b" stroke-width="3.5" stroke-linecap="round"><circle cy="-24" r="16"/><path d="M 0 -8 V 35 M -32 5 H 32 M 0 35 L -26 66 M 0 35 L 26 66"/></g>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b;text-anchor:middle}.title{font-size:39px;font-weight:bold}.head{font-size:29px;font-weight:bold}.actor-label{font-size:22px}.case{fill:#fff;stroke:#17212b;stroke-width:2.8}.case-text{font-size:23px}.id{font-weight:bold}.assoc{fill:none;stroke:#3c4b58;stroke-width:2.3}.note{font-size:23px}</style></defs>
+<rect width="3200" height="1800" fill="white"/>
+<text class="title" x="1600" y="62">R3Foresta · actores y casos de uso generales</text>
+<text class="note" x="1600" y="104">Cuatro vistas del mismo sistema; ADMIN global se repite para facilitar la lectura.</text>
+<text class="head" x="800" y="182">General y Recolección</text>
+<rect x="350" y="207" width="900" height="640" fill="none" stroke="#17212b" stroke-width="3"/><text x="800" y="237" font-size="22">R3Foresta · alcance académico</text>
+<path class="assoc" d="M 230 379 L 430 412"/>
+<path class="assoc" d="M 230 379 L 430 636"/>
+<path class="assoc" d="M 230 634 L 430 524"/>
+<path class="assoc" d="M 1370 509 L 1170 300"/>
+<path class="assoc" d="M 1370 509 L 1170 412"/>
+<path class="assoc" d="M 1370 509 L 1170 524"/>
+<path class="assoc" d="M 1370 509 L 1170 636"/>
+<path class="assoc" d="M 1370 509 L 1170 748"/>
+<ellipse class="case" cx="800" cy="300" rx="370" ry="48"/><text class="case-text" x="800" y="288"><tspan class="id">CU-01</tspan>
+<tspan x="800" dy="25">Administrar datos maestros</tspan>
+<tspan x="800" dy="25">y usuarios</tspan>
+</text>
+<ellipse class="case" cx="800" cy="412" rx="370" ry="48"/><text class="case-text" x="800" y="400"><tspan class="id">CU-02</tspan>
+<tspan x="800" dy="25">Registrar recolección</tspan>
+</text>
+<ellipse class="case" cx="800" cy="524" rx="370" ry="48"/><text class="case-text" x="800" y="512"><tspan class="id">CU-03</tspan>
+<tspan x="800" dy="25">Recibir y validar</tspan>
+<tspan x="800" dy="25">recolección</tspan>
+</text>
+<ellipse class="case" cx="800" cy="636" rx="370" ry="48"/><text class="case-text" x="800" y="624"><tspan class="id">CU-04</tspan>
+<tspan x="800" dy="25">Afectar saldo de</tspan>
+<tspan x="800" dy="25">Recolección</tspan>
+</text>
+<ellipse class="case" cx="800" cy="748" rx="370" ry="48"/><text class="case-text" x="800" y="736"><tspan class="id">CU-08</tspan>
+<tspan x="800" dy="25">Planificar campaña</tspan>
+<tspan x="800" dy="25">y subcampaña</tspan>
+</text>
+<use href="#actor" x="195" y="375"/><text class="actor-label" x="195" y="466">
+<tspan x="195" dy="0">Operador de</tspan>
+<tspan x="195" dy="24">Recolección</tspan>
+</text>
+<use href="#actor" x="195" y="630"/><text class="actor-label" x="195" y="721">
+<tspan x="195" dy="0">Revisor autorizado</tspan>
+<tspan x="195" dy="24">ADMIN o VALIDADOR</tspan>
+<tspan x="195" dy="24">asignado al vivero</tspan>
+</text>
+<use href="#actor" x="1405" y="505"/><text class="actor-label" x="1405" y="596"><tspan x="1405">Administración</tspan><tspan x="1405" dy="25" font-weight="bold">ADMIN global</tspan></text>
+<text class="head" x="2400" y="182">Vivero</text>
+<rect x="1950" y="207" width="900" height="640" fill="none" stroke="#17212b" stroke-width="3"/><text x="2400" y="237" font-size="22">R3Foresta · alcance académico</text>
+<path class="assoc" d="M 1830 394 L 2030 300"/>
+<path class="assoc" d="M 1830 394 L 2030 412"/>
+<path class="assoc" d="M 1830 394 L 2030 524"/>
+<path class="assoc" d="M 2970 509 L 2770 300"/>
+<path class="assoc" d="M 2970 509 L 2770 412"/>
+<path class="assoc" d="M 2970 509 L 2770 524"/>
+<ellipse class="case" cx="2400" cy="300" rx="370" ry="48"/><text class="case-text" x="2400" y="288"><tspan class="id">CU-05</tspan>
+<tspan x="2400" dy="25">Iniciar lote de vivero</tspan>
+</text>
+<ellipse class="case" cx="2400" cy="412" rx="370" ry="48"/><text class="case-text" x="2400" y="400"><tspan class="id">CU-06</tspan>
+<tspan x="2400" dy="25">Registrar resultado</tspan>
+<tspan x="2400" dy="25">observado</tspan>
+</text>
+<ellipse class="case" cx="2400" cy="524" rx="370" ry="48"/><text class="case-text" x="2400" y="512"><tspan class="id">CU-07</tspan>
+<tspan x="2400" dy="25">Registrar movimientos</tspan>
+<tspan x="2400" dy="25">de vivero</tspan>
+</text>
+<use href="#actor" x="1795" y="390"/><text class="actor-label" x="1795" y="481">
+<tspan x="1795" dy="0">Operador de</tspan>
+<tspan x="1795" dy="24">Vivero autorizado</tspan>
+</text>
+<use href="#actor" x="3005" y="505"/><text class="actor-label" x="3005" y="596"><tspan x="3005">Administración</tspan><tspan x="3005" dy="25" font-weight="bold">ADMIN global</tspan></text>
+<text class="head" x="800" y="982">Plantación y acceso contextual</text>
+<rect x="350" y="1007" width="900" height="640" fill="none" stroke="#17212b" stroke-width="3"/><text x="800" y="1037" font-size="22">R3Foresta · alcance académico</text>
+<path class="assoc" d="M 230 1139 L 430 1100"/>
+<path class="assoc" d="M 230 1139 L 430 1212"/>
+<path class="assoc" d="M 230 1339 L 430 1324"/>
+<path class="assoc" d="M 230 1539 L 430 1324"/>
+<path class="assoc" d="M 230 1539 L 430 1436"/>
+<path class="assoc" d="M 1370 1309 L 1170 1100"/>
+<path class="assoc" d="M 1370 1309 L 1170 1212"/>
+<path class="assoc" d="M 1370 1309 L 1170 1324"/>
+<path class="assoc" d="M 1370 1309 L 1170 1436"/>
+<ellipse class="case" cx="800" cy="1100" rx="370" ry="48"/><text class="case-text" x="800" y="1088"><tspan class="id">CU-09</tspan>
+<tspan x="800" dy="25">Asignar plantas</tspan>
+</text>
+<ellipse class="case" cx="800" cy="1212" rx="370" ry="48"/><text class="case-text" x="800" y="1200"><tspan class="id">CU-10</tspan>
+<tspan x="800" dy="25">Devolver plantas</tspan>
+</text>
+<ellipse class="case" cx="800" cy="1324" rx="370" ry="48"/><text class="case-text" x="800" y="1312"><tspan class="id">CU-11</tspan>
+<tspan x="800" dy="25">Registrar plantación</tspan>
+<tspan x="800" dy="25">inicial</tspan>
+</text>
+<ellipse class="case" cx="800" cy="1436" rx="370" ry="48"/><text class="case-text" x="800" y="1424"><tspan class="id">PA-S03</tspan>
+<tspan x="800" dy="25">Incorporar o retirar</tspan>
+<tspan x="800" dy="25">plantadores autorizados</tspan>
+</text>
+<use href="#actor" x="195" y="1135"/><text class="actor-label" x="195" y="1226">
+<tspan x="195" dy="0">Coordinación de</tspan>
+<tspan x="195" dy="24">Plantación</tspan>
+</text>
+<use href="#actor" x="195" y="1335"/><text class="actor-label" x="195" y="1426">
+<tspan x="195" dy="0">Participante</tspan>
+<tspan x="195" dy="24">autorizado</tspan>
+</text>
+<use href="#actor" x="195" y="1535"/><text class="actor-label" x="195" y="1626">
+<tspan x="195" dy="0">Administrador de</tspan>
+<tspan x="195" dy="24">subcampaña</tspan>
+</text>
+<use href="#actor" x="1405" y="1305"/><text class="actor-label" x="1405" y="1396"><tspan x="1405">Administración</tspan><tspan x="1405" dy="25" font-weight="bold">ADMIN global</tspan></text>
+<text class="head" x="2400" y="982">Consulta y administración contextual</text>
+<rect x="1950" y="1007" width="900" height="640" fill="none" stroke="#17212b" stroke-width="3"/><text x="2400" y="1037" font-size="22">R3Foresta · alcance académico</text>
+<path class="assoc" d="M 1830 1139 L 2030 1100"/>
+<path class="assoc" d="M 1830 1339 L 2030 1212"/>
+<path class="assoc" d="M 1830 1539 L 2030 1324"/>
+<path class="assoc" d="M 2970 1309 L 2770 1100"/>
+<path class="assoc" d="M 2970 1309 L 2770 1436"/>
+<ellipse class="case" cx="2400" cy="1100" rx="370" ry="48"/><text class="case-text" x="2400" y="1088"><tspan class="id">CU-12</tspan>
+<tspan x="2400" dy="25">Consultar recorrido</tspan>
+<tspan x="2400" dy="25">operativo autorizado</tspan>
+</text>
+<ellipse class="case" cx="2400" cy="1212" rx="370" ry="48"/><text class="case-text" x="2400" y="1200"><tspan class="id">PA-S02</tspan>
+<tspan x="2400" dy="25">Consultar información</tspan>
+<tspan x="2400" dy="25">pública de Plantación</tspan>
+</text>
+<ellipse class="case" cx="2400" cy="1324" rx="370" ry="48"/><text class="case-text" x="2400" y="1312"><tspan class="id">PA-S02 · consulta propia</tspan>
+<tspan x="2400" dy="25">Consultar registros y</tspan>
+<tspan x="2400" dy="25">fotografías propios</tspan>
+</text>
+<ellipse class="case" cx="2400" cy="1436" rx="370" ry="48"/><text class="case-text" x="2400" y="1424"><tspan class="id">PA-S03 · ADMIN global</tspan>
+<tspan x="2400" dy="25">Designar o retirar</tspan>
+<tspan x="2400" dy="25">administradores contextuales</tspan>
+</text>
+<use href="#actor" x="1795" y="1135"/><text class="actor-label" x="1795" y="1226">
+<tspan x="1795" dy="0">Usuario de consulta</tspan>
+<tspan x="1795" dy="24">operativa autorizada</tspan>
+</text>
+<use href="#actor" x="1795" y="1335"/><text class="actor-label" x="1795" y="1426">
+<tspan x="1795" dy="0">Visitante</tspan>
+<tspan x="1795" dy="24">sin cuenta</tspan>
+</text>
+<use href="#actor" x="1795" y="1535"/><text class="actor-label" x="1795" y="1626">
+<tspan x="1795" dy="0">Autor o participante</tspan>
+<tspan x="1795" dy="24">autenticado</tspan>
+</text>
+<use href="#actor" x="3005" y="1305"/><text class="actor-label" x="3005" y="1396"><tspan x="3005">Administración</tspan><tspan x="3005" dy="25" font-weight="bold">ADMIN global</tspan></text>
+<text class="note" x="1600" y="1680">La recepción de semillas requiere ADMIN o VALIDADOR asignado al vivero de almacenamiento, distinto del recolector.</text>
+<text class="note" x="1600" y="1718">Las asociaciones expresan interacción y no sustituyen la autorización vigente, los contratos ni la evidencia de implementación.</text>
+<text class="note" x="1600" y="1756">La consulta pública de Plantación no equivale al acceso público a la traza operativa completa de Recolección y Vivero.</text>
+</svg>

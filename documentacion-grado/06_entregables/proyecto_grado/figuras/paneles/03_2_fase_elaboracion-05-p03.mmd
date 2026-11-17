@@ -1,0 +1,15 @@
+flowchart TB
+    OP["Operario de Vivero<br/>operación autorizada"]
+    AD["ADMIN global"]
+    EMB(["Registrar EMBOLSADO"])
+    PRE(["Registrar descarte<br/>pre-embolsado"])
+    ADA(["Registrar ADAPTABILIDAD"])
+    EVI(["Vincular evidencia operativa"])
+    OP --- EMB
+    OP --- PRE
+    OP --- ADA
+    AD --- EMB
+    AD --- PRE
+    AD --- ADA
+    EMB -.->|"«include»"| EVI
+    PRE -.->|"«include»"| EVI

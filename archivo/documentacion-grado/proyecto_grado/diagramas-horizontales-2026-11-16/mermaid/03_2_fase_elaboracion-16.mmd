@@ -1,0 +1,51 @@
+erDiagram
+    direction LR
+    USUARIO ||--o{ ACCESO_VIVERO : recibe
+    VIVERO ||--o{ ACCESO_VIVERO : delimita
+    USUARIO ||--o{ PERMISO_SUBCAMPANIA : recibe
+    SUBCAMPANIA ||--o{ PERMISO_SUBCAMPANIA : delimita
+    USUARIO ||--o{ EQUIPO_SUBCAMPANIA : integra
+    SUBCAMPANIA ||--o{ EQUIPO_SUBCAMPANIA : organiza
+
+    CAMPANIA ||--o{ SUBCAMPANIA : contiene
+    SUBCAMPANIA ||--o{ META_ESPECIE : planifica
+    PLANTA ||--o{ META_ESPECIE : identifica
+
+    RECOLECCION |o--o{ LOTE : origen_condicional
+    INCORPORACION |o--|| LOTE : ingreso_alternativo
+    PLANTA ||--o{ LOTE : especie
+    VIVERO |o--o{ LOTE : custodia_fisica
+    LOTE ||--o{ EVENTO_LOTE : historial
+
+    LOTE ||--o{ ASIGNACION : abastece
+    SUBCAMPANIA ||--o{ ASIGNACION : recibe
+    SUBCAMPANIA ||--o{ PLANTACION : contiene
+    PLANTACION ||--|{ DETALLE_CONSUMO : desglosa
+    ASIGNACION ||--o{ DETALLE_CONSUMO : procedencia
+    PLANTA ||--o{ DETALLE_CONSUMO : identifica
+
+    USUARIO ||--o{ PLANTACION : responsable
+    PLANTACION ||--o{ PARTICIPANTE : conserva
+    USUARIO ||--o{ PARTICIPANTE : participa
+
+    USUARIO ||--o{ OPERACION_RECUPERABLE : ejecuta
+    OPERACION_RECUPERABLE ||--o{ CARGA_EVIDENCIA : prepara
+    CARGA_EVIDENCIA }o--o| EVIDENCIA : vincula
+
+    INCORPORACION {
+        string modalidad
+        string procedencia
+        string referencia_procedencia
+        date fecha_recepcion_o_conteo
+        int cantidad_viva
+        string identidad_vegetal_snapshot
+        string responsable_snapshot
+    }
+
+    ACCESO_VIVERO {
+        bigint usuario_id
+        bigint vivero_id
+        datetime otorgado_en
+        datetime retirado_en
+        bigint otorgado_por
+    }

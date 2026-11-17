@@ -1,0 +1,16 @@
+flowchart TB
+    C[Consultar capacidades y contexto]
+    P{Cuenta y permiso vigentes,<br/>subcampaña ACTIVA y stock elegible}
+    B[Mostrar causa y conservar<br/>recuperación propia si existe]
+    E[1 Fotografías y coordenadas<br/>capturadas o manuales]
+    Q[2 Cantidades por especie<br/>y participantes opcionales]
+    S[3 Resumen y confirmación explícita]
+    U[Preparar intento y cargas<br/>con identificadores estables]
+    G[Enviar contenido persistido<br/>con el mismo comando]
+    C --> P
+    P -- No --> B
+    P -- Sí --> E
+    E --> Q
+    Q --> S
+    S --> U
+    U --> G

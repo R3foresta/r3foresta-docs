@@ -1,0 +1,48 @@
+sequenceDiagram
+    actor C as ADMIN o coordinación autorizada
+    actor P as Persona autorizada para plantar
+    participant UI as PWA
+    participant API as API NestJS
+    participant DB as PostgreSQL y PostGIS
+    participant ST as Storage
+
+    C->>API: Asignar plantas de un lote a subcampaña
+    API->>DB: Revalidar autoridad, ACTIVA y saldo físico
+    DB->>DB: Descontar lote, crear asignación y salida enlazada
+    DB-->>API: Entrega confirmada en una transacción
+    API-->>C: Resultado de la entrega
+
+    P->>UI: Preparar registro inicial
+    UI->>API: Consultar contexto autorizado y preparar comando
+    API->>DB: Leer plan, revisión, fecha y stock elegible
+    DB-->>API: Cantidades disponibles por especie
+    API-->>UI: Contexto autorizado
+    UI->>API: Enviar fotografías del mismo comando
+    API->>ST: Preparar originales y derivadas privadas
+    API->>DB: Registrar cargas y generaciones disponibles
+    P->>UI: Confirmar ubicación, fecha, cantidades y participantes
+    UI->>API: Enviar identidad y contenido del intento
+    API->>DB: Ejecutar comando del actor
+    alt Ya existe resultado terminal
+        DB-->>API: Recuperar el mismo recibo
+    else Nueva intención por validar
+        DB->>DB: Revalidar autoridad, ACTIVA, plan, fotos y geografía
+        DB->>DB: Bloquear stock elegible y consumir LIFO
+        DB->>DB: Guardar registro, detalles, snapshots y vínculos de evidencia
+        DB->>DB: Guardar resultado terminal en la misma transacción
+        DB-->>API: Confirmación o rechazo durable
+    end
+    Note over API,DB: Plantar no vuelve a disminuir el lote de Vivero
+    API-->>UI: Resultado del intento
+    opt Respuesta perdida o inconclusa
+        UI->>API: Recuperar mismo actor, operación y UUID
+        API->>DB: Consultar recibo sin repetir efectos
+        DB-->>API: Resultado terminal o todavía inconcluso
+        API-->>UI: Resultado de recuperación
+    end
+    opt Devolución física de remanente de Vivero
+        C->>API: Devolver cantidad y motivo al lote de origen
+        API->>DB: Validar disponible, aumentar devuelta y reponer lote
+        DB-->>API: Devolución y eventos confirmados juntos
+        API-->>C: Resultado de la devolución
+    end

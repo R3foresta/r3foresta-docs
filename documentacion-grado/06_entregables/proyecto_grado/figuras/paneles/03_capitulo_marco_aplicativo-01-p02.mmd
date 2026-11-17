@@ -1,0 +1,14 @@
+flowchart TB
+    CO1["CO-1<br/>Recolección"]
+    CO2["CO-2<br/>Vivero e integración M1→M2"]
+    CO3["CO-3<br/>Plantación e integración M2→M3"]
+    CO4["CO-4<br/>Trazabilidad transversal,<br/>regresión y versión candidata"]
+    EC["Entregables<br/>software integrado, pruebas,<br/>defectos conocidos y manual preliminar"]
+    IOC{"Revisión IOC"}
+    TR1["TR-1<br/>Validación operativa, estabilización<br/>y preparación de liberación"]
+    CO1 --> CO2
+    CO2 --> CO3
+    CO3 --> CO4
+    CO4 --> EC
+    EC --> IOC
+    IOC --> TR1

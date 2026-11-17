@@ -1,0 +1,29 @@
+[
+  {
+    "name": "modelo-conceptual",
+    "width": 806.625,
+    "height": 391.796875,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 227.32,
+    "textPt": 10.44
+  },
+  {
+    "name": "modelo-fisico",
+    "width": 1818.359375,
+    "height": 1374.25,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 353.7,
+    "textPt": 4.63
+  },
+  {
+    "name": "modelo-logico",
+    "width": 821.3125,
+    "height": 372,
+    "minFontPx": 18,
+    "widthPt": 468,
+    "heightPt": 211.97,
+    "textPt": 10.26
+  }
+]

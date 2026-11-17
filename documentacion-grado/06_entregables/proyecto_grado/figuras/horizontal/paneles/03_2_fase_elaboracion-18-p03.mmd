@@ -1,0 +1,13 @@
+classDiagram
+    direction LR
+    class AdministradorSubcampania
+    class PersonaConsultante
+    class Plantador
+    class UsuarioAutenticado
+    class Visitante
+    PersonaConsultante <|-- Visitante
+    PersonaConsultante <|-- UsuarioAutenticado
+    UsuarioAutenticado <|-- Plantador
+    UsuarioAutenticado <|-- AdministradorSubcampania
+    note for Plantador "Permiso PLANTADOR en una subcampaña."
+    note for AdministradorSubcampania "Permiso contextual. Planta y gestiona plantadores de su ámbito."

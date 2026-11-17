@@ -1,0 +1,17 @@
+sequenceDiagram
+    actor C as ADMIN o coordinación autorizada
+    participant UI as PWA
+    participant API as API NestJS
+    participant DB as PostgreSQL y PostGIS
+    opt Respuesta perdida o inconclusa
+        UI->>API: Recuperar mismo actor, operación y UUID
+        API->>DB: Consultar recibo sin repetir efectos
+        DB-->>API: Resultado terminal o todavía inconcluso
+        API-->>UI: Resultado de recuperación
+    end
+    opt Devolución física de remanente de Vivero
+        C->>API: Devolver cantidad y motivo al lote de origen
+        API->>DB: Validar disponible, aumentar devuelta y reponer lote
+        DB-->>API: Devolución y eventos confirmados juntos
+        API-->>C: Resultado de la devolución
+    end

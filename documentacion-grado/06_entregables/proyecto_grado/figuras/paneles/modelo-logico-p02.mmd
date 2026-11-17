@@ -1,0 +1,8 @@
+flowchart TB
+    A["ASIGNACION"]
+    C["CAMPANIA"]
+    S["SUBCAMPANIA"]
+    P["PLANTACION"]
+    C -->|"1 a 0..*"| S
+    S -->|"1 a 0..*"| A
+    S -->|"1 a 0..*"| P

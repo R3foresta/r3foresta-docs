@@ -1,0 +1,10 @@
+sequenceDiagram
+    actor C as ADMIN o coordinación autorizada
+    participant API as API NestJS
+    participant DB as PostgreSQL y PostGIS
+
+    C->>API: Asignar plantas de un lote a subcampaña
+    API->>DB: Revalidar autoridad, ACTIVA y saldo físico
+    DB->>DB: Descontar lote, crear asignación y salida enlazada
+    DB-->>API: Entrega confirmada en una transacción
+    API-->>C: Resultado de la entrega

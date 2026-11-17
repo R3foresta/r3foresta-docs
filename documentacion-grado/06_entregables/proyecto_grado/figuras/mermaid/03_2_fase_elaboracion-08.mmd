@@ -1,8 +1,8 @@
-flowchart TD
+flowchart TB
     I["INICIO desde Recolección<br/>material en proceso, saldo vivo nulo"] --> R{"¿Se observan plantas vivas?"}
     R -->|"Sí"| E["EMBOLSADO<br/>base viva observada"]
     R -->|"No, se descarta"| D["DESCARTE_PRE_EMBOLSADO<br/>cierre con causa y evidencia"]
-    IN["Incorporación de plantines<br/>o inventario inicial por ADMIN"] --> B["Base viva contada y etapa actual<br/>ampliación pendiente de implementación"]
+    IN["Incorporación de plantines<br/>o inventario inicial por ADMIN"] --> B["Base viva contada y procedencia<br/>foto privada y resultado recuperable"]
     E --> L["Lote con plantas vivas"]
     B --> L
     L --> A["Adaptabilidad<br/>no crea otra base de saldo"]

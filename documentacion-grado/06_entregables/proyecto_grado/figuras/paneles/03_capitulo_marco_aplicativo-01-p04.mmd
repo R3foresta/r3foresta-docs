@@ -1,0 +1,17 @@
+flowchart TB
+    IN1["IN-1<br/>Necesidades, alcance, actores y riesgos"]
+    EL1["EL-1<br/>Casos de uso, arquitectura y contratos"]
+    CO3["CO-3<br/>Plantación e integración M2→M3"]
+    CO4["CO-4<br/>Trazabilidad transversal,<br/>regresión y versión candidata"]
+    TR1["TR-1<br/>Validación operativa, estabilización<br/>y preparación de liberación"]
+    PA["PA-F01 · Participación aliada<br/>PA-S00–PA-S04 y entregas INT"]
+    CAM["Versiones de código y migraciones<br/>identificadas por entrega y entorno"]
+    REV["En cada iteración:<br/>requisitos → diseño → implementación<br/>→ pruebas → revisión"]
+    PA -.->|"Aporta evidencia técnica a integrar"| CO3
+    PA -.->|"Integración y regresión"| CO4
+    CAM --> PA
+    REV -.-> IN1
+    REV -.-> EL1
+    REV -.-> CO4
+    REV -.-> TR1
+    IN1 ~~~ EL1 ~~~ CO3 ~~~ CO4 ~~~ TR1

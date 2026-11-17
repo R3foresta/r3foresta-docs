@@ -1,0 +1,102 @@
+[
+  {
+    "source": "03_2_fase_elaboracion-14",
+    "lamina": "03_2_fase_elaboracion-14-lamina-01.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-14-p01",
+      "03_2_fase_elaboracion-14-p02"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-14",
+    "lamina": "03_2_fase_elaboracion-14-lamina-02.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-14-p03",
+      "03_2_fase_elaboracion-14-p04"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-15",
+    "lamina": "03_2_fase_elaboracion-15-lamina-01.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-15-p01",
+      "03_2_fase_elaboracion-15-p02"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-15",
+    "lamina": "03_2_fase_elaboracion-15-lamina-02.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-15-p03"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-16",
+    "lamina": "03_2_fase_elaboracion-16-lamina-01.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-16-p01",
+      "03_2_fase_elaboracion-16-p02"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-16",
+    "lamina": "03_2_fase_elaboracion-16-lamina-02.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-16-p03",
+      "03_2_fase_elaboracion-16-p04"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-16",
+    "lamina": "03_2_fase_elaboracion-16-lamina-03.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-16-p05",
+      "03_2_fase_elaboracion-16-p06"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-16",
+    "lamina": "03_2_fase_elaboracion-16-lamina-04.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-16-p07"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-18",
+    "lamina": "03_2_fase_elaboracion-18-lamina-01.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-18-p01",
+      "03_2_fase_elaboracion-18-p02"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-18",
+    "lamina": "03_2_fase_elaboracion-18-lamina-02.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-18-p03"
+    ]
+  },
+  {
+    "source": "03_3_fase_construccion-02",
+    "lamina": "03_3_fase_construccion-02-lamina-01.svg",
+    "paneles": [
+      "03_3_fase_construccion-02-p01",
+      "03_3_fase_construccion-02-p02"
+    ]
+  },
+  {
+    "source": "03_3_fase_construccion-02",
+    "lamina": "03_3_fase_construccion-02-lamina-02.svg",
+    "paneles": [
+      "03_3_fase_construccion-02-p03"
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-13",
+    "lamina": "03_2_fase_elaboracion-13-lamina-01.svg",
+    "paneles": [
+      "03_2_fase_elaboracion-13-p01",
+      "03_2_fase_elaboracion-13-p02"
+    ]
+  }
+]

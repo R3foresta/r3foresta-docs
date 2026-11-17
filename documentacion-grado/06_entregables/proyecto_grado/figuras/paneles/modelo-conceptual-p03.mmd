@@ -1,0 +1,8 @@
+flowchart TB
+    A["Asignación"]
+    P["Registro de plantación"]
+    D["Detalle de consumo"]
+    H["Participación histórica"]
+    A -->|"se consume en"| D
+    P -->|"se desglosa en"| D
+    P -->|"conserva"| H

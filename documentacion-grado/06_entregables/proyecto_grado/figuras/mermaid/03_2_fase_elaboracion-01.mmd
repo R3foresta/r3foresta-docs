@@ -6,7 +6,7 @@ flowchart TB
         EXIST["Plantines existentes<br/>al comenzar el sistema"]
     end
 
-    REC --> VAL["Validación de Recolección"]
+    REC --> VAL["Recepción y validación<br/>de Recolección"]
     VAL --> INI["INICIO de lote<br/>consumo atómico del origen"]
     INI --> PROC["Material en proceso<br/>sin saldo vivo"]
     PROC --> RES{"Resultado observado"}
@@ -17,10 +17,9 @@ flowchart TB
     DON --> RECEP
     EXIST --> INVENT["Inventario inicial<br/>conteo actual registrado por ADMIN"]
 
-    RECEP --> IDENT["Especie y variedad<br/>procedencia y referencia disponible<br/>fecha de recepción y responsable"]
+    RECEP --> IDENT["Especie, procedencia y fecha<br/>cantidad contada, responsable<br/>y foto privada obligatoria"]
     INVENT --> IDENT
-    IDENT --> ETAPA["Registrar etapa real<br/>SOMBRA / MEDIA_SOMBRA / SOL_DIRECTO"]
-    ETAPA --> INC["INCORPORACIÓN<br/>crea saldo vivo una sola vez"]
+    IDENT --> INC["INCORPORACIÓN<br/>crea saldo vivo una sola vez"]
 
     EMB --> LOTE["Lote trazable de plantas vivas"]
     INC --> LOTE
