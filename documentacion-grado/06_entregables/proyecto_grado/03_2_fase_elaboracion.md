@@ -1,5 +1,7 @@
 ## 3.3. Fase de Elaboración: diseño de la organización de la información
 
+Para maquetar las figuras en hojas carta verticales, usar las [láminas por figura](figuras/paginas/README.md). Los bloques Mermaid conservan la fuente completa; los diagramas extensos continúan en paneles legibles.
+
 > Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Consolidación del 4 de noviembre de 2026, exclusivamente con RUP adaptado. Integra los refinamientos de Inicio, las decisiones aceptadas de Participación aliada y los diagramas actualizados en `445f24f`. El refinamiento aprobado el 16 de noviembre actualiza los requisitos y el modelo físico mediante el nuevo extracto aportado. Las evidencias de implementación y entorno conservan sus fechas propias.
 
 ### 3.3.1. Propósito y correspondencia con la metodología
@@ -45,7 +47,7 @@ flowchart TB
         EXIST["Plantines existentes<br/>al comenzar el sistema"]
     end
 
-    REC --> VAL["Validación de Recolección"]
+    REC --> VAL["Recepción y validación<br/>de Recolección"]
     VAL --> INI["INICIO de lote<br/>consumo atómico del origen"]
     INI --> PROC["Material en proceso<br/>sin saldo vivo"]
     PROC --> RES{"Resultado observado"}
@@ -56,10 +58,9 @@ flowchart TB
     DON --> RECEP
     EXIST --> INVENT["Inventario inicial<br/>conteo actual registrado por ADMIN"]
 
-    RECEP --> IDENT["Especie y variedad<br/>procedencia y referencia disponible<br/>fecha de recepción y responsable"]
+    RECEP --> IDENT["Especie, procedencia y fecha<br/>cantidad contada, responsable<br/>y foto privada obligatoria"]
     INVENT --> IDENT
-    IDENT --> ETAPA["Registrar etapa real<br/>SOMBRA / MEDIA_SOMBRA / SOL_DIRECTO"]
-    ETAPA --> INC["INCORPORACIÓN<br/>crea saldo vivo una sola vez"]
+    IDENT --> INC["INCORPORACIÓN<br/>crea saldo vivo una sola vez"]
 
     EMB --> LOTE["Lote trazable de plantas vivas"]
     INC --> LOTE
@@ -84,14 +85,14 @@ flowchart TB
     TRAZA --> CUSTODIA["Reconstrucción del recorrido registrado"]
 ```
 
-*Nota.* Adaptación de los diagramas del 4 de noviembre a NEC-01–NEC-08 y a los contratos del recorrido. La incorporación de plantines y el acceso por vivero son capacidades acordadas con implementación pendiente; la recepción directa requiere completar origen, custodia y remanentes. Las líneas discontinuas sitúan esta última variante sin atribuirle una solución física ya aplicada. Las etapas de sombra, media sombra y sol directo describen el estado observado, sin una autorización adicional de «listo para entregar».
+*Nota.* Adaptación de los diagramas del 4 de noviembre a NEC-01–NEC-08 y a los contratos del recorrido. La incorporación y el acceso por vivero cuentan con implementación y pruebas en el alcance documentado en ESTADO; sus condiciones de entorno y aceptación permanecen abiertas. La recepción directa requiere completar origen, custodia y remanentes. Las líneas discontinuas sitúan esta última variante sin atribuirle una solución física ya aplicada. Etapa y variedad de incorporación conservan diferencias pendientes de revisión.
 
-En la operación ordinaria el mismo operario recibe y maneja material dentro de sus viveros. La incorporación especial de plantines vivos y del inventario inicial se reserva a ADMIN conforme a Inicio. Esa frontera debe quedar reflejada en los contratos antes del código dependiente. La propuesta técnica anterior de aptitud adicional no se adopta en esta versión.
+GENERAL y VALIDADOR activos manejan material en viveros asignados; la recepción y validación de semillas corresponde a ADMIN o VALIDADOR habilitado para el almacenamiento, distinto del recolector. La incorporación de plantines vivos y del inventario inicial se reserva a ADMIN. No se adopta una aptitud adicional de entrega. [Contrato M1→M2](../../../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md).
 
 **Figura 3.7. Genealogía del material vegetal en la ruta principal**
 
 ```mermaid
-flowchart LR
+flowchart TB
   O[Origen registrado<br/>recolección validada]
   LR[Lote de Recolección<br/>cantidad y unidad de origen]
   LV1[Lote de Vivero A<br/>material en proceso]
@@ -119,7 +120,7 @@ flowchart LR
 
 *Nota.* Elaboración propia a partir de los contratos M1→M2 y M2→M3. Un origen puede abastecer varios lotes y una plantación puede consumir varios orígenes, conservando su detalle. La incorporación de plantines sustituye el antecedente de Recolección por su recepción o conteo real; no inventa propagación anterior. La consulta integral de esta genealogía requiere sus pruebas en CO-4 y TR-1.
 
-La estructura física actual exige `lote_vivero.recoleccion_id` y `vivero_id`. Por ello, ninguna de las variantes nuevas se declara disponible por estar dibujada. Las plantaciones ya realizadas necesitan un tratamiento histórico separado: no constituyen stock para volver a plantar. La recepción directa y su eventual traslado real a un vivero deben conservar su procedencia sin registrar entradas o despachos ficticios.
+En propagación el lote referencia una recolección; en incorporación `recoleccion_id` queda nulo y el origen es la recepción o conteo. La estructura por sí sola no acredita el funcionamiento de una variante. Las plantaciones ya realizadas necesitan un tratamiento histórico separado: no constituyen stock para volver a plantar. La recepción directa y su eventual traslado real a un vivero deben conservar su procedencia sin registrar entradas o despachos ficticios.
 
 ### 3.3.3. Requisitos y capacidades del sistema
 
@@ -143,10 +144,15 @@ La matriz de Inicio relaciona HAL→NEC→RF/CU. Aquí se precisa la responsabil
 | CU-10 | devolver plantas no consumidas | ADMIN o coordinación autorizada | RF-PLA-05; RF-VIV-12 | retorno físico al lote de origen, sin superar el remanente |
 | CU-11 | registrar plantación inicial | PLANTADOR, ADMINISTRADOR_SUBCAMPANIA o ADMIN | RF-PLA-06 y RF-PLA-13; PA-S01/03 | cantidades por especie, consumo LIFO, GPS, fotos, participantes y recibo |
 | CU-12 | reconstruir un recorrido | persona autorizada para la vista | RF-REC-03/05, RF-VIV-07, RF-PLA-14; NEC-08 | origen, eventos, cantidades, responsables, evidencia y destino recuperables |
+| RF-REC-06 | consultar el banco público de semillas | visitante sin cuenta | RF-REC-06 | resumen, filtros, listado y detalle de semillas no eliminadas en todos los estados; fotografías públicas solo de VALIDADO |
 
-*Nota.* Elaboración propia a partir de los requisitos de los módulos y los refinamientos aceptados. RF-VIV-11 y RF-VIV-12 se definen en el contrato M2→M3. CU-04 no crea un descuento manual paralelo al inicio de Vivero. Los permisos de participación no se deducen del equipo logístico. La restricción futura por vivero se distingue del acceso actual en 3.3.13.
+*Nota.* Elaboración propia a partir de los requisitos de los módulos y los refinamientos aceptados. RF-VIV-11 y RF-VIV-12 se definen en el contrato M2→M3. CU-04 no crea un descuento manual paralelo al inicio de Vivero. Los permisos de participación no se deducen del equipo logístico. La autoridad por vivero y su alcance acreditado se distinguen en 3.3.13.
 
-Las nuevas capacidades se nombran sin renumerar CU-01–CU-12: **asignar operarios por vivero**, **incorporar plantines vivos** y **registrar inventario inicial**. Se relacionan con NEC-01–NEC-08 según Inicio y conservan pendientes de contrato. El ingreso exige especie y variedad, cantidad viva contada, fecha de recepción o conteo, procedencia general y etapa actual; comprobantes y notas son opcionales. La obligatoriedad de fotografía operativa sigue pendiente: la propuesta de una foto del chat de diagramas no sustituye una decisión del autor.
+RF-REC-06 conserva una consulta pública específica de Recolección. Incluye BORRADOR, PENDIENTE_VALIDACION, VALIDADO y RECHAZADO; separa G y UNIDAD, limita las fotografías sanitizadas a VALIDADO y distingue indisponibilidad de un banco vacío. Esta proyección no concede operaciones, acceso a originales privados ni una consulta pública integral M1→M2→M3. Su presencia sitúa las audiencias, sin ampliar los criterios de evaluación académica.
+
+En RF-REC-01/03/04, la ventana de 45 días se comprueba al crear la ficha o cambiar explícitamente su fecha. Una corrección de otros datos puede conservar la fecha original aunque haya envejecido. AUD-036 mantiene pendiente corregir el bloqueo de ese recorrido en la PWA; la aprobación de la regla no acredita su cumplimiento completo.
+
+Las nuevas capacidades se nombran sin renumerar CU-01–CU-12: **asignar operarios por vivero**, **incorporar plantines vivos** y **registrar inventario inicial**. Se relacionan con NEC-01–NEC-08 y con los contratos T2–T5. RF-VIV-15 exige vivero, especie activa, cantidad viva, fecha, procedencia, responsable y al menos una foto privada; tercero y referencia documental son opcionales y las observaciones dependen de la procedencia. Las diferencias sobre etapa y variedad mantienen revisión pendiente.
 
 Los criterios de integridad se desarrollan en 3.3.9. Los límites académicos se mantienen: el resultado evaluable termina en la plantación y su trazabilidad. Las vistas de Impacto y Mis registros sitúan las audiencias de consulta; no acreditan una consulta pública integral de todos los módulos. Mantenimiento posterior, carbono y blockchain quedan fuera del cumplimiento académico.
 
@@ -157,7 +163,7 @@ La Figura 3.5 de Inicio conserva la vista general UML actualizada en `445f24f`. 
 **Figura 3.8. Actores y capacidades del diseño integrado**
 
 ```mermaid
-flowchart LR
+flowchart TB
     ADM["ADMIN global"]
     REC["Operador de Recolección"]
     REV["Revisor de Recolección"]
@@ -191,6 +197,7 @@ flowchart LR
         ACC(["Gestionar permisos<br/>por subcampaña"])
         C12(["CU-12<br/>Reconstruir recorrido autorizado"])
         IMP(["Consultar Impacto público"])
+        BAN(["RF-REC-06<br/>Consultar banco público de semillas"])
         MIS(["Consultar Mis registros"])
     end
 
@@ -223,11 +230,15 @@ flowchart LR
     ASC --- C11
     ASC --- ACC
     PUB --- IMP
+    PUB --- BAN
     PRO --- MIS
     CON --- C12
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    C1 ~~~ UR ~~~ AV ~~~ C2 ~~~ C3 ~~~ C4 ~~~ C5 ~~~ C6 ~~~ C7 ~~~ INC ~~~ C8 ~~~ C9 ~~~ C10 ~~~ C11 ~~~ ACC ~~~ C12 ~~~ IMP ~~~ MIS
 ```
 
-*Nota.* Adaptación de los diagramas revisados el 4 de noviembre y de la Figura 3.5 vigente. CU-01–CU-12 mantienen sus IDs. Las incorporaciones y el acceso por vivero muestran el diseño a desarrollar; la gestión de permisos y las consultas conservan los contratos PA-S02/03. En cada operación se comprueban cuenta, ámbito, estado y reglas del dominio.
+*Nota.* Adaptación de los diagramas revisados el 4 de noviembre y de la Figura 3.5 vigente. CU-01–CU-12 mantienen sus IDs. Las incorporaciones y el acceso por vivero se interpretan con el alcance acreditado por sus entregas; la gestión de permisos y las consultas conservan los contratos PA-S02/03. En cada operación se comprueban cuenta, ámbito, estado y reglas del dominio.
 
 ### 3.3.5. Casos de uso específicos y relaciones incluidas o extendidas
 
@@ -236,10 +247,12 @@ Las asociaciones actor–caso se dibujan sin dirección. «include» apunta del 
 **Figura 3.9. Casos de uso específicos de Recolección**
 
 ```mermaid
-flowchart LR
+flowchart TB
+    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
     OP["Operador de Recolección"]
     RV["VALIDADOR o ADMIN"]
     AD["ADMIN"]
+    VIS["Visitante sin cuenta"]
 
     subgraph M1["M1 · Recolección"]
         CRE(["Crear recolección"])
@@ -248,7 +261,7 @@ flowchart LR
         ENV(["Solicitar validación"])
         VAL(["Comprobar ficha y evidencia"])
         REV(["Revisar recolección"])
-        APR(["Aprobar y congelar identidad"])
+        APR(["Recibir, validar y congelar identidad"])
         REJ(["Rechazar con motivo"])
         COR(["Corregir rechazo y reenviar"])
         DEL(["Eliminar lógicamente<br/>un BORRADOR"])
@@ -257,6 +270,7 @@ flowchart LR
         HIS(["Registrar historial"])
         CONH(["Consultar historial autorizado"])
         ESP(["Consultar historial administrativo<br/>por especie"])
+        BAN(["RF-REC-06<br/>Consultar banco público de semillas"])
     end
 
     OP --- CRE
@@ -273,6 +287,8 @@ flowchart LR
     AD --- DES
     AD --- ESP
 
+    VIS --- BAN
+
     RV --- REV
     RV --- APR
     RV --- REJ
@@ -286,15 +302,19 @@ flowchart LR
     DEL -.->|"«include»"| HIS
     DES -.->|"«include»"| SAL
     DES -.->|"«include»"| HIS
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    CRE ~~~ EDI ~~~ ENV ~~~ COR ~~~ REV ~~~ APR ~~~ REJ ~~~ DEL ~~~ DES ~~~ CONH ~~~ ESP
 ```
 
-*Nota.* Adaptación de RF-REC-01–RF-REC-05 y del diagrama actualizado. La eliminación lógica se limita a BORRADOR y conserva historial; aprobar o rechazar no habilita a editar un registro validado. La inclusión de «Registrar historial» representa escritura del hecho, no una consulta que el usuario deba abrir.
+*Nota.* Adaptación de RF-REC-01–RF-REC-06. La consulta pública admite los cuatro estados y fotografías sanitizadas solo de VALIDADO; aplica su proyección y distingue fallo de vacío. La eliminación lógica se limita a BORRADOR y conserva historial; aprobar o rechazar no habilita a editar un registro validado. La inclusión de «Registrar historial» representa escritura del hecho, no una consulta que el usuario deba abrir.
 
 **Figura 3.10. Casos de uso específicos de Vivero**
 
 ```mermaid
-flowchart LR
-    OP["Operario de Vivero<br/>recepción y operación ordinaria"]
+flowchart TB
+    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
+    OP["Operario de Vivero<br/>operación autorizada"]
     AD["ADMIN global"]
 
     subgraph M2["M2 · Vivero"]
@@ -304,7 +324,7 @@ flowchart LR
 
         INC(["Incorporar plantines"])
         INV(["Registrar inventario inicial"])
-        ID(["Identificar especie, variedad,<br/>procedencia, fecha y etapa"])
+        ID(["Identificar especie, procedencia,<br/>fecha, cantidad y foto privada"])
         BASE(["Crear lote, saldo vivo<br/>e historial de incorporación"])
         DOC(["Adjuntar comprobante<br/>o nota opcional"])
 
@@ -345,6 +365,8 @@ flowchart LR
     INV -.->|"«include»"| ID
     INC -.->|"«include»"| BASE
     INV -.->|"«include»"| BASE
+    INC -.->|"«include»"| EVI
+    INV -.->|"«include»"| EVI
 
     DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INC
     DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INV
@@ -355,14 +377,18 @@ flowchart LR
     MER -.->|"«include»"| EVI
     DES -.->|"«include»"| SAL
     DES -.->|"«include»"| EVI
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    SEM ~~~ INI ~~~ INC ~~~ INV ~~~ DOC ~~~ EMB ~~~ PRE ~~~ ADA ~~~ MER ~~~ DES ~~~ HIS
 ```
 
-*Nota.* Adaptación de RF-VIV y de los acuerdos de incorporación del 4 de noviembre. «Vincular evidencia operativa» conserva las exigencias de los eventos existentes. Su obligatoriedad mínima en incorporación e inventario inicial sigue pendiente, por lo que no se dibuja allí como inclusión obligatoria. Recepción ordinaria y manejo corresponden al mismo operario; los dos ingresos especiales permanecen reservados a ADMIN. No se añade un embolsado o una aptitud ficticios para plantas ya vivas.
+*Nota.* Adaptación de RF-VIV-15 y de los acuerdos refinados el 16 de noviembre. Incorporación e inventario inicial exigen foto privada y están reservados a ADMIN. La recepción de semillas exige ADMIN o VALIDADOR asignado, distinto del recolector; el manejo ordinario sigue la autoridad M2. No se añade un embolsado o aptitud ficticios para plantas ya vivas.
 
 **Figura 3.11. Casos de uso específicos de Plantación**
 
 ```mermaid
-flowchart LR
+flowchart TB
+    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
     AD["ADMIN global"]
     CO["Coordinador logístico autorizado"]
     PL["PLANTADOR"]
@@ -420,9 +446,12 @@ flowchart LR
     REG -.->|"«include»"| FOT
     REG -.->|"«include»"| LIFO
     COL -.->|"«extend»<br/>si participan otras personas"| REG
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    PLAN ~~~ ACT ~~~ CIE ~~~ ENT ~~~ DEV ~~~ REG ~~~ COL ~~~ EQU ~~~ GP ~~~ GA ~~~ PUB ~~~ PRO
 ```
 
-*Nota.* Adaptación de RF-PLA, PA-S01–PA-S03 y D01–D12. PLANTADOR y ADMINISTRADOR_SUBCAMPANIA son permisos por persona y ámbito; COORDINADOR es una responsabilidad logística. El acceso por vivero adicional para entregar y devolver es una propuesta contractual pendiente, no una condición ya implementada. El punto exterior se admite con evaluación y advertencia según el acuerdo vigente; el fallo técnico del evaluador impide confirmar el registro.
+*Nota.* Adaptación de RF-PLA, PA-S01–PA-S03 y D01–D12. PLANTADOR y ADMINISTRADOR_SUBCAMPANIA son permisos por persona y ámbito; COORDINADOR es una responsabilidad logística. Entrega y devolución requieren ADMIN o coordinación con autoridad M2 sobre el vivero; T2 verificó localmente esta intersección, con límites de corte y entorno. El punto exterior se admite con evaluación y advertencia según el acuerdo vigente; el fallo técnico del evaluador impide confirmar el registro.
 
 ### 3.3.6. Procesos: estados, eventos y cambios de cantidad
 
@@ -434,11 +463,12 @@ En Recolección se separan la calidad de la ficha y la disponibilidad del saldo.
 
 ```mermaid
 stateDiagram-v2
+    direction TB
   [*] --> BORRADOR
-  BORRADOR --> PENDIENTE_VALIDACION: solicitar validación
-  PENDIENTE_VALIDACION --> VALIDADO: aprobar y congelar snapshots
+  BORRADOR --> PENDIENTE_VALIDACION: enviar o reenviar para validación
+  PENDIENTE_VALIDACION --> VALIDADO: recibir, validar y congelar snapshots
   PENDIENTE_VALIDACION --> RECHAZADO: rechazar
-  RECHAZADO --> PENDIENTE_VALIDACION: corregir y reenviar
+  RECHAZADO --> BORRADOR: guardar corrección
   VALIDADO --> VALIDADO: consumo a Vivero o desecho
   state "Saldo operativo" as SALDO {
     [*] --> ABIERTO
@@ -448,16 +478,16 @@ stateDiagram-v2
 
 *Nota.* Elaboración propia a partir de RF-REC y RN-REC. ABIERTO/CERRADO describen el saldo operativo y no reemplazan el estado de revisión. El borrado lógico de un borrador tampoco se representa como desaparición de su historial.
 
-En la ruta de propagación, INICIO conserva material y unidad de origen; EMBOLSADO crea el saldo vivo observado. En la incorporación propuesta, la recepción o conteo de plantines constituye la única base inicial del saldo. Registrar plantas vivas no requiere reconstruir una germinación previa.
+En la ruta de propagación, INICIO conserva material y unidad de origen; EMBOLSADO crea el saldo vivo observado. En la incorporación de plantas vivas, la recepción o conteo de plantines constituye la única base inicial del saldo. Registrar plantas vivas no requiere reconstruir una germinación previa.
 
 **Figura 3.13. Bases iniciales y movimientos del lote de vivero**
 
 ```mermaid
-flowchart TD
+flowchart TB
     I["INICIO desde Recolección<br/>material en proceso, saldo vivo nulo"] --> R{"¿Se observan plantas vivas?"}
     R -->|"Sí"| E["EMBOLSADO<br/>base viva observada"]
     R -->|"No, se descarta"| D["DESCARTE_PRE_EMBOLSADO<br/>cierre con causa y evidencia"]
-    IN["Incorporación de plantines<br/>o inventario inicial por ADMIN"] --> B["Base viva contada y etapa actual<br/>ampliación pendiente de implementación"]
+    IN["Incorporación de plantines<br/>o inventario inicial por ADMIN"] --> B["Base viva contada y procedencia<br/>foto privada y resultado recuperable"]
     E --> L["Lote con plantas vivas"]
     B --> L
     L --> A["Adaptabilidad<br/>no crea otra base de saldo"]
@@ -469,7 +499,7 @@ flowchart TD
     S --> C
 ```
 
-*Nota.* Adaptación del flujo de Vivero y de los acuerdos de incorporación. Una salida total no es mortalidad. La devolución puede aumentar el saldo del lote de origen según el contrato; no vuelve a crear su base inicial. La incorporación requiere revisar eventos, constraints, consultas y operaciones que hoy exigen EMBOLSADO.
+*Nota.* Adaptación del flujo de Vivero y de los acuerdos de incorporación. Una salida total no es mortalidad. La devolución puede aumentar el saldo del lote de origen según el contrato; no vuelve a crear su base inicial. T5 contempla INCORPORACION como base alternativa; la cobertura y la aceptación dependen de las pruebas y el entorno documentados.
 
 La campaña conserva un estado derivado; la subcampaña concentra plan, polígono, coordinación y operación. Alcanzar la meta no cierra automáticamente ni impide registrar una cantidad superior dentro del stock elegible.
 
@@ -477,6 +507,7 @@ La campaña conserva un estado derivado; la subcampaña concentra plan, polígon
 
 ```mermaid
 stateDiagram-v2
+    direction TB
     [*] --> BORRADOR
     BORRADOR --> ACTIVA: ADMIN activa con plan, coordinación y polígono
     BORRADOR --> CANCELADA: ADMIN cancela sin plantaciones
@@ -496,7 +527,7 @@ stateDiagram-v2
 **Figura 3.15. Actividad de Recolección**
 
 ```mermaid
-flowchart TD
+flowchart TB
   I([Inicio]) --> B[Crear recolección en BORRADOR]
   B --> D[Registrar especie, material, cantidad,<br/>unidad, fecha, responsable y ubicación]
   D --> E[Adjuntar evidencia requerida]
@@ -504,7 +535,7 @@ flowchart TD
   S --> C{¿Ficha completa y<br/>evidencia suficiente?}
   C -- No --> R[Rechazar con observaciones]
   R --> D
-  C -- Sí --> V[Aprobar y congelar snapshots]
+  C -- Sí --> V[Recibir y validar por revisor autorizado<br/>distinto del recolector; congelar snapshots]
   V --> O{¿Destino del saldo?}
   O -- Vivero --> T[Consumir cantidad mediante<br/>contrato M1→M2]
   O -- Desecho --> X[Registrar movimiento de desecho]
@@ -519,7 +550,7 @@ flowchart TD
 **Figura 3.16. Actividad de Vivero por modalidad de ingreso**
 
 ```mermaid
-flowchart TD
+flowchart TB
     I(["Inicio"]) --> MOD{"Modalidad de ingreso"}
     MOD -->|"Desde Recolección"| O["Consultar origen validado, unidad y saldo<br/>con autorización vigente"]
     O --> T["Crear lote, INICIO y consumo<br/>en una transacción"]
@@ -527,7 +558,7 @@ flowchart TD
     P --> R{"¿Hay plantas vivas?"}
     R -->|"Sí"| E["Registrar EMBOLSADO observado"]
     R -->|"No, se descarta"| X["Registrar descarte, causa y evidencia"]
-    MOD -->|"Plantines o existencias previas"| AD["ADMIN registra especie, variedad,<br/>procedencia, fecha, cantidad y etapa"]
+    MOD -->|"Plantines o existencias previas"| AD["ADMIN registra especie, procedencia,<br/>fecha, cantidad y foto privada"]
     AD --> N["Crear base inicial una sola vez<br/>sin consumo M1 ni embolsado ficticio"]
     E --> SAL["Consultar saldo físico e historial"]
     N --> SAL
@@ -537,12 +568,12 @@ flowchart TD
     X --> FIN
 ```
 
-*Nota.* Adaptación del diseño integrado del 4 de noviembre. El camino desde Recolección tiene contrato existente; la incorporación es diseño pendiente de implementación. La evidencia mínima de este último debe concretarse antes de su aceptación. No se infieren pérdidas históricas ni conversiones de gramos a plantas.
+*Nota.* Adaptación del diseño integrado y RF-VIV-15. La incorporación T5 cuenta con pruebas por tramos y conserva pendiente la evaluación integrada y su aceptación. No se infieren pérdidas históricas ni conversiones de gramos a plantas.
 
 **Figura 3.17. Actividad de Plantación y recuperación del resultado**
 
 ```mermaid
-flowchart TD
+flowchart TB
     I(["Inicio"]) --> C["Consultar capacidades, subcampaña ACTIVA,<br/>plan y stock elegible por especie"]
     C --> F["Capturar 1–10 fotos y coordenada válida<br/>GPS o entrada manual; confirmar ubicación"]
     F --> Q["Indicar cantidades, fecha y observaciones<br/>meta orientativa; stock limita"]
@@ -611,7 +642,7 @@ sequenceDiagram
 
 El contrato no convierte gramos de semillas en unidades de plantas. La cantidad transferida en `INICIO` conserva la unidad del origen. El dato de plantas vivas aparece después, cuando el responsable registra el resultado observado en `EMBOLSADO`.
 
-La propuesta de acceso por vivero restringe el camino ordinario a semillas almacenadas en el mismo establecimiento autorizado. El contrato vigente permite seleccionar otro vivero operativo. Esa igualdad no se atribuye al código actual: debe conciliarse antes de implementar la restricción, conservando el camino administrativo y sin inventar un traslado físico.
+El contrato vigente exige recepción conforme y restringe el camino ordinario al vivero de almacenamiento con autorización vigente. ADMIN puede seleccionar explícitamente un destino distinto. T2 verificó localmente esta frontera; sus límites de catálogo, corte y entorno se conservan en [ESTADO](../../../ESTADO.md).
 
 #### 3.3.7.2. Contrato entre Vivero y Plantación
 
@@ -677,11 +708,11 @@ sequenceDiagram
     end
 ```
 
-*Nota.* Adaptación de los diagramas actualizados a M2→M3 y D01–D12. Storage se prepara antes de la confirmación; la transacción SQL vincula cargas válidas y resultado, sin simular una transacción distribuida con el almacenamiento. La idempotencia corresponde a una intención, no detecta por sí sola que dos personas registraron el mismo trabajo real. La propuesta de acceso por vivero añade una intersección de autoridades para logística que todavía debe incorporarse al contrato.
+*Nota.* Adaptación de los diagramas actualizados a M2→M3 y D01–D12. Storage se prepara antes de la confirmación; la transacción SQL vincula cargas válidas y resultado, sin simular una transacción distribuida con el almacenamiento. La idempotencia corresponde a una intención, no detecta por sí sola que dos personas registraron el mismo trabajo real. El contrato M2→M3 exige ADMIN o la intersección de acceso operativo al vivero y coordinación de la subcampaña para la entrega o devolución explícita. T2 acredita implementación local; cotejo, corte y despliegue conservan sus verificaciones por entorno.
 
 #### 3.3.7.3. Incorporación de plantines y continuidad operativa
 
-La operación propuesta registra modalidad, procedencia disponible, identidad vegetal, cantidad viva, fecha, responsable y etapa. Debe confirmar juntos el lote, la base inicial, los snapshots, los vínculos de evidencia exigibles y un resultado recuperable. No consume Recolección ni utiliza EMBOLSADO para eludir la exigencia de un origen. Un segundo embolsado no puede recrear las plantas incorporadas.
+RF-VIV-15 registra modalidad, procedencia disponible, especie, cantidad viva, fecha, responsable y foto privada; la diferencia de etapa y variedad frente al diseño previo permanece en revisión. Debe confirmar juntos el lote, la base inicial, los snapshots, los vínculos de evidencia exigibles y un resultado recuperable. No consume Recolección ni utiliza EMBOLSADO para eludir la exigencia de un origen. Un segundo embolsado no puede recrear las plantas incorporadas.
 
 El diseño requiere revisar las dependencias que hoy presuponen Recolección y EMBOLSADO: nulabilidad y campos de material en proceso, código trazable, enum de eventos, unicidad de base inicial, constraints de aumento de saldo, adaptabilidad, merma, despacho, asignación, lecturas y timeline. Cambiar solo el formulario de alta no daría continuidad al recorrido. Las propuestas técnicas se consultan desde 3.3.13; sus alternativas anteriores de aptitud y cierre de remanentes no sustituyen las reglas aceptadas.
 
@@ -692,6 +723,10 @@ La recepción directa debe crear stock en su lugar real de custodia y conservar 
 Las tres vistas cumplen funciones diferentes. La conceptual expresa los conceptos del negocio; la lógica organiza relaciones e integridad del diseño integrado; la física conserva los objetos que aparecen en la exportación y las fuentes de relaciones. No se agregan al catálogo físico entidades nuevas por el hecho de necesitarlas en el diseño.
 
 #### 3.3.8.1. Modelo conceptual
+
+La siguiente [vista vertical resumida](figuras/modelos-datos/modelo-conceptual.svg) presenta los conceptos principales del recorrido; la Figura 3.20 desarrolla actores, permisos y evidencias. Su [fuente editable](figuras/modelos-datos/modelo-conceptual.mmd) conserva las relaciones representadas.
+
+![Modelo conceptual vertical del recorrido](figuras/modelos-datos/modelo-conceptual.svg)
 
 **Figura 3.20. Modelo conceptual del recorrido y sus modalidades de origen**
 
@@ -745,21 +780,27 @@ classDiagram
     Plantacion "1" -- "0..*" ParticipacionHistorica : conserva
     Persona "1" -- "0..*" ParticipacionHistorica : participa
 
-    EventoLote "1" -- "0..*" Evidencia : documenta
-    Plantacion "1" -- "1..*" Evidencia : documenta
+    EventoLote "0..1" -- "0..*" Evidencia : documenta
+    Plantacion "0..1" -- "1..*" Evidencia : documenta
 
     note for Lote "Una especie y un origen homogéneo. Identidad histórica conservada."
-    note for Incorporacion "Recepción o inventario inicial; procedencia y etapa al ingresar."
+    note for Incorporacion "Recepción o inventario inicial; procedencia y foto del ingreso."
+    note for Evidencia "Cada evidencia pertenece a un solo hecho según su tipo. Evento y plantación son vínculos excluyentes."
 ```
 
-*Nota.* Adaptación del modelo conceptual actualizado el 4 de noviembre. Las especializaciones de Lote no exigen dos tablas ni dos motores de consumo. AccesoVivero e Incorporacion expresan capacidades por implementar; la custodia directa en campo requiere concretar su relación con el lote. Un mismo usuario puede asumir funciones diferentes, manteniendo una identidad.
+*Nota.* Adaptación del modelo conceptual actualizado el 4 de noviembre. Las especializaciones de Lote no exigen dos tablas ni dos motores de consumo. AccesoVivero e Incorporacion representan capacidades con implementación local y límites documentados; la custodia directa en campo requiere concretar su relación con el lote. Un mismo usuario puede asumir funciones diferentes, manteniendo una identidad.
 
 #### 3.3.8.2. Modelo lógico
+
+La [vista vertical resumida](figuras/modelos-datos/modelo-logico.svg) destaca relaciones y cardinalidades del recorrido. Las dos relaciones opcionales de origen se interpretan conjuntamente: cada lote tiene exactamente un origen. La [fuente editable](figuras/modelos-datos/modelo-logico.mmd) y la Figura 3.21 completan esta vista.
+
+![Modelo lógico vertical del recorrido](figuras/modelos-datos/modelo-logico.svg)
 
 **Figura 3.21. Relaciones lógicas del diseño integrado**
 
 ```mermaid
 erDiagram
+    direction TB
     USUARIO ||--o{ ACCESO_VIVERO : recibe
     VIVERO ||--o{ ACCESO_VIVERO : delimita
     USUARIO ||--o{ PERMISO_SUBCAMPANIA : recibe
@@ -798,7 +839,6 @@ erDiagram
         string referencia_procedencia
         date fecha_recepcion_o_conteo
         int cantidad_viva
-        string etapa_inicial
         string identidad_vegetal_snapshot
         string responsable_snapshot
     }
@@ -814,7 +854,7 @@ erDiagram
 
 *Nota.* Adaptación del modelo lógico del chat de diagramas. ACCESO_VIVERO, INCORPORACION y LOTE son nombres de representación del diseño; no sustituyen los nombres físicos ni acreditan tablas nuevas. Las relaciones de procedencia se interpretan con la exclusión de origen indicada a continuación. La asociación polimórfica de evidencia se valida por tipo de hecho y no se convierte en varias FKs físicas desde entidad_id.
 
-Cada lote utiliza exactamente una base de origen: una Recolección, con su consumo, o una incorporación de plantas vivas. Las referencias opcionales del diagrama no autorizan que falten ambas o existan ambas a la vez. Cada incorporación inicia un lote homogéneo, con especie y variedad conservadas históricamente; fecha y cantidad corresponden al hecho observado. La custodia de Vivero solo puede omitirse en la variante directa cuando su contrato haya definido dónde se mantiene el stock.
+Cada lote utiliza exactamente una base de origen: una Recolección, con su consumo, o una incorporación de plantas vivas. Las referencias opcionales del diagrama no autorizan que falten ambas o existan ambas a la vez. Cada incorporación inicia un lote homogéneo y conserva la especie; fecha y cantidad corresponden al hecho observado. La variedad de incorporación mantiene su revisión pendiente. La custodia de Vivero solo puede omitirse en la variante directa cuando su contrato haya definido dónde se mantiene el stock.
 
 La procedencia plantada se recupera por detalle→asignación→lote→origen. Los totales agregados no sustituyen esos enlaces. Retirar acceso o cambiar un catálogo no borra las autorías ni los snapshots anteriores. La revisión técnica de incorporación también exige cotejar la herencia de variedad y la lectura de responsables: un nombre actual del catálogo no debe presentarse como snapshot del hecho.
 
@@ -822,15 +862,13 @@ La procedencia plantada se recupera por detalle→asignación→lote→origen. L
 
 El modelo físico se actualizó documentalmente el 16 de noviembre de 2026 con el esquema aportado por el autor y confirmado como última versión. Contiene 57 tablas y 622 columnas. Sus 175 relaciones comprenden 160 referencias simples y quince compuestas agrupadas por restricción y contrastadas con SQL local. La fuente preserva tipos declarados, nulabilidad, claves y restricciones visibles. El adjunto carece de identificador de proyecto y fecha de exportación. El corte anterior del 4 de noviembre y su consulta PostgREST conservan su procedencia histórica. El [modelo físico y sus fuentes](../../../database/00_database_schema.md) documentan ambos cortes. La reproducción integral y el catálogo remoto conservan los pendientes de RDI-03.
 
-**Modelo físico del recorrido registrado**
+**Modelo físico vertical del recorrido registrado**
 
-![Modelo físico con todas las columnas de las dieciséis tablas del núcleo, incluida recepción e incorporación](../../../database/diagramas/modelo-fisico-nucleo.svg)
+![Modelo físico vertical de diez tablas y sus relaciones seleccionadas](figuras/modelos-datos/modelo-fisico.svg)
 
-**Modelo físico de permisos, comandos y cargas**
+La vista resume diez tablas, columnas y relaciones seleccionadas; su [fuente editable](figuras/modelos-datos/modelo-fisico.mmd) y el [detalle de alcance](figuras/modelos-datos/README.md) explican la selección. Las vistas completas de [núcleo](../../../database/diagramas/modelo-fisico-nucleo.svg) y [permisos, comandos y cargas](../../../database/diagramas/modelo-fisico-participacion.svg) se conservan como apoyo de consulta.
 
-![Modelo físico que distingue usuario, permisos contextuales, equipo logístico, comandos, auditoría y cargas recuperables](../../../database/diagramas/modelo-fisico-participacion.svg)
-
-*Nota.* Elaboración propia a partir del extracto recibido el 16 de noviembre y del contraste local de claves compuestas identificado en el modelo físico. Las dos vistas conservan todas las columnas de sus tablas y relaciones con extremos incluidos. El completo contiene 57 tablas, incluida PostGIS. `USER_DEFINED` conserva el tipo sin resolver del adjunto. La presencia estructural de accesos, recepción, incorporación y correcciones mantiene su acreditación funcional y de entorno por separado.
+*Nota.* Elaboración propia a partir del extracto recibido el 16 de noviembre y del contraste local de claves compuestas identificado en el modelo físico. Las vistas completas de consulta conservan todas las columnas de sus tablas y relaciones con extremos incluidos; la vista vertical selecciona solo una parte. El completo contiene 57 tablas, incluida PostGIS. `USER_DEFINED` conserva el tipo sin resolver del adjunto. La presencia estructural de accesos, recepción, incorporación y correcciones mantiene su acreditación funcional y de entorno por separado.
 
 **Tabla 3.18**
 
@@ -850,7 +888,7 @@ El modelo físico se actualizó documentalmente el 16 de noviembre de 2026 con e
 | Tablas de acceso M1/M2, recepción e incorporación | vigencias, revisiones, comandos, evidencia contextual, recepción inmutable y procedencia de plantas vivas | catorce tablas añadidas frente al corte del 4 de noviembre | presentes en el extracto recibido; la comparación de tablas mantiene pendiente catálogo remoto, RPC, RLS y Storage |
 | Tablas de corrección, estado efectivo y compensaciones | original, revisiones, participantes efectivos, créditos y compensaciones | preservan estructuras del original y su interpretación efectiva | siete tablas presentes; no acredita ejecución completa de todos los casos de PA-S04 |
 
-*Nota.* Elaboración propia a partir del esquema contextual confirmado como última versión por el autor el 16 de noviembre y [database/00_database_schema.md](../../../database/00_database_schema.md). El corte del 4 de noviembre conserva su catálogo histórico. El extracto actual incluye algunas expresiones CHECK, DEFAULT y generadas, y mantiene pendiente la inspección completa de restricciones, índices, triggers y políticas de seguridad. Durante la maquetación se recomienda orientación horizontal solo si la tabla no resulta legible en orientación vertical; se repetirá su encabezado si continúa en otra página.
+*Nota.* Elaboración propia a partir del esquema contextual confirmado como última versión por el autor el 16 de noviembre y [database/00_database_schema.md](../../../database/00_database_schema.md). El corte del 4 de noviembre conserva su catálogo histórico. El extracto actual incluye algunas expresiones CHECK, DEFAULT y generadas, y mantiene pendiente la inspección completa de restricciones, índices, triggers y políticas de seguridad. Durante la maquetación en carta vertical, dividir la tabla en bloques y repetir su encabezado si continúa en otra página.
 
 Las subsecciones 3.3.9 a 3.3.12 forman un bloque transversal de control del diseño. Explican las propiedades, la arquitectura, los riesgos y el resultado que condicionan los seis productos ya presentados; no añaden una etapa entre el modelo de datos y la implementación, que continúa en la sección 3.4.
 
@@ -891,7 +929,7 @@ La solución utiliza PWA React/TypeScript/Vite, API REST NestJS como monolito mo
 **Figura 3.22. Componentes y responsabilidades de la arquitectura académica**
 
 ```mermaid
-flowchart LR
+flowchart TB
     U["Persona usuaria"] --> PWA["PWA React y TypeScript<br/>captura, consulta y recuperación"]
     PWA -->|"HTTPS y Bearer en privado"| API["API NestJS<br/>identidad, autoridad y operación"]
     API --> RPC["RPC transaccionales<br/>locks, saldos y resultado"]
@@ -906,7 +944,7 @@ flowchart LR
 
 El monolito modular permite compartir identidad y transacciones sin introducir coordinación entre microservicios. El modelo combina estado materializado e historia, con snapshots para conservar interpretación. Los comandos de Participación añaden un resultado durable que permite recuperar el mismo intento tras una respuesta perdida.
 
-La observación de julio sobre confianza exclusiva en x-auth-id no describe los controllers actuales de Recolección y Vivero: usan InternalActorGuard, que verifica Bearer y cuenta activa, rechaza un header discordante y adapta la identidad verificada para código legado. La [propuesta de acceso por vivero](../../../../Backend-r3foresta/documentacion/tareas/propuesta-permisos-por-vivero.md) documenta lo que falta en autorización por establecimiento. La revisión de todas las rutas equivalentes, permisos de base y entorno destino conserva su evidencia separada.
+La observación de julio sobre confianza exclusiva en x-auth-id no describe los controllers actuales de Recolección y Vivero: usan InternalActorGuard, que verifica Bearer y cuenta activa, rechaza un header discordante y adapta la identidad verificada para código legado. El [contrato T2](../../../../Backend-r3foresta/docs/t2-acceso-viveros.md) documenta la autorización por establecimiento implementada localmente y sus límites; la propuesta anterior conserva su carácter de antecedente. La revisión de todas las rutas equivalentes, permisos de base y entorno destino conserva su evidencia separada.
 
 La PWA instalable no promete operación completa sin conexión. Recuperar un envío o conservar una captura no equivale a tener cola de operaciones, sincronización diferida y resolución general de conflictos. Las condiciones de conectividad y validación humana corresponden a RNF-INI-06.
 
@@ -939,13 +977,13 @@ La consolidación reúne casos de uso, procesos, interacciones, modelos conceptu
 
 LCA (*Lifecycle Architecture*, arquitectura del ciclo de vida) requiere revisar estos productos junto con evidencia ejecutable y riesgos residuales. La evaluación actual es la siguiente:
 
-1. **Casos prioritarios y variantes.** La ruta M1→M2→M3 tiene contratos y criterios; incorporación, acceso por vivero y recepción directa requieren completar los puntos de RDI-01/02. La etapa real, los documentos opcionales y el comienzo del historial ya están acordados y no se vuelven a someter a decisión.
+1. **Casos prioritarios y variantes.** La ruta M1→M2→M3 tiene contratos y criterios; incorporación, acceso por vivero y recepción directa requieren completar los puntos de RDI-01/02. La foto obligatoria, los documentos opcionales y el comienzo del historial están acordados; las diferencias de etapa y variedad conservan su revisión.
 2. **Arquitectura base ejecutable.** Existe implementación y pruebas técnicas referidas en ESTADO y PA-F01. Falta seleccionar una versión y entorno de evaluación académica y enlazar una demostración completa de identidad, propagación, entrega, consumo y reconstrucción; el inventario físico no la reemplaza.
 3. **Integridad y riesgos técnicos.** INV-01–INV-11 y RNF-INI tienen mecanismos y escenarios. Deben vincularse los resultados disponibles y completar concurrencia/recuperación, exposición de datos, replay y restauración según los límites de cada informe. GPS tiene decisión vigente; su verificación no exige otra decisión funcional.
 4. **Viabilidad de Construcción.** El tablero mantiene CO-1–CO-4 y TR-1. Es necesario estimar el trabajo residual de variantes y verificación, asignar responsables y registrar ajustes del plan con fecha real; no se crean iteraciones académicas por cada migración o entrega INT.
 5. **Decisión humana.** Registrar fecha, versión y entorno, productos y resultados revisados, participantes competentes, decisión y condiciones residuales. No se dispone de una nueva decisión LCA por esta actualización documental.
 
-**Cierre de redacción de Elaboración — 4 de noviembre de 2026:** el autor dio por terminado este texto y dispuso continuar con Construcción y concluir el Capítulo III con una exposición retrospectiva del sistema desarrollado. Los contratos de incorporación y autorización por vivero y la evidencia integral del recorrido conservaron sus pendientes técnicos en RDI-01/02 y el tablero académico. La decisión de continuar la redacción se distinguió de la revisión formal de LCA y de los cierres de implementación, pruebas y entorno. Los resultados se desarrollaron en [Construcción](03_3_fase_construccion.md) y [Transición](03_4_fase_transicion.md).
+**Cierre de redacción de Elaboración — 4 de noviembre de 2026:** el autor dio por terminado este texto y dispuso continuar con Construcción y concluir el Capítulo III con una exposición retrospectiva del sistema desarrollado. Los refinamientos posteriores de incorporación y autorización por vivero y sus verificaciones pendientes se conservan en RDI-01/02 y el tablero académico; la evidencia integral del recorrido sigue pendiente. La decisión de continuar la redacción se distinguió de la revisión formal de LCA y de los cierres de implementación, pruebas y entorno. Los resultados se desarrollaron en [Construcción](03_3_fase_construccion.md) y [Transición](03_4_fase_transicion.md).
 
 ### 3.3.13. Correspondencia de actores, permisos y fuentes de continuidad
 
@@ -980,9 +1018,9 @@ classDiagram
     UsuarioAutenticado <|-- AdministradorSubcampania
 
     note for AdministradorGlobal "Rol global ADMIN. Administración transversal y operación sujeta a reglas del dominio."
-    note for OperadorRecoleccion "GENERAL o ADMIN. Edición y envío según autoría y estado."
+    note for OperadorRecoleccion "GENERAL o VALIDADOR con acceso M1, o ADMIN. Edición y envío según autoría y estado."
     note for RevisorRecoleccion "VALIDADOR o ADMIN."
-    note for OperarioVivero "Acceso por vivero. También realiza recepción ordinaria."
+    note for OperarioVivero "Acceso por vivero. Recepción según rol, asignación y separación del recolector."
     note for CoordinadorPlantacion "Responsabilidad logística en una subcampaña."
     note for Plantador "Permiso PLANTADOR en una subcampaña."
     note for AdministradorSubcampania "Permiso contextual. Planta y gestiona plantadores de su ámbito."
@@ -996,7 +1034,7 @@ La continuidad se consulta desde las fuentes existentes:
 - [Antecedente de acceso por vivero](../../../../Backend-r3foresta/documentacion/tareas/propuesta-permisos-por-vivero.md) y [contrato T2](../../../../Backend-r3foresta/docs/t2-acceso-viveros.md). Ámbitos, consumo de semillas y frontera logística, con sus entregas y límites de entorno.
 - [Plan de incorporación y procedencia](../../../../Backend-r3foresta/documentacion/tareas/plan-incorporacion-plantas-procedencia.md): dependencias técnicas y alternativas anteriores. La copia local termina en el apartado 16; prevalecen las respuestas del autor consolidadas en Inicio frente a aptitud adicional o reglas de cierre aún no conciliadas.
 - [Contrato D01–D12](../../../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) y [tablero PA-F01](../../../specs/plantacion/participacion-aliada/implementacion/README.md): decisiones aceptadas, tareas y límites de cada entrega; PA-S04 conserva su cierre propio pendiente.
-- [Modelo físico y sus fuentes](../../../database/00_database_schema.md): exportación de Supabase, relaciones contrastadas y vistas vectoriales. Las 51 tablas no equivalen a 51 capacidades terminadas.
+- [Modelo físico y sus fuentes](../../../database/00_database_schema.md): exportación de Supabase, relaciones contrastadas y vistas vectoriales. Las 57 tablas del último extracto no equivalen a 57 capacidades terminadas.
 - [Tablero académico, fase de Elaboración](../../02_planificacion/TODO_PROYECTO_GRADO.md#4-fase-de-elaboración--iteración-el-1--20-de-julio-al-16-de-agosto): control de ejecución y salida LCA, sin otro plan general.
 
 Los diagramas se adaptan del chat [Genera diagramas del capítulo 3](codex://threads/01a0abb2-d8eb-7b62-bd57-05c969959b11), incluida su actualización versionada en `445f24f`. El texto conserva los acuerdos humanos frente a elecciones de representación de la IA. La revisión de implementación y pruebas corresponde a Construcción; la validación operativa y la aceptación del producto integrado corresponden a Transición.

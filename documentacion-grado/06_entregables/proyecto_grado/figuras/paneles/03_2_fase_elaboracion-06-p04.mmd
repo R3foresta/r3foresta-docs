@@ -1,0 +1,12 @@
+flowchart TB
+    AD["ADMIN global"]
+    PL["PLANTADOR"]
+    AS["ADMINISTRADOR_SUBCAMPANIA"]
+    EQU(["Consultar equipo"])
+    GP(["Gestionar plantadores"])
+    GA(["Gestionar administradores contextuales"])
+    AD --- GP
+    AD --- GA
+    PL --- EQU
+    AS --- EQU
+    AS --- GP

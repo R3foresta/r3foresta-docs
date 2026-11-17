@@ -1,0 +1,14 @@
+flowchart TB
+    PLANT["Plantación inicial autorizada<br/>consumo LIFO de asignaciones"]
+    TRAZA["Registro + detalles + participantes<br/>ubicación + evidencia + recibo"]
+    DIRECTA["Recepción externa directa en campo<br/>diseño por concretar"]
+    CAMPO["Stock de subcampaña<br/>sin entrada ficticia a Vivero"]
+    PUBLICO["Información pública elegible"]
+    PROPIO["Consulta propia autorizada"]
+    CUSTODIA["Reconstrucción del recorrido registrado"]
+    PLANT --> TRAZA
+    DIRECTA -.-> CAMPO
+    CAMPO -.-> PLANT
+    TRAZA --> PUBLICO
+    TRAZA --> PROPIO
+    TRAZA --> CUSTODIA

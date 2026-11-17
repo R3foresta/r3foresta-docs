@@ -1,0 +1,10 @@
+flowchart TB
+    G[Enviar contenido persistido<br/>con el mismo comando]
+    V{Resultado recibido}
+    R[Conservar clave, contenido y fotos<br/>consultar el mismo resultado]
+    T{Existe resultado terminal}
+    I[Conservar pendiente y ofrecer<br/>reintento con la misma clave]
+    R --> T
+    T -- Sí --> V
+    T -- No --> I
+    I -- Reenvío autorizado --> G

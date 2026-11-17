@@ -1,0 +1,13 @@
+classDiagram
+    direction TB
+    class OperadorRecoleccion
+    class PersonaConsultante
+    class RevisorRecoleccion
+    class UsuarioAutenticado
+    class Visitante
+    PersonaConsultante <|-- Visitante
+    PersonaConsultante <|-- UsuarioAutenticado
+    UsuarioAutenticado <|-- OperadorRecoleccion
+    UsuarioAutenticado <|-- RevisorRecoleccion
+    note for OperadorRecoleccion "GENERAL o VALIDADOR con acceso M1, o ADMIN.<br/>Edición y envío según autoría y estado."
+    note for RevisorRecoleccion "VALIDADOR o ADMIN."

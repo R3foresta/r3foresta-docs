@@ -156,7 +156,7 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 
 ## 6. Fase de Transición — iteración TR-1 — 2 al 15 de noviembre
 
-**Redacción completada — 4 de noviembre de 2026:** la [sección 3.5](../06_entregables/proyecto_grado/03_4_fase_transicion.md) presenta la evaluación documental de EVA-01–EVA-09, los resultados técnicos y el guardado local confirmado del 26 de octubre, las condiciones de entrega y la síntesis de objetivos. No atribuye nueve ejecuciones nuevas, mediciones de tiempo ni validación operativa integral. Las casillas de ejecución y aceptación mantienen sus evidencias propias; PR no se cierra por esta edición.
+**Redacción actualizada el 4 de noviembre de 2026.** La sección 3.5 contrasta los criterios de EVA-01–EVA-09 con la evidencia disponible, incluido el guardado local del 26 de octubre, y documenta las condiciones de entrega. Para la primera demostración se propone evaluar EVA-01 y EVA-08 sobre la misma traza e incluir EVA-04 si queda un remanente. La ejecución operativa y la decisión PR están pendientes. [Fase de Transición](../06_entregables/proyecto_grado/03_4_fase_transicion.md).
 
 ### 6.1. Verificación y validación — 2 al 8 de noviembre
 

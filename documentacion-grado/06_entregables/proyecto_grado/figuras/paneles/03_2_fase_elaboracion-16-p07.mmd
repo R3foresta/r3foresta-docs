@@ -1,0 +1,8 @@
+erDiagram
+    direction TB
+    LOTE ||--o{ ASIGNACION : abastece
+    SUBCAMPANIA ||--o{ ASIGNACION : recibe
+    SUBCAMPANIA ||--o{ PLANTACION : contiene
+    PLANTACION ||--|{ DETALLE_CONSUMO : desglosa
+    ASIGNACION ||--o{ DETALLE_CONSUMO : procedencia
+    PLANTA ||--o{ DETALLE_CONSUMO : identifica

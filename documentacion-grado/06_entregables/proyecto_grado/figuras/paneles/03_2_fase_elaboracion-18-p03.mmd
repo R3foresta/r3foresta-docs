@@ -1,0 +1,13 @@
+classDiagram
+    direction TB
+    class CoordinadorPlantacion
+    class OperarioVivero
+    class PersonaConsultante
+    class UsuarioAutenticado
+    class Visitante
+    PersonaConsultante <|-- Visitante
+    PersonaConsultante <|-- UsuarioAutenticado
+    UsuarioAutenticado <|-- OperarioVivero
+    UsuarioAutenticado <|-- CoordinadorPlantacion
+    note for OperarioVivero "Acceso por vivero. Recepción según rol,<br/>asignación y separación del recolector."
+    note for CoordinadorPlantacion "Responsabilidad logística en una subcampaña."

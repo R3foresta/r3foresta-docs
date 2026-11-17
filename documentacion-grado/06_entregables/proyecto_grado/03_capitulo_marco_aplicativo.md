@@ -1,10 +1,12 @@
 # CAPÍTULO III — MARCO APLICATIVO
 
+Para maquetar las figuras en hojas carta verticales, usar las [láminas por figura](figuras/paginas/README.md). Los bloques Mermaid conservan la fuente completa; los diagramas extensos continúan en paneles legibles.
+
 El presente capítulo documenta el desarrollo de R3Foresta mediante RUP adaptado. El sistema organizó y mantuvo vinculada la información del material vegetal desde su origen registrado hasta la plantación mediante los módulos de Recolección, Vivero y Plantación, apoyados por los datos maestros del Módulo General. El alcance académico concluyó con el registro de la plantación y conservó fuera de la evaluación la medición, certificación y comercialización de bonos de carbono.
 
 El capítulo conserva la relación con los cinco objetivos específicos: analizar la información, diseñar su organización, implementar las funciones, verificar su coherencia y evaluar la reconstrucción del recorrido. La evidencia técnica se distingue de la verificación y de la aceptación; los resultados sin ejecución o decisión documentada permanecen abiertos.
 
-La edición del 4 de noviembre de 2026 integró Inicio, Elaboración, Construcción y Transición en una exposición retrospectiva del sistema desarrollado, conforme a la instrucción del autor. Los informes de implementación y pruebas conservaron sus fechas, versiones y entornos. La síntesis de la sección 3.5.6 relacionó los productos con cada objetivo y delimitó lo demostrado por la evidencia disponible. La [versión anterior a este cierre de redacción](../../../archivo/documentacion-grado/proyecto_grado/cierre-capitulo-iii-2026-11-04/README.md) conserva los estados históricos sustituidos.
+La edición del 4 de noviembre de 2026 integró Inicio, Elaboración, Construcción y Transición en una exposición retrospectiva del sistema desarrollado, conforme a la instrucción del autor. La actualización del 16 de noviembre incorpora los refinamientos aprobados y la evidencia disponible a esa fecha, sin alterar los cortes históricos ni anticipar hitos pendientes. Los informes de implementación y pruebas conservaron sus fechas, versiones y entornos. La síntesis de la sección 3.5.6 relacionó los productos con cada objetivo y delimitó lo demostrado por la evidencia disponible. La [versión anterior a este cierre de redacción](../../../archivo/documentacion-grado/proyecto_grado/cierre-capitulo-iii-2026-11-04/README.md) conserva los estados históricos sustituidos.
 
 ## 3.1. Aplicación de RUP adaptado
 
@@ -108,7 +110,7 @@ flowchart TB
     PA -.->|"Aporta evidencia técnica a integrar"| CO3
     PA -.->|"Integración y regresión"| CO4
 
-    CAM["Commits y migraciones 064–088"]
+    CAM["Versiones de código y migraciones<br/>identificadas por entrega y entorno"]
     CAM --> PA
 
     REV["En cada iteración:<br/>requisitos → diseño → implementación<br/>→ pruebas → revisión"]

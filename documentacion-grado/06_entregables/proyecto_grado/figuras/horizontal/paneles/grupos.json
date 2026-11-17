@@ -1,0 +1,120 @@
+[
+  {
+    "source": "03_2_fase_elaboracion-14",
+    "panels": [
+      {
+        "name": "03_2_fase_elaboracion-14-p01",
+        "title": "Entrega física"
+      },
+      {
+        "name": "03_2_fase_elaboracion-14-p02",
+        "title": "Preparación y evidencia"
+      },
+      {
+        "name": "03_2_fase_elaboracion-14-p03",
+        "title": "Confirmación transaccional"
+      },
+      {
+        "name": "03_2_fase_elaboracion-14-p04",
+        "title": "Recuperación y devolución"
+      }
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-15",
+    "panels": [
+      {
+        "name": "03_2_fase_elaboracion-15-p01",
+        "title": "Identidad, permisos y planificación"
+      },
+      {
+        "name": "03_2_fase_elaboracion-15-p02",
+        "title": "Origen y vida del lote"
+      },
+      {
+        "name": "03_2_fase_elaboracion-15-p03",
+        "title": "Consumo, participación y evidencia"
+      }
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-16",
+    "panels": [
+      {
+        "name": "03_2_fase_elaboracion-16-p01",
+        "title": "Accesos y responsabilidades"
+      },
+      {
+        "name": "03_2_fase_elaboracion-16-p02",
+        "title": "Planificación"
+      },
+      {
+        "name": "03_2_fase_elaboracion-16-p03",
+        "title": "Modalidades de origen"
+      },
+      {
+        "name": "03_2_fase_elaboracion-16-p04",
+        "title": "Custodia e historial"
+      },
+      {
+        "name": "03_2_fase_elaboracion-16-p05",
+        "title": "Asignación y consumo"
+      },
+      {
+        "name": "03_2_fase_elaboracion-16-p06",
+        "title": "Responsabilidad y participación"
+      },
+      {
+        "name": "03_2_fase_elaboracion-16-p07",
+        "title": "Operación recuperable y evidencia"
+      }
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-18",
+    "panels": [
+      {
+        "name": "03_2_fase_elaboracion-18-p01",
+        "title": "Administración y Recolección"
+      },
+      {
+        "name": "03_2_fase_elaboracion-18-p02",
+        "title": "Vivero y coordinación"
+      },
+      {
+        "name": "03_2_fase_elaboracion-18-p03",
+        "title": "Participación en subcampaña"
+      }
+    ]
+  },
+  {
+    "source": "03_3_fase_construccion-02",
+    "panels": [
+      {
+        "name": "03_3_fase_construccion-02-p01",
+        "title": "Contexto, preparación y cargas"
+      },
+      {
+        "name": "03_3_fase_construccion-02-p02",
+        "title": "Confirmación transaccional"
+      },
+      {
+        "name": "03_3_fase_construccion-02-p03",
+        "title": "Recuperación y consulta propia"
+      }
+    ]
+  },
+  {
+    "source": "03_2_fase_elaboracion-13",
+    "panels": [
+      {
+        "name": "03_2_fase_elaboracion-13-p01",
+        "title": "Inicio y registro"
+      },
+      {
+        "name": "03_2_fase_elaboracion-13-p02",
+        "title": "Confirmación o reversión"
+      }
+    ]
+  }
+]

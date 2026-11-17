@@ -1,0 +1,12 @@
+flowchart TB
+    ADM["ADMIN global"]
+    PUB["Persona consultante"]
+    PRO["Autor o participante autenticado"]
+    CON["Persona autorizada<br/>para consulta operativa"]
+    C12(["CU-12<br/>Reconstruir recorrido autorizado"])
+    IMP(["Consultar Impacto público"])
+    MIS(["Consultar Mis registros"])
+    ADM --- C12
+    PUB --- IMP
+    PRO --- MIS
+    CON --- C12

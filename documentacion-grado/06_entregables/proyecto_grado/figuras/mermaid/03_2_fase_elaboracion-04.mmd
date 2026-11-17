@@ -1,7 +1,9 @@
-flowchart LR
+flowchart TB
+    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
     OP["Operador de Recolección"]
     RV["VALIDADOR o ADMIN"]
     AD["ADMIN"]
+    VIS["Visitante sin cuenta"]
 
     subgraph M1["M1 · Recolección"]
         CRE(["Crear recolección"])
@@ -10,7 +12,7 @@ flowchart LR
         ENV(["Solicitar validación"])
         VAL(["Comprobar ficha y evidencia"])
         REV(["Revisar recolección"])
-        APR(["Aprobar y congelar identidad"])
+        APR(["Recibir, validar y congelar identidad"])
         REJ(["Rechazar con motivo"])
         COR(["Corregir rechazo y reenviar"])
         DEL(["Eliminar lógicamente<br/>un BORRADOR"])
@@ -19,6 +21,7 @@ flowchart LR
         HIS(["Registrar historial"])
         CONH(["Consultar historial autorizado"])
         ESP(["Consultar historial administrativo<br/>por especie"])
+        BAN(["RF-REC-06<br/>Consultar banco público de semillas"])
     end
 
     OP --- CRE
@@ -35,6 +38,8 @@ flowchart LR
     AD --- DES
     AD --- ESP
 
+    VIS --- BAN
+
     RV --- REV
     RV --- APR
     RV --- REJ
@@ -48,3 +53,6 @@ flowchart LR
     DEL -.->|"«include»"| HIS
     DES -.->|"«include»"| SAL
     DES -.->|"«include»"| HIS
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    CRE ~~~ EDI ~~~ ENV ~~~ COR ~~~ REV ~~~ APR ~~~ REJ ~~~ DEL ~~~ DES ~~~ CONH ~~~ ESP

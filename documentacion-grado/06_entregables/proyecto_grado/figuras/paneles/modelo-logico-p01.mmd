@@ -1,0 +1,10 @@
+flowchart TB
+    R["RECOLECCION"]
+    L["LOTE"]
+    I["INCORPORACION"]
+    E["EVENTO_LOTE"]
+    A["ASIGNACION"]
+    R -->|"0..1 por lote"| L
+    I -->|"0..1 por lote"| L
+    L -->|"1 a 0..*"| E
+    L -->|"1 a 0..*"| A

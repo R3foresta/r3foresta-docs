@@ -1,0 +1,12 @@
+flowchart TB
+    AD["ADMIN global"]
+    CO["Coordinador logístico autorizado"]
+    ENT(["Asignar plantas físicamente"])
+    DEV(["Registrar devolución física"])
+    FIS(["Validar autoridad logística<br/>y saldo disponible"])
+    AD --- ENT
+    AD --- DEV
+    CO --- ENT
+    CO --- DEV
+    ENT -.->|"«include»"| FIS
+    DEV -.->|"«include»"| FIS

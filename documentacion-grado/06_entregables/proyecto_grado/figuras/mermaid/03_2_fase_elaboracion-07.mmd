@@ -1,9 +1,10 @@
 stateDiagram-v2
+    direction TB
   [*] --> BORRADOR
-  BORRADOR --> PENDIENTE_VALIDACION: solicitar validación
-  PENDIENTE_VALIDACION --> VALIDADO: aprobar y congelar snapshots
+  BORRADOR --> PENDIENTE_VALIDACION: enviar o reenviar para validación
+  PENDIENTE_VALIDACION --> VALIDADO: recibir, validar y congelar snapshots
   PENDIENTE_VALIDACION --> RECHAZADO: rechazar
-  RECHAZADO --> PENDIENTE_VALIDACION: corregir y reenviar
+  RECHAZADO --> BORRADOR: guardar corrección
   VALIDADO --> VALIDADO: consumo a Vivero o desecho
   state "Saldo operativo" as SALDO {
     [*] --> ABIERTO

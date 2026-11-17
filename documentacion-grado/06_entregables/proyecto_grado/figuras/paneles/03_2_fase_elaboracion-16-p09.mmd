@@ -1,0 +1,5 @@
+erDiagram
+    direction TB
+    USUARIO ||--o{ OPERACION_RECUPERABLE : ejecuta
+    OPERACION_RECUPERABLE ||--o{ CARGA_EVIDENCIA : prepara
+    CARGA_EVIDENCIA }o--o| EVIDENCIA : vincula

@@ -1,5 +1,6 @@
-flowchart LR
-    OP["Operario de Vivero<br/>recepción y operación ordinaria"]
+flowchart TB
+    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
+    OP["Operario de Vivero<br/>operación autorizada"]
     AD["ADMIN global"]
 
     subgraph M2["M2 · Vivero"]
@@ -9,7 +10,7 @@ flowchart LR
 
         INC(["Incorporar plantines"])
         INV(["Registrar inventario inicial"])
-        ID(["Identificar especie, variedad,<br/>procedencia, fecha y etapa"])
+        ID(["Identificar especie, procedencia,<br/>fecha, cantidad y foto privada"])
         BASE(["Crear lote, saldo vivo<br/>e historial de incorporación"])
         DOC(["Adjuntar comprobante<br/>o nota opcional"])
 
@@ -50,6 +51,8 @@ flowchart LR
     INV -.->|"«include»"| ID
     INC -.->|"«include»"| BASE
     INV -.->|"«include»"| BASE
+    INC -.->|"«include»"| EVI
+    INV -.->|"«include»"| EVI
 
     DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INC
     DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INV
@@ -60,3 +63,6 @@ flowchart LR
     MER -.->|"«include»"| EVI
     DES -.->|"«include»"| SAL
     DES -.->|"«include»"| EVI
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    SEM ~~~ INI ~~~ INC ~~~ INV ~~~ DOC ~~~ EMB ~~~ PRE ~~~ ADA ~~~ MER ~~~ DES ~~~ HIS

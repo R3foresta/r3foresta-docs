@@ -1,0 +1,10 @@
+flowchart TB
+    AD["ADMIN global"]
+    PLAN(["Crear campaña y planificar subcampaña"])
+    ACT(["Activar subcampaña"])
+    META(["Validar zona, coordinador,<br/>polígono y plan por especie"])
+    CIE(["Cerrar subcampaña"])
+    AD --- PLAN
+    AD --- ACT
+    AD --- CIE
+    ACT -.->|"«include»"| META

@@ -1,0 +1,13 @@
+flowchart TB
+    E["Registrar EMBOLSADO observado"]
+    X["Registrar descarte, causa y evidencia"]
+    N["Crear base inicial una sola vez<br/>sin consumo M1 ni embolsado ficticio"]
+    SAL["Consultar saldo físico e historial"]
+    OP["Registrar manejo, merma, despacho<br/>o entrega según autorización y saldo"]
+    FIN(["Fin de la operación"])
+    E --> SAL
+    N --> SAL
+    SAL --> OP
+    OP --> SAL
+    OP --> FIN
+    X --> FIN

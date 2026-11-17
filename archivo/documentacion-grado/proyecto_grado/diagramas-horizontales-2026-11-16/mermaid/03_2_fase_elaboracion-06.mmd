@@ -1,0 +1,62 @@
+flowchart LR
+    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
+    AD["ADMIN global"]
+    CO["Coordinador logístico autorizado"]
+    PL["PLANTADOR"]
+    AS["ADMINISTRADOR_SUBCAMPANIA"]
+    VI["Visitante"]
+    AU["Autor o participante autenticado"]
+
+    subgraph M3["M3 · Plantación"]
+        PLAN(["Crear campaña y planificar subcampaña"])
+        ACT(["Activar subcampaña"])
+        META(["Validar zona, coordinador,<br/>polígono y plan por especie"])
+        ENT(["Asignar plantas físicamente"])
+        DEV(["Registrar devolución física"])
+        FIS(["Validar autoridad logística<br/>y saldo disponible"])
+
+        REG(["Registrar plantación inicial"])
+        CTX(["Revalidar autoridad, ACTIVA,<br/>plan, fecha y stock"])
+        GEO(["Registrar GPS y evaluar<br/>relación con polígono"])
+        FOT(["Vincular fotografías"])
+        LIFO(["Consumir asignaciones elegibles<br/>y guardar detalles"])
+        COL(["Añadir colaboradores opcionales"])
+
+        EQU(["Consultar equipo"])
+        GP(["Gestionar plantadores"])
+        GA(["Gestionar administradores contextuales"])
+        CIE(["Cerrar subcampaña"])
+        PUB(["Consultar Impacto público"])
+        PRO(["Consultar registro propio"])
+    end
+
+    AD --- PLAN
+    AD --- ACT
+    AD --- ENT
+    AD --- DEV
+    AD --- REG
+    AD --- GP
+    AD --- GA
+    AD --- CIE
+    CO --- ENT
+    CO --- DEV
+
+    PL --- REG
+    PL --- EQU
+    AS --- REG
+    AS --- EQU
+    AS --- GP
+    VI --- PUB
+    AU --- PRO
+
+    ACT -.->|"«include»"| META
+    ENT -.->|"«include»"| FIS
+    DEV -.->|"«include»"| FIS
+    REG -.->|"«include»"| CTX
+    REG -.->|"«include»"| GEO
+    REG -.->|"«include»"| FOT
+    REG -.->|"«include»"| LIFO
+    COL -.->|"«extend»<br/>si participan otras personas"| REG
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    PLAN ~~~ ACT ~~~ CIE ~~~ ENT ~~~ DEV ~~~ REG ~~~ COL ~~~ EQU ~~~ GP ~~~ GA ~~~ PUB ~~~ PRO

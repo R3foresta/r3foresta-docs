@@ -1,0 +1,10 @@
+flowchart TB
+    G[Enviar contenido persistido<br/>con el mismo comando]
+    V{Resultado recibido}
+    F[Mostrar recibo y detalle<br/>del consumo registrado]
+    X[Mostrar causa y permitir<br/>una revisión explícita]
+    R[Conservar clave, contenido y fotos<br/>consultar el mismo resultado]
+    G --> V
+    V -- Confirmado --> F
+    V -- Rechazo terminal --> X
+    V -- Inconcluso --> R

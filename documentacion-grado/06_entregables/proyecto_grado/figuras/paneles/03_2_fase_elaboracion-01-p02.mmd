@@ -1,0 +1,14 @@
+flowchart TB
+    COMP["Plantines comprados"]
+    DON["Plantines donados"]
+    EXIST["Plantines existentes<br/>al comenzar el sistema"]
+    RECEP["Recepción de plantines<br/>registrada por ADMIN"]
+    INVENT["Inventario inicial<br/>conteo actual registrado por ADMIN"]
+    IDENT["Especie, procedencia y fecha<br/>cantidad contada, responsable<br/>y foto privada obligatoria"]
+    INC["INCORPORACIÓN<br/>crea saldo vivo una sola vez"]
+    COMP --> RECEP
+    DON --> RECEP
+    EXIST --> INVENT
+    RECEP --> IDENT
+    INVENT --> IDENT
+    IDENT --> INC

@@ -1,0 +1,19 @@
+erDiagram
+    direction TB
+    asignacion_vivero_subcampania ||..o{ registro_plantacion_detalle : asignacion_id
+asignacion_vivero_subcampania {
+        bigint id PK
+        bigint subcampania_id FK
+        bigint lote_vivero_id FK
+        integer cantidad_asignada
+        integer cantidad_consumida
+        integer cantidad_devuelta
+    }
+registro_plantacion_detalle {
+        bigint id PK
+        bigint registro_plantacion_id FK
+        bigint asignacion_id FK
+        bigint lote_vivero_id FK
+        bigint planta_id FK
+        integer cantidad
+    }

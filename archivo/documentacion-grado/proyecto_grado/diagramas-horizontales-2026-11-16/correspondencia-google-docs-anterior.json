@@ -1,0 +1,356 @@
+[
+  {
+    "figura_drive": "3.4",
+    "titulo_drive": "Figura 3.4. Flujo actual y soportes de información identificados",
+    "fuente_mermaid": "mermaid/03_1_fase_inicio-01.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_1_fase_inicio-01-hoja-01.png",
+        "sha256": "d5e45de61a0d084c35596c3f2ecb5bda1cf0b80369d4f8c12cd675f09a6ac1ba"
+      },
+      {
+        "archivo": "paginas/03_1_fase_inicio-01-hoja-02.png",
+        "sha256": "4291e34b5b0ef7f5c6788c6ff7fead9bec7ab8b9b02c0e5056a8a5781faaac7d"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.6",
+    "titulo_drive": "Figura 3.6. Recorrido del diseño integrado y variantes de ingreso",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-01.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-01-hoja-01.png",
+        "sha256": "8a06a7520aee34ebd749e4c22233fec35fa99c4854f3547b11964443ce01b7dc"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-01-hoja-02.png",
+        "sha256": "4cc8f49d109f746e42730c3d5f78615cac230a378b06a2f8cebbc65a1b3dad9f"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-01-hoja-03.png",
+        "sha256": "8ded2bd8075556f0ebb1ed1738db15b9262fdab96a14d34cb819b58b821751d2"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-01-hoja-04.png",
+        "sha256": "9f8be350b24c548a45f9a8aea2897eef24093fabfa2a1d76f5b1c573368562c7"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.7",
+    "titulo_drive": "Figura 3.7. Genealogía del material vegetal en la ruta principal",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-02.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-02-hoja-01.png",
+        "sha256": "848bdfe32ec2eb9b3b64f9ae8ec5034feeecfd3006e8b40ed80d2f5dccc6283b"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.8",
+    "titulo_drive": "Figura 3.8. Actores y capacidades del diseño integrado",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-03.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-03-hoja-01.png",
+        "sha256": "8836ead481eb28b7e2cc5b9bbc910fcda17ab36e0bfeb07e5275799646c492c0"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-03-hoja-02.png",
+        "sha256": "752b2dbdce10079c984f09954c0a48bdb378c5a5a2e8e968ba6991b46d6e0b71"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.9",
+    "titulo_drive": "Figura 3.9. Casos de uso específicos de Recolección",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-04.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-04-hoja-01.png",
+        "sha256": "cbe479436c316a906419fb8681e562380342944969e48a74563bc1a481c40e2b"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-04-hoja-02.png",
+        "sha256": "89676e1a88fbe016cd5dcc5e424284d2f789230a9e7747680005229c982302d2"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.10",
+    "titulo_drive": "Figura 3.10. Casos de uso específicos de Vivero",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-05.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-05-hoja-01.png",
+        "sha256": "f95c4123579d17427152e0d3318effaafff344e53a989d25cde5a9554c8e933c"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-05-hoja-02.png",
+        "sha256": "0cc4136df2c08e14e272e09bbcb7aa708ac19589f1c434adda73ccf3286edc4a"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.11",
+    "titulo_drive": "Figura 3.11. Casos de uso específicos de Plantación",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-06.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-06-hoja-01.png",
+        "sha256": "8f336d4ec33346dbf88d7d540b215f3d0c2802cbb62fdd7f94ee456d4f89fe9c"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-06-hoja-02.png",
+        "sha256": "4630dd5311381c5166aead7382c010b0905fc49619a5e87cef399a7e210c4451"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.12",
+    "titulo_drive": "Figura 3.12. Correspondencia entre actores y responsabilidades",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-18.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-18-hoja-01.png",
+        "sha256": "c07924ea9d0a182a28cb54eb3c4cdc37c0b7bbf6b0e7eb61924f8e4ba843f5a6"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-18-hoja-02.png",
+        "sha256": "3c221a26a7bd534e682b0b51f674a019ad87e03b8410fd07b6b7ea99d8d876be"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-18-hoja-03.png",
+        "sha256": "6c84f9f1c8cc8c6c4ddcd3e8d72e01fbeda6b3a669fb608afaef61f4ad4883c5"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.13",
+    "titulo_drive": "Figura 3.13. Modelo conceptual del recorrido y sus modalidades de origen",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-15.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-15-hoja-01.png",
+        "sha256": "5dd5c0622406b8b2f6dc107df7bfcab980e79a5a3a92b276b89923e4062d7324"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-15-hoja-02.png",
+        "sha256": "8510ac69f29a35eaf5fb2ab112fd079a9d31af129f3f2261ec5ddd4395ea0d17"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.14",
+    "titulo_drive": "Figura 3.14. Relaciones lógicas del diseño integrado",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-16.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-16-hoja-01.png",
+        "sha256": "b3c30111f7d6f3ee2c95e7ec3c9de3a74a752468cfe085f094e40941ffe71b24"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-16-hoja-02.png",
+        "sha256": "6ef363aed0569d1d6319bf64dcb0fbc926989e7b7e80ae0a65f8e1f9d9d44acd"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-16-hoja-03.png",
+        "sha256": "5366a040a3bbd3116a157110764c93ac272a40e5451cfea8b6a30118c2eff2dc"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-16-hoja-04.png",
+        "sha256": "03e96656baf4936dbd30916c92acd55762628bc343a83989b1e737b8cfba169a"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-16-hoja-05.png",
+        "sha256": "a73cfb3edf97bfd0d3837c84b53494b7134339415a10e13b5a7b484b9202ac15"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-16-hoja-06.png",
+        "sha256": "793ba1b3a1b8e27f55bc9140175889b17b8a61586eb360900cd9bdc812b26b4e"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.17",
+    "titulo_drive": "Figura 3.17. Estados de Recolección y saldo operativo",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-07.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-07-hoja-01.png",
+        "sha256": "aaba2e3b1364599cc6ef9851b79083b4c3ba03e214c687b88d60dfb925dfd9fb"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.18",
+    "titulo_drive": "Figura 3.18. Bases iniciales y movimientos del lote de vivero",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-08.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-08-hoja-01.png",
+        "sha256": "db3d1a26d60bae2aca385576e20d6953230c0714ce52500dfb237c8fb113e6a9"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.19",
+    "titulo_drive": "Figura 3.19. Estados operativos de la subcampaña",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-09.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-09-hoja-01.png",
+        "sha256": "1d540705e462c8d5a8c9fc4af1a4147cb5a850b60ca840898554964571f1a921"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.20",
+    "titulo_drive": "Figura 3.20. Actividad de Recolección",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-10.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-10-hoja-01.png",
+        "sha256": "5e6b1fd64fa163a8c357562a3d24fbeef3da7eb3c77b5b715ef994f41d908219"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-10-hoja-02.png",
+        "sha256": "5a42685e9dafe045d51ca48c2762f814c5438a2ced63beda17419f304597609f"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.21",
+    "titulo_drive": "Figura 3.21. Actividad de Vivero por modalidad de ingreso",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-11.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-11-hoja-01.png",
+        "sha256": "d1bac53721fef02c2520112090a4f1e951c2cabd197d9738c42f063992d68362"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-11-hoja-02.png",
+        "sha256": "515fb41e752795ac29811254a232076b8a157d121fb63deae99c12ae6f05082e"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.22",
+    "titulo_drive": "Figura 3.22. Actividad de Plantación y recuperación del resultado",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-12.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-12-hoja-01.png",
+        "sha256": "a33a3ab9192aeee1e97da557a90d053c16026c4521ff8be7a1ae465670a67e00"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-12-hoja-02.png",
+        "sha256": "ace91bc97fd2fb6e5f98a15c6227febe993329c0daf4d0234c73c624c3e33493"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-12-hoja-03.png",
+        "sha256": "cd68e4de2347c20310cd9aa6c3afd17ef455d7474c9c77781094e3cd99495418"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.23",
+    "titulo_drive": "Figura 3.23. Secuencia de integración entre Recolección y Vivero",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-13.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-13-hoja-01.png",
+        "sha256": "060bf0104880970131af2b4cc30abee1b79552fb2e03069160585fd1c06e0307"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.24",
+    "titulo_drive": "Figura 3.24. Entrega física, consumo de stock y resultado recuperable",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-14.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-14-hoja-01.png",
+        "sha256": "1b11119b1025bb47e5e9661f2dfa9526bb2d4ecdfaca815face0a0bc4566ab5e"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-14-hoja-02.png",
+        "sha256": "b48652963b9b0e3704e1446ddbaf18caee0d6b5fa4beb8a225b9655de98f134f"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-14-hoja-03.png",
+        "sha256": "a3ea89276eacca1ebcb39d5cdaf4a78d373373a1ad879b0d1b646b72590af5ba"
+      },
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-14-hoja-04.png",
+        "sha256": "2b6068478e20e07fdd7e17a43f3808ebd0d25998e0b434a3e0a992b63c5a804d"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.25",
+    "titulo_drive": "Figura 3.25. Componentes y responsabilidades de la arquitectura académica",
+    "fuente_mermaid": "mermaid/03_2_fase_elaboracion-17.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_2_fase_elaboracion-17-hoja-01.png",
+        "sha256": "0bd1d66175f7fccd7091cc04650fa3d0fc18bb8bf26967e76e570674384a969b"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.26",
+    "titulo_drive": "Figura 3.26. Captura y recuperación del registro inicial",
+    "fuente_mermaid": "mermaid/03_3_fase_construccion-01.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_3_fase_construccion-01-hoja-01.png",
+        "sha256": "c74e4bc66ebaaf45ad3629106c86ff4348ae5df6fb01584c96327c64c567bbdf"
+      },
+      {
+        "archivo": "paginas/03_3_fase_construccion-01-hoja-02.png",
+        "sha256": "849c05cffcfd236f6f2224b646e17a5e477d21d2c9874da06be7bbd2f51b9326"
+      },
+      {
+        "archivo": "paginas/03_3_fase_construccion-01-hoja-03.png",
+        "sha256": "5c47de0aba20bf16161ab75eb5b1eb90d75198670aacfb4a1d3d6d391a520281"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.27",
+    "titulo_drive": "Figura 3.27. Secuencia de confirmación del registro inicial",
+    "fuente_mermaid": "mermaid/03_3_fase_construccion-02.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_3_fase_construccion-02-hoja-01.png",
+        "sha256": "10f58cde3fa73d61d38c7fa421d28dc06fc5ccec7e53f61e5a289f596cbe53ff"
+      },
+      {
+        "archivo": "paginas/03_3_fase_construccion-02-hoja-02.png",
+        "sha256": "42ef60e57d12de5187d0013a140c201c9bbb2d0ad5afd2dd948c60a0fc0297d2"
+      },
+      {
+        "archivo": "paginas/03_3_fase_construccion-02-hoja-03.png",
+        "sha256": "ac31fd4e93499c150dc7cd0b0649ee03c31fd6379b252e0b466f36e2606b40ea"
+      }
+    ]
+  },
+  {
+    "figura_drive": "3.28",
+    "titulo_drive": "Figura 3.28. Evaluación de una traza y registro de la decisión",
+    "fuente_mermaid": "mermaid/03_4_fase_transicion-01.mmd",
+    "paginas": [
+      {
+        "archivo": "paginas/03_4_fase_transicion-01-hoja-01.png",
+        "sha256": "d9e4772680bd6fa574cd2b85a2dd14ea8401bd4ce8104d410ad8bf488ce79a1a"
+      },
+      {
+        "archivo": "paginas/03_4_fase_transicion-01-hoja-02.png",
+        "sha256": "faa55ea2530ea98213f615b2a5eb3e972bb8f611f60f581bfe60e1e8dcae0b52"
+      }
+    ]
+  }
+]

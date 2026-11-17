@@ -1,4 +1,4 @@
-flowchart LR
+flowchart TB
   A[Árbol madre, comunidad<br/>o aportante externo] --> B[Recolección o entrega<br/>de semillas/esquejes]
   B --> C[Traslado y recepción<br/>en vivero]
   C --> D[Semillero, germinación<br/>y desarrollo]
@@ -14,3 +14,6 @@ flowchart LR
   M -. acompaña .-> H
   P[Fotografías y redes sociales] -. documentan parcialmente .-> H
   X[Documentos o convenios aislados] -. contextualizan .-> H
+
+    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
+    M ~~~ P ~~~ X

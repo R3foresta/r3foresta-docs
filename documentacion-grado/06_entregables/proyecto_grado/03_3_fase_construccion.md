@@ -1,6 +1,8 @@
 ## 3.4. Fase de Construcción: implementación e integración de los módulos
 
-> Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Edición retrospectiva del 4 de noviembre de 2026. Las versiones y los resultados técnicos conservan las fechas y los entornos de sus fuentes.
+Para maquetar las figuras en hojas carta verticales, usar las [láminas por figura](figuras/paginas/README.md). Los bloques Mermaid conservan la fuente completa; los diagramas extensos continúan en paneles legibles.
+
+> Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Edición retrospectiva del 4 de noviembre de 2026, actualizada con evidencia disponible hasta el 16 de noviembre. Las versiones y los resultados técnicos conservan las fechas y los entornos de sus fuentes.
 
 ### 3.4.1. Propósito y organización de la construcción
 
@@ -25,13 +27,13 @@ En cada incremento se relacionaron requisitos y reglas con decisiones de impleme
 
 ### 3.4.2. Implementación de la arquitectura
 
-La solución se implementó mediante una PWA en React y TypeScript, una API REST en NestJS y una base PostgreSQL con PostGIS y almacenamiento de archivos en Supabase. La interfaz organizó la captura y la consulta por funcionalidades; la API verificó identidad y autoridad y coordinó los casos de uso; la base de datos conservó relaciones, movimientos y saldos. El [modelo físico presentado en Elaboración](03_2_fase_elaboracion.md#3383-modelo-físico-y-contraste-con-la-base-de-datos-documentada) documentó 51 tablas y 564 columnas en el contraste del 4 de noviembre.
+La solución se implementó mediante una PWA en React y TypeScript, una API REST en NestJS y una base PostgreSQL con PostGIS y almacenamiento de archivos en Supabase. La interfaz organizó la captura y la consulta por funcionalidades; la API verificó identidad y autoridad y coordinó los casos de uso; la base de datos conservó relaciones, movimientos y saldos. El [modelo físico presentado en Elaboración](03_2_fase_elaboracion.md#3383-modelo-físico-y-contraste-con-la-base-de-datos-documentada) documenta el extracto aportado el 16 de noviembre: 57 tablas, 622 columnas y 175 relaciones; el proyecto y la fecha de exportación no están identificados. El contraste del 4 de noviembre, de 51 tablas y 564 columnas, permanece como antecedente histórico.
 
 Las operaciones críticas de transferencia, asignación, devolución y registro inicial se concentraron en funciones transaccionales. Esta decisión permitió confirmar conjuntamente los registros y los movimientos relacionados o revertir sus efectos ante un fallo. En las operaciones con competencia por el mismo saldo se utilizaron bloqueos y una nueva comprobación de disponibilidad antes de confirmar. Las garantías correspondieron a las rutas que aplicaron ese protocolo; el SQL privilegiado que lo omitiera quedó fuera de esa protección cooperativa.
 
 Los archivos conservaron un ciclo separado de la transacción de datos. En el registro participante, la carga preparó los originales privados y sus versiones derivadas; la confirmación vinculó únicamente la evidencia disponible y perteneciente al intento. La recuperación y la limpieza distinguieron archivos provisionales de archivos ya asociados con un hecho confirmado. De esta manera, un error de red no justificó borrar fotografías confirmadas ni repetir el consumo.
 
-La autenticación privada utilizó un token JWT verificado y la consulta de la cuenta activa. En los controladores internos inspeccionados, `InternalActorGuard` derivó la identidad y el rol desde esas comprobaciones. El encabezado legado `x-auth-id` se trató como compatibilidad con la identidad verificada y se rechazó cuando no coincidió con el token. Esta implementación actualizó la observación de seguridad de julio. Los permisos por subcampaña se comprobaron además en la operación correspondiente; el acceso específico por vivero conservó el límite señalado en RDI-02.
+La autenticación privada utilizó un token JWT verificado y la consulta de la cuenta activa. En los controladores internos inspeccionados, `InternalActorGuard` derivó la identidad y el rol desde esas comprobaciones. El encabezado legado `x-auth-id` se trató como compatibilidad con la identidad verificada y se rechazó cuando no coincidió con el token. Esta implementación actualizó la observación de seguridad de julio. Los permisos por subcampaña se comprobaron además en la operación correspondiente; el acceso específico por vivero contó con implementación y pruebas locales T1–T3, con los límites de entorno y corte señalados en RDI-02.
 
 *Fuentes de implementación:* [arquitectura observada y su corte histórico](../../../ARCHITECTURE.md), [control de identidad](../../../../Backend-r3foresta/src/auth/verified-actor.guard.ts), [adaptación de controladores internos](../../../../Backend-r3foresta/src/auth/internal-actor.guard.ts) y [estado por versión y entorno](../../../ESTADO.md).
 
@@ -45,6 +47,8 @@ Recolección implementó el registro de procedencia, especie, tipo de material, 
 
 La aprobación fijó la información histórica del origen. Los consumos destinados a Vivero y los desechos se representaron mediante movimientos que explicaron el saldo restante, sin sustituir la cantidad original. Las consultas de detalle e historial permitieron relacionar la recolección con sus movimientos y destinos. Las reglas y las comprobaciones de este incremento se conservaron en el [módulo Recolección](../../../01-recoleccion-module/README.md) y su [checklist de validación](../../../01-recoleccion-module/03_checklist_validacion_recoleccion.md).
 
+La recepción única de semillas vinculó el hecho físico y la validación en una misma operación, con receptor distinto del recolector y autorización para el vivero de almacenamiento. La versión 100 quedó identificada en backend `6e5e756` y PWA `a30c54f`; Pablo reportó su ejecución y pruebas funcionales el 12 de noviembre. El informe conserva los límites de entorno y aceptación. [Contrato de recepción](../../../../Backend-r3foresta/docs/t4-recepcion-semillas.md) · [QA y AUD-036](../../../../pwa-r3foresta/docs/QA_RECEPCION_UNICA.md).
+
 El expediente de CO-1 mantuvo un alcance distinto del de los ensayos de Participación aliada: las pruebas de M3 no acreditaron por extensión todas las operaciones de M1. La consolidación de sus resultados completos se conservó como RDI-07, sin alterar la descripción funcional del módulo desarrollado.
 
 ### 3.4.4. Módulo Vivero e integración M1→M2
@@ -57,7 +61,7 @@ Cuando el proceso terminó sin producir plantas vivas, DESCARTE_PRE_EMBOLSADO re
 
 Los movimientos de salida se diferenciaron según su destino. El despacho manual atendió DONACION, VENTA y OTRO; la asignación física utilizó un formulario específico para campaña, subcampaña, propósito, cantidad, fecha y evidencia. La separación de ambos recorridos quedó registrada en el cambio frontend `562a97e` y sus comprobaciones del 23 de julio de 2026.
 
-El [contrato M1→M2](../../../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md) relacionó el movimiento de origen, el lote y el evento inicial. El historial del lote conservó los hechos de manejo y las salidas posteriores. La incorporación de plantas vivas adquiridas y la recepción directa se mantuvieron diferenciadas en el diseño; la evidencia de propagación desde una recolección no se atribuyó a esas variantes, cuyo límite de implementación se conservó en RDI-01.
+El [contrato M1→M2](../../../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md) relacionó el movimiento de origen, el lote y el evento inicial. El historial del lote conservó los hechos de manejo y las salidas posteriores. La incorporación T5 creó un lote de plantas vivas desde una recepción o conteo, con procedencia declarada, foto privada y una base viva alternativa a EMBOLSADO. El QA del 16 de noviembre documentó la reconstrucción inversa, con sesión ADMIN en Chrome local, desde el registro de plantación 20 hasta la asignación 53 y el lote 125, con consulta de historial y foto. Identificó PWA `c6bdec9` y backend de integración `3cb82e4` incluido en `b57192c`; la aplicación de 109/110 fue confirmada por Pablo. Teléfono físico, otros roles y recorridos, despliegue externo y diferencias de etapa y variedad permanecen pendientes. La recepción externa directa en Plantación conserva su diseño y evaluación pendientes. [QA T5](../../../../pwa-r3foresta/docs/QA_T5_ITERACION_3.md) · [Estado](../../../ESTADO.md).
 
 ### 3.4.5. Módulo Plantación e integración M2→M3
 
@@ -86,7 +90,7 @@ La Figura 3.23 reúne el recorrido de captura y la confirmación transaccional. 
 *a) Captura, confirmación y recuperación desde la interfaz*
 
 ```mermaid
-flowchart TD
+flowchart TB
     C[Consultar capacidades y contexto] --> P{Cuenta y permiso vigentes,<br/>subcampaña ACTIVA y stock elegible}
     P -- No --> B[Mostrar causa y conservar<br/>recuperación propia si existe]
     P -- Sí --> E[1 Fotografías y coordenadas<br/>capturadas o manuales]
@@ -150,12 +154,12 @@ sequenceDiagram
     end
     U->>PWA: Consultar comprobante o Mis registros
     PWA->>API: Solicitar detalle propio
-    API->>DB: Verificar autoría o participación histórica
+    API->>DB: Verificar autoría o participación efectiva
     DB-->>API: Datos y referencia de evidencia permitidos
     API-->>PWA: Detalle según audiencia
 ```
 
-*Nota.* Elaboración propia a partir de PA-S01, D01–D12, la [entrega INT03-A](../../../../Backend-r3foresta/docs/pa-int03a-entrega-local.md), el [informe INT04](../../../../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md) y el [caso de guardado del 26 de octubre](../../../../pwa-r3foresta/docs/QA_REGISTRO_GUARDADO_51.md). Los dos paneles describen el mismo recorrido vigente y sustituyen la secuencia histórica de reparto en el cliente.
+*Nota.* Elaboración propia a partir de PA-S01, D01–D12, la [entrega INT03-A](../../../../Backend-r3foresta/docs/pa-int03a-entrega-local.md), el [informe INT04](../../../../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md) y el [caso de guardado del 26 de octubre](../../../../pwa-r3foresta/docs/QA_REGISTRO_GUARDADO_51.md). Los dos paneles describen el mismo recorrido y sustituyen la secuencia histórica de reparto en el cliente. La lectura propia se actualiza conforme a RF-PLA-14 y al contrato de participantes efectivos; el estado de su verificación se distingue a continuación.
 
 La recuperación distinguió confirmación, rechazo terminal e incertidumbre. Ante una respuesta perdida, la PWA conservó la clave, el contenido y las fotografías y consultó el resultado propio. El reenvío del mismo intento recuperó el recibo o ejecutó la operación una sola vez. Un contenido distinto con la misma clave entró en conflicto; una nueva revisión después de un rechazo terminal exigió confirmación explícita. Los borradores permanecieron asociados con la cuenta y el dispositivo, sin constituir una sincronización autónoma de trabajo sin conexión.
 
@@ -177,7 +181,7 @@ Las estructuras de mantenimiento, mortandad, reposición y correcciones excepcio
 
 La construcción produjo una aplicación que vinculó la recolección con el lote de vivero, la entrega física con la subcampaña y el registro de plantación con las asignaciones consumidas. La separación entre cantidad de origen, resultado vivo observado, salida física y consumo plantado permitió explicar cada etapa en su propia unidad. Los eventos, los detalles y los snapshots conservaron las relaciones necesarias para interpretar el recorrido registrado.
 
-El aporte a OBJ-03 se concretó en esa ruta implementada y en los refinamientos de autorización, evidencia y recuperación. Las variantes de incorporación externa y recepción directa conservaron la diferencia entre diseño e implementación acreditada. La consulta pública de Plantación tampoco se equiparó con una consulta universal de todos los antecedentes de M1 y M2. Estos límites se mantuvieron en RDI-01, RDI-02, RDI-03 y RDI-07 y en el tablero académico.
+El aporte a OBJ-03 se concretó en esa ruta implementada y en los refinamientos de autorización, evidencia y recuperación. La incorporación externa en Vivero contó con evidencia local acotada; la recepción directa en Plantación y la evaluación integrada de ambas variantes conservaron pendientes. La consulta pública de Plantación tampoco se equiparó con una consulta universal de todos los antecedentes de M1 y M2. Estos límites se mantuvieron en RDI-01, RDI-02, RDI-03 y RDI-07 y en el tablero académico.
 
 La revisión de IOC, capacidad operativa inicial, se sustentó conceptualmente en la integración, la regresión, la configuración de la versión y los defectos conocidos. El expediente reunió los aportes disponibles para esa revisión; los cierres técnicos locales conservaron sus condiciones de entorno. La conclusión del texto de Construcción no se registró como una liberación de software ni como una decisión institucional de IOC.
 
@@ -203,12 +207,17 @@ La propiedad comprobada se distinguió del mecanismo utilizado. Por ejemplo, la 
 | INT05 frontend, 18–19 de octubre | base 6a2c955 más árbol; entrega a3a4b28 | 48 suites y 691 pruebas; lint/build y 111 comprobaciones integradas/SQL aprobados | navegación pública y propia, con regresiones de registro y acceso en entornos locales |
 | guardado de plantación, 26 de octubre | backend local en puerto 3000 y PWA en 5173, identificados por el informe | 87 pruebas focales aprobadas; confirmación humana y lectura posterior de un comando CONFIRMADO vinculado al registro 13 | caso real de reintento mediante backend local; sin identificador de liberación remota en esta evidencia |
 | administración de roles, 3 de noviembre | bases backend f26cbfa y PWA c684ad9 más árbol; entregas 5fb723b y 37cec4d | 1.190 unitarios backend, 1.129 pruebas frontend, 26 grupos SQL, ocho carreras, 15 HTTP y 27 comprobaciones de navegador aprobados | entorno sintético aislado; administración global y protección del último ADMIN |
+| T5, 16 de noviembre | PWA c6bdec9; backend 3cb82e4 incluido en b57192c | reconstrucción inversa ADMIN del registro 20 a la asignación 53 y lote 125; historial y foto consultados | Chrome local; teléfono físico, otros recorridos y despliegue externo pendientes |
 
-*Nota.* Elaboración propia a partir de los informes [INT02-D](../../../../Backend-r3foresta/docs/pa-int02d-entrega-local.md), [INT04](../../../../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md), [INT05 backend](../../../../Backend-r3foresta/docs/pa-int05-entrega-local.md), [INT05 frontend](../../../../pwa-r3foresta/docs/QA_IMPACTO_INT05.md), [guardado del 26 de octubre](../../../../pwa-r3foresta/docs/QA_REGISTRO_GUARDADO_51.md) y [roles globales](../../../../pwa-r3foresta/docs/QA_USUARIOS_ADMINISTRACION.md), contrastados con ESTADO.md. Los conteos pertenecen a ejecuciones distintas y se solapan; no se agregaron como un total de pruebas únicas. La consolidación documental no constituyó una nueva ejecución.
+*Nota.* Elaboración propia a partir de los informes [INT02-D](../../../../Backend-r3foresta/docs/pa-int02d-entrega-local.md), [INT04](../../../../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md), [INT05 backend](../../../../Backend-r3foresta/docs/pa-int05-entrega-local.md), [INT05 frontend](../../../../pwa-r3foresta/docs/QA_IMPACTO_INT05.md), [guardado del 26 de octubre](../../../../pwa-r3foresta/docs/QA_REGISTRO_GUARDADO_51.md) y [roles globales](../../../../pwa-r3foresta/docs/QA_USUARIOS_ADMINISTRACION.md) y [QA T5](../../../../pwa-r3foresta/docs/QA_T5_ITERACION_3.md), contrastados con ESTADO.md. Los conteos pertenecen a ejecuciones distintas y se solapan; no se agregaron como un total de pruebas únicas. La consolidación documental no constituyó una nueva ejecución.
 
 INT04 comprobó, entre otros casos, una respuesta perdida después de confirmar la transacción. La consulta SQL identificó tres comandos confirmados con un registro, detalle de consumo y vínculo de fotografía por cada uno, y dos rechazos sin efectos parciales. El intento cuya respuesta se perdió consumió dos plantas una sola vez. Los ensayos conservaron los saldos del vivero, lo que respaldó la separación entre entrega física y consumo de Plantación.
 
-INT05 comprobó la navegación sin cuenta, la lista propia por autoría o participación histórica y la separación de fotografías y datos por audiencia. Los ensayos utilizaron identidad sintética de arranque y no acreditaron una ceremonia WebAuthn real. La aplicación SQL, el catálogo del entorno destino y el despliegue conservaron sus evidencias específicas.
+INT05 comprobó en su corte de octubre la navegación sin cuenta, la lista propia por autoría o participación histórica y la separación de fotografías y datos por audiencia. Los ensayos utilizaron identidad sintética de arranque y no acreditaron una ceremonia WebAuthn real. La aplicación SQL, el catálogo del entorno destino y el despliegue conservaron sus evidencias específicas.
+
+La regla refinada el 16 de noviembre exige autoría o participación efectiva para la consulta propia: retirar una participación mediante corrección extingue ese acceso, salvo otra relación efectiva o autoría. El original y su auditoría se conservan. Participantes085 está implementado en backend `41026ae`, pero su [evidencia HTTP](../../../../Backend-r3foresta/docs/evidencia/pa-int07-participantes-local.json) registra `FALLIDO`. BE03/BE07 siguen parciales y la interfaz de correcciones y la aceptación integral de PA-S04 permanecen pendientes. El [contrato](../../../../Backend-r3foresta/docs/pa-int07-participantes.md) y [ESTADO.md](../../../ESTADO.md) conservan estos límites; INT05 no acredita por sí solo el comportamiento posterior a las correcciones.
+
+La recepción única conserva también AUD-036: la PWA bloquea ciertas correcciones de fichas mayores de 45 días aunque mantengan su fecha original. El [QA de recepción](../../../../pwa-r3foresta/docs/QA_RECEPCION_UNICA.md) registra la advertencia pendiente; no se declara resuelta por actualizar el requisito.
 
 #### 3.4.9.3. Correspondencia con los casos prioritarios
 
@@ -230,9 +239,9 @@ INT05 comprobó la navegación sin cuenta, la lista propia por autoría o partic
 | TC-10 | INV-09 | conservar interpretación histórica ante cambios de catálogo | snapshots y lecturas históricas comprobados en el alcance PA; cobertura completa de M1/M2 no acreditada por esos ensayos |
 | TC-11 | INV-10 | vincular fotografías propias y rechazar las de otro intento | INT04 rechazó fotografía de otra preparación sin consumo y cotejó vínculos de confirmados; recorrido fotográfico M1→M3 no acreditado íntegramente |
 | TC-12 | INV-11 | evaluar coordenadas y fallo del evaluador | INT03-A/INT04 cubrieron PostGIS y rechazo del evaluador; exterior válido con advertencia conservó la decisión PA-S01-CA10 |
-| TC-13 | RDI-02 y RNF-INI-01 | actuar sin JWT, con identidad discordante o sin autoridad | guards actuales y ensayos HTTP D respaldaron rechazo en las rutas cubiertas; política específica por vivero conservó su alcance pendiente |
+| TC-13 | RDI-02 y RNF-INI-01 | actuar sin JWT, con identidad discordante o sin autoridad | guards y ensayos HTTP D y T1–T3 respaldaron rechazos en rutas cubiertas; cotejo, corte y comprobación del entorno destino permanecen pendientes |
 | TC-14 | RDI-03 | reconstruir la base desde cero | fixtures y migraciones de entrega reproducidos en su alcance; replay integral y restauración de datos/archivos no acreditados |
-| TC-15 | RDI-01 | iniciar el recorrido mediante incorporaciones externas | variantes diseñadas; sin implementación y resultado integrado acreditados en las fuentes examinadas |
+| TC-15 | RDI-01 | iniciar el recorrido mediante incorporaciones externas | T5 acredita un recorrido ADMIN local con historial y foto; falta la evaluación integrada y de otros recorridos. La recepción directa en Plantación continúa pendiente |
 
 *Nota.* Elaboración propia a partir de INV-01–INV-11 y RNF-INI de la Tabla 3.19, RDI-01–RDI-08, el checklist de Recolección y los informes de la Tabla 3.22. TC-01–TC-15 conservan sus identificadores. La cobertura se atribuyó al ensayo y a la propiedad efectivamente descritos, sin convertir pruebas parciales en aprobación de todos los casos.
 
@@ -240,7 +249,7 @@ INT05 comprobó la navegación sin cuenta, la lista propia por autoría o partic
 
 Los resultados respaldaron la consistencia de las operaciones de Plantación cubiertas: autoridad vigente, consumo de stock elegible, confirmación sin efectos parciales, vínculo de evidencia y recuperación del mismo intento. También respaldaron la separación de las consultas pública, propia e interna. La presencia de pruebas automatizadas de la PWA sustituyó la afirmación histórica de septiembre que indicaba su ausencia.
 
-La revisión diferenció dos riesgos que ya habían cambiado de situación: la identidad de los controladores inspeccionados utilizó JWT verificado y la regla de GPS exterior contó con decisión funcional aceptada. La evaluación mantuvo los límites de entorno y de autorización específica por vivero, en lugar de repetir aquellos hallazgos históricos como si continuaran sin tratamiento.
+La revisión diferenció dos riesgos que ya habían cambiado de situación: la identidad de los controladores inspeccionados utilizó JWT verificado y la regla de GPS exterior contó con decisión funcional aceptada. La evaluación mantuvo los límites de entorno y del corte de autorización específica por vivero, en lugar de repetir aquellos hallazgos históricos como si continuaran sin tratamiento.
 
 OBJ-04 contó con resultados técnicos positivos para los casos documentados y con cobertura desigual del recorrido completo. Los informes no aportaron una regresión única de todas las variantes sobre una misma versión final. La reproducibilidad integral, la recuperación conjunta de datos y archivos de RNF-INI-05 y la evaluación humana de uso de RNF-INI-06 conservaron su tratamiento residual.
 

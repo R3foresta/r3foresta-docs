@@ -1,0 +1,15 @@
+erDiagram
+    direction LR
+    USUARIO ||--o{ ACCESO_VIVERO : recibe
+    VIVERO ||--o{ ACCESO_VIVERO : delimita
+    USUARIO ||--o{ PERMISO_SUBCAMPANIA : recibe
+    SUBCAMPANIA ||--o{ PERMISO_SUBCAMPANIA : delimita
+    USUARIO ||--o{ EQUIPO_SUBCAMPANIA : integra
+    SUBCAMPANIA ||--o{ EQUIPO_SUBCAMPANIA : organiza
+ACCESO_VIVERO {
+        bigint usuario_id
+        bigint vivero_id
+        datetime otorgado_en
+        datetime retirado_en
+        bigint otorgado_por
+    }

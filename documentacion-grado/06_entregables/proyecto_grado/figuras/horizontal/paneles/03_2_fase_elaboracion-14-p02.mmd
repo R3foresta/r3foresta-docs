@@ -1,0 +1,15 @@
+sequenceDiagram
+    actor P as Persona autorizada para plantar
+    participant UI as PWA
+    participant API as API NestJS
+    participant DB as PostgreSQL y PostGIS
+    participant ST as Storage
+    P->>UI: Preparar registro inicial
+    UI->>API: Consultar contexto autorizado y preparar comando
+    API->>DB: Leer plan, revisión, fecha y stock elegible
+    DB-->>API: Cantidades disponibles por especie
+    API-->>UI: Contexto autorizado
+    UI->>API: Enviar fotografías del mismo comando
+    API->>ST: Preparar originales y derivadas privadas
+    API->>DB: Registrar cargas y generaciones disponibles
+    P->>UI: Confirmar ubicación, fecha, cantidades y participantes

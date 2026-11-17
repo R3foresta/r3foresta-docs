@@ -1,0 +1,11 @@
+flowchart TB
+    R["Recolección"] -->|"origen de"| L["Lote de vivero"]
+    I["Incorporación<br/>de plantas vivas"] -->|"origen alternativo de"| L
+    L -->|"registra"| E["Evento del lote"]
+    L -->|"abastece"| A["Asignación"]
+    C["Campaña"] -->|"agrupa"| S["Subcampaña"]
+    S -->|"recibe"| A
+    S -->|"contiene"| P["Registro de plantación"]
+    A -->|"se consume en"| D["Detalle de consumo"]
+    P -->|"se desglosa en"| D
+    P -->|"conserva"| H["Participación histórica"]

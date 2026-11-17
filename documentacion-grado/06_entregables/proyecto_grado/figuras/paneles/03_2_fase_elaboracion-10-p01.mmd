@@ -1,0 +1,17 @@
+flowchart TB
+    I([Inicio])
+    B[Crear recolección en BORRADOR]
+    D[Registrar especie, material, cantidad,<br/>unidad, fecha, responsable y ubicación]
+    E[Adjuntar evidencia requerida]
+    S[Solicitar validación]
+    C{¿Ficha completa y<br/>evidencia suficiente?}
+    R[Rechazar con observaciones]
+    V[Recibir y validar por revisor autorizado<br/>distinto del recolector; congelar snapshots]
+    I --> B
+    B --> D
+    D --> E
+    E --> S
+    S --> C
+    C -- No --> R
+    R --> D
+    C -- Sí --> V

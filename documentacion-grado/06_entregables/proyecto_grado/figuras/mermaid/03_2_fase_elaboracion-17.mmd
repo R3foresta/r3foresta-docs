@@ -1,4 +1,4 @@
-flowchart LR
+flowchart TB
     U["Persona usuaria"] --> PWA["PWA React y TypeScript<br/>captura, consulta y recuperación"]
     PWA -->|"HTTPS y Bearer en privado"| API["API NestJS<br/>identidad, autoridad y operación"]
     API --> RPC["RPC transaccionales<br/>locks, saldos y resultado"]

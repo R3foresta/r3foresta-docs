@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant PWA as PWA
+    participant API as API NestJS
+    participant DB as PostgreSQL/PostGIS
+    PWA->>PWA: Persistir clave y contenido definitivo
+    PWA->>API: Enviar registro con comando_id
+    API->>DB: Ejecutar operación transaccional
+    alt El intento ya tiene resultado terminal
+        DB-->>API: Recuperar el mismo recibo
+    else Primera ejecución válida
+        DB->>DB: Revalidar autoridad, ACTIVA, plan y fecha
+        DB->>DB: Evaluar GPS y validar evidencia y cantidades
+        Note over DB: Exterior válido con advertencia<br/>Fallo técnico sin confirmación
+        DB->>DB: Consumir stock elegible mediante LIFO
+        DB->>DB: Guardar registro, detalles y snapshots
+        DB->>DB: Vincular evidencia y recibo en la<br/>transacción
+        DB-->>API: Confirmación o rechazo durable
+    end
+    API-->>PWA: Resultado del mismo intento

@@ -1,4 +1,4 @@
-flowchart TD
+flowchart TB
     I(["Inicio"]) --> MOD{"Modalidad de ingreso"}
     MOD -->|"Desde Recolección"| O["Consultar origen validado, unidad y saldo<br/>con autorización vigente"]
     O --> T["Crear lote, INICIO y consumo<br/>en una transacción"]
@@ -6,7 +6,7 @@ flowchart TD
     P --> R{"¿Hay plantas vivas?"}
     R -->|"Sí"| E["Registrar EMBOLSADO observado"]
     R -->|"No, se descarta"| X["Registrar descarte, causa y evidencia"]
-    MOD -->|"Plantines o existencias previas"| AD["ADMIN registra especie, variedad,<br/>procedencia, fecha, cantidad y etapa"]
+    MOD -->|"Plantines o existencias previas"| AD["ADMIN registra especie, procedencia,<br/>fecha, cantidad y foto privada"]
     AD --> N["Crear base inicial una sola vez<br/>sin consumo M1 ni embolsado ficticio"]
     E --> SAL["Consultar saldo físico e historial"]
     N --> SAL

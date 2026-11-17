@@ -1,0 +1,13 @@
+erDiagram
+    direction TB
+    RECOLECCION |o--o{ LOTE : origen_condicional
+    INCORPORACION |o--|| LOTE : ingreso_alternativo
+INCORPORACION {
+        string modalidad
+        string procedencia
+        string referencia_procedencia
+        date fecha_recepcion_o_conteo
+        int cantidad_viva
+        string identidad_vegetal_snapshot
+        string responsable_snapshot
+    }

@@ -1,0 +1,13 @@
+flowchart TB
+    R["Rechazo confirmado sin efecto<br/>revisar captura permitida"]
+    OK["Abrir el mismo comprobante"]
+    U["Resultado pendiente de confirmar"]
+    REC["Recuperar con misma clave y contenido"]
+    TERM{"¿Hay resultado terminal?"}
+    FIN(["Fin"])
+    U --> REC
+    REC --> TERM
+    TERM -->|"Confirmado"| OK
+    TERM -->|"Rechazado"| R
+    TERM -->|"Aún inconcluso"| U
+    OK --> FIN

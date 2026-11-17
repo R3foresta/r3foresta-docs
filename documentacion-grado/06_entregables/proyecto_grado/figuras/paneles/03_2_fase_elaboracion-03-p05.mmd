@@ -1,0 +1,11 @@
+flowchart TB
+    ADM["ADMIN global"]
+    PLA["Plantador autorizado"]
+    ASC["Administrador de subcampaña"]
+    C11(["CU-11<br/>Registrar plantación inicial"])
+    ACC(["Gestionar permisos<br/>por subcampaña"])
+    ADM --- C11
+    ADM --- ACC
+    PLA --- C11
+    ASC --- C11
+    ASC --- ACC

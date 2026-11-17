@@ -1,0 +1,16 @@
+classDiagram
+    direction LR
+    class AdministradorGlobal
+    class OperadorRecoleccion
+    class PersonaConsultante
+    class RevisorRecoleccion
+    class UsuarioAutenticado
+    class Visitante
+    PersonaConsultante <|-- Visitante
+    PersonaConsultante <|-- UsuarioAutenticado
+    UsuarioAutenticado <|-- AdministradorGlobal
+    UsuarioAutenticado <|-- OperadorRecoleccion
+    UsuarioAutenticado <|-- RevisorRecoleccion
+    note for AdministradorGlobal "Rol global ADMIN. Administración transversal y operación sujeta a reglas del dominio."
+    note for OperadorRecoleccion "GENERAL o ADMIN. Edición y envío según autoría y estado."
+    note for RevisorRecoleccion "VALIDADOR o ADMIN."

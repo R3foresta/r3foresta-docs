@@ -1,0 +1,32 @@
+classDiagram
+    direction LR
+
+    class PersonaConsultante
+    class Visitante
+    class UsuarioAutenticado
+    class AdministradorGlobal
+    class OperadorRecoleccion
+    class RevisorRecoleccion
+    class OperarioVivero
+    class CoordinadorPlantacion
+    class Plantador
+    class AdministradorSubcampania
+
+    PersonaConsultante <|-- Visitante
+    PersonaConsultante <|-- UsuarioAutenticado
+
+    UsuarioAutenticado <|-- AdministradorGlobal
+    UsuarioAutenticado <|-- OperadorRecoleccion
+    UsuarioAutenticado <|-- RevisorRecoleccion
+    UsuarioAutenticado <|-- OperarioVivero
+    UsuarioAutenticado <|-- CoordinadorPlantacion
+    UsuarioAutenticado <|-- Plantador
+    UsuarioAutenticado <|-- AdministradorSubcampania
+
+    note for AdministradorGlobal "Rol global ADMIN. Administración transversal y operación sujeta a reglas del dominio."
+    note for OperadorRecoleccion "GENERAL o ADMIN. Edición y envío según autoría y estado."
+    note for RevisorRecoleccion "VALIDADOR o ADMIN."
+    note for OperarioVivero "Acceso por vivero. Recepción según rol, asignación y separación del recolector."
+    note for CoordinadorPlantacion "Responsabilidad logística en una subcampaña."
+    note for Plantador "Permiso PLANTADOR en una subcampaña."
+    note for AdministradorSubcampania "Permiso contextual. Planta y gestiona plantadores de su ámbito."

@@ -1,0 +1,14 @@
+flowchart TB
+    REC["Semillas o esquejes<br/>registrados en Recolección"]
+    VAL["Recepción y validación<br/>de Recolección"]
+    INI["INICIO de lote<br/>consumo atómico del origen"]
+    PROC["Material en proceso<br/>sin saldo vivo"]
+    RES{"Resultado observado"}
+    EMB["EMBOLSADO<br/>crea saldo vivo"]
+    PRE["DESCARTE_PRE_EMBOLSADO<br/>y cierre"]
+    REC --> VAL
+    VAL --> INI
+    INI --> PROC
+    PROC --> RES
+    RES -->|"Plantas vivas"| EMB
+    RES -->|"Sin plantas viables"| PRE

@@ -1,0 +1,18 @@
+erDiagram
+    direction TB
+    recoleccion ||..o| recoleccion_recepcion : recoleccion_id
+recoleccion {
+        bigint id PK
+        date fecha
+        text codigo_trazabilidad UK
+        numeric saldo_actual
+        bigint revision_captura
+    }
+recoleccion_recepcion {
+        bigint id PK
+        bigint recoleccion_id FK, UK
+        bigint vivero_id FK
+        numeric cantidad_recibida
+        date fecha_recepcion
+        timestamp_with_time_zone registrado_en
+    }

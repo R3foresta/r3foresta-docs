@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant UI as PWA
+    participant API as API NestJS
+    participant DB as PostgreSQL y PostGIS
+    UI->>API: Enviar identidad y contenido del<br/>intento
+    API->>DB: Ejecutar comando del actor
+    alt Ya existe resultado terminal
+        DB-->>API: Recuperar el mismo recibo
+    else Nueva intención por validar
+        DB->>DB: Revalidar autoridad, ACTIVA, plan,<br/>fotos y geografía
+        DB->>DB: Bloquear stock elegible y consumir<br/>LIFO
+        DB->>DB: Guardar registro, detalles,<br/>snapshots y vínculos de evidencia
+        DB->>DB: Guardar resultado terminal en la<br/>misma transacción
+        DB-->>API: Confirmación o rechazo durable
+    end
+    Note over API,DB: Plantar no vuelve a disminuir el<br/>lote de Vivero
+    API-->>UI: Resultado del intento

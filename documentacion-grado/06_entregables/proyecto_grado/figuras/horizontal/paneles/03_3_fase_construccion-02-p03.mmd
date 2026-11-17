@@ -1,0 +1,17 @@
+sequenceDiagram
+    actor U as Persona autorizada
+    participant PWA as PWA
+    participant API as API NestJS
+    participant DB as PostgreSQL/PostGIS
+    opt Respuesta perdida o inconclusa
+        PWA->>API: Consultar resultado propio con la misma clave
+        API->>DB: Leer recibo sin nuevo consumo
+        DB-->>API: Terminal o resultado aún no determinado
+        API-->>PWA: Estado recuperable
+        Note over PWA,API: Reenvío autorizado conserva clave y contenido
+    end
+    U->>PWA: Consultar comprobante o Mis registros
+    PWA->>API: Solicitar detalle propio
+    API->>DB: Verificar autoría o participación histórica
+    DB-->>API: Datos y referencia de evidencia permitidos
+    API-->>PWA: Detalle según audiencia

@@ -1,0 +1,18 @@
+erDiagram
+    direction TB
+    recoleccion |o..o{ lote_vivero : recoleccion_id
+recoleccion {
+        bigint id PK
+        date fecha
+        text codigo_trazabilidad UK
+        numeric saldo_actual
+        bigint revision_captura
+    }
+lote_vivero {
+        bigint id PK
+        bigint recoleccion_id FK "NULL"
+        bigint planta_id FK
+        bigint vivero_id FK
+        integer saldo_vivo_actual "NULL"
+        text codigo_trazabilidad UK
+    }

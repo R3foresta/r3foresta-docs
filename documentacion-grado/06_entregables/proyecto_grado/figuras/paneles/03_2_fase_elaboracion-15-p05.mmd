@@ -1,0 +1,8 @@
+classDiagram
+    direction TB
+    class EventoLote
+    class Evidencia
+    class Plantacion
+    EventoLote "0..1" -- "0..*" Evidencia : documenta
+    Plantacion "0..1" -- "1..*" Evidencia : documenta
+    note for Evidencia "Cada evidencia pertenece a un solo hecho<br/>según su tipo. Evento y plantación son<br/>vínculos excluyentes."

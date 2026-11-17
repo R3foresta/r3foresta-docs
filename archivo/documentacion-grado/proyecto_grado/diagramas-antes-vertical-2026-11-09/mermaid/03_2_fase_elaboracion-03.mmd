@@ -1,0 +1,68 @@
+flowchart LR
+    ADM["ADMIN global"]
+    REC["Operador de Recolección"]
+    REV["Revisor de Recolección"]
+    VIV["Operario de Vivero"]
+    COO["Coordinador de Plantación"]
+    PLA["Plantador autorizado"]
+    ASC["Administrador de subcampaña"]
+    PUB["Persona consultante"]
+    PRO["Autor o participante autenticado"]
+    CON["Persona autorizada<br/>para consulta operativa"]
+
+    subgraph SYS["R3Foresta · límite del sistema"]
+        C1(["CU-01<br/>Administrar datos maestros"])
+        UR(["Administrar usuarios<br/>y roles globales"])
+        AV(["Asignar operarios<br/>a viveros"])
+
+        C2(["CU-02<br/>Registrar y completar recolección"])
+        C3(["CU-03<br/>Revisar recolección"])
+        C4(["CU-04<br/>Afectar saldo de Recolección"])
+
+        C5(["CU-05<br/>Iniciar lote desde Recolección"])
+        C6(["CU-06<br/>Registrar resultado observado"])
+        C7(["CU-07<br/>Registrar movimientos de Vivero"])
+        INC(["Incorporar plantines<br/>e inventario inicial"])
+
+        C8(["CU-08<br/>Planificar campaña y subcampaña"])
+        C9(["CU-09<br/>Asignar plantas a subcampaña"])
+        C10(["CU-10<br/>Devolver plantas"])
+        C11(["CU-11<br/>Registrar plantación inicial"])
+
+        ACC(["Gestionar permisos<br/>por subcampaña"])
+        C12(["CU-12<br/>Reconstruir recorrido autorizado"])
+        IMP(["Consultar Impacto público"])
+        MIS(["Consultar Mis registros"])
+    end
+
+    ADM --- C1
+    ADM --- UR
+    ADM --- AV
+    ADM --- C2
+    ADM --- C3
+    ADM --- C4
+    ADM --- C5
+    ADM --- C6
+    ADM --- C7
+    ADM --- INC
+    ADM --- C8
+    ADM --- C9
+    ADM --- C10
+    ADM --- C11
+    ADM --- ACC
+    ADM --- C12
+
+    REC --- C2
+    REC --- C4
+    REV --- C3
+    VIV --- C5
+    VIV --- C6
+    VIV --- C7
+    COO --- C9
+    COO --- C10
+    PLA --- C11
+    ASC --- C11
+    ASC --- ACC
+    PUB --- IMP
+    PRO --- MIS
+    CON --- C12

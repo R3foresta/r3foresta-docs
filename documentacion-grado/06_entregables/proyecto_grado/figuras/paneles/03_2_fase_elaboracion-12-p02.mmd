@@ -1,0 +1,13 @@
+flowchart TB
+    V{"Validación transaccional"}
+    R["Rechazo confirmado sin efecto<br/>revisar captura permitida"]
+    T["Consumir LIFO y guardar registro,<br/>detalles, participantes, evidencia y recibo"]
+    RESP{"¿Respuesta conocida?"}
+    OK["Abrir el mismo comprobante"]
+    U["Resultado pendiente de confirmar"]
+    V -->|"Cuenta, permiso, plan, stock<br/>o datos no válidos"| R
+    V -->|"Evaluador espacial falla"| R
+    V -->|"Coordenada evaluada<br/>interior o exterior advertido"| T
+    T --> RESP
+    RESP -->|"Sí"| OK
+    RESP -->|"No"| U

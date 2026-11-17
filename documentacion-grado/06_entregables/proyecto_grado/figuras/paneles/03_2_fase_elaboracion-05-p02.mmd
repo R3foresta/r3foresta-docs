@@ -1,0 +1,18 @@
+flowchart TB
+    AD["ADMIN global"]
+    INC(["Incorporar plantines"])
+    INV(["Registrar inventario inicial"])
+    ID(["Identificar especie, procedencia,<br/>fecha, cantidad y foto privada"])
+    BASE(["Crear lote, saldo vivo<br/>e historial de incorporación"])
+    DOC(["Adjuntar comprobante<br/>o nota opcional"])
+    EVI(["Vincular evidencia operativa"])
+    AD --- INC
+    AD --- INV
+    INC -.->|"«include»"| ID
+    INV -.->|"«include»"| ID
+    INC -.->|"«include»"| BASE
+    INV -.->|"«include»"| BASE
+    INC -.->|"«include»"| EVI
+    INV -.->|"«include»"| EVI
+    DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INC
+    DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INV

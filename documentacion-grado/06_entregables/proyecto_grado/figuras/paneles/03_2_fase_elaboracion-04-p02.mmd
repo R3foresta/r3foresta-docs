@@ -1,0 +1,13 @@
+flowchart TB
+    RV["VALIDADOR o ADMIN"]
+    VAL(["Comprobar ficha y evidencia"])
+    REV(["Revisar recolección"])
+    APR(["Recibir, validar y congelar identidad"])
+    REJ(["Rechazar con motivo"])
+    HIS(["Registrar historial"])
+    RV --- REV
+    RV --- APR
+    RV --- REJ
+    REV -.->|"«include»"| VAL
+    REJ -.->|"«include»"| HIS
+    APR -.->|"«include»"| HIS

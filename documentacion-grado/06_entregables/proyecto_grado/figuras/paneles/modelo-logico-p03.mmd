@@ -1,0 +1,10 @@
+flowchart TB
+    A["ASIGNACION"]
+    P["PLANTACION"]
+    D["DETALLE_CONSUMO"]
+    H["PARTICIPANTE"]
+    U["USUARIO"]
+    A -->|"1 a 0..*"| D
+    P -->|"1 a 1..*"| D
+    P -->|"1 a 0..*"| H
+    U -->|"1 a 0..*"| H

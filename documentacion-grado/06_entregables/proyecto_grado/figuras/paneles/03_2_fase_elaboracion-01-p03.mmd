@@ -1,0 +1,22 @@
+flowchart TB
+    EMB["EMBOLSADO<br/>crea saldo vivo"]
+    INC["INCORPORACIÓN<br/>crea saldo vivo una sola vez"]
+    LOTE["Lote trazable de plantas vivas"]
+    MAN["Manejo y adaptabilidad"]
+    MER["Merma real registrada"]
+    SAL["Saldo físico disponible"]
+    ENTREGA["Entrega física a subcampaña"]
+    ASIG["Asignación con lote,<br/>especie, cantidad y propósito"]
+    PLANT["Plantación inicial autorizada<br/>consumo LIFO de asignaciones"]
+    DEV["Remanente devuelto físicamente"]
+    EMB --> LOTE
+    INC --> LOTE
+    LOTE --> MAN
+    MAN --> MER
+    MAN --> SAL
+    MER --> SAL
+    SAL --> ENTREGA
+    ENTREGA --> ASIG
+    ASIG --> PLANT
+    ASIG --> DEV
+    DEV --> SAL

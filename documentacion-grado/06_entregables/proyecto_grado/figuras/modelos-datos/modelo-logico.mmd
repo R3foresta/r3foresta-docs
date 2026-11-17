@@ -1,0 +1,12 @@
+flowchart TB
+    R["RECOLECCION"] -->|"0..1 por lote"| L["LOTE"]
+    I["INCORPORACION"] -->|"0..1 por lote"| L
+    L -->|"1 a 0..*"| E["EVENTO_LOTE"]
+    L -->|"1 a 0..*"| A["ASIGNACION"]
+    C["CAMPANIA"] -->|"1 a 0..*"| S["SUBCAMPANIA"]
+    S -->|"1 a 0..*"| A
+    S -->|"1 a 0..*"| P["PLANTACION"]
+    A -->|"1 a 0..*"| D["DETALLE_CONSUMO"]
+    P -->|"1 a 1..*"| D
+    P -->|"1 a 0..*"| H["PARTICIPANTE"]
+    U["USUARIO"] -->|"1 a 0..*"| H
