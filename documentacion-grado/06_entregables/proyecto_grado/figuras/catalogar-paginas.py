@@ -16,12 +16,17 @@ for chapter in sorted(ROOT.parent.glob('03*.md')):
         titles[key] = figures[-1]
 titles.update({
     '03_05_casos_uso_inicio': 'Figura 3.5. Actores y casos de uso generales',
+    '03_2_fase_elaboracion-03': 'Figura 3.8. Actores y capacidades del diseño integrado',
+    '03_2_fase_elaboracion-04': 'Figura 3.9. Casos de uso específicos de Recolección',
+    '03_2_fase_elaboracion-05': 'Figura 3.10. Casos de uso específicos de Vivero',
+    '03_2_fase_elaboracion-06': 'Figura 3.11. Casos de uso específicos de Plantación',
     'modelo-conceptual': 'Figura 3.20 · vista conceptual resumida',
     'modelo-logico': 'Figura 3.21 · vista lógica resumida',
     'modelo-fisico': 'Sección 3.3.8.3 · modelo físico parcial del recorrido',
 })
 lines = [
     '# Figuras para carta vertical', '',
+    'Las figuras 3.5 y 3.8–3.11 de este catálogo corresponden a la edición del 16 de noviembre. Consulta las [láminas UML vigentes, incluido el detalle de CU-11](../casos-de-uso/README.md).', '',
     'Edición del 16 de noviembre de 2026. Las láminas usan un área de 468 × 620 pt '
     '(16,51 × 21,87 cm) dentro de hojas carta verticales de 612 × 792 pt '
     '(21,59 × 27,94 cm). Insertar cada PNG al ancho máximo de 16,51 cm, '
@@ -64,9 +69,9 @@ lines += ['',
     'python3 componer-paginas.py',
     'python3 catalogar-paginas.py',
     '```', '',
-    'Los bloques Mermaid del capítulo son la fuente de los 23 diagramas; '
+    'Los bloques Mermaid del capítulo son la fuente de los diagramas Mermaid; '
     'los tres modelos resumidos mantienen sus propias fuentes en `modelos-datos/`. '
-    'El generador de actores conserva la Figura 3.5. El compositor detiene la '
+    'El generador de actores conserva la edición anterior de la Figura 3.5. El compositor detiene la '
     'generación si una lámina incumple el tamaño mínimo.', '',
 ]
 (ROOT / 'paginas/README.md').write_text('\n'.join(lines))

@@ -683,29 +683,13 @@ La [realización de capacidades en 3.2.3](03_2_fase_elaboracion.md#323-capacidad
 
 <!-- catalogo-cu-fin -->
 
-La Figura 3.5 representa esta frontera mediante notación UML de casos de uso: actores externos, elipses para los objetivos y asociaciones con el sistema. Conserva los identificadores del catálogo de Elaboración; no representa tablas, pantallas ni secuencias de ejecución.
+La Figura 3.5 reúne los doce casos de uso en un mismo límite de sistema. Los agrupa por módulo y muestra quién interviene en cada parte del recorrido.
 
 **Figura 3.5. Actores y casos de uso generales del sistema académico**
 
-La figura se presenta en cuatro partes independientes para insertarlas en hojas carta verticales. ADMIN y el límite del mismo sistema se repiten para facilitar la lectura.
+![Figura 3.5. Casos de uso generales](figuras/casos-de-uso/figura-3-05.svg)
 
-**a) General y Recolección**
-
-![Figura 3.5a: General y Recolección](figuras/03_05_casos_uso_inicio.svg)
-
-**b) Vivero**
-
-![Figura 3.5b: Vivero](figuras/03_05_casos_uso_inicio_b.svg)
-
-**c) Plantación y acceso contextual**
-
-![Figura 3.5c: Plantación y acceso contextual](figuras/03_05_casos_uso_inicio_c.svg)
-
-**d) Consulta y administración contextual**
-
-![Figura 3.5d: consulta y administración contextual](figuras/03_05_casos_uso_inicio_d.svg)
-
-*Nota.* Elaboración propia a partir de la tabla anterior, los requisitos `RF-GEN-*`, `RF-REC-*`, `RF-VIV-*` y `RF-PLA-*` seleccionados para el alcance académico, y PA-S02/PA-S03 para situar las audiencias y el acceso al registro de Plantación. Las asociaciones indican interacciones principales y no privilegios exclusivos; una misma persona puede desempeñar varios actores. Se distinguen consulta pública, consulta propia por vínculo autorizado y consulta operativa. Administrar una subcampaña no concede administración global, logística ni facultad para designar otros administradores. PA-S02 y PA-S03 aportan contexto al recorrido académico; no amplían sus criterios de evaluación. El diagrama expresa interacciones y no acredita implementación ni cobertura integral de acceso o incorporación. Las reglas, alternativas y criterios de aceptación se desarrollan en la sección 3.2.
+*Nota.* Una asociación indica una interacción principal. La autorización se comprueba según la operación y su ámbito. La consulta pública, la consulta propia y la consulta operativa muestran información distinta.
 
 CU-04 conserva la denominación «afectar saldo de Recolección». Según RN-REC-10A, el consumo hacia Vivero se genera al iniciar el lote mediante CU-05; no constituye una acción manual independiente del operador de Recolección. El desecho sigue su operación autorizada correspondiente.
 

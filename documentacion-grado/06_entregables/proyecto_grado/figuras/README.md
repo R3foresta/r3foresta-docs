@@ -1,6 +1,6 @@
 # Diagramas del Capítulo III
 
-Los documentos del capítulo conservan la fuente vigente de los diagramas Mermaid. Los 23 archivos independientes enlazados abajo son copias generadas para edición y exportación. Regenerarlos tras modificar los documentos:
+Los documentos del capítulo conservan la fuente vigente de los diagramas Mermaid. Los 19 archivos independientes enlazados abajo son copias generadas para edición y exportación. Regenerarlos tras modificar los documentos:
 
 ```sh
 node documentacion-grado/06_entregables/proyecto_grado/figuras/exportar-mermaid.mjs
@@ -10,11 +10,11 @@ node documentacion-grado/06_entregables/proyecto_grado/figuras/exportar-mermaid.
 
 Las figuras vigentes se preparan para hojas carta de 612 × 792 pt (21,59 × 27,94 cm), con un área de figura de 468 × 620 pt. Los diagramas extensos se dividen en paneles; se repiten los nodos frontera y los participantes para conservar continuidad. El [catálogo de láminas verticales](paginas/README.md) es la entrada para insertar las figuras en el documento. Los SVG completos sirven para consulta y edición, y no deben reducirse a una sola página cuando su tamaño de texto resulte insuficiente.
 
-Los [modelos de datos](modelos-datos/README.md) conservan sus fuentes editables. Las carpetas `paneles/`, `renderizados/` y `paginas/` se regeneran desde las fuentes vigentes. La [edición horizontal anterior](horizontal/README.md) queda como antecedente, sustituida por la corrección del autor del 16 de noviembre. No se actualizó ningún documento remoto de Google Docs.
+Los [modelos de datos](modelos-datos/README.md) conservan sus fuentes editables. Las carpetas `paneles/`, `renderizados/` y `paginas/` se regeneran desde las fuentes vigentes. La [edición horizontal anterior](horizontal/README.md) queda como antecedente, sustituida por la corrección del autor del 16 de noviembre. Las láminas anteriores de estas figuras siguen disponibles en la edición del 16 de noviembre.
 
 ## Diagramas en SVG
 
-- Figura 3.5 en cuatro SVG independientes: [a) General y Recolección](03_05_casos_uso_inicio.svg), [b) Vivero](03_05_casos_uso_inicio_b.svg), [c) Plantación y acceso](03_05_casos_uso_inicio_c.svg), [d) Consultas](03_05_casos_uso_inicio_d.svg).
+- [Casos de uso UML del Capítulo III](casos-de-uso/README.md): Figuras 3.5 y 3.8–3.11A, con fuentes SVG y láminas vectoriales.
 - [Modelo físico completo y cinco vistas temáticas](../../../../database/00_database_schema.md): SVG y fuentes Mermaid, junto con procedencia y scripts de generación.
 
 ## Fuentes Mermaid del capítulo
@@ -24,10 +24,6 @@ Los [modelos de datos](modelos-datos/README.md) conservan sus fuentes editables.
 | Figura 3.4. Flujo actual y soportes de información identificados | [Documento](../03_1_fase_inicio.md) | [Mermaid](mermaid/03_1_fase_inicio-01.mmd) |
 | Figura 3.6. Recorrido del diseño integrado y variantes de ingreso | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-01.mmd) |
 | Figura 3.7. Genealogía del material vegetal en la ruta principal | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-02.mmd) |
-| Figura 3.8. Actores y capacidades del diseño integrado | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-03.mmd) |
-| Figura 3.9. Casos de uso específicos de Recolección | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-04.mmd) |
-| Figura 3.10. Casos de uso específicos de Vivero | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-05.mmd) |
-| Figura 3.11. Casos de uso específicos de Plantación | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-06.mmd) |
 | Figura 3.12. Estados de Recolección y saldo operativo | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-07.mmd) |
 | Figura 3.13. Bases iniciales y movimientos del lote de vivero | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-08.mmd) |
 | Figura 3.14. Estados operativos de la subcampaña pertinentes al recorrido | [Documento](../03_2_fase_elaboracion.md) | [Mermaid](mermaid/03_2_fase_elaboracion-09.mmd) |

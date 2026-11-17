@@ -239,304 +239,41 @@ Las cinco especificaciones PA-S00–PA-S04 alimentan además los componentes de 
 
 ### 3.2.4. Realización de casos de uso: vista general
 
-La Figura 3.5 de Inicio conserva la vista general UML actualizada en `445f24f`. La Figura 3.8 desarrolla su distribución funcional, incorporando los permisos contextuales, la consulta propia y las capacidades de Vivero. Una asociación señala interacción y no concede por sí sola autoridad. Una persona puede desempeñar varias funciones sin tener varios roles globales.
+La Figura 3.8 desarrolla la vista general de la Figura 3.5. Distingue el rol global, la autoridad operativa por vivero y los permisos por subcampaña. Una misma persona puede actuar en más de un ámbito.
 
 **Figura 3.8. Actores y capacidades del diseño integrado**
 
-<!-- diagrama: 03_2_fase_elaboracion-03 -->
-```mermaid
-flowchart TB
-    ADM["ADMIN global"]
-    REC["Operador de Recolección"]
-    REV["Revisor de Recolección"]
-    VIV["Operario de Vivero"]
-    COO["Coordinador de Plantación"]
-    PLA["Plantador autorizado"]
-    ASC["Administrador de subcampaña"]
-    PUB["Persona consultante"]
-    PRO["Autor o participante autenticado"]
-    CON["Persona autorizada<br/>para consulta operativa"]
+![Figura 3.8. Actores y capacidades del diseño integrado](figuras/casos-de-uso/figura-3-08.svg)
 
-    subgraph SYS["R3Foresta · límite del sistema"]
-        C1(["CU-01<br/>Administrar datos maestros"])
-        UR(["Administrar usuarios<br/>y roles globales"])
-        AV(["Asignar operarios<br/>a viveros"])
-
-        C2(["CU-02<br/>Registrar y completar recolección"])
-        C3(["CU-03<br/>Revisar recolección"])
-        C4(["CU-04<br/>Afectar saldo de Recolección"])
-
-        C5(["CU-05<br/>Iniciar lote desde Recolección"])
-        C6(["CU-06<br/>Registrar resultado observado"])
-        C7(["CU-07<br/>Registrar movimientos de Vivero"])
-        INC(["Incorporar plantines<br/>e inventario inicial"])
-
-        C8(["CU-08<br/>Planificar campaña y subcampaña"])
-        C9(["CU-09<br/>Asignar plantas a subcampaña"])
-        C10(["CU-10<br/>Devolver plantas"])
-        C11(["CU-11<br/>Registrar plantación inicial"])
-
-        ACC(["Gestionar permisos<br/>por subcampaña"])
-        C12(["CU-12<br/>Reconstruir recorrido autorizado"])
-        IMP(["Consultar Impacto público"])
-        BAN(["RF-REC-06<br/>Consultar banco público de semillas"])
-        MIS(["Consultar Mis registros"])
-    end
-
-    ADM --- C1
-    ADM --- UR
-    ADM --- AV
-    ADM --- C2
-    ADM --- C3
-    ADM --- C4
-    ADM --- C5
-    ADM --- C6
-    ADM --- C7
-    ADM --- INC
-    ADM --- C8
-    ADM --- C9
-    ADM --- C10
-    ADM --- C11
-    ADM --- ACC
-    ADM --- C12
-
-    REC --- C2
-    REC --- C4
-    REV --- C3
-    VIV --- C5
-    VIV --- C6
-    VIV --- C7
-    COO --- C9
-    COO --- C10
-    PLA --- C11
-    ASC --- C11
-    ASC --- ACC
-    PUB --- IMP
-    PUB --- BAN
-    PRO --- MIS
-    CON --- C12
-
-    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
-    C1 ~~~ UR ~~~ AV ~~~ C2 ~~~ C3 ~~~ C4 ~~~ C5 ~~~ C6 ~~~ C7 ~~~ INC ~~~ C8 ~~~ C9 ~~~ C10 ~~~ C11 ~~~ ACC ~~~ C12 ~~~ IMP ~~~ MIS
-```
-
-*Nota.* Adaptación de los diagramas revisados el 4 de noviembre y de la Figura 3.5 vigente. CU-01–CU-12 mantienen sus IDs. Las incorporaciones y el acceso por vivero se interpretan con el alcance acreditado por sus entregas; la gestión de permisos y las consultas conservan los contratos PA-S02/03. En cada operación se comprueban cuenta, ámbito, estado y reglas del dominio.
+*Nota.* La coordinación logística y los permisos de subcampaña se comprueban por separado. La consulta propia depende del vínculo con el registro y la consulta operativa depende de la autorización correspondiente.
 
 ### 3.2.5. Realización de casos de uso específicos y relaciones incluidas o extendidas
 
-Las asociaciones actor–caso se dibujan sin dirección. «include» apunta del caso base al comportamiento obligatorio reutilizado; «extend» apunta del comportamiento opcional al caso base e indica su condición. Los resultados excluyentes de revisión se explican en el proceso, sin convertir una elección en una extensión obligatoria.
+La línea continua asocia un actor con un caso de uso. La flecha «include» va hacia un comportamiento obligatorio. La flecha «extend» va hacia el caso base y se aplica cuando se cumple la condición indicada.
 
 **Figura 3.9. Casos de uso específicos de Recolección**
 
-<!-- diagrama: 03_2_fase_elaboracion-04 -->
-```mermaid
-flowchart TB
-    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
-    OP["Operador de Recolección"]
-    RV["VALIDADOR o ADMIN"]
-    AD["ADMIN"]
-    VIS["Visitante sin cuenta"]
+![Figura 3.9. Casos de uso específicos de Recolección](figuras/casos-de-uso/figura-3-09.svg)
 
-    subgraph M1["M1 · Recolección"]
-        CRE(["Crear recolección"])
-        EDI(["Editar ficha permitida"])
-        DAT(["Registrar especie, material,<br/>cantidad, unidad y ubicación"])
-        ENV(["Solicitar validación"])
-        VAL(["Comprobar ficha y evidencia"])
-        REV(["Revisar recolección"])
-        APR(["Recibir, validar y congelar identidad"])
-        REJ(["Rechazar con motivo"])
-        COR(["Corregir rechazo y reenviar"])
-        DEL(["Eliminar lógicamente<br/>un BORRADOR"])
-        DES(["Registrar DESECHO"])
-        SAL(["Validar estado,<br/>unidad y saldo"])
-        HIS(["Registrar historial"])
-        CONH(["Consultar historial autorizado"])
-        ESP(["Consultar historial administrativo<br/>por especie"])
-        BAN(["RF-REC-06<br/>Consultar banco público de semillas"])
-    end
-
-    OP --- CRE
-    OP --- EDI
-    OP --- ENV
-    OP --- COR
-    OP --- DEL
-    OP --- DES
-    OP --- CONH
-
-    AD --- CRE
-    AD --- EDI
-    AD --- DEL
-    AD --- DES
-    AD --- ESP
-
-    VIS --- BAN
-
-    RV --- REV
-    RV --- APR
-    RV --- REJ
-
-    CRE -.->|"«include»"| DAT
-    ENV -.->|"«include»"| VAL
-    COR -.->|"«include»"| VAL
-    REV -.->|"«include»"| VAL
-    REJ -.->|"«include»"| HIS
-    APR -.->|"«include»"| HIS
-    DEL -.->|"«include»"| HIS
-    DES -.->|"«include»"| SAL
-    DES -.->|"«include»"| HIS
-
-    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
-    CRE ~~~ EDI ~~~ ENV ~~~ COR ~~~ REV ~~~ APR ~~~ REJ ~~~ DEL ~~~ DES ~~~ CONH ~~~ ESP
-```
-
-*Nota.* Adaptación de RF-REC-01–RF-REC-06. La consulta pública admite los cuatro estados y fotografías sanitizadas solo de VALIDADO; aplica su proyección y distingue fallo de vacío. La eliminación lógica se limita a BORRADOR y conserva historial; aprobar o rechazar no habilita a editar un registro validado. La inclusión de «Registrar historial» representa escritura del hecho, no una consulta que el usuario deba abrir.
+*Nota.* La revisión exige un actor distinto del recolector. Los borradores admiten eliminación lógica y conservan su historial. La consulta pública muestra fotografías preparadas para publicación solo de registros validados.
 
 **Figura 3.10. Casos de uso específicos de Vivero**
 
-<!-- diagrama: 03_2_fase_elaboracion-05 -->
-```mermaid
-flowchart TB
-    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
-    OP["Operario de Vivero<br/>operación autorizada"]
-    AD["ADMIN global"]
+![Figura 3.10. Casos de uso específicos de Vivero](figuras/casos-de-uso/figura-3-10.svg)
 
-    subgraph M2["M2 · Vivero"]
-        SEM(["Consultar semillas elegibles<br/>del vivero"])
-        INI(["Iniciar lote desde Recolección"])
-        CON(["Consumir origen y crear INICIO<br/>en una transacción"])
-
-        INC(["Incorporar plantines"])
-        INV(["Registrar inventario inicial"])
-        ID(["Identificar especie, procedencia,<br/>fecha, cantidad y foto privada"])
-        BASE(["Crear lote, saldo vivo<br/>e historial de incorporación"])
-        DOC(["Adjuntar comprobante<br/>o nota opcional"])
-
-        EMB(["Registrar EMBOLSADO"])
-        PRE(["Registrar descarte<br/>pre-embolsado"])
-        ADA(["Registrar ADAPTABILIDAD"])
-        MER(["Registrar MERMA"])
-        DES(["Registrar despacho manual"])
-        SAL(["Validar saldo físico<br/>y condiciones del lote"])
-        EVI(["Vincular evidencia operativa"])
-        HIS(["Consultar lote e historial"])
-    end
-
-    OP --- SEM
-    OP --- INI
-    OP --- EMB
-    OP --- PRE
-    OP --- ADA
-    OP --- MER
-    OP --- DES
-    OP --- HIS
-
-    AD --- INI
-    AD --- INC
-    AD --- INV
-    AD --- EMB
-    AD --- PRE
-    AD --- ADA
-    AD --- MER
-    AD --- DES
-    AD --- HIS
-
-    INI -.->|"«include»"| SEM
-    INI -.->|"«include»"| CON
-    INI -.->|"«include»"| EVI
-
-    INC -.->|"«include»"| ID
-    INV -.->|"«include»"| ID
-    INC -.->|"«include»"| BASE
-    INV -.->|"«include»"| BASE
-    INC -.->|"«include»"| EVI
-    INV -.->|"«include»"| EVI
-
-    DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INC
-    DOC -.->|"«extend»<br/>si se aporta respaldo adicional"| INV
-
-    EMB -.->|"«include»"| EVI
-    PRE -.->|"«include»"| EVI
-    MER -.->|"«include»"| SAL
-    MER -.->|"«include»"| EVI
-    DES -.->|"«include»"| SAL
-    DES -.->|"«include»"| EVI
-
-    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
-    SEM ~~~ INI ~~~ INC ~~~ INV ~~~ DOC ~~~ EMB ~~~ PRE ~~~ ADA ~~~ MER ~~~ DES ~~~ HIS
-```
-
-*Nota.* Adaptación de RF-VIV-15 y de los acuerdos refinados el 16 de noviembre. Incorporación e inventario inicial exigen foto privada y están reservados a ADMIN. La recepción de semillas exige ADMIN o VALIDADOR asignado, distinto del recolector; el manejo ordinario sigue la autoridad M2. No se añade un embolsado o aptitud ficticios para plantas ya vivas.
+*Nota.* Iniciar un lote desde Recolección consume saldo del origen. Incorporar plantas vivas establece un saldo inicial a partir de la recepción o el conteo observado, con fotografía privada. Solo ADMIN puede realizar esta incorporación.
 
 **Figura 3.11. Casos de uso específicos de Plantación**
 
-<!-- diagrama: 03_2_fase_elaboracion-06 -->
-```mermaid
-flowchart TB
-    %%{init: {"flowchart": {"rankSpacing": 160}}}%%
-    AD["ADMIN global"]
-    CO["Coordinador logístico autorizado"]
-    PL["PLANTADOR"]
-    AS["ADMINISTRADOR_SUBCAMPANIA"]
-    VI["Visitante"]
-    AU["Autor o participante autenticado"]
+![Figura 3.11. Casos de uso específicos de Plantación](figuras/casos-de-uso/figura-3-11.svg)
 
-    subgraph M3["M3 · Plantación"]
-        PLAN(["Crear campaña y planificar subcampaña"])
-        ACT(["Activar subcampaña"])
-        META(["Validar zona, coordinador,<br/>polígono y plan por especie"])
-        ENT(["Asignar plantas físicamente"])
-        DEV(["Registrar devolución física"])
-        FIS(["Validar autoridad logística<br/>y saldo disponible"])
+*Nota.* La entrega y la devolución requieren ADMIN o coordinación con autoridad sobre el vivero. La gestión de plantadores se limita a la subcampaña autorizada. La Figura 3.11A detalla el registro inicial.
 
-        REG(["Registrar plantación inicial"])
-        CTX(["Revalidar autoridad, ACTIVA,<br/>plan, fecha y stock"])
-        GEO(["Registrar GPS y evaluar<br/>relación con polígono"])
-        FOT(["Vincular fotografías"])
-        LIFO(["Consumir asignaciones elegibles<br/>y guardar detalles"])
-        COL(["Añadir colaboradores opcionales"])
+**Figura 3.11A. Registro inicial de plantación (CU-11)**
 
-        EQU(["Consultar equipo"])
-        GP(["Gestionar plantadores"])
-        GA(["Gestionar administradores contextuales"])
-        CIE(["Cerrar subcampaña"])
-        PUB(["Consultar Impacto público"])
-        PRO(["Consultar registro propio"])
-    end
+![Figura 3.11A. Registro inicial de plantación (CU-11)](figuras/casos-de-uso/figura-3-11a.svg)
 
-    AD --- PLAN
-    AD --- ACT
-    AD --- ENT
-    AD --- DEV
-    AD --- REG
-    AD --- GP
-    AD --- GA
-    AD --- CIE
-    CO --- ENT
-    CO --- DEV
-
-    PL --- REG
-    PL --- EQU
-    AS --- REG
-    AS --- EQU
-    AS --- GP
-    VI --- PUB
-    AU --- PRO
-
-    ACT -.->|"«include»"| META
-    ENT -.->|"«include»"| FIS
-    DEV -.->|"«include»"| FIS
-    REG -.->|"«include»"| CTX
-    REG -.->|"«include»"| GEO
-    REG -.->|"«include»"| FOT
-    REG -.->|"«include»"| LIFO
-    COL -.->|"«extend»<br/>si participan otras personas"| REG
-
-    %% Orden visual; estos enlaces invisibles no son relaciones del dominio.
-    PLAN ~~~ ACT ~~~ CIE ~~~ ENT ~~~ DEV ~~~ REG ~~~ COL ~~~ EQU ~~~ GP ~~~ GA ~~~ PUB ~~~ PRO
-```
-
-*Nota.* Adaptación de RF-PLA, PA-S01–PA-S03 y D01–D12. PLANTADOR y ADMINISTRADOR_SUBCAMPANIA son permisos por persona y ámbito; COORDINADOR es una responsabilidad logística. Entrega y devolución requieren ADMIN o coordinación con autoridad M2 sobre el vivero; T2 verificó localmente esta intersección, con límites de corte y entorno. El punto exterior se admite con evaluación y advertencia según el acuerdo vigente; el fallo técnico del evaluador impide confirmar el registro.
+*Nota.* Al confirmar, el sistema revalida el acceso, el estado de la subcampaña y el stock elegible. El registro conserva la procedencia del consumo y las evidencias. Si se pierde la respuesta, se recupera el resultado del mismo intento sin duplicar el consumo.
 
 ### 3.2.6. Procesos: estados, eventos y cambios de cantidad
 

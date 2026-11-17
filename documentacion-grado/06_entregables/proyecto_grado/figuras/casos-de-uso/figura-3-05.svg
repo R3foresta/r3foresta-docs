@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="632" height="827" viewBox="0 0 632 827" role="img" aria-labelledby="title description">
+  <title id="title">Actores y casos de uso generales del sistema académico</title>
+  <desc id="description">Los doce casos de uso del sistema se organizan en General, Recolección, Vivero, Plantación y Trazabilidad. Los actores externos se asocian con sus interacciones principales.</desc>
+  <defs>
+    <g id="actor" fill="none" stroke="#263630" stroke-width="1.7" stroke-linecap="round">
+      <circle cy="-17" r="5"/>
+      <path d="M0 -12V4 M-11 -6H11 M0 4L-8 16 M0 4L8 16"/>
+    </g>
+  </defs>
+  <rect width="632" height="827" fill="#fff"/>
+  <g fill="#182520" font-family="Arial, Helvetica, sans-serif" font-size="15.3">
+    <rect x="128" y="17" width="376" height="765" rx="2" fill="#fff" stroke="#263630" stroke-width="1.6"/>
+    <text x="145" y="37" text-anchor="start" font-size="16.8" font-weight="700"><tspan x="145" dy="0">R3Foresta App</tspan></text>
+    <rect x="137" y="47" width="358" height="68" rx="4" fill="#f6f8f6" stroke="#c2ccc6" stroke-width="0.8"/>
+    <text x="146" y="64" text-anchor="start" font-size="14.9" font-weight="700"><tspan x="146" dy="0">General</tspan></text>
+    <rect x="137" y="123" width="358" height="147" rx="4" fill="#f5f8f7" stroke="#c2ccc6" stroke-width="0.8"/>
+    <text x="146" y="140" text-anchor="start" font-size="14.9" font-weight="700"><tspan x="146" dy="0">Recolección</tspan></text>
+    <rect x="137" y="278" width="358" height="198" rx="4" fill="#f3f7f2" stroke="#c2ccc6" stroke-width="0.8"/>
+    <text x="146" y="295" text-anchor="start" font-size="14.9" font-weight="700"><tspan x="146" dy="0">Vivero</tspan></text>
+    <rect x="137" y="484" width="358" height="195" rx="4" fill="#faf8f2" stroke="#c2ccc6" stroke-width="0.8"/>
+    <text x="146" y="501" text-anchor="start" font-size="14.9" font-weight="700"><tspan x="146" dy="0">Plantación</tspan></text>
+    <rect x="137" y="687" width="358" height="86" rx="4" fill="#f6f8f6" stroke="#c2ccc6" stroke-width="0.8"/>
+    <text x="146" y="704" text-anchor="start" font-size="14.9" font-weight="700"><tspan x="146" dy="0">Trazabilidad</tspan></text>
+    <polyline points="63,83 192,83" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="65,172 141,172" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="65,172 108,172 108,239 141,239" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="567,172 491,172" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="65,378 99,378 151,327 192,327" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="65,378 192,378" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="65,378 99,378 151,441 192,441" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="65,538 141,538" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="567,555 536,555 536,538 491,538" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="567,555 536,555 536,611 491,611" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="65,611 141,611" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="567,735 440,735" fill="none" stroke="#495a51" stroke-width="1.25" stroke-linejoin="round"/>
+    <ellipse cx="316" cy="83" rx="124" ry="27" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="316" y="80" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="316" dy="0" font-weight="700">CU-01</tspan><tspan x="316" dy="16">Administrar datos maestros</tspan></text>
+    <ellipse cx="226" cy="172" rx="85" ry="30" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="226" y="161" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="226" dy="0" font-weight="700">CU-02</tspan><tspan x="226" dy="16">Registrar y completar</tspan><tspan x="226" dy="16">recolección</tspan></text>
+    <ellipse cx="406" cy="172" rx="85" ry="30" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="406" y="161" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="406" dy="0" font-weight="700">CU-03</tspan><tspan x="406" dy="16">Recibir y validar</tspan><tspan x="406" dy="16">o rechazar</tspan></text>
+    <ellipse cx="226" cy="239" rx="85" ry="28" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="226" y="228" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="226" dy="0" font-weight="700">CU-04</tspan><tspan x="226" dy="16">Afectar saldo de</tspan><tspan x="226" dy="16">Recolección</tspan></text>
+    <ellipse cx="316" cy="327" rx="124" ry="25" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="316" y="324" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="316" dy="0" font-weight="700">CU-05</tspan><tspan x="316" dy="16">Iniciar lote de Vivero</tspan></text>
+    <ellipse cx="316" cy="378" rx="134" ry="27" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="316" y="375" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="316" dy="0" font-weight="700">CU-06</tspan><tspan x="316" dy="16">Registrar resultado observado</tspan></text>
+    <ellipse cx="316" cy="441" rx="134" ry="28" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="316" y="438" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="316" dy="0" font-weight="700">CU-07</tspan><tspan x="316" dy="16">Registrar movimientos de Vivero</tspan></text>
+    <ellipse cx="226" cy="538" rx="85" ry="30" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="226" y="527" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="226" dy="0" font-weight="700">CU-08</tspan><tspan x="226" dy="16">Planificar campaña</tspan><tspan x="226" dy="16">y subcampaña</tspan></text>
+    <ellipse cx="406" cy="538" rx="85" ry="30" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="406" y="527" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="406" dy="0" font-weight="700">CU-09</tspan><tspan x="406" dy="16">Asignar plantas</tspan><tspan x="406" dy="16">a subcampaña</tspan></text>
+    <ellipse cx="406" cy="611" rx="85" ry="30" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="406" y="600" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="406" dy="0" font-weight="700">CU-10</tspan><tspan x="406" dy="16">Devolver plantas</tspan><tspan x="406" dy="16">al vivero</tspan></text>
+    <ellipse cx="226" cy="611" rx="85" ry="30" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="226" y="600" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="226" dy="0" font-weight="700">CU-11</tspan><tspan x="226" dy="16">Registrar plantación</tspan><tspan x="226" dy="16">inicial</tspan></text>
+    <ellipse cx="316" cy="735" rx="124" ry="30" fill="#fff" stroke="#33453d" stroke-width="1.25"/>
+    <text x="316" y="724" text-anchor="middle" font-size="15.3" font-weight="400"><tspan x="316" dy="0" font-weight="700">CU-12</tspan><tspan x="316" dy="16">Reconstruir el recorrido</tspan><tspan x="316" dy="16">autorizado</tspan></text>
+    <use href="#actor" xlink:href="#actor" x="53" y="83"/>
+    <text x="53" y="115" text-anchor="middle" font-size="14.8" font-weight="400"><tspan x="53" dy="0">ADMIN global</tspan></text>
+    <use href="#actor" xlink:href="#actor" x="53" y="172"/>
+    <text x="53" y="204" text-anchor="middle" font-size="14.8" font-weight="400"><tspan x="53" dy="0">Operador de</tspan><tspan x="53" dy="16">Recolección</tspan></text>
+    <use href="#actor" xlink:href="#actor" x="578" y="172"/>
+    <text x="578" y="204" text-anchor="middle" font-size="14.8" font-weight="400"><tspan x="578" dy="0">Revisor de</tspan><tspan x="578" dy="16">Recolección</tspan></text>
+    <use href="#actor" xlink:href="#actor" x="53" y="378"/>
+    <text x="53" y="410" text-anchor="middle" font-size="14.8" font-weight="400"><tspan x="53" dy="0">Operario de</tspan><tspan x="53" dy="16">Vivero</tspan></text>
+    <use href="#actor" xlink:href="#actor" x="53" y="538"/>
+    <text x="53" y="570" text-anchor="middle" font-size="14.8" font-weight="400"><tspan x="53" dy="0">ADMIN global</tspan></text>
+    <use href="#actor" xlink:href="#actor" x="578" y="555"/>
+    <text x="578" y="587" text-anchor="middle" font-size="14.8" font-weight="400"><tspan x="578" dy="0">Coordinación</tspan><tspan x="578" dy="16">de Plantación</tspan></text>
+    <use href="#actor" xlink:href="#actor" x="53" y="611"/>
+    <text x="53" y="643" text-anchor="middle" font-size="14.8" font-weight="400"><tspan x="53" dy="0">Persona</tspan><tspan x="53" dy="16">autorizada</tspan></text>
+    <use href="#actor" xlink:href="#actor" x="578" y="735"/>
+    <text x="578" y="767" text-anchor="middle" font-size="14.8" font-weight="400"><tspan x="578" dy="0">Usuario de</tspan><tspan x="578" dy="16">consulta</tspan></text>
+    <text x="316" y="808" text-anchor="middle" font-size="13.4" font-weight="400"><tspan x="316" dy="0">Las asociaciones muestran interacciones principales. La autorización se aplica por operación.</tspan></text>
+  </g>
+</svg>

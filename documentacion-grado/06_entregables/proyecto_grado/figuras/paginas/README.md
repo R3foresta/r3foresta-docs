@@ -1,5 +1,7 @@
 # Figuras para carta vertical
 
+Las figuras 3.5 y 3.8–3.11 de este catálogo corresponden a la edición del 16 de noviembre. Consulta las [láminas UML vigentes, incluido el detalle de CU-11](../casos-de-uso/README.md).
+
 Edición del 16 de noviembre de 2026. Las láminas usan un área de 468 × 620 pt (16,51 × 21,87 cm) dentro de hojas carta verticales de 612 × 792 pt (21,59 × 27,94 cm). Insertar cada PNG al ancho máximo de 16,51 cm, conservar su proporción y dejar espacio para el título y la nota de figura. El tamaño mínimo medido del texto del diagrama es de 9 pt a ese ancho. Reducir el ancho también reduce ese tamaño.
 
 Los diagramas extensos continúan en varias láminas. Se repiten participantes y nodos frontera; no deben fusionarse reduciendo todas las partes a una sola hoja. PNG a 288 ppp para documentos; SVG para edición y ampliación. El texto y las cardinalidades se verifican en el navegador al renderizar.
@@ -48,4 +50,4 @@ python3 componer-paginas.py
 python3 catalogar-paginas.py
 ```
 
-Los bloques Mermaid del capítulo son la fuente de los 23 diagramas; los tres modelos resumidos mantienen sus propias fuentes en `modelos-datos/`. El generador de actores conserva la Figura 3.5. El compositor detiene la generación si una lámina incumple el tamaño mínimo.
+Los bloques Mermaid del capítulo son la fuente de los diagramas Mermaid; los tres modelos resumidos mantienen sus propias fuentes en `modelos-datos/`. El generador de actores conserva la edición anterior de la Figura 3.5. El compositor detiene la generación si una lámina incumple el tamaño mínimo.

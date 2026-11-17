@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="766" viewBox="0 0 640 766" role="img" aria-labelledby="titulo descripcion">
+<title id="titulo">Figura 3.11. Casos de uso específicos de Plantación</title>
+<desc id="descripcion">La administración global planifica, activa y cierra subcampañas. La entrega y la devolución físicas se separan del registro de plantación y exigen autoridad global o coordinación con acceso al vivero del lote. Plantador y administrador de subcampaña operan en su ámbito. Se distinguen la lectura propia y la consulta pública.</desc>
+<defs>
+  <marker id="abierta" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 9 8"><path d="M0 0L8 4L0 8" fill="none" stroke="#334155" stroke-width="1.4"/></marker>
+</defs>
+<style>
+  text {font-family:Arial,'Liberation Sans',sans-serif; font-size:15.5px; fill:#111827}
+  .titulo {font-size:18px; font-weight:700}
+  .sector,.codigo {font-weight:700}
+  .contorno {fill:#fff; stroke:#334155; stroke-width:1.5}
+  .separador {stroke:#cbd5e1; stroke-width:1}
+  .caso {fill:#f8fafc; stroke:#334155; stroke-width:1.45}
+  .principal {fill:#eef4f0; stroke:#315648; stroke-width:1.8}
+  .asociacion,.actor {fill:none; stroke:#334155; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round}
+  .dependencia,.enlace-nota {fill:none; stroke:#334155; stroke-width:1.5; stroke-dasharray:6 4; stroke-linejoin:round}
+  .dependencia {marker-end:url(#abierta)}
+  .rotulo {paint-order:stroke; stroke:#fff; stroke-width:5; stroke-linejoin:round}
+  .nota {fill:#fff; stroke:#64748b; stroke-width:1.2}
+</style>
+<rect width="640" height="766" fill="#fff"/>
+<rect x="108" y="12" width="404" height="709" rx="3" class="contorno"/>
+<text x="310" y="36" class="titulo" text-anchor="middle"><tspan x="310" dy="0">R3Foresta · M3 Plantación</tspan></text>
+<path d="M108 211H512" class="separador"/>
+<path d="M108 331H512" class="separador"/>
+<path d="M108 440H512" class="separador"/>
+<path d="M108 612H512" class="separador"/>
+<text x="122" y="61" class="sector" text-anchor="start"><tspan x="122" dy="0">Planificación y ciclo de vida</tspan></text>
+<text x="122" y="234" class="sector" text-anchor="start"><tspan x="122" dy="0">Logística entre Vivero y Plantación</tspan></text>
+<text x="122" y="354" class="sector" text-anchor="start"><tspan x="122" dy="0">Registro en campo</tspan></text>
+<text x="122" y="463" class="sector" text-anchor="start"><tspan x="122" dy="0">Acceso por subcampaña</tspan></text>
+<text x="122" y="635" class="sector" text-anchor="start"><tspan x="122" dy="0">Consultas por audiencia</tspan></text>
+<path d="M58 104H91V177H134" class="asociacion"/>
+<path d="M91 111H134" class="asociacion"/>
+<path d="M91 104V72H409V80" class="asociacion"/>
+<path d="M91 177V278H131" class="asociacion"/>
+<path d="M91 278V242H407V250" class="asociacion"/>
+<path d="M91 278V395H209" class="asociacion"/>
+<path d="M91 395V506H129" class="asociacion"/>
+<path d="M91 506V474H408V478" class="asociacion"/>
+<path d="M565 278H491" class="asociacion"/>
+<path d="M516 278V316H223V306" class="asociacion"/>
+<path d="M565 387H531L402 388" class="asociacion"/>
+<path d="M565 465H535L404 405" class="asociacion"/>
+<path d="M565 465H507V506H492" class="asociacion"/>
+<path d="M507 506V571H492" class="asociacion"/>
+<path d="M58 681H129" class="asociacion"/>
+<path d="M565 681H492" class="asociacion"/>
+<ellipse cx="219" cy="111" rx="85" ry="36" class="caso"/><text x="219" y="99.0" class="" text-anchor="middle"><tspan x="219" dy="0">CU-08 · Planificar</tspan><tspan x="219" dy="17">campaña y</tspan><tspan x="219" dy="17">subcampaña</tspan></text>
+<ellipse cx="409" cy="111" rx="82" ry="31" class="caso"/><text x="409" y="107.5" class="" text-anchor="middle"><tspan x="409" dy="0">Activar</tspan><tspan x="409" dy="17">subcampaña</tspan></text>
+<ellipse cx="219" cy="177" rx="85" ry="27" class="caso"/><text x="219" y="182.0" class="" text-anchor="middle"><tspan x="219" dy="0">Cerrar subcampaña</tspan></text>
+<ellipse cx="223" cy="278" rx="92" ry="28" class="caso"/><text x="223" y="274.5" class="" text-anchor="middle"><tspan x="223" dy="0">CU-09 · Asignar</tspan><tspan x="223" dy="17">plantas físicamente</tspan></text>
+<ellipse cx="407" cy="278" rx="84" ry="28" class="caso"/><text x="407" y="274.5" class="" text-anchor="middle"><tspan x="407" dy="0">CU-10 · Devolver</tspan><tspan x="407" dy="17">plantas al vivero</tspan></text>
+<ellipse cx="309" cy="395" rx="100" ry="31" class="principal"/><text x="309" y="391.5" class="" text-anchor="middle"><tspan x="309" dy="0">CU-11 · Registrar</tspan><tspan x="309" dy="17">plantación inicial</tspan></text>
+<ellipse cx="218" cy="506" rx="89" ry="28" class="caso"/><text x="218" y="502.5" class="" text-anchor="middle"><tspan x="218" dy="0">Gestionar</tspan><tspan x="218" dy="17">administradores</tspan></text>
+<ellipse cx="408" cy="506" rx="84" ry="28" class="caso"/><text x="408" y="502.5" class="" text-anchor="middle"><tspan x="408" dy="0">Gestionar</tspan><tspan x="408" dy="17">plantadores</tspan></text>
+<ellipse cx="408" cy="571" rx="84" ry="26" class="caso"/><text x="408" y="576.0" class="" text-anchor="middle"><tspan x="408" dy="0">Consultar equipo</tspan></text>
+<ellipse cx="218" cy="681" rx="89" ry="28" class="caso"/><text x="218" y="677.5" class="" text-anchor="middle"><tspan x="218" dy="0">Consultar</tspan><tspan x="218" dy="17">registro propio</tspan></text>
+<ellipse cx="408" cy="681" rx="84" ry="28" class="caso"/><text x="408" y="677.5" class="" text-anchor="middle"><tspan x="408" dy="0">Consultar</tspan><tspan x="408" dy="17">Impacto público</tspan></text>
+<g class="actor"><circle cx="47" cy="88" r="6"/><path d="M47 94v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="47" y="146" class="" text-anchor="middle"><tspan x="47" dy="0">ADMIN</tspan><tspan x="47" dy="17">global</tspan></text>
+<g class="actor"><circle cx="576" cy="262" r="6"/><path d="M576 268v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="576" y="320" class="" text-anchor="middle"><tspan x="576" dy="0">Coordinación</tspan><tspan x="576" dy="17">con acceso al</tspan><tspan x="576" dy="17">vivero</tspan></text>
+<g class="actor"><circle cx="576" cy="371" r="6"/><path d="M576 377v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="576" y="429" class="" text-anchor="middle"><tspan x="576" dy="0">Plantador</tspan></text>
+<g class="actor"><circle cx="576" cy="449" r="6"/><path d="M576 455v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="576" y="507" class="" text-anchor="middle"><tspan x="576" dy="0">Administrador</tspan><tspan x="576" dy="17">de subcampaña</tspan></text>
+<g class="actor"><circle cx="47" cy="665" r="6"/><path d="M47 671v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="47" y="723" class="" text-anchor="middle"><tspan x="47" dy="0">Autor o</tspan><tspan x="47" dy="17">participante</tspan><tspan x="47" dy="17">efectivo</tspan></text>
+<g class="actor"><circle cx="576" cy="665" r="6"/><path d="M576 671v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="576" y="723" class="" text-anchor="middle"><tspan x="576" dy="0">Visitante</tspan><tspan x="576" dy="17">sin cuenta</tspan></text>
+</svg>

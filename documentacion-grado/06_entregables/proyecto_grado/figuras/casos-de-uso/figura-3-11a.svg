@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="659" viewBox="0 0 640 659" role="img" aria-labelledby="titulo descripcion">
+<title id="titulo">Figura 3.11A. Detalle del caso de uso CU-11</title>
+<desc id="descripcion">La asociación con CU-11 corresponde a ADMIN global, plantador, administrador de subcampaña y equipo interno autorizado. El registro incluye fotografías y ubicación evaluada. Añadir participantes adicionales extiende CU-11 cuando se declaran otras personas habilitadas. La confirmación consume stock asignado en orden LIFO y vincula el resultado a un intento recuperable.</desc>
+<defs>
+  <marker id="abierta" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 9 8"><path d="M0 0L8 4L0 8" fill="none" stroke="#334155" stroke-width="1.4"/></marker>
+</defs>
+<style>
+  text {font-family:Arial,'Liberation Sans',sans-serif; font-size:15.5px; fill:#111827}
+  .titulo {font-size:18px; font-weight:700}
+  .sector,.codigo {font-weight:700}
+  .contorno {fill:#fff; stroke:#334155; stroke-width:1.5}
+  .separador {stroke:#cbd5e1; stroke-width:1}
+  .caso {fill:#f8fafc; stroke:#334155; stroke-width:1.45}
+  .principal {fill:#eef4f0; stroke:#315648; stroke-width:1.8}
+  .asociacion,.actor {fill:none; stroke:#334155; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round}
+  .dependencia,.enlace-nota {fill:none; stroke:#334155; stroke-width:1.5; stroke-dasharray:6 4; stroke-linejoin:round}
+  .dependencia {marker-end:url(#abierta)}
+  .rotulo {paint-order:stroke; stroke:#fff; stroke-width:5; stroke-linejoin:round}
+  .nota {fill:#fff; stroke:#64748b; stroke-width:1.2}
+</style>
+<rect width="640" height="659" fill="#fff"/>
+<rect x="130" y="14" width="500" height="533" rx="3" class="contorno"/>
+<text x="380" y="40" class="titulo" text-anchor="middle"><tspan x="380" dy="0">R3Foresta · Registro de plantación inicial</tspan></text>
+<path d="M77 113H121L182 217" class="asociacion"/>
+<path d="M77 211H131L157 242" class="asociacion"/>
+<path d="M77 315H132L157 281" class="asociacion"/>
+<path d="M77 416H122L182 305" class="asociacion"/>
+<path d="M343 213L449 152" class="dependencia"/>
+<path d="M341 311L447 394" class="dependencia"/>
+<path d="M261 443V328" class="dependencia"/>
+<path d="M383 473H370L356 420H263" class="enlace-nota"/>
+<ellipse cx="261" cy="261" rx="111" ry="67" class="principal"/>
+<text x="261" y="234" class="codigo" text-anchor="middle"><tspan x="261" dy="0">CU-11</tspan></text>
+<text x="261" y="253" class="" text-anchor="middle"><tspan x="261" dy="0">Registrar plantación inicial</tspan></text>
+<path d="M153 268H369" class="separador"/>
+<text x="261" y="285" class="" text-anchor="middle"><tspan x="261" dy="0">Punto de extensión</tspan><tspan x="261" dy="17">Participantes adicionales</tspan></text>
+<ellipse cx="531" cy="134" rx="93" ry="33" class="caso"/><text x="531" y="130.5" class="" text-anchor="middle"><tspan x="531" dy="0">Vincular fotografías</tspan><tspan x="531" dy="17">de la plantación</tspan></text>
+<ellipse cx="531" cy="414" rx="94" ry="37" class="caso"/><text x="531" y="410.5" class="" text-anchor="middle"><tspan x="531" dy="0">Registrar ubicación</tspan><tspan x="531" dy="17">y evaluar polígono</tspan></text>
+<ellipse cx="261" cy="473" rx="105" ry="30" class="caso"/><text x="261" y="469.5" class="" text-anchor="middle"><tspan x="261" dy="0">Añadir participantes</tspan><tspan x="261" dy="17">adicionales</tspan></text>
+<text x="396" y="176" class="rotulo" text-anchor="middle"><tspan x="396" dy="0">«include»</tspan></text>
+<text x="394" y="352" class="rotulo" text-anchor="middle"><tspan x="394" dy="0">«include»</tspan></text>
+<text x="261" y="390" class="rotulo" text-anchor="middle"><tspan x="261" dy="0">«extend»</tspan></text>
+<path class="nota" d="M383 466h223l12 12v54h-235Z m223 0v12h12"/><text x="395" y="487" class="" text-anchor="start"><tspan x="395" dy="0">Condición de la extensión</tspan><tspan x="395" dy="18">Se declaran otras personas</tspan><tspan x="395" dy="18">habilitadas en la subcampaña.</tspan></text>
+<g class="actor"><circle cx="66" cy="97" r="6"/><path d="M66 103v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="66" y="155" class="" text-anchor="middle"><tspan x="66" dy="0">ADMIN global</tspan></text>
+<g class="actor"><circle cx="66" cy="195" r="6"/><path d="M66 201v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="66" y="253" class="" text-anchor="middle"><tspan x="66" dy="0">Plantador</tspan></text>
+<g class="actor"><circle cx="66" cy="299" r="6"/><path d="M66 305v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="66" y="357" class="" text-anchor="middle"><tspan x="66" dy="0">Administrador</tspan><tspan x="66" dy="17">de subcampaña</tspan></text>
+<g class="actor"><circle cx="66" cy="400" r="6"/><path d="M66 406v21m-11 -14h22m-11 14l-10 13m10 -13l10 13"/></g><text x="66" y="458" class="" text-anchor="middle"><tspan x="66" dy="0">Equipo interno</tspan><tspan x="66" dy="17">autorizado</tspan></text>
+<path class="nota" d="M13 563h605l12 12v71h-617Z m605 0v12h12"/><text x="25" y="584" class="" text-anchor="start"><tspan x="25" dy="0">Condiciones del registro</tspan><tspan x="25" dy="18">Revalida la autorización, el estado ACTIVA y el saldo elegible al confirmar.</tspan><tspan x="25" dy="18">Confirma el consumo LIFO del stock asignado y el registro en conjunto.</tspan><tspan x="25" dy="18">Si se pierde la respuesta, recupera el resultado del mismo intento.</tspan></text>
+</svg>

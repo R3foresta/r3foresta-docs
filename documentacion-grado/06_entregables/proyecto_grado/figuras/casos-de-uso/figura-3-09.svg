@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="470" height="580" viewBox="0 0 470 580" role="img" aria-labelledby="title desc">
+<title id="title">R3Foresta · M1 Recolección</title>
+<desc id="desc">La captura, el envío y la eliminación lógica requieren acceso M1 propio o autoridad global. El revisor es ADMIN o VALIDADOR con asignación vigente al almacenamiento y es distinto del recolector para recibir. La consulta pública es independiente de las operaciones y del historial privado.</desc>
+<style>text { font: 12px Arial, sans-serif; fill: #17232a }
+  .module { font-size: 14px; font-weight: bold }
+  .group { font-size: 12px; font-weight: bold; fill: #25423b }
+  .actor-label { font-weight: bold }
+  .stereo { fill: #263e39 }
+  .boundary { fill: #fff; stroke: #42545b; stroke-width: 1.25 }
+  .stripe { fill: #edf3f0 }
+  .actor { fill: #fff; stroke: #24363e; stroke-width: 1.35 }
+  .usecase { fill: #fff; stroke: #42545b; stroke-width: 1.25 }
+  .primary { fill: #f5f8f6; stroke: #325c52; stroke-width: 1.35 }
+  .edge { fill: none; stroke: #40545a; stroke-width: 1.18 }
+  .dependency { stroke-dasharray: 4 3; marker-end: url(#arrow) }
+  .note { fill: #f7f9f8; stroke: #a5b4ad; stroke-width: .8 }</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1L8 4.5L1 8" fill="none" stroke="#40545a" stroke-width="1.15"/></marker></defs>
+<rect width="470" height="580" fill="#fff"/>
+<rect class="boundary" x="96" y="7" width="369" height="566"/>
+<text class="module" x="108" y="26" text-anchor="start">R3Foresta · M1 Recolección</text>
+<rect class="stripe" x="97" y="37" width="367" height="22"/>
+<text class="group" x="106" y="52" text-anchor="start">CU-02 · Captura y envío</text>
+<rect class="stripe" x="97" y="224" width="367" height="22"/>
+<text class="group" x="106" y="239" text-anchor="start">CU-03 · Recepción y revisión</text>
+<rect class="stripe" x="97" y="326" width="367" height="22"/>
+<text class="group" x="106" y="341" text-anchor="start">CU-04 · Saldo de Recolección</text>
+<rect class="stripe" x="97" y="418" width="367" height="22"/>
+<text class="group" x="106" y="433" text-anchor="start">CU-12 · Historial autorizado</text>
+<rect class="stripe" x="97" y="501" width="367" height="22"/>
+<text class="group" x="106" y="516" text-anchor="start">RF-REC-06 · Consulta pública de semillas</text>
+<path class="edge" d="M51 102 H88 L113 83"/>
+<path class="edge" d="M88 102 V138 H112"/>
+<path class="edge" d="M88 138 V192 H112"/>
+<path class="edge" d="M52 274 H113"/>
+<path class="edge" d="M53 369 H112"/>
+<path class="edge" d="M53 455 H77 L112 464"/>
+<path class="edge" d="M53 526 H77 L112 545"/>
+<path class="edge dependency" d="M271 141 H306 Q318 141 327 148 L339 161"/>
+<path class="edge dependency" d="M271 267 H306 Q318 267 327 254 L369 197"/>
+<path class="edge dependency" d="M271 369 H337"/>
+<rect x="269" y="122" width="58" height="14" rx="2" fill="#fff"/>
+<text class="stereo" x="298" y="133" text-anchor="middle">«include»</text>
+<rect x="276" y="243" width="58" height="14" rx="2" fill="#fff"/>
+<text class="stereo" x="305" y="254" text-anchor="middle">«include»</text>
+<rect x="275" y="351" width="58" height="14" rx="2" fill="#fff"/>
+<text class="stereo" x="304" y="362" text-anchor="middle">«include»</text>
+<circle class="actor" cx="41" cy="90" r="6"/>
+<path class="actor" d="M41 96v18m-11 -12h22m-11 12l-9 10m9 -10l9 10" fill="none"/>
+<text class="actor-label" x="41" y="139" text-anchor="middle">Operador M1</text>
+<text class="actor-label" x="41" y="152" text-anchor="middle">autorizado</text>
+<text class="actor-label" x="41" y="165" text-anchor="middle">o ADMIN</text>
+<circle class="actor" cx="41" cy="262" r="6"/>
+<path class="actor" d="M41 268v18m-11 -12h22m-11 12l-9 10m9 -10l9 10" fill="none"/>
+<text class="actor-label" x="41" y="311" text-anchor="middle">ADMIN o</text>
+<text class="actor-label" x="41" y="324" text-anchor="middle">VALIDADOR</text>
+<text class="actor-label" x="41" y="337" text-anchor="middle">asignado</text>
+<circle class="actor" cx="42" cy="357" r="6"/>
+<path class="actor" d="M42 363v18m-11 -12h22m-11 12l-9 10m9 -10l9 10" fill="none"/>
+<text class="actor-label" x="42" y="406" text-anchor="middle">Custodio</text>
+<text class="actor-label" x="42" y="419" text-anchor="middle">autorizado</text>
+<text class="actor-label" x="42" y="432" text-anchor="middle">o ADMIN</text>
+<circle class="actor" cx="42" cy="443" r="6"/>
+<path class="actor" d="M42 449v18m-11 -12h22m-11 12l-9 10m9 -10l9 10" fill="none"/>
+<text class="actor-label" x="42" y="492" text-anchor="middle">Usuario</text>
+<text class="actor-label" x="42" y="505" text-anchor="middle">autorizado</text>
+<circle class="actor" cx="42" cy="514" r="6"/>
+<path class="actor" d="M42 520v18m-11 -12h22m-11 12l-9 10m9 -10l9 10" fill="none"/>
+<text class="actor-label" x="42" y="563" text-anchor="middle">Visitante</text>
+<ellipse class="usecase primary" cx="193" cy="83" rx="81" ry="20"/>
+<text class="" x="193" y="87" text-anchor="middle">Crear o editar ficha</text>
+<ellipse class="usecase primary" cx="193" cy="138" rx="81" ry="25"/>
+<text class="" x="193" y="135" text-anchor="middle">Solicitar validación</text>
+<text class="" x="193" y="149" text-anchor="middle">o corregir y reenviar</text>
+<ellipse class="usecase primary" cx="193" cy="192" rx="81" ry="22"/>
+<text class="" x="193" y="196" text-anchor="middle">Eliminar borrador</text>
+<ellipse class="usecase primary" cx="193" cy="274" rx="81" ry="25"/>
+<text class="" x="193" y="271" text-anchor="middle">Revisar y recibir</text>
+<text class="" x="193" y="285" text-anchor="middle">o rechazar origen</text>
+<ellipse class="usecase" cx="390" cy="173" rx="58" ry="25"/>
+<text class="" x="390" y="170" text-anchor="middle">Comprobar ficha</text>
+<text class="" x="390" y="184" text-anchor="middle">y evidencia</text>
+<rect class="note" x="111" y="302" width="338" height="24"/>
+<text class="" x="118" y="317" text-anchor="start">La recepción exige un revisor distinto del recolector.</text>
+<ellipse class="usecase primary" cx="193" cy="369" rx="81" ry="20"/>
+<text class="" x="193" y="373" text-anchor="middle">Registrar DESECHO</text>
+<ellipse class="usecase" cx="390" cy="369" rx="57" ry="25"/>
+<text class="" x="390" y="366" text-anchor="middle">Validar estado,</text>
+<text class="" x="390" y="380" text-anchor="middle">unidad y saldo</text>
+<text class="" x="111" y="407" text-anchor="start">El desecho requiere autoridad sobre la custodia.</text>
+<ellipse class="usecase primary" cx="193" cy="464" rx="81" ry="22"/>
+<text class="" x="193" y="461" text-anchor="middle">Consultar historial</text>
+<text class="" x="193" y="475" text-anchor="middle">autorizado</text>
+<text class="" x="286" y="459" text-anchor="start">Propio según acceso.</text>
+<text class="" x="286" y="473" text-anchor="start">Por especie: ADMIN.</text>
+<ellipse class="usecase primary" cx="193" cy="545" rx="81" ry="23"/>
+<text class="" x="193" y="542" text-anchor="middle">Consultar banco</text>
+<text class="" x="193" y="556" text-anchor="middle">público de semillas</text>
+<text class="" x="286" y="535" text-anchor="start">Semillas no eliminadas.</text>
+<text class="" x="286" y="549" text-anchor="start">Fotos sanitizadas solo</text>
+<text class="" x="286" y="563" text-anchor="start">de VALIDADO.</text>
+</svg>
