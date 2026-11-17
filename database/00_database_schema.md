@@ -1,675 +1,73 @@
-erDiagram
+# Modelo físico de la base de datos de R3Foresta
 
-  PAIS {
-    bigint id PK
-    text nombre
-    character codigo_iso2 "UNIQUE"
-    character codigo_iso3
-    boolean activo
-    timestamptz created_at
-  }
+**Actualización documental del 16 de noviembre de 2026.** El esquema aportado por Pablo y confirmado en el chat como la última versión contiene **57 tablas y 622 columnas**. La fecha identifica esta recepción documental. El adjunto carece de identificador de proyecto y fecha de exportación. Su estructura se representa con esa procedencia y las capacidades se consultan en los módulos, contratos y [ESTADO.md](../ESTADO.md).
 
-  DIVISION_TIPO {
-    bigint id PK
-    bigint pais_id FK
-    text nombre
-    int orden
-    boolean activo
-    timestamptz created_at
-  }
+[Diagrama completo en SVG](diagramas/modelo-fisico-completo.svg) · [Fuente Mermaid completa](diagramas/modelo-fisico-completo.mmd)
 
-  DIVISION_ADMINISTRATIVA {
-    bigint id PK
-    bigint pais_id FK
-    bigint parent_id FK "self"
-    bigint tipo_id FK "en MVP la comunidad usa DIVISION_TIPO = Comunidad - Localidad (id 4)"
-    text nombre
-    text codigo_externo
-    boolean activo
-    bigint reemplazada_por_id FK "self"
-    timestamptz created_at
-    timestamptz updated_at
-  }
+## Vistas del mismo modelo
 
-  UBICACION {
-    bigint id PK
-    numeric latitud
-    numeric longitud
-    timestamptz created_at
-    bigint pais_id FK
-    bigint division_id FK
-    text nombre
-    int precision_m
-    text fuente
-    text referencia
-    timestamptz updated_at
-  }
+| Vista | Tablas | Uso |
+|---|---:|---|
+| [Recorrido principal](diagramas/modelo-fisico-nucleo.svg) · [Mermaid](diagramas/modelo-fisico-nucleo.mmd) | 16 | Recolección, recepción, movimientos, lotes, incorporación, campañas, asignaciones y registros de Plantación. |
+| [General](diagramas/modelo-fisico-general.svg) · [Mermaid](diagramas/modelo-fisico-general.mmd) | 13 | Usuarios, credenciales, organizaciones, plantas, territorio y evidencias. |
+| [Participación](diagramas/modelo-fisico-participacion.svg) · [Mermaid](diagramas/modelo-fisico-participacion.mmd) | 11 | Permisos, equipo logístico, comandos, auditoría de autoridad y cargas. |
+| [Correcciones](diagramas/modelo-fisico-correcciones.svg) · [Mermaid](diagramas/modelo-fisico-correcciones.mmd) | 13 | Originales, revisiones, estado efectivo, participantes, créditos y compensaciones. |
+| [Operación por vivero](diagramas/modelo-fisico-operacion.svg) · [Mermaid](diagramas/modelo-fisico-operacion.mmd) | 20 | Accesos M1/M2, recepción, contexto de fotografías e incorporación. |
 
-  USUARIO {
-    bigint id PK
-    text nombre
-    text apellido
-    text doc_identidad "UNIQUE"
-    text wallet_address "UNIQUE"
-    text organizacion
-    text contacto
-    ENUM(rol_usuario) rol
-    timestamptz created_at
-    text username "UNIQUE"
-    text auth_id
-    text correo "UNIQUE"
-    text foto_perfil_url
-  }
+Las vistas temáticas repiten tablas compartidas y conservan todas sus columnas. Cada vista dibuja relaciones con ambos extremos incluidos. El completo incluye `spatial_ref_sys`, tabla técnica de PostGIS. Los campos históricos de blockchain y las tablas de corrección conservan su presencia física y su alcance funcional propio.
 
-  USUARIO_CREDENCIAL {
-    bigint id PK
-    bigint usuario_id FK
-    text credential_id "UNIQUE"
-    text public_key
-    text algorithm
-    int counter
-    ARRAY transports
-    timestamptz created_at
-    timestamptz last_used_at
-  }
+## Fuentes y correspondencia
 
-  TIPOS_ENTIDAD_EVIDENCIA {
-    smallint id PK
-    text codigo "UNIQUE"
-    text descripcion
-    boolean activo
-    timestamptz creado_en
-  }
+1. [Extracto contextual recibido el 16 de noviembre](fuentes/supabase-estructura-2026-11-16.sql). Se preservan exactamente los bytes del adjunto y su advertencia de uso contextual. De aquí proceden nombres, orden, tipos declarados, nulabilidad, claves primarias, unicidad individual, identidad y las restricciones visibles.
+2. [Procedencia de relaciones y huella SHA-256](fuentes/supabase-relaciones-2026-11-16.json). El extracto contiene 190 filas de referencias que representan **175 relaciones**, distribuidas en 160 simples y 15 compuestas. Las compuestas aparecen divididas bajo un mismo nombre de restricción. Se agrupan por tabla y nombre y se contrastan sus pares de columnas con las migraciones locales 070, 072, 074, 082, 092, 094 y 100. El archivo identifica la migración de cada una.
+3. El [extracto del 4 de noviembre](fuentes/supabase-estructura-2026-11-04.md) y sus [metadatos](fuentes/supabase-relaciones-2026-11-04.json) conservan el corte histórico de 51 tablas y 564 columnas, incluidas las 139 referencias simples de PostgREST cotejadas entonces y las siete compuestas documentadas en ese corte. Esa consulta conserva su fecha y entorno propios.
 
-  EVIDENCIAS_TRAZABILIDAD {
-    bigint id PK
-    smallint tipo_entidad_id FK
-    bigint entidad_id "polimórfico"
-    text codigo_trazabilidad
-    text bucket
-    text ruta_archivo
-    uuid storage_object_id
-    text tipo_archivo
-    text mime_type
-    bigint tamano_bytes
-    text hash_sha256
-    text titulo
-    text descripcion
-    jsonb metadata
-    boolean es_principal
-    int orden
-    timestamptz tomado_en
-    timestamptz creado_en
-    timestamptz actualizado_en
-    timestamptz eliminado_en
-    bigint creado_por_usuario_id FK
-    bigint actualizado_por_usuario_id FK
-    bigint eliminado_por_usuario_id FK
-  }
+La revisión actual utilizó el adjunto y las migraciones locales. El catálogo remoto, los cuerpos RPC, índices completos, triggers, grants, RLS, Storage y replay de migraciones mantienen su comprobación independiente. Las migraciones 111–113 afectan altas y funciones cuya aplicación completa no puede establecerse mediante este inventario de tablas. Las claves compuestas agrupadas describen una sola restricción por nombre y tabla.
 
-  VIVERO {
-    bigint id PK
-    text codigo "UNIQUE"
-    text nombre
-    bigint ubicacion_id FK "UNIQUE"
-    timestamptz created_at
-  }
+## Lectura de la notación
 
-  TIPO_PLANTA {
-    int id PK
-    text nombre "UNIQUE"
-    timestamptz created_at
-  }
+- `PK` identifica columnas de clave primaria. Varios componentes forman una sola clave compuesta.
+- `UK` identifica unicidad individual visible. Una clave compuesta conserva su conjunto de columnas.
+- `FK` identifica componentes de referencias explícitas del extracto y del contraste documentado.
+- `NN`, `NULL` e `IDENTITY` conservan obligatoriedad e identidad. Una PK implica obligatoriedad.
+- `USER_DEFINED` representa el literal `USER-DEFINED` del adjunto. El tipo enumerado o dominio concreto queda sin resolver en esta fuente. Los nombres históricos del extracto del 4 de noviembre mantienen su procedencia histórica.
+- Los tipos con espacios utilizan guiones bajos para ser legibles por Mermaid, como `timestamp_with_time_zone` y `character_varying`. Las expresiones originales permanecen en la fuente SQL.
+- La línea continua identifica relaciones cuyas columnas FK pertenecen a la PK hija. La discontinua identifica las restantes.
+- La opcionalidad del padre depende de la nulabilidad de la FK. La cardinalidad hija cero-a-uno se representa cuando PK o unicidad individual visible la sustentan. Las demás relaciones se dibujan cero-a-muchos, pendientes de índices y restricciones adicionales ausentes del extracto.
 
-  PLANTA {
-    bigint id PK
-    text especie
-    text nombre_cientifico
-    text variedad
-    timestamptz created_at
-    text nombre_comun_principal "fuente viva oficial de naming operativo para poblar nombre_comercial_snapshot"
-    text nombres_comunes "fuera de alcance funcional en MVP"
-    text imagen_url
-    text notas
-    int tipo_planta_id FK
-  }
+## Cambios frente al corte del 4 de noviembre
 
-  METODO_RECOLECCION {
-    bigint id PK
-    text nombre
-    text descripcion
-  }
+Se incorporan catorce tablas al inventario recibido.
 
-  RECOLECCION {
-    bigint id PK
-    date fecha
-    ENUM(tipo_material_origen) tipo_material
-    text nombre_cientifico_snapshot "NOT NULL - recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR"
-    text nombre_comercial_snapshot "NOT NULL - recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR; en MVP se alimenta desde PLANTA.nombre_comun_principal"
-    text variedad_snapshot "NOT NULL - recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR"
-    text nombre_comunidad_snapshot "NOT NULL - comunidad donde se recolectó; recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR"
-    text nombre_recolector_snapshot "NOT NULL - recalculable en BORRADOR/RECHAZADO; se congela al VALIDAR"
-    boolean especie_nueva
-    text observaciones
-    bigint usuario_id FK
-    bigint ubicacion_id FK
-    bigint vivero_id FK
-    bigint metodo_id FK
-    bigint planta_id FK
-    timestamptz created_at
-    timestamptz updated_at "nullable - ultima edicion de ficha en BORRADOR o RECHAZADO"
-    bigint updated_by FK "nullable"
-    timestamptz deleted_at "nullable - soft delete solo para BORRADOR"
-    bigint deleted_by FK "nullable"
-    text codigo_trazabilidad "UNIQUE"
-    text blockchain_url
-    text token_id
-    text transaction_hash
-    ENUM(estado_registro_recoleccion) estado_registro
-    ENUM(unidad_medida) unidad_canonica
-    numeric cantidad_inicial_canonica
-    bigint usuario_validacion_id FK "nullable - solo cuando la solicitud fue aprobada"
-    timestamptz fecha_validacion "nullable - solo cuando pasa a VALIDADO"
-    numeric saldo_actual
-    ENUM(estado_operativo_recoleccion) estado_operativo
-  }
+| Familia | Tablas |
+|---|---|
+| Acceso M1 | `recoleccion_acceso_comando`, `usuario_acceso_recoleccion`, `usuario_acceso_recoleccion_revision`, `usuario_acceso_recoleccion_historial` |
+| Acceso M2 | `vivero_acceso_comando`, `usuario_vivero`, `usuario_vivero_revision`, `usuario_vivero_historial` |
+| Evidencia operativa | `m2_evidencia_contexto` |
+| Recepción | `recoleccion_recepcion_comando`, `recoleccion_recepcion`, `recoleccion_recepcion_evidencia_contexto`, `recoleccion_recepcion_evidencia` |
+| Incorporación | `vivero_incorporacion` |
 
-  RECOLECCION_HISTORIAL {
-    bigint id PK
-    bigint recoleccion_id FK
-    ENUM(tipo_historial_recoleccion) tipo_historial
-    ENUM(estado_registro_recoleccion) estado_origen
-    ENUM(estado_registro_recoleccion) estado_destino
-    text observaciones
-    jsonb metadata
-    bigint actor_user_id FK
-    timestamptz created_at
-  }
+Las ocho tablas `plantacion`, `plantacion_usuario`, `plantacion_riego`, `plantacion_abono`, `plantacion_foto`, `plantacion_monitoreo`, `tipo_riego` y `tipo_abono` están ausentes del extracto actual. El [diagrama legado del 4 de noviembre](diagramas/modelo-fisico-legado.svg) y su [fuente](diagramas/modelo-fisico-legado.mmd) conservan aquella observación. La ausencia en un extracto acredita la diferencia entre fuentes y deja pendiente el acto y fecha de retirada en cada entorno.
 
-  RECOLECCION_MOVIMIENTO {
-    bigint id PK
-    bigint recoleccion_id FK
-    ENUM(tipo_movimiento_recoleccion) tipo_movimiento
-    numeric delta
-    ENUM(unidad_medida) unidad_medida_movimiento
-    ENUM(motivo_movimiento_recoleccion) motivo
-    text motivo_otro
-    bigint lote_vivero_id "FK a LOTE_VIVERO"
-    jsonb detalle_cambios "nullable - solo para correcciones o ajustes tecnicos futuros"
-    bigint created_by FK
-    timestamptz created_at
-    text transaction_hash
-  }
+## Precisiones físicas relevantes
 
-  LOTE_VIVERO {
-    bigint id PK
-    bigint recoleccion_id FK "NOT NULL - origen único por lote, sin UNIQUE"
-    bigint planta_id FK "NOT NULL"
-    bigint vivero_id FK "NOT NULL - vivero operativo seleccionado para este lote, no heredado desde Recolección"
-    bigint responsable_id FK "NOT NULL"
-    text nombre_cientifico_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
-    text nombre_comercial_snapshot "NOT NULL - congelado al crear, heredado desde Recolección; su fuente original viva en MVP es PLANTA.nombre_comun_principal"
-    ENUM(tipo_material_origen) tipo_material_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
-    text variedad_snapshot "NOT NULL - congelado al crear, heredado desde Recolección"
-    text nombre_comunidad_origen_snapshot "NOT NULL - congelado al crear y también lo hereda"
-    text nombre_responsable_snapshot "NOT NULL - congelado al crear"
-    date fecha_inicio "NOT NULL"
-    numeric cantidad_inicial_en_proceso "NOT NULL - lectura operativa de inicio"
-    ENUM(unidad_medida) unidad_medida_inicial "NOT NULL - UNIDAD | G"
-    int plantas_vivas_iniciales "nullable - materializado al registrar EMBOLSADO"
-    int saldo_vivo_actual "nullable - caché controlada, nunca editar directo"
-    ENUM(subetapa_adaptabilidad) subetapa_actual "nullable - SOMBRA | MEDIA_SOMBRA | SOL_DIRECTO"
-    ENUM(estado_lote_vivero) estado_lote "NOT NULL - ACTIVO | FINALIZADO, default ACTIVO"
-    ENUM(motivo_cierre_lote) motivo_cierre "nullable - DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO | DESCARTE_PRE_EMBOLSADO"
-    text codigo_trazabilidad "NOT NULL - UNIQUE - formato VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}"
-    timestamptz created_at "NOT NULL"
-    timestamptz updated_at "NOT NULL"
-}
+- `recoleccion.revision_captura` es NN y permite vincular fotografías y decisiones a la revisión correspondiente. `usuario_validacion_id` y `fecha_validacion` dejan de figurar en Recolección. El hecho inmutable de recepción contiene `fecha_recepcion`, `recibido_por` y `registrado_en`.
+- `lote_vivero.recoleccion_id`, `tipo_material_snapshot`, `cantidad_inicial_en_proceso` y `unidad_medida_inicial` son nullable. El contrato limita esos nulos al camino incorporado. `vivero_id` y `planta_id` permanecen NN.
+- `vivero_incorporacion` extiende el evento por `evento_id` PK/FK y contiene modalidad, procedencia, tercero/referencia opcionales, solicitud UUID única, huella y instante de registro. La base viva única corresponde a las restricciones y transacciones de T5.
+- `m2_evidencia_contexto` admite el contexto `INCORPORACION` y `solicitud_id`. El permiso de lectura o escritura exige su contrato de audiencia.
+- `recoleccion_movimiento.lote_vivero_id` permanece como columna sin una FK explícita al lote en este extracto. Su vínculo semántico se consulta en el contrato M1→M2.
+- `evidencias_trazabilidad.entidad_id` conserva su asociación polimórfica. El diagrama representa las FKs que figuran expresamente en la fuente.
+- Permisos de participación y equipo logístico conservan tablas distintas. El rol global permanece en `usuario.rol`.
+- `campania` conserva estado derivado. Las vistas y funciones no aparecen como tablas adicionales.
+- Las columnas de saldo generadas conservan la nulabilidad exportada. Las fórmulas, CHECK y DEFAULT visibles permanecen en el SQL contextual.
 
-EVENTO_LOTE_VIVERO {
-    bigint id PK
-    bigint lote_id FK "NOT NULL"
-    ENUM(tipo_evento_vivero) tipo_evento "NOT NULL - INICIO | EMBOLSADO | DESCARTE_PRE_EMBOLSADO | ADAPTABILIDAD | MERMA | DESPACHO | DEVOLUCION_PLANTACION | CIERRE_AUTOMATICO"
-    date fecha_evento "NOT NULL"
-    timestamptz created_at "NOT NULL - inmutable, cuándo se guardó realmente"
-    bigint responsable_id FK "NOT NULL"
-    numeric cantidad_afectada "nullable - material o plantas segun tipo_evento; en DESCARTE_PRE_EMBOLSADO = cantidad_material_afectado"
-    ENUM(unidad_medida) unidad_medida_evento "nullable - UNIDAD | G"
-    ENUM(causa_merma_vivero) causa_merma "nullable - solo aplica en MERMA"
-    ENUM(causa_descarte_pre_embolsado) causa_descarte_pre_embolsado "nullable - solo aplica en DESCARTE_PRE_EMBOLSADO"
-    ENUM(destino_tipo_vivero) destino_tipo "nullable - solo aplica en DESPACHO; incluye PLANTACION_CAMPANIA"
-    ENUM(origen_despacho_vivero) origen_despacho "nullable - solo aplica en DESPACHO; MANUAL | ASIGNACION_SUBCAMPANIA; AUTOMATICO_PLANTACION legado"
-    text destino_referencia "nullable - texto libre en DESPACHO manual; referencia de asignacion en ASIGNACION_SUBCAMPANIA"
-    bigint subcampania_id FK "nullable - obligatorio cuando origen_despacho = ASIGNACION_SUBCAMPANIA y en DEVOLUCION_PLANTACION"
-    bigint campania_id FK "nullable - obligatorio cuando origen_despacho = ASIGNACION_SUBCAMPANIA; opcional en DEVOLUCION_PLANTACION segun subcampania"
-    bigint registro_plantacion_id FK "nullable - NULL en ASIGNACION_SUBCAMPANIA; solo legado AUTOMATICO_PLANTACION lo poblaba"
-    bigint asignacion_id FK "nullable - obligatorio en DESPACHO ASIGNACION_SUBCAMPANIA y DEVOLUCION_PLANTACION"
-    bigint comunidad_destino_id FK "nullable - referencia a DIVISION_ADMINISTRATIVA(id), solo aplica en DESPACHO"
-    ENUM(subetapa_adaptabilidad) subetapa_destino "nullable - SOMBRA | MEDIA_SOMBRA | SOL_DIRECTO"
-    int saldo_vivo_antes "nullable - calculado por sistema"
-    int saldo_vivo_despues "nullable - calculado por sistema"
-    ENUM(motivo_cierre_lote) motivo_cierre_calculado "nullable - DESPACHO_TOTAL | PERDIDA_TOTAL | MIXTO | DESCARTE_PRE_EMBOLSADO"
-    bigint ref_evento_trigger_id FK "nullable - autorreferencia, solo aplica en CIERRE_AUTOMATICO"
-    jsonb metadata_blockchain "nullable - solo aplica en DESPACHO con anclaje activo"
-    text observaciones "nullable"
-}
+## Regeneración
 
-ASIGNACION_VIVERO_SUBCAMPANIA {
-    bigint id PK
-    bigint subcampania_id FK "NOT NULL"
-    bigint lote_vivero_id FK "NOT NULL - el lote de vivero entregado fisicamente"
-    ENUM(proposito_asignacion) proposito "NOT NULL - PLANTACION_INICIAL | REPOSICION"
-    ENUM(estado_asignacion_vivero) estado "NOT NULL - ACTIVA | AGOTADA | DEVUELTA; default ACTIVA; derivado por trigger"
-    int cantidad_asignada "NOT NULL - inmutable, > 0, siempre UNIDAD"
-    int cantidad_consumida "NOT NULL default 0 - aumenta con cada PLANTACION_INICIAL/REPOSICION que consume de esta asignacion"
-    int cantidad_devuelta "NOT NULL default 0 - aumenta con cada DEVOLUCION_A_VIVERO fisica en M3"
-    int cantidad_mermada "NOT NULL default 0 - aumenta por merma de stock asignado en campo, si ese flujo se implementa"
-    int saldo_asignado_disponible "GENERATED ALWAYS AS (cantidad_asignada - cantidad_consumida - cantidad_devuelta - cantidad_mermada) STORED"
-    bigint usuario_asignacion_id FK "NOT NULL - ADMIN o COORDINADOR de la subcampania"
-    timestamptz fecha_asignacion "NOT NULL default now()"
-    timestamptz updated_at "NOT NULL"
-}
+```sh
+node database/scripts/generar-modelo-fisico.mjs
+node database/scripts/renderizar-modelo-fisico.mjs
+```
 
-ORGANIZACION {
-    bigint id PK
-    text nombre "NOT NULL"
-    boolean activo "NOT NULL default true"
-    timestamptz created_at
-    timestamptz updated_at
-    text logo_url
-    ENUM(tipo_organizacion) tipo "NOT NULL - ONG | EMPRESA_PRIVADA | EMPRESA_PUBLICA | FUNDACION | ETFs | ALCALDIA | ASOCIACION_CIUDADANA | OTRO"
-}
-%% Entidad maestra documentada en 00-general-module/00_Requerimientos_Modulo_General.json (RF-GEN-07) y 00-general-module/01_reglas_de_negocio_general.md (RN-GEN-27..29).
+El primer script valida las referencias y sus columnas, genera seis fuentes Mermaid y publica conteos por vista. El segundo requiere Mermaid CLI (`mmdc`) o `--cli /ruta/a/mermaid-cli/src/cli.js` y regenera los seis SVG actuales. El diagrama legado histórico queda accesible por separado. Las modificaciones se realizan en las fuentes y el generador antes de regenerar los SVG.
 
-CAMPANIA {
-    bigint id PK
-    text nombre "UNIQUE"
-    text descripcion
-    ENUM(tipo_subcampania) tipo "NOT NULL - REFORESTACION | ARBORIZACION | FORESTACION; define el tipo de toda subcampania hija"
-    date fecha_estimada_inicio
-    date fecha_estimada_fin
-    text codigo_trazabilidad "UNIQUE - formato CMP-YYYY-NNN"
-    timestamptz created_at
-    timestamptz updated_at
-    bigint created_by FK
-    bigint updated_by FK
-    timestamptz deleted_at "nullable - soft delete"
-    bigint deleted_by FK "nullable"
-    jsonb metadata_blockchain "nullable"
-}
-%% Sin columna de estado: el estado se deriva via vista campania_estado (invariante CLAUDE.md).
-%% Sin columna de meta: la meta vive en SUBCAMPANIA. El total de planificacion de la campaña se deriva (meta_planificada_campania = SUM de metas de subcampañas no CANCELADA, incluye BORRADOR); ver RN-PLA-36. No materializar.
-%% Edicion MVP: nombre, descripcion, fechas estimadas y organizaciones asociadas pueden corregirse como datos generales. tipo solo es editable si no existe ninguna SUBCAMPANIA con ese campania_id; ver RN-PLA-38.
-%% Desactivacion MVP: la accion estricta marca deleted_at/deleted_by si no hay subcampanias vivas no canceladas. La accion masiva (migracion 057) cancela atomicamente BORRADOR/ACTIVA sin plantaciones, devuelve stock y desactiva la campaña; una hija no elegible revierte todo. DELETE fisico solo si no existe ninguna subcampania. El enum tipo_subcampania se reusa porque CAMPANIA.tipo y SUBCAMPANIA.tipo representan el mismo concepto.
-
-CAMPANIA_ORGANIZACION {
-    bigint id PK
-    bigint campania_id FK "NOT NULL - ON DELETE CASCADE"
-    bigint organizacion_id FK "NOT NULL"
-    timestamptz created_at
-    bigint created_by FK
-}
-%% En MVP, insertar/eliminar/modificar organizaciones asociadas es permitido; las subcampanias ya activadas conservan sus snapshots de organizaciones. Ver RN-PLA-38.
-
-SUBCAMPANIA {
-    bigint id PK
-    bigint campania_id FK "NOT NULL"
-    text nombre
-    text descripcion
-    ENUM(tipo_subcampania) tipo "NOT NULL - REFORESTACION | ARBORIZACION | FORESTACION; CHECK debe coincidir con CAMPANIA.tipo de la campania padre"
-    ENUM(estado_subcampania) estado "NOT NULL default BORRADOR"
-    ENUM(fase_mantenimiento_subcampania) fase_mantenimiento "NOT NULL default NO_APLICA"
-    bigint zona_id FK "NOT NULL - DIVISION_ADMINISTRATIVA"
-    geometry poligono_geom "nullable - Polygon WGS84; obligatorio para activar (CHECK)"
-    numeric area_hectareas "nullable"
-    int meta_total_arboles "NOT NULL > 0 - referencia orientativa, no tope de plantacion"
-    bigint plan_revision "NOT NULL default 0; CHECK >= 0 - version de meta total y especies (062)"
-    date fecha_estimada_inicio "nullable"
-    date fecha_estimada_fin "nullable"
-    timestamptz fecha_cierre_operativo "nullable - obligatorio si estado en (COMPLETADA, FINALIZADA_PARCIAL)"
-    date fecha_fin_mantenimiento "nullable - obligatorio si estado en (COMPLETADA, FINALIZADA_PARCIAL)"
-    ENUM(motivo_cierre_parcial) motivo_cierre_parcial "nullable - obligatorio si estado = FINALIZADA_PARCIAL"
-    text observaciones_cierre
-    int tolerancia_gps_metros "NOT NULL default 50"
-    text nombre_zona_snapshot "nullable - congelado al activar"
-    text nombre_coordinador_snapshot "nullable - congelado al activar"
-    ARRAY nombres_organizaciones_snapshot "text[] - congelado al activar"
-    text codigo_trazabilidad "UNIQUE - formato SUB-NNN-CMP-YYYY-NNN"
-    int total_plantado_inicial "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
-    int total_repuesto "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
-    int total_muerto_acumulado "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
-    int saldo_vivo_actual "GENERATED ALWAYS AS (total_plantado_inicial + total_repuesto - total_muerto_acumulado) STORED"
-    timestamptz created_at
-    timestamptz updated_at
-    bigint created_by FK
-    bigint updated_by FK
-    timestamptz deleted_at "nullable - timestamp de cancelacion (estado=CANCELADA); inactivacion, no borrado fisico"
-    bigint deleted_by FK "nullable"
-    jsonb metadata_blockchain "nullable"
-}
-%% Indice GIST sobre poligono_geom para PostGIS. Sin columna coordinador_id (membresia via SUBCAMPANIA_EQUIPO).
-%% Cancelacion (RN-PLA-37): permitida solo si total_plantado_inicial = 0. Al cancelar, estado=CANCELADA, el registro se conserva y toda asignacion activa entregada fisicamente debe resolverse con devolucion fisica al vivero.
-
-SUBCAMPANIA_META_ESPECIE {
-    bigint id PK
-    bigint subcampania_id FK "NOT NULL - ON DELETE CASCADE"
-    bigint planta_id FK "NOT NULL"
-    numeric porcentaje_objetivo "NOT NULL > 0 y <= 100"
-    int cantidad_objetivo "NOT NULL > 0 - referencia orientativa calculada o ajustada manualmente; suma coherente con meta_total_arboles"
-    timestamptz created_at
-    timestamptz updated_at
-    bigint created_by FK
-    bigint updated_by FK
-}
-%% Unique (subcampania_id, planta_id). Al activar: SUM(porcentaje_objetivo)=100 y SUM(cantidad_objetivo)=SUBCAMPANIA.meta_total_arboles.
-%% No es una asignacion de vivero: define la meta de composicion planificada para PLANTACION_INICIAL.
-%% ADR-PLA-05/062: ADMIN revisa meta/especies en BORRADOR o ACTIVA mediante fn_subcampania_revisar_plan; valida coherencia en cada guardado.
-%% Comparte lock de SUBCAMPANIA con asignacion/plantacion, comprueba revision_esperada, incrementa plan_revision y escribe PLAN_REVISADO atomicamente. Un fallo de historial revierte todo.
-%% GET/PUT /plan requieren JWT: cualquier usuario autenticado lee; solo ADMIN escribe. Tras 063 ambas RPC son ejecutables solo por service_role; claves privadas solo en backend.
-%% La lectura del plan no concede permisos de equipo/stock/plantacion. Frontend implementado localmente; QA integrado y verificacion remota pendientes en ESTADO.md.
-%% Inicial exige especies del plan vigente pero puede superar objetivos con stock asignado; no cierra automaticamente.
-%% Migraciones 060-063 viven en Backend-r3foresta. Aplicacion hasta 062 y de 063 confirmada por el usuario; los scripts historicos no prueban despliegue ni verificacion remota.
-
-SUBCAMPANIA_HISTORIAL {
-    bigint id PK
-    bigint subcampania_id FK "NOT NULL - ON DELETE RESTRICT"
-    ENUM(tipo_historial_subcampania) tipo_historial "NOT NULL - incluye PLAN_REVISADO (062)"
-    ENUM(estado_subcampania) estado_origen "nullable"
-    ENUM(estado_subcampania) estado_destino "nullable"
-    text observaciones "nullable"
-    jsonb metadata "NOT NULL default {}; CHECK objeto JSON"
-    bigint actor_user_id FK "nullable - ON DELETE SET NULL"
-    timestamptz created_at "NOT NULL default now()"
-}
-%% Append-only (047): no UPDATE/DELETE/TRUNCATE. Enum: BORRADOR_CREADO, SUBCAMPANIA_ACTIVADA, SUBCAMPANIA_COMPLETADA, SUBCAMPANIA_FINALIZADA_PARCIAL, SUBCAMPANIA_CANCELADA, TRANSICION_A_MONITOREO_HISTORICO, EQUIPO_AMPLIADO, EQUIPO_REDUCIDO, COORDINADOR_CAMBIADO, PLAN_REVISADO.
-%% PLAN_REVISADO conserva estado y registra metadata.anterior/nuevo con meta_total_arboles, metas y plan_revision, actor y fecha. Su escritura es obligatoria junto con la revision.
-%% El enum disponible no acredita implementacion de todos los flujos de historial; ver ESTADO.md.
-
-SUBCAMPANIA_EQUIPO {
-    bigint id PK
-    bigint subcampania_id FK "NOT NULL - ON DELETE CASCADE"
-    bigint usuario_id FK "NOT NULL"
-    ENUM(rol_en_subcampania) rol "NOT NULL - COORDINADOR | OPERARIO"
-    timestamptz agregado_at "NOT NULL default now()"
-    bigint agregado_by FK "NOT NULL"
-}
-%% Unique parcial WHERE rol = COORDINADOR garantiza 1 coordinador por subcampania. VOLUNTARIO no puede ser miembro (validacion en handler).
-
-REGISTRO_PLANTACION {
-    bigint id PK
-    bigint subcampania_id FK "NOT NULL"
-    boolean es_reposicion "NOT NULL default false"
-    bigint registro_plantacion_origen_id FK "self - NOT NULL si es_reposicion=true; NULL si false (CHECK)"
-    date fecha_plantacion "NOT NULL"
-    bigint responsable_id FK "NOT NULL - USUARIO miembro de SUBCAMPANIA_EQUIPO (handler valida)"
-    numeric latitud "NOT NULL"
-    numeric longitud "NOT NULL"
-    boolean gps_dentro_poligono "NOT NULL - calculado con gps_dentro_poligono_con_tolerancia"
-    numeric gps_distancia_a_poligono_m "nullable"
-    int cantidad_total_plantada "NOT NULL > 0"
-    int cantidad_muerta_acumulada "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
-    int cantidad_repuesta_acumulada "NOT NULL default 0 - materializado por trigger pendiente de implementacion"
-    int saldo_vivo_grupo "GENERATED ALWAYS AS (cantidad_total_plantada + cantidad_repuesta_acumulada - cantidad_muerta_acumulada) STORED"
-    text nombre_subcampania_snapshot "nullable - congelado al insertar"
-    text nombre_zona_snapshot "nullable - congelado al insertar"
-    text nombre_responsable_snapshot "nullable - congelado al insertar"
-    text observaciones
-    text codigo_trazabilidad "UNIQUE - formato PLT-NNN-SUB-NNN"
-    timestamptz created_at
-    bigint created_by FK
-    jsonb metadata_blockchain "nullable"
-}
-%% es_reposicion = true cuelga del grupo origen via registro_plantacion_origen_id.
-%% La validacion de especie planificada para PLANTACION_INICIAL usa SUBCAMPANIA_META_ESPECIE.
-
-REGISTRO_PLANTACION_DETALLE {
-    bigint id PK
-    bigint registro_plantacion_id FK "NOT NULL - ON DELETE CASCADE"
-    bigint asignacion_id FK "NOT NULL - ASIGNACION_VIVERO_SUBCAMPANIA"
-    bigint lote_vivero_id FK "NOT NULL - redundante con asignacion.lote_vivero_id; debe coincidir"
-    bigint planta_id FK "NOT NULL"
-    int cantidad "NOT NULL > 0"
-    text nombre_cientifico_snapshot
-    text nombre_comercial_snapshot
-    text variedad_snapshot
-    bigint evento_lote_vivero_despacho_id FK "legado/nullable - en el flujo vigente la plantacion no genera DESPACHO automatico"
-    timestamptz created_at
-}
-%% Unique (registro_plantacion_id, asignacion_id, planta_id). Una linea por (registro, asignacion, planta).
-
-REGISTRO_PLANTACION_CORESPONSABLE {
-    bigint id PK
-    bigint registro_plantacion_id FK "NOT NULL - ON DELETE CASCADE"
-    bigint usuario_id FK "NOT NULL - subset de SUBCAMPANIA_EQUIPO (handler valida)"
-    timestamptz created_at
-}
-
-EVENTO_PLANTACION {
-    bigint id PK
-    ENUM(tipo_evento_plantacion) tipo_evento "NOT NULL - ASIGNACION_VIVERO | DEVOLUCION_A_VIVERO | MORTANDAD_REPORTADA"
-    bigint subcampania_id FK "NOT NULL"
-    bigint registro_plantacion_id FK "nullable - obligatorio en MORTANDAD_REPORTADA"
-    bigint asignacion_id FK "nullable - obligatorio en DEVOLUCION_A_VIVERO y ASIGNACION_VIVERO"
-    timestamptz fecha_evento "NOT NULL"
-    bigint responsable_id FK "NOT NULL"
-    text observaciones "nullable"
-    int cantidad_muerta_delta "nullable - solo MORTANDAD_REPORTADA, > 0"
-    ENUM(causa_mortandad_plantacion) causa_mortandad "nullable - solo MORTANDAD_REPORTADA"
-    numeric latitud "nullable - solo MORTANDAD_REPORTADA"
-    numeric longitud "nullable - solo MORTANDAD_REPORTADA"
-    int cantidad_devuelta "nullable - solo DEVOLUCION_A_VIVERO, > 0"
-    ENUM(motivo_devolucion_plantacion) motivo_devolucion "nullable - solo DEVOLUCION_A_VIVERO"
-    int cantidad_asignada_evento "nullable - solo ASIGNACION_VIVERO, > 0; fuente de verdad es ASIGNACION_VIVERO_SUBCAMPANIA"
-    timestamptz created_at
-    bigint created_by FK
-    jsonb metadata_blockchain "nullable"
-}
-%% Append-only. PLANTACION_INICIAL y REPOSICION NO van aqui; viven como filas en REGISTRO_PLANTACION con es_reposicion = false | true. CHECKs por tipo_evento garantizan coherencia.
-
-  %% === Relaciones sin cambio ===
-
-  PAIS ||--o{ DIVISION_TIPO : tiene
-  PAIS ||--o{ DIVISION_ADMINISTRATIVA : tiene
-  PAIS ||--o{ UBICACION : tiene
-  DIVISION_TIPO ||--o{ DIVISION_ADMINISTRATIVA : clasifica
-  DIVISION_ADMINISTRATIVA ||--o{ DIVISION_ADMINISTRATIVA : parent
-  DIVISION_ADMINISTRATIVA ||--o{ DIVISION_ADMINISTRATIVA : reemplaza
-  UBICACION }o--|| DIVISION_ADMINISTRATIVA : pertenece_a
-  UBICACION ||--|| VIVERO : ubicacion_unica
-  USUARIO ||--o{ USUARIO_CREDENCIAL : tiene
-  USUARIO ||--o{ RECOLECCION : registra
-  UBICACION ||--o{ RECOLECCION : ocurre_en
-  VIVERO ||--o{ RECOLECCION : almacena_en
-  METODO_RECOLECCION ||--o{ RECOLECCION : metodo
-  PLANTA ||--o{ RECOLECCION : identifica
-  RECOLECCION ||--o{ RECOLECCION_HISTORIAL : historial_ciclo_vida
-  USUARIO ||--o{ RECOLECCION_HISTORIAL : actor
-  RECOLECCION ||--o{ RECOLECCION_MOVIMIENTO : movimientos
-  USUARIO ||--o{ RECOLECCION_MOVIMIENTO : creado_por
-  TIPOS_ENTIDAD_EVIDENCIA ||--o{ EVIDENCIAS_TRAZABILIDAD : tipo
-  USUARIO ||--o{ EVIDENCIAS_TRAZABILIDAD : creado_por
-  USUARIO ||--o{ EVIDENCIAS_TRAZABILIDAD : actualizado_por
-  USUARIO ||--o{ EVIDENCIAS_TRAZABILIDAD : eliminado_por
-
-  %% === Relaciones módulo vivero — actualizadas ===
-
-  RECOLECCION ||--o{ LOTE_VIVERO : "origen único"
-  PLANTA ||--o{ LOTE_VIVERO : planta
-  VIVERO ||--o{ LOTE_VIVERO : contiene
-  USUARIO ||--o{ LOTE_VIVERO : responsable
-
-  LOTE_VIVERO ||--o{ EVENTO_LOTE_VIVERO : "historial append-only"
-  USUARIO ||--o{ EVENTO_LOTE_VIVERO : responsable
-  EVENTO_LOTE_VIVERO ||--o| EVENTO_LOTE_VIVERO : "ref_evento_trigger"
-
-  RECOLECCION_MOVIMIENTO }o--|| LOTE_VIVERO : "registra consumo en M1"
-
-  %% === Relaciones vivero ↔ plantación (integración M2 ↔ M3) ===
-
-  LOTE_VIVERO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "entrega fisica a subcampania"
-  ASIGNACION_VIVERO_SUBCAMPANIA ||--o{ EVENTO_LOTE_VIVERO : "salida/devolucion fisica"
-  USUARIO ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "asigna"
-  SUBCAMPANIA ||--o{ ASIGNACION_VIVERO_SUBCAMPANIA : "lotes asignados"
-  EVENTO_LOTE_VIVERO }o--o| SUBCAMPANIA : "DESPACHO por asignacion (subcampania_id)"
-  EVENTO_LOTE_VIVERO }o--o| CAMPANIA : "DESPACHO por asignacion (campania_id)"
-  EVENTO_LOTE_VIVERO }o--o| REGISTRO_PLANTACION : "legado: DESPACHO automatico (registro_plantacion_id)"
-  %% FKs fisicos evento_lote_vivero -> {subcampania, campania, registro_plantacion} pendientes de ALTER en BD
-
-  TIPOS_ENTIDAD_EVIDENCIA ||--o{ EVIDENCIAS_TRAZABILIDAD : tipo
-
-  %% === Relaciones modulo plantacion (M3) ===
-
-  ORGANIZACION ||--o{ CAMPANIA_ORGANIZACION : participa_en
-  CAMPANIA ||--o{ CAMPANIA_ORGANIZACION : tiene_organizaciones
-  USUARIO ||--o{ CAMPANIA : created_by
-  USUARIO ||--o{ CAMPANIA_ORGANIZACION : created_by
-
-  CAMPANIA ||--o{ SUBCAMPANIA : contiene
-  DIVISION_ADMINISTRATIVA ||--o{ SUBCAMPANIA : zona
-  USUARIO ||--o{ SUBCAMPANIA : created_by
-
-  SUBCAMPANIA ||--o{ SUBCAMPANIA_HISTORIAL : "historial append-only"
-  USUARIO |o--o{ SUBCAMPANIA_HISTORIAL : actor
-
-  SUBCAMPANIA ||--o{ SUBCAMPANIA_META_ESPECIE : "meta por especie"
-  PLANTA ||--o{ SUBCAMPANIA_META_ESPECIE : "especie planificada"
-  USUARIO ||--o{ SUBCAMPANIA_META_ESPECIE : created_by
-
-  SUBCAMPANIA ||--o{ SUBCAMPANIA_EQUIPO : tiene_equipo
-  USUARIO ||--o{ SUBCAMPANIA_EQUIPO : participa
-
-  SUBCAMPANIA ||--o{ REGISTRO_PLANTACION : "registros de plantacion"
-  USUARIO ||--o{ REGISTRO_PLANTACION : responsable
-  REGISTRO_PLANTACION ||--o{ REGISTRO_PLANTACION : "reposicion (self)"
-  REGISTRO_PLANTACION ||--o{ REGISTRO_PLANTACION_DETALLE : detalle
-  REGISTRO_PLANTACION ||--o{ REGISTRO_PLANTACION_CORESPONSABLE : coresponsables
-  USUARIO ||--o{ REGISTRO_PLANTACION_CORESPONSABLE : firma
-
-  ASIGNACION_VIVERO_SUBCAMPANIA ||--o{ REGISTRO_PLANTACION_DETALLE : "consumida via detalle"
-  LOTE_VIVERO ||--o{ REGISTRO_PLANTACION_DETALLE : "lote consumido"
-  PLANTA ||--o{ REGISTRO_PLANTACION_DETALLE : especie
-  EVENTO_LOTE_VIVERO ||--o{ REGISTRO_PLANTACION_DETALLE : "legado: despacho automatico generado"
-
-  SUBCAMPANIA ||--o{ EVENTO_PLANTACION : "historial append-only"
-  REGISTRO_PLANTACION ||--o{ EVENTO_PLANTACION : "evento sobre grupo"
-  ASIGNACION_VIVERO_SUBCAMPANIA ||--o{ EVENTO_PLANTACION : "evento sobre asignacion"
-  USUARIO ||--o{ EVENTO_PLANTACION : responsable
-
-ENUMS
-RECOLECCION
-tipo_material_origen = [SEMILLA, ESQUEJE]
-
-estado_registro_recoleccion = [BORRADOR, PENDIENTE_VALIDACION, VALIDADO, RECHAZADO]
-
-tipo_movimiento_recoleccion = [
-  CONSUMO_A_VIVERO, DESECHO, CORRECCION, AJUSTE_MIGRACION
-]
-
-motivo_movimiento_recoleccion = [
-CONSUMO_PARA_VIVERO, DESECHO_MALA_CALIDAD, DESECHO_PLAGA, DESECHO_HONGO, DESECHO_PUDRICION, DESECHO_DANO_TRANSPORTE, DESECHO_DANO_MANIPULACION, DESECHO_CONTAMINACION, DESECHO_CADUCIDAD, DESECHO_OTRO, CORRECCION_CONTEO_FISICO, CORRECCION_ERROR_DIGITACION, CORRECCION_CAMBIO_UNIDAD, CORRECCION_OTRO, AJUSTE_MIGRACION, AJUSTE_INTEGRIDAD_DATOS, AJUSTE_REVERSA_OPERACION, AJUSTE_OTRO, OTRO
-]
-motivo_movimiento_recoleccion se mantiene en DB como enum oficial, pero debe documentarse y tratarse en tres grupos:
-Motivos funcionales: usados en la operación normal del negocio.
-Motivos correctivos: usados para correcciones auditadas.
-Motivos técnicos: usados para migraciones, integridad o reversas técnicas.
-
-LOTE VIVIERO
-estado_lote_vivero = [ACTIVO, FINALIZADO]
-
-tipo_evento_vivero = [
-  INICIO, EMBOLSADO, DESCARTE_PRE_EMBOLSADO, ADAPTABILIDAD, MERMA, DESPACHO, DEVOLUCION_PLANTACION, CIERRE_AUTOMATICO
-]
-// DEVOLUCION_PLANTACION: entrada fisica al vivero por devolucion desde Plantacion; explica el aumento de saldo del lote.
-
-subetapa_adaptabilidad = [SOMBRA, MEDIA_SOMBRA, SOL_DIRECTO]
-
-causa_merma_vivero = [
-  PLAGA, ENFERMEDAD, SEQUIA, DANO_FISICO,
-  MUERTE_NATURAL, OTRO
-]
-
-causa_descarte_pre_embolsado = [
-  NO_GERMINACION, NO_ENRAIZAMIENTO, CONTAMINACION,
-  PERDIDA_TOTAL_MATERIAL, MATERIAL_NO_VIABLE, DANO_PRE_EMBOLSADO, OTRO
-]
-
-destino_tipo_vivero = [
-  PLANTACION_CAMPANIA, PLANTACION_PROPIA, PLANTACION_COMUNIDAD, DONACION, VENTA, OTRO
-]
-// Nota: PLANTACION_CAMPANIA se usa para salidas fisicas hacia subcampania.
-// En el flujo vigente aplica con origen_despacho = ASIGNACION_SUBCAMPANIA.
-// Decision cerrada (2026-07-01): se mantienen PLANTACION_COMUNIDAD y DONACION como valores separados (no se fusionan a DONACION_COMUNIDAD).
-
-origen_despacho_vivero = [MANUAL, ASIGNACION_SUBCAMPANIA, AUTOMATICO_PLANTACION]
-// MANUAL: despacho registrado directamente desde Vivero por usuario autorizado.
-// ASIGNACION_SUBCAMPANIA: salida fisica desde Vivero al crear ASIGNACION_VIVERO_SUBCAMPANIA.
-// AUTOMATICO_PLANTACION: legado del flujo anterior; no debe usarse al guardar PLANTACION_INICIAL o REPOSICION en el contrato vigente.
-
-proposito_asignacion = [PLANTACION_INICIAL, REPOSICION]
-estado_asignacion_vivero = [ACTIVA, AGOTADA, DEVUELTA]
-// AFECTADA_POR_MERMA no se modela como estado; se muestra como badge derivado cuando cantidad_mermada > 0.
-
-motivo_cierre_lote = [DESPACHO_TOTAL, PERDIDA_TOTAL, MIXTO, DESCARTE_PRE_EMBOLSADO]
-estado_operativo_recoleccion = [ABIERTO, CERRADO]
-
-PLANTACION (M3)
-tipo_subcampania = [REFORESTACION, ARBORIZACION, FORESTACION]
-// Compartido por CAMPANIA.tipo y SUBCAMPANIA.tipo. La campania declara el tipo al crearse y todas sus subcampanias hijas deben heredarlo (CHECK constraint o trigger). El nombre del enum se conserva por compatibilidad con migracion 027.
-
-estado_subcampania = [
-  BORRADOR, ACTIVA, COMPLETADA, FINALIZADA_PARCIAL,
-  CANCELADA, // en MVP: solo si no hay PLANTACION_INICIAL (BORRADOR, o ACTIVA sin plantar). Si ya hay plantado, el cierre anticipado es FINALIZADA_PARCIAL. Ver RN-PLA-37.
-  PAUSADA    // reservado, sin flujo en MVP
-]
-
-tipo_organizacion = [ONG | EMPRESA_PRIVADA | EMPRESA_PUBLICA | FUNDACION | ETFs | ALCALDIA | ASOCIACION_CIUDADANA | OTRO]
-
-fase_mantenimiento_subcampania = [NO_APLICA, MANTENIMIENTO_ACTIVO, MONITOREO_HISTORICO]
-// Persistida con default NO_APLICA. Transita a MANTENIMIENTO_ACTIVO al cerrar y a MONITOREO_HISTORICO 3 anos despues via job nocturno (pendiente).
-
-rol_en_subcampania = [COORDINADOR, OPERARIO]
-// Membresia por subcampania (no rol global). Unique parcial garantiza 1 COORDINADOR por subcampania. VOLUNTARIO no puede ser miembro.
-
-tipo_evento_plantacion = [ASIGNACION_VIVERO, DEVOLUCION_A_VIVERO, MORTANDAD_REPORTADA]
-// PLANTACION_INICIAL y REPOSICION NO van aqui; viven como filas en REGISTRO_PLANTACION con es_reposicion = false | true.
-
-motivo_cierre_parcial = [
-  FALTA_STOCK, PROBLEMAS_CLIMATICOS, CANCELACION_CONVENIO,
-  CONFLICTO_SOCIAL, ACCESO_RESTRINGIDO, CAMBIO_PRIORIDAD_INSTITUCIONAL,
-  RIESGO_OPERATIVO, META_REDEFINIDA, CIERRE_ADMINISTRATIVO, OTRO
-]
-
-causa_mortandad_plantacion = [
-  SEQUIA, EXCESO_AGUA, HELADA, GRANIZO, PLAGA, ENFERMEDAD,
-  SUELO_INADECUADO, FALTA_MANTENIMIENTO, DANO_MECANICO, PASTOREO,
-  VANDALISMO, INCENDIO, COMPETENCIA_MALEZA, TRASPLANTE_DEFICIENTE,
-  DESCONOCIDA, OTRO
-]
-
-motivo_devolucion_plantacion = [
-  SOBRANTE_OPERATIVO, ERROR_PLANIFICACION, CAMBIO_SUBCAMPANIA,
-  CIERRE_SUBCAMPANIA, PROBLEMAS_CALIDAD_LOTE, CONDICIONES_CAMPO_NO_APTAS,
-  ACCESO_RESTRINGIDO, CANCELACION_ACTIVIDAD, REASIGNACION_PRIORIDAD, OTRO
-]
-
-USUARIO
-rol_usuario = [ADMIN, GENERAL, VALIDADOR, VOLUNTARIO]
-UNIDADES
-unidad_medida = [UNIDAD, G]
-
-OBJETOS DERIVADOS / FUNCIONES (no son tablas, no aparecen en el ER)
-
-vista campania_estado (subcampania) -> {campania_id, estado_derivado}
-// Calcula al leer el estado de CAMPANIA desde el conjunto de sus SUBCAMPANIA segun §2.2 / §5.3 del Modulo 3.
-// Valores: BORRADOR | ACTIVA | EN_MANTENIMIENTO | MONITOREO_HISTORICO. No materializar.
-
-lectura meta_planificada_campania (subcampania) -> {campania_id, meta_planificada}
-// meta_planificada = SUM(SUBCAMPANIA.meta_total_arboles WHERE estado <> CANCELADA); incluye BORRADOR.
-// Total de planificacion para admin/coordinador. La vista publica agrega solo ACTIVA | COMPLETADA | FINALIZADA_PARCIAL. Derivado, no materializar. Ver RN-PLA-36.
-
-funcion gps_dentro_poligono_con_tolerancia(p_subcampania_id, p_lat, p_lng) -> {dentro, distancia_m}
-// PostGIS. Fuente de verdad para validar GPS de REGISTRO_PLANTACION contra el poligono de la subcampania
-// aplicando subcampania.tolerancia_gps_metros. Turf.js en frontend es opcional, solo para feedback UX.
-
-EXTENSIONES POSTGRES
-postgis (requerida por SUBCAMPANIA.poligono_geom y gps_dentro_poligono_con_tolerancia)
+El [esquema anterior al 4 de noviembre](archivo/00_database_schema-antes-2026-11-04.md) conserva la documentación histórica previa a ambos contrastes.

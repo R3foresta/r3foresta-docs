@@ -15,6 +15,10 @@ PA-F01 conserva avances parciales de B/C y el cierre técnico local de INT03-A; 
 
 [INT04: implementación frontend](specs/plantacion/participacion-aliada/implementacion/pa-t-int04.md) completó FE01–FE08 localmente el 17 de octubre: 553 pruebas y 60 checks integrados con D; [evidencia y límites](../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md). Código INT04 versionado localmente en `94f62a9`. [INT05 — Impacto público y Mis registros](specs/plantacion/participacion-aliada/implementacion/pa-t-int05.md) completó backend y frontend en alcance técnico local; consolidación del 19 en commits locales `8dc8efc`/`a3a4b28`, con pruebas originales del 17/18 y push pendiente; [evidencia PWA y límites](../pwa-r3foresta/docs/QA_IMPACTO_INT05.md). El [tablero](specs/plantacion/participacion-aliada/implementacion/README.md) conserva los pendientes externos; estos cierres no habilitan el piloto.
 
+[INT07 — Correcciones excepcionales](specs/plantacion/participacion-aliada/implementacion/pa-t-int07.md) conserva implementación backend parcial de observaciones084 y participantes/lecturas085. La evidencia085 registra un fallo HTTP pendiente. La ficha identifica las tareas BE02/03/07 parciales, el frontend pendiente y los límites de cantidades, reversiones y entorno.
+
+La actualización aprobada del 16 de noviembre incorpora RF-REC-06 y RF-VIV-15 y refina los requisitos funcionales y RNF-INI-01/03/04/06 en sus fuentes existentes. El [modelo físico](database/00_database_schema.md) representa el último esquema aportado, con 57 tablas y 622 columnas. [ESTADO.md](ESTADO.md#actualización-documental-aprobada-del-16-de-noviembre) conserva procedencia, evidencia y advertencias pendientes.
+
 ## Fuentes de dominio
 
 | Área | Contenido |

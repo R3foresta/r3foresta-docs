@@ -1,0 +1,242 @@
+# TODO — ejecución del Proyecto de Grado
+
+> **Propósito:** controlar la ejecución de RUP adaptado, sus fases e iteraciones, los incrementos de los tres módulos, sus integraciones, la verificación, la validación, la entrega y el documento final.
+
+> La revisión y cierre específicos de los capítulos I y II se controlan en [`TODO_CAPITULOS_1_Y_2.md`](../../../../documentacion-grado/02_planificacion/TODO_CAPITULOS_1_Y_2.md).
+
+## 1. Decisiones vigentes
+
+- [x] Adoptar como título **Sistema de trazabilidad del material vegetal para reforestación con proyección hacia bonos de carbono: caso R3Foresta**.
+- [x] Mantener exactamente tres módulos: M1 Recolección, M2 Vivero y M3 Plantación.
+- [x] Permitir que el recorrido académico se inicie con el origen registrado: una recolección de semillas o la incorporación, en Vivero o Plantación, de material vegetal adquirido externamente.
+- [x] Mantener fuera del alcance monitoreo posterior, CO₂, MRV, certificación, emisión o comercialización de bonos de carbono, blockchain, NFT, contratos inteligentes e IPFS.
+- [x] Adoptar **Rational Unified Process (RUP) adaptado** como metodología de desarrollo.
+- [x] Decisión de trabajo del 3 de noviembre de 2026: desarrollar y revisar el **Capítulo III exclusivamente con RUP adaptado**, con IA como herramienta de apoyo. La actualización integral de la base documental queda pendiente en 1.1.
+- [x] Eliminar los sprints y organizar el trabajo mediante fases e iteraciones RUP, con incrementos ejecutables en Construcción.
+- [x] Retirar ciencia del diseño, DSRM, estudio de caso único embebido, FEDS y demás componentes de metodología de investigación.
+- [x] Tratar la verificación, la validación operativa y la aceptación como actividades de Ingeniería de Software.
+
+### 1.1. Actualización documental a RUP
+
+**Estado al 4 de noviembre de 2026: parcial.** Los entregables vigentes del documento final —capítulos I, II y III, índices, figura metodológica y bibliografía— declaran únicamente RUP adaptado, con IA como apoyo bajo revisión humana. Las versiones previas se conservan en el [archivo del documento final](../README.md), fuera de los entregables. La revisión actual no modifica el Perfil aprobado; la actualización integral de los documentos de apoyo sigue pendiente.
+
+**Antecedente:** la base documental declaraba RUP complementado con SDD asistido por IA. Esa formulación, sus flujos y sus productos todavía aparecen en documentos de apoyo y en apartados posteriores de este tablero. Se conservan para su revisión; no rigen los entregables actualizados del documento final. Este ajuste no completa la migración documental ni modifica las aprobaciones históricas.
+
+- [ ] Actualizar `base_perfil_proyecto_grado.md`, `metodologia_desarrollo.md`, el registro de avance y la guía personal de metodología y defensa para retirar el protocolo SDD y explicitar la adaptación de RUP.
+- [x] Actualizar los capítulos I y II, los índices de entregables y documento final, la Figura 2.6 y la bibliografía para declarar solamente RUP adaptado. Revisión del 4 de noviembre: se retiran el flujo SDD y GitHub Spec Kit; se conservan los requisitos útiles, IDs, fechas, evidencia y pendientes. La copia anterior y el archivo histórico se mantienen fuera de `06_entregables`.
+- [ ] Propagar el ajuste a los documentos base, lineamientos y tableros de apoyo, conservando la versión presentada o aprobada y la fecha real del cambio. El Perfil permanece intacto por el alcance del encargo del 4 de noviembre; una eventual actualización se tratará por separado.
+- [x] Adecuar el texto existente del Capítulo III y sus cuatro fases a RUP; mantener los requisitos, decisiones, evidencias y límites acreditados, y retirar las obligaciones exclusivas del protocolo SDD. Ajuste textual del 4 de noviembre; Transición ya era compatible. No cierra revisión académica, actualización de los documentos base, diseño de variantes ni hitos.
+- [ ] Revisar los documentos que guían a la IA y el seguimiento operativo: seleccionar artefactos según utilidad y riesgo, aprovechar IDs existentes y reducir actualización duplicada de estados, sin exigir tres archivos por capacidad ni nuevas familias de IDs por razón de SDD.
+- [ ] Comprobar coherencia, enlaces y citas; conservar rutas, contratos, decisiones aceptadas, actas y pendientes de pruebas, validación, despliegue y aceptación. Las copias históricas permanecen identificadas como tales.
+- [ ] Tras la revisión de la versión académica, transferir los cambios que correspondan al Google Docs de presentación y regenerar los entregables vigentes que se utilicen; las capturas locales no son destinos de edición.
+
+**Comprobación local de los entregables — 4 de noviembre:** 238 enlaces locales y 14 anclas Markdown revisados sin errores; sin menciones visibles a specs o SDD en el texto vigente. Se cotejaron los IDs, las copias históricas y la copia previa a esta revisión. Los tres archivos del Perfil y la figura activa de casos de uso conservan su contenido anterior al encargo. Las rutas técnicas existentes se mantienen como referencias de evidencia. Esta comprobación documental no cierra la revisión académica ni la actualización de los documentos de apoyo.
+
+El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere documentos vigentes coherentes con RUP y evidencia conservada; no acredita el cierre de LCO, LCA, IOC, PR ni de las entregas técnicas.
+
+## 2. Productos y evidencia transversales
+
+- [ ] Preparar una base de datos reproducible mediante migraciones académicas.
+- [ ] Mantener el registro de riesgos con impacto, respuesta, responsable, estado y efecto sobre el plan.
+- [ ] Mantener la lista priorizada de requisitos, defectos y tareas.
+- [ ] Mantener la matriz principal:
+  `necesidad → requisito → especificación → decisión de diseño → tarea → cambio → prueba → resultado → aceptación`.
+- [ ] Mantener para las reglas críticas:
+  `requisito → regla → invariante → mecanismo → prueba → resultado`.
+- [ ] Asignar identificadores estables a objetivos, casos de uso, requisitos, reglas, especificaciones, decisiones, tareas, pruebas y actas.
+- [ ] Definir para LCO, LCA, IOC y PR la evidencia mínima, las personas que revisan según su competencia, la decisión de salida y los riesgos o defectos residuales.
+- [ ] Conservar por iteración, además del incremento cuando corresponda:
+  - referencia de inicio y cierre;
+  - especificaciones y criterios de aceptación;
+  - plan técnico y tareas;
+  - decisiones relevantes;
+  - código y migraciones;
+  - pruebas y resultados;
+  - revisión de la iteración, demostración e integración;
+  - defectos, desviaciones y acciones correctivas.
+- [ ] Registrar por iteración `resultado o incremento → planificado → realizado → evidencia → desviación → decisión → riesgo residual → estado del hito`.
+- [x] Crear el registro inicial de avance en [`../04_metodologia/registro_avance_rup_sdd.md`](registro_avance_rup_sdd.md), separando evidencia disponible, verificación y aceptación; mantenerlo actualizado en cada cierre.
+- [ ] Registrar horas académicas por fase, iteración, incremento y actividad transversal.
+
+## 3. Fase de Inicio — iteración IN-1 — 6 al 19 de julio
+
+### 3.1. Alcance y actores
+
+- [ ] Cerrar alcance, límites y relación con los cinco objetivos específicos.
+- [ ] Confirmar responsables de Recolección, Vivero y Plantación.
+- [ ] Identificar actores institucionales que priorizan o aceptan requisitos.
+- [ ] Confirmar que el alcance operativo se inicia con el origen registrado: una recolección de semillas o la incorporación de material adquirido externamente en Vivero o Plantación, y concluye con el registro de la plantación.
+- [ ] Confirmar que la trazabilidad, las consultas y las evidencias son capacidades transversales y no un cuarto módulo.
+
+### 3.2. Productos de Inicio
+
+Actualización documental del 29 de octubre: la [sección 3.2 del Capítulo III](03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO. Las casillas de cierre permanecen abiertas hasta su revisión. El autor confirmó que no existe acta LCO ni registro previo al 20 de julio que acredite IN-1; cualquier revisión posterior conservará su fecha real. Esa formulación del 29 de octubre se adecuó el 4 de noviembre: la [sección 3.1](03_capitulo_marco_aplicativo.md) explica ahora exclusivamente RUP adaptado conforme a la directriz vigente.
+
+- [ ] Cerrar la visión y el alcance del producto.
+- [ ] Cerrar el glosario inicial.
+- [ ] Preparar el modelo inicial de casos de uso.
+- [ ] Preparar la lista priorizada de requisitos y riesgos.
+- [ ] Preparar el plan de fases, iteraciones, incrementos, productos y criterios de salida.
+- [ ] Revisar y cerrar el hito **LCO — Objetivos del ciclo de vida**.
+
+## 4. Fase de Elaboración — iteración EL-1 — 20 de julio al 16 de agosto
+
+### 4.1. Dominio y arquitectura
+
+- [ ] Especificar entidades, eventos, estados, cantidades, unidades, saldos, responsables y evidencias.
+- [ ] Diferenciar transferencia de transformación biológica u operativa.
+- [ ] Definir invariantes de cantidad, disponibilidad, asignación y consumo.
+- [ ] Diseñar la arquitectura base y el modelo de datos.
+- [ ] Definir los contratos M1→M2 y M2→M3.
+- [ ] Definir la procedencia y el historial del recorrido Recolección→Vivero→Plantación y de los ingresos externos en Vivero o Plantación.
+- [ ] Definir conceptualmente el “recorrido del material vegetal” como secuencia observable de origen, ingresos, procesos o cambios, movimientos y destino, junto con las cantidades, responsables, fechas, ubicaciones y evidencias que correspondan.
+- [ ] Preparar una línea vertical arquitectónica mínima M1→M2→M3 para comprobar identidad, procedencia, contratos, integridad e historial.
+
+### 4.2. Especificaciones y riesgos
+
+**Continuidad del análisis — 4 de noviembre:** Inicio incorpora las precisiones del autor sin acreditar implementación de las dos capacidades pendientes. La [propuesta de operarios por vivero](../../../../../Backend-r3foresta/documentacion/tareas/propuesta-permisos-por-vivero.md) desarrolla el acceso por establecimiento y la recepción por el mismo operario. La [propuesta de incorporación de plantines](../../../../../Backend-r3foresta/documentacion/tareas/plan-incorporacion-plantas-procedencia.md) conserva alternativas que deben conciliarse con las últimas respuestas del autor registradas en [Inicio](03_1_fase_inicio.md): incorporación especial por ADMIN, etapa actual sin habilitación adicional de aptitud, comprobantes y notas opcionales, y comienzo del historial en recepción o conteo. Concretar esa frontera de responsabilidades, la recepción directa y sus remanentes antes de actualizar contratos e implementar. El registro de plantaciones ya realizadas permanece como tratamiento por definir. La migración metodológica de los documentos base sigue pendiente en 1.1.
+
+- [ ] Priorizar escenarios por valor, dependencia y riesgo.
+- [ ] Definir criterios para seleccionar y justificar escenarios operativos representativos a partir de variantes reales del proceso de R3Foresta.
+- [ ] Especificar y probar anticipadamente saldo no negativo, transferencia consistente, asignación coherente y ausencia de estados parciales.
+- [ ] Establecer los criterios de aceptación para cada incremento.
+- [ ] Actualizar el plan y el registro de riesgos.
+- [ ] Revisar y cerrar el hito **LCA — Arquitectura del ciclo de vida**.
+
+## 5. Fase de Construcción
+
+Cada capacidad priorizada dentro de una iteración seguirá el flujo:
+
+`seleccionar → especificar → clarificar → planificar → descomponer → implementar → integrar → probar → demostrar → actualizar`.
+
+### 5.1. Iteración CO-1 e incremento 1 — M1 Recolección — 17 de agosto al 6 de septiembre
+
+- [ ] Especificar casos de uso, reglas, excepciones y criterios de aceptación de M1.
+- [ ] Diseñar datos, interfaz, servicios, migraciones y pruebas de M1.
+- [ ] Implementar actividades, lotes, especies, cantidades, unidades, responsables, ubicación y evidencia.
+- [ ] Implementar cierre o entrega del lote hacia Vivero.
+- [ ] Verificar procedencia, cantidades, estados e historial de M1.
+- [ ] Demostrar M1 y registrar los resultados del incremento.
+
+### 5.2. Iteración CO-2 e incremento 2 — M2 Vivero e integración M1→M2 — 7 al 27 de septiembre
+
+- [ ] Especificar la recepción desde Recolección y la incorporación de material adquirido externamente en Vivero.
+- [ ] Especificar transformaciones observadas, mermas, descartes, saldo vivo, asignaciones, despachos, devoluciones y cierre.
+- [ ] Diseñar e implementar M2 y el contrato M1→M2.
+- [ ] Registrar para ingresos externos procedencia, especie, cantidad, unidad, fecha, responsable y evidencia disponible.
+- [ ] Verificar transferencia consistente, transformación observada, merma y saldo.
+- [ ] Ejecutar regresión de M1 e integración M1→M2.
+- [ ] Demostrar el incremento integrado y registrar resultados.
+
+### 5.3. Iteración CO-3 e incremento 3 — M3 Plantación e integración M2→M3 — 28 de septiembre al 18 de octubre
+
+- [ ] Especificar asignación, recepción, plantación, devolución, descarte, ubicación y evidencia.
+- [ ] Especificar la incorporación directa en Plantación de material adquirido externamente y su procedencia.
+- [ ] Diseñar e implementar M3 y el contrato M2→M3.
+- [ ] Verificar cantidad recibida, plantada, devuelta o descartada.
+- [ ] Verificar rechazo de consumo o asignación superior al disponible y de duplicados concurrentes.
+- [ ] Ejecutar regresión de M1 y M2 e integración M2→M3.
+- [ ] Demostrar los tres módulos integrados y registrar resultados.
+
+### 5.4. Iteración CO-4 e incremento 4 — Trazabilidad transversal y versión candidata — 19 de octubre al 1 de noviembre
+
+- [ ] Especificar la consulta y reconstrucción de una traza completa M1→M2→M3.
+- [ ] Implementar la recuperación de procedencia, eventos, cantidades, responsables, ubicaciones, evidencias y destino.
+- [ ] Completar consultas y reportes estrictamente necesarios para la reconstrucción.
+- [ ] Ejecutar pruebas de integración y regresión de los tres módulos.
+- [ ] Corregir deuda técnica crítica de seguridad, configuración y reproducibilidad.
+- [ ] Congelar código, migraciones, configuración y datos de la versión candidata.
+- [ ] Revisar y cerrar el hito **IOC — Capacidad operativa inicial**.
+
+## 6. Fase de Transición — iteración TR-1 — 2 al 15 de noviembre
+
+### 6.1. Verificación y validación — 2 al 8 de noviembre
+
+- [ ] Ejecutar la matriz de pruebas funcionales, integración, regresión, concurrencia y fallos críticos.
+- [ ] Seleccionar y ejecutar escenarios de aceptación representativos, derivados de variantes reales de R3Foresta y con justificación registrada. Como candidatos iniciales:
+  - recorrido propio M1→M2→M3;
+  - incorporación de material adquirido externamente en Vivero;
+  - incorporación directa de material adquirido externamente en Plantación;
+  - transferencia parcial;
+  - transformación observada;
+  - merma o descarte;
+  - devolución;
+  - intento de consumo superior al saldo;
+  - reconstrucción completa con evidencia.
+- [ ] Identificar claramente si cada escenario utiliza una operación real disponible o datos controlados.
+- [ ] Registrar resultado esperado, resultado observado, defectos y decisión de aceptación.
+- [ ] Corregir defectos de la versión candidata y repetir las pruebas afectadas.
+
+### 6.2. Despliegue, aceptación y cierre — 9 al 15 de noviembre
+
+- [ ] Preparar y comprobar migraciones, secretos, configuración y datos iniciales.
+- [ ] Desplegar la versión final en el entorno autorizado.
+- [ ] Preparar manual técnico, manual de usuario y guía de operación.
+- [ ] Obtener el registro de aceptación o de observaciones pendientes.
+- [ ] Cerrar el registro de riesgos, cambios y defectos.
+- [ ] Etiquetar la liberación final.
+- [ ] Revisar y cerrar el hito **PR — Liberación del producto**.
+
+## 7. Controles técnicos mínimos
+
+- [ ] Derivar identidad desde credenciales validadas y eliminar confianza productiva en identificadores no autenticados.
+- [ ] Proteger o retirar endpoints privilegiados y de diagnóstico fuera del alcance.
+- [ ] Eliminar sesiones o datos mock del flujo productivo entregado.
+- [ ] Exigir configuración segura de secretos.
+- [ ] Reconstruir la base académica desde cero mediante migraciones.
+- [ ] Alinear contratos, especificaciones e implementación.
+- [ ] Incorporar pruebas frontend mínimas para los recorridos de aceptación.
+- [ ] Confirmar que componentes históricos excluidos no intervienen en el flujo académico.
+
+## 8. Protocolo SDD previo y asistencia de IA
+
+El apartado 8.1 conserva los compromisos anteriores para su revisión en 1.1. El Capítulo III se trabajará exclusivamente con RUP adaptado. El control humano de la asistencia de IA se mantiene y su registro se revisará de forma proporcional al trabajo.
+
+### 8.1. Productos SDD
+
+- [ ] Mantener una especificación canónica por incremento o conjunto coherente de casos de uso.
+- [ ] Incluir actores, precondiciones, flujo principal, alternativas, reglas, invariantes y criterios de aceptación.
+- [ ] Mantener el plan técnico sincronizado con arquitectura, datos, interfaces, migraciones y pruebas.
+- [ ] Mantener tareas identificables y vinculadas con la especificación y el plan.
+- [ ] Actualizar especificaciones y decisiones cuando cambie el comportamiento implementado.
+- [ ] Utilizar los productos SDD para materializar requisitos, diseño detallado y planificación de capacidades, sin duplicarlos.
+- [ ] Conservar por separado los productos RUP transversales cuya finalidad no cubra SDD: visión, arquitectura, riesgos, configuración, revisión de iteraciones, hitos y despliegue.
+
+### 8.2. Control de IA
+
+- [ ] Registrar para cada aporte material: fecha, herramienta y modelo o versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio o evidencia.
+- [ ] Revisar todo cambio generado o modificado por IA antes de aceptarlo.
+- [ ] No permitir que un agente apruebe requisitos, reglas, arquitectura crítica, pruebas, incrementos o despliegues.
+- [ ] No proporcionar datos personales, sensibles o institucionales no autorizados a los agentes.
+- [ ] No atribuir a la IA decisiones que requieran conocimiento del contexto organizacional.
+- [ ] Mantener al postulante como único responsable académico de los resultados.
+
+## 9. Coherencia documental
+
+- [x] Propagar RUP, SDD asistido por IA, fases, iteraciones, incrementos e hitos al Perfil, Capítulo I y Capítulo II.
+- [x] Aplicar la misma estructura al primer borrador del Marco aplicativo, relacionando objetivos, fases, iteraciones, incrementos, contratos, pruebas y resultados abiertos.
+- [x] Mantener exactamente tres módulos y las integraciones M1→M2 y M2→M3.
+- [x] Mantener trazabilidad, consultas, historial y evidencias como capacidades transversales.
+- [x] Sustituir toda referencia activa a sprint por fase, iteración o incremento, según corresponda.
+- [x] Sustituir la matriz DSR por la matriz de trazabilidad de desarrollo.
+- [x] Retirar de documentos activos ciencia del diseño, DSRM, estudio de caso único embebido y FEDS.
+- [x] Diferenciar verificación, validación operativa y aceptación.
+- [x] Mantener el límite respecto de carbono y de los componentes tecnológicos excluidos.
+- [x] Incorporar al Marco aplicativo una base de diagramas de casos de uso, actividades, clases, entidad-relación, secuencias críticas y genealogía del material vegetal.
+- [ ] Contrastar los diagramas con usuarios, reglas canónicas, implementación y observaciones de la tutora antes de considerarlos definitivos.
+- [ ] Aplicar los [`criterios editoriales`](../../../../documentacion-grado/01_lineamientos/criterios_editoriales_proyecto_grado.md) antes de cerrar cada sección.
+
+## 10. Documento final y defensa
+
+- [ ] Integrar las versiones aprobadas de los capítulos I y II.
+- [ ] Desarrollar el Capítulo III por fases e iteraciones RUP, mostrando especificaciones, diseño, incrementos, integraciones, pruebas y resultados.
+- [ ] Relacionar cada objetivo con productos y evidencia verificable.
+- [ ] Redactar conclusiones que respondan a cada objetivo sin generalizaciones no respaldadas.
+- [ ] Redactar recomendaciones separadas de los resultados.
+- [ ] Cerrar referencias y anexos.
+- [ ] Redactar resumen y palabras clave cuando el documento completo esté estabilizado.
+- [ ] Preparar la versión para revisión, maquetación y defensa.
+
+---
+
+*Tablero reestructurado el 25 de agosto de 2026 conforme a la selección definitiva de RUP.*

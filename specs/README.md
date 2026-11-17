@@ -1,10 +1,10 @@
 # Specs y ejecución del incremento
 
-Las specs expresan el comportamiento que debe cumplir el producto. En PA-F01 **se están implementando por partes**: INT02-A cubre identidad/perfil y su integración; acceso contextual, registro recuperable, consulta completa y correcciones continúan pendientes según su alcance. [Estado acreditado](../ESTADO.md).
+Las specs expresan el comportamiento que debe cumplir el producto. En PA-F01 **se están implementando por partes**: identidad/perfil, acceso, registro y consulta tienen entregas verificadas con distintos límites de entorno; correcciones mantiene su encargo preparado y pendiente de ejecución. [Estado acreditado](../ESTADO.md).
 
 ## Entrada activa
 
-[PA-F01 — Participación aliada en Plantación](plantacion/participacion-aliada/README.md) → [tablero de ejecución](plantacion/participacion-aliada/implementacion/README.md) → [siguiente entrega INT02-B](plantacion/participacion-aliada/implementacion/pa-t-int02-b.md).
+[PA-F01 — Participación aliada en Plantación](plantacion/participacion-aliada/README.md) → [tablero de ejecución](plantacion/participacion-aliada/implementacion/README.md) → [encargo INT07 preparado](plantacion/participacion-aliada/implementacion/pa-t-int07.md).
 
 | Capacidad | Fuente funcional |
 |---|---|

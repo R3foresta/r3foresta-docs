@@ -1,6 +1,10 @@
 # Contrato de integracion - Vivero -> Plantacion
 
-> Aclaración PA-F01 aceptada el 2026-10-13: entrega física desde Vivero y consumo al plantar son hechos separados. El registro participante consume stock ya disponible de su subcampaña; no incorpora recepción, acuse o confirmación por organización/administrador. D07 del [contrato backend](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) define LIFO en servidor para inicial, sin alterar la entrega ni descontar nuevamente Vivero. [Acta técnica](../specs/plantacion/participacion-aliada/archivo/revision-tecnica-2026-10-13.md); implementación pendiente. Reposición interna y logística conservan contratos específicos. Las compensaciones de PA-S04 se definen por consumo trazable de subcampaña, no como devolución física implícita a Vivero.
+Actualización de requisitos aprobada el 16 de noviembre de 2026. Se incorpora base viva alternativa por `INCORPORACION` y procedencia por consumos persistidos. `RF-VIV-11..14` conservan aquí sus IDs. [RF-VIV-15](../02-vivero-module/00_requerimientos_vivero_core.json) define la incorporación en Vivero.
+
+> Autorización T2 elegida el5 de noviembre de2026: entrega/devolución explícitas requieren ADMIN o la intersección operario vigente del vivero del lote + COORDINADOR de la subcampaña. Cancelación y desactivación masiva administrativas conservan devoluciones atómicas. Plantar sigue consumiendo asignaciones sin acceso al vivero original ni segundo débito. [Contrato local, pruebas y aplicación reportada](../../Backend-r3foresta/docs/t2-acceso-viveros.md); cotejo y despliegue separados.
+
+> Aclaración PA-F01 aceptada el 2026-10-13: entrega física desde Vivero y consumo al plantar son hechos separados. El registro participante consume stock ya disponible de su subcampaña; no incorpora recepción, acuse o confirmación por organización/administrador. D07 del [contrato backend](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) define LIFO en servidor para inicial, sin alterar la entrega ni descontar nuevamente Vivero. El [acta técnica](../specs/plantacion/participacion-aliada/archivo/revision-tecnica-2026-10-13.md) conserva la aceptación de diseño y los cierres de [INT03-A](../specs/plantacion/participacion-aliada/archivo/cierre-pa-t-int03-a.md) e [INT02-D](../specs/plantacion/participacion-aliada/archivo/cierre-pa-t-int02-d.md) acreditan implementación y pruebas locales con sus límites. Reposición interna y logística conservan contratos específicos. Las compensaciones de PA-S04 se definen por consumo trazable de subcampaña, no como devolución física implícita a Vivero.
 
 ## 1. Proposito
 
@@ -58,6 +62,10 @@ Reglas movidas desde Vivero Core y conservadas con ID original cuando aplica:
 - **Proposito de asignacion:** `PLANTACION_INICIAL` o `REPOSICION`.
 
 ## 5. Saldos
+
+### RF-VIV-13 - Saldos físicos de Vivero y de subcampaña
+
+El saldo del lote y el saldo disponible de su asignación se mantienen por separado. Las operaciones conservan las identidades y validaciones de esta sección para lotes con nacimiento vivo por `EMBOLSADO` o `INCORPORACION`.
 
 ### 5.1 Saldo del lote de vivero
 
@@ -124,13 +132,14 @@ Validaciones:
 - `cantidad_asignada > 0`.
 - `cantidad_asignada <= LOTE_VIVERO.saldo_vivo_actual`.
 - El lote debe estar `ACTIVO`.
-- El lote debe tener un evento `EMBOLSADO` registrado. Sin esto solo existe material en proceso, no plantas vivas para entregar.
+- El lote debe tener una única base viva confirmada mediante `EMBOLSADO` o `INCORPORACION`.
 - `saldo_vivo_actual > 0` y `saldo_vivo_actual` no es `NULL`.
 - La subcampania debe existir y no estar eliminada.
 - `PLANTACION_INICIAL` solo se acepta si la subcampania esta `ACTIVA`.
 - `REPOSICION` se acepta en subcampania `ACTIVA`, `COMPLETADA` o `FINALIZADA_PARCIAL`.
 - La asignacion tiene proposito tipado y no puede consumirse para otro proposito.
-- Solo `ADMIN` o `COORDINADOR` de la subcampania pueden registrar la asignacion.
+- ADMIN activo puede registrar la asignación. Otro actor debe ser GENERAL/VALIDADOR activo con acceso vigente al vivero del lote y COORDINADOR de la subcampaña, revalidados en servidor.
+- La fecha de entrega respeta el nacimiento vivo del lote.
 
 Efectos atomicos:
 
@@ -231,17 +240,23 @@ Validaciones:
 - `cantidad_devuelta <= saldo_asignado_disponible`.
 - La asignacion no puede estar `DEVUELTA`.
 - `cantidad_asignada` no se modifica.
-- Solo `ADMIN` o `COORDINADOR` de la subcampania pueden devolver.
+- ADMIN activo puede devolver. Otro actor debe ser GENERAL/VALIDADOR activo con acceso vigente al vivero del lote y COORDINADOR de la subcampaña, revalidados en servidor.
+- La devolución retorna a la misma asignación y lote de origen, conservando modalidad y procedencia del ingreso.
 
 Efectos atomicos:
 
 - Aumenta `ASIGNACION_VIVERO_SUBCAMPANIA.cantidad_devuelta`.
 - Aumenta `LOTE_VIVERO.saldo_vivo_actual` del lote origen en `cantidad_devuelta`.
+- Si el lote estaba `FINALIZADO`, lo deja `ACTIVO` y limpia su `motivo_cierre` actual, conservando los eventos de cierre anteriores. La subcampaña mantiene su estado.
 - Registra `DEVOLUCION_A_VIVERO` en `EVENTO_PLANTACION`.
 - Registra un evento `DEVOLUCION_PLANTACION` en `EVENTO_LOTE_VIVERO` para que el historial del lote explique el aumento de saldo.
 - En MVP no exige evidencia fotografica de devolucion.
 
 Nota de implementacion: el tipo de evento `DEVOLUCION_PLANTACION` existe en `EVENTO_LOTE_VIVERO` desde la migracion `051`; la migracion `054` implementa la RPC de devolucion fisica y la `056` corrige y endurece la constraint que valida el incremento de saldo. Ver estado real en [`../ESTADO.md`](../ESTADO.md).
+
+El retorno autorizado constituye el aumento posterior del saldo físico admitido por `RN-VIV-22`. La cantidad inicial del lote y la cantidad entregada de la asignación permanecen como hechos históricos.
+
+El retorno a `ACTIVO` está presente en la [RPC de devolución095](../../Backend-r3foresta/migrations/095_vivero_operacion_por_ambito.sql). La [proyección exacta105](../../Backend-r3foresta/migrations/105_vivero_operaciones_ids_exactos.sql) conserva una ejecución de esa RPC y sus efectos.
 
 ### 6.4 Despacho manual desde Vivero
 
@@ -280,6 +295,16 @@ Reglas:
 - Genera evento `DESPACHO` en M2.
 - Baja `LOTE_VIVERO.saldo_vivo_actual`.
 - Requiere evidencia propia asociada al evento de Vivero.
+
+### 6.5 Procedencia por consumo registrado
+
+Cada detalle de plantación conserva la asignación y el lote efectivamente consumidos, con cantidades finales y snapshots persistidos. La lectura reconstruye ese vínculo mediante los consumos guardados. La procedencia puede ser Recolección, incorporación o historia anterior sin origen registrado, conservando los nulos disponibles.
+
+`GET /api/v1/plantaciones/:id/procedencia-propia` requiere cuenta activa y autoría o participación efectiva del registro. `GET /api/v1/plantaciones/:id/procedencia-administrativa` requiere ADMIN global activo. La proyección mínima identifica lote, asignación, cantidades, snapshots disponibles, tipo de origen, modalidad y procedencia. Los terceros, referencias, observaciones y fotos privadas de Vivero se consultan por sus recorridos M2 autorizados. [Contrato de procedencia](../../Backend-r3foresta/docs/t5-m3-procedencia.md).
+
+Ejemplo de conservación para un lote incorporado, en `UNIDAD`.
+
+`incorporar 100 − merma 10 − entregar 60 + devolver 15 = vivero 45`. La asignación entregada conserva `60 − plantar 45 − devolver 15 = campo 0`. Quedan plantadas 45 y merma 10, con el mismo lote original en cada relación.
 
 ## 7. Invariantes
 
@@ -375,18 +400,22 @@ El enum `estado_asignacion_vivero` contiene unicamente `ACTIVA | AGOTADA | DEVUE
 
 Una reposicion puede usar stock de cualquier especie disponible en una asignacion con proposito `REPOSICION`. No se exige que coincida con la especie del grupo plantado origen. El sistema registra la especie real en el evento `REPOSICION` y el grupo plantado puede quedar con composicion mixta. Esta politica es revisable post-MVP si la certificacion de carbono exige homogeneidad por grupo.
 
-### RN-VIV-61 - Asignacion requiere lote con EMBOLSADO y saldo vivo positivo
+### RN-VIV-61 - Asignacion requiere base viva confirmada y saldo positivo
 
 Una asignacion solo puede crearse si el lote cumple todas estas condiciones:
 
 - Lote esta `ACTIVO`.
-- Existe evento `EMBOLSADO` registrado en el lote.
+- Existe una única base viva mediante `EMBOLSADO` o `INCORPORACION` registrada en el lote.
 - `saldo_vivo_actual > 0`.
 - `saldo_vivo_actual` no es `NULL`.
 
-Esta regla previene entregar material no viable (semillas, material pre-embolsado, etc.) como si fueran plantines listos para plantar.
+La entrega consume plantas vivas registradas y respeta su fecha de nacimiento vivo, saldo y ámbito autorizado. El registro de base viva conserva el hecho observado y sus límites de evidencia.
 
 ## 8. Politica de mermas
+
+### RF-VIV-14 - Separar merma de Vivero y pérdida de stock entregado
+
+La merma del lote afecta exclusivamente a plantas bajo custodia de Vivero. La pérdida del stock entregado pertenece a su asignación en campo y requiere su propio flujo M3. Se aplican las reglas siguientes a ambos caminos de nacimiento vivo.
 
 ### 8.1 Merma en vivero
 
@@ -415,6 +444,8 @@ Reglas:
 - La devolucion fisica al vivero no exige evidencia en MVP; evidencia de devolucion queda post-MVP.
 
 ## 10. Concurrencia y transacciones
+
+Las operaciones logísticas revalidan cuenta activa y autoridad por vivero/subcampaña en la transacción, coordinadas con retiro de acceso, cambio de rol y baja de cuenta. El contrato de acceso T2 precisa el orden cooperativo de locks y sus límites. Plantar consume su asignación autorizada y conserva su control propio de autoridad.
 
 La transaccion de asignacion fisica debe incluir:
 
@@ -478,16 +509,18 @@ Si una parte falla, falla toda la operacion.
 
 Contrato actualizado para el MVP bajo el enfoque de asignacion fisica.
 
-La implementacion puede estar parcial o diferida hasta Modulo 3. No asumir que el backend ya refleja este contrato sin confirmarlo en [`../ESTADO.md`](../ESTADO.md).
+La integración T5 amplía la base viva del lote y conserva entrega, consumo y retorno al origen. El [contrato backend del 15 de noviembre](../../Backend-r3foresta/docs/t5-integracion-backend-2026-11-15.md) documenta 109 para altas ADMIN, 110 para procedencia administrativa y el historial paginado con estados de evidencia. El alcance de aplicación remota y despliegue se acredita por versión y entorno en sus fuentes.
 
-Cambios de backend esperados respecto a la implementacion anterior:
+La integración física base está documentada mediante las migraciones backend 051–056, con asignación, consumo y devolución al lote. INT03-A e INT02-D acreditan después el registro participante LIFO y su autorización/concurrencia en alcance técnico local. El [estado por versión y entorno](../ESTADO.md) enlaza los ensayos y confirmaciones de aplicación correspondientes.
 
-- agregar o reemplazar el origen de despacho `ASIGNACION_SUBCAMPANIA`,
-- ajustar CHECKs de `EVENTO_LOTE_VIVERO` para permitir `PLANTACION_CAMPANIA` sin `registro_plantacion_id` cuando el origen sea asignacion a subcampania,
-- dejar de generar `DESPACHO AUTOMATICO_PLANTACION` desde `fn_m3_registrar_plantacion`,
-- hacer que la creacion de asignacion descuente `LOTE_VIVERO.saldo_vivo_actual`,
-- hacer que la devolucion fisica aumente `LOTE_VIVERO.saldo_vivo_actual`,
-- agregar soporte de evento M2 para devolucion fisica o documentar explicitamente el ajuste transaccional hasta que exista.
+Los cambios siguientes conservan el antecedente de la transición implementada mediante 051–056.
+
+- origen de despacho `ASIGNACION_SUBCAMPANIA`,
+- CHECKs de `EVENTO_LOTE_VIVERO` compatibles con `PLANTACION_CAMPANIA` y `registro_plantacion_id` nulo en asignaciones,
+- consumo por `fn_m3_registrar_plantacion` sobre la asignación entregada,
+- descuento de `LOTE_VIVERO.saldo_vivo_actual` al asignar,
+- restitución del saldo del lote al devolver,
+- evento M2 `DEVOLUCION_PLANTACION` para explicar el retorno físico.
 
 ## 13. TODO / Decision pendiente
 

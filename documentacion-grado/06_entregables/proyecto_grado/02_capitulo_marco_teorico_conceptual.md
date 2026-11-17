@@ -353,6 +353,8 @@ RUP organiza actividades recurrentes en disciplinas como modelado del negocio, r
 
 Un **artefacto** es un producto de trabajo controlado: visión, modelo de casos de uso, especificación, arquitectura, código, prueba, registro de riesgo, versión o manual. RUP es configurable y no obliga a producir todos sus artefactos posibles. La adaptación debe conservar los necesarios para controlar el riesgo, comunicar decisiones, construir y demostrar el resultado.
 
+Un requisito expresa una capacidad, condición o restricción necesaria para satisfacer una necesidad identificada. Su detalle puede reunir comportamiento esperado, reglas, excepciones y criterios de aceptación en los artefactos de requisitos que resulten útiles. Wiegers y Beatty (2013) destacan la necesidad de que los requisitos sean comunicables y verificables. En R3Foresta, esos criterios permiten contrastar lo construido antes de que la persona competente decida su aceptación.
+
 ### 2.8.5 Adaptación de RUP a R3Foresta
 
 R3Foresta es un proyecto individual y de duración limitada. Por ello una sola persona puede desempeñar varios roles y los artefactos se consolidan para evitar burocracia. Se conservan, sin embargo, los elementos que dan rigor al proceso: fases, iteraciones, hitos, riesgos, arquitectura, requisitos, configuración, incrementos ejecutables, pruebas, integración y aceptación.
@@ -367,78 +369,45 @@ En el Marco aplicativo, el diagrama de casos de uso responderá quién interact�
 
 El DER lógico, los casos de uso, las actividades, los estados, las secuencias y la arquitectura concreta se presentarán en el Capítulo III. En este capítulo se definen las ideas que permiten interpretar dichos artefactos. La sección 2.10 solo identifica tecnologías efectivamente utilizadas, sin anticipar que una tabla, servicio, restricción o decisión técnica concreta sea la solución adoptada.
 
-## 2.9 Spec-Driven Development y asistencia de inteligencia artificial
+## 2.9 Asistencia de inteligencia artificial y control humano
 
-### 2.9.1 Concepto de Spec-Driven Development
+### 2.9.1 Alcance de la asistencia en RUP
 
-Spec-Driven Development es una forma de trabajo en la que una especificación explícita y versionada precede a la implementación y actúa como referencia para planificar, construir y comprobar el software. En vez de redactar documentación después de que el código ya decidió el comportamiento, primero se expresa qué necesita el usuario, qué reglas deben preservarse, qué entradas y salidas existen, qué casos límite importan y cómo se aceptará el resultado.
+La inteligencia artificial se utiliza como herramienta de apoyo en las actividades de RUP. Puede ayudar a formular preguntas sobre requisitos, explorar alternativas de diseño, redactar código, proponer casos de prueba y preparar documentación. Los objetivos, riesgos y artefactos de la iteración delimitan cada encargo; la herramienta no organiza el ciclo de vida ni decide el alcance del producto.
 
-El término no designa, en este proyecto, un estándar internacional ni una metodología de ciclo de vida equivalente a RUP. Se adopta como práctica operacional mediante un protocolo propio basado en el flujo central de GitHub Spec Kit —especificar, planificar, descomponer en tareas e implementar—, sin declarar adopción completa de la herramienta. La validez de una especificación depende de su claridad, revisión y correspondencia con el dominio, no de la herramienta utilizada (GitHub, 2026).
+Las salidas generadas se consideran propuestas. Pueden contener afirmaciones falsas, interpretar de manera incorrecta una regla o producir código y pruebas que no satisfagan el requisito. El control de esos riesgos requiere definir responsabilidades y revisar los resultados dentro del contexto de uso (Tabassi, 2023).
 
-Un requisito expresa una capacidad, condición o restricción necesaria para satisfacer una necesidad identificada; una especificación desarrolla ese requisito mediante comportamiento esperado, reglas, excepciones y criterios de aceptación. Wiegers y Beatty (2013) destacan la necesidad de que los requisitos sean comunicables y verificables. En R3Foresta, los criterios de aceptación no sustituyen el juicio humano: convierten el resultado esperado de una capacidad en condiciones que pueden revisarse antes de decidir su cierre.
-
-### 2.9.2 Flujo de una capacidad especificada
-
-El flujo adoptado es:
-
-`necesidad → requisito → especificación → diseño → tareas → implementación → pruebas → resultado → aceptación`
-
-- la **necesidad** expresa el problema o resultado operativo buscado;
-- el **requisito** establece una obligación verificable del sistema;
-- la **especificación** detalla comportamiento, reglas, datos, interfaces, escenarios y criterios de aceptación;
-- el **diseño** decide cómo satisfacerla dentro de la arquitectura;
-- las **tareas** dividen el cambio en unidades ejecutables;
-- la **implementación** materializa el comportamiento;
-- las **pruebas** contrastan el producto con la especificación;
-- el **resultado** conserva evidencia de conformidad o defecto;
-- la **aceptación** decide si la capacidad puede cerrarse o requiere corrección.
-
-El flujo no debe interpretarse como cascada. Una contradicción encontrada durante diseño, implementación o pruebas puede devolver el trabajo a la especificación. La diferencia es que el cambio se hace explícito y versionado antes de aceptar un comportamiento nuevo. Toda modificación aprobada actualizará la especificación y, según corresponda, el plan, las tareas y las pruebas, conservando el historial de la decisión.
-
-### 2.9.3 Relación entre SDD y RUP
-
-RUP y SDD resuelven niveles distintos. RUP responde **cómo se gobierna el proyecto completo**; SDD responde **cómo se trabaja una capacidad concreta dentro de una iteración**. En Inicio, SDD ayuda a convertir necesidades en requisitos y escenarios principales. En Elaboración, profundiza reglas, contratos y criterios que sostienen la arquitectura. En Construcción, guía las capacidades de cada incremento desde la especificación hasta las pruebas. En Transición, permite relacionar defectos y solicitudes de ajuste con el comportamiento aprobado.
-
-Los artefactos SDD materializan el detalle de requisitos, diseño y planificación de las capacidades. No sustituyen los productos transversales de RUP cuya finalidad es diferente: visión, arquitectura, registro de riesgos, gestión de configuración, revisión de iteraciones, hitos y despliegue.
-
-Esta subordinación evita presentar una suma de metodologías sin jerarquía. RUP sigue siendo el proceso rector; el desarrollo iterativo e incremental es su estrategia inherente; SDD es la práctica de especificación y ejecución; la IA es una herramienta transversal.
-
-### 2.9.4 IA en la variante de SDD adoptada
-
-SDD no cuenta con un estándar normativo ni con una única definición obligatoria. El referente adoptado por el proyecto, GitHub Spec Kit, sí define un flujo agentic en el que los artefactos proporcionan contexto estructurado a agentes de programación (GitHub, 2026). Por ello la IA está integrada operativamente en la variante seleccionada. Aun así, se conserva la formulación **Spec-Driven Development asistido por inteligencia artificial** para declarar con transparencia el uso de agentes y distinguirlos de la revisión y responsabilidad humanas.
-
-La IA puede proponer preguntas para descubrir ambigüedades, alternativas de diseño, casos límite, código, migraciones, pruebas y explicaciones. También puede contrastar una modificación con una especificación y detectar posibles omisiones. Estas capacidades aceleran la exploración, pero no garantizan corrección: una salida puede inventar requisitos, desconocer una regla del dominio, introducir vulnerabilidades o producir una prueba que verifica el comportamiento equivocado.
-
-### 2.9.5 Control humano, autoría y evidencia
+### 2.9.2 Control humano, autoría y evidencia
 
 Cada salida relevante de IA debe someterse a revisión del dominio, revisión técnica y pruebas ejecutadas. Las decisiones institucionales, la aprobación de requisitos, la aceptación, la interpretación de resultados y la autoría académica no se delegan. Esta separación hace explícitos los roles y responsabilidades humanos dentro de la configuración humano–IA (Tabassi, 2023).
 
-La trazabilidad del trabajo no exige publicar conversaciones completas ni atribuir autoría a la herramienta. Requiere conservar especificaciones, decisiones, cambios, pruebas y resultados suficientes para explicar qué se hizo y por qué. Cuando la IA influya materialmente en una alternativa, se registrarán la herramienta y el modelo o versión disponible, la tarea, el artefacto afectado, la salida adoptada, modificada o rechazada, la revisión humana, la prueba y la referencia al cambio.
+La trazabilidad del trabajo no exige publicar conversaciones completas ni atribuir autoría a la herramienta. Requiere conservar requisitos, decisiones, cambios, pruebas y resultados suficientes para explicar qué se hizo y por qué. Cuando la IA influya materialmente en una alternativa, se registrarán la fecha, la herramienta y el modelo o versión disponible, la tarea, el artefacto afectado, la salida adoptada, modificada o rechazada, la revisión humana, la comprobación pertinente y la referencia al cambio. Ese registro se incorpora a la evidencia existente de la iteración.
 
-### 2.9.6 Riesgos y controles del uso de IA
+### 2.9.3 Riesgos y controles del uso de IA
 
 Los riesgos principales son la generación de información falsa, la aceptación automática de código, la pérdida de coherencia entre documentación e implementación, la exposición de información sensible y la dependencia de resultados no reproducibles. Los controles correspondientes son:
 
 - proporcionar contexto acotado y sin datos sensibles innecesarios;
-- exigir correspondencia entre cambio y especificación;
+- comprobar la correspondencia entre el cambio, los requisitos y las reglas del dominio;
 - revisar diferencias y ejecutar pruebas en el entorno del proyecto;
 - mantener decisiones y artefactos importantes bajo control de versiones;
 - separar sugerencia de IA, decisión humana y resultado verificado;
 - rechazar afirmaciones o resultados que no cuenten con evidencia suficiente.
 
-**Figura 2.6. Relación entre RUP, SDD, asistencia de IA y control humano**
+**Figura 2.6. Asistencia de IA y revisión humana en una iteración de RUP**
 
 ```mermaid
 flowchart TB
-  RUP[RUP adaptado<br/>gobierna el ciclo de vida] --> SDD[SDD<br/>organiza una capacidad]
-  SDD --> CAD[Necesidad → requisito → especificación → diseño → tareas → implementación → pruebas → resultado]
-  IA[Asistencia de IA] -. propone, contrasta o apoya .-> CAD
-  HUM[Revisión y decisión humana] -->|aprueba alcance, requisitos y decisiones| SDD
-  HUM -->|revisa evidencia y acepta o rechaza| CAD
-  RUP -->|hitos, riesgos e integración| HUM
+  RUP[RUP adaptado<br/>fases, objetivos y riesgos] --> IT[Iteración]
+  IT --> DIS[Disciplinas pertinentes:<br/>requisitos, análisis y diseño,<br/>implementación y pruebas]
+  DIS --> ART[Artefactos seleccionados,<br/>resultado y evidencia]
+  IA[Asistencia de IA] -. propone, contrasta o apoya .-> DIS
+  ART --> HUM[Revisión y decisión humana]
+  HUM -->|ajustes y riesgos residuales| IT
+  HUM -->|evidencia para la decisión| HIT[Revisión del hito correspondiente]
 ```
 
-*Nota.* Elaboración propia con base en Kruchten (2004), GitHub (2026) y Tabassi (2023). La figura representa una jerarquía de trabajo: RUP es el proceso rector, SDD es una práctica subordinada y la IA no asume responsabilidad ni aceptación.
+*Nota.* Elaboración propia con base en Kruchten (2004) y Tabassi (2023). RUP organiza el trabajo y la revisión humana decide sobre los resultados; la IA apoya las actividades. La revisión de una iteración aporta evidencia al hito sin acreditar por sí sola su cierre.
 
 ## 2.10 Tecnologías utilizadas
 
@@ -466,13 +435,13 @@ R3Foresta utiliza las siguientes tecnologías y componentes confirmados en la im
 
 R3Foresta adopta la trazabilidad como capacidad de reconstruir el recorrido registrado del material vegetal mediante relaciones entre unidades, eventos, cantidades, responsables, ubicaciones y evidencias. Distingue transferencias de transformaciones, preserva invariantes de cantidades y reconoce que la evidencia digital respalda un registro sin certificar por sí sola el hecho físico.
 
-El desarrollo se gobierna con RUP adaptado. Inicio define propósito y alcance; Elaboración estabiliza arquitectura y riesgos; Construcción produce los tres módulos y sus integraciones mediante iteraciones con incrementos ejecutables; Transición valida, corrige, despliega y acepta. SDD convierte cada necesidad priorizada en una cadena versionada de especificación, diseño, tareas, implementación y pruebas. La IA apoya esas actividades, pero toda decisión y aceptación permanece bajo responsabilidad humana.
+El desarrollo se gobierna exclusivamente con RUP adaptado. Inicio define propósito y alcance; Elaboración estabiliza arquitectura y riesgos; Construcción produce los tres módulos y sus integraciones mediante iteraciones con incrementos ejecutables; Transición valida, corrige, despliega y prepara la aceptación. Las disciplinas se aplican con distinta intensidad dentro de cada iteración y los artefactos se seleccionan por utilidad y riesgo. La IA apoya esas actividades, mientras las decisiones y la aceptación permanecen bajo responsabilidad humana.
 
-Esta combinación conecta tres niveles sin duplicarlos:
+La aplicación reúne tres elementos:
 
-1. **RUP:** gobierno y ciclo de vida del proyecto;
-2. **SDD:** práctica de trabajo para cada capacidad dentro de una iteración;
-3. **IA:** asistencia transversal sometida a revisión y prueba.
+1. **RUP adaptado:** fases, iteraciones, disciplinas, arquitectura y riesgos;
+2. **artefactos y evidencia:** requisitos, decisiones, cambios, pruebas y resultados que permiten revisar el avance;
+3. **asistencia de IA:** apoyo transversal sometido a revisión y comprobación humanas.
 
 La síntesis sirve como puente al Marco aplicativo, donde deberán presentarse los artefactos y resultados que demuestren la aplicación real de estos conceptos.
 
@@ -486,12 +455,12 @@ La síntesis sirve como puente al Marco aplicativo, donde deberán presentarse l
 |---|---|---|
 | RUP adaptado | Fases, iteraciones, hitos, disciplinas, riesgos, arquitectura y artefactos | Gobernar el proyecto y justificar el paso entre fases e iteraciones |
 | Desarrollo iterativo e incremental | Iteraciones, incrementos ejecutables, integración y retroalimentación | Construir M1, M2, M3 y la trazabilidad transversal |
-| Spec-Driven Development | Especificación precedente, criterios de aceptación y trazabilidad del cambio | Definir y ejecutar cada capacidad del incremento |
+| Requisitos y artefactos de RUP | Casos de uso, reglas, criterios de aceptación y selección de productos según utilidad y riesgo | Relacionar las necesidades con el diseño, los cambios y las pruebas |
 | Asistencia de IA | Apoyo generativo, revisión humana, autoría, riesgos y controles | Acelerar tareas sin delegar responsabilidad ni aceptación |
 | Verificación técnica | Cantidades, saldos, atomicidad, consistencia y trazabilidad de requerimientos | Diseñar la matriz de pruebas críticas |
 | Validación y aceptación | Completitud, coherencia y evidencia recuperable | Diseñar escenarios operativos y criterios de cierre |
 
-*Nota.* Elaboración propia a partir de las secciones 2.4, 2.6 y 2.8 a 2.11, con base en Kruchten (2004), IBM (s. f.), GitHub (2026) y Tabassi (2023). Las filas sobre verificación, validación y aceptación sintetizan los criterios definidos para este proyecto en el Capítulo I.
+*Nota.* Elaboración propia a partir de las secciones 2.4, 2.6 y 2.8 a 2.11, con base en Kruchten (2004), IBM (s. f.), Wiegers y Beatty (2013) y Tabassi (2023). Las filas sobre verificación, validación y aceptación sintetizan los criterios definidos para este proyecto en el Capítulo I.
 
 La metodología del Capítulo I explica **cómo se organizará el desarrollo**; este capítulo explica **qué significan y cómo se relacionan** los conceptos adoptados. El Marco aplicativo mostrará **cómo se materializaron** en artefactos, incrementos, integraciones y resultados.
 

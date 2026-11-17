@@ -56,6 +56,8 @@ Cohesión del dominio y menor ambigüedad estructural.
 ### Decisión
 Un lote de vivero solo puede venir de **una recolección origen**.
 
+**Complemento vigente aprobado el 16 de noviembre de 2026.** El principio de origen único se aplica a los dos caminos. Propagación conserva una Recolección recibida y validada. Incorporación conserva su evento y procedencia en un lote nuevo, con `recoleccion_id` nulo. Los lotes mantienen su identidad en asignaciones, consumos y devoluciones. [RF-VIV-15 y criterios](../02-vivero-module/00_requerimientos_vivero_core.json).
+
 ### La duda crítica
 “¿Por qué no permitir mezcla de orígenes?”
 
@@ -139,6 +141,8 @@ Consultas más simples, pantallas más rápidas y menor complejidad de uso.
 
 ### Decisión
 Antes del embolsado existe material en proceso, pero no saldo vivo formal del lote.
+
+**Complemento vigente aprobado el 16 de noviembre de 2026.** En propagación, `INICIO` registra material en proceso y `EMBOLSADO` fija la base viva observada. Plantas ya vivas ingresan mediante `INCORPORACION`, con recepción o conteo inicial y procedencia. Cada lote admite una sola base viva. Compra y saldo inicial se distinguen de la producción del período. Las devoluciones autorizadas restituyen saldo al mismo lote de origen conforme a `RN-VIV-22`. [Reglas vigentes](../02-vivero-module/01_reglas_de_negocio_vivero_core.md#rn-viv-11---nacimiento-único-del-saldo-vivo) y [RF-VIV-15](../02-vivero-module/00_requerimientos_vivero_core.json).
 
 ### La duda crítica
 “¿Por qué no empezar a contar saldo desde el inicio?”

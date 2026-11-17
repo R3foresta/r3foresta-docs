@@ -2,6 +2,8 @@
 
 **Corte:** 15 de septiembre de 2026
 
+> Las tablas siguientes conservan ese corte. El apartado 8 registra la actualización documental de Inicio del 29 de octubre. El apartado 9 registra la decisión actual del autor y el avance de Elaboración del 4 de noviembre. El apartado 10 registra la continuidad hacia Construcción y el cierre de redacción del Capítulo III; estas actualizaciones no modifican los estados históricos de septiembre ni acreditan implementación nueva. La adecuación integral de este documento a RUP exclusivo sigue en el tablero académico.
+
 ## 1. Propósito
 
 Este registro compara el plan metodológico del Proyecto de Grado con la evidencia que puede localizarse al corte. Separa la existencia de artefactos técnicos de su verificación y aceptación formal. También incorpora las capacidades implementadas antes de la iteración prevista, sin presentarlas como incrementos cerrados hasta que se revaliden dentro de la secuencia RUP.
@@ -67,3 +69,29 @@ El expediente consolidado de contribuciones materiales asistidas por IA todavía
 ## 7. Actualización del registro
 
 El registro se actualiza al iniciar y cerrar cada iteración, después de una prueba relevante y cuando cambia el estado de un riesgo o de una aceptación. Cada actualización debe conservar la fecha, la versión evaluada y la evidencia localizable. Los estados se elevan solo con la evidencia requerida: la implementación no implica verificación y la verificación no implica aceptación.
+
+## 8. Consolidación documental de Inicio — 29 de octubre de 2026
+
+La [aplicación de RUP y SDD](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) ocupa la sección 3.1 y la [Fase de Inicio](../06_entregables/proyecto_grado/03_1_fase_inicio.md) la sección 3.2. Se reunieron visión, alcance, actores, casos de uso generales, matriz puente hacia las especificaciones, requisitos no funcionales iniciales, riesgos y evaluación documental de LCO. Se conservaron HAL-01 a HAL-11 de la matriz OBJ-01, NEC-01 a NEC-08, RAN-01 a RAN-10 y CU-01 a CU-12. Los nuevos RNF-INI y RIN son propuestas documentales de esta consolidación, pendientes de revisión.
+
+La decisión de adoptar RUP y organizar el periodo consta el 25 de agosto. Las actividades comprobables del 20 y 22 de julio se relacionan con sus productos sin atribuirles retrospectivamente ejecución bajo IN-1 o EL-1. El autor confirmó el 29 de octubre que no existe acta LCO ni registro anterior al 20 de julio que acredite IN-1. Se mantienen **revisión y decisión LCO pendientes**; la aprobación del Perfil o del LCO de un incremento particular no reemplaza la revisión global.
+
+La corrección fue asistida por Codex mediante contraste documental y revisión del diagrama, sobre cambios locales revisables y con versión anterior de Inicio archivada. La identidad del modelo no se consignó; la revisión humana del contenido académico permanece pendiente. La comprobación de enlaces, numeración y correspondencia de IDs es documental y no acredita pruebas nuevas del producto, aceptación o despliegue.
+
+## 9. Continuidad hacia Elaboración — 4 de noviembre de 2026
+
+El autor confirma Inicio/LCO terminado y dispone avanzar con Elaboración, tomando como base el chat [Reorganizar fase de inicio](codex://threads/01a18917-6cf3-74e3-9d48-8b56800da7a7). Se registra una decisión actual sobre los productos consolidados; no se atribuye fecha de julio ni una aceptación institucional independiente no aportada. Las tablas de los apartados 3 y 4 conservan el corte del 15 de septiembre.
+
+La [sección 3.3](../06_entregables/proyecto_grado/03_2_fase_elaboracion.md) se consolida exclusivamente con RUP adaptado y utiliza los diagramas de `445f24f`, incluido el contraste físico de 51 tablas y 564 columnas. Actualiza actores, procesos, interacciones, modelos conceptual/lógico, propiedades INV/RNF y riesgos RDI. Mantiene GPS exterior con advertencia, metas orientativas, cierre manual e idempotencia por intención según las decisiones aceptadas. Incorporación de plantines, acceso por vivero, recepción directa y remanentes conservan sus puntos de contrato e implementación pendientes.
+
+**LCA:** preparación documental avanzada, sin nueva decisión de cierre. La revisión requiere contratos de las variantes, evidencia ejecutable de la línea M1→M2→M3, versión/entorno/resultados, viabilidad del trabajo residual y decisión humana con condiciones. El [tablero académico](../02_planificacion/TODO_PROYECTO_GRADO.md) mantiene el orden de ejecución; el detalle técnico sigue en sus tableros existentes. Esta actualización no acredita aplicación SQL, nuevas pruebas de producto, despliegue ni aceptación de PA-F01. La [copia anterior](../../archivo/documentacion-grado/proyecto_grado/elaboracion-rup-2026-11-04/README.md) conserva el estado previo.
+
+## 10. Cierre de redacción del Capítulo III — 4 de noviembre de 2026
+
+El autor dio por terminado el texto de Elaboración y pidió avanzar con Construcción, concluir el Capítulo III y hablar del sistema como desarrollado. Se completaron las [secciones 3.4](../06_entregables/proyecto_grado/03_3_fase_construccion.md) y [3.5](../06_entregables/proyecto_grado/03_4_fase_transicion.md) en tono retrospectivo, exclusivamente con RUP adaptado. La instrucción se registró como continuidad y cierre de redacción; las decisiones formales de LCA, IOC y PR conservaron sus evidencias independientes.
+
+Construcción integró los módulos, la separación de entrega física y consumo, LIFO en servidor, metas orientativas, cierre manual, GPS exterior con advertencia, comandos recuperables y privacidad por audiencia. Las Tablas 3.22 y 3.23 relacionaron las pruebas documentadas con versiones, entornos y TC-01–TC-15, corrigiendo la repetición de hallazgos de julio ya tratados en las rutas inspeccionadas. Transición relacionó EVA-01–EVA-09 con evidencia disponible, distinguió ensayos controlados del guardado local confirmado del 26 de octubre y reunió los aportes y límites por objetivo en la Tabla 3.25.
+
+La edición fue asistida por Codex mediante lectura documental y contraste de los guards de identidad actuales. Los resultados numéricos procedieron de informes existentes y no se repitieron las pruebas de aplicación. Las comprobaciones de esta edición fueron documentales: enlaces, IDs, numeración, coherencia de reglas y renderizado de los diagramas. La revisión humana del texto y la maquetación conservaron su control académico.
+
+La [copia previa](../../archivo/documentacion-grado/proyecto_grado/cierre-capitulo-iii-2026-11-04/README.md) preservó los textos, el seguimiento y las copias de diagramas disponibles al iniciar el encargo. ESTADO.md y el tablero PA-F01 mantuvieron sus estados técnicos; esta edición no cerró PA-S04, tareas de QA, despliegues, piloto ni aceptaciones sin evidencia.

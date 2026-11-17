@@ -27,22 +27,32 @@ Buscan garantizar:
 
 ### RN-GEN-01 - Todo registro operativo tiene actor responsable
 
-Toda accion relevante del sistema debe poder asociarse a un `USUARIO`.
+Toda accion relevante debe asociarse a un `USUARIO`. Las operaciones privadas obtienen el actor de Bearer JWT verificado y comprueban cuenta activa. Un ID del body, un rol declarado o `x-auth-id` sin verificacion no autentica.
+
+El registro WebAuthn verifica primero la ceremonia y confirma usuario activo `VOLUNTARIO` y primera passkey juntos. Un fallo al guardar la credencial revierte el alta completa. El alta carece de recibo y replay idempotente. Ante respuesta perdida se comprueba el login con la passkey antes de repetir.
+
+CORS y WebAuthn comparten `CORS_ORIGINS` como lista exacta de origenes. Produccion exige lista explicita HTTPS y registro/login requieren `Origin` permitido e igual al de la ceremonia. Los desafios viven en memoria de una instancia y un reinicio invalida ceremonias pendientes.
+
+Contrato tecnico y limites del entorno en la [revision de altas del 16 de noviembre](../../Backend-r3foresta/docs/revision-altas-mvp-2026-11-16.md).
 
 ### RN-GEN-02 - El usuario se inactiva, no se borra
 
 Si un usuario deja de operar, debe marcarse como inactivo. No se debe borrar si ya participa en historial, movimientos, validaciones o snapshots.
 
-### RN-GEN-03 - El rol es controlado por catalogo
+<a id="rn-gen-03---el-rol-es-controlado-por-catalogo"></a>
 
-El rol de usuario no puede ser texto libre. La lista oficial del MVP es:
+### RN-GEN-03 - El rol global y las autoridades por ambito son explicitos
 
-* `ADMIN`
-* `GENERAL`
-* `VALIDADOR`
-* `VOLUNTARIO`
+El catalogo global conserva `ADMIN`, `GENERAL`, `VALIDADOR` y `VOLUNTARIO`. Solo ADMIN global activo administra roles y accesos M1/M2. Cambio, revision, historial y recibo se confirman juntos, con proteccion del ultimo ADMIN global activo.
 
-Los permisos operativos se asignan a partir de este catalogo.
+- Captura y mantenimiento propio M1 requieren GENERAL o VALIDADOR con acceso M1 vigente. ADMIN deriva esta autoridad.
+- Operacion M2 requiere autoridad vigente sobre el vivero y la accion. ADMIN conserva autoridad global.
+- Recepcion de semillas requiere ADMIN global o VALIDADOR con asignacion vigente al vivero de almacenamiento. Se prohibe autorrecepcion tambien a ADMIN. GENERAL con M2 puede hacer INICIO y DESECHO sobre material recibido y no puede recibir-validar.
+- PLANTADOR y ADMINISTRADOR_SUBCAMPANIA son permisos contextuales de Participacion aliada. COORDINADOR pertenece al equipo logistico.
+
+La afiliacion, organizacion, equipo o autoria historica no concede por si misma permiso operativo actual. El perfil propio no acepta rol, actividad ni permisos administrativos. Los comandos administrativos conservan revision esperada, motivo, auditoria y recuperacion propia con cuenta activa tras perder autoridad.
+
+Fuentes vigentes en [usuarios y perfil](../../Backend-r3foresta/documentacion/frontend/modulos/usuarios.md), [acceso M1](../../Backend-r3foresta/docs/t1-acceso-recoleccion.md), [acceso por vivero](../../Backend-r3foresta/docs/t2-acceso-viveros.md) y [recepcion unica](../../Backend-r3foresta/docs/t4-recepcion-semillas.md).
 
 ### RN-GEN-04 - El nombre humano puede congelarse en snapshots
 
@@ -131,7 +141,9 @@ No se usa `AMBOS` en esta fase.
 
 ### RN-GEN-18 - El vivero es catalogo maestro
 
-El vivero se administra como entidad maestra compartida. No debe nacer como texto libre dentro de Recoleccion o Vivero.
+El vivero se administra como entidad maestra compartida y se selecciona desde catalogo en Recoleccion y Vivero.
+
+El acceso M2 se concede a una persona para un vivero con vigencia, revision e historial. Almacenamiento M1 y destino M2 conservan campos distintos. El camino ordinario consume en el vivero de custodia del material recibido y ADMIN conserva la excepcion explicita de destino diferente del [contrato M1-M2](../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md).
 
 ### RN-GEN-19 - Todo vivero tiene ubicacion asociada
 
@@ -149,23 +161,31 @@ La inactivacion bloquea nuevo uso, pero no invalida registros historicos ya asoc
 
 Toda evidencia trazable debe registrarse mediante `TIPOS_ENTIDAD_EVIDENCIA` + `EVIDENCIAS_TRAZABILIDAD`, evitando modelos paralelos por modulo.
 
-### RN-GEN-22 - El archivo no basta sin contexto de negocio
+### RN-GEN-22 - La evidencia conserva contexto y audiencia
 
-La evidencia debe indicar a que entidad pertenece y, cuando aplique, quien la subio, cuando fue tomada y si es principal.
+La evidencia indica entidad, actor y datos disponibles de toma y orden. Las cargas pendientes fijan tambien el contexto de operacion, vivero, solicitud o revision. El servidor vuelve a autorizar al cargar, leer y vincular.
 
-### RN-GEN-23 - `eliminado_en` no participa en el MVP
+Las fotos de recepcion corresponden a la revision de captura actual. Una foto de otra revision no habilita la decision. Recepcion e incorporacion admiten 1 a 5 fotos por su operacion. La plantacion inicial participante requiere entre 1 y 10 fotos conforme a D09.
 
-Aunque `EVIDENCIAS_TRAZABILIDAD` tenga campos para eliminacion logica, esa capacidad queda reservada para fases futuras y no forma parte del flujo funcional del MVP.
+Los originales privados se consultan mediante lectura autorizada o URL firmada. T5 usa `vivero_incorporaciones` privado y firmas de 300 segundos. Los buckets legados conservan su configuracion propia y la proyeccion publica solo publica derivados permitidos y sanitizados.
 
-### RN-GEN-23a - Evidencia auditable no se comprime en frontend
+Un fallo de consulta de fotos se declara como error. Un fallo de firma conserva metadatos, URL nula y estado explicito. Storage se confirma fuera de PostgreSQL y ante incertidumbre se conservan archivos y contexto para recuperar o conciliar.
 
-Aplica a evidencia operativa/auditable de M1 Recoleccion, M2 Vivero (eventos `INICIO`, `EMBOLSADO`, `DESCARTE_PRE_EMBOLSADO`, `ADAPTABILIDAD` con evidencia, `MERMA`, `DESPACHO`) y M3 Plantacion, y en general a cualquier evidencia de trazabilidad asociada a procesos, estados, movimientos o validaciones. Imagenes decorativas o de catalogo si pueden comprimirse; la evidencia auditable, no.
+### RN-GEN-23 - El retiro permitido de evidencia conserva trazabilidad
 
-Backend no debe reemplazar el archivo original con una version comprimida como unica copia. El flujo correcto es: guardar el archivo original intacto, calcular hash del original, guardar metadata tecnica y, si hace falta, generar una copia optimizada/thumbnail solo para visualizacion.
+La sustitucion o retiro de fotos de una ficha editable se rige por su operacion y conserva la trazabilidad. Los vinculos confirmados, snapshots, claves y recibos historicos se preservan.
 
-**Pendiente para M3 Plantacion:** cuando se implemente, toda evidencia de plantacion debe subir el archivo original (sin compresion frontend, sin `nonEvidenceImageCompression`, usando frontend solo para validacion/previews); backend debe guardar original + hash + metadata y puede generar thumbnails/derivados para visualizacion; el frontend debe enviar los archivos por `multipart/form-data` en un campo acordado, idealmente `fotos`.
+Una subida o una respuesta perdida no acreditan por si mismas confirmacion o rollback. La compensacion se limita a rechazos concluyentes y las referencias inciertas permanecen disponibles para recuperacion o conciliacion.
 
----
+### RN-GEN-23a - La evidencia auditable conserva el original
+
+Las nuevas evidencias auditables conservan el archivo original intacto y calculan en servidor SHA256, tamano y MIME. El frontend envia `multipart/form-data` y puede preparar vistas previas. Los derivados de visualizacion o publicacion se generan conservando su relacion con el original. Los hashes y metadatos tecnicos ausentes de registros historicos permanecen como ausentes, sin atribuirles un backfill ni cumplimiento verificado.
+
+Se admiten JPG/JPEG/PNG/WEBP/HEIC/HEIF con validacion y limites por recorrido. La politica comun de originales operativos usada en recepcion y T5 admite hasta 15 MiB por archivo y 100 MiB acumulados por carga. Esos dos recorridos admiten entre 1 y 5 fotos por operacion.
+
+La plantacion inicial participante admite entre 1 y 10 fotos de hasta 10 MiB por archivo, conforme a D09 y `MAX_FOTO_BYTES`. Cada carga transporta una foto y valida su decodificacion real. El [contrato de Participacion aliada](../specs/plantacion/participacion-aliada/contrato-identidad-permisos-backend-propuesta.md) conserva su audiencia, privacidad y recuperacion por carga. Las imagenes decorativas o de catalogo siguen su politica propia.
+
+La distribucion de Recoleccion en 1 a 5 fotos de Lugar y 1 a 5 de Total recolectado se conserva en `RN-REC-14`. Su validacion backend por seccion permanece pendiente y se distingue del control total de 2 a 10 fotografias.
 
 ## 8. Reglas de integracion con otros modulos
 

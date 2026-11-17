@@ -1,6 +1,6 @@
 # Arquitectura integral — R3Foresta
 
-> Estado observado: 2026-07-23.
+> Corte histórico observado del 23 de julio de 2026. Refinamiento de requisitos y configuración aprobado el 16 de noviembre, identificado en la sección 12. El resto conserva sus observaciones fechadas de julio.
 >
 > Esta revisión contrasta los repositorios `r3foresta-docs` (`0217f11`),
 > `Backend-r3foresta` (`f7c691a`) y `pwa-r3foresta` (`562a97e`). Describe la
@@ -870,6 +870,21 @@ Hasta implementar idempotencia:
 Esto reduce riesgo, pero no equivale a idempotencia durable.
 
 ## 12. Seguridad
+
+### Refinamiento aprobado el 16 de noviembre de 2026
+
+RNF-INI-01/03/04/06 se concretan en los módulos, contratos y [ESTADO.md](ESTADO.md#actualización-documental-aprobada-del-16-de-noviembre). El backend revisado `b57192c` utiliza JWT verificado en los contratos operativos de accesos, recepción, incorporación y Participación. Las descripciones posteriores de `x-auth-id`, fallback JWT y comodines Vercel conservan el diagnóstico histórico de julio. El [contrato de altas y WebAuthn](../Backend-r3foresta/docs/revision-altas-mvp-2026-11-16.md) acredita la corrección local y sus límites de entorno.
+
+| Parámetro o recurso | Contrato requerido |
+|---|---|
+| `CORS_ORIGINS` | Lista completa de orígenes exactos compartida por CORS y WebAuthn. Producción exige configuración explícita y HTTPS. Registro/login comprueban coincidencia del header Origin y la ceremonia. |
+| `JWT_SECRET` | Secreto requerido en servidor. El contrato actual exige su configuración. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Credencial privada requerida para verificación de identidad y RPC/datos operativos. Permanece en servidor. |
+| `PARTICIPACION_INICIAL_ESCRITURA_HABILITADA` | Habilita nuevas escrituras de registro inicial después del corte coordinado y su evidencia. El resultado recuperable conserva su contrato. |
+| `PARTICIPACION_CARGAS_CLEANUP_ENABLED` | Controla el worker de expiración y compensación de cargas conforme a su política. |
+| Buckets privados y versiones | Registrar en cada entorno los buckets aplicados, su autorización y las versiones compatibles de API/PWA. |
+
+Los valores secretos se gestionan en la configuración del servicio. La revisión documental identifica requisitos y nombres de parámetros. Su configuración desplegada y el recorrido WebAuthn real conservan la acreditación de cada destino.
 
 ### 12.1 Controles existentes
 

@@ -1,6 +1,6 @@
 # Modulo Vivero - Core operativo
 
-Modulo 2. Documenta el nucleo operativo de Vivero: maduracion, saldo vivo, eventos y cierre del lote.
+Modulo 2. Documenta el nucleo operativo de Vivero, con propagación, incorporación de plantas vivas, saldo físico, eventos y cierre del lote. Requisitos actualizados el 16 de noviembre de 2026.
 
 ## Alcance del modulo
 
@@ -13,7 +13,7 @@ Los contratos entre modulos no viven aqui, sino en:
 
 ## Documentos de este modulo
 
-- [`00_requerimientos_vivero_core.json`](00_requerimientos_vivero_core.json): requerimientos funcionales core (`RF-VIV-01..10`).
+- [`00_requerimientos_vivero_core.json`](00_requerimientos_vivero_core.json): requerimientos funcionales core (`RF-VIV-01..10`, `RF-VIV-02A` y `RF-VIV-15`). `RF-VIV-11..14` se conservan en el contrato con Plantación.
 - [`01_reglas_de_negocio_vivero_core.md`](01_reglas_de_negocio_vivero_core.md): reglas internas de Vivero Core.
 - [`02_flujo_operativo_vivero_core.md`](02_flujo_operativo_vivero_core.md): guia operativa del flujo core.
 - [`03_tarea_frontend_separar_despacho_asignacion.md`](03_tarea_frontend_separar_despacho_asignacion.md): tarea completada para separar Despacho manual y Asignacion a subcampania en la UI de Vivero, sin cambios de backend.
@@ -22,7 +22,7 @@ Los contratos entre modulos no viven aqui, sino en:
 ## Contratos relacionados
 
 - **Entrada desde Recoleccion:** [`../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md`](../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md)
-  Define elegibilidad del origen, snapshots heredados, `CONSUMO_A_VIVERO`, invariantes de cantidad/unidad y transaccion atomica.
+  Define recepción conforme y validación, elegibilidad del origen, snapshots heredados, `CONSUMO_A_VIVERO`, custodia, invariantes de cantidad/unidad y transaccion atomica.
 
 - **Salida hacia Plantacion:** [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md)
   Define asignaciones fisicas, devoluciones fisicas, consumo de stock asignado y saldos derivados.
@@ -32,6 +32,7 @@ Los contratos entre modulos no viven aqui, sino en:
 - `INICIO`: crea el lote y registra material en proceso; no crea saldo vivo.
 - `DESCARTE_PRE_EMBOLSADO`: cierra un lote iniciado que no producira plantas vivas; no crea saldo vivo.
 - `EMBOLSADO`: crea `plantas_vivas_iniciales` y `saldo_vivo_actual`, siempre en `UNIDAD`.
+- `INCORPORACION`: crea otro lote con plantas ya vivas mediante recepción de compra/donación o saldo inicial contado, con procedencia, foto privada y solicitud recuperable.
 - `ADAPTABILIDAD`: seguimiento opcional; no cambia saldo y no bloquea despacho.
 - `MERMA`: baja `saldo_vivo_actual`.
 - `DESPACHO MANUAL`: baja `saldo_vivo_actual` desde Vivero.
@@ -42,10 +43,15 @@ Los contratos entre modulos no viven aqui, sino en:
 - Un lote de vivero tiene un unico origen.
 - En MVP no se permite division ni fusion de lotes.
 - Los eventos son append-only.
-- El saldo vivo nace unicamente en `EMBOLSADO`.
-- Si el lote nunca llega a `EMBOLSADO`, se cierra con `DESCARTE_PRE_EMBOLSADO`, evidencia obligatoria y motivo de cierre propio.
+- Cada lote tiene una única base viva, mediante `EMBOLSADO` en propagación o `INCORPORACION` para plantas ya vivas.
+- Si un lote de propagación tuvo `INICIO` y nunca produjo plantas vivas, se cierra con `DESCARTE_PRE_EMBOLSADO`, evidencia obligatoria y motivo de cierre propio.
+- GENERAL/VALIDADOR activos requieren acceso vigente al vivero para operar y consultar su material. ADMIN activo tiene alcance global. Recibir y validar exige ADMIN o VALIDADOR habilitado al almacenamiento, con persona receptora distinta de quien recolectó.
+- Nuevas incorporaciones y sus fotos pendientes requieren ADMIN global actual. El resultado propio confirmado se recupera con cuenta activa incluso después de perder ADMIN.
+- Cada ingreso incorporado crea un lote nuevo. Las devoluciones autorizadas aumentan el saldo del mismo lote de origen conforme al contrato con Plantación.
 - `ADAPTABILIDAD` no bloquea `MERMA` ni `DESPACHO MANUAL`.
 - Blockchain es metadata opcional y no bloquea la operacion.
+
+Los [contratos de recepción](../../Backend-r3foresta/docs/t4-recepcion-semillas.md) e [incorporación T5](../../Backend-r3foresta/docs/t5-incorporacion-plantas.md) precisan API, recuperación y límites técnicos. La [integración backend del 15 de noviembre](../../Backend-r3foresta/docs/t5-integracion-backend-2026-11-15.md) fija la autoridad ADMIN109 y la procedencia administrativa110. [ESTADO.md](../ESTADO.md) conserva las versiones y evidencias por entorno.
 
 ## Historico
 

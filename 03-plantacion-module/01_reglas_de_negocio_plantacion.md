@@ -11,7 +11,7 @@ Estas reglas cubren el comportamiento propio del Modulo 3 (Plantacion): ciclo de
 
 El contrato de integracion entre Vivero (M2) y Plantacion (M3) — asignaciones fisicas a subcampania, devoluciones fisicas, consumo de stock asignado y saldos derivados — **no se duplica aqui**. Su fuente canonica es [`../90-contratos-integracion/02_contrato_vivero_a_plantacion.md`](../90-contratos-integracion/02_contrato_vivero_a_plantacion.md), donde viven `RN-VIV-47` a `RN-VIV-61`. Este documento referencia ese contrato cuando aplica, no lo copia.
 
-Fuente de estas reglas: `02_Procesos_Modulo_3_Plantacion.md` y `00_Requerimientos_Modulo_3_Plantacion.json` (`RF-PLA-*`) de este modulo, y `database/00_database_schema.md`.
+Fuente de estas reglas son `02_Procesos_Modulo_3_Plantacion.md`, `00_Requerimientos_Modulo_3_Plantacion.json` (`RF-PLA-*`), el esquema documentado y los refinamientos aceptados de [PA-F01](../specs/plantacion/participacion-aliada/README.md). La revisión documental del 16 de noviembre de 2026 incorpora ambas bases vivas, procedencia por consumo, privacidad y altas atómicas conservando los IDs existentes.
 
 ---
 
@@ -45,7 +45,11 @@ Si se quiere ampliar el proyecto, se crea una nueva subcampaña dentro de la mis
 
 ### RN-PLA-05 - Organizaciones asociadas a campaña
 
-Una campaña puede tener 1 o mas organizaciones asociadas (relacion N:M via `CAMPANIA_ORGANIZACION`). `ORGANIZACION` es tabla maestra real del Modulo General (`RF-GEN-07`), no texto libre ni catalogo embebido en Plantacion. Ver `RN-GEN-27..29` para el comportamiento de la entidad maestra.
+Una campaña puede tener 1 o mas organizaciones asociadas (relacion N:M via `CAMPANIA_ORGANIZACION`). `ORGANIZACION` es tabla maestra real del Modulo General (`RF-GEN-07`). Ver `RN-GEN-27..29` para el comportamiento de la entidad maestra.
+
+El alta confirma código, campaña y vínculos en una transacción con ADMIN activo revalidado. El código conserva todos sus dígitos al superar 999 y los códigos existentes permanecen históricos. La pérdida de respuesta después del commit exige consultar antes de repetir, pues el alta carece de recibo/replay idempotente. [Contrato y evidencia 111](../../Backend-r3foresta/docs/revision-altas-mvp-2026-11-16.md).
+
+**Diferencia pendiente de resolución.** RF-PLA-01 y esta regla conservan una o más organizaciones. El contrato implementado de 111 admite crearlas sin organizaciones. La advertencia de la revisión del 16 sigue pendiente de decisión y no cambia la cardinalidad del requisito.
 
 ### RN-PLA-36 - Meta agregada de campaña (derivada, no persistida) — añadida 2026-07-01
 
@@ -84,6 +88,10 @@ Campos tecnicos o de auditoria (`updated_at`, `updated_by`, `metadata_blockchain
 ---
 
 ## 4. Reglas de subcampaña: estados y transiciones
+
+El alta de RF-PLA-02 genera el código, crea BORRADOR y registra BORRADOR_CREADO en una transacción con locks de cuenta y campaña. Considera códigos históricos, incluidos registros retirados, y conserva el correlativo completo al superar 999. Ante fallo de historial se revierte el alta. La respuesta perdida se consulta antes de repetir porque falta replay idempotente. [Contrato y evidencia 112](../../Backend-r3foresta/docs/revision-altas-mvp-2026-11-16.md).
+
+**Diferencia pendiente de resolución.** RF-PLA-02 conserva fechas estimadas futuras al crear. El contrato implementado comprueba coherencia `fin >= inicio` y admite fechas pasadas. La actualización documental del 16 conserva esta advertencia para decisión expresa.
 
 ### RN-PLA-06 - Estados operativos y transiciones permitidas en MVP
 
@@ -189,7 +197,9 @@ Una subcampaña tiene exactamente un `COORDINADOR` (constraint partial unique en
 
 ### RN-PLA-22 - Responsable y co-responsables deben ser parte del equipo
 
-Al registrar una plantacion, el `responsable_id` debe pertenecer a `SUBCAMPANIA_EQUIPO` de la subcampaña (COORDINADOR u OPERARIO). Los co-responsables deben ser un subconjunto de `SUBCAMPANIA_EQUIPO`. No hay porcentaje de participacion entre miembros; todos los co-responsables se tratan por igual.
+El registro interno conserva su autorización por `SUBCAMPANIA_EQUIPO`. Para PA-F01, [PA-S01](../specs/plantacion/participacion-aliada/01-registro-plantacion-inicial/spec.md) autoriza por persona y subcampaña, con responsable derivado del actor y participantes según su contrato. La coordinación logística, el permiso para registrar y la relación histórica de participación se comprueban por separado. Las cantidades pertenecen al grupo y se cuentan una sola vez.
+
+PA-S04 permite corregir participantes reales en ACTIVA por ADMIN global o administrador vigente de esa subcampaña, conservando responsable, originales, cantidades y stock. Una retirada por error extingue su relación propia salvo autoría u otra participación efectiva. Restaurar recupera esa relación y reutiliza sus snapshots históricos. Reconocer una cuenta hoy inactiva no la reactiva ni le concede facultades operativas. [Contrato de participantes 085 y límites](../../Backend-r3foresta/docs/pa-int07-participantes.md).
 
 ---
 
@@ -199,7 +209,9 @@ Al registrar una plantacion, el `responsable_id` debe pertenecer a `SUBCAMPANIA_
 
 Al registrar una plantacion, el sistema solo permite consumir plantas desde asignaciones fisicas activas de la misma subcampaña. La UI puede mostrar la seleccion agrupada por especie para simplificar el flujo; el backend debe persistir el detalle real por asignacion/lote en `REGISTRO_PLANTACION_DETALLE`.
 
-Para el MVP se permite que el backend consuma automaticamente desde las asignaciones disponibles de una misma especie con orden estable y documentado (por ejemplo, asignacion mas antigua primero), siempre que guarde el detalle exacto por `asignacion_id`, `lote_vivero_id`, `planta_id` y cantidad. Si el producto decide exponer varios lotes al usuario, la seleccion manual sigue siendo valida.
+PA-S01 consume LIFO en servidor desde asignaciones elegibles de la misma especie y subcampaña, con orden estable conforme a D07. Persiste cada `asignacion_id`, `lote_vivero_id`, `planta_id` y cantidad realmente consumida. Una especie puede consumir varios lotes. El stock puede proceder de una única base viva EMBOLSADO o INCORPORACION por lote. La entrega conserva el origen RECOLECCION o la modalidad/procedencia de INCORPORACION, sin fabricar hechos anteriores.
+
+RF-PLA-14 reconstruye procedencia mediante esos consumos y vínculos persistidos. SALDO_INICIAL informa que la historia anterior al conteo no está registrada. El acceso privado propio, el administrativo y el historial M2 respetan sus autorizaciones. Las fotos T5 usan acceso temporal privado. La consulta fallida, la ausencia confirmada y la firma/expiración de una foto se representan por separado. [Recorrido local y límites](../../pwa-r3foresta/docs/QA_T5_ITERACION_3.md).
 
 ### RN-PLA-24 - Validaciones para registrar PLANTACION_INICIAL
 
@@ -207,7 +219,7 @@ La subcampaña debe estar `ACTIVA`. Cada especie plantada debe existir en `SUBCA
 
 ### RN-PLA-25 - Registro append-only con snapshots
 
-`REGISTRO_PLANTACION` es append-only: no se permite edicion posterior en el MVP. Al registrar se congelan `nombre_subcampania_snapshot`, `nombre_responsable_snapshot` y, por cada especie, los snapshots heredados del lote de vivero (cientifico, comercial, variedad). Al activar la subcampaña ya se congelaron `nombre_zona_snapshot`, `nombre_coordinador_snapshot` y `nombres_organizaciones_snapshot`.
+`REGISTRO_PLANTACION` conserva su original y snapshots. Al registrar se congelan `nombre_subcampania_snapshot`, `nombre_responsable_snapshot` y, por cada especie, los snapshots heredados del lote de vivero (cientifico, comercial, variedad). Al activar la subcampaña ya se congelaron `nombre_zona_snapshot`, `nombre_coordinador_snapshot` y `nombres_organizaciones_snapshot`. PA-S04 admite exclusivamente sus correcciones vinculadas al original, con auditoría y versión efectiva. La consulta posterior no reemplaza el recibo original ni cuenta dos veces el mismo hecho.
 
 ### RN-PLA-26 - Plantar no genera despacho automatico en M2
 
@@ -245,9 +257,11 @@ Antes de confirmar, el sistema muestra `cantidad_plantada_inicial`, `cantidad_mu
 
 La funcion `gps_dentro_poligono_con_tolerancia(subcampania_id, lat, lng)` es la fuente de verdad para evaluar un punto GPS con tolerancia configurable (default sugerido 50 m). Turf.js u otro chequeo de frontend es opcional y solo sirve para feedback de UX, nunca como autoridad de validacion.
 
-**Registro inicial, aclaración de producto del 11 de octubre de 2026 (ADR-PLA-03):** estar fuera del polígono/tolerancia no bloquea por sí solo el registro del piloto; conservar coordenadas, resultado/distancia y advertencia. Si falla la captura automática se permite indicar un punto manual válido. No se autoriza omitir coordenadas ni declarar una evaluación exitosa inexistente. La RPC local 061 ya permite punto exterior y bloquea evaluación no disponible; validar el contrato y manejo de fallos técnicos antes del piloto. No acredita despliegue ni extiende esta decisión a otros recorridos.
+**Registro inicial, aclaración de producto del 11 de octubre de 2026 (ADR-PLA-03):** estar fuera del polígono/tolerancia no bloquea por sí solo el registro del piloto; conservar coordenadas, resultado/distancia y advertencia. Si falla la captura automática se permite indicar un punto manual válido. No se autoriza omitir coordenadas ni declarar una evaluación exitosa inexistente. PA-S01-CA10 exige conservar resultado/distancia y advertencia exterior. Un fallo técnico confirmado del evaluador conserva formulario y ofrece reintentar sin guardar ni consumir stock. Una respuesta perdida se recupera como resultado incierto antes de afirmar ausencia de efectos. La RPC local 061 y el contrato de registro participante preservan esa decisión. La evidencia de PostGIS y del destino se consulta por entrega en ESTADO.md.
 
 La regla conceptual previa de bloqueo fuera de tolerancia para reposición/mortandad debe contrastarse en sus propios recorridos; esta revisión solo cierra la decisión del registro inicial. No modificar sus contratos por inferencia.
+
+RF-PLA-13 y D09 precisan para PA-S01 de una a diez fotos JPG/JPEG/PNG/WEBP/HEIC/HEIF de hasta 10 MiB por archivo, validadas por decodificación real. Original privado y versión pública sanitizada conservan D12. Las operaciones internas legadas y la evidencia de entrega desde M2 mantienen su propia frontera de formatos, cantidad y tamaño según el contrato de cada operación.
 
 ### RN-PLA-33 - Poligono obligatorio para activar; area es referencial
 
@@ -259,15 +273,19 @@ El poligono de la subcampaña es obligatorio para pasar a `ACTIVA`. El area en h
 
 ### RN-PLA-34 - Transparencia publica sin autenticacion
 
-Toda la informacion de subcampañas `ACTIVA`, `COMPLETADA` y `FINALIZADA_PARCIAL` es publica sin autenticacion (mapa, totalizadores, detalle de campaña/subcampaña, drill-down a M2 y M1). Las subcampañas en `BORRADOR` no son publicas.
+Impacto permite consulta sin cuenta ni login de campañas, subcampañas y registros elegibles, conforme a [PA-S02](../specs/plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md) y D12. Los borradores quedan fuera de la publicación. Un visitante anónimo y una cuenta VOLUNTARIO sin asignación reciben la misma proyección pública y los enlaces compartidos conservan su destino.
 
-**Incremento PA-F01, confirmación del 11 de octubre:** consulta pública sin cuenta ni perfil, independiente de permisos operativos y afiliación. Su proyección incluye nombres/participantes históricos, fotos de plantación, mapa/GPS/ubicación, fechas, plantación inicial, faltantes para meta, reposiciones, bajas reportadas y organización/comunidad de referencia. «Toda la información» no debe usarse para exponer indiscriminadamente credenciales, contactos, perfiles completos, metadatos de fotos, observaciones libres o contexto operativo interno; los campos de esta experiencia están delimitados en [PA-S02](../specs/plantacion/participacion-aliada/02-consulta-impacto-y-registros/spec.md). La trazabilidad pública previa M2/M1 no concede operación ni exige incluir sus herramientas en la navegación del participante.
+El contenido público incluye los campos aprobados de fecha, referencia, GPS/ubicación, cantidades por especie, responsable y participantes efectivos, fotos públicas elegibles y contexto organizacional histórico identificado por separado. Mapa, agregados y detalle cuentan cada registro una vez. Reposiciones, bajas y avance inicial mantienen indicadores distintos. La regla de faltantes por subcampaña es `max(meta_vigente - plantacion_inicial, 0)`.
+
+Credenciales, contactos, perfiles completos, motivos internos, observaciones libres, stock, asignaciones internas y fotos pendientes o privadas requieren sus proyecciones autorizadas. Los archivos públicos cumplen D12 y conservan los originales privados. La procedencia privada de RF-PLA-14 y el historial M1/M2 exigen sus propias autorizaciones. La consulta pública mantiene los indicadores de PA-S02 y no incorpora estimaciones de CO2.
 
 ### RN-PLA-35 - Roles del MVP sin rol global nuevo
 
-El catalogo cerrado de roles globales (`ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`) no se altera. `ADMIN` crea campañas y subcampañas, asigna coordinador inicial, cierra manualmente y gestiona organizaciones. `GENERAL` registra plantaciones, reposiciones y mortandad en las subcampañas donde es miembro del equipo. `VALIDADOR` no tiene flujo especial propio en MVP. `VOLUNTARIO` no puede ser miembro de `SUBCAMPANIA_EQUIPO` ni registrar eventos en este modulo.
+El catálogo global conserva `ADMIN | GENERAL | VALIDADOR | VOLUNTARIO`. ADMIN crea campañas/subcampañas, asigna coordinación, cierra y gestiona organizaciones. GENERAL y VALIDADOR conservan sus lecturas y facultades internas legítimas según el contrato de cada operación. La coordinación logística se comprueba como membresía y, para entregas/devoluciones, con el acceso M2 exigido en el mismo ámbito.
 
-El párrafo anterior describe la base legada. **Para PA-F01, ADR-PLA-03 y revisión del 11 de octubre aprueban la orientación VOLUNTARIO + permiso contextual**: sesión y habilitación de plantador/administrador por subcampaña permiten el registro inicial, sin ascender a GENERAL ni abrir Recolección/Vivero. La transición de tablas, restricciones y usuarios está pendiente; no se afirma que VOLUNTARIO ya pueda operar en el código desplegado. Administrador contextual no equivale a ADMIN global ni a COORDINADOR, y no se introduce rol de campaña con herencia.
+Conforme a ADR-PLA-03, [RF-PLA-17](00_Requerimientos_Modulo_3_Plantacion.json) y el [acuerdo de roles](../specs/plantacion/participacion-aliada/acuerdo-roles-y-permisos-2026-10-12.md), una cuenta VOLUNTARIO con PLANTADOR vigente registra inicial en su subcampaña ACTIVA. ADMINISTRADOR_SUBCAMPANIA puede registrar y gestionar plantadores en su ámbito según PA-S03. Conservan rol global y requieren sesión, cuenta activa y las validaciones de PA-S01. ADMIN global registra inicial en cualquier ACTIVA sin asignación contextual adicional.
+
+La asignación de roles globales y la designación de administradores contextuales corresponden a ADMIN global mediante sus operaciones separadas. Administrar participación no concede coordinación logística ni acceso M1/M2. La presencia derivada de ADMIN en miembros se deduplica y no crea participación histórica. La implementación y el entorno desplegado conservan su acreditación por entrega en [ESTADO.md](../ESTADO.md).
 
 ---
 

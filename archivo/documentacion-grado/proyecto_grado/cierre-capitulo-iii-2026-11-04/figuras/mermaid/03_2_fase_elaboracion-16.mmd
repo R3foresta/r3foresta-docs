@@ -1,0 +1,56 @@
+flowchart LR
+    VIS["Visitante"]
+    USR["Usuario autenticado"]
+    PLA["Plantador autorizado"]
+    ASC["Administrador de subcampaña"]
+    ADM["ADMIN global"]
+
+    subgraph SYS["R3Foresta · Participación en Plantación"]
+        IMP(["Consultar y compartir<br/>Impacto público"])
+        PERF(["Gestionar perfil propio"])
+        MIS(["Consultar Mis registros"])
+        ZON(["Consultar subcampañas autorizadas"])
+        EQU(["Consultar equipo de subcampaña"])
+        REG(["Registrar plantación inicial"])
+        CTX(["Validar autoridad, estado,<br/>plan y stock elegible"])
+        FOT(["Incorporar fotos y ubicación"])
+        DET(["Guardar consumo trazable<br/>y recibo"])
+        COL(["Seleccionar colaboradores<br/>adicionales"])
+        BOR(["Conservar o recuperar<br/>captura propia"])
+
+        GP(["Incorporar o retirar plantadores"])
+        REV(["Revisar persona, ámbito<br/>y permiso vigente"])
+        GA(["Designar, cambiar, retirar<br/>o reemplazar administrador"])
+        CONT(["Proteger continuidad<br/>administrativa"])
+        RG(["Cambiar rol global<br/>o inactivar cuenta"])
+    end
+
+    VIS --- IMP
+    USR --- PERF
+    USR --- MIS
+    PLA --- ZON
+    PLA --- EQU
+    PLA --- REG
+    PLA --- BOR
+
+    ASC --- ZON
+    ASC --- EQU
+    ASC --- REG
+    ASC --- GP
+
+    ADM --- ZON
+    ADM --- EQU
+    ADM --- REG
+    ADM --- GP
+    ADM --- GA
+    ADM --- RG
+
+    REG -.->|"«include»"| CTX
+    REG -.->|"«include»"| FOT
+    REG -.->|"«include»"| DET
+    COL -.->|"«extend»<br/>si se añaden colaboradores"| REG
+
+    GP -.->|"«include»"| REV
+    GA -.->|"«include»"| REV
+    GA -.->|"«include»"| CONT
+    RG -.->|"«include»"| CONT

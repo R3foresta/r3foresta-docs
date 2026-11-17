@@ -18,16 +18,19 @@
 
 ### 1.1. Actualización documental a RUP
 
-**Estado al 3 de noviembre de 2026: pendiente.** Se acuerda preparar la actualización integral para declarar únicamente RUP adaptado. El Capítulo III se trabajará desde ahora con ese criterio; la IA apoyará la redacción y revisión bajo responsabilidad humana.
+**Estado al 4 de noviembre de 2026: parcial.** Los entregables vigentes del documento final —capítulos I, II y III, índices, figura metodológica y bibliografía— declaran únicamente RUP adaptado, con IA como apoyo bajo revisión humana. Las versiones previas se conservan en el [archivo del documento final](../../archivo/documentacion-grado/proyecto_grado/README.md), fuera de los entregables. La revisión actual no modifica el Perfil aprobado; la actualización integral de los documentos de apoyo sigue pendiente.
 
-**Antecedente:** la base documental declaraba RUP complementado con SDD asistido por IA. Esa formulación, sus flujos y sus productos todavía aparecen en los documentos y en apartados posteriores de este tablero. Se conservan para su revisión; no rigen el trabajo nuevo del Capítulo III. Registrar esta directriz no completa la migración documental ni modifica las aprobaciones históricas.
+**Antecedente:** la base documental declaraba RUP complementado con SDD asistido por IA. Esa formulación, sus flujos y sus productos todavía aparecen en documentos de apoyo y en apartados posteriores de este tablero. Se conservan para su revisión; no rigen los entregables actualizados del documento final. Este ajuste no completa la migración documental ni modifica las aprobaciones históricas.
 
 - [ ] Actualizar `base_perfil_proyecto_grado.md`, `metodologia_desarrollo.md`, el registro de avance y la guía personal de metodología y defensa para retirar el protocolo SDD y explicitar la adaptación de RUP.
-- [ ] Propagar el ajuste al Perfil, capítulos I y II, lineamientos, tableros, índices, figuras y referencias bibliográficas, conservando la versión presentada o aprobada y la fecha real del cambio.
-- [ ] Adecuar el texto existente del Capítulo III y sus cuatro fases a RUP; mantener los requisitos, decisiones, evidencias y límites acreditados, y retirar las obligaciones exclusivas del protocolo SDD.
+- [x] Actualizar los capítulos I y II, los índices de entregables y documento final, la Figura 2.6 y la bibliografía para declarar solamente RUP adaptado. Revisión del 4 de noviembre: se retiran el flujo SDD y GitHub Spec Kit; se conservan los requisitos útiles, IDs, fechas, evidencia y pendientes. La copia anterior y el archivo histórico se mantienen fuera de `06_entregables`.
+- [ ] Propagar el ajuste a los documentos base, lineamientos y tableros de apoyo, conservando la versión presentada o aprobada y la fecha real del cambio. El Perfil permanece intacto por el alcance del encargo del 4 de noviembre; una eventual actualización se tratará por separado.
+- [x] Adecuar el texto existente del Capítulo III y sus cuatro fases a RUP; mantener los requisitos, decisiones, evidencias y límites acreditados, y retirar las obligaciones exclusivas del protocolo SDD. Ajuste textual del 4 de noviembre; Transición ya era compatible. No cierra revisión académica, actualización de los documentos base, diseño de variantes ni hitos.
 - [ ] Revisar los documentos que guían a la IA y el seguimiento operativo: seleccionar artefactos según utilidad y riesgo, aprovechar IDs existentes y reducir actualización duplicada de estados, sin exigir tres archivos por capacidad ni nuevas familias de IDs por razón de SDD.
 - [ ] Comprobar coherencia, enlaces y citas; conservar rutas, contratos, decisiones aceptadas, actas y pendientes de pruebas, validación, despliegue y aceptación. Las copias históricas permanecen identificadas como tales.
 - [ ] Tras la revisión de la versión académica, transferir los cambios que correspondan al Google Docs de presentación y regenerar los entregables vigentes que se utilicen; las capturas locales no son destinos de edición.
+
+**Comprobación local de los entregables — 4 de noviembre:** 238 enlaces locales y 14 anclas Markdown revisados sin errores; sin menciones visibles a specs o SDD en el texto vigente. Se cotejaron los IDs, las copias históricas y la copia previa a esta revisión. Los tres archivos del Perfil y la figura activa de casos de uso conservan su contenido anterior al encargo. Las rutas técnicas existentes se mantienen como referencias de evidencia. Esta comprobación documental no cierra la revisión académica ni la actualización de los documentos de apoyo.
 
 El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere documentos vigentes coherentes con RUP y evidencia conservada; no acredita el cierre de LCO, LCA, IOC, PR ni de las entregas técnicas.
 
@@ -67,16 +70,20 @@ El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere 
 
 ### 3.2. Productos de Inicio
 
+La [sección 3.2 del Capítulo III](../06_entregables/proyecto_grado/03_1_fase_inicio.md) reúne visión, alcance, actores, CU-01 a CU-12, matriz HAL→NEC→RF/CU, RNF iniciales, riesgos y evaluación documental de LCO, consolidados desde el 29 de octubre. El 4 de noviembre el autor confirma Inicio/LCO terminado y dispone continuar con Elaboración. Se conserva la ausencia de acta histórica y de registro previo al 20 de julio que acredite IN-1; la decisión actual no modifica esas fechas. La [sección 3.1](../06_entregables/proyecto_grado/03_capitulo_marco_aplicativo.md) explica exclusivamente RUP adaptado. Las casillas de detalle siguientes conservan su auditoría documental propia.
+
 - [ ] Cerrar la visión y el alcance del producto.
 - [ ] Cerrar el glosario inicial.
 - [ ] Preparar el modelo inicial de casos de uso.
 - [ ] Preparar la lista priorizada de requisitos y riesgos.
 - [ ] Preparar el plan de fases, iteraciones, incrementos, productos y criterios de salida.
-- [ ] Revisar y cerrar el hito **LCO — Objetivos del ciclo de vida**.
+- [x] Cierre de **Inicio/LCO — Objetivos del ciclo de vida** confirmado por el autor el 4 de noviembre de 2026 para continuar con Elaboración. La decisión actual no acredita un acta histórica ni aceptación institucional independiente; las casillas de detalle conservan su auditoría documental propia.
 
 ## 4. Fase de Elaboración — iteración EL-1 — 20 de julio al 16 de agosto
 
 ### 4.1. Dominio y arquitectura
+
+**Avance documental — 4 de noviembre de 2026:** la [sección 3.3](../06_entregables/proyecto_grado/03_2_fase_elaboracion.md) integra requisitos/CU, procesos, interacciones, modelos conceptual/lógico y el modelo físico de `445f24f` (51 tablas y 564 columnas), con INV-01–INV-11, RNF-INI y tratamiento actualizado de RDI-01–RDI-08. Los diagramas distinguen meta orientativa, cierre manual, GPS exterior con advertencia y resultado recuperable. Las casillas de cierre integral siguientes permanecen abiertas por las variantes y verificaciones pendientes; la existencia de estos productos no cierra LCA.
 
 - [ ] Especificar entidades, eventos, estados, cantidades, unidades, saldos, responsables y evidencias.
 - [ ] Diferenciar transferencia de transformación biológica u operativa.
@@ -89,6 +96,10 @@ El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere 
 
 ### 4.2. Especificaciones y riesgos
 
+**Continuidad del análisis — 4 de noviembre:** Inicio incorpora las precisiones del autor sin acreditar implementación de las dos capacidades pendientes. La [propuesta de operarios por vivero](../../../Backend-r3foresta/documentacion/tareas/propuesta-permisos-por-vivero.md) desarrolla el acceso por establecimiento y la recepción por el mismo operario. La [propuesta de incorporación de plantines](../../../Backend-r3foresta/documentacion/tareas/plan-incorporacion-plantas-procedencia.md) conserva alternativas que deben conciliarse con las últimas respuestas del autor registradas en [Inicio](../06_entregables/proyecto_grado/03_1_fase_inicio.md): incorporación especial por ADMIN, etapa actual sin habilitación adicional de aptitud, comprobantes y notas opcionales, y comienzo del historial en recepción o conteo. Concretar esa frontera de responsabilidades, la recepción directa y sus remanentes antes de actualizar contratos e implementar. El registro de plantaciones ya realizadas permanece como tratamiento por definir. La migración metodológica de los documentos base sigue pendiente en 1.1.
+
+**Trabajo técnico residual del diseño:** completar los contratos de incorporación y acceso por vivero, incluida evidencia mínima y continuidad de operaciones; concretar recepción directa y remanentes sin reemplazar las reglas de cierre aceptadas; vincular la línea M1→M2→M3 con versión, entorno, resultados y reconstrucción del recorrido; evaluar LCA con sus riesgos residuales. El autor dio por terminado el texto de Elaboración el 4 de noviembre y dispuso continuar la redacción con Construcción; estos pendientes conservan su estado técnico. GPS y D01–D12 conservan sus decisiones aceptadas. Este orden se controla aquí, sin otro plan general.
+
 - [ ] Priorizar escenarios por valor, dependencia y riesgo.
 - [ ] Definir criterios para seleccionar y justificar escenarios operativos representativos a partir de variantes reales del proceso de R3Foresta.
 - [ ] Especificar y probar anticipadamente saldo no negativo, transferencia consistente, asignación coherente y ausencia de estados parciales.
@@ -97,6 +108,8 @@ El ajuste se controla aquí, sin crear otro plan ni tablero. El cierre requiere 
 - [ ] Revisar y cerrar el hito **LCA — Arquitectura del ciclo de vida**.
 
 ## 5. Fase de Construcción
+
+**Redacción completada — 4 de noviembre de 2026:** tras dar por terminado el texto de Elaboración, el autor dispuso continuar con Construcción y concluir el Capítulo III en tono retrospectivo de sistema desarrollado. La [sección 3.4](../06_entregables/proyecto_grado/03_3_fase_construccion.md) integra módulos, contratos, LIFO en servidor, GPS exterior con advertencia, recuperación del mismo intento y las matrices de resultados y cobertura TC-01–TC-15. La edición actualiza los hallazgos históricos de identidad y ausencia de pruebas frontend. Las casillas siguientes conservan su estado técnico: el cierre de redacción no acredita tareas de implementación, regresión integral ni IOC.
 
 Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 
@@ -142,6 +155,8 @@ Cada capacidad priorizada dentro de una iteración seguirá el flujo:
 - [ ] Revisar y cerrar el hito **IOC — Capacidad operativa inicial**.
 
 ## 6. Fase de Transición — iteración TR-1 — 2 al 15 de noviembre
+
+**Redacción completada — 4 de noviembre de 2026:** la [sección 3.5](../06_entregables/proyecto_grado/03_4_fase_transicion.md) presenta la evaluación documental de EVA-01–EVA-09, los resultados técnicos y el guardado local confirmado del 26 de octubre, las condiciones de entrega y la síntesis de objetivos. No atribuye nueve ejecuciones nuevas, mediciones de tiempo ni validación operativa integral. Las casillas de ejecución y aceptación mantienen sus evidencias propias; PR no se cierra por esta edición.
 
 ### 6.1. Verificación y validación — 2 al 8 de noviembre
 
@@ -222,8 +237,8 @@ El apartado 8.1 conserva los compromisos anteriores para su revisión en 1.1. El
 ## 10. Documento final y defensa
 
 - [ ] Integrar las versiones aprobadas de los capítulos I y II.
-- [ ] Desarrollar el Capítulo III por fases e iteraciones RUP, mostrando especificaciones, diseño, incrementos, integraciones, pruebas y resultados.
-- [ ] Relacionar cada objetivo con productos y evidencia verificable.
+- [x] Completar la redacción del Capítulo III por fases e iteraciones RUP, mostrando diseño, incrementos, integraciones, pruebas y resultados con sus límites de cobertura — 4 de noviembre de 2026; revisión académica y maquetación conservan su control propio.
+- [x] Relacionar cada objetivo con productos y evidencia verificable en la Tabla 3.25, sin declarar cierre técnico o aceptación donde no consta — 4 de noviembre de 2026.
 - [ ] Redactar conclusiones que respondan a cada objetivo sin generalizaciones no respaldadas.
 - [ ] Redactar recomendaciones separadas de los resultados.
 - [ ] Cerrar referencias y anexos.

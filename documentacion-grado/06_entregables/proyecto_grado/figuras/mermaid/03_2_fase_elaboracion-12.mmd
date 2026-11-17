@@ -1,0 +1,19 @@
+flowchart TD
+    I(["Inicio"]) --> C["Consultar capacidades, subcampaña ACTIVA,<br/>plan y stock elegible por especie"]
+    C --> F["Capturar 1–10 fotos y coordenada válida<br/>GPS o entrada manual; confirmar ubicación"]
+    F --> Q["Indicar cantidades, fecha y observaciones<br/>meta orientativa; stock limita"]
+    Q --> P["Añadir participantes habilitados opcionales<br/>y revisar resumen"]
+    P --> K["Confirmar con identidad del mismo intento"]
+    K --> V{"Validación transaccional"}
+    V -->|"Cuenta, permiso, plan, stock<br/>o datos no válidos"| R["Rechazo confirmado sin efecto<br/>revisar captura permitida"]
+    V -->|"Evaluador espacial falla"| R
+    V -->|"Coordenada evaluada<br/>interior o exterior advertido"| T["Consumir LIFO y guardar registro,<br/>detalles, participantes, evidencia y recibo"]
+    T --> RESP{"¿Respuesta conocida?"}
+    RESP -->|"Sí"| OK["Abrir el mismo comprobante"]
+    RESP -->|"No"| U["Resultado pendiente de confirmar"]
+    U --> REC["Recuperar con misma clave y contenido"]
+    REC --> TERM{"¿Hay resultado terminal?"}
+    TERM -->|"Confirmado"| OK
+    TERM -->|"Rechazado"| R
+    TERM -->|"Aún inconcluso"| U
+    OK --> FIN(["Fin"])

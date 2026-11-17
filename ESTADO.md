@@ -1,6 +1,18 @@
 # Estado de implementación
 
-**Corte documental:** 19 de octubre de 2026. Registra implementación acreditada por capa y entorno. El [estado previo a esta consolidación](archivo/estado-2026-10-17-antes-consolidacion.md) conserva los cortes y comprobaciones anteriores; el [registro hasta el 14](archivo/estado-2026-10-14.md) mantiene el detalle histórico.
+**Consolidación inicial del 19 de octubre de 2026, con actualizaciones fechadas hasta el 16 de noviembre.** Registra implementación acreditada por capa y entorno. El [estado previo a esta consolidación](archivo/estado-2026-10-17-antes-consolidacion.md) conserva los cortes y comprobaciones anteriores; el [registro hasta el 14](archivo/estado-2026-10-14.md) mantiene el detalle histórico.
+
+## Actualización documental aprobada del 16 de noviembre
+
+Pablo aprobó en el chat las actualizaciones funcionales, RNF-INI-01/03/04/06 y los nuevos RF-REC-06 y RF-VIV-15. Se actualizaron las fuentes de módulos, reglas, contratos y las referencias afectadas de PA-F01. Las advertencias conservan su revisión pendiente, incluidas organizaciones mínimas y fechas estimadas de RF-PLA-01/02, clasificación fotográfica, correcciones PWA mayores de 45 días, alcance histórico propio y etapa/variedad de incorporación. Esta aprobación acredita el diseño documental. Implementación, ensayo, aplicación SQL, publicación y despliegue conservan sus evidencias por capa.
+
+El [modelo físico](database/00_database_schema.md) representa el esquema adjunto confirmado como última versión, con 57 tablas, 622 columnas y 175 relaciones. La [fuente exacta](database/fuentes/supabase-estructura-2026-11-16.sql) y la [procedencia de relaciones](database/fuentes/supabase-relaciones-2026-11-16.json) preservan el contraste. Quince claves compuestas se agruparon y contrastaron con SQL local. El proyecto y la fecha de exportación del adjunto quedan sin identificar. El cotejo remoto del 4 de noviembre conserva su alcance histórico.
+
+La recepción única100 de backend `6e5e756` y PWA `a30c54f` sustituye los recorridos anteriores096–099. Su ejecución y pruebas funcionales fueron reportadas por Pablo el12 de noviembre. [Contrato vigente y límites](../Backend-r3foresta/docs/t4-recepcion-semillas.md), [QA frontend y AUD-036](../pwa-r3foresta/docs/QA_RECEPCION_UNICA.md). Los apartados del6–10 de noviembre se conservan como cortes históricos.
+
+T5 tiene interfaz de alta/recuperación y procedencia implementadas en la PWA actual `c6bdec9`, con backend de integración `3cb82e4` incluido en `b57192c`. El [QA del16](../pwa-r3foresta/docs/QA_T5_ITERACION_3.md) registra el recorrido ADMIN en Chrome local, desde registro20 a asignación53 y lote125, con consulta de historial/foto. Registra aplicación109/110 confirmada por Pablo. Teléfono físico, otros roles/recorridos y despliegue externo conservan sus pendientes. Las referencias locales `origin/main` coincidían con esos HEAD durante la revisión.
+
+Participantes085 está implementado en backend `41026ae`. La [evidencia versionada](../Backend-r3foresta/docs/evidencia/pa-int07-participantes-local.json) conserva estado `FALLIDO` con mensaje «Falló HTTP INT07 participantes/lecturas». [Contrato y límites](../Backend-r3foresta/docs/pa-int07-participantes.md). BE03/BE07 siguen parciales y el frontend de correcciones permanece pendiente según la ficha INT07. Cantidades, reversiones y aceptación integral de PA-S04 conservan sus pendientes.
 
 ## Trabajo actual — PA-F01
 
@@ -18,7 +30,7 @@ Actualización de entorno del 21 de octubre: backend `fbf2529` publicado en main
 | INT05 backend | BE01–BE06 en `8dc8efc`, publicado junto con `fbf2529`; corte original de pruebas sobre `10e5dc5` más árbol; 081, 65 suites/816 unitarios, 16 casos HTTP/SQL/Storage, preview INT05 y regresión D. [Cierre backend](specs/plantacion/participacion-aliada/archivo/cierre-pa-t-int05-backend.md), [contrato/entorno](../Backend-r3foresta/docs/pa-int05-entrega-local.md). | 081 aplicada según Pablo y cinco funciones/ACL cotejadas el 21; Render/local actualizados según Pablo. Storage/WebAuthn, verificación externa de recorridos y piloto pendientes. |
 | INT05 frontend | FE01–FE06 en commit local `a3a4b28`; corte original de pruebas sobre `6a2c955` más árbol; 48 suites/691 pruebas, lint/build y 111 checks integrados/SQL, con nuevas regresiones INT04/INT06. [Informe/versiones](../pwa-r3foresta/docs/QA_IMPACTO_INT05.md), [cierre](specs/plantacion/participacion-aliada/archivo/cierre-pa-t-int05-frontend.md). | Push, revisión humana, WebAuthn real, entorno remoto/despliegue/corte y piloto. |
 | INT06 | FE01–FE05 verificadas localmente, gestión por capacidades y recuperación C04–C09; [informe](../pwa-r3foresta/docs/QA_GESTION_ACCESOS_INT06.md). | FE06 parcial: revisión humana de UX, WebAuthn, entorno externo y QA completo/piloto; Impacto y regresión local acreditados en INT05. El cierre de INT04 no cierra todo el hilo frontend. |
-| INT07 | BE02/03 parciales: motor/recuperación y observaciones verificados localmente con084; commit local backend `1585b4c`. [Entrega y pruebas](../Backend-r3foresta/docs/pa-int07-motor-observaciones.md).083/081/082 conservan su [cotejo de desarrollo del21](../Backend-r3foresta/docs/evidencia/pa-int07-cotejo-desarrollo-completo-2026-10-21.json). | Participantes, cantidades, reversiones, demás lecturas/BE04–BE08 y frontend pendientes.084 con Success reportado y catálogo aportado cotejado el22; diferencias del legado030 frente al fixture documentadas. Backend publicado y HTTP remoto pendientes. Alta de mortandad todavía no implementada. |
+| INT07 | BE02/03 parciales: motor/recuperación y observaciones verificados localmente con084; commit local backend `1585b4c`. [Entrega y pruebas](../Backend-r3foresta/docs/pa-int07-motor-observaciones.md).083/081/082 conservan su [cotejo de desarrollo del21](../Backend-r3foresta/docs/evidencia/pa-int07-cotejo-desarrollo-completo-2026-10-21.json). | Participantes085 implementado en `41026ae`, con evidencia HTTP `FALLIDO` pendiente de cierre. Cantidades, reversiones, demás lecturas/BE04–BE08 y frontend pendientes.084 con Success reportado y catálogo aportado cotejado el22; diferencias del legado030 frente al fixture documentadas. Backend publicado y HTTP remoto pendientes. Alta de mortandad todavía no implementada. |
 
 D incluye el orden campaña → hija con FKs reales y seis carreras adicionales; la expectativa de activación ante `40001` ya devuelve 503 inconcluso. 080 respeta diez tablas, una vista y cuatro catálogos del alcance autorizado; preflight/postflight abortan ante exposición adicional o pérdida de privilegios del servicio, sin ampliar objetos ni grants. La garantía de locks es cooperativa entre RPC y no cubre SQL privilegiado que la omita.
 
@@ -46,8 +58,96 @@ La revisión humana puede comprobar en paralelo comprensión y uso móvil de los
 
 INT02, PA-S00/01/02/03/04, tareas padre de QA y PA-F01 no se declaran completos por estos cierres locales. Se archivan las fichas terminadas y se mantienen activas las que conservan pendientes.
 
+## Administración de usuarios · incremento transversal del 3 de noviembre
+
+Selector exclusivo ADMIN y pantalla de asignación de roles globales implementados y verificados localmente; versionados en backend `5fb723b` y PWA `37cec4d`. Las pruebas conservan sus bases backend `f26cbfa` y PWA `c684ad9` más árbol. Conserva ADMIN/GENERAL/VALIDADOR/VOLUNTARIO y el motor072 de revisión/auditoría/recuperación/último ADMIN; añade lectura091 y `/app/usuarios`. [Contrato y evidencia backend](../Backend-r3foresta/documentacion/frontend/modulos/usuarios.md#administración-de-roles-globales), [QA frontend](../pwa-r3foresta/docs/QA_USUARIOS_ADMINISTRACION.md). Build/lint aplicables, 1.190 unitarios backend, 1.129 pruebas frontend, 26 grupos SQL/ocho carreras/15 HTTP y 27 comprobaciones de navegador aprobados en entorno sintético aislado. Pablo confirmó la aplicación de091; [registro y límites](../Backend-r3foresta/docs/evidencia/usuarios-administracion-091-aplicacion-reportada.json), sin entorno identificado en la confirmación. Cotejo de catálogo/HTTP remoto y WebAuthn real pendientes; push y despliegue no acreditados por este versionado. Este incremento no cierra las tareas PA-F01 que conservan pendientes.
+
+## Modelo físico · contraste histórico del 4 de noviembre
+
+Se actualizó [database/00_database_schema.md](database/00_database_schema.md) a partir de la exportación estructural de Supabase aportada por Pablo: 51 tablas y 564 columnas, con diagrama completo y cinco vistas temáticas. Las 139 referencias simples entre tablas del extracto se contrastaron mediante GET del catálogo PostgREST de desarrollo `vyrjlehkhabydkhjxagx`; siete referencias compuestas conservan procedencia separada en las migraciones 070/072/074/082. Se preservó el esquema documental anterior. Esta actualización acredita el contraste estructural declarado, sin consultas de filas de negocio, ejecución SQL, cierre de migraciones, QA de aplicación o aceptación. No incorpora como desplegados los permisos por vivero ni el ingreso externo de plantines. Fuentes y límites en la entrada del modelo físico.
+
+## Acceso explícito de Recolección · T1 local del 5 de noviembre
+
+T1 implementada/verificada localmente sobre backend `6f59263` más árbol, sin commit de entrega: acceso M1 explícito para GENERAL/VALIDADOR activos, autoridad derivada ADMIN, API administrativa exclusiva ADMIN y lecturas propias, vigencias/revisión/auditoría/recuperación atómicas con 092/093. Captura/mantenimiento propios y rutas de evidencias autorizadas por objeto; sin aprobación propia ni DESECHO por autoría. [Contrato, versión y límites](../Backend-r3foresta/docs/t1-acceso-recoleccion.md), [evidencia SQL/HTTP](../Backend-r3foresta/docs/evidencia/t1-acceso-recoleccion-local-2026-11-05.json) y [validación final](../Backend-r3foresta/docs/evidencia/t1-acceso-recoleccion-validacion-2026-11-05.json). Build, 86 suites/1.229 unitarios, 32 grupos SQL, 12 carreras con locks observados y 9 casos HTTP aprobados en clúster sintético privado; incluye identidad BIGINT exacta y rechazo antiguo 090. Revisión humana/chat revisor, cotejo/aplicación SQL y corte coordinado pendientes. No acredita push, despliegue, aislamiento completo solo M1 ni recepción física; T2–T5 siguen fuera de esta entrega y PA-F01 conserva sus pendientes.
+
+## Acceso operativo por vivero · T2 local del 5 de noviembre
+
+T2 implementada/verificada sobre `6f59263` más el árbol local revisado de T1, sin commit de entrega. 094/095 añaden asignaciones ADMIN recuperables, ámbitos M2 en lecturas/escrituras/evidencias, revisión documental y DESECHO acotados al almacenamiento e intersección M2/COORDINADOR en entregas/devoluciones. [Contrato para T3 y límites](../Backend-r3foresta/docs/t2-acceso-viveros.md), [base conservada](../Backend-r3foresta/docs/evidencia/t2-acceso-viveros-base-2026-11-05.json), [corte previo SQL/HTTP/PostGIS](../Backend-r3foresta/docs/evidencia/t2-acceso-viveros-local-2026-11-05.json) y [validación inicial](../Backend-r3foresta/docs/evidencia/t2-acceso-viveros-validacion-2026-11-05.json). Build, 87 suites/1.252 unitarios, 40 grupos SQL, 22 carreras y 13 grupos HTTP tras la corrección coordinadora; regresión T1 aparte. Incluye consumo M3 real desde asignaciones sin acceso al vivero ni segundo débito; el grupo inicial de esa prueba es sintético. La [verificación posterior](../Backend-r3foresta/docs/evidencia/t2-correccion-validacion-2026-11-05.json) acredita almacenamiento BIGINT exacto y pendientes propios/locales combinables, con 094/095 intactas. El usuario reportó Success hasta095: [aplicación reportada](../Backend-r3foresta/docs/evidencia/t2-migraciones-095-aplicacion-reportada-2026-11-05.json); no acredita catálogo/cuerpos ni HTTP desplegado. [Revisión coordinadora cerrada](../Backend-r3foresta/docs/evidencia/t2-revision-coordinadora-2026-11-05.json), con comprobación independiente y sin hallazgos pendientes. Cotejo, corte de cliente y despliegue pendientes. T3–T5 y los pendientes de PA-F01 se conservan separados.
+
+## Administración de accesos · T3 revisada el 6 de noviembre
+
+T3 implementada y verificada localmente en PWA sobre `dbcedc5`, con backend `6f59263` más el árbol T1/T2 revisado, **revisada localmente el 6 de noviembre**. Usuarios y permisos conserva selector/rol y administra M1 y vigencias M2 por vivero con motivo, UUID/revisión propios, recuperación e identidad aisladas. Navegación/acciones usan capacidades por operación/vivero; orígenes mínimos, fotos de INICIO con contexto y DESECHO sirven al operario sin M1. La revisión documental no acredita recepción física. Backend añade sólo proyecciones BIGINT exactas de catálogo, vivero del lote y actor logístico; 092–095 e historia intactas. [Informe, pruebas y límites T3](../pwa-r3foresta/docs/QA_T3_ACCESOS.md), [huellas y validación](../pwa-r3foresta/docs/evidencia/t3-validacion-2026-11-05.json) y [complemento backend](../Backend-r3foresta/docs/t3-proyecciones-compatibilidad.md). PWA: build/lint y 1.251 pruebas con Node24.19 explícito y 60 comprobaciones de navegador HTTP sintético móvil/escritorio; backend: build, 1.256 unitarios y tres checks OpenAPI. La [corrección del 6](../pwa-r3foresta/docs/QA_T3_CORRECCION_2026-11-06.md) y el [cierre coordinador independiente](../Backend-r3foresta/docs/evidencia/t3-revision-coordinadora-2026-11-06.json) resuelven la entrada/regreso del revisor M2 sin M1 y la consulta única tras DESECHO incierto; sin hallazgos pendientes en esta revisión. Sin SQL remoto, commit de entrega, push ni despliegue. T4/T5 y los pendientes externos conservados quedan separados.
+
 ## Otros pendientes conservados
 
 El [estado anterior](archivo/estado-2026-10-17-antes-consolidacion.md#base-existente-y-pendientes-conservados) conserva evidencia y rutas de la integración física M2→M3, QA completo del plan, aplicación 046 no acreditada en su registro, despacho/replay SQL/TIPO_PLANTA, job de ciclo de vida/estado público, merma y mantenimiento fuera de este cierre, lint global backend y ramas anteriores sin fusionar/eliminar. Ninguno se cierra por esta consolidación.
 
 Para registrar otra entrega, actualizar su ficha, tareas de capacidad y tablero; enlazar evidencia/versiones/entorno aquí. Archivar el estado previo antes de sustituir detalle extenso y mantener visibles los pendientes sin cierre.
+
+
+## Recepción de semillas · corte histórico T4 del 6 de noviembre
+
+T4 implementada y verificada localmente sobre Backend `032527a` y PWA `fc48be2` más árbol: 096 añade recepción/validación atómicas por M2, incidencia/resolución conforme, recuperación propia y elegibilidad física de consumo/desecho; la PWA sirve a solo M2. [Contrato y conciliación](../Backend-r3foresta/docs/t4-recepcion-semillas.md), [bases/huellas/pruebas](../Backend-r3foresta/docs/evidencia/t4-validacion-2026-11-06.json), [QA PWA](../pwa-r3foresta/docs/QA_T4_RECEPCION.md). [Revisión coordinadora cerrada](../Backend-r3foresta/docs/evidencia/t4-revision-coordinadora-2026-11-06.json) tras corregir comparación decimal y retiro de datos por vivero; [QA de las correcciones](../pwa-r3foresta/docs/QA_T4_REVISION_2026-11-06.md): 1.273 pruebas PWA, 1.268 Backend y SQL/HTTP aislados aprobados. Sin commit de entrega, SQL remoto, corte, push o despliegue. Legados con movimientos requieren conciliación real; T5 no iniciado.
+
+## Conciliación del remanente · corte histórico del 9 de noviembre
+
+Backend `2174934` y PWA `8b9dae1` más cambios locales. 097 incorpora padrón
+individual ADMIN, ficha de saldo y trazabilidad, comprobación física M2 y recibo
+recuperable. La PWA distingue saldo habilitado, pendiente e incidencia. La
+conciliación habilita el remanente en su custodia y conserva el registro
+original. [Contrato, pruebas y procedimiento del piloto](../Backend-r3foresta/docs/vivero-conciliacion-historica.md).
+El catálogo aportado el 9 confirmó los antecedentes y motivó un ajuste local de
+097 verificado el 10 de noviembre. Cierra escritura cliente en Recolección y su
+ledger e invalida la conciliación ante movimientos de corrección posteriores.
+[Regresión ampliada](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-cotejo-validacion-2026-11-10.json).
+El postflight aportado el 10 de noviembre acredita aplicación y cotejo focal de
+097 en el catálogo observado de PostgreSQL 17.6. Coinciden las 13 funciones
+cotejadas, sus grants/configuraciones, las tablas privadas y los triggers.
+Registra cero eventos y cero orígenes en padrón. El informe no identifica el
+proyecto. [Evidencia aportada y límites](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-postflight-aportado-2026-11-10.json).
+El 10 de noviembre se aplicó 098 en el proyecto identificado en su evidencia
+y se creó por API el bucket privado de conciliación. Sus seis controles de
+catálogo y metadatos quedaron conformes; 39 grupos SQL/RLS aislados aprobaron.
+Con Backend/PWA locales se verificaron Material con M2 en VIV-001 y VIV-002
+y la ficha fuera del padrón con ADMIN en VIV-003. [Storage aplicado, entorno y límites](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-storage-aplicado-2026-11-10.json).
+Quedan por acreditar la ficha M2 con historial de padrón, la carga real, HTTP/PWA desplegados,
+inventario físico, piloto, publicación y despliegue. El cierre general de
+lecturas legadas sigue separado.
+
+La revisión posterior corrigió la selección de INICIO cuando faltan datos del
+origen, la precisión decimal y la habilitación conciliada en Recolección.
+099 añade localmente una lectura optativa de requisitos y saldo exacto; su
+aplicación y el corte cliente-servidor quedan pendientes. [Regresión SQL/HTTP](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-099-local-2026-11-10.json).
+Versionado local en Backend `d55e547` y PWA `30b16b4`. Build y 1.281
+unitarios Backend, build/lint y 1.289 pruebas PWA aprobados. [Cierre de la revisión](../Backend-r3foresta/docs/evidencia/vivero-conciliacion-revision-cierre-2026-11-10.json).
+
+
+## Incorporación de plantas vivas · T5 verificada en pruebas el14 de noviembre
+
+Backend `7984368` incorpora T5 y `db95e70` añade el cierre aditivo108 del catálogo
+observado. En Supabase de pruebas `vyrjlehkhabydkhjxagx` se cotejaron21 funciones,
+se aplicó/cotejó108 y se creó/verificó el bucket privado por API oficial. Con
+backend/PWA locales y sesión ADMIN legítima pasaron17 comprobaciones HTTP/Storage:
+alta SALDO_INICIAL con foto sintética, recuperación/replay, conflicto409,
+saldo3 sin duplicación y privacidad de imagen. El fixture auditable se conserva.
+[Resultado, evidencia y puntos de retorno](../Backend-r3foresta/docs/t5-correcciones-pruebas-2026-11-14.md).
+Build y1386 unitarios backend,37 grupos focales108 y regresión aislada T5 de126
+grupos SQL/11 carreras/8 HTTP aprobados; PWA `0007ee0` carga/recarga Vivero y pasa
+build/92 pruebas del módulo con Node24.19, sin parche de producto. La causa del
+bloqueo transitorio anterior no está determinada. Interfaz T5 de producto,
+otros roles/recorrido M3 remotos, despliegue externo y QA completo siguen
+pendientes. No modifica los cierres parciales de PA-F01. Git no revierte por sí
+mismo los cambios remotos; aplicación SQL, commits, push y despliegue se acreditan
+por separado.
+
+## Revisión del MVP · altas y WebAuthn del16 de noviembre
+
+Backend sobre `3cb82e4` más árbol local: orígenes exactos para WebAuthn/CORS y
+altas atómicas de campaña/organizaciones111, subcampaña/historial112 y
+usuario/passkey113. Revisión coordinadora, build,101 suites/1.487 unitarios,
+91 comprobaciones SQL aisladas y cuatro controles OpenAPI aprobados.
+[Informe, contratos y evidencia](../Backend-r3foresta/docs/revision-altas-mvp-2026-11-16.md).
+Pablo confirmó `Success` de111–113; sus firmas privadas se observaron en REST
+del Supabase de pruebas. Cuerpos SQL completos, configuración `CORS_ORIGINS`
+desplegada, recorrido real WebAuthn, push y despliegue conservan verificación
+separada. No cierra las tareas padre de PA-F01 ni acredita el paso a producción.

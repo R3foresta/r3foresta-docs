@@ -13,10 +13,10 @@ Las fotografías respaldan la presencia de plantines en bolsas y la utilización
 | FOT-VIV-01 | `Plantines en germinación y sombra 1 2026-07-22.jpeg` | 3000 × 4000 | Grupos de plantines en bolsas dentro de un ambiente protegido; recipientes y materiales de trabajo | Vivero — germinación/desarrollo bajo protección | Evidencia complementaria |
 | FOT-VIV-02 | `Plantines en germinación y sombra 2 2026-07-22.jpeg` | 4000 × 3000 | Vista general del ambiente protegido con plantines agrupados y una persona vinculada con la explicación del proceso | Vivero — ambiente protegido y responsable operativo | Evidencia complementaria; posible anexo |
 | FOT-VIV-03 | `Plantines en germinación y sombra 3 2026-07-22.jpeg` | 3000 × 4000 | Plantines embolsados, recipientes con sustrato y organización física por grupos | Vivero — manejo y desarrollo | Evidencia complementaria |
-| FOT-VIV-04 | `Plantines en germinación y sombra 4 2026-07-22.jpeg` | 3000 × 4000 | Vista amplia de plantines de diferentes tamaños agrupados dentro del ambiente protegido | Vivero — germinación, embolsado y sombra | Seleccionada para la Figura 3.1 |
+| FOT-VIV-04 | `Plantines en germinación y sombra 4 2026-07-22.jpeg` | 3000 × 4000 | Vista amplia de plantines de diferentes tamaños agrupados dentro del ambiente protegido | Vivero — germinación, embolsado y sombra | Seleccionada para la Figura 3.2 (numeración del 29 de octubre) |
 | FOT-VIV-05 | `Plantas en sol directo 1 2026-07-22.jpeg` | 3000 × 4000 | Conjunto de plantas embolsadas expuestas al sol; se observan ejemplares con desarrollo y condición heterogéneos | Vivero — adaptabilidad/sol directo | Evidencia complementaria |
 | FOT-VIV-06 | `Plantas en sol directo 2 2026-07-22.jpeg` | 3000 × 4000 | Grupos de plantas embolsadas sobre superficies elevadas y área exterior | Vivero — adaptabilidad/sol directo | Evidencia complementaria |
-| FOT-VIV-07 | `Plantas en sol directo 3 2026-07-22.jpeg` | 4000 × 3000 | Vista general del espacio exterior destinado a plantas embolsadas con exposición directa | Vivero — adaptabilidad/sol directo | Seleccionada para la Figura 3.2 |
+| FOT-VIV-07 | `Plantas en sol directo 3 2026-07-22.jpeg` | 4000 × 3000 | Vista general del espacio exterior destinado a plantas embolsadas con exposición directa | Vivero — adaptabilidad/sol directo | Seleccionada para la Figura 3.3 (numeración del 29 de octubre) |
 
 ## 3. Identificadores de integridad
 

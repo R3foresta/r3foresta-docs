@@ -2,7 +2,17 @@
 
 **Seguimiento de implementación:** [entregas, tareas y cobertura actual](../implementacion/README.md). El estado funcional/de diseño de este documento se distingue de la ejecución.
 
-**Estado:** correcciones acotadas y ampliación de reversión/eliminación lógica confirmadas; revisión integral y contratos pendientes antes de implementar. **Actualización:** 12 de octubre de 2026. **Prioridad:** P0 antes de campo. Evidencia: [acuerdo del 12 de octubre](../archivo/revision-correcciones-2026-10-12.md).
+**Estado.** Comportamiento de correcciones acotadas y reversiones confirmado. Observaciones 084 y participantes/lecturas 085 tienen implementación backend parcial de INT07, conservando fallo HTTP pendiente en 085, frontend y demás casos sin cierre. **Actualización documental del 16 de noviembre de 2026.** Prioridad P0 antes de campo. El [acuerdo del 12 de octubre](../archivo/revision-correcciones-2026-10-12.md) conserva sus decisiones.
+
+**Preparación de ejecución, corte histórico del 19 de octubre:** [INT07](../implementacion/pa-t-int07.md) desglosa BE01–BE08 → FE01–FE08, con contratos propios por concretar, dependencias y pruebas. Conserva los acuerdos siguientes; fecha/GPS siguen sin tratamiento de corrección aprobado y no se implementan por analogía. No acredita contrato técnico cerrado ni código/SQL/pruebas de corrección.
+
+## Implementación y límites al 16 de noviembre de 2026
+
+La [entrega de participantes](../../../../../Backend-r3foresta/docs/pa-int07-participantes.md), versionada en backend `41026ae`, amplía 084 con 085. Reemplaza el conjunto efectivo de corresponsables con motivo, revisión y comando recuperable por ADMIN global o administrador vigente de la subcampaña ACTIVA exacta. Mantiene responsable, originales, cantidades, grupo, stock y permisos. SIN_CAMBIOS conserva revisión e historial. La búsqueda histórica admite cuentas hoy inactivas y distingue nombre capturado al corregir de snapshot original. Restaurar reutiliza la captura previa.
+
+P01 rige lista, detalle e historial propios y se revalida en cada página. La retirada por error elimina esa relación salvo autoría u otra participación efectiva, mientras restaurar la recupera con cuenta activa. La lectura propia tampoco se concede a ADMIN sin esa relación. Historial propio y señal pública son proyecciones reducidas. Motivos y valores antes/después administrativos requieren su audiencia autorizada.
+
+La [evidencia aislada 085](../../../../../Backend-r3foresta/docs/evidencia/pa-int07-participantes-local.json) registra casos SQL y carreras correctos, pero el resultado general es FALLIDO con causa «Falló HTTP INT07 participantes/lecturas.». La implementación disponible no cierra BE03/BE07/BE08 ni PA-T18/19/21. Quedan resolución y repetición del runner, aplicación/cotejo en destino, frontend, cantidades, reversiones, frontera de mortandad y QA completo. [Ficha INT07](../implementacion/pa-t-int07.md).
 
 ## Acuerdo de partida
 
@@ -19,7 +29,7 @@ Ante un error del piloto se realiza una corrección vinculada al original, regis
 - Cantidad efectiva, efecto en consumo e historial se aplican juntos o no se aplica nada. Sin intervalo de stock liberado durante una sustitución; sin doble efecto por reintento o concurrencia. Conservar original y mostrar resultado efectivo sin duplicar el impacto.
 - Confirmado: correcciones de cantidad solo en subcampaña ACTIVA, también para ADMIN global. Revalidar estado al aplicar; no reabrir ni reactivar. Cantidad cero queda fuera de este ajuste; tampoco habilita eliminación de especie. La decisión posterior del 12 autoriza revertir duplicados y eliminar registros erróneos mediante comandos propios, conservando originales e historial; no mediante cantidad cero. El contrato debe comprobar asignaciones elegibles y rechazar efectos incompatibles con devoluciones/inactivaciones.
 
-La ampliación de reversión se describe a continuación y en [instrucciones implementables](../archivo/instrucciones-implementacion.md). Estos son comportamientos exigidos, no mecanismos ya implementados. Contrato de versión/intento, distribución/reversión por asignación, representación original/efectiva y visibilidad del historial siguen en diseño. No concede facultad para anular mortandad.
+La ampliación de reversión se describe a continuación y en [instrucciones implementables](../archivo/instrucciones-implementacion.md). Estos son comportamientos exigidos, no mecanismos ya implementados. Contrato de versión/intento, distribución/reversión por asignación, representación original/efectiva y visibilidad del historial siguen en diseño. No concede facultad para anular mortandad real; una baja registrada por error se trata únicamente mediante su caso específico de reversión auditable.
 
 ## Reversión y eliminación de registros erróneos — ampliación del 12
 
@@ -102,6 +112,18 @@ Tras revisar los requerimientos, el usuario descarta la reapertura por cierre er
 
 ## Decisiones y revisión
 
-PA-DI07 parcialmente resuelta: observaciones por autoridad central; participantes y cantidades por ADMIN global o administrador de la subcampaña en ACTIVA, bajo condiciones explícitas. La decisión posterior autoriza reversión de duplicados y eliminación lógica de plantación, baja o reposición erróneas por ambos administradores; «admin de campaña» queda aclarado como administrador de esa subcampaña. Cero permanece fuera del ajuste simple. Antes del cierre integral: revisar búsqueda histórica/visibilidad, contratos de compensación por asignación y grupo, versión/repetición/concurrencia y lectura pública/privada del historial. ACTIVA se conserva como límite actual de PA-S04; no se aprueba cascada de hechos reales ni reapertura. No se aprueba editor general ni anulación de bajas reales; las bajas registradas por error admiten reversión lógica con los controles del caso. ADR-PLA-03 y CLAUDE.md sincronizados el 12 de octubre tras resolver los conflictos documentales; no acredita implementación.
+### Continuación confirmada el 19 de octubre de 2026
+
+Pablo confirmó expresamente estas tres decisiones al responder a las preguntas de BE01:
+
+- **P01:** retirar a alguien por participación registrada por error retira su acceso mediante Mis registros, detalle e historial propio, salvo que conserve autoría u otra relación válida. Se conservan snapshots y auditoría administrativa; restaurar participación válida permite recuperar lectura con cuenta activa.
+- **P02:** se permite añadir o restituir personas registradas cuya cuenta esté hoy inactiva para reconocer participación real pasada. No reactiva cuenta, no otorga permiso operativo ni relaja el guard de cuenta activa del lector o ejecutor.
+- **P03:** el enlace público de un registro revertido muestra una ficha mínima «Registro revertido» y, cuando era duplicado, enlace al registro vigente públicamente elegible. Sus fotos dejan de publicarse pero se conservan como evidencia privada. Público solo ve señal/estado y referencia; actor, motivo e historial detallado quedan en lecturas privadas autorizadas.
+
+[Contrato BE01](../../../../../Backend-r3foresta/docs/pa-int07-contrato.md) y [constancia de continuación](../../../../../Backend-r3foresta/docs/evidencia/pa-int07-be01-decisiones.json) distinguen estas confirmaciones humanas de las decisiones técnicas y del estado de implementación. En la continuación, Pablo confirma que el alta de mortandad todavía no está implementada. La persistencia082 de BE02 se verificó parcialmente en PostgreSQL aislado, sin backfill ni ejecutores; [evidencia y límites](../../../../../Backend-r3foresta/docs/evidencia/pa-int07-be02-persistencia-local.json). T03 conserva pendiente la implementación/verificación acotada del escritor y su concurrencia en BE06; no se acredita un mecanismo de corrección por registrar decisiones o añadir persistencia.
+
+### Acuerdos anteriores y límites conservados
+
+PA-DI07 parcialmente resuelta: observaciones por autoridad central; participantes y cantidades por ADMIN global o administrador de la subcampaña en ACTIVA, bajo condiciones explícitas. La decisión posterior autoriza reversión de duplicados y eliminación lógica de plantación, baja o reposición erróneas por ambos administradores; «admin de campaña» queda aclarado como administrador de esa subcampaña. Cero permanece fuera del ajuste simple. P01–P03 precisan participación histórica/visibilidad en la continuación del19; antes del cierre integral siguen la implementación/verificación de búsqueda, compensaciones, versiones/repetición/concurrencia e historial, y el cotejo del escritor real de mortandad. ACTIVA se conserva como límite actual de PA-S04; no se aprueba cascada de hechos reales ni reapertura. No se aprueba editor general ni anulación de bajas reales; las bajas registradas por error admiten reversión lógica con los controles del caso. ADR-PLA-03 y CLAUDE.md sincronizados el 12 de octubre tras resolver los conflictos documentales; no acredita implementación.
 
 Fuentes: [LCO](../../../../03-plantacion-module/06-LCO_registro_plantacion_organizacion.md), [ADR-PLA-03](../../../../decisiones/02_decisiones_plantacion.md), [contrato M2→M3](../../../../90-contratos-integracion/02_contrato_vivero_a_plantacion.md), [diseño compartido](../archivo/diseno-tecnico-compartido.md). Leer [plan](plan.md) y [tareas](tasks.md) después de revisar estos casos.

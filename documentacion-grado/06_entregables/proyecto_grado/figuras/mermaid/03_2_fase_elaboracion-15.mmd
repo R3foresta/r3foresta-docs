@@ -1,0 +1,54 @@
+classDiagram
+    direction TB
+
+    class Persona
+    class RolGlobal
+    class AccesoVivero
+    class PermisoSubcampania
+    class ResponsabilidadLogistica
+    class Vivero
+    class Campania
+    class Subcampania
+    class Especie
+    class Recoleccion
+    class Lote
+    class LoteDesdeRecoleccion
+    class LoteIncorporado
+    class Incorporacion
+    class EventoLote
+    class Asignacion
+    class Plantacion
+    class DetalleConsumo
+    class ParticipacionHistorica
+    class Evidencia
+
+    Persona "0..*" --> "1" RolGlobal : tiene
+    Persona "1" -- "0..*" AccesoVivero : recibe
+    Vivero "1" -- "0..*" AccesoVivero : delimita
+    Persona "1" -- "0..*" PermisoSubcampania : recibe
+    Subcampania "1" -- "0..*" PermisoSubcampania : delimita
+    Persona "1" -- "0..*" ResponsabilidadLogistica : asume
+    Subcampania "1" -- "0..*" ResponsabilidadLogistica : organiza
+
+    Campania "1" -- "0..*" Subcampania : agrupa
+
+    Lote <|-- LoteDesdeRecoleccion
+    Lote <|-- LoteIncorporado
+    Recoleccion "1" -- "0..*" LoteDesdeRecoleccion : origina
+    Incorporacion "1" -- "1" LoteIncorporado : inicia
+    Especie "1" -- "0..*" Lote : identifica
+    Lote "1" -- "0..*" EventoLote : historiza
+
+    Lote "1" -- "0..*" Asignacion : abastece
+    Subcampania "1" -- "0..*" Asignacion : recibe
+    Subcampania "1" -- "0..*" Plantacion : contiene
+    Plantacion "1" -- "1..*" DetalleConsumo : desglosa
+    Asignacion "1" -- "0..*" DetalleConsumo : consume
+    Plantacion "1" -- "0..*" ParticipacionHistorica : conserva
+    Persona "1" -- "0..*" ParticipacionHistorica : participa
+
+    EventoLote "1" -- "0..*" Evidencia : documenta
+    Plantacion "1" -- "1..*" Evidencia : documenta
+
+    note for Lote "Una especie y un origen homogéneo. Identidad histórica conservada."
+    note for Incorporacion "Recepción o inventario inicial; procedencia y etapa al ingresar."

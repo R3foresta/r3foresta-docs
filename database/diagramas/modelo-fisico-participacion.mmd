@@ -1,0 +1,280 @@
+---
+title: Modelo físico · permisos, comandos y cargas de participación
+---
+erDiagram
+  direction TB
+  %% Generado por database/scripts/generar-modelo-fisico.mjs.
+  %% NULL / NN e IDENTITY proceden de la exportación aportada.
+  %% FK del extracto aportado. Claves compuestas agrupadas y contrastadas con SQL local.
+  %% USER_DEFINED conserva el tipo no resuelto por el extracto.
+  %% La vista temática solo dibuja relaciones cuyos dos extremos están incluidos.
+  usuario {
+    bigint id PK "NN"
+    text nombre "NN"
+    text doc_identidad UK "NULL"
+    text wallet_address UK "NULL"
+    text organizacion "NULL"
+    text contacto "NULL"
+    USER_DEFINED rol "NN"
+    timestamp_with_time_zone created_at "NN"
+    text username UK "NULL"
+    text auth_id "NN"
+    text correo UK "NULL"
+    text apellido "NULL"
+    text foto_perfil_url "NULL"
+    boolean activo "NN"
+    bigint revision_autoridad "NN"
+    bigint organizacion_id FK "NULL"
+  }
+
+  organizacion {
+    bigint id PK "NN / IDENTITY"
+    text nombre UK "NN"
+    boolean activo "NN"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NN"
+    text logo_url "NULL"
+    USER_DEFINED tipo "NN"
+  }
+
+  subcampania {
+    bigint id PK "NN / IDENTITY"
+    bigint campania_id FK "NN"
+    text nombre "NN"
+    text descripcion "NULL"
+    USER_DEFINED tipo "NN"
+    USER_DEFINED estado "NN"
+    USER_DEFINED fase_mantenimiento "NN"
+    bigint zona_id FK "NN"
+    USER_DEFINED poligono_geom "NULL"
+    numeric area_hectareas "NULL"
+    integer meta_total_arboles "NN"
+    date fecha_estimada_inicio "NULL"
+    date fecha_estimada_fin "NULL"
+    timestamp_with_time_zone fecha_cierre_operativo "NULL"
+    date fecha_fin_mantenimiento "NULL"
+    USER_DEFINED motivo_cierre_parcial "NULL"
+    text observaciones_cierre "NULL"
+    integer tolerancia_gps_metros "NN"
+    text nombre_zona_snapshot "NULL"
+    text nombre_coordinador_snapshot "NULL"
+    ARRAY nombres_organizaciones_snapshot "NULL"
+    text codigo_trazabilidad UK "NN"
+    integer total_plantado_inicial "NN"
+    integer total_repuesto "NN"
+    integer total_muerto_acumulado "NN"
+    integer saldo_vivo_actual "NULL"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NN"
+    bigint created_by FK "NN"
+    bigint updated_by FK "NN"
+    timestamp_with_time_zone deleted_at "NULL"
+    bigint deleted_by FK "NULL"
+    jsonb metadata_blockchain "NULL"
+    bigint plan_revision "NN"
+    timestamp_with_time_zone participacion_inicializada_en "NULL"
+    bigint participacion_inicializada_por FK "NULL"
+  }
+
+  subcampania_equipo {
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    bigint usuario_id FK "NN"
+    USER_DEFINED rol "NN"
+    timestamp_with_time_zone agregado_at "NN"
+    bigint agregado_by FK "NN"
+  }
+
+  subcampania_permiso_revision {
+    bigint subcampania_id PK, FK "NN"
+    bigint usuario_id PK, FK "NN"
+    bigint revision "NN"
+    timestamp_with_time_zone actualizado_en "NN"
+    bigint actualizado_por FK "NN"
+  }
+
+  subcampania_permiso {
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    bigint usuario_id FK "NN"
+    text rol_contextual "NN"
+    timestamp_with_time_zone otorgado_en "NN"
+    bigint otorgado_por FK "NN"
+    bigint comando_otorgamiento_id FK "NN"
+    timestamp_with_time_zone revocado_en "NULL"
+    bigint revocado_por FK "NULL"
+    bigint comando_retiro_id FK "NULL"
+  }
+
+  participacion_comando {
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
+    text operacion "NN"
+    uuid comando_id "NN"
+    smallint version_contrato "NN"
+    smallint version_huella "NN"
+    bytea huella "NULL"
+    text estado "NN"
+    bigint subcampania_preparacion_id FK "NULL"
+    bigint registro_plantacion_id FK "NULL"
+    jsonb resultado "NULL"
+    jsonb error "NULL"
+    smallint http_terminal "NULL"
+    timestamp_with_time_zone creado_en "NN"
+    timestamp_with_time_zone finalizado_en "NULL"
+  }
+
+  usuario_autoridad_historial {
+    bigint id PK "NN / IDENTITY"
+    bigint comando_id FK "NN"
+    bigint usuario_id FK "NN"
+    bigint actor_id FK "NN"
+    text evento "NN"
+    USER_DEFINED rol_anterior "NN"
+    USER_DEFINED rol_nuevo "NN"
+    boolean activo_anterior "NN"
+    boolean activo_nuevo "NN"
+    bigint revision_anterior "NN"
+    bigint revision_nueva "NN"
+    text motivo "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  participacion_carga {
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
+    bigint comando_interno_id FK "NN"
+    bigint comando_origen_id FK "NN"
+    uuid carga_id "NN"
+    bigint subcampania_id FK "NN"
+    bigint tipo_entidad_id FK "NN"
+    text estado "NN"
+    bytea hash_original_sha256 "NN"
+    bytea hash_derivada_sha256 "NN"
+    bigint tamano_original_bytes "NN"
+    bigint tamano_derivada_bytes "NN"
+    text mime_original "NN"
+    text bucket "NN"
+    text ruta_original "NN"
+    text ruta_derivada "NN"
+    bigint evidencia_id FK, UK "NULL"
+    uuid lease_token "NULL"
+    timestamp_with_time_zone lease_hasta "NULL"
+    integer generacion "NN"
+    timestamp_with_time_zone objetos_verificados_en "NULL"
+    timestamp_with_time_zone creado_en "NN"
+    timestamp_with_time_zone actualizado_en "NN"
+    timestamp_with_time_zone expira_en "NULL"
+  }
+
+  participacion_carga_generacion {
+    bigint carga_interna_id PK, FK "NN"
+    integer generacion PK "NN"
+    text bucket "NN"
+    text ruta_original "NN"
+    text ruta_derivada "NN"
+    uuid lease_token "NN"
+    timestamp_with_time_zone lease_hasta "NN"
+    text estado "NN"
+    text limpieza_estado "NN"
+    timestamp_with_time_zone proximo_intento_en "NULL"
+    timestamp_with_time_zone borrado_verificado_en "NULL"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  evidencias_trazabilidad {
+    bigint id PK "NN / IDENTITY"
+    smallint tipo_entidad_id FK "NN"
+    bigint entidad_id "NN"
+    text codigo_trazabilidad "NULL"
+    text bucket "NN"
+    text ruta_archivo "NN"
+    uuid storage_object_id "NULL"
+    text tipo_archivo "NN"
+    text mime_type "NN"
+    bigint tamano_bytes "NULL"
+    text hash_sha256 "NULL"
+    text titulo "NULL"
+    text descripcion "NULL"
+    jsonb metadata "NN"
+    boolean es_principal "NN"
+    integer orden "NN"
+    timestamp_with_time_zone tomado_en "NULL"
+    date creado_en "NN"
+    date actualizado_en "NN"
+    date eliminado_en "NULL"
+    bigint creado_por_usuario_id FK "NN"
+    bigint actualizado_por_usuario_id FK "NULL"
+    bigint eliminado_por_usuario_id FK "NULL"
+  }
+
+  %% Extracto aportado: usuario(organizacion_id) -> organizacion(id)
+  organizacion |o..o{ usuario : "organizacion_id"
+  %% Extracto aportado: evidencias_trazabilidad(creado_por_usuario_id) -> usuario(id)
+  usuario ||..o{ evidencias_trazabilidad : "creado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(actualizado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ evidencias_trazabilidad : "actualizado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(eliminado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ evidencias_trazabilidad : "eliminado_por_usuario_id"
+  %% Extracto aportado: subcampania(created_by) -> usuario(id)
+  usuario ||..o{ subcampania : "created_by"
+  %% Extracto aportado: subcampania(updated_by) -> usuario(id)
+  usuario ||..o{ subcampania : "updated_by"
+  %% Extracto aportado: subcampania(deleted_by) -> usuario(id)
+  usuario |o..o{ subcampania : "deleted_by"
+  %% Extracto aportado: subcampania(participacion_inicializada_por) -> usuario(id)
+  usuario |o..o{ subcampania : "participacion_inicializada_por"
+  %% Extracto aportado: subcampania_equipo(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ subcampania_equipo : "subcampania_id"
+  %% Extracto aportado: subcampania_equipo(usuario_id) -> usuario(id)
+  usuario ||..o{ subcampania_equipo : "usuario_id"
+  %% Extracto aportado: subcampania_equipo(agregado_by) -> usuario(id)
+  usuario ||..o{ subcampania_equipo : "agregado_by"
+  %% Extracto aportado: participacion_comando(actor_id) -> usuario(id)
+  usuario ||..o{ participacion_comando : "actor_id"
+  %% Extracto aportado: participacion_comando(subcampania_preparacion_id) -> subcampania(id)
+  subcampania |o..o{ participacion_comando : "subcampania_preparacion_id"
+  %% Extracto aportado: subcampania_permiso_revision(subcampania_id) -> subcampania(id)
+  subcampania ||--o{ subcampania_permiso_revision : "subcampania_id"
+  %% Extracto aportado: subcampania_permiso_revision(usuario_id) -> usuario(id)
+  usuario ||--o{ subcampania_permiso_revision : "usuario_id"
+  %% Extracto aportado: subcampania_permiso_revision(actualizado_por) -> usuario(id)
+  usuario ||..o{ subcampania_permiso_revision : "actualizado_por"
+  %% Extracto aportado: subcampania_permiso(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ subcampania_permiso : "subcampania_id"
+  %% Extracto aportado: subcampania_permiso(usuario_id) -> usuario(id)
+  usuario ||..o{ subcampania_permiso : "usuario_id"
+  %% Extracto aportado: subcampania_permiso(otorgado_por) -> usuario(id)
+  usuario ||..o{ subcampania_permiso : "otorgado_por"
+  %% Extracto aportado: subcampania_permiso(comando_otorgamiento_id) -> participacion_comando(id)
+  participacion_comando ||..o{ subcampania_permiso : "comando_otorgamiento_id"
+  %% Extracto aportado: subcampania_permiso(revocado_por) -> usuario(id)
+  usuario |o..o{ subcampania_permiso : "revocado_por"
+  %% Extracto aportado: subcampania_permiso(comando_retiro_id) -> participacion_comando(id)
+  participacion_comando |o..o{ subcampania_permiso : "comando_retiro_id"
+  %% Extracto y SQL 070: subcampania_permiso(subcampania_id,usuario_id) -> subcampania_permiso_revision(subcampania_id,usuario_id)
+  subcampania_permiso_revision ||..o{ subcampania_permiso : "subcampania_id+usuario_id"
+  %% Extracto y SQL 070: subcampania_permiso(comando_otorgamiento_id,otorgado_por) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o{ subcampania_permiso : "comando_otorgamiento_id+otorgado_por"
+  %% Extracto y SQL 070: subcampania_permiso(comando_retiro_id,revocado_por) -> participacion_comando(id,actor_id)
+  participacion_comando |o..o{ subcampania_permiso : "comando_retiro_id+revocado_por"
+  %% Extracto aportado: usuario_autoridad_historial(comando_id) -> participacion_comando(id)
+  participacion_comando ||..o{ usuario_autoridad_historial : "comando_id"
+  %% Extracto aportado: usuario_autoridad_historial(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_autoridad_historial : "usuario_id"
+  %% Extracto aportado: usuario_autoridad_historial(actor_id) -> usuario(id)
+  usuario ||..o{ usuario_autoridad_historial : "actor_id"
+  %% Extracto y SQL 072: usuario_autoridad_historial(comando_id,actor_id) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o{ usuario_autoridad_historial : "comando_id+actor_id"
+  %% Extracto aportado: participacion_carga(actor_id) -> usuario(id)
+  usuario ||..o{ participacion_carga : "actor_id"
+  %% Extracto aportado: participacion_carga(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ participacion_carga : "subcampania_id"
+  %% Extracto aportado: participacion_carga(evidencia_id) -> evidencias_trazabilidad(id)
+  evidencias_trazabilidad |o..o| participacion_carga : "evidencia_id"
+  %% Extracto y SQL 074: participacion_carga(comando_interno_id,actor_id) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o{ participacion_carga : "comando_interno_id+actor_id"
+  %% Extracto y SQL 074: participacion_carga(comando_origen_id,actor_id) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o{ participacion_carga : "comando_origen_id+actor_id"
+  %% Extracto aportado: participacion_carga_generacion(carga_interna_id) -> participacion_carga(id)
+  participacion_carga ||--o{ participacion_carga_generacion : "carga_interna_id"

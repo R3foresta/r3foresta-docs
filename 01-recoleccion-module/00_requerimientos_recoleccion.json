@@ -4,7 +4,7 @@
       "codigo": "RF-REC-01",
       "modulo": "Recoleccion",
       "nombre": "Registrar recoleccion (BORRADOR)",
-      "descripcion": "Permitir crear una recoleccion en estado BORRADOR y editarla hasta su validacion, manteniendo una sola convencion oficial de unidades.",
+      "descripcion": "Permitir crear una recoleccion en BORRADOR y corregirla hasta su recepcion fisica conforme, manteniendo una convencion oficial de unidades y la identidad de la ficha.",
       "campos": [
         "Identificador unico",
         "Estado del registro: BORRADOR (default) / PENDIENTE_VALIDACION / VALIDADO / RECHAZADO",
@@ -24,20 +24,24 @@
         "Observaciones opcionales"
       ],
       "validaciones": [
-        "La fecha no puede ser futura.",
+        "Al crear o cambiar explicitamente la fecha, debe estar entre hoy menos 45 dias y hoy en America/La_Paz. Conservar la fecha permite corregir, reenviar y recibir una ficha que luego supere esa ventana.",
         "La cantidad inicial debe ser > 0.",
         "Persistencia oficial: ENUM(unidad_medida) = [UNIDAD, G].",
         "Normalizacion de entrada (kg/g/unidad -> unidad canonica): ver RN-VIV-17B en 02-vivero-module/01_reglas_de_negocio_vivero_core.md (fuente canonica).",
         "SEMILLA puede persistirse en G o UNIDAD segun la captura funcional.",
-        "ESQUEJE solo admite UNIDAD, entero estricto y sin decimales."
+        "ESQUEJE solo admite UNIDAD, entero estricto y sin decimales.",
+        "Captura y mantenimiento propio requieren GENERAL o VALIDADOR con acceso M1 vigente, o autoridad global ADMIN.",
+        "La captura mantiene 1 a 5 fotos de Lugar y 1 a 5 de Total recolectado, con minimo total 2 y maximo 10.",
+        "La evidencia original admite JPG/JPEG/PNG/WEBP/HEIC/HEIF hasta 15 MiB por archivo y 100 MiB acumulados por carga."
       ],
       "reglas_adicionales": [
         "En BORRADOR no se considera registro sellado.",
         "En BORRADOR se permite soft delete.",
         "No se deben mezclar G y GR en documentacion, backend, frontend ni DB.",
         "En BORRADOR y RECHAZADO los campos snapshot son NOT NULL pero pueden recalcularse desde las fuentes vivas.",
-        "Al VALIDAR, esos campos snapshot quedan congelados como identidad oficial y no se pueden modificar.",
-        "Se registran automaticamente campos de control (creado_por/creado_en/actualizado_por/actualizado_en)."
+        "La recepcion fisica conforme produce VALIDADO y congela snapshots oficiales.",
+        "Se registran automaticamente campos de control (creado_por/creado_en/actualizado_por/actualizado_en).",
+        "La brecha de validacion backend por seccion fotografica y el cierre completo del recorrido PWA de fechas permanecen pendientes de verificacion."
       ]
     },
     {
@@ -61,7 +65,9 @@
         "Pais puede tener valor por defecto BOLIVIA.",
         "Departamento y provincia pueden mantenerse como parte de la estructura administrativa si existen en catalogo.",
         "Comunidad, localidad y zona se tratan como el mismo nivel operativo de ubicacion dentro de Recoleccion.",
-        "Para solicitar validacion, la informacion obligatoria debe existir y ser consistente con catalogo."
+        "Para solicitar validacion, la informacion obligatoria debe existir y ser consistente con catalogo.",
+        "Al editar, omitir ubicacion o conservar sus valores mantiene el mismo ID y sus datos. Corregir cantidad, notas o fotos no exige recapturar GPS.",
+        "Un cambio explicito de ubicacion crea una nueva referencia y conserva la anterior, sin modificar en sitio una ubicacion compartida."
       ]
     },
     {
@@ -75,7 +81,9 @@
         "updated_at / updated_by",
         "Tabla RECOLECCION_HISTORIAL para ciclo de vida",
         "Snapshots oficiales congelados al validar",
-        "Motivo cuando aplique"
+        "Motivo cuando aplique",
+        "revision_captura exacta",
+        "Snapshot de la ficha revisada, motivo, actor y comando en cada rechazo"
       ],
       "validaciones": [
         "En BORRADOR se puede editar la ficha y hacer soft delete.",
@@ -91,34 +99,46 @@
         "RECOLECCION_MOVIMIENTO registra exclusivamente operaciones que afectan saldo.",
         "En el MVP no se audita cada edicion del borrador campo por campo.",
         "El naming oficial del dato comercial congelado es nombre_comercial_snapshot; no se usa nombre_comun_snapshot.",
-        "No hay CORRECCION operativa en el MVP una vez validado/subido el registro."
+        "No hay CORRECCION operativa en el MVP una vez validado/subido el registro.",
+        "El rechazo conserva la cantidad, unidad, vivero, ubicacion, fecha y revision anteriores a la correccion. motivo_rechazo resume el ciclo actual y el historial conserva los ciclos previos.",
+        "Eliminar un borrador confirma retiro logico, auditoria y retiro de evidencias permitidas en una operacion atomica. Una respuesta perdida conserva la incertidumbre y exige comprobar el estado antes de repetir.",
+        "El historial funcional requerido no acredita por si mismo una pantalla de historial propio completa."
       ]
     },
     {
       "codigo": "RF-REC-04",
       "modulo": "Recoleccion",
-      "nombre": "Solicitar validacion y resolver por validador",
-      "descripcion": "Permitir pasar de BORRADOR o RECHAZADO a PENDIENTE_VALIDACION, y luego a VALIDADO o RECHAZADO segun la decision del validador.",
+      "nombre": "Solicitar recepcion y validar conformidad fisica o rechazar",
+      "descripcion": "Permitir enviar BORRADOR a PENDIENTE_VALIDACION y confirmar la recepcion fisica conforme en Vivero para producir VALIDADO, o rechazar con motivo y corregir la misma ficha antes de reenviar.",
       "campos": [
-        "Cambio de estado: BORRADOR o RECHAZADO -> PENDIENTE_VALIDACION",
-        "Cambio de estado: PENDIENTE_VALIDACION -> VALIDADO o RECHAZADO",
-        "Usuario validador",
-        "Fecha/hora de validacion",
-        "Hash/snapshot del registro sellado",
-        "Congelamiento de snapshots oficiales de identidad al aprobar",
-        "Identificador de anclaje en blockchain (tx o referencia)"
+        "Transiciones BORRADOR -> PENDIENTE_VALIDACION -> VALIDADO o RECHAZADO, y correccion RECHAZADO -> BORRADOR -> PENDIENTE_VALIDACION",
+        "comando_id UUID por actor e intencion y revision_esperada exacta",
+        "Cantidad y unidad recibidas coincidentes con lo declarado al normalizar G/KG a G y UNIDAD entera",
+        "fecha_recepcion fisica, recibido_por y registrado_en del hecho inmutable RECOLECCION_RECEPCION",
+        "1 a 5 evidencia_ids propias del origen, vivero y revision de captura actual para recibir",
+        "Motivo de rechazo de 10 a 500 caracteres y snapshot de la ficha revisada",
+        "Snapshots oficiales, historial y recibo confirmados en la misma transaccion",
+        "Referencia de anclaje externo cuando su ejecucion posterior tenga resultado conocido"
       ],
       "validaciones": [
-        "Para solicitar validacion se exige >= 2 fotos + lat/long validas + comunidad/localidad/zona valida + campos minimos completos.",
-        "Mientras esta en PENDIENTE_VALIDACION no se permite editar la ficha.",
-        "Solo VALIDADO habilita consumo.",
-        "RECHAZADO no habilita consumo."
+        "El envio exige campos minimos, GPS y ubicacion administrativa validos, y 1 a 5 fotos por cada seccion Lugar y Total recolectado.",
+        "Mientras esta PENDIENTE_VALIDACION la ficha permanece congelada para el recolector.",
+        "Bandeja, detalle, fotos y decisiones requieren ADMIN global activo o VALIDADOR con asignacion vigente al vivero de almacenamiento, sin exigir acceso M1 al receptor.",
+        "Se prohibe recibir o rechazar la propia recoleccion, tambien para ADMIN.",
+        "Una diferencia de cantidad o unidad impide confirmar. El receptor puede rechazar motivadamente la ficha para corregirla. No se permite recepcion parcial, ajuste automatico ni saldo adicional.",
+        "La fecha fisica cumple fecha_recoleccion <= fecha_recepcion <= hoy en America/La_Paz.",
+        "Las fotos de recepcion corresponden a la revision actual de la ficha. Una revision obsoleta o evidencias de otra revision impiden decidir.",
+        "Recibir requiere 1 a 5 fotos propias. Rechazar exige motivo de 10 a 500 caracteres y no exige foto.",
+        "Una misma clave, actor e intencion devuelve el resultado original. Reutilizar la clave con otra intencion produce conflicto.",
+        "Timeout, 503 o 202 SIN_RESULTADO conservan clave, intencion y fotos para consultar el mismo comando. La ausencia de recibo mantiene el resultado inconcluso."
       ],
       "reglas_adicionales": [
-        "Al VALIDAR se considera el registro como historia oficial (sellado).",
-        "Al VALIDAR se congelan nombre_cientifico_snapshot, nombre_comercial_snapshot, variedad_snapshot, nombre_comunidad_snapshot y nombre_recolector_snapshot.",
-        "RECOLECCION_HISTORIAL debe registrar SOLICITUD_VALIDACION, VALIDACION_APROBADA y VALIDACION_RECHAZADA.",
-        "El borrador o rechazado se pueden modificar; una vez validado no hay vuelta atras en el MVP."
+        "Recepcion conforme, congelamiento de snapshots, historia y recibo son atomicos y producen una recepcion conforme unica por origen.",
+        "El rechazo registra VALIDACION_RECHAZADA sobre la ficha revisada. El recolector corrige la misma ficha y codigo, guarda BORRADOR y vuelve a enviar.",
+        "RECOLECCION_HISTORIAL conserva SOLICITUD_VALIDACION, VALIDACION_APROBADA y VALIDACION_RECHAZADA como IDs de eventos existentes.",
+        "La recuperacion propia requiere cuenta activa aun despues de perder rol o asignacion y no concede permiso actual sobre el objeto.",
+        "Pinata y blockchain se ejecutan despues de la confirmacion conforme, fuera de SQL. El replay no repite el mint y una caida puede dejar el anclaje pendiente, sin recuperacion automatica ni garantia de exactamente una vez.",
+        "El flujo vigente usa recepcion unica. Los cortes historicos 096 a 099 mantienen sus evidencias fechadas y no definen nuevas operaciones de incidencia o conciliacion."
       ]
     },
     {
@@ -146,8 +166,10 @@
         "DESECHO usa delta negativo.",
         "DESECHO solo se permite para recolecciones VALIDADO y ABIERTO.",
         "DESECHO puede registrarse varias veces de forma parcial o una vez de forma total.",
-        "DESECHO solo puede registrarlo el creador de la recoleccion o ADMIN.",
-        "La cantidad de DESECHO no puede superar el saldo actual y si llega a cero cierra la recoleccion."
+        "DESECHO requiere ADMIN global o GENERAL/VALIDADOR con acceso M2 vigente al vivero de almacenamiento. La autoria por si misma no autoriza.",
+        "La cantidad de DESECHO no puede superar el saldo actual y si llega a cero cierra la recoleccion.",
+        "INICIO y DESECHO requieren el hecho de recepcion conforme, saldo suficiente y autoridad vigente sobre la custodia.",
+        "INICIO no puede preceder la fecha fisica de recepcion. La operacion confirma lote, evento, movimiento y vinculos de evidencia juntos."
       ],
       "reglas_adicionales": [
         "saldo_actual = cantidad_inicial + SUM(delta_movimientos).",
@@ -156,10 +178,37 @@
         "Contrato estricto M1-M2: LOTE_VIVERO.cantidad_inicial_en_proceso = EVENTO_LOTE_VIVERO.cantidad_afectada.",
         "Contrato estricto M1-M2: RECOLECCION_MOVIMIENTO.unidad_medida_movimiento = LOTE_VIVERO.unidad_medida_inicial = EVENTO_LOTE_VIVERO.unidad_medida_evento.",
         "Contrato estricto M1-M2: LOTE_VIVERO hereda snapshots oficiales desde RECOLECCION, no desde una lectura viva de PLANTA.",
-        "Contrato M1-M2: LOTE_VIVERO.vivero_id se selecciona en Vivero y no se hereda automaticamente desde RECOLECCION.vivero_id.",
+        "Contrato M1-M2 vigente de custodia. El operario consume en el mismo vivero de almacenamiento. ADMIN conserva compatibilidad explicita de destino diferente cuando el origen tiene recepcion conforme.",
         "Contrato M1-M2: LOTE_VIVERO.codigo_trazabilidad usa formato VIV-{codigo_lote_vivero}-{RECOLECCION.codigo_trazabilidad}.",
         "Cada movimiento del MVP puede anclarse a blockchain sin romper la operacion base.",
-        "CORRECCION queda fuera del MVP; si existe en el futuro podra usar delta positivo o negativo segun corresponda."
+        "CORRECCION queda fuera del MVP; si existe en el futuro podra usar delta positivo o negativo segun corresponda.",
+        "Plantar consume stock ya asignado en M3 y no vuelve a descontar Recoleccion ni Vivero."
+      ]
+    },
+    {
+      "codigo": "RF-REC-06",
+      "modulo": "Recoleccion",
+      "nombre": "Consultar banco publico de semillas",
+      "descripcion": "Permitir consulta publica sin cuenta del banco de recolecciones de SEMILLA no eliminadas mediante resumen, filtros, listado paginado y detalle.",
+      "campos": [
+        "Codigo y fecha de recoleccion",
+        "Especie y ubicacion publicadas por la proyeccion, con GPS disponible",
+        "Estado BORRADOR, PENDIENTE_VALIDACION, VALIDADO o RECHAZADO",
+        "Cantidad recolectada y saldo disponible separados por G y UNIDAD",
+        "Referencia blockchain verificable cuando existe",
+        "Fotografias sanitizadas exclusivamente de registros VALIDADO"
+      ],
+      "validaciones": [
+        "Incluye todos los estados del registro y excluye recolecciones eliminadas y material ESQUEJE.",
+        "Listado y resumen permiten explorar especies, ubicaciones y fechas segun sus filtros. Las cantidades de G y UNIDAD permanecen separadas.",
+        "Cada descarga de imagen vuelve a verificar pertenencia, estado VALIDADO y ausencia de eliminacion.",
+        "La proyeccion excluye credenciales, correo, contacto, identidad de cuenta y observaciones o captions libres.",
+        "Un fallo de datos o imagenes se muestra como indisponibilidad y permite reintentar, sin representarlo como banco vacio."
+      ],
+      "reglas_adicionales": [
+        "La visibilidad publica de un BORRADOR, pendiente o rechazo no habilita consumo ni certifica recepcion fisica o validacion.",
+        "La consulta publica no concede acceso a originales privados ni a operaciones M1/M2.",
+        "Las fotos sanitizadas son derivados de lectura publica y preservan los originales auditables en su contexto."
       ]
     }
   ]

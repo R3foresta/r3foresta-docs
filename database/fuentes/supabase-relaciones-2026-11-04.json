@@ -1,0 +1,946 @@
+{
+  "consultado_en": "2026-11-04T20:25:02.515Z",
+  "proyecto": "vyrjlehkhabydkhjxagx.supabase.co",
+  "fuente": "GET /rest/v1/; metadatos PostgREST, sin filas de negocio",
+  "foreignKeys": [
+    {
+      "table": "plantacion_riego",
+      "column": "plantacion_id",
+      "target": "plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion_riego",
+      "column": "tipo_riego_id",
+      "target": "tipo_riego",
+      "targetColumn": "id"
+    },
+    {
+      "table": "lote_vivero",
+      "column": "recoleccion_id",
+      "target": "recoleccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "lote_vivero",
+      "column": "planta_id",
+      "target": "planta",
+      "targetColumn": "id"
+    },
+    {
+      "table": "lote_vivero",
+      "column": "vivero_id",
+      "target": "vivero",
+      "targetColumn": "id"
+    },
+    {
+      "table": "lote_vivero",
+      "column": "responsable_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion_historial",
+      "column": "recoleccion_id",
+      "target": "recoleccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion_historial",
+      "column": "actor_user_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "planta",
+      "column": "tipo_planta_id",
+      "target": "tipo_planta",
+      "targetColumn": "id"
+    },
+    {
+      "table": "usuario_credencial",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion",
+      "column": "registro_plantacion_origen_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion",
+      "column": "responsable_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion",
+      "column": "created_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion",
+      "column": "organizacion_responsable_id_snapshot",
+      "target": "organizacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion",
+      "column": "ubicacion_id",
+      "target": "ubicacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion",
+      "column": "vivero_id",
+      "target": "vivero",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion",
+      "column": "metodo_id",
+      "target": "metodo_recoleccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion",
+      "column": "planta_id",
+      "target": "planta",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion",
+      "column": "usuario_validacion_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion",
+      "column": "eliminado_por_usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "v_ubicacion_enriquecida",
+      "column": "pais_id",
+      "target": "pais",
+      "targetColumn": "id"
+    },
+    {
+      "table": "v_ubicacion_enriquecida",
+      "column": "division_id",
+      "target": "division_administrativa",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_correccion",
+      "column": "actor_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_correccion",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_correccion",
+      "column": "grupo_registro_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_correccion",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_correccion",
+      "column": "evento_plantacion_id",
+      "target": "evento_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_correccion",
+      "column": "referencia_registro_vigente_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_historial",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_historial",
+      "column": "actor_user_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_historial",
+      "column": "participacion_comando_id",
+      "target": "participacion_comando",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_equipo",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_equipo",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_equipo",
+      "column": "agregado_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "campania",
+      "column": "created_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "campania",
+      "column": "updated_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "campania",
+      "column": "deleted_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "division_tipo",
+      "column": "pais_id",
+      "target": "pais",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_participante_efectivo",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_participante_efectivo",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_participante_efectivo",
+      "column": "coresponsable_original_id",
+      "target": "registro_plantacion_coresponsable",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_participante_efectivo",
+      "column": "organizacion_id_snapshot",
+      "target": "organizacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_participante_efectivo",
+      "column": "correccion_incorporacion_id",
+      "target": "registro_plantacion_correccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_participante_efectivo",
+      "column": "ultima_correccion_id",
+      "target": "registro_plantacion_correccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion_movimiento",
+      "column": "recoleccion_id",
+      "target": "recoleccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "recoleccion_movimiento",
+      "column": "created_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion",
+      "column": "asignacion_id",
+      "target": "asignacion_vivero_subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion",
+      "column": "responsable_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion",
+      "column": "created_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "vivero",
+      "column": "ubicacion_id",
+      "target": "ubicacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion_abono",
+      "column": "plantacion_id",
+      "target": "plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion_abono",
+      "column": "tipo_abono_id",
+      "target": "tipo_abono",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_grupo_revision",
+      "column": "grupo_registro_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "participacion_comando",
+      "column": "actor_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "participacion_comando",
+      "column": "subcampania_preparacion_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "participacion_comando",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "ubicacion",
+      "column": "pais_id",
+      "target": "pais",
+      "targetColumn": "id"
+    },
+    {
+      "table": "ubicacion",
+      "column": "division_id",
+      "target": "division_administrativa",
+      "targetColumn": "id"
+    },
+    {
+      "table": "division_administrativa",
+      "column": "pais_id",
+      "target": "pais",
+      "targetColumn": "id"
+    },
+    {
+      "table": "division_administrativa",
+      "column": "parent_id",
+      "target": "division_administrativa",
+      "targetColumn": "id"
+    },
+    {
+      "table": "division_administrativa",
+      "column": "tipo_id",
+      "target": "division_tipo",
+      "targetColumn": "id"
+    },
+    {
+      "table": "division_administrativa",
+      "column": "reemplazada_por_id",
+      "target": "division_administrativa",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion_efectivo",
+      "column": "evento_plantacion_id",
+      "target": "evento_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion_efectivo",
+      "column": "grupo_registro_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion_efectivo",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_plantacion_efectivo",
+      "column": "ultima_correccion_id",
+      "target": "registro_plantacion_correccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion_usuario",
+      "column": "plantacion_id",
+      "target": "plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion_usuario",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_efectivo",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_efectivo",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_efectivo",
+      "column": "ultima_correccion_id",
+      "target": "registro_plantacion_correccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_consumo_credito",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_consumo_credito",
+      "column": "asignacion_id",
+      "target": "asignacion_vivero_subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_consumo_credito",
+      "column": "planta_id",
+      "target": "planta",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_consumo_credito",
+      "column": "detalle_original_id",
+      "target": "registro_plantacion_detalle",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_consumo_credito",
+      "column": "correccion_id",
+      "target": "registro_plantacion_correccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evidencias_trazabilidad",
+      "column": "tipo_entidad_id",
+      "target": "tipos_entidad_evidencia",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evidencias_trazabilidad",
+      "column": "creado_por_usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evidencias_trazabilidad",
+      "column": "actualizado_por_usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evidencias_trazabilidad",
+      "column": "eliminado_por_usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "participacion_carga",
+      "column": "actor_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "participacion_carga",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "participacion_carga",
+      "column": "tipo_entidad_id",
+      "target": "tipos_entidad_evidencia",
+      "targetColumn": "id"
+    },
+    {
+      "table": "participacion_carga",
+      "column": "evidencia_id",
+      "target": "evidencias_trazabilidad",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_meta_especie",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_meta_especie",
+      "column": "planta_id",
+      "target": "planta",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_meta_especie",
+      "column": "created_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_meta_especie",
+      "column": "updated_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso_revision",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso_revision",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso_revision",
+      "column": "actualizado_por",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso",
+      "column": "otorgado_por",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso",
+      "column": "comando_otorgamiento_id",
+      "target": "participacion_comando",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso",
+      "column": "revocado_por",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania_permiso",
+      "column": "comando_retiro_id",
+      "target": "participacion_comando",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_detalle",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_detalle",
+      "column": "asignacion_id",
+      "target": "asignacion_vivero_subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_detalle",
+      "column": "lote_vivero_id",
+      "target": "lote_vivero",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_detalle",
+      "column": "planta_id",
+      "target": "planta",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_detalle",
+      "column": "evento_lote_vivero_despacho_id",
+      "target": "evento_lote_vivero",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion_monitoreo",
+      "column": "plantacion_id",
+      "target": "plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion_monitoreo",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "campania_organizacion",
+      "column": "campania_id",
+      "target": "campania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "campania_organizacion",
+      "column": "organizacion_id",
+      "target": "organizacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "campania_organizacion",
+      "column": "created_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_lote_vivero",
+      "column": "lote_id",
+      "target": "lote_vivero",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_lote_vivero",
+      "column": "responsable_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_lote_vivero",
+      "column": "comunidad_destino_id",
+      "target": "division_administrativa",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_lote_vivero",
+      "column": "ref_evento_trigger_id",
+      "target": "evento_lote_vivero",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_lote_vivero",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_lote_vivero",
+      "column": "campania_id",
+      "target": "campania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_lote_vivero",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "evento_lote_vivero",
+      "column": "asignacion_id",
+      "target": "asignacion_vivero_subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_consumo_compensacion",
+      "column": "credito_id",
+      "target": "registro_plantacion_consumo_credito",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_consumo_compensacion",
+      "column": "correccion_id",
+      "target": "registro_plantacion_correccion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion_foto",
+      "column": "plantacion_id",
+      "target": "plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "usuario",
+      "column": "organizacion_id",
+      "target": "organizacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "asignacion_vivero_subcampania",
+      "column": "subcampania_id",
+      "target": "subcampania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "asignacion_vivero_subcampania",
+      "column": "lote_vivero_id",
+      "target": "lote_vivero",
+      "targetColumn": "id"
+    },
+    {
+      "table": "asignacion_vivero_subcampania",
+      "column": "usuario_asignacion_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion",
+      "column": "ubicacion_id",
+      "target": "ubicacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "plantacion",
+      "column": "created_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_coresponsable",
+      "column": "registro_plantacion_id",
+      "target": "registro_plantacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_coresponsable",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "registro_plantacion_coresponsable",
+      "column": "organizacion_id_snapshot",
+      "target": "organizacion",
+      "targetColumn": "id"
+    },
+    {
+      "table": "participacion_carga_generacion",
+      "column": "carga_interna_id",
+      "target": "participacion_carga",
+      "targetColumn": "id"
+    },
+    {
+      "table": "usuario_autoridad_historial",
+      "column": "comando_id",
+      "target": "participacion_comando",
+      "targetColumn": "id"
+    },
+    {
+      "table": "usuario_autoridad_historial",
+      "column": "usuario_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "usuario_autoridad_historial",
+      "column": "actor_id",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania",
+      "column": "campania_id",
+      "target": "campania",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania",
+      "column": "zona_id",
+      "target": "division_administrativa",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania",
+      "column": "created_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania",
+      "column": "updated_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania",
+      "column": "deleted_by",
+      "target": "usuario",
+      "targetColumn": "id"
+    },
+    {
+      "table": "subcampania",
+      "column": "participacion_inicializada_por",
+      "target": "usuario",
+      "targetColumn": "id"
+    }
+  ],
+  "fuentes_compuestas": [
+    {
+      "table": "subcampania_permiso",
+      "columns": [
+        "subcampania_id",
+        "usuario_id"
+      ],
+      "target": "subcampania_permiso_revision",
+      "targetColumns": [
+        "subcampania_id",
+        "usuario_id"
+      ],
+      "migration": "070"
+    },
+    {
+      "table": "subcampania_permiso",
+      "columns": [
+        "comando_otorgamiento_id",
+        "otorgado_por"
+      ],
+      "target": "participacion_comando",
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "070"
+    },
+    {
+      "table": "subcampania_permiso",
+      "columns": [
+        "comando_retiro_id",
+        "revocado_por"
+      ],
+      "target": "participacion_comando",
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "070"
+    },
+    {
+      "table": "usuario_autoridad_historial",
+      "columns": [
+        "comando_id",
+        "actor_id"
+      ],
+      "target": "participacion_comando",
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "072"
+    },
+    {
+      "table": "participacion_carga",
+      "columns": [
+        "comando_interno_id",
+        "actor_id"
+      ],
+      "target": "participacion_comando",
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "074"
+    },
+    {
+      "table": "participacion_carga",
+      "columns": [
+        "comando_origen_id",
+        "actor_id"
+      ],
+      "target": "participacion_comando",
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "074"
+    },
+    {
+      "table": "registro_plantacion_correccion",
+      "columns": [
+        "comando_interno_id",
+        "actor_id"
+      ],
+      "target": "participacion_comando",
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "082"
+    }
+  ]
+}

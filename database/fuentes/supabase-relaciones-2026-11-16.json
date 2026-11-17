@@ -1,0 +1,221 @@
+{
+  "fecha_revision": "2026-11-16",
+  "procedencia": "Esquema adjunto aportado por Pablo, confirmado como última versión en el chat. La fecha del archivo identifica su recepción documental.",
+  "proyecto": null,
+  "fecha_exportacion": null,
+  "source": "supabase-estructura-2026-11-16.sql",
+  "sha256": "ee10bfce263a279f3cad1c5b3b75c7e2818b118d41ed0e3ff74316234086cc1d",
+  "limites": "Extracto contextual de tablas. Las claves repetidas se agrupan por tabla y nombre de restricción y sus pares de columnas se contrastaron con las migraciones indicadas. El contraste SQL es local. No es una consulta nueva del catálogo remoto ni acredita aplicación de migraciones, RPC, RLS, Storage o despliegue.",
+  "fuentes_compuestas": [
+    {
+      "table": "subcampania_historial",
+      "name": "subcampania_historial_comando_actor_fk",
+      "target": "participacion_comando",
+      "columns": [
+        "participacion_comando_id",
+        "actor_user_id"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "070"
+    },
+    {
+      "table": "subcampania_permiso",
+      "name": "subcampania_permiso_revision_fk",
+      "target": "subcampania_permiso_revision",
+      "columns": [
+        "subcampania_id",
+        "usuario_id"
+      ],
+      "targetColumns": [
+        "subcampania_id",
+        "usuario_id"
+      ],
+      "migration": "070"
+    },
+    {
+      "table": "subcampania_permiso",
+      "name": "subcampania_permiso_actor_otorgamiento_fk",
+      "target": "participacion_comando",
+      "columns": [
+        "comando_otorgamiento_id",
+        "otorgado_por"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "070"
+    },
+    {
+      "table": "subcampania_permiso",
+      "name": "subcampania_permiso_actor_retiro_fk",
+      "target": "participacion_comando",
+      "columns": [
+        "comando_retiro_id",
+        "revocado_por"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "070"
+    },
+    {
+      "table": "usuario_autoridad_historial",
+      "name": "usuario_autoridad_historial_comando_id_actor_id_fkey",
+      "target": "participacion_comando",
+      "columns": [
+        "comando_id",
+        "actor_id"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "072"
+    },
+    {
+      "table": "participacion_carga",
+      "name": "participacion_carga_comando_interno_id_actor_id_fkey",
+      "target": "participacion_comando",
+      "columns": [
+        "comando_interno_id",
+        "actor_id"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "074"
+    },
+    {
+      "table": "participacion_carga",
+      "name": "participacion_carga_comando_origen_id_actor_id_fkey",
+      "target": "participacion_comando",
+      "columns": [
+        "comando_origen_id",
+        "actor_id"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "074"
+    },
+    {
+      "table": "registro_plantacion_correccion",
+      "name": "registro_plantacion_correccion_comando_interno_id_actor_id_fkey",
+      "target": "participacion_comando",
+      "columns": [
+        "comando_interno_id",
+        "actor_id"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "082"
+    },
+    {
+      "table": "usuario_acceso_recoleccion",
+      "name": "usuario_acceso_recoleccion_comando_otorgamiento_id_otorgad_fkey",
+      "target": "recoleccion_acceso_comando",
+      "columns": [
+        "comando_otorgamiento_id",
+        "otorgado_por"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "092"
+    },
+    {
+      "table": "usuario_acceso_recoleccion",
+      "name": "usuario_acceso_recoleccion_comando_retiro_id_revocado_por_fkey",
+      "target": "recoleccion_acceso_comando",
+      "columns": [
+        "comando_retiro_id",
+        "revocado_por"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "092"
+    },
+    {
+      "table": "usuario_acceso_recoleccion_historial",
+      "name": "usuario_acceso_recoleccion_historial_comando_id_actor_id_fkey",
+      "target": "recoleccion_acceso_comando",
+      "columns": [
+        "comando_id",
+        "actor_id"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "092"
+    },
+    {
+      "table": "usuario_vivero",
+      "name": "usuario_vivero_comando_otorgamiento_id_otorgado_por_fkey",
+      "target": "vivero_acceso_comando",
+      "columns": [
+        "comando_otorgamiento_id",
+        "otorgado_por"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "094"
+    },
+    {
+      "table": "usuario_vivero",
+      "name": "usuario_vivero_comando_retiro_id_revocado_por_fkey",
+      "target": "vivero_acceso_comando",
+      "columns": [
+        "comando_retiro_id",
+        "revocado_por"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "094"
+    },
+    {
+      "table": "usuario_vivero_historial",
+      "name": "usuario_vivero_historial_comando_id_actor_id_fkey",
+      "target": "vivero_acceso_comando",
+      "columns": [
+        "comando_id",
+        "actor_id"
+      ],
+      "targetColumns": [
+        "id",
+        "actor_id"
+      ],
+      "migration": "094"
+    },
+    {
+      "table": "recoleccion_recepcion",
+      "name": "recepcion_comando_fk",
+      "target": "recoleccion_recepcion_comando",
+      "columns": [
+        "recibido_por",
+        "comando_id"
+      ],
+      "targetColumns": [
+        "actor_id",
+        "comando_id"
+      ],
+      "migration": "100"
+    }
+  ]
+}

@@ -1,0 +1,1153 @@
+---
+title: Modelo físico completo · extracto aportado · revisión 16 de noviembre de 2026
+---
+erDiagram
+  direction TB
+  %% Generado por database/scripts/generar-modelo-fisico.mjs.
+  %% NULL / NN e IDENTITY proceden de la exportación aportada.
+  %% FK del extracto aportado. Claves compuestas agrupadas y contrastadas con SQL local.
+  %% USER_DEFINED conserva el tipo no resuelto por el extracto.
+  %% La vista temática solo dibuja relaciones cuyos dos extremos están incluidos.
+  usuario {
+    bigint id PK "NN"
+    text nombre "NN"
+    text doc_identidad UK "NULL"
+    text wallet_address UK "NULL"
+    text organizacion "NULL"
+    text contacto "NULL"
+    USER_DEFINED rol "NN"
+    timestamp_with_time_zone created_at "NN"
+    text username UK "NULL"
+    text auth_id "NN"
+    text correo UK "NULL"
+    text apellido "NULL"
+    text foto_perfil_url "NULL"
+    boolean activo "NN"
+    bigint revision_autoridad "NN"
+    bigint organizacion_id FK "NULL"
+  }
+
+  ubicacion {
+    bigint id PK "NN"
+    numeric latitud "NULL"
+    numeric longitud "NULL"
+    timestamp_with_time_zone created_at "NN"
+    bigint pais_id FK "NULL"
+    bigint division_id FK "NULL"
+    text nombre "NULL"
+    integer precision_m "NULL"
+    text fuente "NULL"
+    text referencia "NULL"
+    timestamp_with_time_zone updated_at "NULL"
+  }
+
+  vivero {
+    bigint id PK "NN"
+    text codigo UK "NN"
+    USER_DEFINED nombre "NN"
+    bigint ubicacion_id FK, UK "NN"
+    timestamp_with_time_zone created_at "NN"
+  }
+
+  planta {
+    bigint id PK "NN"
+    text especie "NN"
+    text nombre_cientifico "NN"
+    text variedad "NN"
+    timestamp_with_time_zone created_at "NN"
+    text nombre_comun_principal "NULL"
+    text nombres_comunes "NULL"
+    text imagen_url "NULL"
+    text notas "NULL"
+    integer tipo_planta_id FK "NN"
+    boolean activo "NN"
+    timestamp_with_time_zone updated_at "NN"
+  }
+
+  metodo_recoleccion {
+    bigint id PK "NN"
+    USER_DEFINED nombre UK "NN"
+    text descripcion "NULL"
+  }
+
+  recoleccion {
+    bigint id PK "NN"
+    date fecha "NN"
+    USER_DEFINED tipo_material "NN"
+    boolean especie_nueva "NN"
+    text observaciones "NULL"
+    bigint usuario_id FK "NN"
+    bigint ubicacion_id FK "NN"
+    bigint vivero_id FK "NULL"
+    bigint metodo_id FK "NN"
+    bigint planta_id FK "NULL"
+    date created_at "NN"
+    text codigo_trazabilidad UK "NN"
+    text blockchain_url "NULL"
+    text token_id "NULL"
+    text transaction_hash "NULL"
+    USER_DEFINED estado_registro "NN"
+    USER_DEFINED unidad_canonica "NN"
+    numeric cantidad_inicial_canonica "NN"
+    numeric saldo_actual "NN"
+    USER_DEFINED estado_operativo "NN"
+    text nombre_cientifico_snapshot "NULL"
+    text nombre_comercial_snapshot "NULL"
+    text variedad_snapshot "NULL"
+    text nombre_comunidad_snapshot "NULL"
+    text nombre_recolector_snapshot "NULL"
+    date eliminado_en "NULL"
+    bigint eliminado_por_usuario_id FK "NULL"
+    text motivo_eliminacion "NULL"
+    text motivo_rechazo "NULL"
+    bigint revision_captura "NN"
+  }
+
+  usuario_credencial {
+    bigint id PK "NN"
+    bigint usuario_id FK "NN"
+    text credential_id UK "NN"
+    text public_key "NN"
+    text algorithm "NN"
+    integer counter "NN"
+    ARRAY transports "NULL"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone last_used_at "NULL"
+  }
+
+  tipo_planta {
+    integer id PK "NN"
+    text nombre UK "NN"
+    timestamp_with_time_zone created_at "NULL"
+  }
+
+  pais {
+    bigint id PK "NN"
+    text nombre "NN"
+    character codigo_iso2 UK "NN"
+    character codigo_iso3 "NULL"
+    boolean activo "NN"
+    timestamp_with_time_zone created_at "NN"
+  }
+
+  division_tipo {
+    bigint id PK "NN"
+    bigint pais_id FK "NN"
+    text nombre "NN"
+    integer orden "NN"
+    boolean activo "NN"
+    timestamp_with_time_zone created_at "NN"
+  }
+
+  division_administrativa {
+    bigint id PK "NN"
+    bigint pais_id FK "NN"
+    bigint parent_id FK "NULL"
+    bigint tipo_id FK "NN"
+    text nombre "NN"
+    text codigo_externo "NULL"
+    boolean activo "NN"
+    bigint reemplazada_por_id FK "NULL"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NULL"
+  }
+
+  tipos_entidad_evidencia {
+    smallint id PK "NN / IDENTITY"
+    text codigo UK "NN"
+    text descripcion "NULL"
+    boolean activo "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  evidencias_trazabilidad {
+    bigint id PK "NN / IDENTITY"
+    smallint tipo_entidad_id FK "NN"
+    bigint entidad_id "NN"
+    text codigo_trazabilidad "NULL"
+    text bucket "NN"
+    text ruta_archivo "NN"
+    uuid storage_object_id "NULL"
+    text tipo_archivo "NN"
+    text mime_type "NN"
+    bigint tamano_bytes "NULL"
+    text hash_sha256 "NULL"
+    text titulo "NULL"
+    text descripcion "NULL"
+    jsonb metadata "NN"
+    boolean es_principal "NN"
+    integer orden "NN"
+    timestamp_with_time_zone tomado_en "NULL"
+    date creado_en "NN"
+    date actualizado_en "NN"
+    date eliminado_en "NULL"
+    bigint creado_por_usuario_id FK "NN"
+    bigint actualizado_por_usuario_id FK "NULL"
+    bigint eliminado_por_usuario_id FK "NULL"
+  }
+
+  recoleccion_movimiento {
+    bigint id PK "NN / IDENTITY"
+    bigint recoleccion_id FK "NN"
+    USER_DEFINED tipo_movimiento "NN"
+    numeric delta "NN"
+    USER_DEFINED unidad_medida_evento "NN"
+    USER_DEFINED motivo "NULL"
+    text motivo_otro "NULL"
+    bigint lote_vivero_id "NULL"
+    jsonb detalle_cambios "NULL"
+    bigint created_by FK "NN"
+    date created_at "NN"
+    text transaction_hash "NULL"
+    USER_DEFINED unidad_operativa "NULL"
+  }
+
+  lote_vivero {
+    bigint id PK "NN / IDENTITY"
+    bigint recoleccion_id FK "NULL"
+    bigint planta_id FK "NN"
+    bigint vivero_id FK "NN"
+    bigint responsable_id FK "NN"
+    text nombre_cientifico_snapshot "NN"
+    text nombre_comercial_snapshot "NN"
+    USER_DEFINED tipo_material_snapshot "NULL"
+    date fecha_inicio "NN"
+    numeric cantidad_inicial_en_proceso "NULL"
+    USER_DEFINED unidad_medida_inicial "NULL"
+    integer plantas_vivas_iniciales "NULL"
+    integer saldo_vivo_actual "NULL"
+    USER_DEFINED subetapa_actual "NULL"
+    USER_DEFINED estado_lote "NN"
+    USER_DEFINED motivo_cierre "NULL"
+    text codigo_trazabilidad UK "NN"
+    date created_at "NN"
+    date updated_at "NN"
+    text variedad_snapshot "NULL"
+    text nombre_comunidad_origen_snapshot "NULL"
+    text nombre_responsable_snapshot "NULL"
+  }
+
+  evento_lote_vivero {
+    bigint id PK "NN / IDENTITY"
+    bigint lote_id FK "NN"
+    USER_DEFINED tipo_evento "NN"
+    date fecha_evento "NN"
+    date created_at "NN"
+    bigint responsable_id FK "NN"
+    numeric cantidad_afectada "NULL"
+    USER_DEFINED unidad_medida_evento "NULL"
+    USER_DEFINED causa_merma "NULL"
+    USER_DEFINED destino_tipo "NULL"
+    text destino_referencia "NULL"
+    bigint comunidad_destino_id FK "NULL"
+    USER_DEFINED subetapa_destino "NULL"
+    integer saldo_vivo_antes "NULL"
+    integer saldo_vivo_despues "NULL"
+    USER_DEFINED motivo_cierre_calculado "NULL"
+    bigint ref_evento_trigger_id FK "NULL"
+    jsonb metadata_blockchain "NULL"
+    text observaciones "NULL"
+    USER_DEFINED origen_despacho "NULL"
+    bigint subcampania_id FK "NULL"
+    bigint campania_id FK "NULL"
+    bigint registro_plantacion_id FK "NULL"
+    jsonb metadata "NULL"
+    USER_DEFINED causa_descarte_pre_embolsado "NULL"
+    bigint asignacion_id FK "NULL"
+  }
+
+  recoleccion_historial {
+    bigint id PK "NN / IDENTITY"
+    bigint recoleccion_id FK "NN"
+    USER_DEFINED tipo_historial "NN"
+    USER_DEFINED estado_origen "NULL"
+    USER_DEFINED estado_destino "NULL"
+    text observaciones "NULL"
+    jsonb metadata "NN"
+    bigint actor_user_id FK "NULL"
+    date created_at "NN"
+  }
+
+  asignacion_vivero_subcampania {
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    bigint lote_vivero_id FK "NN"
+    USER_DEFINED proposito "NN"
+    USER_DEFINED estado "NN"
+    integer cantidad_asignada "NN"
+    integer cantidad_consumida "NN"
+    integer cantidad_devuelta "NN"
+    integer cantidad_mermada "NN"
+    integer saldo_asignado_disponible "NULL"
+    bigint usuario_asignacion_id FK "NN"
+    timestamp_with_time_zone fecha_asignacion "NN"
+    timestamp_with_time_zone updated_at "NN"
+    date fecha_entrega_operativa "NULL"
+  }
+
+  spatial_ref_sys {
+    integer srid PK "NN"
+    character_varying auth_name "NULL"
+    integer auth_srid "NULL"
+    character_varying srtext "NULL"
+    character_varying proj4text "NULL"
+  }
+
+  organizacion {
+    bigint id PK "NN / IDENTITY"
+    text nombre UK "NN"
+    boolean activo "NN"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NN"
+    text logo_url "NULL"
+    USER_DEFINED tipo "NN"
+  }
+
+  campania {
+    bigint id PK "NN / IDENTITY"
+    text nombre UK "NN"
+    text descripcion "NULL"
+    date fecha_estimada_inicio "NULL"
+    date fecha_estimada_fin "NULL"
+    text codigo_trazabilidad UK "NN"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NN"
+    bigint created_by FK "NN"
+    bigint updated_by FK "NN"
+    timestamp_with_time_zone deleted_at "NULL"
+    bigint deleted_by FK "NULL"
+    jsonb metadata_blockchain "NULL"
+    USER_DEFINED tipo "NN"
+  }
+
+  campania_organizacion {
+    bigint id PK "NN / IDENTITY"
+    bigint campania_id FK "NN"
+    bigint organizacion_id FK "NN"
+    timestamp_with_time_zone created_at "NN"
+    bigint created_by FK "NN"
+  }
+
+  subcampania {
+    bigint id PK "NN / IDENTITY"
+    bigint campania_id FK "NN"
+    text nombre "NN"
+    text descripcion "NULL"
+    USER_DEFINED tipo "NN"
+    USER_DEFINED estado "NN"
+    USER_DEFINED fase_mantenimiento "NN"
+    bigint zona_id FK "NN"
+    USER_DEFINED poligono_geom "NULL"
+    numeric area_hectareas "NULL"
+    integer meta_total_arboles "NN"
+    date fecha_estimada_inicio "NULL"
+    date fecha_estimada_fin "NULL"
+    timestamp_with_time_zone fecha_cierre_operativo "NULL"
+    date fecha_fin_mantenimiento "NULL"
+    USER_DEFINED motivo_cierre_parcial "NULL"
+    text observaciones_cierre "NULL"
+    integer tolerancia_gps_metros "NN"
+    text nombre_zona_snapshot "NULL"
+    text nombre_coordinador_snapshot "NULL"
+    ARRAY nombres_organizaciones_snapshot "NULL"
+    text codigo_trazabilidad UK "NN"
+    integer total_plantado_inicial "NN"
+    integer total_repuesto "NN"
+    integer total_muerto_acumulado "NN"
+    integer saldo_vivo_actual "NULL"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NN"
+    bigint created_by FK "NN"
+    bigint updated_by FK "NN"
+    timestamp_with_time_zone deleted_at "NULL"
+    bigint deleted_by FK "NULL"
+    jsonb metadata_blockchain "NULL"
+    bigint plan_revision "NN"
+    timestamp_with_time_zone participacion_inicializada_en "NULL"
+    bigint participacion_inicializada_por FK "NULL"
+  }
+
+  subcampania_equipo {
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    bigint usuario_id FK "NN"
+    USER_DEFINED rol "NN"
+    timestamp_with_time_zone agregado_at "NN"
+    bigint agregado_by FK "NN"
+  }
+
+  registro_plantacion {
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    boolean es_reposicion "NN"
+    bigint registro_plantacion_origen_id FK "NULL"
+    date fecha_plantacion "NN"
+    bigint responsable_id FK "NN"
+    numeric latitud "NN"
+    numeric longitud "NN"
+    boolean gps_dentro_poligono "NN"
+    numeric gps_distancia_a_poligono_m "NULL"
+    integer cantidad_total_plantada "NN"
+    integer cantidad_muerta_acumulada "NN"
+    integer cantidad_repuesta_acumulada "NN"
+    integer saldo_vivo_grupo "NULL"
+    text nombre_subcampania_snapshot "NULL"
+    text nombre_zona_snapshot "NULL"
+    text nombre_responsable_snapshot "NULL"
+    text observaciones "NULL"
+    text codigo_trazabilidad UK "NN"
+    timestamp_with_time_zone created_at "NN"
+    bigint created_by FK "NN"
+    jsonb metadata_blockchain "NULL"
+    bigint revision_registro "NN"
+    text afiliacion_responsable_snapshot "NULL"
+    text afiliacion_responsable_estado "NN"
+    text afiliacion_responsable_tipo "NULL"
+    bigint organizacion_responsable_id_snapshot FK "NULL"
+  }
+
+  registro_plantacion_detalle {
+    bigint id PK "NN / IDENTITY"
+    bigint registro_plantacion_id FK "NN"
+    bigint asignacion_id FK "NN"
+    bigint lote_vivero_id FK "NN"
+    bigint planta_id FK "NN"
+    integer cantidad "NN"
+    text nombre_cientifico_snapshot "NULL"
+    text nombre_comercial_snapshot "NULL"
+    text variedad_snapshot "NULL"
+    bigint evento_lote_vivero_despacho_id FK "NULL"
+    timestamp_with_time_zone created_at "NN"
+  }
+
+  registro_plantacion_coresponsable {
+    bigint id PK "NN / IDENTITY"
+    bigint registro_plantacion_id FK "NN"
+    bigint usuario_id FK "NN"
+    timestamp_with_time_zone created_at "NN"
+    text nombre_snapshot "NULL"
+    text afiliacion_snapshot "NULL"
+    text afiliacion_estado "NN"
+    text afiliacion_tipo "NULL"
+    bigint organizacion_id_snapshot FK "NULL"
+  }
+
+  evento_plantacion {
+    bigint id PK "NN / IDENTITY"
+    USER_DEFINED tipo_evento "NN"
+    bigint subcampania_id FK "NN"
+    bigint registro_plantacion_id FK "NULL"
+    bigint asignacion_id FK "NULL"
+    timestamp_with_time_zone fecha_evento "NN"
+    bigint responsable_id FK "NN"
+    text observaciones "NULL"
+    integer cantidad_muerta_delta "NULL"
+    USER_DEFINED causa_mortandad "NULL"
+    numeric latitud "NULL"
+    numeric longitud "NULL"
+    integer cantidad_devuelta "NULL"
+    USER_DEFINED motivo_devolucion "NULL"
+    integer cantidad_asignada_evento "NULL"
+    timestamp_with_time_zone created_at "NN"
+    bigint created_by FK "NN"
+    jsonb metadata_blockchain "NULL"
+  }
+
+  subcampania_historial {
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    USER_DEFINED tipo_historial "NN"
+    USER_DEFINED estado_origen "NULL"
+    USER_DEFINED estado_destino "NULL"
+    text observaciones "NULL"
+    jsonb metadata "NN"
+    bigint actor_user_id FK "NULL"
+    timestamp_with_time_zone created_at "NN"
+    bigint participacion_comando_id FK "NULL"
+  }
+
+  subcampania_meta_especie {
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    bigint planta_id FK "NN"
+    numeric porcentaje_objetivo "NN"
+    integer cantidad_objetivo "NN"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NN"
+    bigint created_by FK "NN"
+    bigint updated_by FK "NN"
+  }
+
+  participacion_comando {
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
+    text operacion "NN"
+    uuid comando_id "NN"
+    smallint version_contrato "NN"
+    smallint version_huella "NN"
+    bytea huella "NULL"
+    text estado "NN"
+    bigint subcampania_preparacion_id FK "NULL"
+    bigint registro_plantacion_id FK "NULL"
+    jsonb resultado "NULL"
+    jsonb error "NULL"
+    smallint http_terminal "NULL"
+    timestamp_with_time_zone creado_en "NN"
+    timestamp_with_time_zone finalizado_en "NULL"
+  }
+
+  subcampania_permiso_revision {
+    bigint subcampania_id PK, FK "NN"
+    bigint usuario_id PK, FK "NN"
+    bigint revision "NN"
+    timestamp_with_time_zone actualizado_en "NN"
+    bigint actualizado_por FK "NN"
+  }
+
+  subcampania_permiso {
+    bigint id PK "NN / IDENTITY"
+    bigint subcampania_id FK "NN"
+    bigint usuario_id FK "NN"
+    text rol_contextual "NN"
+    timestamp_with_time_zone otorgado_en "NN"
+    bigint otorgado_por FK "NN"
+    bigint comando_otorgamiento_id FK "NN"
+    timestamp_with_time_zone revocado_en "NULL"
+    bigint revocado_por FK "NULL"
+    bigint comando_retiro_id FK "NULL"
+  }
+
+  usuario_autoridad_historial {
+    bigint id PK "NN / IDENTITY"
+    bigint comando_id FK "NN"
+    bigint usuario_id FK "NN"
+    bigint actor_id FK "NN"
+    text evento "NN"
+    USER_DEFINED rol_anterior "NN"
+    USER_DEFINED rol_nuevo "NN"
+    boolean activo_anterior "NN"
+    boolean activo_nuevo "NN"
+    bigint revision_anterior "NN"
+    bigint revision_nueva "NN"
+    text motivo "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  participacion_carga {
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
+    bigint comando_interno_id FK "NN"
+    bigint comando_origen_id FK "NN"
+    uuid carga_id "NN"
+    bigint subcampania_id FK "NN"
+    bigint tipo_entidad_id FK "NN"
+    text estado "NN"
+    bytea hash_original_sha256 "NN"
+    bytea hash_derivada_sha256 "NN"
+    bigint tamano_original_bytes "NN"
+    bigint tamano_derivada_bytes "NN"
+    text mime_original "NN"
+    text bucket "NN"
+    text ruta_original "NN"
+    text ruta_derivada "NN"
+    bigint evidencia_id FK, UK "NULL"
+    uuid lease_token "NULL"
+    timestamp_with_time_zone lease_hasta "NULL"
+    integer generacion "NN"
+    timestamp_with_time_zone objetos_verificados_en "NULL"
+    timestamp_with_time_zone creado_en "NN"
+    timestamp_with_time_zone actualizado_en "NN"
+    timestamp_with_time_zone expira_en "NULL"
+  }
+
+  participacion_carga_generacion {
+    bigint carga_interna_id PK, FK "NN"
+    integer generacion PK "NN"
+    text bucket "NN"
+    text ruta_original "NN"
+    text ruta_derivada "NN"
+    uuid lease_token "NN"
+    timestamp_with_time_zone lease_hasta "NN"
+    text estado "NN"
+    text limpieza_estado "NN"
+    timestamp_with_time_zone proximo_intento_en "NULL"
+    timestamp_with_time_zone borrado_verificado_en "NULL"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  registro_plantacion_grupo_revision {
+    bigint grupo_registro_id PK, FK "NN"
+    bigint revision_grupo "NN"
+  }
+
+  registro_plantacion_correccion {
+    bigint id PK "NN / IDENTITY"
+    bigint comando_interno_id FK, UK "NN"
+    bigint actor_id FK "NN"
+    text actor_nombre_snapshot "NULL"
+    bigint subcampania_id FK "NN"
+    bigint grupo_registro_id FK "NN"
+    bigint registro_plantacion_id FK "NULL"
+    bigint evento_plantacion_id FK "NULL"
+    text caso "NN"
+    text motivo "NN"
+    jsonb anterior "NN"
+    jsonb nuevo "NN"
+    bigint revision_anterior "NN"
+    bigint revision_nueva "NN"
+    bigint revision_grupo_anterior "NN"
+    bigint revision_grupo_nueva "NN"
+    bigint referencia_registro_vigente_id FK "NULL"
+    bigint referencia_revision_registro "NULL"
+    bigint referencia_revision_grupo "NULL"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  registro_plantacion_efectivo {
+    bigint registro_plantacion_id PK, FK "NN"
+    bigint subcampania_id FK "NN"
+    text estado "NN"
+    integer cantidad_efectiva "NN"
+    text observaciones_efectivas "NULL"
+    bigint ultima_correccion_id FK "NULL"
+  }
+
+  evento_plantacion_efectivo {
+    bigint evento_plantacion_id PK, FK "NN"
+    bigint grupo_registro_id FK "NN"
+    bigint subcampania_id FK "NN"
+    text estado "NN"
+    integer cantidad_muerta_efectiva "NN"
+    bigint revision_evento "NN"
+    bigint ultima_correccion_id FK "NULL"
+  }
+
+  registro_plantacion_participante_efectivo {
+    bigint registro_plantacion_id PK, FK "NN"
+    bigint usuario_id PK, FK "NN"
+    bigint coresponsable_original_id FK, UK "NULL"
+    text estado "NN"
+    text procedencia "NN"
+    text nombre_snapshot "NULL"
+    text afiliacion_snapshot "NULL"
+    text afiliacion_estado "NN"
+    text afiliacion_tipo "NULL"
+    bigint organizacion_id_snapshot FK "NULL"
+    timestamp_with_time_zone snapshot_capturado_en "NULL"
+    bigint correccion_incorporacion_id FK "NULL"
+    bigint ultima_correccion_id FK "NULL"
+  }
+
+  registro_plantacion_consumo_credito {
+    bigint id PK "NN / IDENTITY"
+    bigint registro_plantacion_id FK "NN"
+    bigint asignacion_id FK "NN"
+    bigint planta_id FK "NN"
+    USER_DEFINED proposito "NN"
+    integer cantidad "NN"
+    bigint detalle_original_id FK, UK "NULL"
+    bigint correccion_id FK "NULL"
+    bigint revision_origen "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  registro_plantacion_consumo_compensacion {
+    bigint id PK "NN / IDENTITY"
+    bigint credito_id FK "NN"
+    bigint correccion_id FK "NN"
+    integer cantidad "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  recoleccion_acceso_comando {
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
+    uuid comando_id "NN"
+    text operacion "NN"
+    jsonb intencion "NN"
+    text estado "NN"
+    jsonb resultado "NULL"
+    jsonb error "NULL"
+    integer http_terminal "NN"
+    timestamp_with_time_zone finalizado_en "NN"
+  }
+
+  usuario_acceso_recoleccion_revision {
+    bigint usuario_id PK, FK "NN"
+    bigint revision "NN"
+  }
+
+  usuario_acceso_recoleccion {
+    bigint id PK "NN / IDENTITY"
+    bigint usuario_id FK "NN"
+    timestamp_with_time_zone otorgado_en "NN"
+    bigint otorgado_por FK "NN"
+    bigint comando_otorgamiento_id FK "NN"
+    timestamp_with_time_zone revocado_en "NULL"
+    bigint revocado_por FK "NULL"
+    bigint comando_retiro_id FK "NULL"
+  }
+
+  usuario_acceso_recoleccion_historial {
+    bigint id PK "NN / IDENTITY"
+    bigint usuario_id FK "NN"
+    bigint actor_id FK "NN"
+    bigint comando_id FK, UK "NN"
+    bigint acceso_id FK "NN"
+    text evento "NN"
+    bigint revision_anterior "NN"
+    bigint revision_nueva "NN"
+    text motivo "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  vivero_acceso_comando {
+    bigint id PK "NN / IDENTITY"
+    bigint actor_id FK "NN"
+    uuid comando_id "NN"
+    text operacion "NN"
+    jsonb intencion "NN"
+    text estado "NN"
+    jsonb resultado "NULL"
+    jsonb error "NULL"
+    integer http_terminal "NN"
+    timestamp_with_time_zone finalizado_en "NN"
+  }
+
+  usuario_vivero_revision {
+    bigint usuario_id PK, FK "NN"
+    bigint revision "NN"
+  }
+
+  usuario_vivero {
+    bigint vivero_id FK "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint usuario_id FK "NN"
+    timestamp_with_time_zone otorgado_en "NN"
+    bigint otorgado_por FK "NN"
+    bigint comando_otorgamiento_id FK "NN"
+    timestamp_with_time_zone revocado_en "NULL"
+    bigint revocado_por FK "NULL"
+    bigint comando_retiro_id FK "NULL"
+  }
+
+  usuario_vivero_historial {
+    bigint vivero_id FK "NN"
+    bigint id PK "NN / IDENTITY"
+    bigint usuario_id FK "NN"
+    bigint actor_id FK "NN"
+    bigint comando_id FK, UK "NN"
+    bigint acceso_id FK "NN"
+    text evento "NN"
+    bigint revision_anterior "NN"
+    bigint revision_nueva "NN"
+    text motivo "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  m2_evidencia_contexto {
+    bigint evidencia_id PK, FK "NN"
+    bigint vivero_id FK "NN"
+    bigint lote_id FK "NULL"
+    text evento "NN"
+    bigint actor_id FK "NN"
+    timestamp_with_time_zone creado_en "NN"
+    uuid solicitud_id "NULL"
+  }
+
+  recoleccion_recepcion_comando {
+    bigint actor_id PK, FK "NN"
+    uuid comando_id PK "NN"
+    jsonb intencion "NN"
+    integer http_status "NN"
+    jsonb recibo "NN"
+    timestamp_with_time_zone registrado_en "NN"
+  }
+
+  recoleccion_recepcion {
+    bigint id PK "NN / IDENTITY"
+    bigint recoleccion_id FK, UK "NN"
+    bigint vivero_id FK "NN"
+    numeric cantidad_recibida "NN"
+    USER_DEFINED unidad_recibida "NN"
+    date fecha_recepcion "NN"
+    bigint recibido_por FK "NN"
+    timestamp_with_time_zone registrado_en "NN"
+    uuid comando_id FK "NN"
+  }
+
+  recoleccion_recepcion_evidencia_contexto {
+    bigint evidencia_id PK, FK "NN"
+    bigint recoleccion_id FK "NN"
+    bigint vivero_id FK "NN"
+    bigint actor_id FK "NN"
+    timestamp_with_time_zone registrado_en "NN"
+    bigint revision_captura "NN"
+  }
+
+  recoleccion_recepcion_evidencia {
+    bigint evidencia_id PK, FK "NN"
+    bigint recepcion_id FK "NN"
+  }
+
+  vivero_incorporacion {
+    bigint evento_id PK, FK "NN"
+    text modalidad "NN"
+    text procedencia "NN"
+    text tercero_origen "NULL"
+    text referencia_documental "NULL"
+    uuid solicitud_id UK "NN"
+    jsonb huella_solicitud "NN"
+    timestamp_with_time_zone registrado_en "NN"
+  }
+
+  %% Extracto aportado: usuario(organizacion_id) -> organizacion(id)
+  organizacion |o..o{ usuario : "organizacion_id"
+  %% Extracto aportado: ubicacion(pais_id) -> pais(id)
+  pais |o..o{ ubicacion : "pais_id"
+  %% Extracto aportado: ubicacion(division_id) -> division_administrativa(id)
+  division_administrativa |o..o{ ubicacion : "division_id"
+  %% Extracto aportado: vivero(ubicacion_id) -> ubicacion(id)
+  ubicacion ||..o| vivero : "ubicacion_id"
+  %% Extracto aportado: planta(tipo_planta_id) -> tipo_planta(id)
+  tipo_planta ||..o{ planta : "tipo_planta_id"
+  %% Extracto aportado: recoleccion(usuario_id) -> usuario(id)
+  usuario ||..o{ recoleccion : "usuario_id"
+  %% Extracto aportado: recoleccion(ubicacion_id) -> ubicacion(id)
+  ubicacion ||..o{ recoleccion : "ubicacion_id"
+  %% Extracto aportado: recoleccion(vivero_id) -> vivero(id)
+  vivero |o..o{ recoleccion : "vivero_id"
+  %% Extracto aportado: recoleccion(metodo_id) -> metodo_recoleccion(id)
+  metodo_recoleccion ||..o{ recoleccion : "metodo_id"
+  %% Extracto aportado: recoleccion(planta_id) -> planta(id)
+  planta |o..o{ recoleccion : "planta_id"
+  %% Extracto aportado: recoleccion(eliminado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ recoleccion : "eliminado_por_usuario_id"
+  %% Extracto aportado: usuario_credencial(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_credencial : "usuario_id"
+  %% Extracto aportado: division_tipo(pais_id) -> pais(id)
+  pais ||..o{ division_tipo : "pais_id"
+  %% Extracto aportado: division_administrativa(pais_id) -> pais(id)
+  pais ||..o{ division_administrativa : "pais_id"
+  %% Extracto aportado: division_administrativa(tipo_id) -> division_tipo(id)
+  division_tipo ||..o{ division_administrativa : "tipo_id"
+  %% Extracto aportado: division_administrativa(reemplazada_por_id) -> division_administrativa(id)
+  division_administrativa |o..o{ division_administrativa : "reemplazada_por_id"
+  %% Extracto aportado: division_administrativa(parent_id) -> division_administrativa(id)
+  division_administrativa |o..o{ division_administrativa : "parent_id"
+  %% Extracto aportado: evidencias_trazabilidad(tipo_entidad_id) -> tipos_entidad_evidencia(id)
+  tipos_entidad_evidencia ||..o{ evidencias_trazabilidad : "tipo_entidad_id"
+  %% Extracto aportado: evidencias_trazabilidad(creado_por_usuario_id) -> usuario(id)
+  usuario ||..o{ evidencias_trazabilidad : "creado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(actualizado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ evidencias_trazabilidad : "actualizado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(eliminado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ evidencias_trazabilidad : "eliminado_por_usuario_id"
+  %% Extracto aportado: recoleccion_movimiento(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o{ recoleccion_movimiento : "recoleccion_id"
+  %% Extracto aportado: recoleccion_movimiento(created_by) -> usuario(id)
+  usuario ||..o{ recoleccion_movimiento : "created_by"
+  %% Extracto aportado: lote_vivero(recoleccion_id) -> recoleccion(id)
+  recoleccion |o..o{ lote_vivero : "recoleccion_id"
+  %% Extracto aportado: lote_vivero(planta_id) -> planta(id)
+  planta ||..o{ lote_vivero : "planta_id"
+  %% Extracto aportado: lote_vivero(vivero_id) -> vivero(id)
+  vivero ||..o{ lote_vivero : "vivero_id"
+  %% Extracto aportado: lote_vivero(responsable_id) -> usuario(id)
+  usuario ||..o{ lote_vivero : "responsable_id"
+  %% Extracto aportado: evento_lote_vivero(responsable_id) -> usuario(id)
+  usuario ||..o{ evento_lote_vivero : "responsable_id"
+  %% Extracto aportado: evento_lote_vivero(comunidad_destino_id) -> division_administrativa(id)
+  division_administrativa |o..o{ evento_lote_vivero : "comunidad_destino_id"
+  %% Extracto aportado: evento_lote_vivero(ref_evento_trigger_id) -> evento_lote_vivero(id)
+  evento_lote_vivero |o..o{ evento_lote_vivero : "ref_evento_trigger_id"
+  %% Extracto aportado: evento_lote_vivero(lote_id) -> lote_vivero(id)
+  lote_vivero ||..o{ evento_lote_vivero : "lote_id"
+  %% Extracto aportado: evento_lote_vivero(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania |o..o{ evento_lote_vivero : "asignacion_id"
+  %% Extracto aportado: evento_lote_vivero(subcampania_id) -> subcampania(id)
+  subcampania |o..o{ evento_lote_vivero : "subcampania_id"
+  %% Extracto aportado: evento_lote_vivero(campania_id) -> campania(id)
+  campania |o..o{ evento_lote_vivero : "campania_id"
+  %% Extracto aportado: evento_lote_vivero(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ evento_lote_vivero : "registro_plantacion_id"
+  %% Extracto aportado: recoleccion_historial(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o{ recoleccion_historial : "recoleccion_id"
+  %% Extracto aportado: recoleccion_historial(actor_user_id) -> usuario(id)
+  usuario |o..o{ recoleccion_historial : "actor_user_id"
+  %% Extracto aportado: asignacion_vivero_subcampania(lote_vivero_id) -> lote_vivero(id)
+  lote_vivero ||..o{ asignacion_vivero_subcampania : "lote_vivero_id"
+  %% Extracto aportado: asignacion_vivero_subcampania(usuario_asignacion_id) -> usuario(id)
+  usuario ||..o{ asignacion_vivero_subcampania : "usuario_asignacion_id"
+  %% Extracto aportado: asignacion_vivero_subcampania(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ asignacion_vivero_subcampania : "subcampania_id"
+  %% Extracto aportado: campania(created_by) -> usuario(id)
+  usuario ||..o{ campania : "created_by"
+  %% Extracto aportado: campania(updated_by) -> usuario(id)
+  usuario ||..o{ campania : "updated_by"
+  %% Extracto aportado: campania(deleted_by) -> usuario(id)
+  usuario |o..o{ campania : "deleted_by"
+  %% Extracto aportado: campania_organizacion(campania_id) -> campania(id)
+  campania ||..o{ campania_organizacion : "campania_id"
+  %% Extracto aportado: campania_organizacion(organizacion_id) -> organizacion(id)
+  organizacion ||..o{ campania_organizacion : "organizacion_id"
+  %% Extracto aportado: campania_organizacion(created_by) -> usuario(id)
+  usuario ||..o{ campania_organizacion : "created_by"
+  %% Extracto aportado: subcampania(campania_id) -> campania(id)
+  campania ||..o{ subcampania : "campania_id"
+  %% Extracto aportado: subcampania(zona_id) -> division_administrativa(id)
+  division_administrativa ||..o{ subcampania : "zona_id"
+  %% Extracto aportado: subcampania(created_by) -> usuario(id)
+  usuario ||..o{ subcampania : "created_by"
+  %% Extracto aportado: subcampania(updated_by) -> usuario(id)
+  usuario ||..o{ subcampania : "updated_by"
+  %% Extracto aportado: subcampania(deleted_by) -> usuario(id)
+  usuario |o..o{ subcampania : "deleted_by"
+  %% Extracto aportado: subcampania(participacion_inicializada_por) -> usuario(id)
+  usuario |o..o{ subcampania : "participacion_inicializada_por"
+  %% Extracto aportado: subcampania_equipo(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ subcampania_equipo : "subcampania_id"
+  %% Extracto aportado: subcampania_equipo(usuario_id) -> usuario(id)
+  usuario ||..o{ subcampania_equipo : "usuario_id"
+  %% Extracto aportado: subcampania_equipo(agregado_by) -> usuario(id)
+  usuario ||..o{ subcampania_equipo : "agregado_by"
+  %% Extracto aportado: registro_plantacion(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ registro_plantacion : "subcampania_id"
+  %% Extracto aportado: registro_plantacion(responsable_id) -> usuario(id)
+  usuario ||..o{ registro_plantacion : "responsable_id"
+  %% Extracto aportado: registro_plantacion(created_by) -> usuario(id)
+  usuario ||..o{ registro_plantacion : "created_by"
+  %% Extracto aportado: registro_plantacion(registro_plantacion_origen_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ registro_plantacion : "registro_plantacion_origen_id"
+  %% Extracto aportado: registro_plantacion(organizacion_responsable_id_snapshot) -> organizacion(id)
+  organizacion |o..o{ registro_plantacion : "organizacion_responsable_id_snapshot"
+  %% Extracto aportado: registro_plantacion_detalle(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ registro_plantacion_detalle : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_detalle(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania ||..o{ registro_plantacion_detalle : "asignacion_id"
+  %% Extracto aportado: registro_plantacion_detalle(lote_vivero_id) -> lote_vivero(id)
+  lote_vivero ||..o{ registro_plantacion_detalle : "lote_vivero_id"
+  %% Extracto aportado: registro_plantacion_detalle(planta_id) -> planta(id)
+  planta ||..o{ registro_plantacion_detalle : "planta_id"
+  %% Extracto aportado: registro_plantacion_detalle(evento_lote_vivero_despacho_id) -> evento_lote_vivero(id)
+  evento_lote_vivero |o..o{ registro_plantacion_detalle : "evento_lote_vivero_despacho_id"
+  %% Extracto aportado: registro_plantacion_coresponsable(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ registro_plantacion_coresponsable : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_coresponsable(usuario_id) -> usuario(id)
+  usuario ||..o{ registro_plantacion_coresponsable : "usuario_id"
+  %% Extracto aportado: registro_plantacion_coresponsable(organizacion_id_snapshot) -> organizacion(id)
+  organizacion |o..o{ registro_plantacion_coresponsable : "organizacion_id_snapshot"
+  %% Extracto aportado: evento_plantacion(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ evento_plantacion : "subcampania_id"
+  %% Extracto aportado: evento_plantacion(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ evento_plantacion : "registro_plantacion_id"
+  %% Extracto aportado: evento_plantacion(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania |o..o{ evento_plantacion : "asignacion_id"
+  %% Extracto aportado: evento_plantacion(responsable_id) -> usuario(id)
+  usuario ||..o{ evento_plantacion : "responsable_id"
+  %% Extracto aportado: evento_plantacion(created_by) -> usuario(id)
+  usuario ||..o{ evento_plantacion : "created_by"
+  %% Extracto aportado: subcampania_historial(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ subcampania_historial : "subcampania_id"
+  %% Extracto aportado: subcampania_historial(actor_user_id) -> usuario(id)
+  usuario |o..o{ subcampania_historial : "actor_user_id"
+  %% Extracto aportado: subcampania_historial(participacion_comando_id) -> participacion_comando(id)
+  participacion_comando |o..o{ subcampania_historial : "participacion_comando_id"
+  %% Extracto y SQL 070: subcampania_historial(participacion_comando_id,actor_user_id) -> participacion_comando(id,actor_id)
+  participacion_comando |o..o{ subcampania_historial : "participacion_comando_id+actor_user_id"
+  %% Extracto aportado: subcampania_meta_especie(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ subcampania_meta_especie : "subcampania_id"
+  %% Extracto aportado: subcampania_meta_especie(planta_id) -> planta(id)
+  planta ||..o{ subcampania_meta_especie : "planta_id"
+  %% Extracto aportado: subcampania_meta_especie(created_by) -> usuario(id)
+  usuario ||..o{ subcampania_meta_especie : "created_by"
+  %% Extracto aportado: subcampania_meta_especie(updated_by) -> usuario(id)
+  usuario ||..o{ subcampania_meta_especie : "updated_by"
+  %% Extracto aportado: participacion_comando(actor_id) -> usuario(id)
+  usuario ||..o{ participacion_comando : "actor_id"
+  %% Extracto aportado: participacion_comando(subcampania_preparacion_id) -> subcampania(id)
+  subcampania |o..o{ participacion_comando : "subcampania_preparacion_id"
+  %% Extracto aportado: participacion_comando(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ participacion_comando : "registro_plantacion_id"
+  %% Extracto aportado: subcampania_permiso_revision(subcampania_id) -> subcampania(id)
+  subcampania ||--o{ subcampania_permiso_revision : "subcampania_id"
+  %% Extracto aportado: subcampania_permiso_revision(usuario_id) -> usuario(id)
+  usuario ||--o{ subcampania_permiso_revision : "usuario_id"
+  %% Extracto aportado: subcampania_permiso_revision(actualizado_por) -> usuario(id)
+  usuario ||..o{ subcampania_permiso_revision : "actualizado_por"
+  %% Extracto aportado: subcampania_permiso(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ subcampania_permiso : "subcampania_id"
+  %% Extracto aportado: subcampania_permiso(usuario_id) -> usuario(id)
+  usuario ||..o{ subcampania_permiso : "usuario_id"
+  %% Extracto aportado: subcampania_permiso(otorgado_por) -> usuario(id)
+  usuario ||..o{ subcampania_permiso : "otorgado_por"
+  %% Extracto aportado: subcampania_permiso(comando_otorgamiento_id) -> participacion_comando(id)
+  participacion_comando ||..o{ subcampania_permiso : "comando_otorgamiento_id"
+  %% Extracto aportado: subcampania_permiso(revocado_por) -> usuario(id)
+  usuario |o..o{ subcampania_permiso : "revocado_por"
+  %% Extracto aportado: subcampania_permiso(comando_retiro_id) -> participacion_comando(id)
+  participacion_comando |o..o{ subcampania_permiso : "comando_retiro_id"
+  %% Extracto y SQL 070: subcampania_permiso(subcampania_id,usuario_id) -> subcampania_permiso_revision(subcampania_id,usuario_id)
+  subcampania_permiso_revision ||..o{ subcampania_permiso : "subcampania_id+usuario_id"
+  %% Extracto y SQL 070: subcampania_permiso(comando_otorgamiento_id,otorgado_por) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o{ subcampania_permiso : "comando_otorgamiento_id+otorgado_por"
+  %% Extracto y SQL 070: subcampania_permiso(comando_retiro_id,revocado_por) -> participacion_comando(id,actor_id)
+  participacion_comando |o..o{ subcampania_permiso : "comando_retiro_id+revocado_por"
+  %% Extracto aportado: usuario_autoridad_historial(comando_id) -> participacion_comando(id)
+  participacion_comando ||..o{ usuario_autoridad_historial : "comando_id"
+  %% Extracto aportado: usuario_autoridad_historial(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_autoridad_historial : "usuario_id"
+  %% Extracto aportado: usuario_autoridad_historial(actor_id) -> usuario(id)
+  usuario ||..o{ usuario_autoridad_historial : "actor_id"
+  %% Extracto y SQL 072: usuario_autoridad_historial(comando_id,actor_id) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o{ usuario_autoridad_historial : "comando_id+actor_id"
+  %% Extracto aportado: participacion_carga(actor_id) -> usuario(id)
+  usuario ||..o{ participacion_carga : "actor_id"
+  %% Extracto aportado: participacion_carga(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ participacion_carga : "subcampania_id"
+  %% Extracto aportado: participacion_carga(tipo_entidad_id) -> tipos_entidad_evidencia(id)
+  tipos_entidad_evidencia ||..o{ participacion_carga : "tipo_entidad_id"
+  %% Extracto aportado: participacion_carga(evidencia_id) -> evidencias_trazabilidad(id)
+  evidencias_trazabilidad |o..o| participacion_carga : "evidencia_id"
+  %% Extracto y SQL 074: participacion_carga(comando_interno_id,actor_id) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o{ participacion_carga : "comando_interno_id+actor_id"
+  %% Extracto y SQL 074: participacion_carga(comando_origen_id,actor_id) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o{ participacion_carga : "comando_origen_id+actor_id"
+  %% Extracto aportado: participacion_carga_generacion(carga_interna_id) -> participacion_carga(id)
+  participacion_carga ||--o{ participacion_carga_generacion : "carga_interna_id"
+  %% Extracto aportado: registro_plantacion_grupo_revision(grupo_registro_id) -> registro_plantacion(id)
+  registro_plantacion ||--o| registro_plantacion_grupo_revision : "grupo_registro_id"
+  %% Extracto aportado: registro_plantacion_correccion(actor_id) -> usuario(id)
+  usuario ||..o{ registro_plantacion_correccion : "actor_id"
+  %% Extracto aportado: registro_plantacion_correccion(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ registro_plantacion_correccion : "subcampania_id"
+  %% Extracto aportado: registro_plantacion_correccion(grupo_registro_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ registro_plantacion_correccion : "grupo_registro_id"
+  %% Extracto aportado: registro_plantacion_correccion(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ registro_plantacion_correccion : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_correccion(evento_plantacion_id) -> evento_plantacion(id)
+  evento_plantacion |o..o{ registro_plantacion_correccion : "evento_plantacion_id"
+  %% Extracto aportado: registro_plantacion_correccion(referencia_registro_vigente_id) -> registro_plantacion(id)
+  registro_plantacion |o..o{ registro_plantacion_correccion : "referencia_registro_vigente_id"
+  %% Extracto y SQL 082: registro_plantacion_correccion(comando_interno_id,actor_id) -> participacion_comando(id,actor_id)
+  participacion_comando ||..o| registro_plantacion_correccion : "comando_interno_id+actor_id"
+  %% Extracto aportado: registro_plantacion_efectivo(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||--o| registro_plantacion_efectivo : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_efectivo(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ registro_plantacion_efectivo : "subcampania_id"
+  %% Extracto aportado: registro_plantacion_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ registro_plantacion_efectivo : "ultima_correccion_id"
+  %% Extracto aportado: evento_plantacion_efectivo(evento_plantacion_id) -> evento_plantacion(id)
+  evento_plantacion ||--o| evento_plantacion_efectivo : "evento_plantacion_id"
+  %% Extracto aportado: evento_plantacion_efectivo(grupo_registro_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ evento_plantacion_efectivo : "grupo_registro_id"
+  %% Extracto aportado: evento_plantacion_efectivo(subcampania_id) -> subcampania(id)
+  subcampania ||..o{ evento_plantacion_efectivo : "subcampania_id"
+  %% Extracto aportado: evento_plantacion_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ evento_plantacion_efectivo : "ultima_correccion_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||--o{ registro_plantacion_participante_efectivo : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(usuario_id) -> usuario(id)
+  usuario ||--o{ registro_plantacion_participante_efectivo : "usuario_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(coresponsable_original_id) -> registro_plantacion_coresponsable(id)
+  registro_plantacion_coresponsable |o..o| registro_plantacion_participante_efectivo : "coresponsable_original_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(organizacion_id_snapshot) -> organizacion(id)
+  organizacion |o..o{ registro_plantacion_participante_efectivo : "organizacion_id_snapshot"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(correccion_incorporacion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ registro_plantacion_participante_efectivo : "correccion_incorporacion_id"
+  %% Extracto aportado: registro_plantacion_participante_efectivo(ultima_correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ registro_plantacion_participante_efectivo : "ultima_correccion_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(registro_plantacion_id) -> registro_plantacion(id)
+  registro_plantacion ||..o{ registro_plantacion_consumo_credito : "registro_plantacion_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(asignacion_id) -> asignacion_vivero_subcampania(id)
+  asignacion_vivero_subcampania ||..o{ registro_plantacion_consumo_credito : "asignacion_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(planta_id) -> planta(id)
+  planta ||..o{ registro_plantacion_consumo_credito : "planta_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(detalle_original_id) -> registro_plantacion_detalle(id)
+  registro_plantacion_detalle |o..o| registro_plantacion_consumo_credito : "detalle_original_id"
+  %% Extracto aportado: registro_plantacion_consumo_credito(correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion |o..o{ registro_plantacion_consumo_credito : "correccion_id"
+  %% Extracto aportado: registro_plantacion_consumo_compensacion(credito_id) -> registro_plantacion_consumo_credito(id)
+  registro_plantacion_consumo_credito ||..o{ registro_plantacion_consumo_compensacion : "credito_id"
+  %% Extracto aportado: registro_plantacion_consumo_compensacion(correccion_id) -> registro_plantacion_correccion(id)
+  registro_plantacion_correccion ||..o{ registro_plantacion_consumo_compensacion : "correccion_id"
+  %% Extracto aportado: recoleccion_acceso_comando(actor_id) -> usuario(id)
+  usuario ||..o{ recoleccion_acceso_comando : "actor_id"
+  %% Extracto aportado: usuario_acceso_recoleccion_revision(usuario_id) -> usuario(id)
+  usuario ||--o| usuario_acceso_recoleccion_revision : "usuario_id"
+  %% Extracto aportado: usuario_acceso_recoleccion(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_acceso_recoleccion : "usuario_id"
+  %% Extracto aportado: usuario_acceso_recoleccion(otorgado_por) -> usuario(id)
+  usuario ||..o{ usuario_acceso_recoleccion : "otorgado_por"
+  %% Extracto aportado: usuario_acceso_recoleccion(revocado_por) -> usuario(id)
+  usuario |o..o{ usuario_acceso_recoleccion : "revocado_por"
+  %% Extracto y SQL 092: usuario_acceso_recoleccion(comando_otorgamiento_id,otorgado_por) -> recoleccion_acceso_comando(id,actor_id)
+  recoleccion_acceso_comando ||..o{ usuario_acceso_recoleccion : "comando_otorgamiento_id+otorgado_por"
+  %% Extracto y SQL 092: usuario_acceso_recoleccion(comando_retiro_id,revocado_por) -> recoleccion_acceso_comando(id,actor_id)
+  recoleccion_acceso_comando |o..o{ usuario_acceso_recoleccion : "comando_retiro_id+revocado_por"
+  %% Extracto aportado: usuario_acceso_recoleccion_historial(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_acceso_recoleccion_historial : "usuario_id"
+  %% Extracto aportado: usuario_acceso_recoleccion_historial(actor_id) -> usuario(id)
+  usuario ||..o{ usuario_acceso_recoleccion_historial : "actor_id"
+  %% Extracto aportado: usuario_acceso_recoleccion_historial(acceso_id) -> usuario_acceso_recoleccion(id)
+  usuario_acceso_recoleccion ||..o{ usuario_acceso_recoleccion_historial : "acceso_id"
+  %% Extracto y SQL 092: usuario_acceso_recoleccion_historial(comando_id,actor_id) -> recoleccion_acceso_comando(id,actor_id)
+  recoleccion_acceso_comando ||..o| usuario_acceso_recoleccion_historial : "comando_id+actor_id"
+  %% Extracto aportado: vivero_acceso_comando(actor_id) -> usuario(id)
+  usuario ||..o{ vivero_acceso_comando : "actor_id"
+  %% Extracto aportado: usuario_vivero_revision(usuario_id) -> usuario(id)
+  usuario ||--o| usuario_vivero_revision : "usuario_id"
+  %% Extracto aportado: usuario_vivero(vivero_id) -> vivero(id)
+  vivero ||..o{ usuario_vivero : "vivero_id"
+  %% Extracto aportado: usuario_vivero(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_vivero : "usuario_id"
+  %% Extracto aportado: usuario_vivero(otorgado_por) -> usuario(id)
+  usuario ||..o{ usuario_vivero : "otorgado_por"
+  %% Extracto aportado: usuario_vivero(revocado_por) -> usuario(id)
+  usuario |o..o{ usuario_vivero : "revocado_por"
+  %% Extracto y SQL 094: usuario_vivero(comando_otorgamiento_id,otorgado_por) -> vivero_acceso_comando(id,actor_id)
+  vivero_acceso_comando ||..o{ usuario_vivero : "comando_otorgamiento_id+otorgado_por"
+  %% Extracto y SQL 094: usuario_vivero(comando_retiro_id,revocado_por) -> vivero_acceso_comando(id,actor_id)
+  vivero_acceso_comando |o..o{ usuario_vivero : "comando_retiro_id+revocado_por"
+  %% Extracto aportado: usuario_vivero_historial(vivero_id) -> vivero(id)
+  vivero ||..o{ usuario_vivero_historial : "vivero_id"
+  %% Extracto aportado: usuario_vivero_historial(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_vivero_historial : "usuario_id"
+  %% Extracto aportado: usuario_vivero_historial(actor_id) -> usuario(id)
+  usuario ||..o{ usuario_vivero_historial : "actor_id"
+  %% Extracto aportado: usuario_vivero_historial(acceso_id) -> usuario_vivero(id)
+  usuario_vivero ||..o{ usuario_vivero_historial : "acceso_id"
+  %% Extracto y SQL 094: usuario_vivero_historial(comando_id,actor_id) -> vivero_acceso_comando(id,actor_id)
+  vivero_acceso_comando ||..o| usuario_vivero_historial : "comando_id+actor_id"
+  %% Extracto aportado: m2_evidencia_contexto(evidencia_id) -> evidencias_trazabilidad(id)
+  evidencias_trazabilidad ||--o| m2_evidencia_contexto : "evidencia_id"
+  %% Extracto aportado: m2_evidencia_contexto(vivero_id) -> vivero(id)
+  vivero ||..o{ m2_evidencia_contexto : "vivero_id"
+  %% Extracto aportado: m2_evidencia_contexto(lote_id) -> lote_vivero(id)
+  lote_vivero |o..o{ m2_evidencia_contexto : "lote_id"
+  %% Extracto aportado: m2_evidencia_contexto(actor_id) -> usuario(id)
+  usuario ||..o{ m2_evidencia_contexto : "actor_id"
+  %% Extracto aportado: recoleccion_recepcion_comando(actor_id) -> usuario(id)
+  usuario ||--o{ recoleccion_recepcion_comando : "actor_id"
+  %% Extracto aportado: recoleccion_recepcion(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o| recoleccion_recepcion : "recoleccion_id"
+  %% Extracto aportado: recoleccion_recepcion(vivero_id) -> vivero(id)
+  vivero ||..o{ recoleccion_recepcion : "vivero_id"
+  %% Extracto aportado: recoleccion_recepcion(recibido_por) -> usuario(id)
+  usuario ||..o{ recoleccion_recepcion : "recibido_por"
+  %% Extracto y SQL 100: recoleccion_recepcion(recibido_por,comando_id) -> recoleccion_recepcion_comando(actor_id,comando_id)
+  recoleccion_recepcion_comando ||..o{ recoleccion_recepcion : "recibido_por+comando_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia_contexto(evidencia_id) -> evidencias_trazabilidad(id)
+  evidencias_trazabilidad ||--o| recoleccion_recepcion_evidencia_contexto : "evidencia_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia_contexto(recoleccion_id) -> recoleccion(id)
+  recoleccion ||..o{ recoleccion_recepcion_evidencia_contexto : "recoleccion_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia_contexto(vivero_id) -> vivero(id)
+  vivero ||..o{ recoleccion_recepcion_evidencia_contexto : "vivero_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia_contexto(actor_id) -> usuario(id)
+  usuario ||..o{ recoleccion_recepcion_evidencia_contexto : "actor_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia(evidencia_id) -> recoleccion_recepcion_evidencia_contexto(evidencia_id)
+  recoleccion_recepcion_evidencia_contexto ||--o| recoleccion_recepcion_evidencia : "evidencia_id"
+  %% Extracto aportado: recoleccion_recepcion_evidencia(recepcion_id) -> recoleccion_recepcion(id)
+  recoleccion_recepcion ||..o{ recoleccion_recepcion_evidencia : "recepcion_id"
+  %% Extracto aportado: vivero_incorporacion(evento_id) -> evento_lote_vivero(id)
+  evento_lote_vivero ||--o| vivero_incorporacion : "evento_id"

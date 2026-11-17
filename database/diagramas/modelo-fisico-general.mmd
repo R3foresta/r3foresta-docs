@@ -1,0 +1,195 @@
+---
+title: Modelo físico · identidad, catálogos, territorio y evidencias
+---
+erDiagram
+  direction TB
+  %% Generado por database/scripts/generar-modelo-fisico.mjs.
+  %% NULL / NN e IDENTITY proceden de la exportación aportada.
+  %% FK del extracto aportado. Claves compuestas agrupadas y contrastadas con SQL local.
+  %% USER_DEFINED conserva el tipo no resuelto por el extracto.
+  %% La vista temática solo dibuja relaciones cuyos dos extremos están incluidos.
+  usuario {
+    bigint id PK "NN"
+    text nombre "NN"
+    text doc_identidad UK "NULL"
+    text wallet_address UK "NULL"
+    text organizacion "NULL"
+    text contacto "NULL"
+    USER_DEFINED rol "NN"
+    timestamp_with_time_zone created_at "NN"
+    text username UK "NULL"
+    text auth_id "NN"
+    text correo UK "NULL"
+    text apellido "NULL"
+    text foto_perfil_url "NULL"
+    boolean activo "NN"
+    bigint revision_autoridad "NN"
+    bigint organizacion_id FK "NULL"
+  }
+
+  usuario_credencial {
+    bigint id PK "NN"
+    bigint usuario_id FK "NN"
+    text credential_id UK "NN"
+    text public_key "NN"
+    text algorithm "NN"
+    integer counter "NN"
+    ARRAY transports "NULL"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone last_used_at "NULL"
+  }
+
+  organizacion {
+    bigint id PK "NN / IDENTITY"
+    text nombre UK "NN"
+    boolean activo "NN"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NN"
+    text logo_url "NULL"
+    USER_DEFINED tipo "NN"
+  }
+
+  planta {
+    bigint id PK "NN"
+    text especie "NN"
+    text nombre_cientifico "NN"
+    text variedad "NN"
+    timestamp_with_time_zone created_at "NN"
+    text nombre_comun_principal "NULL"
+    text nombres_comunes "NULL"
+    text imagen_url "NULL"
+    text notas "NULL"
+    integer tipo_planta_id FK "NN"
+    boolean activo "NN"
+    timestamp_with_time_zone updated_at "NN"
+  }
+
+  tipo_planta {
+    integer id PK "NN"
+    text nombre UK "NN"
+    timestamp_with_time_zone created_at "NULL"
+  }
+
+  pais {
+    bigint id PK "NN"
+    text nombre "NN"
+    character codigo_iso2 UK "NN"
+    character codigo_iso3 "NULL"
+    boolean activo "NN"
+    timestamp_with_time_zone created_at "NN"
+  }
+
+  division_tipo {
+    bigint id PK "NN"
+    bigint pais_id FK "NN"
+    text nombre "NN"
+    integer orden "NN"
+    boolean activo "NN"
+    timestamp_with_time_zone created_at "NN"
+  }
+
+  division_administrativa {
+    bigint id PK "NN"
+    bigint pais_id FK "NN"
+    bigint parent_id FK "NULL"
+    bigint tipo_id FK "NN"
+    text nombre "NN"
+    text codigo_externo "NULL"
+    boolean activo "NN"
+    bigint reemplazada_por_id FK "NULL"
+    timestamp_with_time_zone created_at "NN"
+    timestamp_with_time_zone updated_at "NULL"
+  }
+
+  ubicacion {
+    bigint id PK "NN"
+    numeric latitud "NULL"
+    numeric longitud "NULL"
+    timestamp_with_time_zone created_at "NN"
+    bigint pais_id FK "NULL"
+    bigint division_id FK "NULL"
+    text nombre "NULL"
+    integer precision_m "NULL"
+    text fuente "NULL"
+    text referencia "NULL"
+    timestamp_with_time_zone updated_at "NULL"
+  }
+
+  vivero {
+    bigint id PK "NN"
+    text codigo UK "NN"
+    USER_DEFINED nombre "NN"
+    bigint ubicacion_id FK, UK "NN"
+    timestamp_with_time_zone created_at "NN"
+  }
+
+  metodo_recoleccion {
+    bigint id PK "NN"
+    USER_DEFINED nombre UK "NN"
+    text descripcion "NULL"
+  }
+
+  tipos_entidad_evidencia {
+    smallint id PK "NN / IDENTITY"
+    text codigo UK "NN"
+    text descripcion "NULL"
+    boolean activo "NN"
+    timestamp_with_time_zone creado_en "NN"
+  }
+
+  evidencias_trazabilidad {
+    bigint id PK "NN / IDENTITY"
+    smallint tipo_entidad_id FK "NN"
+    bigint entidad_id "NN"
+    text codigo_trazabilidad "NULL"
+    text bucket "NN"
+    text ruta_archivo "NN"
+    uuid storage_object_id "NULL"
+    text tipo_archivo "NN"
+    text mime_type "NN"
+    bigint tamano_bytes "NULL"
+    text hash_sha256 "NULL"
+    text titulo "NULL"
+    text descripcion "NULL"
+    jsonb metadata "NN"
+    boolean es_principal "NN"
+    integer orden "NN"
+    timestamp_with_time_zone tomado_en "NULL"
+    date creado_en "NN"
+    date actualizado_en "NN"
+    date eliminado_en "NULL"
+    bigint creado_por_usuario_id FK "NN"
+    bigint actualizado_por_usuario_id FK "NULL"
+    bigint eliminado_por_usuario_id FK "NULL"
+  }
+
+  %% Extracto aportado: usuario(organizacion_id) -> organizacion(id)
+  organizacion |o..o{ usuario : "organizacion_id"
+  %% Extracto aportado: ubicacion(pais_id) -> pais(id)
+  pais |o..o{ ubicacion : "pais_id"
+  %% Extracto aportado: ubicacion(division_id) -> division_administrativa(id)
+  division_administrativa |o..o{ ubicacion : "division_id"
+  %% Extracto aportado: vivero(ubicacion_id) -> ubicacion(id)
+  ubicacion ||..o| vivero : "ubicacion_id"
+  %% Extracto aportado: planta(tipo_planta_id) -> tipo_planta(id)
+  tipo_planta ||..o{ planta : "tipo_planta_id"
+  %% Extracto aportado: usuario_credencial(usuario_id) -> usuario(id)
+  usuario ||..o{ usuario_credencial : "usuario_id"
+  %% Extracto aportado: division_tipo(pais_id) -> pais(id)
+  pais ||..o{ division_tipo : "pais_id"
+  %% Extracto aportado: division_administrativa(pais_id) -> pais(id)
+  pais ||..o{ division_administrativa : "pais_id"
+  %% Extracto aportado: division_administrativa(tipo_id) -> division_tipo(id)
+  division_tipo ||..o{ division_administrativa : "tipo_id"
+  %% Extracto aportado: division_administrativa(reemplazada_por_id) -> division_administrativa(id)
+  division_administrativa |o..o{ division_administrativa : "reemplazada_por_id"
+  %% Extracto aportado: division_administrativa(parent_id) -> division_administrativa(id)
+  division_administrativa |o..o{ division_administrativa : "parent_id"
+  %% Extracto aportado: evidencias_trazabilidad(tipo_entidad_id) -> tipos_entidad_evidencia(id)
+  tipos_entidad_evidencia ||..o{ evidencias_trazabilidad : "tipo_entidad_id"
+  %% Extracto aportado: evidencias_trazabilidad(creado_por_usuario_id) -> usuario(id)
+  usuario ||..o{ evidencias_trazabilidad : "creado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(actualizado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ evidencias_trazabilidad : "actualizado_por_usuario_id"
+  %% Extracto aportado: evidencias_trazabilidad(eliminado_por_usuario_id) -> usuario(id)
+  usuario |o..o{ evidencias_trazabilidad : "eliminado_por_usuario_id"

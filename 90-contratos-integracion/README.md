@@ -18,8 +18,10 @@ Sirven para evitar acoplamientos ambiguos entre modulos.
 
 ## Contratos disponibles
 
-- [`01_contrato_recoleccion_a_vivero.md`](01_contrato_recoleccion_a_vivero.md)
-- [`02_contrato_vivero_a_plantacion.md`](02_contrato_vivero_a_plantacion.md)
+- [`01_contrato_recoleccion_a_vivero.md`](01_contrato_recoleccion_a_vivero.md) conserva recepción conforme, custodia, acceso por vivero y consumo atómico al iniciar propagación.
+- [`02_contrato_vivero_a_plantacion.md`](02_contrato_vivero_a_plantacion.md) conserva `RF-VIV-11..14`, entrega, consumo y devolución al lote de origen, con base viva por `EMBOLSADO` o `INCORPORACION` y procedencia por consumos persistidos.
+
+Actualización de requisitos aprobada el 16 de noviembre de 2026. La incorporación de plantas ya vivas se define en [RF-VIV-15 de Vivero Core](../02-vivero-module/00_requerimientos_vivero_core.json). Las versiones, entornos y evidencias se consultan en [ESTADO.md](../ESTADO.md).
 
 ## Relacion con modulos
 

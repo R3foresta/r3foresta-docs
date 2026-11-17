@@ -1,230 +1,251 @@
-## 3.3. Fase de Construcción: implementación e integración de los módulos
+## 3.4. Fase de Construcción: implementación e integración de los módulos
 
-> Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Las tablas y resultados del desarrollo original conservan el corte del 15 de septiembre de 2026; la sección 3.3.5.1 añade una revisión local del 29 de octubre. Las afirmaciones históricas y sus pruebas requieren actualización para una versión candidata.
+> Parte del [Capítulo III](03_capitulo_marco_aplicativo.md). Edición retrospectiva del 4 de noviembre de 2026. Las versiones y los resultados técnicos conservan las fechas y los entornos de sus fuentes.
 
-### 3.3.1. Propósito, corte y correspondencia con RUP
+### 3.4.1. Propósito y organización de la construcción
 
-Esta sección responde al tercer objetivo específico: **implementar en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido**. La fase de Construcción se organiza en cuatro iteraciones: CO-1 para Recolección, CO-2 para Vivero e integración M1→M2, CO-3 para Plantación e integración M2→M3 y CO-4 para la trazabilidad transversal y la versión candidata.
+La fase de Construcción materializó el tercer objetivo específico: **implementar en el sistema las funciones de Recolección, Vivero y Plantación necesarias para mantener vinculada la información del material vegetal durante su recorrido**. A partir de los requisitos, modelos y contratos de Elaboración, se desarrollaron las pantallas, los servicios y las operaciones de persistencia que relacionaron el origen registrado con el destino plantado.
 
-El corte documental del 15 de septiembre de 2026 se encuentra dentro de CO-2 según el cronograma rector. Sin embargo, existen implementaciones y verificaciones registradas durante julio para M2, M3 y su integración. Esas piezas constituyen una base técnica disponible, pero deben incorporarse de manera explícita al registro de cada iteración: objetivo, especificación, riesgo, tareas, cambio, pruebas, resultado y decisión de cierre. La fecha de un despliegue previo no sustituye esa evidencia metodológica.
+El trabajo se organizó mediante CO-1, CO-2, CO-3 y CO-4. Estas etiquetas conservaron la distribución académica del proyecto; las fechas reales de los cambios y las pruebas se mantuvieron en sus informes. Los componentes construidos antes del periodo planificado se incorporaron como antecedentes técnicos. Las entregas INT de Participación aliada aportaron refinamientos de autorización, captura, recuperación y consulta, sin convertirse en nuevas fases de RUP.
 
-**Tabla 3.12**
+**Tabla 3.21**
 
-*Correspondencia entre fases, iteraciones, actividades, hitos y entregables al corte*
+*Organización de los incrementos y sus aportes al producto integrado*
 
-| Fase e iteración | Actividades principales | Hito de control | Entregables previstos | Evidencia disponible al corte | Estado metodológico |
-|---|---|---|---|---|---|
-| Inicio, IN-1 | delimitar alcance, actores, requisitos iniciales, riesgos y plan | LCO | Perfil, análisis inicial, mapa de actores, necesidades y plan | Perfil, análisis, actores, necesidades y planificación disponibles | evidencia disponible; falta revisión de iteración y cierre LCO |
-| Elaboración, EL-1 | modelar dominio y datos, definir arquitectura, contratos, invariantes y especificaciones prioritarias | LCA | modelo, esquema, arquitectura, reglas, contratos y especificaciones | esquema, arquitectura, reglas y contratos M1→M2 y M2→M3 disponibles | evidencia disponible; falta resolver vacíos y cerrar LCA |
-| Construcción, CO-1 | implementar y comprobar M1 Recolección | revisión CO-1 | incremento M1, checklist y evidencia de pruebas | requisitos, reglas, flujo, checklist, arquitectura observada y operación de `DESECHO` marcada como validada | periodo concluido; requiere auditoría y registro formal de cierre |
-| Construcción, CO-2 | implementar Vivero e integración M1→M2 | revisión CO-2 | incremento M2, contrato integrado y matriz de pruebas | requisitos y contratos, eventos de Vivero, descarte pre-embolsado, arquitectura y pruebas backend disponibles | en curso; falta consolidar la matriz de evidencia de la iteración |
-| Construcción, CO-3 | implementar Plantación e integración M2→M3 | revisión CO-3 | incremento M3, migraciones, flujos y pruebas integradas | campañas, subcampañas, asignación física, devolución y plantación inicial documentadas como implementadas; frontend y backend desplegados | planificada; evidencia técnica adelantada que debe revalidarse |
-| Construcción, CO-4 | integrar trazabilidad transversal y preparar versión candidata | IOC | consulta integral, regresión, manual preliminar y versión candidata | relaciones y timelines parciales, arquitectura y contratos definidos | planificada; faltan consulta integral, regresión y cierre IOC |
-| Transición, TR-1 | ejecutar pruebas de sistema, validación operativa, despliegue y aceptación | PR | resultados de validación, manuales, incidencias y acta de aceptación | matriz de verificación en 3.3.9 y escenarios de evaluación en 3.4 | planificada; ejecución y cierre PR pendientes |
+| Iteración | Capacidad desarrollada | Riesgo principal tratado | Artefactos y evidencia relacionados |
+|---|---|---|---|
+| CO-1 | captura, revisión e historial de Recolección | origen incompleto, unidad incorrecta o pérdida del historial | RF-REC, reglas de Recolección, checklist de validación y contrato M1→M2 |
+| CO-2 | manejo del lote de Vivero e integración M1→M2 | confundir material en proceso con plantas vivas o consumir dos veces el origen | RF-VIV, eventos del lote, descarte pre-embolsado y contrato de transferencia |
+| CO-3 | planificación, entrega física y registro de Plantación | doble descuento, consumo excesivo o actuación sin permiso | RF-PLA, contrato M2→M3, migraciones 051–057 y refinamientos PA-S00/01/03 |
+| CO-4 | integración de consultas, recuperación y regresión | duplicar un registro tras una respuesta perdida o exponer datos de otra audiencia | comandos y recibos, INT02-D, INT04, INT05, informes de QA y versiones de entrega |
 
-*Nota.* Elaboración propia a partir de `metodologia_desarrollo.md`, `registro_avance_rup_sdd.md`, `TODO_PROYECTO_GRADO.md`, `ESTADO.md`, `ARCHITECTURE.md` y los planes operativos de los módulos, con corte al 15 de septiembre de 2026. “Evidencia disponible” no significa “verificado” ni “aceptado”.
+*Nota.* Elaboración propia a partir del cronograma de la sección 3.1.4, los requisitos de los módulos, los [contratos de integración](../../../90-contratos-integracion/README.md) y el [tablero PA-F01](../../../specs/plantacion/participacion-aliada/implementacion/README.md). La tabla relaciona aportes técnicos con la organización de RUP; los cierres de IOC y PR se distinguen de las entregas locales.
 
-### 3.3.2. Implementación de la arquitectura
+En cada incremento se relacionaron requisitos y reglas con decisiones de implementación y comprobaciones. Las disciplinas de análisis y diseño continuaron durante la construcción cuando se refinaron el reparto del stock, los permisos y el tratamiento de respuestas inconclusas. Las pruebas acompañaron estos cambios y proporcionaron la evidencia examinada en la sección 3.4.9.
 
-La PWA organiza sus pantallas por funcionalidades de autenticación, recolecciones, vivero, plantación y catálogos. Los servicios del cliente preparan datos y consumen la API mediante JSON o `multipart/form-data`. El backend reúne los módulos en un único proceso NestJS y distribuye la lógica compleja entre controladores, casos de uso, políticas y funciones de base de datos. Las operaciones que conservan saldos se ejecutan en PostgreSQL para reducir el riesgo de escrituras parciales.
+### 3.4.2. Implementación de la arquitectura
 
-La evidencia sigue un patrón de carga previa en los flujos que la requieren. El cliente envía los archivos originales, el backend los registra como evidencia pendiente y devuelve sus identificadores, y la operación final vincula esos identificadores dentro de la transacción. Si la operación no se completa, la interfaz debe conservar los datos del formulario y limpiar la evidencia provisional según el contrato disponible.
+La solución se implementó mediante una PWA en React y TypeScript, una API REST en NestJS y una base PostgreSQL con PostGIS y almacenamiento de archivos en Supabase. La interfaz organizó la captura y la consulta por funcionalidades; la API verificó identidad y autoridad y coordinó los casos de uso; la base de datos conservó relaciones, movimientos y saldos. El [modelo físico presentado en Elaboración](03_2_fase_elaboracion.md#3383-modelo-físico-y-contraste-con-la-base-de-datos-documentada) documentó 51 tablas y 564 columnas en el contraste del 4 de noviembre.
 
-### 3.3.3. Módulo General y Recolección
+Las operaciones críticas de transferencia, asignación, devolución y registro inicial se concentraron en funciones transaccionales. Esta decisión permitió confirmar conjuntamente los registros y los movimientos relacionados o revertir sus efectos ante un fallo. En las operaciones con competencia por el mismo saldo se utilizaron bloqueos y una nueva comprobación de disponibilidad antes de confirmar. Las garantías correspondieron a las rutas que aplicaron ese protocolo; el SQL privilegiado que lo omitiera quedó fuera de esa protección cooperativa.
 
-El Módulo General proporciona los catálogos compartidos. Los usuarios conservan uno de cuatro roles globales; las plantas mantienen identidad científica y nombre común operativo; las comunidades se resuelven mediante la estructura de divisiones administrativas; y toda coordenada reutilizable se registra en `UBICACION`. Los registros históricos conservan snapshots para que la inactivación o el cambio de un maestro no altere operaciones anteriores.
+Los archivos conservaron un ciclo separado de la transacción de datos. En el registro participante, la carga preparó los originales privados y sus versiones derivadas; la confirmación vinculó únicamente la evidencia disponible y perteneciente al intento. La recuperación y la limpieza distinguieron archivos provisionales de archivos ya asociados con un hecho confirmado. De esta manera, un error de red no justificó borrar fotografías confirmadas ni repetir el consumo.
 
-Recolección implementa un flujo de borrador, solicitud de validación, aprobación o rechazo. La ficha exige especie, tipo de material, cantidad, unidad, fecha, responsable, vivero, ubicación y evidencia. Las semillas pueden persistirse en `G` o `UNIDAD`; los esquejes solo en `UNIDAD` entera. Después de la validación, la ficha queda congelada y su saldo cambia únicamente mediante movimientos de consumo hacia Vivero o desecho.
+La autenticación privada utilizó un token JWT verificado y la consulta de la cuenta activa. En los controladores internos inspeccionados, `InternalActorGuard` derivó la identidad y el rol desde esas comprobaciones. El encabezado legado `x-auth-id` se trató como compatibilidad con la identidad verificada y se rechazó cuando no coincidió con el token. Esta implementación actualizó la observación de seguridad de julio. Los permisos por subcampaña se comprobaron además en la operación correspondiente; el acceso específico por vivero conservó el límite señalado en RDI-02.
 
-La revisión arquitectónica confirma que existen pantallas para listado, alta, edición de borrador, evidencia, validación y detalle. No obstante, algunas secuencias de Recolección coordinan varias llamadas desde TypeScript y utilizan compensación en lugar de una sola función de base de datos. Además, `ESTADO.md` no contiene todavía una auditoría completa de M1. Por ello, este incremento no se presenta como aceptado: requiere contrastar la implementación real con `RF-REC-01` a `RF-REC-05`, ejecutar el checklist completo y registrar sus resultados.
+*Fuentes de implementación:* [arquitectura observada y su corte histórico](../../../ARCHITECTURE.md), [control de identidad](../../../../Backend-r3foresta/src/auth/verified-actor.guard.ts), [adaptación de controladores internos](../../../../Backend-r3foresta/src/auth/internal-actor.guard.ts) y [estado por versión y entorno](../../../ESTADO.md).
 
-### 3.3.4. Módulo Vivero e integración M1→M2
+### 3.4.3. Módulo General y Recolección
 
-Vivero implementa el lote como agregado central. `INICIO` registra material en proceso y consume una cantidad de la recolección de origen. `EMBOLSADO` materializa el primer saldo vivo observado. `DESCARTE_PRE_EMBOLSADO` cierra un lote que no produjo plantas vivas. Después del embolsado se admiten adaptabilidad, merma, despacho manual, asignación física y devolución, con cierre automático cuando corresponde.
+El Módulo General proporcionó las referencias compartidas de usuarios, especies, viveros, organizaciones, territorios y ubicaciones. Se mantuvo el catálogo cerrado de roles ADMIN, GENERAL, VALIDADOR y VOLUNTARIO. La afiliación declarada a una organización se conservó separada de la autoridad para operar, y los registros históricos utilizaron copias de los datos relevantes, denominadas snapshots, para conservar su interpretación ante cambios posteriores de los catálogos.
 
-El descarte pre-embolsado se encuentra implementado en backend y frontend. La operación registra causa, cantidad total afectada y evidencia; mantiene nulo el saldo vivo y finaliza el lote con un motivo específico. En la interfaz, la acción solo aparece cuando el lote está activo, tiene `INICIO` y todavía no tiene `EMBOLSADO`. Si ya existen plantas vivas y se pierde todo el saldo, el hecho se registra como merma, no como descarte previo.
+La administración de roles globales se incorporó mediante una pantalla exclusiva de ADMIN. La operación conservó el motivo, la confirmación explícita, la comprobación de autoridad vigente y la protección del último administrador. Su [verificación local del 3 de noviembre](../../../../pwa-r3foresta/docs/QA_USUARIOS_ADMINISTRACION.md) identificó las versiones backend `5fb723b` y PWA `37cec4d`.
 
-La interfaz separa el despacho manual de la asignación a subcampaña. El despacho ofrece `DONACION`, `VENTA` y `OTRO`; la asignación dispone de su propio formulario, exige evidencia y conserva la selección de campaña, subcampaña, propósito, cantidad y fecha. Esta separación fue implementada en el frontend mediante el cambio `562a97e` y superó las comprobaciones de lint y construcción registradas el 23 de julio de 2026.
+Recolección implementó el registro de procedencia, especie, tipo de material, cantidad, unidad, fecha, responsable, vivero, ubicación y evidencia. El flujo distinguió borrador, solicitud de validación y decisión de aprobación o rechazo. La solicitud de validación exigió la ubicación y la evidencia fotográfica establecidas en RF-REC-04. Las semillas conservaron su cantidad en gramos o unidades, mientras que los esquejes utilizaron unidades enteras.
 
-### 3.3.5. Módulo Plantación e integración M2→M3
+La aprobación fijó la información histórica del origen. Los consumos destinados a Vivero y los desechos se representaron mediante movimientos que explicaron el saldo restante, sin sustituir la cantidad original. Las consultas de detalle e historial permitieron relacionar la recolección con sus movimientos y destinos. Las reglas y las comprobaciones de este incremento se conservaron en el [módulo Recolección](../../../01-recoleccion-module/README.md) y su [checklist de validación](../../../01-recoleccion-module/03_checklist_validacion_recoleccion.md).
 
-La implementación disponible permite crear y editar campañas, crear subcampañas, definir zona, meta, plan por especie, polígono y equipo, y activar una subcampaña aun cuando tenga cobertura de stock parcial o nula. La campaña no mantiene un estado ni una meta operativa propios; ambas lecturas se derivan de sus subcampañas. El coordinador se almacena como miembro contextual del equipo.
+El expediente de CO-1 mantuvo un alcance distinto del de los ensayos de Participación aliada: las pruebas de M3 no acreditaron por extensión todas las operaciones de M1. La consolidación de sus resultados completos se conservó como RDI-07, sin alterar la descripción funcional del módulo desarrollado.
 
-La integración física M2→M3 se implementó mediante las migraciones 051 a 057. La creación de una asignación descuenta el saldo del lote, crea stock para la subcampaña y registra eventos relacionados en ambos módulos. La devolución incrementa `cantidad_devuelta`, repone el saldo del lote y registra los hechos de retorno. La plantación consume asignaciones y no genera un segundo despacho en Vivero. Las migraciones 056 y 057, el backend y el frontend fueron reportados como desplegados en producción el 23 de julio de 2026.
+### 3.4.4. Módulo Vivero e integración M1→M2
 
-El registro de plantación inicial está implementado como un flujo móvil de tres pasos: evidencia y GPS, cantidades por especie, y resumen y confirmación. Antes de abrir el formulario se consulta el contexto de la subcampaña, que incluye estado, permisos, equipo, plan y stock asignado. El operario introduce cantidades por especie; el cliente las distribuye entre asignaciones de la misma especie mediante un orden estable por fecha e identificador, y el backend conserva el detalle real.
+Vivero implementó el lote como unidad de seguimiento del material recibido desde una recolección. El inicio conservó la cantidad y la unidad del material de origen, registró su consumo y creó el evento INICIO. La relación permitió que una misma recolección abasteciera varios lotes mediante consumos diferenciados, conservando un único origen por lote.
 
-**Figura 3.21. Flujo implementado para registrar una plantación inicial**
+El sistema distinguió el material en proceso de las plantas vivas observadas. Antes de EMBOLSADO, el saldo vivo permaneció nulo. El embolsado registró el número de plantas efectivamente obtenido en UNIDAD, sin convertir automáticamente gramos de semillas en plantas ni interpretar la diferencia entre ambas magnitudes como una pérdida.
+
+Cuando el proceso terminó sin producir plantas vivas, DESCARTE_PRE_EMBOLSADO registró causa, cantidad afectada y evidencia y cerró el lote. La interfaz habilitó esa acción únicamente en un lote activo con INICIO y sin EMBOLSADO. Después del embolsado, las pérdidas se registraron como MERMA y afectaron las plantas que permanecían físicamente en el vivero.
+
+Los movimientos de salida se diferenciaron según su destino. El despacho manual atendió DONACION, VENTA y OTRO; la asignación física utilizó un formulario específico para campaña, subcampaña, propósito, cantidad, fecha y evidencia. La separación de ambos recorridos quedó registrada en el cambio frontend `562a97e` y sus comprobaciones del 23 de julio de 2026.
+
+El [contrato M1→M2](../../../90-contratos-integracion/01_contrato_recoleccion_a_vivero.md) relacionó el movimiento de origen, el lote y el evento inicial. El historial del lote conservó los hechos de manejo y las salidas posteriores. La incorporación de plantas vivas adquiridas y la recepción directa se mantuvieron diferenciadas en el diseño; la evidencia de propagación desde una recolección no se atribuyó a esas variantes, cuyo límite de implementación se conservó en RDI-01.
+
+### 3.4.5. Módulo Plantación e integración M2→M3
+
+Plantación implementó campañas y subcampañas con zona, fechas, plan por especie, polígono y equipo. La campaña obtuvo su estado y su meta agregada mediante sus subcampañas. La coordinación se representó como responsabilidad del equipo y se mantuvo separada del rol global y de los permisos de participación.
+
+La planificación habilitó la activación con cobertura de stock parcial o nula. El plan por especie orientó el avance; el saldo físico elegible limitó las cantidades registrables. Alcanzar o superar la meta no cerró automáticamente la subcampaña. El cierre se trató como una operación explícita, conservando la regla aceptada de ausencia de reapertura y la devolución del remanente como hecho separado.
+
+La integración M2→M3 distinguió entrega y plantación. Al crear una asignación, la transacción descontó las plantas del lote, generó el movimiento de salida y creó stock disponible en la subcampaña. El registro de plantación consumió esa asignación y conservó su procedencia, sin generar un segundo despacho ni disminuir otra vez el saldo del vivero. La devolución incrementó la cantidad devuelta y repuso físicamente el saldo del lote de origen. La cantidad asignada original permaneció inmutable.
+
+El saldo de la asignación se explicó mediante la relación:
+
+`saldo_asignado_disponible = cantidad_asignada − cantidad_consumida − cantidad_devuelta − cantidad_mermada`.
+
+Las migraciones 051–057 materializaron la base de esta integración y los refinamientos posteriores de Participación aliada incorporaron autorización, recuperación y reparto en servidor. La aplicación productiva de 056/057 y el despliegue coordinado del 23 de julio conservaron su condición de antecedente confirmado; no se utilizaron para atribuir despliegue a los cambios posteriores.
+
+#### 3.4.5.1. Registro inicial participante y recuperación del intento
+
+El registro inicial se implementó en tres pasos: fotografías y ubicación; cantidades y participantes; resumen y confirmación. La persona autenticada seleccionó una subcampaña ACTIVA para la que dispuso de permiso vigente. ADMIN global pudo registrar directamente con las mismas validaciones de negocio. La afiliación a una organización y la inclusión histórica como participante no concedieron autoridad operativa.
+
+El contexto entregó especies, revisión del plan y disponibilidad autorizada. La persona indicó cantidades por especie y el servidor resolvió su distribución sobre las asignaciones elegibles mediante LIFO: fecha de asignación e identificador descendentes. La selección excluyó otros ámbitos, propósitos y entregas posteriores a la fecha operativa. El orden de consumo se mantuvo separado del orden de bloqueo utilizado para controlar la concurrencia.
+
+La Figura 3.23 reúne el recorrido de captura y la confirmación transaccional. El GPS pudo capturarse automáticamente o señalarse manualmente. PostGIS evaluó la relación con el polígono: un punto exterior válido generó advertencia y permitió continuar; un fallo técnico de evaluación no se interpretó como ubicación exterior ni confirmó el registro.
+
+**Figura 3.23. Flujo y secuencia del registro inicial de plantación**
+
+*a) Captura, confirmación y recuperación desde la interfaz*
 
 ```mermaid
 flowchart TD
-  C[Consultar contexto de subcampaña] --> P{¿ACTIVA, usuario miembro,<br/>plan y stock disponibles?}
-  P -- No --> B[Bloquear operación<br/>y mostrar causa]
-  P -- Sí --> E[1 Evidencia y GPS]
-  E --> Q[2 Cantidades por especie]
-  Q --> R[Resolver detalle por asignación<br/>fecha e identificador ascendentes]
-  R --> S[3 Resumen y confirmación]
-  S --> U[Subir evidencia pendiente]
-  U --> G[Guardar registro en transacción]
-  G --> V{¿Cumple saldos, meta,<br/>permisos y evidencia?}
-  V -- No --> X[Rechazar y reconsultar contexto]
-  V -- Sí --> F[Crear registro y detalles<br/>consumir asignaciones]
-  F --> H[Mostrar código, cantidades,<br/>GPS y saldos resultantes]
+    C[Consultar capacidades y contexto] --> P{Cuenta y permiso vigentes,<br/>subcampaña ACTIVA y stock elegible}
+    P -- No --> B[Mostrar causa y conservar<br/>recuperación propia si existe]
+    P -- Sí --> E[1 Fotografías y coordenadas<br/>capturadas o manuales]
+    E --> Q[2 Cantidades por especie<br/>y participantes opcionales]
+    Q --> S[3 Resumen y confirmación explícita]
+    S --> U[Preparar intento y cargas<br/>con identificadores estables]
+    U --> G[Enviar contenido persistido<br/>con el mismo comando]
+    G --> V{Resultado recibido}
+    V -- Confirmado --> F[Mostrar recibo y detalle<br/>del consumo registrado]
+    V -- Rechazo terminal --> X[Mostrar causa y permitir<br/>una revisión explícita]
+    V -- Inconcluso --> R[Conservar clave, contenido y fotos<br/>consultar el mismo resultado]
+    R --> T{Existe resultado terminal}
+    T -- Sí --> V
+    T -- No --> I[Conservar pendiente y ofrecer<br/>reintento con la misma clave]
+    I -- Reenvío autorizado --> G
 ```
 
-*Nota.* Elaboración propia a partir de `05_handoff_registro_plantacion_inicial.md`, el plan frontend de M3 y la migración `053_m3_registrar_plantacion_sin_despacho.sql`.
-
-El flujo fue reportado con control de doble envío, limpieza de evidencias pendientes y comprobante de consumo. La verificación de interfaz del 8 de julio de 2026 no registró bloqueantes. Persisten vacíos de experiencia: no existe una vista agregada de asignaciones por subcampaña, el historial completo de M3 no está expuesto y la regla de GPS debe reconciliarse con el comportamiento real del backend.
-
-
-#### 3.3.5.1. Actualización del registro participante
-
-La revisión del 29 de octubre de 2026 identificó un recorrido participante posterior al flujo histórico de la Figura 3.21. La autoridad se verifica por subcampaña y el registro consume el stock asignado elegible; el avance por especie es orientativo y no reemplaza la comprobación de saldo. Los borradores pertenecen a la cuenta y al dispositivo. La secuencia describe el código local revisado, no una aceptación integral del flujo o un despliegue remoto.
-
-**Diagrama de trabajo: secuencia del registro participante**
+*b) Autoridad, consumo y evidencia en la confirmación*
 
 ```mermaid
 sequenceDiagram
     actor U as Persona autorizada
-    participant PWA as Frontend
-    participant API as Backend
+    participant PWA as PWA
+    participant API as API NestJS
     participant DB as PostgreSQL/PostGIS
-    participant STO as Storage privado
+    participant STO as Almacenamiento privado
 
-    U->>PWA: Elegir subcampaña
-    PWA->>API: Consultar capacidades
-    API->>DB: Verificar cuenta y autoridad por ámbito
-    DB-->>PWA: Subcampañas y acciones permitidas
-
-    opt Consultar equipo
-        PWA->>API: Solicitar miembros del ámbito
-        API->>DB: Lectura autorizada por 087
-        DB-->>PWA: Miembros y responsabilidades
-    end
-
-    U->>PWA: Iniciar captura
-    PWA->>API: Consultar contexto de registro
-    API->>DB: Leer plan, revisión y stock elegible
-    DB-->>API: Avance inicial y pendiente por especie
-    API-->>PWA: Contexto autorizado
-
-    Note over PWA,DB: La meta orienta; el saldo elegible limita la cantidad
-
+    U->>PWA: Seleccionar subcampaña
+    PWA->>API: Consultar capacidades y contexto
+    API->>DB: Verificar cuenta, permiso, plan y stock
+    DB-->>API: Contexto autorizado
+    API-->>PWA: Especies, disponibilidad y revisión
+    U->>PWA: Completar captura y revisar datos
     PWA->>API: Preparar comando propio
-    API->>DB: Guardar preparación
-    U->>PWA: Añadir fotos y ubicación
-    PWA->>API: Enviar fotografías
-    API->>STO: Guardar original y derivada
-    API->>DB: Marcar cargas disponibles
-
-    U->>PWA: Confirmar cantidades, fecha y participantes
-    PWA->>API: Enviar misma intención con comando_id
-    API->>DB: Ejecutar RPC transaccional
-
-    alt El comando ya tiene resultado terminal
+    API->>DB: Persistir preparación sin reservar stock
+    PWA->>API: Cargar fotografías con identidad estable
+    API->>STO: Guardar originales y derivadas
+    API->>DB: Registrar cargas disponibles
+    U->>PWA: Confirmar resumen
+    PWA->>PWA: Persistir clave y contenido definitivo
+    PWA->>API: Enviar registro con comando_id
+    API->>DB: Ejecutar operación transaccional
+    alt El intento ya tiene resultado terminal
         DB-->>API: Recuperar el mismo recibo
-    else Nueva ejecución válida
-        DB->>DB: Revalidar cuenta, permiso, ACTIVA y revisión
-        DB->>DB: Validar fecha, GPS, fotos y saldo
-        DB->>DB: Consumir asignaciones elegibles en orden LIFO
+    else Primera ejecución válida
+        DB->>DB: Revalidar autoridad, ACTIVA, plan y fecha
+        DB->>DB: Evaluar GPS y validar evidencia y cantidades
+        Note over DB: Exterior válido con advertencia<br/>Fallo técnico sin confirmación
+        DB->>DB: Consumir stock elegible mediante LIFO
         DB->>DB: Guardar registro, detalles y snapshots
-        DB->>DB: Vincular evidencia y recibo en la misma transacción
-        DB-->>API: Resultado terminal
+        DB->>DB: Vincular evidencia y recibo en la transacción
+        DB-->>API: Confirmación o rechazo durable
     end
-
-    API-->>PWA: Confirmación o rechazo durable
-
+    API-->>PWA: Resultado del mismo intento
     opt Respuesta perdida o inconclusa
-        PWA->>API: Recuperar con misma clave y operación
-        API->>DB: Consultar recibo del actor
-        DB-->>PWA: Terminal o resultado aún no determinado
+        PWA->>API: Consultar resultado propio con la misma clave
+        API->>DB: Leer recibo sin nuevo consumo
+        DB-->>API: Terminal o resultado aún no determinado
+        API-->>PWA: Estado recuperable
+        Note over PWA,API: Reenvío autorizado conserva clave y contenido
     end
-
-    U->>PWA: Consultar Mis registros
-    PWA->>API: Solicitar registros propios
-    API->>DB: Verificar autoría o participación efectiva
-    DB-->>PWA: Registros, especies y referencia de foto autorizada
+    U->>PWA: Consultar comprobante o Mis registros
+    PWA->>API: Solicitar detalle propio
+    API->>DB: Verificar autoría o participación histórica
+    DB-->>API: Datos y referencia de evidencia permitidos
+    API-->>PWA: Detalle según audiencia
 ```
 
+*Nota.* Elaboración propia a partir de PA-S01, D01–D12, la [entrega INT03-A](../../../../Backend-r3foresta/docs/pa-int03a-entrega-local.md), el [informe INT04](../../../../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md) y el [caso de guardado del 26 de octubre](../../../../pwa-r3foresta/docs/QA_REGISTRO_GUARDADO_51.md). Los dos paneles describen el mismo recorrido vigente y sustituyen la secuencia histórica de reparto en el cliente.
 
-*Nota.* Elaboración propia a partir de la revisión de backend `9eef958` y frontend `dd36c57` del 29 de octubre de 2026. La evidencia de un registro confirmado mediante backend local el 26 de octubre se conserva en [`QA_REGISTRO_GUARDADO_51.md`](../../../../pwa-r3foresta/docs/QA_REGISTRO_GUARDADO_51.md); no demuestra por sí sola los demás recorridos ni el despliegue remoto. La Figura 3.21 conserva el flujo documentado en septiembre y requiere actualización antes de la edición final.
+La recuperación distinguió confirmación, rechazo terminal e incertidumbre. Ante una respuesta perdida, la PWA conservó la clave, el contenido y las fotografías y consultó el resultado propio. El reenvío del mismo intento recuperó el recibo o ejecutó la operación una sola vez. Un contenido distinto con la misma clave entró en conflicto; una nueva revisión después de un rechazo terminal exigió confirmación explícita. Los borradores permanecieron asociados con la cuenta y el dispositivo, sin constituir una sincronización autónoma de trabajo sin conexión.
 
-### 3.3.6. Aplicación de SDD y asistencia de IA
+### 3.4.6. Artefactos, configuración y asistencia de IA
 
-Los documentos revisados cubren partes de la cadena SDD. Los archivos de requisitos expresan capacidades y validaciones; las reglas precisan invariantes; los flujos operativos organizan la experiencia; los contratos resuelven las fronteras; los ADR registran decisiones; los planes de frontend descomponen trabajo; las migraciones materializan operaciones; y `ESTADO.md` registra confirmaciones técnicas disponibles. Esta correspondencia todavía no está consolidada con identificadores estables de especificación, tarea, prueba, resultado y aceptación, por lo que no se presenta como una aplicación metodológica plenamente demostrada.
+La construcción utilizó los requisitos y las reglas de los módulos, los contratos de integración, las decisiones ADR y las especificaciones PA-S00–PA-S04 como artefactos de RUP. Su selección respondió al riesgo tratado: saldos y transferencias requirieron contratos y pruebas transaccionales; autorización y recuperación requirieron matrices de rutas, comandos y ensayos de concurrencia; la experiencia móvil requirió capturas y comprobaciones de navegador.
 
-La asistencia de IA participó en análisis, contraste documental, planificación, implementación y redacción bajo revisión humana. Para cumplir plenamente la metodología, falta completar el registro por aporte material con fecha, herramienta y versión disponible, tarea, artefacto afectado, salida adoptada, modificada o rechazada, revisión humana, prueba y referencia al cambio. La existencia de archivos generados o revisados con IA no equivale por sí sola a esa trazabilidad de proceso.
+Las fichas INT relacionaron las tareas existentes con los cambios backend, frontend y SQL y con sus resultados. Los informes conservaron tanto la base usada para probar como el commit posterior de entrega. Esta separación permitió distinguir código probado, versionado local, publicación Git, aplicación SQL y despliegue. Los resultados de diferentes fechas no se sumaron como una única ejecución del producto.
 
-El archivo `../../04_metodologia/registro_avance_rup_sdd.md` concentra el estado por iteración e hito, la cobertura actual de la cadena SDD y la plantilla de control de IA. Este registro permite incorporar evidencia a medida que se verifica, sin reconstruir retrospectivamente cierres o aceptaciones que no fueron documentados.
+La IA apoyó el contraste documental, el análisis, la implementación y la redacción. La selección del comportamiento y la responsabilidad académica permanecieron bajo control humano. Los informes técnicos conservaron las comprobaciones de los cambios; las decisiones funcionales aceptadas mantuvieron su procedencia y fecha. Esta edición utilizó RUP adaptado como único proceso y conservó los identificadores existentes, sin imponer nuevas familias de artefactos.
 
-### 3.3.7. Control del alcance implementado
+### 3.4.7. Control del alcance implementado
 
-La versión técnica contiene o proyecta funciones posteriores al registro inicial: mortandad, reposición, fases de mantenimiento, vistas públicas, metadatos de carbono e integraciones blockchain. También existen pantallas de CO₂ y escaneo que funcionan como marcadores de posición. Estas capacidades no se incorporan a la matriz de cumplimiento del Proyecto de Grado porque el alcance académico concluye con el registro de la plantación.
+El producto académico se delimitó a procedencia, cantidades, unidades, responsables, ubicaciones, evidencia, movimientos y destino registrado. Los módulos de soporte y las consultas pública, propia e interna se utilizaron según su aporte a ese recorrido. La consulta pública de Plantación mostró únicamente la proyección autorizada y las fotografías elegibles; los datos operativos y los originales privados conservaron su tratamiento diferenciado.
 
-El capítulo utiliza únicamente los componentes necesarios para demostrar procedencia, cantidades, responsables, ubicaciones, evidencia y destino registrado. Si una capacidad adicional interviene técnicamente en el mismo repositorio, debe permanecer desactivada o separada de los escenarios de aceptación, sin presentarse como aporte ni resultado del proyecto académico.
+Las estructuras de mantenimiento, mortandad, reposición y correcciones excepcionales se identificaron con su alcance particular. La evidencia de regresión de esas funciones aportó información sobre compatibilidad, pero no amplió el objetivo académico más allá del registro de plantación. Carbono, MRV, certificación, blockchain y comercialización quedaron fuera de los resultados evaluados. PA-S04 conservó sus decisiones aceptadas y sus límites de implementación, sin presentarse como capacidad concluida por el cierre de otras entregas.
 
-### 3.3.8. Resultado de la implementación
+### 3.4.8. Resultado de la implementación
 
-La implementación disponible materializa la ruta principal: una recolección puede originar un lote de vivero; el vivero distingue material en proceso de plantas vivas; una asignación transfiere físicamente plantas a una subcampaña; y una plantación consume el stock asignado conservando el lote y la especie de procedencia. Los eventos, snapshots y evidencias permiten mantener las relaciones necesarias para una reconstrucción posterior.
+La construcción produjo una aplicación que vinculó la recolección con el lote de vivero, la entrega física con la subcampaña y el registro de plantación con las asignaciones consumidas. La separación entre cantidad de origen, resultado vivo observado, salida física y consumo plantado permitió explicar cada etapa en su propia unidad. Los eventos, los detalles y los snapshots conservaron las relaciones necesarias para interpretar el recorrido registrado.
 
-OBJ-03 no puede declararse cerrado en este corte. Falta demostrar formalmente el incremento completo de Recolección, implementar las variantes de ingreso externo comprometidas, resolver los riesgos P0 de identidad y reproducibilidad y completar la trazabilidad transversal de CO-4. La evidencia adelantada de M3 reduce trabajo de construcción, pero debe verificarse nuevamente dentro de la secuencia metodológica y con la versión candidata que se someta a aceptación.
+El aporte a OBJ-03 se concretó en esa ruta implementada y en los refinamientos de autorización, evidencia y recuperación. Las variantes de incorporación externa y recepción directa conservaron la diferencia entre diseño e implementación acreditada. La consulta pública de Plantación tampoco se equiparó con una consulta universal de todos los antecedentes de M1 y M2. Estos límites se mantuvieron en RDI-01, RDI-02, RDI-03 y RDI-07 y en el tablero académico.
 
-### 3.3.9. Verificación de requerimientos e invariantes
+La revisión de IOC, capacidad operativa inicial, se sustentó conceptualmente en la integración, la regresión, la configuración de la versión y los defectos conocidos. El expediente reunió los aportes disponibles para esa revisión; los cierres técnicos locales conservaron sus condiciones de entorno. La conclusión del texto de Construcción no se registró como una liberación de software ni como una decisión institucional de IOC.
 
-#### 3.3.9.1. Propósito y enfoque
+### 3.4.9. Verificación de requerimientos e invariantes
 
-Esta sección responde al cuarto objetivo específico: **verificar que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal**. La verificación acompaña cada incremento de Construcción y culmina durante Transición con pruebas de sistema y regresión sobre una versión candidata identificada.
+#### 3.4.9.1. Propósito y enfoque
 
-Las pruebas deben relacionarse con requisitos e invariantes. El volumen de archivos o casos no constituye por sí mismo un resultado. Para cada comprobación se conservarán versión, datos, precondiciones, operación, resultado esperado, resultado observado, evidencia, defecto y decisión. Cuando una prueba escriba en servicios externos, se ejecutará en un entorno controlado.
+La verificación atendió el cuarto objetivo específico: **verificar que las funciones implementadas cumplan los requerimientos definidos y que los registros mantengan coherencia entre las cantidades y los movimientos del material vegetal**. Se examinaron pruebas de reglas y servicios, operaciones transaccionales, concurrencia, transporte HTTP, archivos e interacción desde el navegador.
 
-#### 3.3.9.2. Evidencia técnica disponible
+La propiedad comprobada se distinguió del mecanismo utilizado. Por ejemplo, la existencia de una transacción no se tomó como prueba suficiente de integridad: se examinaron fallos y operaciones competidoras y se contrastaron los saldos y los registros resultantes. Las pruebas con servicios simulados se distinguieron de las ejecutadas contra PostgreSQL/PostGIS y de las confirmaciones aportadas por el usuario.
 
-**Tabla 3.13**
+#### 3.4.9.2. Resultados técnicos documentados
 
-*Evidencia de verificación disponible antes del cierre de OBJ-04*
+**Tabla 3.22**
 
-| Evidencia | Resultado registrado | Alcance que respalda | Limitación para el cierre académico |
+*Resultados de verificación por entrega, versión y entorno*
+
+| Entrega y fecha | Versión o base identificada | Resultado registrado | Entorno y alcance |
 |---|---|---|---|
-| auditoría de backend del 23 de julio de 2026 | 42 suites y 415 pruebas unitarias ejecutadas | reglas y servicios cubiertos por esas suites | requiere matriz que vincule cada resultado con requisito e invariante |
-| pruebas de backend y base de datos del despliegue coordinado | unitarias y e2e de base de datos reportadas como correctas | integración física M2→M3, devolución y desactivación | no sustituye regresión sobre la versión candidata final |
-| comprobaciones de frontend | lint y build correctos | tipado, compilación y reglas estáticas del frontend | no existen todavía pruebas unitarias, de componentes o e2e automatizadas en la PWA |
-| QA del registro de plantación inicial | flujo móvil reportado sin bloqueantes el 8 de julio de 2026 | contexto, tres pasos, evidencia, GPS, cantidades y confirmación | falta anexar casos, datos y resultados observados a la matriz académica |
-| migraciones 056 y 057 en producción | aplicación y despliegue confirmados | devolución física y desactivación atómica de campaña | no demuestra replay completo desde una base vacía |
+| INT02-D, 16–17 de octubre | base backend a045d9d más árbol D; entrega 75a57eb | 64 suites y 787 pruebas unitarias; 33 grupos SQL, 28 carreras y 25 pruebas HTTP/Storage aprobados | PostgreSQL/PostGIS y archivos sintéticos aislados; permisos, rutas equivalentes, locks y regresión compartida |
+| INT04, 17 de octubre | base PWA 20157dc más árbol; entrega 94f62a9; backend D | 39 suites y 553 pruebas; lint/build y 60 comprobaciones integradas aprobados | navegador, API, PostgreSQL/PostGIS y archivos privados locales; captura, fotos, recuperación y compatibilidad |
+| INT05 backend, 17 de octubre; consolidación del 19 | base 10e5dc5 más árbol; entrega 8dc8efc | 65 suites y 816 pruebas unitarias; 16 casos HTTP/SQL/Storage aprobados | entorno sintético; proyecciones públicas, agregados y consulta propia |
+| INT05 frontend, 18–19 de octubre | base 6a2c955 más árbol; entrega a3a4b28 | 48 suites y 691 pruebas; lint/build y 111 comprobaciones integradas/SQL aprobados | navegación pública y propia, con regresiones de registro y acceso en entornos locales |
+| guardado de plantación, 26 de octubre | backend local en puerto 3000 y PWA en 5173, identificados por el informe | 87 pruebas focales aprobadas; confirmación humana y lectura posterior de un comando CONFIRMADO vinculado al registro 13 | caso real de reintento mediante backend local; sin identificador de liberación remota en esta evidencia |
+| administración de roles, 3 de noviembre | bases backend f26cbfa y PWA c684ad9 más árbol; entregas 5fb723b y 37cec4d | 1.190 unitarios backend, 1.129 pruebas frontend, 26 grupos SQL, ocho carreras, 15 HTTP y 27 comprobaciones de navegador aprobados | entorno sintético aislado; administración global y protección del último ADMIN |
 
-*Nota.* Elaboración propia a partir de `ARCHITECTURE.md`, `ESTADO.md`, `03_tarea_frontend_separar_despacho_asignacion.md` y `05_handoff_registro_plantacion_inicial.md`. Los resultados corresponden a las fechas y versiones documentadas, no a una certificación general del producto.
+*Nota.* Elaboración propia a partir de los informes [INT02-D](../../../../Backend-r3foresta/docs/pa-int02d-entrega-local.md), [INT04](../../../../pwa-r3foresta/docs/QA_REGISTRO_PARTICIPANTE_INT04.md), [INT05 backend](../../../../Backend-r3foresta/docs/pa-int05-entrega-local.md), [INT05 frontend](../../../../pwa-r3foresta/docs/QA_IMPACTO_INT05.md), [guardado del 26 de octubre](../../../../pwa-r3foresta/docs/QA_REGISTRO_GUARDADO_51.md) y [roles globales](../../../../pwa-r3foresta/docs/QA_USUARIOS_ADMINISTRACION.md), contrastados con ESTADO.md. Los conteos pertenecen a ejecuciones distintas y se solapan; no se agregaron como un total de pruebas únicas. La consolidación documental no constituyó una nueva ejecución.
 
-#### 3.3.9.3. Matriz mínima de verificación
+INT04 comprobó, entre otros casos, una respuesta perdida después de confirmar la transacción. La consulta SQL identificó tres comandos confirmados con un registro, detalle de consumo y vínculo de fotografía por cada uno, y dos rechazos sin efectos parciales. El intento cuya respuesta se perdió consumió dos plantas una sola vez. Los ensayos conservaron los saldos del vivero, lo que respaldó la separación entre entrega física y consumo de Plantación.
 
-**Tabla 3.14**
+INT05 comprobó la navegación sin cuenta, la lista propia por autoría o participación histórica y la separación de fotografías y datos por audiencia. Los ensayos utilizaron identidad sintética de arranque y no acreditaron una ceremonia WebAuthn real. La aplicación SQL, el catálogo del entorno destino y el despliegue conservaron sus evidencias específicas.
 
-*Casos prioritarios para verificar el recorrido y sus saldos*
+#### 3.4.9.3. Correspondencia con los casos prioritarios
 
-| Caso | Requisito o invariante | Operación de prueba | Resultado esperado | Estado al corte |
-|---|---|---|---|---|
-| TC-01 | `RF-REC-04` | solicitar validación sin fotos o ubicación completa | rechazo sin cambiar a `PENDIENTE_VALIDACION` | pendiente de consolidar |
-| TC-02 | INV-01 | consumir o desechar más del saldo de Recolección | rechazo y saldo sin cambios | pendiente de consolidar |
-| TC-03 | INV-02 e INV-04 | forzar un fallo durante la creación del lote de Vivero | ausencia de lote, evento o movimiento parcial | prueba de contrato disponible; evidencia académica pendiente |
-| TC-04 | INV-03 | iniciar un lote con semillas en gramos | saldo vivo nulo hasta registrar `EMBOLSADO` | pendiente de consolidar |
-| TC-05 | `RF-VIV-02A` | descartar un lote antes y después de `EMBOLSADO` | aceptación solo antes del embolsado; después corresponde merma | reportado en unitarias y e2e; anexos pendientes |
-| TC-06 | INV-05 | asignar 100 plantas y luego plantar 60 | el lote disminuye 100 al asignar; la asignación queda con 40; plantar no descuenta el lote otra vez | reportado como implementado; repetir en versión candidata |
-| TC-07 | INV-06 | enviar dos consumos concurrentes sobre el mismo saldo asignado | solo se acepta la combinación que no exceda el disponible | e2e DB reportado; detalle pendiente |
-| TC-08 | INV-07 | enviar total distinto de la suma de detalles | rechazo sin registro parcial | implementado en función; resultado pendiente de matriz |
-| TC-09 | INV-08 | devolver más del saldo asignado | rechazo; asignación y lote permanecen sin cambios | implementación confirmada; evidencia de caso pendiente |
-| TC-10 | INV-09 | cambiar el nombre maestro después de validar o crear un lote | los registros anteriores conservan sus snapshots | pendiente |
-| TC-11 | INV-10 | recuperar evidencia desde cada etapa | cada archivo aparece vinculado con su hecho, no como adjunto aislado | pendiente de recorrido completo |
-| TC-12 | INV-11 | registrar puntos interior, exterior y dentro de tolerancia | comportamiento conforme a la regla de GPS que se apruebe | bloqueado por discrepancia de especificación |
-| TC-13 | RDI-02 | intentar operar con `x-auth-id` sin JWT válido | acceso rechazado | no conforme en la arquitectura actual |
-| TC-14 | RDI-03 | reproducir la base desde cero con todas las migraciones | esquema, enums y funciones vigentes disponibles | no conforme hasta alinear migraciones |
-| TC-15 | RDI-01 | ejecutar ingreso externo en Vivero y Plantación | procedencia y recorrido conservados sin crear un cuarto módulo | no implementado |
+**Tabla 3.23**
 
-*Nota.* Elaboración propia a partir de la matriz de invariantes 3.10, `TODO_PROYECTO_GRADO.md`, los checklists de los módulos y los riesgos documentados en `ESTADO.md` y `ARCHITECTURE.md`. “Reportado” indica evidencia técnica previa que todavía debe incorporarse al expediente académico.
+*Casos de verificación y alcance de la evidencia examinada*
 
-#### 3.3.9.4. Interpretación provisional
+| Caso | Referencia | Propiedad y operación | Resultado o cobertura documentada |
+|---|---|---|---|
+| TC-01 | RF-REC-04 | solicitar validación sin fotografías o ubicación completas | criterio definido en el checklist M1; el expediente revisado no aportó un resultado completo para este caso |
+| TC-02 | INV-01 | consumir o desechar más del saldo de Recolección | regla y contrato conservados; sin cierre individual acreditado en la matriz de CO-1 |
+| TC-03 | INV-02 e INV-04 | interrumpir la transferencia M1→M2 y contrastar cantidad y unidad | contrato transaccional identificado; sin ejecución integral de fallo acreditada aquí |
+| TC-04 | INV-03 | iniciar propagación con semillas en gramos | diseño y operación distinguieron entrada y saldo vivo observado; no se atribuyó una conversión entre magnitudes |
+| TC-05 | RF-VIV-02A | descartar antes y después de EMBOLSADO | implementación y pruebas técnicas históricas referidas; el descarte previo y la merma conservaron tratamientos distintos |
+| TC-06 | INV-05 | entregar stock y registrar una plantación parcial | INT04 cotejó consumos confirmados sin nuevo débito de Vivero; el ejemplo 100 entregadas y 60 plantadas quedó como dato de prueba ilustrativo |
+| TC-07 | INV-06 | competir por el mismo saldo elegible | INT03-A/D registraron carreras SQL y comprobaciones de saldos y rollback en sus fixtures |
+| TC-08 | INV-07 | contrastar total plantado y detalles por asignación | INT03-A/INT04 cotejaron registro y detalle de consumo por comando confirmado; sin atribuir ejecución a toda variante negativa |
+| TC-09 | INV-08 | devolver el remanente y rechazar exceso | contrato físico y ensayos compartidos D respaldaron retorno único, saldos y ausencia de consumo indebido en los casos documentados |
+| TC-10 | INV-09 | conservar interpretación histórica ante cambios de catálogo | snapshots y lecturas históricas comprobados en el alcance PA; cobertura completa de M1/M2 no acreditada por esos ensayos |
+| TC-11 | INV-10 | vincular fotografías propias y rechazar las de otro intento | INT04 rechazó fotografía de otra preparación sin consumo y cotejó vínculos de confirmados; recorrido fotográfico M1→M3 no acreditado íntegramente |
+| TC-12 | INV-11 | evaluar coordenadas y fallo del evaluador | INT03-A/INT04 cubrieron PostGIS y rechazo del evaluador; exterior válido con advertencia conservó la decisión PA-S01-CA10 |
+| TC-13 | RDI-02 y RNF-INI-01 | actuar sin JWT, con identidad discordante o sin autoridad | guards actuales y ensayos HTTP D respaldaron rechazo en las rutas cubiertas; política específica por vivero conservó su alcance pendiente |
+| TC-14 | RDI-03 | reconstruir la base desde cero | fixtures y migraciones de entrega reproducidos en su alcance; replay integral y restauración de datos/archivos no acreditados |
+| TC-15 | RDI-01 | iniciar el recorrido mediante incorporaciones externas | variantes diseñadas; sin implementación y resultado integrado acreditados en las fuentes examinadas |
 
-La evidencia disponible respalda que la integración física M2→M3 cuenta con mecanismos y pruebas técnicas ejecutadas. También muestra que la compilación del frontend y una parte importante de las pruebas del backend pasan en las versiones registradas. Estos resultados permiten planificar una regresión focalizada, pero no justifican declarar cumplido todo OBJ-04.
+*Nota.* Elaboración propia a partir de INV-01–INV-11 y RNF-INI de la Tabla 3.19, RDI-01–RDI-08, el checklist de Recolección y los informes de la Tabla 3.22. TC-01–TC-15 conservan sus identificadores. La cobertura se atribuyó al ensayo y a la propiedad efectivamente descritos, sin convertir pruebas parciales en aprobación de todos los casos.
 
-Cuatro condiciones impiden el cierre: el flujo de ingresos externos no está implementado, la autenticación permite todavía una ruta de identidad débil, el replay completo de migraciones presenta diferencias y la regla de GPS no coincide con el comportamiento desplegado. Además, las pruebas disponibles deben vincularse con identificadores estables y repetirse sobre la versión candidata de CO-4 o TR-1.
+#### 3.4.9.4. Interpretación de los resultados
 
-#### 3.3.9.5. Criterio de salida para OBJ-04
+Los resultados respaldaron la consistencia de las operaciones de Plantación cubiertas: autoridad vigente, consumo de stock elegible, confirmación sin efectos parciales, vínculo de evidencia y recuperación del mismo intento. También respaldaron la separación de las consultas pública, propia e interna. La presencia de pruebas automatizadas de la PWA sustituyó la afirmación histórica de septiembre que indicaba su ausencia.
 
-El objetivo podrá cerrarse cuando la matriz de pruebas identifique la versión evaluada, todos los casos críticos cuenten con resultados observados y evidencia, las no conformidades bloqueantes hayan sido corregidas o rechazadas para la liberación, y la regresión de los tres módulos confirme que las correcciones no rompieron los recorridos ya aprobados. El cierre deberá distinguir pruebas unitarias, funcionales, de integración, concurrencia, fallo y regresión.
+La revisión diferenció dos riesgos que ya habían cambiado de situación: la identidad de los controladores inspeccionados utilizó JWT verificado y la regla de GPS exterior contó con decisión funcional aceptada. La evaluación mantuvo los límites de entorno y de autorización específica por vivero, en lugar de repetir aquellos hallazgos históricos como si continuaran sin tratamiento.
+
+OBJ-04 contó con resultados técnicos positivos para los casos documentados y con cobertura desigual del recorrido completo. Los informes no aportaron una regresión única de todas las variantes sobre una misma versión final. La reproducibilidad integral, la recuperación conjunta de datos y archivos de RNF-INI-05 y la evaluación humana de uso de RNF-INI-06 conservaron su tratamiento residual.
+
+#### 3.4.9.5. Balance de salida y enlace con Transición
+
+La construcción entregó módulos relacionados, operaciones de saldo y evidencia técnica de su integración. La revisión organizó esa evidencia por propiedad, caso, versión y entorno y dejó identificadas las diferencias entre implementación, verificación y aceptación. Ese balance constituyó la entrada documental de Transición.
+
+El expediente de salida de IOC comprendió código y migraciones identificados, configuración, resultados de regresión, defectos conocidos y demostración del recorrido. La documentación revisada aportó cierres locales y confirmaciones parciales de entorno; la decisión global de IOC se mantuvo en el [tablero académico](../../02_planificacion/TODO_PROYECTO_GRADO.md#54-iteración-co-4-e-incremento-4--trazabilidad-transversal-y-versión-candidata--19-de-octubre-al-1-de-noviembre). La [sección 3.5](03_4_fase_transicion.md) presentó la evaluación de la reconstrucción y las condiciones de entrega sin convertir este cierre de redacción en aceptación del producto.

@@ -1,0 +1,7 @@
+flowchart LR
+  U[Usuarios de R3Foresta] --> PWA[PWA React y TypeScript]
+  PWA -->|HTTPS<br/>JSON o multipart| API[API REST NestJS]
+  API --> DB[(PostgreSQL<br/>registros, eventos y saldos)]
+  API --> GIS[(PostGIS<br/>geometrías y validación espacial)]
+  API --> STO[(Supabase Storage<br/>evidencia)]
+  DB --- GIS

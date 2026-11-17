@@ -4,13 +4,13 @@
       "codigo": "RF-GEN-01",
       "modulo": "General",
       "nombre": "Gestionar usuarios y roles base",
-      "descripcion": "Permitir administrar usuarios operativos del sistema con identidad, rol, estado y datos de acceso consistentes.",
+      "descripcion": "Permitir registrar usuarios con passkey y administrar identidad, rol global, actividad y accesos especificos por operacion y ambito, conservando auditoria y trazabilidad.",
       "campos": [
         "id",
         "nombre",
         "apellido",
-        "doc_identidad unico",
-        "correo unico",
+        "doc_identidad opcional de compatibilidad, unico cuando se informa",
+        "correo opcional, unico cuando se informa",
         "username unico",
         "auth_id",
         "wallet_address opcional",
@@ -18,18 +18,31 @@
         "contacto",
         "foto_perfil_url opcional",
         "rol",
-        "activo"
+        "activo",
+        "Primera credencial WebAuthn vinculada al usuario dentro del alta atomica",
+        "Revision de autoridad y accesos M1, M2 por vivero y participacion por subcampaña"
       ],
       "validaciones": [
         "No se permiten usuarios duplicados por doc_identidad, correo o username.",
         "El rol debe pertenecer al catalogo oficial de roles del sistema: ADMIN, GENERAL, VALIDADOR, VOLUNTARIO.",
         "Todo registro operativo debe poder asociarse a un usuario responsable.",
-        "El usuario autenticado es el actor por defecto en operaciones propias."
+        "El usuario autenticado es el actor por defecto en operaciones propias.",
+        "El alta verifica WebAuthn antes de confirmar usuario activo VOLUNTARIO y primera credencial en una sola transaccion. Un fallo de credencial revierte el alta.",
+        "El actor de una operacion privada se obtiene de Bearer JWT verificado y cuenta activa. Un ID o rol del body o un header sin verificar no autentica.",
+        "Solo ADMIN global activo administra roles globales y accesos M1/M2. El cambio confirma revision, historial y recibo juntos y protege al ultimo ADMIN activo.",
+        "GENERAL y VALIDADOR requieren acceso M1 vigente para capturar o mantener su propia recoleccion. ADMIN deriva esa autoridad.",
+        "La operacion M2 requiere acceso vigente al vivero y capacidad para la accion, con autoridad global ADMIN. La recepcion de semillas solo corresponde a ADMIN global o VALIDADOR con acceso vigente al almacenamiento y prohibe autorrecepcion tambien a ADMIN.",
+        "Permisos PLANTADOR y ADMINISTRADOR_SUBCAMPANIA son contextuales y se gestionan conforme al contrato de Participacion aliada.",
+        "CORS y WebAuthn comparten una lista exacta de origenes permitidos. En produccion CORS_ORIGINS es obligatoria y exige HTTPS. Registro y login requieren Origin permitido y coincidente con la ceremonia."
       ],
       "reglas_adicionales": [
         "No se debe borrar historial por desactivar un usuario.",
         "La desactivacion no debe romper trazabilidad historica.",
-        "Los snapshots funcionales pueden congelar nombre completo cuando aplique."
+        "Los snapshots funcionales pueden congelar nombre completo cuando aplique.",
+        "Afiliacion, organizacion, equipo logistico y autoria historica no conceden por si mismos autoridad operativa actual.",
+        "Perfil propio no admite cambios de rol, actividad ni permisos. La administracion conserva motivo, revision esperada, auditoria y recuperacion de su comando.",
+        "El alta de usuario y passkey carece de recibo durable y replay idempotente. Ante respuesta perdida se comprueba login con la credencial antes de repetir el registro.",
+        "Los desafios WebAuthn permanecen en memoria de una instancia y un reinicio invalida ceremonias pendientes. La configuracion desplegada y el recorrido real requieren verificacion en su entorno."
       ]
     },
     {
@@ -52,7 +65,9 @@
       "reglas_adicionales": [
         "Recoleccion selecciona vivero de almacenamiento desde este catalogo.",
         "Vivero selecciona vivero operativo del lote desde este catalogo.",
-        "La inactivacion no debe afectar registros historicos existentes."
+        "La inactivacion no debe afectar registros historicos existentes.",
+        "El acceso operativo se concede a una persona por vivero y no se deriva de pertenecer a una organizacion o equipo.",
+        "Almacenamiento M1 y destino operativo M2 conservan campos distintos. El camino ordinario consume material recibido en el mismo vivero y ADMIN conserva la excepcion explicita de otro destino del contrato M1-M2."
       ]
     },
     {
@@ -153,7 +168,7 @@
         "tipo_archivo",
         "mime_type",
         "tamano_bytes",
-        "hash_sha256 opcional",
+        "hash_sha256 del original cuando esta registrado, con ausencia historica conservada",
         "titulo opcional",
         "descripcion opcional",
         "metadata opcional",
@@ -164,12 +179,24 @@
       "validaciones": [
         "Toda evidencia debe pertenecer a un tipo_entidad_id valido.",
         "La evidencia debe poder asociarse sin ambiguedad a una entidad de negocio.",
-        "No se debe perder evidencia por cambios de estado del registro principal."
+        "No se debe perder evidencia por cambios de estado del registro principal.",
+        "Las nuevas evidencias auditables conservan el archivo original y calculan hash, tamano y MIME en servidor. Los formatos admitidos son JPG/JPEG/PNG/WEBP/HEIC/HEIF con validacion especifica de cada recorrido.",
+        "La captura se envia por multipart/form-data. Una copia optimizada de visualizacion conserva su relacion con el original.",
+        "Carga, consulta y vinculo vuelven a autorizar actor, objeto, vivero, solicitud o revision segun el recorrido.",
+        "Una fotografia de recepcion pertenece a la revision de captura revisada. Una fotografia de otra revision no habilita la decision.",
+        "Los originales privados se entregan mediante lectura autorizada o URL firmada. La consulta publica usa las proyecciones sanitizadas permitidas por su contrato.",
+        "Una URL que no se puede firmar conserva metadatos y declara su error. Un fallo al consultar fotos se informa como tal y no como una lista vacia.",
+        "La politica comun de originales operativos usada en recepcion y T5 admite hasta 15 MiB por archivo y 100 MiB acumulados por carga, con 1 a 5 fotos por operacion en esos recorridos.",
+        "La plantacion inicial participante admite 1 a 10 fotos de hasta 10 MiB por archivo, conforme a D09 y MAX_FOTO_BYTES. Cada carga transporta una foto y valida su decodificacion real."
       ],
       "reglas_adicionales": [
         "La capa de evidencias es transversal y no debe duplicarse por modulo.",
         "Cada modulo define obligatoriedad, pero el modelo comun vive aqui.",
-        "eliminado_en queda reservado para futuro; en el MVP no se usara como parte del flujo funcional."
+        "La sustitucion o retiro permitido de fotos editables conserva su trazabilidad. Los snapshots, vinculos confirmados, claves y recibos historicos se preservan.",
+        "Cada recorrido define cantidad de fotos, audiencia, contexto y retencion. Recepcion e incorporacion admiten 1 a 5 fotos por su operacion.",
+        "Los buckets legados conservan su configuracion propia. Las incorporaciones usan bucket privado vivero_incorporaciones y URL firmada de 300 segundos.",
+        "Storage y PostgreSQL tienen confirmaciones distintas. Ante un resultado incierto se conservan archivos y contexto para recuperacion y conciliacion.",
+        "Los hashes y metadatos tecnicos ausentes de evidencia historica se conservan como ausentes. La actualizacion del requisito no crea backfill ni acredita que todos los registros existentes cuenten con esos datos."
       ]
     },
     {

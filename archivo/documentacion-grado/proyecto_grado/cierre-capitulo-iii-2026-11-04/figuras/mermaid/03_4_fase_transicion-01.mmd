@@ -1,0 +1,10 @@
+flowchart LR
+  S[Seleccionar escenario<br/>y versión] --> D[Preparar datos y<br/>precondiciones]
+  D --> E[Ejecutar operaciones]
+  E --> R[Intentar reconstrucción<br/>desde origen o destino]
+  R --> C[Contrastar completitud,<br/>coherencia y tiempo]
+  C --> H[Registrar evidencia,<br/>vacíos y defectos]
+  H --> Q{¿Cumple criterios<br/>de aceptación?}
+  Q -- No --> X[Corregir o aceptar<br/>limitación explícita]
+  Q -- Sí --> A[Aceptar escenario]
+  X --> R
